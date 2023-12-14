@@ -1,6 +1,6 @@
 package net.swofty.command;
 
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

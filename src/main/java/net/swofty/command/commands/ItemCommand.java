@@ -6,7 +6,7 @@ import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
 @CommandParameters(aliases = "giveitem", description = "Gives an item to the player", usage = "/item <item>", permission = Rank.ADMIN, allowsConsole = false)

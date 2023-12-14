@@ -12,7 +12,7 @@ import net.swofty.data.datapoints.DatapointInventory;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointString;
 import net.swofty.user.SkyBlockInventory;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 import org.bson.Document;
 
 import java.util.Arrays;

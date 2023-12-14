@@ -13,8 +13,8 @@ import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.user.CustomGroups;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.CustomGroups;
+import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Join miscellaneous stuff with data being loaded",

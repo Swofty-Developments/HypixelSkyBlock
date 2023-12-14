@@ -1,4 +1,4 @@
-package net.swofty.user;
+package net.swofty.user.categories;
 
 import lombok.Getter;
 import net.kyori.adventure.text.format.NamedTextColor;

@@ -46,7 +46,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility {
 
     @Override
     public int getAbilityCooldownTicks() {
-        return 30;
+        return 60;
     }
 
     @Override

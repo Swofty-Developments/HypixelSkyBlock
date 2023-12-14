@@ -4,28 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Changed Holograms to being bottom-aligned">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ManaDisplayReplacement.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Minor improvements across everything, implementation of ManaDisplayReplacement">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/PlayerAbilityHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/CommandParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/CommandParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AdminMeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AdminMeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AnvilGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AnvilGUICommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoinsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoinsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/GamemodeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/GamemodeCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/AttributeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/AttributeHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeStatistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/AbilityActivation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockAbility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/ItemStatistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/ItemStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/NBTCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/NBTCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RankCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RankCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RecombobulateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RecombobulateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SignGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SignGUICommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SpawnHologramCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SpawnHologramCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/data/DataHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointRank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventNodes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventNodes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/Hyperion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/Hyperion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketClientListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketClientListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/PlayerStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/PlayerStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/CustomGroups.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/categories/CustomGroups.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/categories/Rank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ManaDisplayReplacement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/StatisticDisplayReplacement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/PlayerStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/PlayerStatistics.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +42,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="118688" />
+    <option name="totalTimeSeconds" value="122090" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -75,22 +84,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockMinestom" />
@@ -126,7 +135,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="87947000" />
+      <workItem from="1702442546885" duration="91884000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -184,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702580292756</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Minor improvements across everything, implementation of ManaDisplayReplacement">
+      <option name="closed" value="true" />
+      <created>1702583917182</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702583917182</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +215,7 @@
     <MESSAGE value="Update all libraries" />
     <MESSAGE value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
     <MESSAGE value="Changed Holograms to being bottom-aligned" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed Holograms to being bottom-aligned" />
+    <MESSAGE value="Minor improvements across everything, implementation of ManaDisplayReplacement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor improvements across everything, implementation of ManaDisplayReplacement" />
   </component>
 </project>

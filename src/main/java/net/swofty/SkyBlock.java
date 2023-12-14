@@ -28,7 +28,7 @@ import net.swofty.gameplay.SkyBlockScoreboard;
 import net.swofty.item.player.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.packet.SkyBlockPacketClientListener;
-import net.swofty.user.CustomGroups;
+import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.SkyBlockPlayer;
 import org.reflections.Reflections;

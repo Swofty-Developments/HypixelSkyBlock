@@ -8,7 +8,7 @@ import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.HELPER, allowsConsole = false)
 public class RankCommand extends SkyBlockCommand {

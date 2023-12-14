@@ -1,24 +1,16 @@
 package net.swofty.event.actions.player.gui;
 
-import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.event.player.PlayerChatEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.Utility;
-import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.gui.SkyBlockAnvilGUI;
-import net.swofty.user.Rank;
 import net.swofty.user.SkyBlockPlayer;
-
-import java.awt.*;
 
 @EventParameters(description = "Handles when a player clicks on an AnvilGUI",
         node = EventNodes.PLAYER,

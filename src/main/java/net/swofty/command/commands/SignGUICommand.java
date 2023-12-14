@@ -5,10 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.gui.SkyBlockSignGUI;
-import net.swofty.item.attribute.AttributeHandler;
-import net.swofty.item.player.PlayerItemOrigin;
-import net.swofty.item.player.PlayerItemUpdater;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
 @CommandParameters(aliases = "signgraphicaluserinterface",

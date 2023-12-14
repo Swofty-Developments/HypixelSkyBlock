@@ -9,11 +9,14 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.item.SkyBlockItem;
 import net.swofty.user.statistics.ItemStatistic;
-import net.swofty.user.statistics.ManaDisplayReplacement;
+import net.swofty.user.statistics.StatisticDisplayReplacement;
 import net.swofty.user.statistics.PlayerStatistics;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class SkyBlockPlayer extends Player {
@@ -24,7 +27,11 @@ public class SkyBlockPlayer extends Player {
     public long joined = 0;
 
     @Getter
-    private ManaDisplayReplacement manaDisplayReplacement = null;
+    private StatisticDisplayReplacement manaDisplayReplacement = null;
+    @Getter
+    private StatisticDisplayReplacement defenseDisplayReplacement = null;
+    @Getter
+    private PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -45,16 +52,34 @@ public class SkyBlockPlayer extends Player {
         return new PlayerStatistics(this);
     }
 
-    public void setManaDisplayReplacement(ManaDisplayReplacement replacement) {
-        if (this.manaDisplayReplacement != null &&
-                this.manaDisplayReplacement.getTicksToLast() > replacement.getTicksToLast()) {
-            this.manaDisplayReplacement = replacement;
+    public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
+        // Determine which replacement to update based on type
+        StatisticDisplayReplacement currentReplacement =
+                (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
+                        this.defenseDisplayReplacement;
+
+        // Check if the replacement needs to be updated
+        if (currentReplacement == null || currentReplacement.getTicksToLast() > replacement.getTicksToLast()) {
+            // Update the appropriate replacement based on type
+            if (type == StatisticDisplayReplacement.DisplayType.MANA) {
+                this.manaDisplayReplacement = replacement;
+            } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
+                this.defenseDisplayReplacement = replacement;
+            }
 
             int hashCode = replacement.hashCode();
 
             MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                if (hashCode == this.manaDisplayReplacement.hashCode())
-                    this.manaDisplayReplacement = null;
+                StatisticDisplayReplacement scheduledReplacement =
+                        (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
+                                this.defenseDisplayReplacement;
+                if (hashCode == scheduledReplacement.hashCode()) {
+                    if (type == StatisticDisplayReplacement.DisplayType.MANA) {
+                        this.manaDisplayReplacement = null;
+                    } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
+                        this.defenseDisplayReplacement = null;
+                    }
+                }
             }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
         }
     }

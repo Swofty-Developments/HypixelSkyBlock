@@ -6,10 +6,8 @@ import net.swofty.SkyBlock;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.entity.hologram.HologramEntity;
-import net.swofty.user.Rank;
+import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
-
-import java.util.Arrays;
 
 @CommandParameters(aliases = "spawnholo", description = "Rank command", usage = "/spawnhologram <text>", permission = Rank.ADMIN, allowsConsole = false)
 public class SpawnHologramCommand extends SkyBlockCommand {

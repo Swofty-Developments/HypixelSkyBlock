@@ -90,11 +90,15 @@ public class PlayerStatistics {
                     manaText = player.getManaDisplayReplacement().getDisplay();
                 }
 
+                if (player.getDefenseDisplayReplacement() != null) {
+                    defenseText = player.getDefenseDisplayReplacement().getDisplay();
+                }
+
                 player.sendActionBar(Component.text(
                         healthText + "     " + defenseText + "     " + manaText
                 ));
             });
-            return TaskSchedule.tick(2);
+            return TaskSchedule.tick(4);
         });
     }
 

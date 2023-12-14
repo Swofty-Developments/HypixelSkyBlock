@@ -13,10 +13,8 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.gui.SkyBlockAnvilGUI;
 import net.swofty.gui.SkyBlockSignGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.user.CustomGroups;
+import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.SkyBlockPlayer;
-
-import java.util.UUID;
 
 @EventParameters(description = "Runs on player quit",
         node = EventNodes.PLAYER,

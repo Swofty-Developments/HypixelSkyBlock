@@ -1,4 +1,4 @@
-package net.swofty.user;
+package net.swofty.user.categories;
 
 import net.kyori.adventure.key.Key;
 import net.minestom.server.adventure.audience.Audiences;

@@ -9,7 +9,7 @@ public enum EventNodes {
     // Overarching eventnodes
     ENTITY(EventNode.type("entity-listener", EventFilter.ENTITY)),
     PLAYER(EventNode.type("player-listener", EventFilter.PLAYER)),
-
+    ITEM(EventNode.type("item-listener", EventFilter.PLAYER)),
     // Player nodes
 
     ;
