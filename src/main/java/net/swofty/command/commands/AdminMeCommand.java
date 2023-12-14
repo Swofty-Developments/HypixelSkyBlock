@@ -20,7 +20,7 @@ public class AdminMeCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
-            if (!player.getUsername().equals("Swofty")) {
+            if (!player.getUsername().equals("Swofty") && !player.getUsername().equals("Maploop")) {
                 sender.sendMessage("§cNope.");
                 return;
             }
