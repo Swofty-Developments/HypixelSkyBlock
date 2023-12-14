@@ -280,6 +280,7 @@ public abstract class SkyBlockInventoryGUI {
         afterOpen(openEvent);
         if (this instanceof RefreshingGUI gui) {
             MinecraftServer.getSchedulerManager().submitTask(() -> {
+                // Player is removed from Map on disconnect, so we just need to check that
                 if (!GUI_MAP.containsKey(player.getUuid()) || GUI_MAP.get(player.getUuid()) != this) {
                     return TaskSchedule.stop();
                 }
@@ -315,7 +316,7 @@ public abstract class SkyBlockInventoryGUI {
      * @param e the event of the gui closing
      * @throws ExecutionException sometimes it might fail to call this event
      */
-    public abstract void onClose(InventoryCloseEvent e);
+    public abstract void onClose(InventoryCloseEvent e, CloseReason reason);
 
     public abstract void suddenlyQuit(SkyBlockPlayer player);
 
@@ -357,4 +358,10 @@ public abstract class SkyBlockInventoryGUI {
     }
 
     public record InventoryGUIOpenEvent(SkyBlockPlayer player, SkyBlockInventoryGUI opened, Inventory inventory) {}
+
+    public enum CloseReason {
+        SIGN_OPENED,
+        PLAYER_EXITED,
+        PLUGIN_EXITED
+    }
 }

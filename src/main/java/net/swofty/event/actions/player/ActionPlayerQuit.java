@@ -54,6 +54,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         }
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(player);
+            SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
         PlayerHolograms.remove(player);
     }

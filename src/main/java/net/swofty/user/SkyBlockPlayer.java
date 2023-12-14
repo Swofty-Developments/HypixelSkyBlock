@@ -6,6 +6,7 @@ import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
+import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.impl.ItemStatistic;
 import org.jetbrains.annotations.NotNull;
 
@@ -93,5 +94,18 @@ public class SkyBlockPlayer extends Player {
     @Override
     public void sendMessage(@NotNull String message) {
         super.sendMessage(message.replace("&", "§"));
+    }
+
+    @Override
+    public void closeInventory() {
+        super.closeInventory();
+        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(this.getUuid())) {
+            SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());
+
+            if (gui == null) return;
+
+            gui.onClose(null, SkyBlockInventoryGUI.CloseReason.PLUGIN_EXITED);
+            SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
+        }
     }
 }

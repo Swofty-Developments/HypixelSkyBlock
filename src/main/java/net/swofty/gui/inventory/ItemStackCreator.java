@@ -19,7 +19,7 @@ public class ItemStackCreator {
 
     public static ItemStack.Builder createNamedItemStack(Material material, String name) {
         return ItemStack.builder(material).displayName(Component.text(name)).meta(meta -> {
-            meta.displayName(Component.text(name));
+            meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
             meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
             meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
@@ -46,7 +46,7 @@ public class ItemStackCreator {
 
         return ItemStack.builder(material).meta(meta -> {
             meta.damage(data);
-            meta.displayName(Component.text(name));
+            meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
             meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
             meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);

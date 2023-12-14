@@ -19,7 +19,8 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 3. Download the JAR file from the latest release on the GitHub page, it should be named `skyblock-1.0-SNAPSHOT.jar`.
 4. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
    {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
-5. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+5. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
+6. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
 
 ## Compilation Guide
 
@@ -29,7 +30,8 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 4. Run the `package` lifecycle either through `mvn package` or your Maven-enabled environment.
 5. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
 {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
-6. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+6. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
+7. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
 
 ## Credits
 

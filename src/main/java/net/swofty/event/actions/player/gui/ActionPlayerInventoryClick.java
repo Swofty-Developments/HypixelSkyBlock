@@ -71,6 +71,8 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 if (item instanceof GUIQueryItem) {
                     GUIQueryItem query = (GUIQueryItem) item;
 
+                    gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
+
                     new SkyBlockSignGUI(player).open(query.lines()).thenAccept(string -> {
                         SkyBlockInventoryGUI nextGui = query.onQueryFinish(string, player);
                         if (nextGui != null && string != null)
