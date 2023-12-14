@@ -85,12 +85,12 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.9</version>
+            <version>0.10.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -111,13 +111,13 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20220320</version>
+            <version>20231013</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.11</version>
+            <version>3.12.14</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -125,7 +125,6 @@
             <artifactId>tinylog-api</artifactId>
             <version>2.4.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.tinylog</groupId>
             <artifactId>tinylog-impl</artifactId>

@@ -1,6 +1,5 @@
 package net.swofty.command.commands;
 
-import com.google.common.base.Joiner;
 import net.minestom.server.command.builder.arguments.*;
 import net.minestom.server.entity.Entity;
 import net.swofty.SkyBlock;
@@ -20,7 +19,7 @@ public class SpawnHologramCommand extends SkyBlockCommand {
 
         command.addSyntax((sender, context) -> {
             String[] nameArray = context.get(nameArgument);
-            String name = Joiner.on(" ").join(Arrays.asList(nameArray));
+            String name = String.join(" ", nameArray);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             Entity entity = new HologramEntity(name);

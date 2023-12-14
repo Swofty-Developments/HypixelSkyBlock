@@ -80,7 +80,12 @@ public class SkyBlock {
         /**
          * Register commands
          */
-        MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, command) -> sender.sendMessage("§cUnknown command!"));
+        MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, command) -> {
+            // Large amount of Clients (such as Lunar) send a `/tip all` when joining
+            // due to the scoreboard containing `hypixel.net`
+            if (command.startsWith("tip ")) return;
+            sender.sendMessage("§cUnknown command!");
+        });
         Reflections commandReflection = new Reflections("net.swofty.command.commands");
         for (Class<? extends SkyBlockCommand> l : commandReflection.getSubTypesOf(SkyBlockCommand.class)) {
             try {

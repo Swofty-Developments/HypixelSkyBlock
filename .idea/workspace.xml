@@ -4,27 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Updated AnvilGUI from using packets to Minestoms API">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/npcs/NPCBanker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/RefreshingGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIClickableItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIQueryItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/tinylog.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Implemented logging and updated GUI system">
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AnvilGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AnvilGUICommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SpawnHologramCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SpawnHologramCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="111940" />
+    <option name="totalTimeSeconds" value="112260" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -125,7 +107,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="79519000" />
+      <workItem from="1702442546885" duration="79838000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -151,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702555381423</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implemented logging and updated GUI system">
+      <option name="closed" value="true" />
+      <created>1702572788165</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702572788165</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +151,7 @@
     <MESSAGE value="Initial Commit (v1.0)" />
     <MESSAGE value="Updated POM.xml compilation for Manifest attributes" />
     <MESSAGE value="Updated AnvilGUI from using packets to Minestoms API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated AnvilGUI from using packets to Minestoms API" />
+    <MESSAGE value="Implemented logging and updated GUI system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented logging and updated GUI system" />
   </component>
 </project>
