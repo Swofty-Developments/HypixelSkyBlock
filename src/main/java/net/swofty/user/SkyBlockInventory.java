@@ -10,23 +10,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class SkyBlockInventory {
 
-    @Getter
     @Setter
-    Map<Integer, SkyBlockItem> items = new HashMap<>();
-    @Getter
+    private Map<Integer, SkyBlockItem> items = new HashMap<>();
     @Setter
-    SkyBlockItem helmet = new SkyBlockItem(Material.AIR);
-    @Getter
+    private SkyBlockItem helmet = new SkyBlockItem(Material.AIR);
     @Setter
-    SkyBlockItem chestplate = new SkyBlockItem(Material.AIR);
-    @Getter
+    private SkyBlockItem chestplate = new SkyBlockItem(Material.AIR);
     @Setter
-    SkyBlockItem leggings = new SkyBlockItem(Material.AIR);
-    @Getter
+    private SkyBlockItem leggings = new SkyBlockItem(Material.AIR);
     @Setter
-    SkyBlockItem boots = new SkyBlockItem(Material.AIR);
+    private SkyBlockItem boots = new SkyBlockItem(Material.AIR);
 
     public SkyBlockInventory() {}
 }

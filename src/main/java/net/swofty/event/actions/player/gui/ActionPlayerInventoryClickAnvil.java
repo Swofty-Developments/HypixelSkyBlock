@@ -38,7 +38,8 @@ public class ActionPlayerInventoryClickAnvil extends SkyBlockEvent {
         if (SkyBlockAnvilGUI.anvilGUIs.containsKey(player)) {
             // Needed because for some reason if you send this packet too early Client won't register it
             MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                player.sendPacket(new WindowPropertyPacket(player.getOpenInventory().getWindowId(), (short) 0, (short) 0));
+                if (player.getOpenInventory() != null)
+                    player.sendPacket(new WindowPropertyPacket(player.getOpenInventory().getWindowId(), (short) 0, (short) 0));
             }, TaskSchedule.tick(2), TaskSchedule.stop());
 
             if (inventoryClick.getInventory() == null) {

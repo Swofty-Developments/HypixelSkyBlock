@@ -30,7 +30,7 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
     @Override
     public void run(Event event) {
         PlayerLoginEvent playerLoginEvent = (PlayerLoginEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
         Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
         if (rank.isStaff()) {

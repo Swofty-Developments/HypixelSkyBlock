@@ -33,6 +33,7 @@ import net.swofty.user.CustomGroups;
 import net.swofty.user.PlayerStatistics;
 import net.swofty.user.SkyBlockPlayer;
 import org.reflections.Reflections;
+import org.tinylog.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class SkyBlock {
     public static ArrayList<UUID> offlineUUIDs = new ArrayList<>();
     @Getter
     @Setter
-    public static SharedInstance instanceContainer;
+    private static SharedInstance instanceContainer;
     @Getter
     @Setter
-    public static GlobalEventHandler globalEventHandler;
+    private static GlobalEventHandler globalEventHandler;
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
@@ -212,7 +213,7 @@ public class SkyBlock {
          */
         minecraftServer.start("0.0.0.0", 25530);
         long endTime = System.currentTimeMillis();
-        System.out.println("Started server in " + (endTime - startTime) + "ms");
+        Logger.info("Started server in " + (endTime - startTime) + "ms");
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {

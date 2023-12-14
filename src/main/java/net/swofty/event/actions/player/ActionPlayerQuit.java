@@ -12,6 +12,7 @@ import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.gui.SkyBlockAnvilGUI;
 import net.swofty.gui.SkyBlockSignGUI;
+import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.user.CustomGroups;
 import net.swofty.user.SkyBlockPlayer;
 
@@ -50,6 +51,9 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         if (SkyBlockAnvilGUI.anvilGUIs.containsKey(player)) {
             SkyBlockAnvilGUI.anvilGUIs.get(player).getValue().complete(null);
             SkyBlockAnvilGUI.anvilGUIs.remove(player);
+        }
+        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
+            SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(player);
         }
         PlayerHolograms.remove(player);
     }

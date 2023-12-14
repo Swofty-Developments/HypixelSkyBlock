@@ -89,4 +89,9 @@ public class SkyBlockPlayer extends Player {
         this.hearts = health;
         this.sendPacket(new UpdateHealthPacket(health, 20, 20));
     }
+
+    @Override
+    public void sendMessage(@NotNull String message) {
+        super.sendMessage(message.replace("&", "§"));
+    }
 }

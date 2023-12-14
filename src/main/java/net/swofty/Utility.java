@@ -7,6 +7,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -47,5 +48,12 @@ public class Utility {
             sb.append(s);
         }
         return sb.toString();
+    }
+
+    public static String commaify(double d) {
+        if (d < 1) {
+            return "0";
+        }
+        return new DecimalFormat("#,###.0").format(d);
     }
 }

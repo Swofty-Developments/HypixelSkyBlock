@@ -25,11 +25,9 @@ public class AnvilGUICommand extends SkyBlockCommand {
 
             new SkyBlockAnvilGUI(player).open(anvilText).thenAccept(line -> {
                 if (line == null) {
-                    System.out.println(sender.asPlayer().getName() + " left server while GUI was open");
                     return;
                 }
 
-                System.out.println("Line: " + line);
                 player.sendMessage("§7You wrote: §a" + line);
             });
         }, text);
