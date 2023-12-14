@@ -5,20 +5,19 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.SkyBlock;
-import net.swofty.data.serializer.SkyBlockItemSerializer;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIQueryItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GUICreative extends SkyBlockInventoryGUI
@@ -126,10 +125,9 @@ public class GUICreative extends SkyBlockInventoryGUI
                               return slot;
                         }
 
-                        // TODO; make it so this method actually returns what it needs to
                         @Override
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                              return ItemStackCreator.createNamedItemStack(item.getItemStack().material(), "dummy");
+                              return new NonPlayerItemUpdater(item).getUpdatedItem();
                         }
                   });
             }

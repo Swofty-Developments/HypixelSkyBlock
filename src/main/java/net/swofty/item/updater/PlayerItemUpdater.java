@@ -1,6 +1,5 @@
-package net.swofty.item.player;
+package net.swofty.item.updater;
 
-import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
@@ -13,7 +12,6 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;

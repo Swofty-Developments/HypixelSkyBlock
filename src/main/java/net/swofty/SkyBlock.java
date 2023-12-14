@@ -25,7 +25,7 @@ import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.gameplay.SkyBlockScoreboard;
-import net.swofty.item.player.PlayerItemUpdater;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.categories.CustomGroups;

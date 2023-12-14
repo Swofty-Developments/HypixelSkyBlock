@@ -1,4 +1,4 @@
-package net.swofty.item.player;
+package net.swofty.item.updater;
 
 import net.minestom.server.item.ItemStack;
 import net.swofty.user.SkyBlockPlayer;

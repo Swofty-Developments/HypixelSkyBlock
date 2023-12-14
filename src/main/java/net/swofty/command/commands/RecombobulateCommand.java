@@ -2,8 +2,8 @@ package net.swofty.command.commands;
 
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
-import net.swofty.item.player.PlayerItemOrigin;
-import net.swofty.item.player.PlayerItemUpdater;
+import net.swofty.item.updater.PlayerItemOrigin;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;

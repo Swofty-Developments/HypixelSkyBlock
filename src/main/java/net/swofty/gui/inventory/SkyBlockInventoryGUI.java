@@ -268,7 +268,6 @@ public abstract class SkyBlockInventoryGUI {
         InventoryGUIOpenEvent openEvent = new InventoryGUIOpenEvent(player, this, inventory);
 
         // Initializing GUI
-        setItems();
         setItems(openEvent);
         updateItemStacks(inventory, player);
 
@@ -297,11 +296,6 @@ public abstract class SkyBlockInventoryGUI {
      * @return a boolean
      */
     public abstract boolean allowHotkeying();
-
-    /**
-     * Runs before open to set items
-     */
-    public void setItems() {}
 
     /**
      * Runs when the player opens the gui
@@ -348,12 +342,7 @@ public abstract class SkyBlockInventoryGUI {
     public void updateItemStacks(Inventory inventory, SkyBlockPlayer player) {
         inventory.clear();
         for (GUIItem item : items) {
-            inventory.setItemStack(item.getSlot(), item.getItem(player).meta(meta -> {
-                meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
-                meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
-                meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
-                meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
-            }).build());
+            inventory.setItemStack(item.getSlot(), item.getItem(player).build());
         }
     }
 

@@ -87,32 +87,31 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {}
     }
 
-    public ItemStack getItemStack() {
+    public Material getMaterial() {
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
-        ItemStack itemStack = null;
-
         try {
-            ItemType type = ItemType.valueOf(typeAttribute.getValue());
-            itemStack = ItemStack.builder(type.material)
-                    .meta(meta -> {
-                        meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
-                    }).build();
+            return ItemType.valueOf(typeAttribute.getValue()).material;
         } catch (IllegalArgumentException e) {
-            if (!typeAttribute.getValue().equalsIgnoreCase("N/A")) {
-                itemStack = ItemStack.builder(Material.values().stream().
-                        filter(material -> material.name().equalsIgnoreCase("minecraft:" + typeAttribute.getValue().toLowerCase()))
-                        .findFirst().get())
-                        .meta(meta -> {
-                            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
-                        }).build();
-            }
+            return Material.values().stream().
+                    filter(material -> material.name().equalsIgnoreCase("minecraft:" + typeAttribute.getValue().toLowerCase()))
+                    .findFirst().get();
         }
+    }
+
+    public ItemStack getItemStack() {
+        return getItemStackBuilder().build();
+    }
+
+    public ItemStack.Builder getItemStackBuilder() {
+        ItemStack.Builder itemStackBuilder = ItemStack.builder(getMaterial());
 
         for (ItemAttribute attribute : attributes) {
-            itemStack = itemStack.withTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
+            itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
 
-        return itemStack;
+        return itemStackBuilder.meta(meta -> {
+            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+        });
     }
 
     public AttributeHandler getAttributeHandler() {

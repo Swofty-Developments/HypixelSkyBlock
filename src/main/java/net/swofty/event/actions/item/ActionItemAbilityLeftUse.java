@@ -26,8 +26,8 @@ public class ActionItemAbilityLeftUse extends SkyBlockEvent {
     @SneakyThrows
     @Override
     public void run(Event event) {
-        PlayerUseItemEvent playerUseItemEvent = (PlayerUseItemEvent) event;
-        ItemStack itemStack = playerUseItemEvent.getItemStack();
+        PlayerHandAnimationEvent playerUseItemEvent = (PlayerHandAnimationEvent) event;
+        ItemStack itemStack = playerUseItemEvent.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) playerUseItemEvent.getPlayer();
 
