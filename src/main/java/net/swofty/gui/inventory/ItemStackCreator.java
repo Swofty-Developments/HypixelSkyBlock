@@ -1,18 +1,15 @@
 package net.swofty.gui.inventory;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemHideFlag;
-import net.minestom.server.item.ItemMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ItemStackCreator {
@@ -29,7 +26,7 @@ public class ItemStackCreator {
 
     public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, short data, int amount, String lore) {
         List<String> l = new ArrayList<>();
-        for (String line : splitByWordAndLength(lore, 30, "\\s"))
+        for (String line : Utility.splitByWordAndLength(lore, 30, "\\s"))
             l.add(color + line);
         return getStack(name, material, data, amount, l.toArray(new String[]{}));
     }
@@ -58,14 +55,5 @@ public class ItemStackCreator {
 
     public static String color(String string) {
         return string.replace("&", "§");
-    }
-
-    public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
-        List<String> result = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\G" + separator + "*(.{1," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(string);
-        while (matcher.find())
-            result.add(matcher.group(1));
-        return result;
     }
 }

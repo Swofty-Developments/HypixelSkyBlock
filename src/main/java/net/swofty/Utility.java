@@ -8,8 +8,12 @@ import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utility {
     public static PlayerInfoPacket addPlayerInfoPacket(UUID uuid, String username, PlayerSkin skin) {
@@ -55,5 +59,14 @@ public class Utility {
             return "0";
         }
         return new DecimalFormat("#,###.0").format(d);
+    }
+
+    public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
+        List<String> result = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\G" + separator + "*(.{1," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(string);
+        while (matcher.find())
+            result.add(matcher.group(1));
+        return result;
     }
 }

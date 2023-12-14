@@ -1,4 +1,4 @@
-package net.swofty.item.impl;
+package net.swofty.user.statistics;
 
 import lombok.Getter;
 

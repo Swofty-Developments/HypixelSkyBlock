@@ -99,7 +99,9 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+        System.out.println("Closed for reason " + reason.name());
+    }
 
     @Override
     public void suddenlyQuit(SkyBlockPlayer player) {}

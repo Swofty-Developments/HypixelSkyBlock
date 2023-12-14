@@ -4,13 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties">
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Changed Holograms to being bottom-aligned">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ManaDisplayReplacement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/PlayerHolograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/PlayerHolograms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/ServerHolograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/ServerHolograms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/SkyBlockNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/SkyBlockNPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/AttributeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/AttributeHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/AbilityActivation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockAbility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockAbility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/ItemStatistic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/ItemStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/Hyperion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/Hyperion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketClientListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketClientListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/PlayerStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/PlayerStatistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +33,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="115100" />
+    <option name="totalTimeSeconds" value="118688" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -87,7 +102,7 @@
       <module name="skyblock" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="net.swofty.user.*" />
+          <option name="PATTERN" value="net.swofty.user.statistics.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -111,7 +126,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="84111000" />
+      <workItem from="1702442546885" duration="87947000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -161,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702576024901</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Changed Holograms to being bottom-aligned">
+      <option name="closed" value="true" />
+      <created>1702580292756</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702580292756</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +197,7 @@
     <MESSAGE value="Implemented logging and updated GUI system" />
     <MESSAGE value="Update all libraries" />
     <MESSAGE value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
+    <MESSAGE value="Changed Holograms to being bottom-aligned" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed Holograms to being bottom-aligned" />
   </component>
 </project>

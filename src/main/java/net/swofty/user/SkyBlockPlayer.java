@@ -1,13 +1,17 @@
 package net.swofty.user;
 
 import lombok.Getter;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.item.impl.ItemStatistic;
+import net.swofty.user.statistics.ItemStatistic;
+import net.swofty.user.statistics.ManaDisplayReplacement;
+import net.swofty.user.statistics.PlayerStatistics;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -16,8 +20,11 @@ public class SkyBlockPlayer extends Player {
 
     @Getter
     private float mana = 100;
-    public float hearts = 100;
+    public float health = 100;
     public long joined = 0;
+
+    @Getter
+    private ManaDisplayReplacement manaDisplayReplacement = null;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -36,6 +43,20 @@ public class SkyBlockPlayer extends Player {
 
     public PlayerStatistics getStatistics() {
         return new PlayerStatistics(this);
+    }
+
+    public void setManaDisplayReplacement(ManaDisplayReplacement replacement) {
+        if (this.manaDisplayReplacement != null &&
+                this.manaDisplayReplacement.getTicksToLast() > replacement.getTicksToLast()) {
+            this.manaDisplayReplacement = replacement;
+
+            int hashCode = replacement.hashCode();
+
+            MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+                if (hashCode == this.manaDisplayReplacement.hashCode())
+                    this.manaDisplayReplacement = null;
+            }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
+        }
     }
 
     public void setMana(float mana) {
@@ -65,7 +86,7 @@ public class SkyBlockPlayer extends Player {
 
     @Override
     public float getHealth() {
-        return this.hearts;
+        return this.health;
     }
 
     public float getDefence() {
@@ -79,16 +100,16 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void setHearts(float hearts) {
-        this.hearts = hearts;
-        this.sendPacket(new UpdateHealthPacket(hearts, 20, 20));
+        this.health = hearts;
+        this.sendPacket(new UpdateHealthPacket((hearts / getMaxHealth()) * 20, 20, 20));
     }
 
     @Override
     public void setHealth(float health) {
         if ((System.currentTimeMillis() - joined) < 3000)
             return;
-        this.hearts = health;
-        this.sendPacket(new UpdateHealthPacket(health, 20, 20));
+        this.health = health;
+        this.sendPacket(new UpdateHealthPacket((health / getMaxHealth()) * 20, 20, 20));
     }
 
     @Override
@@ -104,7 +125,7 @@ public class SkyBlockPlayer extends Player {
 
             if (gui == null) return;
 
-            gui.onClose(null, SkyBlockInventoryGUI.CloseReason.PLUGIN_EXITED);
+            gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
         }
     }

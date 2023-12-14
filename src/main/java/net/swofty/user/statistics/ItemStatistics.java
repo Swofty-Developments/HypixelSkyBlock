@@ -1,6 +1,5 @@
-package net.swofty.item.impl;
+package net.swofty.user.statistics;
 
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.EnumMap;

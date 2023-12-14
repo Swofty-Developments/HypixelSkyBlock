@@ -10,7 +10,7 @@ import net.swofty.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.item.attribute.attributes.ItemAttributeType;
 import net.swofty.item.impl.CustomSkyBlockItem;
-import net.swofty.item.impl.ItemStatistics;
+import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.List;

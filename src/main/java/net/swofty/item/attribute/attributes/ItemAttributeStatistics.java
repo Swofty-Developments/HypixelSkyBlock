@@ -1,8 +1,8 @@
 package net.swofty.item.attribute.attributes;
 
 import net.swofty.item.attribute.ItemAttribute;
-import net.swofty.item.impl.ItemStatistic;
-import net.swofty.item.impl.ItemStatistics;
+import net.swofty.user.statistics.ItemStatistic;
+import net.swofty.user.statistics.ItemStatistics;
 
 public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
 

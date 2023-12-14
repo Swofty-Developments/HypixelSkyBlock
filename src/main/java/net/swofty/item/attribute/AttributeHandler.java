@@ -6,7 +6,7 @@ import net.swofty.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.item.attribute.attributes.ItemAttributeRecombobulated;
 import net.swofty.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.item.attribute.attributes.ItemAttributeType;
-import net.swofty.item.impl.ItemStatistics;
+import net.swofty.user.statistics.ItemStatistics;
 
 public class AttributeHandler {
     SkyBlockItem item;

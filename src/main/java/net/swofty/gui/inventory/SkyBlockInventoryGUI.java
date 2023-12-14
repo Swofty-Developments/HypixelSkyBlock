@@ -362,6 +362,6 @@ public abstract class SkyBlockInventoryGUI {
     public enum CloseReason {
         SIGN_OPENED,
         PLAYER_EXITED,
-        PLUGIN_EXITED
+        SERVER_EXITED
     }
 }

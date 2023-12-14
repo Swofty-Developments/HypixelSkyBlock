@@ -4,18 +4,16 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.swofty.Utility;
 import net.swofty.item.attribute.AttributeHandler;
+import net.swofty.item.impl.CustomSkyBlockAbility;
 import net.swofty.item.impl.CustomSkyBlockItem;
-import net.swofty.item.impl.ItemStatistic;
-import net.swofty.item.impl.ItemStatistics;
-import net.swofty.user.PlayerStatistics;
+import net.swofty.user.statistics.ItemStatistic;
+import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class ItemLore {
     private ArrayList<Component> loreLines = new ArrayList<>();
@@ -55,6 +53,20 @@ public class ItemLore {
             CustomSkyBlockItem skyBlockItem = ((CustomSkyBlockItem) item.clazz.newInstance());
             if (skyBlockItem.getLore() != null) {
                 skyBlockItem.getLore().forEach(line -> addLoreLine("§7" + line));
+                addLoreLine(null);
+            }
+
+            // Handle Custom Item Ability
+            if (clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
+                addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
+                        ability.getAbilityActivation().getDisplay());
+                for (String line : Utility.splitByWordAndLength(ability.getAbilityDescription(), 34, "\\s"))
+                    addLoreLine("§7" + line);
+                if (ability.getManaCost() > 0)
+                    addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
+                if (ability.getAbilityCooldownTicks() > 20)
+                    addLoreLine("§8Cooldown: §a" + Utility.commaify((double) ability.getAbilityCooldownTicks() / 20) + "s");
+
                 addLoreLine(null);
             }
         }

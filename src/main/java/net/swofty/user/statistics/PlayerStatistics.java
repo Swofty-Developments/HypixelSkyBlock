@@ -1,4 +1,4 @@
-package net.swofty.user;
+package net.swofty.user.statistics;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.item.impl.ItemStatistics;
+import net.swofty.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 
@@ -81,11 +81,17 @@ public class PlayerStatistics {
                 float absorption = player.getAdditionalHearts();
                 String heartsColour = absorption > 0.0f ? "§6" : "§c";
 
+                String healthText = heartsColour + Math.round(player.getHealth() + absorption) + "/" +
+                        Math.round(player.getMaxHealth()) + "❤";
+                String defenseText = player.getDefence() == 0 ? "" : "§a" + Math.round(player.getDefence()) + "❈ Defense";
+                String manaText = "§b" + Math.round(player.getMana()) + "/" + Math.round(player.getMaxMana()) + "✎ Mana";
+
+                if (player.getManaDisplayReplacement() != null) {
+                    manaText = player.getManaDisplayReplacement().getDisplay();
+                }
+
                 player.sendActionBar(Component.text(
-                        heartsColour + Math.round(player.getHealth() + absorption) + "/" + Math.round(player.getMaxHealth())
-                                + "❤     §b" +
-                                (player.getDefence() == 0 ? "" : "§a" + Math.round(player.getDefence()) + "❈ Defense     §b") +
-                                Math.round(player.getMana()) + "/" + Math.round(player.getMaxMana()) + "✎ Mana"
+                        healthText + "     " + defenseText + "     " + manaText
                 ));
             });
             return TaskSchedule.tick(2);
