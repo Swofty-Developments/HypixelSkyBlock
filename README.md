@@ -14,15 +14,20 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 
 ## Execution Guide
 
-1. Download the JAR file 
+1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
+2. Ensure you have the `Java 17` SDK installed.
+3. Download the JAR file from the latest release on the GitHub page, it should be named `skyblock-1.0-SNAPSHOT.jar`.
+4. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
+   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
+5. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
 
 ## Compilation Guide
 
 1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
 2. Load the project into your IntelliJ or in another Maven-enabled environment.
-3. Ensure you have the `Java 17` SDK installed.
+3. Ensure you have the `Java 17` JDK installed.
 4. Run the `package` lifecycle either through `mvn package` or your Maven-enabled environment.
-5. With the resulting JAR file insert a `resources.json` with the following setup ensuring you change the values in accordance to your setup;
+5. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
 {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
 6. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
 

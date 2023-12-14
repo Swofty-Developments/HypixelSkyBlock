@@ -1,6 +1,8 @@
 package net.swofty;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
@@ -14,6 +16,12 @@ public class Utility {
         var playerEntry = new PlayerInfoPacket.AddPlayer(uuid, username, Collections.singletonList(textureProperty), GameMode.CREATIVE, 0, Component.text(username), null);
 
         return new PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER, Collections.singletonList(playerEntry));
+    }
+
+    public static String getTextFromComponent(Component component) {
+        if (!(component instanceof TextComponent))
+            throw new IllegalArgumentException("Component must be a TextComponent");
+        return PlainTextComponentSerializer.plainText().serialize(component);
     }
 
     public static String toNormalCase(String string) {

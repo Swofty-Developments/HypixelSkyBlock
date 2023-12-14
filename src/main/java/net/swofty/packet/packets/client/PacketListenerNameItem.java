@@ -15,6 +15,8 @@ import net.swofty.gui.SkyBlockSignGUI;
 import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.SkyBlockPlayer;
 
+import java.util.Map;
+
 public class PacketListenerNameItem extends SkyBlockPacketClientListener {
     @Override
     public Class<? extends ClientPacket> getPacket() {
@@ -24,9 +26,9 @@ public class PacketListenerNameItem extends SkyBlockPacketClientListener {
     @Override
     public void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player) {
         if (SkyBlockAnvilGUI.anvilGUIs.containsKey(player)) {
-            SkyBlockAnvilGUI.anvilValues.put(player, ((ClientNameItemPacket) packet).itemName());
+            SkyBlockAnvilGUI.anvilGUIs.put(player, Map.entry(((ClientNameItemPacket) packet).itemName(), SkyBlockAnvilGUI.anvilGUIs.get(player).getValue()));
 
-            player.sendPacket(new WindowPropertyPacket((byte) 99, (short) 0, (short) 0));
+            player.sendPacket(new WindowPropertyPacket(player.getOpenInventory().getWindowId(), (short) 0, (short) 0));
         }
     }
 }
