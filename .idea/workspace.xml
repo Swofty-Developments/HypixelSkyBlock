@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Update all libraries">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/PlayerHolograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/PlayerHolograms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/ServerHolograms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/ServerHolograms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/SkyBlockNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/SkyBlockNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="113754" />
+    <option name="totalTimeSeconds" value="115100" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -114,7 +111,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="82295000" />
+      <workItem from="1702442546885" duration="84111000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -156,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702573269819</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties">
+      <option name="closed" value="true" />
+      <created>1702576024901</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1702576024901</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,6 +173,7 @@
     <MESSAGE value="Updated AnvilGUI from using packets to Minestoms API" />
     <MESSAGE value="Implemented logging and updated GUI system" />
     <MESSAGE value="Update all libraries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update all libraries" />
+    <MESSAGE value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
   </component>
 </project>

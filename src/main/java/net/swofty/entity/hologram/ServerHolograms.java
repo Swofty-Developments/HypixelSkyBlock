@@ -23,26 +23,24 @@ public enum ServerHolograms {
 
     public static void spawnAll(Instance instance) {
         for (ServerHolograms hologram : values()) {
-            int i = 0;
-            for (String s : hologram.text) {
-                HologramEntity entity = new HologramEntity(s);
-                entity.setInstance(instance, hologram.pos.add(0, -(i * 0.25), 0));
+            // Calculate the starting Y position based on the text length
+            double startY = hologram.text.length * 0.3 - 0.3;
+            for (int i = 0; i < hologram.text.length; i++) {
+                HologramEntity entity = new HologramEntity(hologram.text[i]);
+                entity.setInstance(instance, hologram.pos.add(0, startY - (i * 0.3), 0));
                 entity.setAutoViewable(true);
                 entity.spawn();
-
-                i++;
             }
         }
 
         for (ExternalHologram hologram : externalHolograms) {
-            int i = 0;
-            for (String s : hologram.text) {
-                HologramEntity entity = new HologramEntity(s);
-                entity.setInstance(hologram.instance, hologram.pos.add(0, -(i * 0.25), 0));
+            // Calculate the starting Y position based on the text length
+            double startY = hologram.text.length * 0.3 - 0.3;
+            for (int i = 0; i < hologram.text.length; i++) {
+                HologramEntity entity = new HologramEntity(hologram.text[i]);
+                entity.setInstance(hologram.instance, hologram.pos.add(0, startY - (i * 0.3), 0));
                 entity.setAutoViewable(true);
                 entity.spawn();
-
-                i++;
             }
         }
     }

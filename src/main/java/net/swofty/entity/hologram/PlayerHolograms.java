@@ -87,16 +87,23 @@ public enum PlayerHolograms {
                         continue;
                     }
 
+                    // Calculate the starting Y position based on the text length
+                    double startY = lines.length * 0.3 - 0.3;
+
                     // Update existing or add new holograms
                     List<HologramEntity> perTypeCurrentEntities = perTypeEntities.getOrDefault(hologram, new ArrayList<>());
                     for (int i = 0; i < lines.length; i++) {
                         if (i < perTypeCurrentEntities.size()) {
                             // Update existing hologram text
-                            perTypeCurrentEntities.get(i).setText(lines[i]);
+                            HologramEntity existingEntity = perTypeCurrentEntities.get(i);
+                            existingEntity.setText(lines[i]);
+                            // Update existing hologram position
+                            existingEntity.setInstance(SkyBlock.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
                         } else {
                             // Add new hologram
                             HologramEntity entity = new HologramEntity(lines[i]);
-                            entity.setInstance(SkyBlock.getInstanceContainer(), hologram.pos.add(0, -(i * 0.25), 0));
+                            // Set hologram entity at the correct position considering new spacing and bottom alignment
+                            entity.setInstance(SkyBlock.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
                             entity.addViewer(skyBlockPlayer);
                             entity.spawn();
                             currentEntities.add(Map.entry(hologram, entity));

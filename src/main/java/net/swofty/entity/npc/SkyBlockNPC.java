@@ -32,7 +32,7 @@ public abstract class SkyBlockNPC {
         String[] holograms = parameters.holograms();
 
         ServerHolograms.addExternalHologram(ServerHolograms.ExternalHologram.builder()
-                .pos(new Pos(parameters.position().x(),parameters.position().y() + 1.3,parameters.position().z()))
+                .pos(new Pos(parameters.position().x(), parameters.position().y() + 1.1, parameters.position().z()))
                 .text(Arrays.copyOfRange(holograms, 0, holograms.length - 1))
                 .instance(SkyBlock.getInstanceContainer())
                 .build());
