@@ -17,10 +17,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
 2. Ensure you have the `Java 17` SDK installed.
 3. Download the JAR file from the latest release on the GitHub page, it should be named `skyblock-1.0-SNAPSHOT.jar`.
-4. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
-   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
-5. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
-6. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+4. Scroll down to Setup Guide to continue.
 
 ## Compilation Guide
 
@@ -28,10 +25,14 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 2. Load the project into your IntelliJ or in another Maven-enabled environment.
 3. Ensure you have the `Java 17` JDK installed.
 4. Run the `package` lifecycle either through `mvn package` or your Maven-enabled environment.
-5. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
-{"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
-6. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
-7. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+5. Scroll down to Setup Guide to continue.
+
+## Setup Guide
+1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
+   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
+2. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
+3. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+4. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 
 ## Credits
 

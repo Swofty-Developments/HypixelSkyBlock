@@ -1,6 +1,5 @@
 package net.swofty.region;
 
-import com.mongodb.annotations.Immutable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,13 +36,14 @@ public abstract class SkyBlockMiningConfiguration {
                     instance,
                     System.currentTimeMillis() + getRegenerationTime(),
                     2,
-                    getInitialBlockFromPos(block).get()), block);
-            if (task.getCurrentBlock() == null || task.getReviveBlock() == null) {
+                    getInitialBlockFromPos(block).get(),
+                    taskExists.get().getInitialMinedBlock()), block);
+            if (task.getIntermediaryBlock() == null || task.getReviveBlock() == null) {
                 // There is no stage 2 for this MiningConfiguration
                 return;
             }
 
-            instance.setBlock(block, task.getCurrentBlock());
+            instance.setBlock(block, task.getIntermediaryBlock());
             removeExistingTask(block);
             activeMiningTasks.add(task);
         } else {
@@ -56,26 +56,27 @@ public abstract class SkyBlockMiningConfiguration {
                     instance,
                     System.currentTimeMillis() + getRegenerationTime(),
                     1,
-                    null), block);
+                    null,
+                    instance.getBlock(block)), block);
             task.setInitialReviveBlock(task.getReviveBlock());
             activeMiningTasks.add(task);
-            instance.setBlock(block, task.getCurrentBlock());
+            instance.setBlock(block, task.getIntermediaryBlock());
         }
     }
 
     private Optional<MiningTask> findMiningTask(Pos block) {
-        return activeMiningTasks.stream().filter(task -> task.getBrokenBlock().equals(block)).findFirst();
+        return activeMiningTasks.stream().filter(task -> task.getPosition().equals(block)).findFirst();
     }
 
     public Optional<Block> getInitialBlockFromPos(Pos block) {
         return activeMiningTasks.stream()
-                .filter(task -> task.getBrokenBlock().equals(block))
+                .filter(task -> task.getPosition().equals(block))
                 .map(MiningTask::getInitialReviveBlock)
                 .findFirst();
     }
 
     public void removeExistingTask(Pos block) {
-        activeMiningTasks.removeIf(task -> task.getBrokenBlock().equals(block));
+        activeMiningTasks.removeIf(task -> task.getPosition().equals(block));
     }
 
     public static void startRepeater(Scheduler scheduler) {
@@ -90,14 +91,14 @@ public abstract class SkyBlockMiningConfiguration {
 
                         mining.activeMiningTasks.forEach(task -> {
                             if (task.getRegenerationTime() <= System.currentTimeMillis()) {
-                                task.getInstance().setBlock(task.getBrokenBlock(), task.getReviveBlock());
+                                task.getInstance().setBlock(task.getPosition(), task.getReviveBlock());
 
-                                toRemove.add(task.getBrokenBlock());
+                                toRemove.add(task.getPosition());
 
                                 if (task.getStage() == 2) {
                                     task.setStage(1);
                                     task.setRegenerationTime(System.currentTimeMillis() + mining.getRegenerationTime());
-                                    task.setCurrentBlock(task.getReviveBlock());
+                                    task.setIntermediaryBlock(task.getReviveBlock());
                                     task.setReviveBlock(task.getInitialReviveBlock());
                                     toAdd.add(task);
                                 }
@@ -131,13 +132,14 @@ public abstract class SkyBlockMiningConfiguration {
     @Getter @Setter
     public static class MiningTask {
         SkyBlockPlayer playerWhoInitiated;
-        Pos brokenBlock;
-        Block currentBlock;
+        Pos position;
+        Block intermediaryBlock;
         Block reviveBlock;
         SharedInstance instance;
         long regenerationTime;
         int stage;
         Block initialReviveBlock;
+        Block initialMinedBlock;
 
         public static MiningTask never() {
             return MiningTask.builder().build();

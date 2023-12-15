@@ -104,11 +104,4 @@ public enum RegionType {
     public static RegionType getByID(int id) {
         return RegionType.values()[id];
     }
-
-    public static RegionType getType(String string) {
-        for (RegionType type : RegionType.values()) {
-            if (type.name.equalsIgnoreCase(string)) return type;
-        }
-        return null;
-    }
 }

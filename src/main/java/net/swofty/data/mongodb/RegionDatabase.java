@@ -132,7 +132,7 @@ public class RegionDatabase implements MongoDB {
         List<SkyBlockRegion> regions = new ArrayList<>();
         for (Document doc : collection.find()) {
             String name = doc.getString("_id");
-            RegionType type = RegionType.getType(doc.getString("type"));
+            RegionType type = RegionType.valueOf(doc.getString("type"));
             int x1 = doc.getInteger("x1");
             int y1 = doc.getInteger("y1");
             int z1 = doc.getInteger("z1");
