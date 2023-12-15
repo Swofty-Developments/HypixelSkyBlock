@@ -73,4 +73,25 @@ public class Utility {
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }
+
+    public static String zeroed(long l) {
+        return l > 9 ? "" + l : "0" + l;
+    }
+
+    public static String ntify(int i) {
+        if (i == 11 || i == 12 || i == 13)
+            return i + "th";
+        String s = String.valueOf(i);
+        char last = s.charAt(s.length() - 1);
+        switch (last) {
+            case '1':
+                return i + "st";
+            case '2':
+                return i + "nd";
+            case '3':
+                return i + "rd";
+            default:
+                return i + "th";
+        }
+    }
 }
