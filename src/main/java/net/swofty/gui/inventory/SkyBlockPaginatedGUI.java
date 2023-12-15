@@ -65,7 +65,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
                 gui.items.clear();
                 gui.performSearch(player, query, 1, gui.latestPaged.getPageCount());
                 gui.open(player, query);
-                return null;
+                return gui;
             }
 
             @Override

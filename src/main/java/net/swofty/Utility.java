@@ -69,4 +69,8 @@ public class Utility {
             result.add(matcher.group(1));
         return result;
     }
+
+    public static double random(double min, double max) {
+        return Math.random() * (max - min) + min;
+    }
 }
