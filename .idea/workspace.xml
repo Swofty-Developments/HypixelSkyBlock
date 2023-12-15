@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Implemented Regions">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreativeNewSkyBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/PaginationList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/utility/PaginationList.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Actually added paginated GUIs">
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="138773" />
+    <option name="totalTimeSeconds" value="139283" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -111,7 +107,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="106436000" />
+      <workItem from="1702442546885" duration="106946000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -201,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702603224870</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Actually added paginated GUIs">
+      <option name="closed" value="true" />
+      <created>1702611508893</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1702611508893</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +223,7 @@
     <MESSAGE value="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's" />
     <MESSAGE value="Added NonPlayerItemUpdater system and fixed Attribute hiding" />
     <MESSAGE value="Implemented Regions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Regions" />
+    <MESSAGE value="Actually added paginated GUIs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Actually added paginated GUIs" />
   </component>
 </project>

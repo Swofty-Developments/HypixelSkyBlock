@@ -30,6 +30,6 @@ public interface GUIQueryItem extends GUIClickableItem
      * @return an array that needs only 2 components
      */
     default String[] lines() {
-        return new String[]{"^^^^^^^^", "Enter your", "input"};
+        return new String[]{"Enter your", "input"};
     }
 }

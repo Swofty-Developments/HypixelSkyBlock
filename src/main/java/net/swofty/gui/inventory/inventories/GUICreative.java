@@ -43,15 +43,15 @@ public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public void search(SkyBlockPlayer player, String query, int page, int maxPage) {
+    protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
         if (page > 1)
-            set(getBackButton(this, 45, query, page, maxPage));
+            set(createNavigationButton(this, 45, query, page, false));
         if (page < maxPage)
-            set(getForward(this, 53, query, page, maxPage));
+            set(createNavigationButton(this, 53, query, page, true));
 
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(50));
-        set(getSearchItem(this, 48));
+        set(createSearchItem(this, 48));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public GUIClickableItem getItem(ItemType item, int slot) {
+    protected GUIClickableItem createItemFor(ItemType item, int slot) {
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
 
@@ -91,17 +91,11 @@ public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
-    }
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(SkyBlockPlayer player) {
-
-    }
+    public void suddenlyQuit(SkyBlockPlayer player) {}
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
-    }
+    public void onBottomClick(InventoryPreClickEvent e) {}
 }
