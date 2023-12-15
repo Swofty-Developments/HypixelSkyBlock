@@ -1,4 +1,4 @@
-package net.swofty.gameplay;
+package net.swofty.user;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -9,6 +9,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
+import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +34,7 @@ public class SkyBlockScoreboard {
             for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
                 SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
                 DataHandler dataHandler = skyBlockPlayer.getDataHandler();
+                SkyBlockRegion region = SkyBlockRegion.getRegionOfEntity(player);
 
                 if (dataHandler == null) {
                     continue;
@@ -48,7 +50,11 @@ public class SkyBlockScoreboard {
                 addLine("§7 ", sidebar);
                 addLine("§fN/A", sidebar);
                 addLine("§710:00PM §bP", sidebar);
-                addLine("§aYour Island", sidebar);
+                try {
+                    addLine(" " + region.getType().getColor() + region.getType().getName(), sidebar);
+                } catch (NullPointerException ignored) {
+                    addLine(" §7Unknown", sidebar);
+                }
                 addLine("§7 ", sidebar);
                 addLine("§fPurse: §6" + dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue(), sidebar);
                 addLine("§7 ", sidebar);

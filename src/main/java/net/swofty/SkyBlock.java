@@ -19,12 +19,14 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.Resources;
+import net.swofty.data.mongodb.RegionDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.gameplay.SkyBlockScoreboard;
+import net.swofty.region.SkyBlockRegion;
+import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.packet.SkyBlockPacketClientListener;
@@ -75,6 +77,7 @@ public class SkyBlock {
          * Register database
          */
         new UserDatabase("_placeHolder").connect(Resources.get("mongodb"));
+        new RegionDatabase("_placeHolder").connect(Resources.get("mongodb"));
 
         /**
          * Register commands
@@ -132,6 +135,10 @@ public class SkyBlock {
         }
         SkyBlockPacketClientListener.register(globalEventHandler);
 
+        /**
+         * Load regions
+         */
+        SkyBlockRegion.cacheRegions();
 
         /**
          * Debugging

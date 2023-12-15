@@ -4,18 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/NonPlayerItemUpdater.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Added NonPlayerItemUpdater system and fixed Attribute hiding">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RegionCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/RegionDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/region/RegionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RecombobulateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RecombobulateCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/player/PlayerItemOrigin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemOrigin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/player/PlayerItemUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gameplay/SkyBlockScoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockScoreboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemUpdater.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="125800" />
+    <option name="totalTimeSeconds" value="130589" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -116,7 +118,7 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="96858000" />
+      <workItem from="1702442546885" duration="102822000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -190,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702590462654</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added NonPlayerItemUpdater system and fixed Attribute hiding">
+      <option name="closed" value="true" />
+      <created>1702596480162</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702596480162</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +216,7 @@
     <MESSAGE value="Changed Holograms to being bottom-aligned" />
     <MESSAGE value="Minor improvements across everything, implementation of ManaDisplayReplacement" />
     <MESSAGE value="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's" />
+    <MESSAGE value="Added NonPlayerItemUpdater system and fixed Attribute hiding" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added NonPlayerItemUpdater system and fixed Attribute hiding" />
   </component>
 </project>

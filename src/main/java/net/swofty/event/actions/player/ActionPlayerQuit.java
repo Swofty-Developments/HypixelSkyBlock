@@ -5,7 +5,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.actions.player.fall.ActionPlayerFall;
-import net.swofty.gameplay.SkyBlockScoreboard;
+import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;

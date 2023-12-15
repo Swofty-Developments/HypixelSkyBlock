@@ -1,5 +1,6 @@
 package net.swofty.item.updater;
 
+import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
@@ -13,36 +14,28 @@ import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 
 public class PlayerItemUpdater {
 
-    private static HashMap<Map.Entry<SkyBlockPlayer, PlayerItemOrigin>,
-            ArrayList<Map.Entry<BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem>, CompletableFuture<SkyBlockItem>>>> queuedUpdates = new HashMap<>();
+    private static final QueuedUpdateManager updateManager = new QueuedUpdateManager();
 
-    private BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> queuedUpdate;
+    private final BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> queuedUpdate;
 
     public PlayerItemUpdater(BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> queuedUpdate) {
         this.queuedUpdate = queuedUpdate;
     }
 
     public CompletableFuture<SkyBlockItem> queueUpdate(SkyBlockPlayer player, PlayerItemOrigin origin) {
-        if (!queuedUpdates.containsKey(Map.entry(player, origin))) {
-            queuedUpdates.put(Map.entry(player, origin), new ArrayList<>());
-        }
-
         CompletableFuture<SkyBlockItem> future = new CompletableFuture<>();
-        queuedUpdates.get(Map.entry(player, origin)).add(Map.entry(queuedUpdate, future));
+        updateManager.queueUpdate(player, origin, queuedUpdate, future);
         return future;
     }
 
     public static ItemStack playerUpdate(SkyBlockPlayer player, PlayerItemOrigin origin, ItemStack stack) {
-        if (!stack.hasTag(Tag.String("item_type"))) {
+        if (!SkyBlockItem.isSkyBlockItem(stack)) {
             /**
              * Item is not SkyBlock item, so we just instance it here
              */
@@ -59,13 +52,14 @@ public class PlayerItemUpdater {
          * Check for value updates
          */
         SkyBlockItem item = new SkyBlockItem(stack);
-        if (queuedUpdates.containsKey(Map.entry(player, origin))) {
-            for (Map.Entry<BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem>, CompletableFuture<SkyBlockItem>> queuedUpdate : queuedUpdates.get(Map.entry(player, origin))) {
-                item = queuedUpdate.getKey().apply(player, item);
-                queuedUpdate.getValue().complete(item);
+        ArrayList<QueuedUpdateManager.UpdatePair> updates = updateManager.getQueuedUpdates(player, origin);
+        if (updates != null) {
+            for (QueuedUpdateManager.UpdatePair updatePair : updates) {
+                item = updatePair.getUpdateFunction().apply(player, item);
+                updatePair.getFuture().complete(item);
             }
         }
-        queuedUpdates.remove(Map.entry(player, origin));
+        updateManager.clearQueue(player, origin);
         stack = item.getItemStack().withAmount(stack.getAmount());
 
         /**
@@ -107,5 +101,39 @@ public class PlayerItemUpdater {
             });
             return TaskSchedule.tick(1);
         });
+    }
+
+    public static class QueuedUpdateManager {
+
+        @Getter
+        private static final class UpdatePair {
+            private BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction;
+            private CompletableFuture<SkyBlockItem> future;
+
+            public UpdatePair(BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction, CompletableFuture<SkyBlockItem> future) {
+                this.updateFunction = updateFunction;
+                this.future = future;
+            }
+
+        }
+
+        private final Map<Map.Entry<SkyBlockPlayer, PlayerItemOrigin>,
+                ArrayList<UpdatePair>> queuedUpdates = new HashMap<>();
+
+        public synchronized void queueUpdate(SkyBlockPlayer player, PlayerItemOrigin origin,
+                                             BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction,
+                                             CompletableFuture<SkyBlockItem> future) {
+            Map.Entry<SkyBlockPlayer, PlayerItemOrigin> key = new AbstractMap.SimpleEntry<>(player, origin);
+            queuedUpdates.computeIfAbsent(key, k -> new ArrayList<>())
+                    .add(new UpdatePair(updateFunction, future));
+        }
+
+        public synchronized ArrayList<UpdatePair> getQueuedUpdates(SkyBlockPlayer player, PlayerItemOrigin origin) {
+            return queuedUpdates.get(new AbstractMap.SimpleEntry<>(player, origin));
+        }
+
+        public synchronized void clearQueue(SkyBlockPlayer player, PlayerItemOrigin origin) {
+            queuedUpdates.remove(new AbstractMap.SimpleEntry<>(player, origin));
+        }
     }
 }

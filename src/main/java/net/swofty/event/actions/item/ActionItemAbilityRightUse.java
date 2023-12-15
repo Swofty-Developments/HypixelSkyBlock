@@ -30,7 +30,7 @@ public class ActionItemAbilityRightUse extends SkyBlockEvent {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) playerUseItemEvent.getPlayer();
 
-        if (item.clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
+        if (item.clazz != null && item.clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
             if (ability.getAbilityActivation() == CustomSkyBlockAbility.AbilityActivation.RIGHT_CLICK) {
                 if (ability.getManaCost() > player.getMana()) {
                     player.setDisplayReplacement(StatisticDisplayReplacement.builder()
