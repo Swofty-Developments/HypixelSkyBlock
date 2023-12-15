@@ -32,13 +32,13 @@ public class SkyBlockRegion {
     }
 
     public void save() {
-        regionDatabase.insertOrUpdate("x1", firstLocation.x());
-        regionDatabase.insertOrUpdate("y1", firstLocation.y());
-        regionDatabase.insertOrUpdate("z1", firstLocation.z());
+        regionDatabase.insertOrUpdate("x1", firstLocation.blockX());
+        regionDatabase.insertOrUpdate("y1", firstLocation.blockY());
+        regionDatabase.insertOrUpdate("z1", firstLocation.blockZ());
 
-        regionDatabase.insertOrUpdate("x2", secondLocation.x());
-        regionDatabase.insertOrUpdate("y2", secondLocation.y());
-        regionDatabase.insertOrUpdate("z2", secondLocation.z());
+        regionDatabase.insertOrUpdate("x2", secondLocation.blockZ());
+        regionDatabase.insertOrUpdate("y2", secondLocation.blockY());
+        regionDatabase.insertOrUpdate("z2", secondLocation.blockZ());
 
         regionDatabase.insertOrUpdate("type", type.name());
     }
@@ -100,7 +100,12 @@ public class SkyBlockRegion {
     }
 
     public static void cacheRegions() {
-        for (SkyBlockRegion region : RegionDatabase.getAllRegions())
-            REGION_CACHE.put(region.getName(), region);
+        for (SkyBlockRegion region : RegionDatabase.getAllRegions()) {
+            if (region.getType() == null) {
+                region.delete();
+            } else {
+                REGION_CACHE.put(region.getName(), region);
+            }
+        }
     }
 }

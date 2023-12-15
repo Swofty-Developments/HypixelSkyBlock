@@ -12,7 +12,7 @@ public class ItemListCommand extends SkyBlockCommand
       @Override
       public void run(MinestomCommand command) {
             command.addSyntax((sender, context) -> {
-                  new GUICreative("", 1).open((SkyBlockPlayer) sender);
+                  new GUICreative().open((SkyBlockPlayer) sender);
             });
       }
 }

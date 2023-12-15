@@ -88,9 +88,10 @@ public class PaginationList<T> extends ArrayList<T>
             return pages;
       }
 
-      public void addAll(T[] t) {
+      public PaginationList<T> addAll(T[] t) {
             for (T o : t)
                   this.add(o);
+            return this;
       }
 
       @Override
