@@ -1,7 +1,7 @@
 package net.swofty.data.datapoints;
 
 import net.swofty.data.Datapoint;
-import net.swofty.data.serializer.JacksonSerializer;
+import net.swofty.serializer.JacksonSerializer;
 
 public class DatapointDouble extends Datapoint<Double> {
     private static final JacksonSerializer<Double> serializer = new JacksonSerializer<>(Double.class);

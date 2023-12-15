@@ -9,7 +9,11 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "giveitem", description = "Gives an item to the player", usage = "/item <item>", permission = Rank.ADMIN, allowsConsole = false)
+@CommandParameters(aliases = "giveitem",
+        description = "Gives an item to the player",
+        usage = "/item <item>",
+        permission = Rank.ADMIN,
+        allowsConsole = false)
 public class ItemCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {

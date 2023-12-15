@@ -1,23 +1,16 @@
-package net.swofty.data.serializer;
+package net.swofty.serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import net.swofty.item.SkyBlockItem;
 
-public class InventorySerializer<T> implements Serializer<T> {
+public class JacksonSerializer<T> implements Serializer<T> {
     private final ObjectMapper mapper;
     private final Class<T> clazz;
 
-    public InventorySerializer(Class<T> clazz) {
+    public JacksonSerializer(Class<T> clazz) {
         this.mapper = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         this.clazz = clazz;
-
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(SkyBlockItem.class, new SkyBlockItemSerializer());
-        module.addDeserializer(SkyBlockItem.class, new SkyBlockItemDeserializer());
-        mapper.registerModule(module);
     }
 
     @Override

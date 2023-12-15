@@ -28,6 +28,7 @@ import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.server.SkyBlockServerAttributes;
 import net.swofty.user.SkyBlockScoreboard;
@@ -150,6 +151,7 @@ public class SkyBlock {
          * Load regions
          */
         SkyBlockRegion.cacheRegions();
+        SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
 
         /**
          * Debugging

@@ -1,4 +1,4 @@
-package net.swofty.data.serializer;
+package net.swofty.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

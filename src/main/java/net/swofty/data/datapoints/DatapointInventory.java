@@ -1,8 +1,7 @@
 package net.swofty.data.datapoints;
 
 import net.swofty.data.Datapoint;
-import net.swofty.data.serializer.InventorySerializer;
-import net.swofty.data.serializer.JacksonSerializer;
+import net.swofty.serializer.InventorySerializer;
 import net.swofty.user.SkyBlockInventory;
 
 public class DatapointInventory extends Datapoint<SkyBlockInventory> {

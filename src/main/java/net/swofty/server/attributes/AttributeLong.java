@@ -1,6 +1,6 @@
 package net.swofty.server.attributes;
 
-import net.swofty.data.serializer.JacksonSerializer;
+import net.swofty.serializer.JacksonSerializer;
 import net.swofty.server.ServerAttribute;
 
 public class AttributeLong extends ServerAttribute<Long> {

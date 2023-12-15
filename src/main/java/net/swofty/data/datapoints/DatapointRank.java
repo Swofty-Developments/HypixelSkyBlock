@@ -1,7 +1,7 @@
 package net.swofty.data.datapoints;
 
 import net.swofty.data.Datapoint;
-import net.swofty.data.serializer.JacksonSerializer;
+import net.swofty.serializer.JacksonSerializer;
 import net.swofty.user.categories.Rank;
 
 public class DatapointRank extends Datapoint<Rank> {

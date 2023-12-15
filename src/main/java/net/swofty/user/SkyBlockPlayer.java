@@ -9,15 +9,12 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.item.SkyBlockItem;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.statistics.ItemStatistic;
-import net.swofty.user.statistics.StatisticDisplayReplacement;
 import net.swofty.user.statistics.PlayerStatistics;
+import net.swofty.user.statistics.StatisticDisplayReplacement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class SkyBlockPlayer extends Player {

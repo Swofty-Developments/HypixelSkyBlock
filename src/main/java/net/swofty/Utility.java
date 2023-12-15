@@ -84,7 +84,7 @@ public class Utility {
         return l > 9 ? "" + l : "0" + l;
     }
 
-    public static String limString(String s, int charLimit) {
+    public static String limitStringLength(String s, int charLimit) {
         return s.substring(0, charLimit - 1);
     }
 

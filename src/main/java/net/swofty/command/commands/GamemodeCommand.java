@@ -8,7 +8,11 @@ import net.swofty.command.SkyBlockCommand;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "gm", description = "Sets a players gamemode", usage = "/gamemode <gamemode>", permission = Rank.ADMIN, allowsConsole = false)
+@CommandParameters(aliases = "gm",
+        description = "Sets a players gamemode",
+        usage = "/gamemode <gamemode>",
+        permission = Rank.ADMIN,
+        allowsConsole = false)
 public class GamemodeCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {

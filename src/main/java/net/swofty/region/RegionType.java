@@ -1,6 +1,8 @@
 package net.swofty.region;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
+import net.swofty.region.mining.MineCoalConfiguration;
 
 @Getter
 public enum RegionType {
@@ -12,7 +14,7 @@ public enum RegionType {
     RUINS("Ruins"),
     COLOSSEUM("Colosseum"),
     GRAVEYARD("Graveyard", "§c"),
-    COAL_MINE("Coal Mine"),
+    COAL_MINE("Coal Mine", MineCoalConfiguration.class),
     COAL_MINE_CAVES("Coal Mine"),
     WILDERNESS("Wilderness", "§2"),
     HIGH_LEVEL("High Level", "§4"),
@@ -69,14 +71,34 @@ public enum RegionType {
 
     private final String name;
     private final String color;
+    private SkyBlockMiningConfiguration miningHandler;
 
-    RegionType(String name, String color) {
+    @SneakyThrows
+    RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
         this.name = name;
         this.color = color;
+
+        if (miningHandler != null)
+            this.miningHandler = miningHandler.newInstance();
+        else
+            this.miningHandler = null;
+    }
+
+    RegionType(String name, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
+        this(name, "§b", miningHandler);
+    }
+
+    RegionType(String name, String color) {
+        this(name, color, null);
     }
 
     RegionType(String name) {
-        this(name, "§b");
+        this(name, "§b", null);
+    }
+
+    @SneakyThrows
+    public SkyBlockMiningConfiguration getMiningHandler() {
+        return miningHandler;
     }
 
     public static RegionType getByID(int id) {

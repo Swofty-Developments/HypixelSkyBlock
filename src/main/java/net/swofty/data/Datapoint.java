@@ -3,7 +3,7 @@ package net.swofty.data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.swofty.data.serializer.Serializer;
+import net.swofty.serializer.Serializer;
 
 public abstract class Datapoint<T> {
     private DataHandler dataHandler;

@@ -105,7 +105,7 @@ public class DataHandler {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
 
             Rank rank = (Rank) datapoint.getValue();
-            String teamName = Utility.limString(rank.ordinalToChar() + "_" + player.getUsername(), 16);
+            String teamName = Utility.limitStringLength(rank.ordinalToChar() + "_" + player.getUsername(), 16);
             Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())

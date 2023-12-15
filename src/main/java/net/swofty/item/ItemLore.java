@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
 import net.swofty.Utility;
 import net.swofty.item.attribute.AttributeHandler;
+import net.swofty.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.item.impl.CustomSkyBlockAbility;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.statistics.ItemStatistic;

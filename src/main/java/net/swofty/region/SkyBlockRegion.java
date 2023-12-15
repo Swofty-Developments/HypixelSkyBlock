@@ -2,6 +2,7 @@ package net.swofty.region;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.swofty.data.mongodb.RegionDatabase;
@@ -60,6 +61,10 @@ public class SkyBlockRegion {
 
     public static SkyBlockRegion getRegionOfEntity(Entity entity) {
         return getRegionOfPosition(entity.getPosition());
+    }
+
+    public static SkyBlockRegion getRegionOfPosition(Point point) {
+        return getRegionOfPosition(Pos.fromPoint(point));
     }
 
     public static SkyBlockRegion getRegionOfPosition(Pos position) {
