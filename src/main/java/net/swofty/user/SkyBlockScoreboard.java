@@ -2,18 +2,16 @@ package net.swofty.user;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.color.Color;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.SkyBlock;
 import net.swofty.Utility;
-import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.region.SkyBlockRegion;
-import net.swofty.user.SkyBlockPlayer;
-import net.swofty.utility.calendar.SkyBlockCalendar;
+import net.swofty.calendar.SkyBlockCalendar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,19 +23,8 @@ public class SkyBlockScoreboard {
     private static Map<UUID, Sidebar> sidebarCache = new HashMap<>();
     private static Integer skyblockName = 0;
 
-    public static char _DaySymbol = '☀';
-    public static char _NightSymbol = '☽';
-    public static char _LocationSymbol = '⏣';
-
     public static void start() {
         Scheduler scheduler = MinecraftServer.getSchedulerManager();
-
-        // Calendar Updater
-        scheduler.submitTask(() -> {
-            SkyBlockCalendar.ELAPSED += 10L;
-            SkyBlockCalendar.checkForEvents(SkyBlockCalendar.ELAPSED % SkyBlockCalendar.YEAR);
-           return TaskSchedule.tick(10);
-        });
 
         // Scoreboard Updater
         scheduler.submitTask(() -> {
@@ -46,21 +33,9 @@ public class SkyBlockScoreboard {
                 skyblockName = 0;
             }
 
-            boolean day = true;
-            int time = (int) ((SkyBlockCalendar.ELAPSED % 24000) - 6000);
-            if (time < 0)
-                time += 24000;
-            int hours = 6 + (time / 1000);
-            int minutes = (int) ((time % ((hours - 6) * 1000.0)) / 16.66666);
-            String sMin = String.valueOf(minutes);
-            minutes = minutes - Integer.parseInt(sMin.substring(sMin.length() - 1));
-            if (hours >= 24) hours -= 24;
-            if (hours <= 6 || hours >= 20) day = false;
-
-            for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
-                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
-                DataHandler dataHandler = skyBlockPlayer.getDataHandler();
-                SkyBlockRegion region = SkyBlockRegion.getRegionOfEntity(player);
+            for (SkyBlockPlayer player : SkyBlock.getLoadedPlayers()) {
+                DataHandler dataHandler = player.getDataHandler();
+                SkyBlockRegion region = player.getRegion();
 
                 if (dataHandler == null) {
                     continue;
@@ -75,10 +50,9 @@ public class SkyBlockScoreboard {
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8???", sidebar);
                 addLine("§7 ", sidebar);
                 addLine("§f" + SkyBlockCalendar.getMonthName() + " " + Utility.ntify(SkyBlockCalendar.getDay()), sidebar);
-                addLine("§7" + (hours > 12 ? hours - 12 : (hours == 0 ? 12 : hours)) + ":" + Utility.zeroed(minutes) +
-                (hours >= 12 ? "pm" : "am") + " " + (day ? "§e" + _DaySymbol : "§b" + _NightSymbol), sidebar);
+                addLine("§7" + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()), sidebar);
                 try {
-                    addLine("§7 " + _LocationSymbol + " " + region.getType().getColor() + region.getType().getName(), sidebar);
+                    addLine("§7 ⏣ " + region.getType().getColor() + region.getType().getName(), sidebar);
                 } catch (NullPointerException ignored) {
                     addLine(" §7Unknown", sidebar);
                 }

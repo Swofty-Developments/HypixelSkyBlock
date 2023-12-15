@@ -59,7 +59,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         List<?> thisPage = paged.getPage(page);
         if (thisPage == null) throw new IllegalStateException();
         for (int i = 0; i < thisPage.size(); i++) {
-            set(createItemFor((T)thisPage.get(i), getPaginatedSlots()[i]));
+            set(createItemFor((T) thisPage.get(i), getPaginatedSlots()[i]));
         }
     }
 
@@ -111,9 +111,4 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         };
     }
 
-    @Override
-    public void setItems(InventoryGUIOpenEvent e) {
-        // Not implemented. If the method is not required, consider removing it
-        // or creating a default implementation in the parent class.
-    }
 }

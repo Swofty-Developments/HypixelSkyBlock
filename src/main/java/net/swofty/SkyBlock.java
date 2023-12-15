@@ -1,5 +1,6 @@
 package net.swofty;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -16,9 +17,11 @@ import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.Resources;
+import net.swofty.data.mongodb.AttributeDatabase;
 import net.swofty.data.mongodb.RegionDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.entity.hologram.PlayerHolograms;
@@ -26,6 +29,7 @@ import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.region.SkyBlockRegion;
+import net.swofty.server.SkyBlockServerAttributes;
 import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
@@ -44,7 +48,6 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SkyBlock {
-
     private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
     private static final String crackedDomain = Resources.get("cracked_domain");
     public static ArrayList<UUID> offlineUUIDs = new ArrayList<>();
@@ -55,7 +58,7 @@ public class SkyBlock {
     @Setter
     private static GlobalEventHandler globalEventHandler;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
         long startTime = System.currentTimeMillis();
 
         /**
@@ -78,6 +81,7 @@ public class SkyBlock {
          */
         new UserDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new RegionDatabase("_placeHolder").connect(Resources.get("mongodb"));
+        AttributeDatabase.connect(Resources.get("mongodb"));
 
         /**
          * Register commands
@@ -110,6 +114,13 @@ public class SkyBlock {
                 ex.printStackTrace();
             }
         }
+
+        /**
+         * Handle server attributes
+         */
+        SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
+        SkyBlockServerAttributes.loadAttributes(AttributeDatabase.getDocument("attributes"));
+        SkyBlockServerAttributes.saveAttributeLoop();
 
         /**
          * Register packet events

@@ -10,6 +10,7 @@ import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.StatisticDisplayReplacement;
 import net.swofty.user.statistics.PlayerStatistics;
@@ -84,19 +85,12 @@ public class SkyBlockPlayer extends Player {
         }
     }
 
-    public void setMana(float mana) {
-        this.mana = mana;
+    public SkyBlockRegion getRegion() {
+        return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
-    @Override
-    public float getMaxHealth() {
-        float maxHealth = 100;
-
-        PlayerStatistics statistics = this.getStatistics();
-        maxHealth += statistics.allArmorStatistics().get(ItemStatistic.HEALTH);
-        maxHealth += statistics.mainHandStatistics().get(ItemStatistic.HEALTH);
-
-        return maxHealth;
+    public void setMana(float mana) {
+        this.mana = mana;
     }
 
     public float getMaxMana() {
@@ -107,11 +101,6 @@ public class SkyBlockPlayer extends Player {
         maxMana += statistics.mainHandStatistics().get(ItemStatistic.INTELLIGENCE);
 
         return maxMana;
-    }
-
-    @Override
-    public float getHealth() {
-        return this.health;
     }
 
     public float getDefence() {
@@ -127,6 +116,22 @@ public class SkyBlockPlayer extends Player {
     public void setHearts(float hearts) {
         this.health = hearts;
         this.sendPacket(new UpdateHealthPacket((hearts / getMaxHealth()) * 20, 20, 20));
+    }
+
+    @Override
+    public float getMaxHealth() {
+        float maxHealth = 100;
+
+        PlayerStatistics statistics = this.getStatistics();
+        maxHealth += statistics.allArmorStatistics().get(ItemStatistic.HEALTH);
+        maxHealth += statistics.mainHandStatistics().get(ItemStatistic.HEALTH);
+
+        return maxHealth;
+    }
+
+    @Override
+    public float getHealth() {
+        return this.health;
     }
 
     @Override

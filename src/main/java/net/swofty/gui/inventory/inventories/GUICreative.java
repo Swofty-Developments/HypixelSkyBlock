@@ -10,7 +10,6 @@ import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
-import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.NonPlayerItemUpdater;
@@ -20,7 +19,6 @@ import net.swofty.utility.PaginationList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
