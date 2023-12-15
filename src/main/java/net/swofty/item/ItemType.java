@@ -24,4 +24,16 @@ public enum ItemType {
         this.rarity = rarity;
         this.clazz = clazz;
     }
+
+    public static ItemType get(String s) {
+        try {
+            return ItemType.valueOf(s);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static boolean isVanillaReplaced(String item) {
+        return get(item) != null;
+    }
 }

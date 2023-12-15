@@ -10,13 +10,19 @@ import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
+import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
 
-public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     public GUICreative() {
         super(InventoryType.CHEST_6_ROW);
@@ -33,35 +39,41 @@ public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public PaginationList<ItemType> fillPaged(SkyBlockPlayer player, PaginationList<ItemType> paged) {
-        return paged.addAll(ItemType.values());
+    public PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
+        paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
+
+        List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
+        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.getAttributeHandler().getItemType()));
+        paged.addAll(vanilla);
+        return paged;
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, ItemType item) {
-        return !item.name().toLowerCase().contains(query.replaceAll(" ", "_").toLowerCase());
+    public boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
+        return !item.getAttributeHandler().getItemType().toLowerCase().contains(query.replaceAll(" ", "_").toLowerCase());
     }
 
     @Override
     protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
-        if (page > 1)
-            set(createNavigationButton(this, 45, query, page, false));
-        if (page < maxPage)
-            set(createNavigationButton(this, 53, query, page, true));
-
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
         set(GUIClickableItem.getCloseItem(50));
-        set(createSearchItem(this, 48));
+        set(createSearchItem(this, 48, query));
+
+        if (page > 1) {
+            set(createNavigationButton(this, 45, query, page, false));
+        }
+        if (page < maxPage) {
+            set(createNavigationButton(this, 53, query, page, true));
+        }
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemType> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
         return "Creative Menu | Page " + page + "/" + paged.getPageCount();
     }
 
     @Override
-    protected GUIClickableItem createItemFor(ItemType item, int slot) {
-        SkyBlockItem skyBlockItem = new SkyBlockItem(item);
+    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot) {
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
 
         return new GUIClickableItem()
@@ -69,7 +81,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<ItemType> {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                player.sendMessage("§aGave you a §e" + item.name() + "§a.");
+                player.sendMessage("§aGave you a §e" + skyBlockItem.getAttributeHandler().getItemType() + "§a.");
                 player.getInventory().addItemStack(itemStack.build());
             }
 

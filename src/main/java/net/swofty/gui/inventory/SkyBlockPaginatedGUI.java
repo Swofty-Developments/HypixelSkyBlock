@@ -1,9 +1,11 @@
 package net.swofty.gui.inventory;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIQueryItem;
 import net.swofty.item.ItemType;
@@ -11,6 +13,7 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
@@ -29,32 +32,38 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
     @Override
     public void open(SkyBlockPlayer player) {
-        open(player, "");
+        open(player, "", 1);
     }
 
-    public void open(SkyBlockPlayer player, String query) {
+    public void open(SkyBlockPlayer player, String query, int page) {
         PaginationList<T> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
 
         if (!query.isEmpty()) {
             paged.removeIf(type -> shouldFilterFromSearch(query, type));
         }
 
-        this.title = getTitle(player, query, 1, paged);
+        this.title = getTitle(player, query, page, paged);
         latestPaged = paged;
 
-        updatePagedItems(paged);
-        performSearch(player, query, 1, paged.getPageCount());
+        try {
+            updatePagedItems(paged, page);
+        } catch (IllegalStateException ex) {
+            player.sendMessage("§cOops! It seems like there are no results for your query! ('" + query + "')");
+            return;
+        }
+        performSearch(player, query, page, paged.getPageCount());
         super.open(player);
     }
 
-    private void updatePagedItems(PaginationList<T> paged) {
-        List<T> thisPage = paged.getPage(1);
+    private void updatePagedItems(PaginationList<?> paged, int page) {
+        List<?> thisPage = paged.getPage(page);
+        if (thisPage == null) throw new IllegalStateException();
         for (int i = 0; i < thisPage.size(); i++) {
-            set(createItemFor(thisPage.get(i), getPaginatedSlots()[i]));
+            set(createItemFor((T)thisPage.get(i), getPaginatedSlots()[i]));
         }
     }
 
-    public static GUIQueryItem createSearchItem(SkyBlockPaginatedGUI<?> gui, int slot) {
+    public static GUIQueryItem createSearchItem(SkyBlockPaginatedGUI<?> gui, int slot, String search) {
         return new GUIQueryItem() {
 
             @Override
@@ -64,8 +73,8 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
             public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
                 gui.items.clear();
                 gui.performSearch(player, query, 1, gui.latestPaged.getPageCount());
-                gui.open(player, query);
-                return gui;
+                MinecraftServer.getSchedulerManager().scheduleTask(() -> gui.open(player, query, 1), TaskSchedule.tick(1), TaskSchedule.stop());
+                return null;
             }
 
             @Override
@@ -75,7 +84,8 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.createNamedItemStack(Material.BIRCH_SIGN, "§aSearch");
+                return ItemStackCreator.getStack("§aSearch", Material.BIRCH_SIGN, (short) 0, 1, "§7Query: §e" +
+                        (Objects.equals(search, "") ? "None" : search));
             }
         };
     }
@@ -84,9 +94,8 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         return new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                gui.items.clear();
                 int newPage = forward ? page + 1 : page - 1;
-                gui.performSearch(player, search, newPage, gui.latestPaged.getPageCount());
+                gui.open(player, search, newPage);
             }
 
             @Override
@@ -96,7 +105,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                String name = forward ? "&a->" : "&a<-";
+                String name = forward ? "§a->" : "§a<-";
                 return ItemStackCreator.createNamedItemStack(Material.ARROW, name);
             }
         };
