@@ -16,6 +16,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utility {
+    public static char ALPHABET[] = {
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
+    };
+
     public static PlayerInfoPacket addPlayerInfoPacket(UUID uuid, String username, PlayerSkin skin) {
         var textureProperty = new PlayerInfoPacket.AddPlayer.Property("textures", skin.textures(), skin.signature());
         var playerEntry = new PlayerInfoPacket.AddPlayer(uuid, username, Collections.singletonList(textureProperty), GameMode.CREATIVE, 0, Component.text(username), null);
@@ -76,6 +80,10 @@ public class Utility {
 
     public static String zeroed(long l) {
         return l > 9 ? "" + l : "0" + l;
+    }
+
+    public static String limString(String s, int charLimit) {
+        return s.substring(0, charLimit - 1);
     }
 
     public static String ntify(int i) {

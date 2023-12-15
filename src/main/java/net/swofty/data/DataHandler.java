@@ -7,6 +7,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.Utility;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.data.datapoints.DatapointInventory;
 import net.swofty.data.datapoints.DatapointRank;
@@ -104,7 +105,8 @@ public class DataHandler {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
 
             Rank rank = (Rank) datapoint.getValue();
-            Team team = new TeamBuilder(player.getUsername(), MinecraftServer.getTeamManager())
+            String teamName = Utility.limString(rank.ordinalToChar() + "_" + player.getUsername(), 16);
+            Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())
                     .build();
