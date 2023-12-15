@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
+import net.swofty.utility.Acronym;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class Utility {
     }
 
     public static String toNormalCase(String string) {
+        if (Acronym.isAcronym(string)) return string.toUpperCase();
         string = string.replaceAll("_", " ");
         String[] spl = string.split(" ");
         StringBuilder sb = new StringBuilder();
