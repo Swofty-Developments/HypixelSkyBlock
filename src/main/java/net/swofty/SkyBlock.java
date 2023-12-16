@@ -27,6 +27,7 @@ import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
+import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.region.SkyBlockMiningConfiguration;
@@ -103,6 +104,8 @@ public class SkyBlock {
         loopThroughPackage("net.swofty.entity.npc.npcs", SkyBlockNPC.class)
                 .forEach(SkyBlockNPC::register);
         loopThroughPackage("net.swofty.entity.villager.villagers", SkyBlockVillagerNPC.class)
+                .forEach(SkyBlockVillagerNPC::register);
+        loopThroughPackage("net.swofty.entity.villager.villagers", NPCVillagerDialogue.class)
                 .forEach(SkyBlockVillagerNPC::register);
 
         /**
@@ -223,10 +226,8 @@ public class SkyBlock {
         return subTypes.stream()
                 .map(subClass -> {
                     try {
-                        T instance = clazz.cast(subClass.getDeclaredConstructor().newInstance());
-                        return instance;
+                        return clazz.cast(subClass.getDeclaredConstructor().newInstance());
                     } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                        e.printStackTrace();
                         return null;
                     }
                 })

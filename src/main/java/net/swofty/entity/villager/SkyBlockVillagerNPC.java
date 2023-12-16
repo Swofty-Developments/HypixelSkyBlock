@@ -1,15 +1,11 @@
 package net.swofty.entity.villager;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.SkyBlock;
 import net.swofty.entity.hologram.ServerHolograms;
-import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
