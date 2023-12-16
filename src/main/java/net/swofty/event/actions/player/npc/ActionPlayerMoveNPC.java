@@ -3,6 +3,7 @@ package net.swofty.event.actions.player.npc;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.entity.npc.SkyBlockNPC;
+import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;

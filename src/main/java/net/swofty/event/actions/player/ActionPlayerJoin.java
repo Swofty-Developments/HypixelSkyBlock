@@ -1,5 +1,6 @@
 package net.swofty.event.actions.player;
 
+import lombok.extern.java.Log;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
@@ -8,6 +9,7 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import org.tinylog.Logger;
 
 @EventParameters(description = "Miscellaneous join stuff",
         node = EventNodes.PLAYER,

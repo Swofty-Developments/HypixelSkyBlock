@@ -27,6 +27,7 @@ import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
+import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
@@ -41,12 +42,11 @@ import net.swofty.user.SkyBlockPlayer;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 public class SkyBlock {
     private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
@@ -93,28 +93,17 @@ public class SkyBlock {
             if (command.startsWith("tip ")) return;
             sender.sendMessage("§cUnknown command!");
         });
-        Reflections commandReflection = new Reflections("net.swofty.command.commands");
-        for (Class<? extends SkyBlockCommand> l : commandReflection.getSubTypesOf(SkyBlockCommand.class)) {
-            try {
-                SkyBlockCommand command = l.newInstance();
+        loopThroughPackage("net.swofty.command.commands", SkyBlockCommand.class).forEach(command -> {
                 MinecraftServer.getCommandManager().register(command.getCommand());
-            } catch (InstantiationException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
+        });
 
         /**
          * Register NPCs
          */
-        Reflections npcReflection = new Reflections("net.swofty.entity.npc.npcs");
-        for (Class<? extends SkyBlockNPC> l : npcReflection.getSubTypesOf(SkyBlockNPC.class)) {
-            try {
-                SkyBlockNPC npc = l.newInstance();
-                npc.register();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
+        loopThroughPackage("net.swofty.entity.npc.npcs", SkyBlockNPC.class)
+                .forEach(SkyBlockNPC::register);
+        loopThroughPackage("net.swofty.entity.villager.villagers", SkyBlockVillagerNPC.class)
+                .forEach(SkyBlockVillagerNPC::register);
 
         /**
          * Handle server attributes
@@ -126,25 +115,11 @@ public class SkyBlock {
         /**
          * Register packet events
          */
-        Reflections clientPacketReflection = new Reflections("net.swofty.packet.packets.client");
-        for (Class<? extends SkyBlockPacketClientListener> l : clientPacketReflection.getSubTypesOf(SkyBlockPacketClientListener.class)) {
-            try {
-                SkyBlockPacketClientListener packetListener = l.newInstance();
-                packetListener.cacheListener();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
+        loopThroughPackage("net.swofty.packet.packets.client", SkyBlockPacketClientListener.class)
+                .forEach(SkyBlockPacketClientListener::cacheListener);
+        loopThroughPackage("net.swofty.packet.packets.server", SkyBlockPacketClientListener.class)
+                .forEach(SkyBlockPacketClientListener::cacheListener);
         SkyBlockPacketClientListener.register(globalEventHandler);
-        Reflections serverPacketReflection = new Reflections("net.swofty.packet.packets.server");
-        for (Class<? extends SkyBlockPacketClientListener> l : serverPacketReflection.getSubTypesOf(SkyBlockPacketClientListener.class)) {
-            try {
-                SkyBlockPacketClientListener packetListener = l.newInstance();
-                packetListener.cacheListener();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
         SkyBlockPacketClientListener.register(globalEventHandler);
 
         /**
@@ -205,15 +180,7 @@ public class SkyBlock {
         /**
          * Register events
          */
-        Reflections eventReflection = new Reflections("net.swofty.event.actions");
-        for (Class<? extends SkyBlockEvent> l : eventReflection.getSubTypesOf(SkyBlockEvent.class)) {
-            try {
-                SkyBlockEvent event = l.newInstance();
-                event.cacheCommand();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                ex.printStackTrace();
-            }
-        }
+        loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheCommand);
         SkyBlockEvent.register(globalEventHandler);
 
         /**
@@ -247,5 +214,22 @@ public class SkyBlock {
                 .filter(player -> DataHandler.getUser(player) != null)
                 .forEach(player -> players.add((SkyBlockPlayer) player));
         return players;
+    }
+
+    public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {
+        Reflections reflections = new Reflections(packageName);
+        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
+
+        return subTypes.stream()
+                .map(subClass -> {
+                    try {
+                        T instance = clazz.cast(subClass.getDeclaredConstructor().newInstance());
+                        return instance;
+                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                })
+                .filter(java.util.Objects::nonNull);
     }
 }

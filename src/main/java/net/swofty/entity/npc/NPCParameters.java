@@ -13,8 +13,4 @@ public abstract class NPCParameters {
     public abstract Pos position();
 
     public abstract boolean looking();
-
-    public String belowName() {
-        return "§e§lCLICK";
-    }
 }

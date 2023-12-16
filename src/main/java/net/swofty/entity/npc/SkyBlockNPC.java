@@ -22,7 +22,6 @@ public abstract class SkyBlockNPC {
 
     public abstract void onClick(PlayerClickNPCEvent e);
 
-
     public SkyBlockNPC(NPCParameters defaultParams) {
         this.parameters = defaultParams;
         this.name = getClass().getSimpleName().replace("NPC", "");
