@@ -164,7 +164,6 @@ public class SkyBlock {
 
         EventDispatcher.call(new PlayerRegionChange(null, null, null));
         MinecraftServer.getGlobalEventHandler().call(new PlayerRegionChange(null, null, null));
-        Logger.info(MinecraftServer.getGlobalEventHandler().hasListener(PlayerRegionChange.class));
 
         /**
          * Create audiences
