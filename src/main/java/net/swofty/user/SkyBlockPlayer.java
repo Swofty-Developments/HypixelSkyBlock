@@ -1,6 +1,7 @@
 package net.swofty.user;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
@@ -23,6 +24,9 @@ public class SkyBlockPlayer extends Player {
     private float mana = 100;
     public float health = 100;
     public long joined = 0;
+    @Setter
+    @Getter
+    public boolean bypassBuild = false;
 
     @Getter
     private StatisticDisplayReplacement manaDisplayReplacement = null;

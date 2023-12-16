@@ -8,11 +8,9 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.Utility;
-import net.swofty.data.datapoints.DatapointDouble;
-import net.swofty.data.datapoints.DatapointInventory;
-import net.swofty.data.datapoints.DatapointRank;
-import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.datapoints.*;
 import net.swofty.user.SkyBlockInventory;
+import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 import org.bson.Document;
 
@@ -21,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class DataHandler {
     public static Map<UUID, DataHandler> userCache = new HashMap<>();
@@ -115,7 +115,12 @@ public class DataHandler {
         }),
         COINS("coins", DatapointDouble.class, new DatapointDouble("coins", 0.0), (player, datapoint) -> {}),
         INVENTORY("inventory", DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}),
-        IGN_LOWER("ignLowercase", DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {}),
+        IGN_LOWER("ignLowercase", DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {}, (player, datapoint) -> {
+            datapoint.setValue(player.getUsername().toLowerCase());
+        }),
+        BUILD_MODE("build_mode", DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {}, (player, datapoint) -> {
+            player.setBypassBuild((Boolean) datapoint.getValue());
+        }, (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
         ;
 
         @Getter
@@ -125,12 +130,34 @@ public class DataHandler {
         @Getter
         private final Datapoint defaultDatapoint;
         public final BiConsumer<Player, Datapoint> onChange;
+        public final BiConsumer<SkyBlockPlayer, Datapoint> onLoad;
+        public final Function<SkyBlockPlayer, Datapoint> onQuit;
+
+        Data(String key, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad, Function<SkyBlockPlayer, Datapoint> onQuit) {
+            this.key = key;
+            this.type = type;
+            this.defaultDatapoint = defaultDatapoint;
+            this.onChange = onChange;
+            this.onLoad = onLoad;
+            this.onQuit = onQuit;
+        }
+
+        Data(String key, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad) {
+            this.key = key;
+            this.type = type;
+            this.defaultDatapoint = defaultDatapoint;
+            this.onChange = onChange;
+            this.onLoad = onLoad;
+            this.onQuit = null;
+        }
 
         Data(String key, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange) {
             this.key = key;
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange;
+            this.onLoad = null;
+            this.onQuit = null;
         }
 
         public static Data fromKey(String key) {

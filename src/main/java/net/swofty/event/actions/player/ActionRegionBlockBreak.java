@@ -29,6 +29,10 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
+        if (player.isBypassBuild()) {
+            return;
+        }
+
         playerBreakEvent.setCancelled(true);
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(playerBreakEvent.getBlockPosition());
 

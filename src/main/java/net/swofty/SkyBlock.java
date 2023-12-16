@@ -162,9 +162,6 @@ public class SkyBlock {
             Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
-        EventDispatcher.call(new PlayerRegionChange(null, null, null));
-        MinecraftServer.getGlobalEventHandler().call(new PlayerRegionChange(null, null, null));
-
         /**
          * Create audiences
          */
