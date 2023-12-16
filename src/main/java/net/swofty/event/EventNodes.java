@@ -7,6 +7,7 @@ import net.minestom.server.event.EventNode;
 public enum EventNodes {
 
     // Overarching eventnodes
+    CUSTOM(EventNode.all("custom-listener")),
     ENTITY(EventNode.type("entity-listener", EventFilter.ENTITY)),
     PLAYER(EventNode.type("player-listener", EventFilter.PLAYER)),
     ITEM(EventNode.type("item-listener", EventFilter.PLAYER)),

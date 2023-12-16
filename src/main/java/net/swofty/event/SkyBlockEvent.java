@@ -9,12 +9,16 @@ import net.minestom.server.event.trait.PlayerEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
+import net.swofty.event.custom.PlayerRegionChange;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class SkyBlockEvent {
     private static HashMap<EventNode<? extends Event>, ArrayList<SkyBlockEvent>> cachedEvents = new HashMap();
+    private static ArrayList<SkyBlockEvent> cachedCustomEvents = new ArrayList();
+    private static EventNode<Event> customEventNode = (EventNode<Event>) EventNodes.CUSTOM.type;
+
     private final EventParameters params;
 
     protected SkyBlockEvent() {
@@ -28,6 +32,11 @@ public abstract class SkyBlockEvent {
     public void cacheCommand() {
         EventNodes paramNode = params.node();
 
+        if (paramNode == EventNodes.CUSTOM) {
+            cachedCustomEvents.add(this);
+            return;
+        }
+
         if (cachedEvents.containsKey(paramNode.type)) {
             ArrayList<SkyBlockEvent> preExisting = cachedEvents.get(paramNode.type);
             preExisting.add(this);
@@ -40,6 +49,10 @@ public abstract class SkyBlockEvent {
     }
 
     public static void register(GlobalEventHandler eventHandler) {
+        cachedCustomEvents.forEach(skyBlockEvent -> {
+            customEventNode.addListener(skyBlockEvent.getEvent(), skyBlockEvent::run);
+        });
+
         cachedEvents.forEach((eventNode, skyBlockEvents) -> {
             @SuppressWarnings("unchecked")
             // Here we use a raw type to bypass the generics system
@@ -79,5 +92,12 @@ public abstract class SkyBlockEvent {
 
             eventHandler.addChild(typeErasedNode);
         });
+    }
+
+    public static void callSkyBlockEvent(Event event) {
+        if (customEventNode != null) {
+            System.out.println("Custom event node called!");
+            customEventNode.call(event);
+        }
     }
 }

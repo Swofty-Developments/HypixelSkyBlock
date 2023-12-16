@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
@@ -26,10 +27,12 @@ import net.swofty.data.mongodb.RegionDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
+import net.swofty.entity.npc.NPCDialogue;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.PlayerRegionChange;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.server.SkyBlockServerAttributes;
@@ -103,6 +106,8 @@ public class SkyBlock {
          */
         loopThroughPackage("net.swofty.entity.npc.npcs", SkyBlockNPC.class)
                 .forEach(SkyBlockNPC::register);
+        loopThroughPackage("net.swofty.entity.npc.npcs", NPCDialogue.class)
+                .forEach(SkyBlockNPC::register);
         loopThroughPackage("net.swofty.entity.villager.villagers", SkyBlockVillagerNPC.class)
                 .forEach(SkyBlockVillagerNPC::register);
         loopThroughPackage("net.swofty.entity.villager.villagers", NPCVillagerDialogue.class)
@@ -157,6 +162,10 @@ public class SkyBlock {
             Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
+        EventDispatcher.call(new PlayerRegionChange(null, null, null));
+        MinecraftServer.getGlobalEventHandler().call(new PlayerRegionChange(null, null, null));
+        Logger.info(MinecraftServer.getGlobalEventHandler().hasListener(PlayerRegionChange.class));
+
         /**
          * Create audiences
          */
@@ -183,6 +192,7 @@ public class SkyBlock {
         /**
          * Register events
          */
+        loopThroughPackage("net.swofty.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheCommand);
         loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheCommand);
         SkyBlockEvent.register(globalEventHandler);
 
