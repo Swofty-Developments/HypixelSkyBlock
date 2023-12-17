@@ -8,7 +8,9 @@ public enum ItemStatistic {
     DEFENSE("Defense", false, "+", ""),
     HEALTH("Health", true, "+", ""),
     STRENGTH("Strength", true, "+", ""),
-    INTELLIGENCE("Intelligence", false, "+", "");
+    INTELLIGENCE("Intelligence", false, "+", ""),
+    MINING_SPEED("Mining Speed", false, "+", ""),
+    ;
 
     private final String displayName;
     private final boolean isRed;

@@ -2,11 +2,15 @@ package net.swofty.item;
 
 import net.minestom.server.item.Material;
 import net.swofty.item.impl.CustomSkyBlockItem;
+import net.swofty.item.items.mining.DiamondPickaxe;
+import net.swofty.item.items.mining.PioneersPickaxe;
 import net.swofty.item.items.weapon.Hyperion;
 
 public enum ItemType {
     HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
     DIRT(Material.DIRT, Rarity.EPIC),
+    DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
+    PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.SPECIAL, PioneersPickaxe.class),
     ;
 
     public final Material material;

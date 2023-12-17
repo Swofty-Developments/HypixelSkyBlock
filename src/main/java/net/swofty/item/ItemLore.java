@@ -38,18 +38,24 @@ public class ItemLore {
         ItemStatistics statistics = handler.getStatistics();
         Class<?> clazz = item.clazz;
 
+
         if (recombobulated) {
             rarity = rarity.upgrade();
         }
 
         if (clazz != null) {
             // Handle Item Statistics
+            if (handler.isMiningTool()) {
+                addLoreLine("§8Breaking Power " + handler.getBreakingPower());
+                addLoreLine(null);
+            }
             boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE));
             boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE));
             boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH));
             boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.get(ItemStatistic.STRENGTH));
             boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.get(ItemStatistic.INTELLIGENCE));
-            if (damage || defence || health || strength || intelligence) addLoreLine(null);
+            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.get(ItemStatistic.MINING_SPEED));
+            if (damage || defence || health || strength || intelligence || miningSpeed) addLoreLine(null);
 
             // Handle Custom Item Lore
             CustomSkyBlockItem skyBlockItem = ((CustomSkyBlockItem) item.clazz.newInstance());

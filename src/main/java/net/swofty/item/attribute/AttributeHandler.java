@@ -2,10 +2,7 @@ package net.swofty.item.attribute;
 
 import net.swofty.item.Rarity;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.item.attribute.attributes.ItemAttributeRarity;
-import net.swofty.item.attribute.attributes.ItemAttributeRecombobulated;
-import net.swofty.item.attribute.attributes.ItemAttributeStatistics;
-import net.swofty.item.attribute.attributes.ItemAttributeType;
+import net.swofty.item.attribute.attributes.*;
 import net.swofty.user.statistics.ItemStatistics;
 
 public class AttributeHandler {
@@ -41,6 +38,14 @@ public class AttributeHandler {
 
     public boolean isRecombobulated() {
         return ((ItemAttributeRecombobulated) item.getAttribute("recombobulated")).getValue();
+    }
+
+    public int getBreakingPower() {
+        return ((ItemAttributeBreakingPower) item.getAttribute("breaking_power")).getValue();
+    }
+
+    public boolean isMiningTool() {
+        return getBreakingPower() != 0;
     }
 
     public SkyBlockItem asSkyBlockItem() {

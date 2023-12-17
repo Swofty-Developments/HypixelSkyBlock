@@ -6,10 +6,12 @@ import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.attribute.ItemAttribute;
+import net.swofty.item.attribute.attributes.ItemAttributeBreakingPower;
 import net.swofty.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.item.attribute.attributes.ItemAttributeType;
 import net.swofty.item.impl.CustomSkyBlockItem;
+import net.swofty.item.impl.MiningTool;
 import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
@@ -36,6 +38,16 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException e) {
             rarityAttribute.setValue(Rarity.COMMON);
         }
+
+        ItemAttributeBreakingPower breakingPower = (ItemAttributeBreakingPower) getAttribute("breaking_power");
+        try {
+            MiningTool t = (MiningTool) ItemType.valueOf(itemType).clazz.newInstance();
+            breakingPower.setValue(t.getBreakingPower());
+        } catch (ClassCastException castEx) {
+            breakingPower.setValue(0);
+
+            // Any other exception must be ignored.
+        } catch (Exception ignored) { }
 
         ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
         try {

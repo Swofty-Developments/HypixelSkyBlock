@@ -88,6 +88,14 @@ public class Utility {
         return s.substring(0, charLimit - 1);
     }
 
+    public static <T> T arrayDValue(Object[] array, int index, T defaultValue) {
+        try {
+            return (T) array[index];
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
+
     public static String ntify(int i) {
         if (i == 11 || i == 12 || i == 13)
             return i + "th";
