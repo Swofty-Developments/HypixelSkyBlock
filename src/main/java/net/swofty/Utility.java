@@ -85,6 +85,7 @@ public class Utility {
     }
 
     public static String limitStringLength(String s, int charLimit) {
+        if (s.length() <= charLimit) return s;
         return s.substring(0, charLimit - 1);
     }
 

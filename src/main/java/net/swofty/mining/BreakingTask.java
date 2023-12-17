@@ -14,11 +14,11 @@ import net.swofty.utility.PositionedBlock;
 
 public class BreakingTask
 {
-      private int counter = 0;
-      private final SkyBlockPlayer player;
+      private int                   counter = 0;
+      private final SkyBlockPlayer  player;
       private final PositionedBlock block;
-      private final double breakTime;
-      private TaskSchedule nextSchedule;
+      private final double          breakTime;
+      private TaskSchedule          nextSchedule;
 
       public BreakingTask(SkyBlockPlayer player, PositionedBlock block, SkyBlockItem item) {
             this.player = player;

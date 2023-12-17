@@ -8,6 +8,7 @@ import net.swofty.Utility;
 public enum Rank {
     OWNER("§c[OWNER] ", true, NamedTextColor.RED),
     ADMIN("§c[ADMIN] ", true, NamedTextColor.RED),
+    DEVELOPER("§d[DEV] ", true, NamedTextColor.LIGHT_PURPLE),
     MOD("§2[MOD] ", true, NamedTextColor.DARK_GREEN),
     HELPER("§9[HELPER] ", true, NamedTextColor.BLUE),
     YOUTUBE("§c[§fYOUTUBE§c] ", false, NamedTextColor.RED),
