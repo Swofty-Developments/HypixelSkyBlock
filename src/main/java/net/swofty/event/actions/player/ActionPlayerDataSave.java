@@ -34,6 +34,8 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
         UUID uuid = player.getUuid();
 
+        player.getDataHandler().runOnSave(player);
+
         /*
         Handle inventories separately to other datapoints
          */

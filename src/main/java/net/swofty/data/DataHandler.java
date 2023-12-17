@@ -2,6 +2,7 @@ package net.swofty.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
@@ -88,6 +89,23 @@ public class DataHandler {
         return type.cast(this.datapoints.get(datapoint.key));
     }
 
+    public void runOnLoad() {
+        Arrays.stream(Data.values()).forEach(data -> {
+            if (data.onLoad != null) {
+                data.onLoad.accept((SkyBlockPlayer) MinecraftServer.getConnectionManager().getPlayer(uuid), get(data, data.getType()));
+            }
+        });
+    }
+
+    @SneakyThrows
+    public void runOnSave(SkyBlockPlayer player) {
+        for (Data data : Data.values()) {
+            if (data.onQuit != null) {
+                get(data, data.getType()).setValue(data.onQuit.apply(player).getSerializedValue());
+            }
+        }
+    }
+
     public static DataHandler initUserWithDefaultData(UUID uuid) {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = uuid;
@@ -120,7 +138,9 @@ public class DataHandler {
         }),
         BUILD_MODE("build_mode", DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {}, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());
-        }, (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
+        }, (player) ->  {
+            return new DatapointBoolean("build_mode", player.isBypassBuild());
+        }),
         ;
 
         @Getter

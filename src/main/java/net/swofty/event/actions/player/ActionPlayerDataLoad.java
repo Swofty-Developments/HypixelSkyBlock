@@ -39,10 +39,12 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
         UUID uuid = player.getUuid();
 
         UserDatabase userDatabase = new UserDatabase(uuid.toString());
+        DataHandler handler;
+
         if (userDatabase.exists()) {
             Document document = userDatabase.getDocument();
-            DataHandler dataHandler = DataHandler.fromDocument(document);
-            DataHandler.userCache.put(uuid, dataHandler);
+            handler = DataHandler.fromDocument(document);
+            DataHandler.userCache.put(uuid, handler);
 
             SkyBlockInventory skyBlockInventory = ((SkyBlockPlayer) player).getDataHandler()
                     .get(DataHandler.Data.INVENTORY, DatapointInventory.class).getValue();
@@ -62,8 +64,10 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
                 origin.setStack(((SkyBlockPlayer) player), loadedItem);
             });
         } else {
-            DataHandler dataHandler = DataHandler.initUserWithDefaultData(uuid);
-            DataHandler.userCache.put(uuid, dataHandler);
+            handler = DataHandler.initUserWithDefaultData(uuid);
+            DataHandler.userCache.put(uuid, handler);
         }
+
+        handler.runOnLoad();
     }
 }
