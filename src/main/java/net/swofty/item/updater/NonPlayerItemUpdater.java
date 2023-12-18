@@ -3,10 +3,8 @@ package net.swofty.item.updater;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.swofty.Utility;
+import net.swofty.utility.StringUtility;
 import net.swofty.item.ItemLore;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.AttributeHandler;
@@ -33,7 +31,7 @@ public class NonPlayerItemUpdater {
 
         return updateItemLore(builder)
                 .displayName(Component.text(
-                        handler.getRarity().getColor() + Utility.toNormalCase(handler.getItemType()))
+                        handler.getRarity().getColor() + StringUtility.toNormalCase(handler.getItemType()))
                         .decoration(TextDecoration.ITALIC, false));
     }
 

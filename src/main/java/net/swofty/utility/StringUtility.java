@@ -1,4 +1,4 @@
-package net.swofty;
+package net.swofty.utility;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Utility {
+public class StringUtility {
     public static char ALPHABET[] = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
@@ -87,14 +87,6 @@ public class Utility {
     public static String limitStringLength(String s, int charLimit) {
         if (s.length() <= charLimit) return s;
         return s.substring(0, charLimit - 1);
-    }
-
-    public static <T> T arrayDValue(Object[] array, int index, T defaultValue) {
-        try {
-            return (T) array[index];
-        } catch (Exception e) {
-            return defaultValue;
-        }
     }
 
     public static String ntify(int i) {

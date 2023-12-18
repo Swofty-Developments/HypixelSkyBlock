@@ -1,4 +1,4 @@
-package net.swofty.region.mining;
+package net.swofty.region.mining.configurations;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;

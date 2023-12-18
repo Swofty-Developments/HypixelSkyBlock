@@ -96,7 +96,6 @@ public abstract class SkyBlockEvent {
 
     public static void callSkyBlockEvent(Event event) {
         if (customEventNode != null) {
-            System.out.println("Custom event node called!");
             customEventNode.call(event);
         }
     }

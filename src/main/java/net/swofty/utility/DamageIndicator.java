@@ -6,29 +6,26 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
-import net.swofty.Utility;
 import net.swofty.entity.hologram.HologramEntity;
 
 public class DamageIndicator
 {
-      private static final char _DefaultColourPallet[] = { 'F', 'F', 'E', '6', 'C', 'C' };
+      private static final char DEFAULT_COLOUR_PALLET[] = { 'F', 'F', 'E', '6', 'C', 'C' };
 
       private int damage;
       private Pos pos;
-      private Color color;
       private boolean crit;
       private int randomnessMultiplier;
 
       public DamageIndicator() {
             randomnessMultiplier = 1;
-            color = null;
             crit = false;
       }
 
       public void display() {
             if (this.pos == null) return;
 
-            String name = crit ? utilRainbowize("✧" + damage + "✧") : "§7" + damage;
+            String name = crit ? getRainbowEffect("✧" + damage + "✧") : "§7" + damage;
 
             Entity entity = new HologramEntity(name);
             entity.setInstance(SkyBlock.getInstanceContainer(),
@@ -49,7 +46,6 @@ public class DamageIndicator
       }
 
       public DamageIndicator color(Color c) {
-            this.color = c;
             return this;
       }
 
@@ -58,23 +54,18 @@ public class DamageIndicator
             return this;
       }
 
-      public DamageIndicator randomnessMultiplier(int mulp) {
-            this.randomnessMultiplier = mulp;
-            return this;
-      }
-
-      private String utilRainbowize(String string) {
+      private String getRainbowEffect(String string) {
             StringBuilder builder = new StringBuilder();
             int i = 0;
             for (String c : string.split("")) {
-                  if (i > _DefaultColourPallet.length - 1) i = 0;
-                  builder.append("§" + _DefaultColourPallet[i]).append(c);
+                  if (i > DEFAULT_COLOUR_PALLET.length - 1) i = 0;
+                  builder.append("§" + DEFAULT_COLOUR_PALLET[i]).append(c);
                   i++;
             }
             return builder.toString();
       }
 
       private Pos utilRandomizeLoc(Pos pos) {
-            return pos.add(Utility.random(-1.5, 1.5) + randomnessMultiplier, 1, Utility.random(-1.5, 1.5) * randomnessMultiplier);
+            return pos.add(StringUtility.random(-1.5, 1.5) + randomnessMultiplier, 1, StringUtility.random(-1.5, 1.5) * randomnessMultiplier);
       }
 }

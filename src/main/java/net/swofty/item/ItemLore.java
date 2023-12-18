@@ -5,9 +5,8 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
-import net.swofty.Utility;
+import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
-import net.swofty.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.item.impl.CustomSkyBlockAbility;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.statistics.ItemStatistic;
@@ -68,12 +67,12 @@ public class ItemLore {
             if (clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
                 addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
                         ability.getAbilityActivation().getDisplay());
-                for (String line : Utility.splitByWordAndLength(ability.getAbilityDescription(), 34, "\\s"))
+                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34, "\\s"))
                     addLoreLine("§7" + line);
                 if (ability.getManaCost() > 0)
                     addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
                 if (ability.getAbilityCooldownTicks() > 20)
-                    addLoreLine("§8Cooldown: §a" + Utility.commaify((double) ability.getAbilityCooldownTicks() / 20) + "s");
+                    addLoreLine("§8Cooldown: §a" + StringUtility.commaify((double) ability.getAbilityCooldownTicks() / 20) + "s");
 
                 addLoreLine(null);
             }
@@ -86,7 +85,7 @@ public class ItemLore {
         }
 
         this.stack = stack.withLore(loreLines)
-                .withDisplayName(Component.text(rarity.getColor() + Utility.toNormalCase(type))
+                .withDisplayName(Component.text(rarity.getColor() + StringUtility.toNormalCase(type))
                         .decoration(TextDecoration.ITALIC, false));
     }
 
@@ -94,7 +93,7 @@ public class ItemLore {
         if (baseValue == 0) return false;
 
         String color = statistic.isRed() ? "&c" : "&a";
-        addLoreLine("§7" + Utility.toNormalCase(statistic.getDisplayName()) + ": " +
+        addLoreLine("§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
                 color + statistic.getPrefix() + baseValue + statistic.getSuffix());
 
         return true;

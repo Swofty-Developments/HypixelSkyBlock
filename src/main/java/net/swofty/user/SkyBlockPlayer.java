@@ -1,10 +1,9 @@
 package net.swofty.user;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import lombok.Setter;
-import net.kyori.adventure.text.event.HoverEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.block.Block;
@@ -16,7 +15,7 @@ import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.mining.MineableBlock;
+import net.swofty.region.mining.MineableBlock;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.statistics.ItemStatistic;
@@ -24,7 +23,6 @@ import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.statistics.StatisticDisplayReplacement;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.plaf.synth.Region;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -115,7 +113,8 @@ public class SkyBlockPlayer extends Player {
     }
 
     public int getMiningSpeed() {
-        return this.getStatistics().mainHandStatistics().get(ItemStatistic.MINING_SPEED) + this.getStatistics().allArmorStatistics().get(ItemStatistic.MINING_SPEED);
+        return this.getStatistics().mainHandStatistics().get(ItemStatistic.MINING_SPEED) +
+                this.getStatistics().allArmorStatistics().get(ItemStatistic.MINING_SPEED);
     }
 
     public double getTimeToMine(SkyBlockItem item, Block b) {
@@ -125,7 +124,6 @@ public class SkyBlockPlayer extends Player {
         if (getRegion() == null) return -1;
 
         if (block.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) return -1;
-        if (!block.getSupportedRegions().contains(getRegion().getType())) return -1;
         if (block.getStrength() > 0) {
             double time = (block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
             double softcap = ((double) 20 / 3) * block.getStrength();

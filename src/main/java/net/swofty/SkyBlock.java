@@ -162,6 +162,8 @@ public class SkyBlock {
             Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
+        SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChange(null, null, null));
+
         /**
          * Create audiences
          */

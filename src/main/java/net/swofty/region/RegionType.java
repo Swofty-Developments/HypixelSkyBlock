@@ -2,7 +2,7 @@ package net.swofty.region;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.region.mining.MineCoalConfiguration;
+import net.swofty.region.mining.configurations.MineCoalConfiguration;
 
 @Getter
 public enum RegionType {

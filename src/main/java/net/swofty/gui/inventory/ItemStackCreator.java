@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.Utility;
+import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ public class ItemStackCreator {
 
     public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, short data, int amount, String lore) {
         List<String> l = new ArrayList<>();
-        for (String line : Utility.splitByWordAndLength(lore, 30, "\\s"))
+        for (String line : StringUtility.splitByWordAndLength(lore, 30, "\\s"))
             l.add(color + line);
         return getStack(name, material, data, amount, l.toArray(new String[]{}));
     }

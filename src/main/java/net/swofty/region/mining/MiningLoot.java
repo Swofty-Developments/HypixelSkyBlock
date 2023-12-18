@@ -1,11 +1,10 @@
-package net.swofty.mining;
+package net.swofty.region.mining;
 
 import net.minestom.server.item.Material;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.utility.MaterialQuantifiableRandom;
 
-public record MiningLoot(String identifier, MaterialQuantifiableRandom mat)
-{
+public record MiningLoot(String identifier, MaterialQuantifiableRandom material) {
       public static MiningLoot Default() {
             return new MiningLoot("default", null);
       }

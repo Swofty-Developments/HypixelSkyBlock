@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.Utility;
 
 import java.util.Arrays;
 import java.util.List;

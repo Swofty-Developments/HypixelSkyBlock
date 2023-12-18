@@ -5,10 +5,15 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
-import net.swofty.Utility;
+import net.swofty.item.SkyBlockItem;
+import net.swofty.item.updater.PlayerItemOrigin;
+import net.swofty.item.updater.PlayerItemUpdater;
+import net.swofty.utility.StringUtility;
 import net.swofty.data.datapoints.*;
 import net.swofty.user.SkyBlockInventory;
 import net.swofty.user.SkyBlockPlayer;
@@ -20,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class DataHandler {
@@ -101,7 +105,7 @@ public class DataHandler {
     public void runOnSave(SkyBlockPlayer player) {
         for (Data data : Data.values()) {
             if (data.onQuit != null) {
-                get(data, data.getType()).setValue(data.onQuit.apply(player).getSerializedValue());
+                get(data, data.getType()).setValue(data.onQuit.apply(player).getValue());
             }
         }
     }
@@ -123,7 +127,7 @@ public class DataHandler {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
 
             Rank rank = (Rank) datapoint.getValue();
-            String teamName = Utility.limitStringLength(rank.ordinalToChar() + "_" + player.getUsername(), 16);
+            String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
             Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
                     .prefix(Component.text(rank.getPrefix()))
                     .teamColor(rank.getTextColor())
@@ -132,15 +136,60 @@ public class DataHandler {
             player.getTeam().sendUpdatePacket();
         }),
         COINS("coins", DatapointDouble.class, new DatapointDouble("coins", 0.0), (player, datapoint) -> {}),
-        INVENTORY("inventory", DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}),
+        INVENTORY("inventory", DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}, (player, datapoint) -> {
+            SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();
+
+            player.setHelmet(skyBlockInventory.getHelmet().getItemStack());
+            player.setChestplate(skyBlockInventory.getChestplate().getItemStack());
+            player.setLeggings(skyBlockInventory.getLeggings().getItemStack());
+            player.setBoots(skyBlockInventory.getBoots().getItemStack());
+
+            skyBlockInventory.getItems().forEach((integer, itemStack) -> {
+                PlayerItemOrigin origin = PlayerItemOrigin.INVENTORY_SLOT;
+                origin.setData(integer);
+
+                player.getInventory().setItemStack(integer, itemStack.getItemStack());
+
+                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(player, origin, itemStack.getItemStack());
+                origin.setStack(player, loadedItem);
+            });
+        }, (player) -> {
+            SkyBlockInventory skyBlockInventory = new SkyBlockInventory();
+
+            ItemStack helmet = player.getHelmet();
+            if (SkyBlockItem.isSkyBlockItem(helmet)) {
+                skyBlockInventory.setHelmet(new SkyBlockItem(helmet));
+            }
+            ItemStack chestplate = player.getChestplate();
+            if (SkyBlockItem.isSkyBlockItem(chestplate)) {
+                skyBlockInventory.setChestplate(new SkyBlockItem(chestplate));
+            }
+            ItemStack leggings = player.getLeggings();
+            if (SkyBlockItem.isSkyBlockItem(leggings)) {
+                skyBlockInventory.setLeggings(new SkyBlockItem(leggings));
+            }
+            ItemStack boots = player.getBoots();
+            if (SkyBlockItem.isSkyBlockItem(boots)) {
+                skyBlockInventory.setBoots(new SkyBlockItem(boots));
+            }
+
+            for (int i = 0; i <= 36; i++) {
+                ItemStack stack = player.getInventory().getItemStack(i);
+                if (SkyBlockItem.isSkyBlockItem(stack)) {
+                    skyBlockInventory.getItems().put(i, new SkyBlockItem(stack));
+                }
+            }
+            return new DatapointInventory("inventory", skyBlockInventory);
+        }),
         IGN_LOWER("ignLowercase", DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {}, (player, datapoint) -> {
             datapoint.setValue(player.getUsername().toLowerCase());
         }),
         BUILD_MODE("build_mode", DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {}, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());
-        }, (player) ->  {
-            return new DatapointBoolean("build_mode", player.isBypassBuild());
-        }),
+        }, (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
+        GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {}, (player, datapoint) -> {
+            player.setGameMode((GameMode) datapoint.getValue());
+        }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
         ;
 
         @Getter

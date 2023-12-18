@@ -1,9 +1,9 @@
 package net.swofty.item.attribute.attributes;
 
-import net.swofty.Utility;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
+import net.swofty.utility.MathUtility;
 
 public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
 
@@ -26,7 +26,7 @@ public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
                 .with(ItemStatistic.HEALTH, Integer.parseInt(split[2]))
                 .with(ItemStatistic.INTELLIGENCE, Integer.parseInt(split[3]))
                 .with(ItemStatistic.STRENGTH, Integer.parseInt(split[4]))
-                .with(ItemStatistic.MINING_SPEED, Utility.arrayDValue(split, 5, 0))
+                .with(ItemStatistic.MINING_SPEED, MathUtility.arrayDValue(split, 5, 0))
                 .build();
     }
 

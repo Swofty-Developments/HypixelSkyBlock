@@ -5,7 +5,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.Utility;
+import net.swofty.utility.StringUtility;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.gui.inventory.ItemStackCreator;
@@ -47,7 +47,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, (short) 0, 1,
-                        "§7Current balance: §6" + Utility.commaify(
+                        "§7Current balance: §6" + StringUtility.commaify(
                                 player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue()),
                         " ",
                         "§7Store coins in the bank to keep",

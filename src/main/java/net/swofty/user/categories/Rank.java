@@ -2,7 +2,7 @@ package net.swofty.user.categories;
 
 import lombok.Getter;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.swofty.Utility;
+import net.swofty.utility.StringUtility;
 
 @Getter
 public enum Rank {
@@ -29,7 +29,7 @@ public enum Rank {
         return this.ordinal() <= rank.ordinal();
     }
 
-    public char ordinalToChar() {
-        return Utility.ALPHABET[ordinal()];
+    public char getPriorityCharacter() {
+        return StringUtility.ALPHABET[ordinal()];
     }
 }

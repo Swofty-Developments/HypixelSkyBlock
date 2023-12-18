@@ -17,7 +17,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-27.5, 69, -125.5, 0f, 40f);
+                return new Pos(-27.5, 69, -125.5, -35f, 0f);
             }
 
             @Override

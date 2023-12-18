@@ -37,37 +37,6 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         player.getDataHandler().runOnSave(player);
 
         /*
-        Handle inventories separately to other datapoints
-         */
-        SkyBlockInventory skyBlockInventory = new SkyBlockInventory();
-
-        ItemStack helmet = player.getHelmet();
-        if (SkyBlockItem.isSkyBlockItem(helmet)) {
-            skyBlockInventory.setHelmet(new SkyBlockItem(helmet));
-        }
-        ItemStack chestplate = player.getChestplate();
-        if (SkyBlockItem.isSkyBlockItem(chestplate)) {
-            skyBlockInventory.setChestplate(new SkyBlockItem(chestplate));
-        }
-        ItemStack leggings = player.getLeggings();
-        if (SkyBlockItem.isSkyBlockItem(leggings)) {
-            skyBlockInventory.setLeggings(new SkyBlockItem(leggings));
-        }
-        ItemStack boots = player.getBoots();
-        if (SkyBlockItem.isSkyBlockItem(boots)) {
-            skyBlockInventory.setBoots(new SkyBlockItem(boots));
-        }
-
-        for (int i = 0; i <= 36; i++) {
-            ItemStack stack = player.getInventory().getItemStack(i);
-            if (SkyBlockItem.isSkyBlockItem(stack)) {
-                skyBlockInventory.getItems().put(i, new SkyBlockItem(stack));
-            }
-        }
-
-        player.getDataHandler().get(DataHandler.Data.INVENTORY, DatapointInventory.class).setValue(skyBlockInventory);
-
-        /*
         Save the data into the DB
          */
         UserDatabase userDatabase = new UserDatabase(uuid.toString());

@@ -45,24 +45,6 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
             Document document = userDatabase.getDocument();
             handler = DataHandler.fromDocument(document);
             DataHandler.userCache.put(uuid, handler);
-
-            SkyBlockInventory skyBlockInventory = ((SkyBlockPlayer) player).getDataHandler()
-                    .get(DataHandler.Data.INVENTORY, DatapointInventory.class).getValue();
-
-            player.setHelmet(skyBlockInventory.getHelmet().getItemStack());
-            player.setChestplate(skyBlockInventory.getChestplate().getItemStack());
-            player.setLeggings(skyBlockInventory.getLeggings().getItemStack());
-            player.setBoots(skyBlockInventory.getBoots().getItemStack());
-
-            skyBlockInventory.getItems().forEach((integer, itemStack) -> {
-                PlayerItemOrigin origin = PlayerItemOrigin.INVENTORY_SLOT;
-                origin.setData(integer);
-
-                player.getInventory().setItemStack(integer, itemStack.getItemStack());
-
-                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(((SkyBlockPlayer) player), origin, itemStack.getItemStack());
-                origin.setStack(((SkyBlockPlayer) player), loadedItem);
-            });
         } else {
             handler = DataHandler.initUserWithDefaultData(uuid);
             DataHandler.userCache.put(uuid, handler);
