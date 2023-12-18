@@ -60,6 +60,18 @@ public abstract class NPCDialogue extends SkyBlockNPC {
         }).delay(TaskSchedule.seconds(2)).schedule();
     }
 
+    public static void remove(SkyBlockPlayer player) {
+        for (SkyBlockNPC npc : SkyBlockNPC.getNpcs().keySet()) {
+            if (npc instanceof NPCDialogue) {
+                NPCDialogue dialogue = (NPCDialogue) npc;
+                if (dialogue.isInDialogue(player)) {
+                    dialogue.dialogueSets.get(player).getValue().complete(null);
+                    dialogue.dialogueSets.remove(player);
+                }
+            }
+        }
+    }
+
     @Builder
     public record DialogueSet(String key, String[] lines) { }
 

@@ -83,7 +83,7 @@ public class PlayerStatistics {
 
                 String healthText = heartsColour + Math.round(player.getHealth() + absorption) + "/" +
                         Math.round(player.getMaxHealth()) + "❤";
-                String defenseText = player.getDefence() == 0 ? "" : "§a" + Math.round(player.getDefence()) + "❈ Defense";
+                String defenseText = player.getDefense() == 0 ? "" : "§a" + Math.round(player.getDefense()) + "❈ Defense";
                 String manaText = "§b" + Math.round(player.getMana()) + "/" + Math.round(player.getMaxMana()) + "✎ Mana";
 
                 if (player.getManaDisplayReplacement() != null) {

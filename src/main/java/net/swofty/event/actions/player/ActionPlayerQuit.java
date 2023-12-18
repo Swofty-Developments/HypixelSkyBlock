@@ -3,8 +3,10 @@ package net.swofty.event.actions.player;
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
+import net.swofty.entity.npc.NPCDialogue;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.actions.player.fall.ActionPlayerFall;
+import net.swofty.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.event.EventNodes;
@@ -54,6 +56,9 @@ public class ActionPlayerQuit extends SkyBlockEvent {
             SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(player);
             SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
+        PacketListenerAirJump.yLevel.remove(player);
+        PacketListenerAirJump.isDropping.remove(player);
+        NPCDialogue.remove(player);
         PlayerHolograms.remove(player);
     }
 }

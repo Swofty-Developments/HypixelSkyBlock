@@ -62,6 +62,14 @@ public class SkyBlockPlayer extends Player {
         return new PlayerStatistics(this);
     }
 
+    public AntiCheatHandler getAntiCheatHandler() {
+        return new AntiCheatHandler(this);
+    }
+
+    public LogHandler getLogHandler() {
+        return new LogHandler(this);
+    }
+
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
         // Determine which replacement to update based on type
         StatisticDisplayReplacement currentReplacement =
@@ -136,7 +144,7 @@ public class SkyBlockPlayer extends Player {
         return 0;
     }
 
-    public float getDefence() {
+    public float getDefense() {
         float defence = 0;
 
         PlayerStatistics statistics = this.getStatistics();
@@ -146,28 +154,13 @@ public class SkyBlockPlayer extends Player {
         return defence;
     }
 
-    public void debug(Object message) {
-        debug(Component.text(String.valueOf(message)));
-    }
-
-    public void debug(TextComponent message) {
-        debug(message, () -> true);
-    }
-
-    public void debug(Object message, Supplier<Boolean> condition) {
-        debug(Component.text(String.valueOf(message)), condition);
-    }
-
-    public void debug(TextComponent message, Supplier<Boolean> condition) {
-        if (getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(Rank.ADMIN)) {
-            if (!condition.get()) return;
-            sendMessage(Component.text("§9[HELPER DEBUG] §f").append(message));
-        }
-    }
-
     public void setHearts(float hearts) {
         this.health = hearts;
         this.sendPacket(new UpdateHealthPacket((hearts / getMaxHealth()) * 20, 20, 20));
+    }
+
+    public void closeInventoryBypass() {
+        super.closeInventory();
     }
 
     @Override
