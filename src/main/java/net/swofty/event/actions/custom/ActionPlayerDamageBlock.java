@@ -71,8 +71,6 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
                   return;
             }
 
-            System.out.println(player.getInstance());
-
             BreakingTask task = new BreakingTask(
                     player,
                     new BreakingTask.PositionedBlock(

@@ -68,7 +68,7 @@ public class BreakingTask {
       }
 
       private void sendBlockBreak(int damage) {
-            BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId(), block.pos(), (byte) damage);
+            BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId() + 1, block.pos(), (byte) damage);
             player.getPlayerConnection().sendPackets(breakAnim);
       }
 
