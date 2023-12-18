@@ -4,6 +4,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
 import net.swofty.packet.SkyBlockPacketClientListener;
@@ -29,6 +30,14 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
         Double newY = positionPacket.position().y();
         AntiCheatHandler handler = player.getAntiCheatHandler();
         Double distance = handler.getDistanceFromClosestBlockBelow();
+
+        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.WATER) return;
+        if (player.getInstance().getBlock(player.getPosition()) == Block.WATER) return;
+        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.LAVA) return;
+        if (player.getInstance().getBlock(player.getPosition()) == Block.LAVA) return;
+        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.CAULDRON) return;
+        if (player.getInstance().getBlock(player.getPosition()) == Block.WATER_CAULDRON) return;
+        if (player.getInstance().getBlock(player.getPosition()) == Block.LAVA_CAULDRON) return;
 
         boolean isOnGround = distance == 1.0;
 

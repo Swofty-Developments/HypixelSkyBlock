@@ -14,7 +14,7 @@ public record AntiCheatHandler(SkyBlockPlayer player) {
 
         for (int i = 0; i < 256; i++) {
             Block block = instance.getBlock(player.getPosition().sub(0, i, 0));
-            if (block != Block.AIR) {
+            if (block != Block.AIR || block == Block.WATER || block == Block.LAVA) {
                 toReturn = i;
                 break;
             }
