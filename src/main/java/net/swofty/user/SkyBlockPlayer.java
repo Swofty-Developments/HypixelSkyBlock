@@ -12,9 +12,11 @@ import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointMissionData;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.mission.MissionData;
 import net.swofty.region.mining.MineableBlock;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.categories.Rank;
@@ -68,6 +70,10 @@ public class SkyBlockPlayer extends Player {
 
     public LogHandler getLogHandler() {
         return new LogHandler(this);
+    }
+
+    public MissionData getMissionData() {
+        return getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {

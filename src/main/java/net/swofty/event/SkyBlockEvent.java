@@ -9,15 +9,14 @@ import net.minestom.server.event.trait.PlayerEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
-import net.swofty.event.custom.PlayerRegionChange;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class SkyBlockEvent {
-    private static HashMap<EventNode<? extends Event>, ArrayList<SkyBlockEvent>> cachedEvents = new HashMap();
-    private static ArrayList<SkyBlockEvent> cachedCustomEvents = new ArrayList();
-    private static EventNode<Event> customEventNode = (EventNode<Event>) EventNodes.CUSTOM.type;
+    private static final HashMap<EventNode<? extends Event>, ArrayList<SkyBlockEvent>> cachedEvents = new HashMap<>();
+    private static final ArrayList<SkyBlockEvent> cachedCustomEvents = new ArrayList<>();
+    private static final EventNode<Event> customEventNode = (EventNode<Event>) EventNodes.CUSTOM.type;
 
     private final EventParameters params;
 
@@ -29,7 +28,7 @@ public abstract class SkyBlockEvent {
 
     public abstract void run(Event event);
 
-    public void cacheCommand() {
+    public void cacheEvent() {
         EventNodes paramNode = params.node();
 
         if (paramNode == EventNodes.CUSTOM) {

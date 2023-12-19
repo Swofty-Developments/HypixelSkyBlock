@@ -56,8 +56,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
             SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(player);
             SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
-        PacketListenerAirJump.yLevel.remove(player);
-        PacketListenerAirJump.isDropping.remove(player);
+        PacketListenerAirJump.playerData.remove(player);
         NPCDialogue.remove(player);
         PlayerHolograms.remove(player);
     }

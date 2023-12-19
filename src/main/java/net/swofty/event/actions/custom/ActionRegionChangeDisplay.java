@@ -9,12 +9,13 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChange;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.statistics.StatisticDisplayReplacement;
 import net.swofty.utility.Groups;
 
-@EventParameters(description = "Handles mining fatigue in mining regions",
+@EventParameters(description = "Handles the display of changing regions",
         node = EventNodes.CUSTOM,
         requireDataLoaded = false)
-public class ActionChangeMiningRegion extends SkyBlockEvent {
+public class ActionRegionChangeDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
         return PlayerRegionChange.class;
@@ -24,14 +25,16 @@ public class ActionChangeMiningRegion extends SkyBlockEvent {
     public void run(Event event) {
         PlayerRegionChange regionChangeEvent = (PlayerRegionChange) event;
         SkyBlockPlayer player = regionChangeEvent.getPlayer();
-        SkyBlockRegion newRegion = regionChangeEvent.getTo();
 
-        if (newRegion != null && Groups.MINING_REGIONS.contains(newRegion.getType())) {
-            if (!player.getActiveEffects().stream().map(f -> f.getPotion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
-                player.addEffect(new Potion(PotionEffect.MINING_FATIGUE, (byte) 255, 9999999));
-        } else {
-            if (player.getActiveEffects().stream().map(f -> f.getPotion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
-                player.removeEffect(PotionEffect.MINING_FATIGUE);
+        if (regionChangeEvent.getTo() != null && regionChangeEvent.getFrom() != null
+                && !regionChangeEvent.getTo().getType().equals(regionChangeEvent.getFrom().getType())) {
+            player.setDisplayReplacement(StatisticDisplayReplacement
+                    .builder()
+                    .ticksToLast(20)
+                    .display(regionChangeEvent.getTo().getType().getColor() + " ⏣ " + regionChangeEvent.getTo().getType().getName())
+                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE
+            );
+            return;
         }
     }
 }

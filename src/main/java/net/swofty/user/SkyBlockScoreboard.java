@@ -9,6 +9,8 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChange;
+import net.swofty.mission.MissionData;
+import net.swofty.serializer.MissionDataSerializer;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
@@ -39,6 +41,7 @@ public class SkyBlockScoreboard {
             for (SkyBlockPlayer player : SkyBlock.getLoadedPlayers()) {
                 DataHandler dataHandler = player.getDataHandler();
                 SkyBlockRegion region = player.getRegion();
+                MissionData missionData = player.getMissionData();
 
                 if (dataHandler == null) {
                     continue;
@@ -72,6 +75,13 @@ public class SkyBlockScoreboard {
                 addLine("§7 ", sidebar);
                 addLine("§fPurse: §6" + dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue(), sidebar);
                 addLine("§7 ", sidebar);
+                if (region != null &&
+                        !missionData.getActiveMissions(region.getType()).isEmpty()) {
+                    addLine("§fObjective", sidebar);
+                    addLine("§e" + missionData.getActiveMissions(region.getType()).get(0), sidebar);
+                    addLine("§7 ", sidebar);
+                }
+
                 addLine("§ewww.hypixel.net", sidebar);
 
                 sidebar.addViewer(player);

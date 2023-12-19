@@ -13,6 +13,7 @@ import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
+import net.swofty.mission.MissionData;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.datapoints.*;
 import net.swofty.user.SkyBlockInventory;
@@ -135,7 +136,7 @@ public class DataHandler {
             player.setTeam(team);
             player.getTeam().sendUpdatePacket();
         }),
-        COINS("coins", DatapointDouble.class, new DatapointDouble("coins", 0.0), (player, datapoint) -> {}),
+        COINS("coins", DatapointDouble.class, new DatapointDouble("coins", 0.0)),
         INVENTORY("inventory", DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();
 
@@ -190,6 +191,11 @@ public class DataHandler {
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {}, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
+        MISSION_DATA("mission_data", DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {}, (player, datapoint) -> {
+            MissionData data = (MissionData) datapoint.getValue();
+            data.setSkyBlockPlayer(player);
+            datapoint.setValue(data);
+        }),
         ;
 
         @Getter
@@ -225,6 +231,15 @@ public class DataHandler {
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange;
+            this.onLoad = null;
+            this.onQuit = null;
+        }
+
+        Data(String key, Class<? extends Datapoint> type, Datapoint defaultDatapoint) {
+            this.key = key;
+            this.type = type;
+            this.defaultDatapoint = defaultDatapoint;
+            this.onChange = null;
             this.onLoad = null;
             this.onQuit = null;
         }

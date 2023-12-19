@@ -11,13 +11,11 @@ import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.AntiCheatHandler;
 import net.swofty.user.SkyBlockPlayer;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 
 public class PacketListenerAirJump extends SkyBlockPacketClientListener {
-    public static HashMap<Player, Boolean> isDropping = new HashMap<>();
-    public static HashMap<Player, Double> yLevel = new HashMap<>();
-    public static HashMap<Player, Boolean> hasChangedVelocity = new HashMap<>();
-    public static HashMap<Player, String> lastLoggedMessage = new HashMap<>();
+    public static HashMap<Player, PlayerData> playerData = new HashMap<>();
 
     @Override
     public Class<? extends ClientPacket> getPacket() {
@@ -31,43 +29,57 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
         AntiCheatHandler handler = player.getAntiCheatHandler();
         Double distance = handler.getDistanceFromClosestBlockBelow();
 
-        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.WATER) return;
-        if (player.getInstance().getBlock(player.getPosition()) == Block.WATER) return;
-        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.LAVA) return;
-        if (player.getInstance().getBlock(player.getPosition()) == Block.LAVA) return;
-        if (player.getInstance().getBlock(player.getPosition().sub(0, 1, 0)) == Block.CAULDRON) return;
-        if (player.getInstance().getBlock(player.getPosition()) == Block.WATER_CAULDRON) return;
-        if (player.getInstance().getBlock(player.getPosition()) == Block.LAVA_CAULDRON) return;
+        PlayerData data = getPlayerData(player);
+
+        if (isInFluid(player)) return;
 
         boolean isOnGround = distance == 1.0;
 
         if (isOnGround || player.getGameMode() == GameMode.CREATIVE) {
-            yLevel.remove(player);
-            hasChangedVelocity.put(player, false);
+            data.yLevel = null;
+            data.hasChangedVelocity = false;
             return;
         }
 
-        if (!yLevel.containsKey(player)) {
-            yLevel.put(player, newY);
-            hasChangedVelocity.put(player, false);
+        if (data.yLevel == null) {
+            data.yLevel = newY;
+            data.hasChangedVelocity = false;
             return;
         }
 
-        boolean yIncreased = newY > yLevel.get(player);
-        if (newY.equals(yLevel.get(player))) return;
+        boolean yIncreased = newY > data.yLevel;
+        if (newY.equals(data.yLevel)) return;
 
         if (yIncreased) {
-            if (hasChangedVelocity.get(player)) {
+            if (data.hasChangedVelocity) {
                 player.teleport(player.getPosition().sub(0, distance - 1, 0));
                 event.setCancelled(true);
                 return;
             }
-            isDropping.put(player, false);
+            data.isDropping = false;
         } else {
-            isDropping.put(player, true);
-            hasChangedVelocity.put(player, true);
+            data.isDropping = true;
+            data.hasChangedVelocity = true;
         }
 
-        yLevel.put(player, newY);
+        data.yLevel = newY;
+    }
+
+    private boolean isInFluid(SkyBlockPlayer player) {
+        Block blockBelow = player.getInstance().getBlock(player.getPosition().sub(0, 1, 0));
+        Block block = player.getInstance().getBlock(player.getPosition());
+
+        return block == Block.WATER || block == Block.LAVA || block == Block.CAULDRON ||
+                blockBelow == Block.WATER || blockBelow == Block.LAVA || blockBelow == Block.WATER_CAULDRON || blockBelow == Block.LAVA_CAULDRON;
+    }
+
+    private PlayerData getPlayerData(SkyBlockPlayer player) {
+        return playerData.computeIfAbsent(player, p -> new PlayerData());
+    }
+
+    public static class PlayerData {
+        public boolean isDropping;
+        public Double yLevel;
+        public boolean hasChangedVelocity;
     }
 }

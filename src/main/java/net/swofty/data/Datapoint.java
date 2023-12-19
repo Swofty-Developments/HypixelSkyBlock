@@ -43,7 +43,7 @@ public abstract class Datapoint<T> {
         this.value = value;
 
         Player player = MinecraftServer.getConnectionManager().getPlayer(dataHandler.getUuid());
-        if (player != null) {
+        if (player != null && data.onChange != null) {
             data.onChange.accept(player, this);
         }
     }

@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
@@ -32,7 +31,9 @@ import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.PlayerRegionChange;
+import net.swofty.mission.MissionData;
+import net.swofty.mission.SkyBlockMission;
+import net.swofty.mission.SkyBlockMissionDynamic;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.server.SkyBlockServerAttributes;
@@ -188,8 +189,18 @@ public class SkyBlock {
         /**
          * Register events
          */
-        loopThroughPackage("net.swofty.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheCommand);
-        loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheCommand);
+        loopThroughPackage("net.swofty.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
+        loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
+
+        // Register missions
+        loopThroughPackage("net.swofty.mission.missions", SkyBlockMission.class)
+                .forEach((event) -> {
+                    try {
+                        event.cacheEvent();
+                        MissionData.registerMission(event.getClass());
+                    } catch (Exception e) {}
+                });
+
         SkyBlockEvent.register(globalEventHandler);
 
         /**

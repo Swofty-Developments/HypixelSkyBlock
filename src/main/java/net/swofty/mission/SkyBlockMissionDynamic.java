@@ -1,4 +1,6 @@
 package net.swofty.mission;
 
-public class SkyBlockMissionDynamic {
+import net.swofty.event.SkyBlockEvent;
+
+public abstract class SkyBlockMissionDynamic extends SkyBlockMission {
 }

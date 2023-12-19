@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.entity.npc.NPCParameters;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.gui.inventory.inventories.GUIBanker;
+import net.swofty.mission.MissionData;
 import net.swofty.user.SkyBlockPlayer;
 
 public class NPCBanker extends SkyBlockNPC {
@@ -39,5 +40,11 @@ public class NPCBanker extends SkyBlockNPC {
     @Override
     public void onClick(PlayerClickNPCEvent e) {
         new GUIBanker().open(e.player());
+
+        MissionData missionData = e.player().getMissionData();
+
+        if (missionData.isCurrentlyActive("talk_to_banker")) {
+            missionData.endMission("talk_to_banker");
+        }
     }
 }
