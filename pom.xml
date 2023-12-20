@@ -72,9 +72,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.Minestom</groupId>
-            <artifactId>Minestom</artifactId>
-            <version>1.19-6c1946c489-1</version>
+            <groupId>com.github.hollow-cube</groupId>
+            <artifactId>minestom-ce</artifactId>
+            <version>8a9029c80c</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.shrinkwrap.resolver</groupId>

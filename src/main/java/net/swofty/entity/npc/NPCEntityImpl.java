@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -38,16 +39,23 @@ public class NPCEntityImpl extends Entity {
     public void updateNewViewer(@NotNull Player player) {
         super.updateNewViewer(player);
 
-        var properties = new ArrayList<PlayerInfoPacket.AddPlayer.Property>();
+
+        List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
         if (skinTexture != null && skinSignature != null) {
-            properties.add(new PlayerInfoPacket.AddPlayer.Property("textures", skinTexture, skinSignature));
+            properties.add(new PlayerInfoUpdatePacket.Property("textures", skinTexture, skinSignature));
         }
 
         player.sendPackets(
-                new PlayerInfoPacket(
-                        PlayerInfoPacket.Action.ADD_PLAYER,
-                        new PlayerInfoPacket.AddPlayer(uuid, username, properties, GameMode.CREATIVE, 0, Component.text("§8[NPC] " + this.uuid.toString().substring(0, 8)), null)
-                ),
+                new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                        new PlayerInfoUpdatePacket.Entry(
+                                uuid,
+                                username,
+                                properties,
+                                false,
+                                0,
+                                GameMode.CREATIVE,
+                                Component.text("§8[NPC] " + this.uuid.toString().substring(0, 8)),
+                                null)),
                 new SpawnPlayerPacket(getEntityId(), getUuid(), getPosition()),
                 new EntityHeadLookPacket(getEntityId(), getPosition().yaw()),
                 new EntityMetaDataPacket(getEntityId(), Map.of(17, Metadata.Byte((byte) 127)))
@@ -57,10 +65,7 @@ public class NPCEntityImpl extends Entity {
         packetsSent.add(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (packetsSent.contains(player)) {
-                player.sendPacket(new PlayerInfoPacket(
-                        PlayerInfoPacket.Action.REMOVE_PLAYER,
-                        new PlayerInfoPacket.RemovePlayer(uuid)
-                ));
+                player.sendPacket(new PlayerInfoRemovePacket(uuid));
             }
         }, TaskSchedule.seconds(3), TaskSchedule.stop());
     }
@@ -69,9 +74,7 @@ public class NPCEntityImpl extends Entity {
     public void updateOldViewer(@NotNull Player player) {
         super.updateOldViewer(player);
 
-        player.sendPacket(new PlayerInfoPacket(
-                PlayerInfoPacket.Action.REMOVE_PLAYER,
-                new PlayerInfoPacket.RemovePlayer(getUuid())));
+        player.sendPacket(new PlayerInfoRemovePacket(getUuid()));
 
         packetsSent.remove(player);
     }

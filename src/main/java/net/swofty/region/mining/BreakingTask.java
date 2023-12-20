@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
@@ -15,14 +16,12 @@ public class BreakingTask {
       private int counter = 0;
       private final SkyBlockPlayer player;
       private final PositionedBlock block;
-      private final SkyBlockItem item;
       private final double breakTime;
       private TaskSchedule nextSchedule;
 
       public BreakingTask(SkyBlockPlayer player, PositionedBlock block, SkyBlockItem item) {
             this.player = player;
             this.block = block;
-            this.item = item;
 
             double miningTime = player.getTimeToMine(item, block.block());
             if (miningTime < 1 && miningTime != -1) {
@@ -43,7 +42,12 @@ public class BreakingTask {
             counter += 1;
 
             if (counter >= breakTime) {
-                  MinecraftServer.getGlobalEventHandler().call(new PlayerBlockBreakEvent(player, block.block(), block.block(), block.pos()));
+                  MinecraftServer.getGlobalEventHandler().call(new PlayerBlockBreakEvent(
+                          player,
+                          block.block(),
+                          block.block(),
+                          block.pos(),
+                          BlockFace.BOTTOM));
 
                   this.counter = 0;
                   MinecraftServer.getSchedulerManager().scheduleTask(() -> {

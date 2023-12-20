@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
@@ -38,7 +39,6 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
             PlayerDamageSkyBlockBlock e = (PlayerDamageSkyBlockBlock) event;
             SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
             SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(e.getBlockPosition());
-
 
             if (e.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING
                     || region == null

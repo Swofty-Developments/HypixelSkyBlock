@@ -5,8 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.network.packet.server.play.PlayerInfoPacket;
-import net.swofty.utility.Acronym;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -17,16 +15,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtility {
-    public static char ALPHABET[] = {
+    public static char[] ALPHABET = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
-
-    public static PlayerInfoPacket addPlayerInfoPacket(UUID uuid, String username, PlayerSkin skin) {
-        var textureProperty = new PlayerInfoPacket.AddPlayer.Property("textures", skin.textures(), skin.signature());
-        var playerEntry = new PlayerInfoPacket.AddPlayer(uuid, username, Collections.singletonList(textureProperty), GameMode.CREATIVE, 0, Component.text(username), null);
-
-        return new PlayerInfoPacket(PlayerInfoPacket.Action.ADD_PLAYER, Collections.singletonList(playerEntry));
-    }
 
     public static String getTextFromComponent(Component component) {
         if (!(component instanceof TextComponent))

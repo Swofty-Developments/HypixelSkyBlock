@@ -47,6 +47,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {
             SkyBlockSignGUI.signGUIs.get(player).complete(null);
             SkyBlockSignGUI.signGUIs.remove(player);
+            SkyBlockSignGUI.signPos.remove(player);
         }
         if (SkyBlockAnvilGUI.anvilGUIs.containsKey(player)) {
             SkyBlockAnvilGUI.anvilGUIs.get(player).getValue().complete(null);

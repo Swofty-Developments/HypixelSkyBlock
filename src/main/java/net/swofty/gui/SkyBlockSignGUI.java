@@ -1,24 +1,28 @@
 package net.swofty.gui;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.gamedata.tags.Tag;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.BlockChangePacket;
 import net.minestom.server.network.packet.server.play.BlockEntityDataPacket;
 import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.user.SkyBlockPlayer;
-import org.jglrxavpok.hephaistos.nbt.NBT;
-import org.jglrxavpok.hephaistos.nbt.NBTCompound;
+import org.jglrxavpok.hephaistos.nbt.*;
+import org.jglrxavpok.hephaistos.nbt.mutable.MutableNBTCompound;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockSignGUI {
     public static Map<SkyBlockPlayer, CompletableFuture<String>> signGUIs = new HashMap<>();
-    private static final Pos SIGN_POSITION = new Pos(0, 0, 0);
+    public static Map<SkyBlockPlayer, Map.Entry<Pos, Block>> signPos = new HashMap<>();
     private final SkyBlockPlayer player;
 
     public SkyBlockSignGUI(SkyBlockPlayer player) {
@@ -26,22 +30,42 @@ public class SkyBlockSignGUI {
     }
 
     public CompletableFuture<String> open(String[] text) {
+        Pos pos = player.getPosition().add(0, 6, 0);
+
         NBTCompound compound = new NBTCompound().withEntries(
-                NBT.Entry("Color", NBT.String("black")),
-                NBT.Entry("GlowingText", NBT.Byte(0)),
-                NBT.Entry("Text1", NBT.String("{\"text\":\"\"}")),
-                NBT.Entry("Text2", NBT.String("{\"text\":\"^^^^^^^^\"}")),
-                NBT.Entry("Text3", NBT.String("{\"text\":\"" + text[0] + "\"}")),
-                NBT.Entry("Text4", NBT.String("{\"text\":\"" + text[1] + "\"}"))
+                NBT.Entry("is_waxed", NBT.Byte(0)),
+                NBT.Entry("back_text", NBT.Compound(new MutableNBTCompound()
+                        .set("has_glowing_text", NBT.Byte(0))
+                        .set("color", NBT.String("black"))
+                        .set("messages", new NBTList<>(NBTType.TAG_String, List.of(
+                                NBT.String("{\"text\":\"\"}"),
+                                NBT.String("{\"text\":\"\"}"),
+                                NBT.String("{\"text\":\"\"}"),
+                                NBT.String("{\"text\":\"\"}")
+                        )))
+                        .asMapView())),
+                NBT.Entry("front_text", NBT.Compound(new MutableNBTCompound()
+                        .set("has_glowing_text", NBT.Byte(0))
+                        .set("color", NBT.String("black"))
+                        .set("messages", new NBTList<>(NBTType.TAG_String, List.of(
+                                NBT.String("{\"text\":\"\"}"),
+                                NBT.String("{\"text\":\"^^^^^^^^\"}"),
+                                NBT.String("{\"text\":\"" + text[0] + "\"}"),
+                                NBT.String("{\"text\":\"" + text[1] + "\"}")
+                        )))
+                        .asMapView()))
         );
 
         player.sendPackets(
-                new BlockChangePacket(SIGN_POSITION, Block.OAK_SIGN),
-                new BlockEntityDataPacket(SIGN_POSITION, Block.OAK_SIGN.registry().blockEntityId(), compound),
-                new OpenSignEditorPacket(SIGN_POSITION)
+                new BlockChangePacket(pos, Block.OAK_SIGN),
+                new BlockEntityDataPacket(pos, Block.OAK_SIGN.registry().blockEntityId(), compound)
         );
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            player.sendPacket(new OpenSignEditorPacket(pos, true));
+        }, TaskSchedule.tick(2), TaskSchedule.stop());
 
         CompletableFuture<String> future = new CompletableFuture<>();
+        signPos.put(player, Map.entry(pos, player.getInstance().getBlock(pos)));
         signGUIs.put(player, future);
         return future;
     }

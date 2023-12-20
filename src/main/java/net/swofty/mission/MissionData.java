@@ -6,12 +6,10 @@ import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.region.RegionType;
 import net.swofty.serializer.MissionDataSerializer;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -168,6 +166,38 @@ public class MissionData {
         public String toString() {
             return MissionData.getMissionClass(missionID).getName();
         }
+
+        public List<String> getObjectiveCompleteText(SkyBlockPlayer player, List<String> rewards) {
+            SkyBlockMission mission = MissionData.getMissionClass(missionID);
+
+            if (rewards == null || rewards.isEmpty())
+                return Arrays.asList(
+                        "§7 ",
+                        "§6§l  OBJECTIVE COMPLETE",
+                        "§7  " + mission.getName(),
+                        "§7 ");
+
+            List<String> display = Arrays.asList(
+                    "§7 ",
+                    "§6§l  OBJECTIVE COMPLETE",
+                    "§7  " + mission.getName(),
+                    "§7 ",
+                    "§a§l    REWARDS"
+            );
+            display.addAll(rewards.stream().map(reward -> "§8    +" + reward).toList());
+            display.add("§7 ");
+            return display;
+        }
+
+        public List<String> getNewObjectiveText(SkyBlockPlayer player) {
+            SkyBlockMission mission = MissionData.getMissionClass(missionID);
+
+            return Arrays.asList(
+                    "§7 ",
+                    "§6§l  NEW OBJECTIVE",
+                    "§f  " + mission.getName(),
+                    "§7 ");
+        }
     }
 
     public static SkyBlockMission getMissionClass(String missionID) {
@@ -179,7 +209,7 @@ public class MissionData {
             SkyBlockMission mission = skyBlockMission.newInstance();
             missionClassCache.put(mission.getID(), mission);
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            Logger.info(e.getStackTrace());
         }
     }
 }

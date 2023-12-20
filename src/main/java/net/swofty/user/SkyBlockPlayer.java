@@ -44,6 +44,8 @@ public class SkyBlockPlayer extends Player {
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     @Getter
     private PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
+    @Getter
+    private SkyBlockIsland skyBlockIsland = null;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -53,6 +55,7 @@ public class SkyBlockPlayer extends Player {
             SkyBlock.offlineUUIDs.remove(uuid);
         }
 
+        skyBlockIsland = new SkyBlockIsland(this);
         joined = System.currentTimeMillis();
     }
 
