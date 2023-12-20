@@ -1,23 +1,13 @@
 package net.swofty.event.actions.player;
 
-import lombok.extern.java.Log;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.swofty.SkyBlock;
-import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointRank;
-import net.swofty.mission.MissionData;
-import net.swofty.mission.missions.MissionTalkToBanker;
-import net.swofty.user.LogHandler;
-import net.swofty.user.SkyBlockIsland;
-import net.swofty.user.SkyBlockPlayer;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.user.categories.Rank;
-import net.swofty.user.statistics.StatisticDisplayReplacement;
-import org.tinylog.Logger;
+import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Miscellaneous join stuff",
         node = EventNodes.PLAYER,
