@@ -9,6 +9,7 @@ import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
+import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
@@ -33,10 +34,10 @@ import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.SkyBlockMission;
-import net.swofty.mission.SkyBlockMissionDynamic;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
-import net.swofty.server.SkyBlockServerAttributes;
+import net.swofty.server.attribute.SkyBlockServerAttributes;
+import net.swofty.server.eventcaller.CustomEventCaller;
 import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
@@ -191,6 +192,7 @@ public class SkyBlock {
          */
         loopThroughPackage("net.swofty.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
         loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
+        CustomEventCaller.start();
 
         // Register missions
         loopThroughPackage("net.swofty.mission.missions", SkyBlockMission.class)
@@ -224,6 +226,7 @@ public class SkyBlock {
          */
         minecraftServer.start("0.0.0.0", 25530);
         long endTime = System.currentTimeMillis();
+        MinecraftServer.setBrandName("SkyBlock");
         Logger.info("Started server in " + (endTime - startTime) + "ms");
     }
 

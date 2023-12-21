@@ -1,4 +1,4 @@
-package net.swofty.server;
+package net.swofty.server.attribute;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.data.mongodb.AttributeDatabase;
-import net.swofty.server.attributes.AttributeLong;
+import net.swofty.server.attribute.attributes.AttributeLong;
 import org.bson.Document;
 
 import java.util.Arrays;

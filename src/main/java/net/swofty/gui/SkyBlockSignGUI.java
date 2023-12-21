@@ -21,8 +21,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockSignGUI {
-    public static Map<SkyBlockPlayer, CompletableFuture<String>> signGUIs = new HashMap<>();
-    public static Map<SkyBlockPlayer, Map.Entry<Pos, Block>> signPos = new HashMap<>();
+    public static Map<SkyBlockPlayer, SignGUI> signGUIs = new HashMap<>();
     private final SkyBlockPlayer player;
 
     public SkyBlockSignGUI(SkyBlockPlayer player) {
@@ -65,8 +64,9 @@ public class SkyBlockSignGUI {
         }, TaskSchedule.tick(2), TaskSchedule.stop());
 
         CompletableFuture<String> future = new CompletableFuture<>();
-        signPos.put(player, Map.entry(pos, player.getInstance().getBlock(pos)));
-        signGUIs.put(player, future);
+        signGUIs.put(player, new SignGUI(future, pos, player.getInstance().getBlock(pos)));
         return future;
     }
+
+    public record SignGUI(CompletableFuture<String> future, Pos pos, Block block) { }
 }

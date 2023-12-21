@@ -7,6 +7,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
@@ -16,6 +17,8 @@ import net.swofty.data.datapoints.DatapointMissionData;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.updater.PlayerItemOrigin;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
 import net.swofty.region.mining.MineableBlock;
 import net.swofty.region.SkyBlockRegion;
@@ -117,6 +120,11 @@ public class SkyBlockPlayer extends Player {
 
     public void setMana(float mana) {
         this.mana = mana;
+    }
+
+    public void addAndUpdateItem(SkyBlockItem item) {
+        ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, PlayerItemOrigin.INVENTORY_SLOT, item.getItemStack());
+        this.getInventory().addItemStack(toAdd);
     }
 
     public float getMaxMana() {

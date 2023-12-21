@@ -104,8 +104,12 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
     public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(SkyBlockPlayer player) {}
+    public void suddenlyQuit(SkyBlockPlayer player) {
+
+    }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {}
+    public void onBottomClick(InventoryPreClickEvent e) {
+        e.setCancelled(true);
+    }
 }

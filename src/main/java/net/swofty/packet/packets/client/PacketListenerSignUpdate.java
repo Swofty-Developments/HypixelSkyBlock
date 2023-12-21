@@ -21,15 +21,14 @@ public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
         ClientUpdateSignPacket signPacket = (ClientUpdateSignPacket) packet;
 
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {
-            SkyBlockSignGUI.signGUIs.get(player).complete(signPacket.lines().get(0));
-            SkyBlockSignGUI.signGUIs.remove(player);
+            SkyBlockSignGUI.SignGUI signGUI = SkyBlockSignGUI.signGUIs.get(player);
+            signGUI.future().complete(signPacket.lines().get(0));
 
             player.sendPacket(
-                    new BlockChangePacket(SkyBlockSignGUI.signPos.get(player).getKey(),
-                            SkyBlockSignGUI.signPos.get(player).getValue())
+                    new BlockChangePacket(signGUI.pos(), signGUI.block())
             );
 
-            SkyBlockSignGUI.signPos.remove(player);
+            SkyBlockSignGUI.signGUIs.remove(player);
         }
     }
 }

@@ -44,6 +44,14 @@ public final class SkyBlockCalendar {
             return ((int) (getElapsed() / DAY) % 31) + 1;
       }
 
+      public static int getHour() {
+            int currentTime = (int) ((getElapsed() % DAY) - 6000);
+            if (currentTime < 0) currentTime += DAY; // Adjust if before 6:00AM
+            int hours = 6 + (currentTime / 1000); // 1 hour = 1000 units in elapsed time
+            if (hours >= 24) hours -= 24; // Adjust if the time is past midnight
+            return hours;
+      }
+
       public static String getMonthName(int month) {
             if (month < 1 || month > 12)
                   return "Unknown Month";
@@ -66,7 +74,7 @@ public final class SkyBlockCalendar {
             int currentTime = (int) ((elapsed % DAY) - 6000);
             if (currentTime < 0) currentTime += DAY;
             int hours = 6 + (currentTime / 1000);
-            int minutes = (int) ((currentTime % ((hours - 6) * 1000.0)) / 16.66666);
+            int minutes = (int) ((currentTime % 1000) * 60 / 1000); // Corrected minutes calculation
             String formattedMinutes = String.format("%02d", minutes);
             if (hours >= 24) hours -= 24;
             if (hours < 6 || hours >= 20) isDaytime = false;

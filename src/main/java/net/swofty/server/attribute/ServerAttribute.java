@@ -1,4 +1,4 @@
-package net.swofty.server;
+package net.swofty.server.attribute;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;

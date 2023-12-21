@@ -8,9 +8,8 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.PlayerRegionChange;
+import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
-import net.swofty.serializer.MissionDataSerializer;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
@@ -25,7 +24,6 @@ import java.util.UUID;
 
 public class SkyBlockScoreboard {
     private static Map<UUID, Sidebar> sidebarCache = new HashMap<>();
-    private static Map<UUID, SkyBlockRegion> regionCache = new HashMap<>();
     private static Integer skyblockName = 0;
 
     public static void start() {
@@ -49,16 +47,6 @@ public class SkyBlockScoreboard {
 
                 if (sidebarCache.containsKey(player.getUuid())) {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
-                }
-                // Handle PlayerRegionChange as a custom event
-                if (regionCache.containsKey(player.getUuid())) {
-                    if (regionCache.get(player.getUuid()) != region) {
-                        SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChange(player, regionCache.get(player.getUuid()), region));
-                        regionCache.put(player.getUuid(), region);
-                    }
-                } else {
-                    SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChange(player, null, region));
-                    regionCache.put(player.getUuid(), region);
                 }
 
                 Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false));
