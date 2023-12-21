@@ -24,8 +24,8 @@ public class ActionPlayerMoveWhileInventory extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerMoveEvent.getPlayer();
 
         if (player.getOpenInventory() != null) {
-            player.closeInventory();
-            player.sendMessage("§cYou cannot open an inventory while moving!");
+            // player.closeInventory();
+            // player.sendMessage("§cYou cannot open an inventory while moving!");
         }
     }
 }
