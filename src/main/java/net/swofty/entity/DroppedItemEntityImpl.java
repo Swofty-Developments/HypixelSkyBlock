@@ -35,7 +35,10 @@ public class DroppedItemEntityImpl extends Entity {
         meta.setShadowRadius(0.2f);
         meta.setShadowStrength(5);
 
+        setAutoViewable(false);
+
         this.scheduleRemove(Duration.ofSeconds(60));
+        this.addViewer(player);
 
         MinecraftServer.getSchedulerManager().submitTask(() -> {
             if (instance == null) {
