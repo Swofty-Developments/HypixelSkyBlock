@@ -5,6 +5,8 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.Material;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ public class StringUtility {
     public static char[] ALPHABET = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
+
+    public static Material getMaterialFromBlock(Block block) {
+        return Material.fromNamespaceId(block.namespace());
+    }
 
     public static String getTextFromComponent(Component component) {
         if (!(component instanceof TextComponent))

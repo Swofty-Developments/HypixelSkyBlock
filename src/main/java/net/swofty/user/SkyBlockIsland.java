@@ -1,6 +1,6 @@
 package net.swofty.user;
 
-import lombok.Getter;
+import net.hollowcube.polar.*;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.*;
 import net.minestom.server.timer.ExecutionType;
@@ -10,6 +10,8 @@ import net.swofty.SkyBlock;
 import net.swofty.data.mongodb.IslandDatabase;
 import org.bson.Document;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockIsland {
@@ -22,7 +24,7 @@ public class SkyBlockIsland {
         this.database = new IslandDatabase(player.getUuid().toString());
     }
 
-    public CompletableFuture<SharedInstance> getShareInstance() {
+    public CompletableFuture<SharedInstance> getSharedInstance() {
         InstanceManager manager = MinecraftServer.getInstanceManager();
         CompletableFuture<SharedInstance> future = new CompletableFuture<>();
 
@@ -34,9 +36,15 @@ public class SkyBlockIsland {
 
             if (!database.exists()) {
                 InstanceContainer temporaryInstance = manager.createInstanceContainer();
-                temporaryInstance.setChunkLoader(new AnvilLoader(ISLAND_TEMPLATE_NAME));
-
+                PolarWorld world = null;
+                try {
+                    world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(2));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 islandInstance = manager.createSharedInstance(temporaryInstance);
+                new PolarLoader(world).loadInstance(islandInstance);
+
                 this.created = true;
 
                 future.complete(islandInstance);
