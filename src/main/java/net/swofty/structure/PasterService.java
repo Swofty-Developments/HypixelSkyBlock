@@ -1,4 +1,4 @@
-package net.swofty.utility;
+package net.swofty.structure;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;

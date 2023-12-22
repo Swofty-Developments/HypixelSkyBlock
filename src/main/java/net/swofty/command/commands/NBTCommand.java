@@ -8,7 +8,11 @@ import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "iteminfo", description = "Returns the players held item info", usage = "/nbt", permission = Rank.HELPER, allowsConsole = false)
+@CommandParameters(aliases = "iteminfo",
+        description = "Returns the players held item info",
+        usage = "/nbt",
+        permission = Rank.HELPER,
+        allowsConsole = false)
 public class NBTCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {

@@ -3,36 +3,38 @@ package net.swofty.user;
 import lombok.Getter;
 import net.hollowcube.polar.*;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.*;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.NamespaceID;
-import net.minestom.server.world.DimensionType;
-import net.minestom.server.world.DimensionTypeManager;
 import net.swofty.SkyBlock;
 import net.swofty.data.mongodb.IslandDatabase;
-import net.swofty.utility.PasterService;
-import org.bson.Document;
+import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.IslandCreatedEvent;
+import net.swofty.event.custom.IslandLoadedEvent;
+import net.swofty.event.custom.IslandUnloadEvent;
 import org.bson.types.Binary;
-import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockIsland {
-    private static String ISLAND_TEMPLATE_NAME = "hypixel_island_template";
-    private IslandDatabase database;
+    private static final String ISLAND_TEMPLATE_NAME = "hypixel_island_template";
+
+    @Getter
+    private final IslandDatabase database;
+    private final SkyBlockPlayer owner;
     @Getter
     private Boolean created = false;
+    @Getter
     private SharedInstance islandInstance;
     private PolarWorld world;
 
     public SkyBlockIsland(SkyBlockPlayer player) {
         this.database = new IslandDatabase(player.getUuid().toString());
+        this.owner = player;
     }
 
     public CompletableFuture<SharedInstance> getSharedInstance() {
@@ -48,12 +50,18 @@ public class SkyBlockIsland {
             InstanceContainer temporaryInstance = manager.createInstanceContainer(MinecraftServer.getDimensionTypeManager().getDimension(
                     NamespaceID.from("skyblock:island")
             ));
+
             if (!database.exists()) {
                 try {
                     world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
                 } catch (IOException e) {
+                    // TODO: Proper error handling
                     throw new RuntimeException(e);
                 }
+
+                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+                    SkyBlockEvent.callSkyBlockEvent(new IslandCreatedEvent(this.owner, this));
+                }, TaskSchedule.tick(1), TaskSchedule.stop());
             } else {
                 world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
             }
@@ -63,12 +71,7 @@ public class SkyBlockIsland {
 
             this.created = true;
 
-            PasterService.fill(
-                    new Pos(0, 104, 35),
-                    new Pos(-2, 100, 35),
-                    Block.NETHER_PORTAL,
-                    islandInstance
-            );
+            SkyBlockEvent.callSkyBlockEvent(new IslandLoadedEvent(this.owner, this));
 
             future.complete(islandInstance);
         }).start();
@@ -80,6 +83,8 @@ public class SkyBlockIsland {
         if (islandInstance == null) return;
 
         if (islandInstance.getPlayers().isEmpty()) {
+            SkyBlockEvent.callSkyBlockEvent(new IslandUnloadEvent(this.owner, this));
+
             save();
             this.created = false;
             islandInstance.getChunks().forEach(chunk -> {
