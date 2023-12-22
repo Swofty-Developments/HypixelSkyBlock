@@ -15,6 +15,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Checks to see if a player clicks on a Villager NPC",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.HUB,
         requireDataLoaded = true)
 public class ActionPlayerClickedVillagerNPC extends SkyBlockEvent {
     @Override

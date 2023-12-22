@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 @EventParameters(description = "For the purpose of simulating fall damage",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerFall extends SkyBlockEvent {
     public static HashMap<SkyBlockPlayer, Integer> fallHeight = new HashMap<>();

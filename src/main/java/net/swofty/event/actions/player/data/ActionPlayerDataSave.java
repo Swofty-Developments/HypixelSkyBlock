@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @EventParameters(description = "Saves player data on quit",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerDataSave extends SkyBlockEvent {
 

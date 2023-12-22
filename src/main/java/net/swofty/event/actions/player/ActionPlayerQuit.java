@@ -24,6 +24,7 @@ import net.swofty.user.categories.Rank;
 
 @EventParameters(description = "Runs on player quit",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerQuit extends SkyBlockEvent {
 

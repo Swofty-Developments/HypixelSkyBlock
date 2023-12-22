@@ -13,6 +13,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles chat stuff",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerChat extends SkyBlockEvent {
 

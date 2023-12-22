@@ -9,6 +9,7 @@ import net.minestom.server.event.trait.PlayerEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
+import net.swofty.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +68,21 @@ public abstract class SkyBlockEvent {
                     // getEvent() returns the correct type for this SkyBlockEvent.
                     @SuppressWarnings("unchecked")
                     Event concreteEvent = eventType.cast(rawEvent);
+
+                    if (concreteEvent instanceof PlayerEvent playerEvent
+                            && skyBlockEvent.params.validLocations() != EventParameters.Location.EITHER) {
+                        SkyBlockPlayer player = (SkyBlockPlayer) playerEvent.getPlayer();
+
+                        if (skyBlockEvent.params.validLocations() == EventParameters.Location.HUB
+                                && player.isOnIsland()) {
+                            return;
+                        }
+
+                        if (skyBlockEvent.params.validLocations() == EventParameters.Location.ISLAND
+                                && !player.isOnIsland()) {
+                            return;
+                        }
+                    }
 
                     if (concreteEvent instanceof PlayerEvent
                             && skyBlockEvent.params.requireDataLoaded()

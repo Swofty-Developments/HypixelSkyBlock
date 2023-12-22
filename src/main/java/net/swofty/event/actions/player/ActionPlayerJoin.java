@@ -11,6 +11,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Miscellaneous join stuff",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerJoin extends SkyBlockEvent {
 

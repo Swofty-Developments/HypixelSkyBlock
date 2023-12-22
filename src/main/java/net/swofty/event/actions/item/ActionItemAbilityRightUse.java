@@ -15,6 +15,7 @@ import net.swofty.user.statistics.StatisticDisplayReplacement;
 
 @EventParameters(description = "Handles item ability use for right clicks",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionItemAbilityRightUse extends SkyBlockEvent {
     @Override

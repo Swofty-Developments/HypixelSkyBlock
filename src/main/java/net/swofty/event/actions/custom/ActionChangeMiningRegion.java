@@ -14,6 +14,7 @@ import net.swofty.utility.Groups;
 
 @EventParameters(description = "Handles mining fatigue in mining regions",
         node = EventNodes.CUSTOM,
+        validLocations = EventParameters.Location.HUB,
         requireDataLoaded = false)
 public class ActionChangeMiningRegion extends SkyBlockEvent {
     @Override

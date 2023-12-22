@@ -13,6 +13,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Picks up items",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerItemPickup extends SkyBlockEvent {
 

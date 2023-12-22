@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.entity.Player;
@@ -21,6 +21,7 @@ import java.util.UUID;
 
 @EventParameters(description = "Load player data on join",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerDataLoad extends SkyBlockEvent {
 

@@ -11,6 +11,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles seeing if NPCs are in range of a player",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.HUB,
         requireDataLoaded = true)
 public class ActionPlayerMoveNPC extends SkyBlockEvent {
     @Override

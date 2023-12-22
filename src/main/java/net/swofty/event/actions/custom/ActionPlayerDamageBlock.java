@@ -23,6 +23,7 @@ import java.util.UUID;
 
 @EventParameters(description = "Damage block",
         node = EventNodes.CUSTOM,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerDamageBlock extends SkyBlockEvent {
       public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();

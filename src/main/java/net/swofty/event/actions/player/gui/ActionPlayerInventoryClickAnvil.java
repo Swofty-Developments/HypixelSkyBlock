@@ -14,6 +14,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles when a player clicks on an AnvilGUI",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerInventoryClickAnvil extends SkyBlockEvent {
 

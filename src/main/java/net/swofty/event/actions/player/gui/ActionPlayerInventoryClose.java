@@ -12,6 +12,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles when a player closes an InventoryGUI",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerInventoryClose extends SkyBlockEvent {
 

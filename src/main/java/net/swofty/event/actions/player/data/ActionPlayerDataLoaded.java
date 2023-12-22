@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.player.data;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -19,6 +19,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Join miscellaneous stuff with data being loaded",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerDataLoaded extends SkyBlockEvent {
 

@@ -10,6 +10,7 @@ import net.swofty.user.statistics.StatisticDisplayReplacement;
 
 @EventParameters(description = "Handles the display of changing regions",
         node = EventNodes.CUSTOM,
+        validLocations = EventParameters.Location.HUB,
         requireDataLoaded = false)
 public class ActionRegionChangeDisplay extends SkyBlockEvent {
     @Override

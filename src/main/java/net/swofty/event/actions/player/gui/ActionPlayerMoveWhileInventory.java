@@ -10,6 +10,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Triggers when the player moves with an inventory open",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerMoveWhileInventory extends SkyBlockEvent {
 

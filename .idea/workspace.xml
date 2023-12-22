@@ -4,9 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Actually added paginated GUIs">
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/HubCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerTravel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/utility/PasterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/IslandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/IslandCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeMiningRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeMiningRegion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeTimeCalender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeTimeCalender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionPlayerDamageBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionPlayerDamageBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionRegionChangeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionRegionChangeDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionEnchantmentTableClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionEnchantmentTableClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoaded.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataSave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataSave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerGUIItemRestore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerGUIItemRestore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerItemPickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerItemPickup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerSkinInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerSkinInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionRegionBlockBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockBreak.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionRegionBlockPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockPlace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/PlayerActionDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/PlayerActionDamage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockIsland.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockIsland.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +54,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="139283" />
+    <option name="totalTimeSeconds" value="239997" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -37,15 +77,20 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/jdks/jdk-17.0.2+8/lib/src.zip!/java.base/java/lang/Object.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/entity/Entity.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/entity/Player.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/inventory/AbstractInventory.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/item/ItemStack.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/item/attribute/ItemAttribute.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/network/packet/server/play/PlayerInfoPacket.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/8a9029c80c/minestom-ce-8a9029c80c.jar!/net/minestom/server/network/packet/server/play/PlayerInfoUpdatePacket.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/net/kyori/adventure-api/4.11.0/adventure-api-4.11.0-sources.jar!/net/kyori/adventure/text/Component.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -60,7 +105,6 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -69,6 +113,10 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -107,7 +155,15 @@
       <updated>1702279149611</updated>
       <workItem from="1702279151591" duration="32097000" />
       <workItem from="1702375030814" duration="24407000" />
-      <workItem from="1702442546885" duration="106946000" />
+      <workItem from="1702442546885" duration="107924000" />
+      <workItem from="1702645696563" duration="36418000" />
+      <workItem from="1702761195890" duration="7287000" />
+      <workItem from="1702866674371" duration="20872000" />
+      <workItem from="1702951863295" duration="17501000" />
+      <workItem from="1703053603302" duration="15244000" />
+      <workItem from="1703075679888" duration="103000" />
+      <workItem from="1703113181512" duration="30578000" />
+      <workItem from="1703200685542" duration="6547000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
       <option name="closed" value="true" />
@@ -205,25 +261,217 @@
       <option name="project" value="LOCAL" />
       <updated>1702611508893</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Cleaned up implementation of Pagination with minor refractoring and method name changes">
+      <option name="closed" value="true" />
+      <created>1702612018248</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1702612018248</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Finished ServerAttribute implementation">
+      <option name="closed" value="true" />
+      <created>1702650541716</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1702650541716</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fully implemented mining with SkyBlockMiningConfiguration in RegionType">
+      <option name="closed" value="true" />
+      <created>1702670719542</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1702670719542</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added regions support within GitHub project and touched up Coal Mine configuration">
+      <option name="closed" value="true" />
+      <created>1702680497675</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1702680497675</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added Villagers with the blacksmith already being there, comes with a VillagerEntityImpl">
+      <option name="closed" value="true" />
+      <created>1702685217943</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1702685217943</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Implemented Dialogue abstraction for both types of NPCs (Villagers and Player)">
+      <option name="closed" value="true" />
+      <created>1702695857258</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1702695857258</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Implemented Custom Event support aswell as preparation for SkyBlock Missions">
+      <option name="closed" value="true" />
+      <created>1702708510612</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1702708510612</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Removed accidental logging, woops">
+      <option name="closed" value="true" />
+      <created>1702708672410</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1702708672410</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added base of onLoad and onSave for a players DataHandler">
+      <option name="closed" value="true" />
+      <created>1702762285177</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1702762285177</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Finished implementation of onSave and onLoad aswell as /build inside of BuildCommand.java">
+      <option name="closed" value="true" />
+      <created>1702794705105</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1702794705105</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Completely finished mining implementation aswell as onLoad and onSave, aswell as Villager and NPC looking">
+      <option name="closed" value="true" />
+      <created>1702881736482</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1702881736482</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Fixed Mining, playerId + 1">
+      <option name="closed" value="true" />
+      <created>1702882309943</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1702882309943</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added AntiAirJump, fixed cache removal aswell as cleaned up general logging, fixed Build Mode in regards to placing in ActionRegionBlockPlace.java">
+      <option name="closed" value="true" />
+      <created>1702890129879</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1702890129879</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fixed liquid and misc block checks for AirJump">
+      <option name="closed" value="true" />
+      <created>1702891240735</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1702891240735</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Updated libraries (12/20/2023)">
+      <option name="closed" value="true" />
+      <created>1703055365959</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1703055365960</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated to 1.20.1 through Minestom-CE and started work on SkyBlockIsland">
+      <option name="closed" value="true" />
+      <created>1703074825216</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1703074825216</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fixed minor bug">
+      <option name="closed" value="true" />
+      <created>1703075046285</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1703075046285</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Miscellaneous patches and README changes">
+      <option name="closed" value="true" />
+      <created>1703075772268</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1703075772268</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Implemented 1.20.1 support fully aswell as implementing item dropping and picking up. Also refractored CustomEventCaller for a cleaner result">
+      <option name="closed" value="true" />
+      <created>1703138815624</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1703138815624</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Per-player items">
+      <option name="closed" value="true" />
+      <created>1703140925301</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1703140925301</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland">
+      <option name="closed" value="true" />
+      <created>1703160363069</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1703160363069</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial Commit (v1.0)" />
-    <MESSAGE value="Updated POM.xml compilation for Manifest attributes" />
-    <MESSAGE value="Updated AnvilGUI from using packets to Minestoms API" />
-    <MESSAGE value="Implemented logging and updated GUI system" />
-    <MESSAGE value="Update all libraries" />
-    <MESSAGE value="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties" />
-    <MESSAGE value="Changed Holograms to being bottom-aligned" />
-    <MESSAGE value="Minor improvements across everything, implementation of ManaDisplayReplacement" />
     <MESSAGE value="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's" />
     <MESSAGE value="Added NonPlayerItemUpdater system and fixed Attribute hiding" />
     <MESSAGE value="Implemented Regions" />
     <MESSAGE value="Actually added paginated GUIs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actually added paginated GUIs" />
+    <MESSAGE value="Cleaned up implementation of Pagination with minor refractoring and method name changes" />
+    <MESSAGE value="Finished ServerAttribute implementation" />
+    <MESSAGE value="Fully implemented mining with SkyBlockMiningConfiguration in RegionType" />
+    <MESSAGE value="Added regions support within GitHub project and touched up Coal Mine configuration" />
+    <MESSAGE value="Added Villagers with the blacksmith already being there, comes with a VillagerEntityImpl" />
+    <MESSAGE value="Implemented Dialogue abstraction for both types of NPCs (Villagers and Player)" />
+    <MESSAGE value="Implemented Custom Event support aswell as preparation for SkyBlock Missions" />
+    <MESSAGE value="Removed accidental logging, woops" />
+    <MESSAGE value="Added base of onLoad and onSave for a players DataHandler" />
+    <MESSAGE value="Finished implementation of onSave and onLoad aswell as /build inside of BuildCommand.java" />
+    <MESSAGE value="Completely finished mining implementation aswell as onLoad and onSave, aswell as Villager and NPC looking" />
+    <MESSAGE value="Fixed Mining, playerId + 1" />
+    <MESSAGE value="Added AntiAirJump, fixed cache removal aswell as cleaned up general logging, fixed Build Mode in regards to placing in ActionRegionBlockPlace.java" />
+    <MESSAGE value="Fixed liquid and misc block checks for AirJump" />
+    <MESSAGE value="Updated libraries (12/20/2023)" />
+    <MESSAGE value="Updated to 1.20.1 through Minestom-CE and started work on SkyBlockIsland" />
+    <MESSAGE value="Fixed minor bug" />
+    <MESSAGE value="Miscellaneous patches and README changes" />
+    <MESSAGE value="Implemented 1.20.1 support fully aswell as implementing item dropping and picking up. Also refractored CustomEventCaller for a cleaner result" />
+    <MESSAGE value="Per-player items" />
+    <MESSAGE value="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland" />
+    <option name="LAST_COMMIT_MESSAGE" value="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland" />
   </component>
 </project>

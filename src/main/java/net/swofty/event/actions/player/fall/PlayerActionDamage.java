@@ -11,6 +11,7 @@ import net.swofty.utility.DamageIndicator;
 
 @EventParameters(description = "For damage indicators",
         node = EventNodes.ENTITY,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class PlayerActionDamage extends SkyBlockEvent
 {

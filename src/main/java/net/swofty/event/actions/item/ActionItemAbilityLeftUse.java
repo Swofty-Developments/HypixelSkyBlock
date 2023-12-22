@@ -16,6 +16,7 @@ import net.swofty.user.statistics.StatisticDisplayReplacement;
 
 @EventParameters(description = "Handles item ability use for left clicks",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionItemAbilityLeftUse extends SkyBlockEvent {
     @Override

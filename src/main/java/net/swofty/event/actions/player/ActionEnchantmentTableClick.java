@@ -17,6 +17,7 @@ import net.swofty.user.categories.Rank;
 
 @EventParameters(description = "Handles clicking on the enchantment table",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionEnchantmentTableClick extends SkyBlockEvent {
 

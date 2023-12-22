@@ -15,6 +15,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles when a player closes an AnvilGUI",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerInventoryCloseAnvil extends SkyBlockEvent {
 

@@ -1,3 +1,4 @@
+> This is a Minestom-implementation of a Hypixel-SkyBlock recreation hosted on my server at discord.gg/atlasmc. This implementation is nowhere near complete and is not ready for production. There are still portions of the codebase which are messy and aren't following proper Minestom standard practice.
 # Hypixel SkyBlock
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/atlasmc)
@@ -31,6 +32,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
    {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
 2. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
+2. Download a world copy of the Hypixel Island default template and put it in the same directory as your jar under the name `hypixel_island_template`.
 3. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
 4. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 

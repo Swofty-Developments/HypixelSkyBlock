@@ -11,6 +11,7 @@ import net.swofty.event.custom.CalenderHourlyUpdateEvent;
 
 @EventParameters(description = "Updates hourly from the calender",
         node = EventNodes.CUSTOM,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionChangeTimeCalender extends SkyBlockEvent {
 

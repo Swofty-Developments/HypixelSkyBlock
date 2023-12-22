@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.player.region;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
@@ -19,6 +19,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Protects the hub from being broken",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.HUB,
         requireDataLoaded = false)
 public class ActionRegionBlockBreak extends SkyBlockEvent {
 

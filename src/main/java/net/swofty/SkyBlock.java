@@ -17,7 +17,9 @@ import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.MathUtils;
+import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
+import net.minestom.server.world.DimensionType;
 import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
@@ -39,6 +41,7 @@ import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.server.attribute.SkyBlockServerAttributes;
 import net.swofty.server.eventcaller.CustomEventCaller;
+import net.swofty.user.SkyBlockIsland;
 import net.swofty.user.SkyBlockScoreboard;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.item.attribute.ItemAttribute;
@@ -139,6 +142,11 @@ public class SkyBlock {
          */
         SkyBlockRegion.cacheRegions();
         SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
+        MinecraftServer.getDimensionTypeManager().addDimension(
+                DimensionType.builder(NamespaceID.from("skyblock:island"))
+                        .ambientLight(2)
+                        .build());
+        SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
 
         /**
          * Debugging

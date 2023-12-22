@@ -106,11 +106,16 @@ public class SkyBlockRegion {
 
     public static void cacheRegions() {
         for (SkyBlockRegion region : RegionDatabase.getAllRegions()) {
-            if (region.getType() == null) {
+            if (region.getType() == null || region.getType() == RegionType.PRIVATE_ISLAND) {
                 region.delete();
             } else {
                 REGION_CACHE.put(region.getName(), region);
             }
         }
+        REGION_CACHE.put("island", new SkyBlockRegion("island", new Pos(0, 0, 0), new Pos(0, 0, 0), RegionType.PRIVATE_ISLAND));
+    }
+
+    public static SkyBlockRegion getIslandRegion() {
+        return REGION_CACHE.get("island");
     }
 }

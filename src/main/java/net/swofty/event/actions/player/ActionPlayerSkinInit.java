@@ -11,6 +11,7 @@ import net.swofty.event.SkyBlockEvent;
 
 @EventParameters(description = "Sets the players skin when init",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = true)
 public class ActionPlayerSkinInit extends SkyBlockEvent {
 

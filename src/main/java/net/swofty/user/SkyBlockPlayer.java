@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -29,6 +30,7 @@ import net.swofty.user.statistics.StatisticDisplayReplacement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 public class SkyBlockPlayer extends Player {
@@ -82,6 +84,10 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
     }
 
+    public boolean isOnIsland() {
+        return skyBlockIsland.getCreated();
+    }
+
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
         // Determine which replacement to update based on type
         StatisticDisplayReplacement currentReplacement =
@@ -115,6 +121,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public SkyBlockRegion getRegion() {
+        if (isOnIsland()) {
+            return SkyBlockRegion.getIslandRegion();
+        }
+
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
@@ -140,6 +150,22 @@ public class SkyBlockPlayer extends Player {
     public int getMiningSpeed() {
         return this.getStatistics().mainHandStatistics().get(ItemStatistic.MINING_SPEED) +
                 this.getStatistics().allArmorStatistics().get(ItemStatistic.MINING_SPEED);
+    }
+
+    public void sendToHub() {
+        this.setInstance(SkyBlock.getInstanceContainer(), new Pos(-2.5, 70, -69.5, 180, 0));
+        this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
+    }
+
+    public CompletableFuture<Boolean> sendToIsland() {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        skyBlockIsland.getSharedInstance().thenAccept(sharedInstance -> {
+            this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
+            this.teleport(new Pos(0.5, 100, 0.5, 0, 0));
+        });
+
+        return future;
     }
 
     public double getTimeToMine(SkyBlockItem item, Block b) {

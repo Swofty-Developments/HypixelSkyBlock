@@ -12,6 +12,7 @@ import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Restores the item from a players cursor when they close a gui",
         node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
 public class ActionPlayerGUIItemRestore extends SkyBlockEvent {
 
