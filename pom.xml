@@ -142,4 +142,24 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>github</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/Swofty-Developments/HypixelSkyBlock</url>
+                </repository>
+                <snapshotRepository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/Swofty-Developments/HypixelSkyBlock</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
