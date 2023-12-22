@@ -218,17 +218,7 @@ public class SkyBlock {
         /**
          * Handle ConnectionManager
          */
-        MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
-            String serverAddress = playerConnection.getServerAddress();
-            if (serverAddress.contains(crackedDomain)) {
-                // Player is attempting to connect through the Cracked domain
-                offlineUUIDs.add(UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes()));
-                return UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes());
-            } else {
-                // Player is attempting to connect through the Premium domain
-                return UUID.nameUUIDFromBytes(username.getBytes());
-            }
-        });
+        MojangAuth.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(SkyBlockPlayer::new);
 
         /**
