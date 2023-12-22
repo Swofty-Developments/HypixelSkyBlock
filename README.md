@@ -31,10 +31,11 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 ## Setup Guide
 1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
    {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
-2. Download a world copy of the Hypixel SkyBlock hub and put it in the same directory as your jar under the name `hypixel_hub`.
-2. Download a world copy of the Hypixel Island default template and put it in the same directory as your jar under the name `hypixel_island_template`.
-3. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
-4. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+2. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
+3. Get the Hypixel SkyBlock hub from the above download and put it in the same directory as your jar under the name `hypixel_hub`.
+4. Get the Hypixel Island default template from the above download and put it in the same directory as your jar under the name `hypixel_island_template`.
+5. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
+6. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 
 ## Credits
 
