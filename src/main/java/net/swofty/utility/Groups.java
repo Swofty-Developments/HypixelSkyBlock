@@ -1,12 +1,12 @@
 package net.swofty.utility;
 
+import net.minestom.server.item.Material;
 import net.swofty.region.RegionType;
 
 import java.util.Arrays;
 import java.util.List;
 
-public final class Groups
-{
+public final class Groups {
       public static final List<RegionType> MINING_REGIONS = Arrays.asList(
               RegionType.COAL_MINE,
               RegionType.GOLD_MINE,

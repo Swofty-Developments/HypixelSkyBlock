@@ -37,7 +37,7 @@ public class NonPlayerItemUpdater {
 
     private static ItemStack.Builder updateItemLore(ItemStack.Builder stack) {
         ItemLore lore = new ItemLore(stack.build());
-        lore.updateLore();
+        lore.updateLore(null);
 
         return stack.lore(lore.getStack().getLore());
     }

@@ -7,8 +7,7 @@ import java.util.Map;
 
 @Getter
 public class ItemStatistics {
-
-    private Map<ItemStatistic, Integer> statistics;
+    private final Map<ItemStatistic, Integer> statistics;
 
     // Private constructor used by the builder
     private ItemStatistics(Map<ItemStatistic, Integer> statistics) {
@@ -20,9 +19,13 @@ public class ItemStatistics {
         return new ItemStatisticsBuilder();
     }
 
+    public static ItemStatistics empty() {
+        return new ItemStatistics(new EnumMap<>(ItemStatistic.class));
+    }
+
     // Builder class
     public static class ItemStatisticsBuilder {
-        private Map<ItemStatistic, Integer> statistics = new EnumMap<>(ItemStatistic.class);
+        private final Map<ItemStatistic, Integer> statistics = new EnumMap<>(ItemStatistic.class);
 
         public ItemStatisticsBuilder with(ItemStatistic stat, Integer value) {
             this.statistics.put(stat, value);

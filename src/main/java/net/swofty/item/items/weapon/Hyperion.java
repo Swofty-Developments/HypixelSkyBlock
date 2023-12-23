@@ -20,7 +20,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility {
     }
 
     @Override
-    public ArrayList<String> getLore() {
+    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList("This item literally comes", "out of your mum and", "says §aHELLO §7lmao."));
     }
 

@@ -81,7 +81,7 @@ public class PlayerItemUpdater {
          * Update Lore
          */
         ItemLore lore = new ItemLore(stack);
-        lore.updateLore();
+        lore.updateLore(player);
         stack = lore.getStack();
 
         return stack.withAmount(stack.getAmount());

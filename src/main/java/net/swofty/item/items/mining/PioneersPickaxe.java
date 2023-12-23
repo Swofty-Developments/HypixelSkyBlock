@@ -1,7 +1,9 @@
 package net.swofty.item.items.mining;
 
+import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.item.impl.MiningTool;
+import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
 
@@ -17,7 +19,7 @@ public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool {
       }
 
       @Override
-      public ArrayList<String> getLore() {
+      public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
             return new ArrayList<>(Arrays.asList(
                     "§7§oThe very first pickaxe",
                     "§7§omodel! Invented by the famous",

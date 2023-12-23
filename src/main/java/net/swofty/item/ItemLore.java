@@ -5,12 +5,14 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
+import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.impl.CustomSkyBlockAbility;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +29,7 @@ public class ItemLore {
 
 
     @SneakyThrows
-    public void updateLore() {
+    public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
         AttributeHandler handler = item.getAttributeHandler();
 
@@ -57,8 +59,8 @@ public class ItemLore {
 
             // Handle Custom Item Lore
             CustomSkyBlockItem skyBlockItem = ((CustomSkyBlockItem) item.clazz.newInstance());
-            if (skyBlockItem.getLore() != null) {
-                skyBlockItem.getLore().forEach(line -> addLoreLine("§7" + line));
+            if (skyBlockItem.getLore(player, item) != null) {
+                skyBlockItem.getLore(player, item).forEach(line -> addLoreLine("§7" + line));
                 addLoreLine(null);
             }
 

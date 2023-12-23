@@ -1,6 +1,5 @@
 package net.swofty.item.impl;
 
-public interface MiningTool
-{
+public interface MiningTool {
       int getBreakingPower();
 }

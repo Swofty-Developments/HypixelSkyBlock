@@ -1,9 +1,12 @@
 package net.swofty.item.attribute;
 
+import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.Rarity;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
 import net.swofty.user.statistics.ItemStatistics;
+
+import java.util.stream.Stream;
 
 public class AttributeHandler {
     SkyBlockItem item;
@@ -22,6 +25,30 @@ public class AttributeHandler {
 
     public void setRarity(Rarity rarity) {
         ((ItemAttributeRarity) item.getAttribute("rarity")).setValue(rarity);
+    }
+
+    public boolean hasEnchantment(SkyBlockEnchantment.EnchantmentType type) {
+        return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
+                .enchantments()
+                .stream()
+                .anyMatch(enchantment -> enchantment.getType() == type);
+    }
+
+    public SkyBlockEnchantment getEnchantment(SkyBlockEnchantment.EnchantmentType type) {
+        return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
+                .enchantments()
+                .stream()
+                .filter(enchantment -> enchantment.getType() == type)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Stream<SkyBlockEnchantment> getEnchantments() {
+        return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue().enchantments().stream();
+    }
+
+    public void addEnchantment(SkyBlockEnchantment enchantment) {
+        ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue().addEnchantment(enchantment);
     }
 
     public ItemStatistics getStatistics() {

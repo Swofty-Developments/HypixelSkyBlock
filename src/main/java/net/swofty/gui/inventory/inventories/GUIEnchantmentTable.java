@@ -17,13 +17,16 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 
 public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
-    private Pos enchantmentTable;
-    private int bookshelfPower;
+    private static final int[] PAGINATED_SLOTS = new int[]{
+            12, 13, 14, 15, 16,
+            21, 22, 23, 24, 25,
+            30, 31, 32, 33, 34,
+    };
+    private final int bookshelfPower;
 
     public GUIEnchantmentTable(Instance instance, Pos enchantmentTable) {
         super("Enchantment Table", InventoryType.CHEST_6_ROW);
 
-        this.enchantmentTable = enchantmentTable;
         this.bookshelfPower = getBookshelfPower(instance, enchantmentTable);
 
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
