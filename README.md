@@ -17,7 +17,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 
 1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
 2. Ensure you have the `Java 17` SDK installed.
-3. Download the JAR file from the latest release on the GitHub page, it should be named `skyblock-1.0-SNAPSHOT.jar`.
+3. Download the JAR file from the latest release on the GitHub page, it'll be whichever one has a large file size and doesn't have 'ORIGINAL' in its name.
 4. Scroll down to Setup Guide to continue.
 
 ## Compilation Guide
