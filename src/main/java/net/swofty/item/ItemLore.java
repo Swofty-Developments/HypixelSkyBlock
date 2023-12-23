@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ItemLore {
-    private ArrayList<Component> loreLines = new ArrayList<>();
+    private final ArrayList<Component> loreLines = new ArrayList<>();
 
     @Getter
     private ItemStack stack;
@@ -36,7 +36,6 @@ public class ItemLore {
         boolean recombobulated = handler.isRecombobulated();
         ItemStatistics statistics = handler.getStatistics();
         Class<?> clazz = item.clazz;
-
 
         if (recombobulated) {
             rarity = rarity.upgrade();

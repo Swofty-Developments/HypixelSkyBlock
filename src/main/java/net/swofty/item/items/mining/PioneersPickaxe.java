@@ -8,11 +8,12 @@ import net.swofty.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool
-{
+public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool {
       @Override
       public ItemStatistics getStatistics() {
-            return ItemStatistics.builder().with(ItemStatistic.MINING_SPEED, 1).build();
+            return ItemStatistics.builder()
+                    .with(ItemStatistic.MINING_SPEED, 1)
+                    .build();
       }
 
       @Override

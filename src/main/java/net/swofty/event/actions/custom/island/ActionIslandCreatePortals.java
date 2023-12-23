@@ -5,7 +5,7 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.IslandCreatedEvent;
-import net.swofty.structure.IslandPortal;
+import net.swofty.structure.structures.IslandPortal;
 
 @EventParameters(description = "Handles creating portals on the players Island",
         node = EventNodes.CUSTOM,

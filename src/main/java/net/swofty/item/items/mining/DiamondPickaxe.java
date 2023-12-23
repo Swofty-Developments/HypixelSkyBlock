@@ -8,8 +8,7 @@ import net.swofty.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool
-{
+public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool {
       @Override
       public ItemStatistics getStatistics() {
             return ItemStatistics.builder()

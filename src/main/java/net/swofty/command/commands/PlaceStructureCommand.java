@@ -1,13 +1,10 @@
 package net.swofty.command.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
-import net.minestom.server.entity.GameMode;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
-import net.swofty.structure.IslandPortal;
-import net.swofty.structure.SkyBlockStructure;
+import net.swofty.structure.structures.IslandPortal;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 

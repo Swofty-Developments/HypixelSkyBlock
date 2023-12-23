@@ -2,7 +2,6 @@ package net.swofty.structure;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 
@@ -29,6 +28,13 @@ public abstract class SkyBlockStructure {
                 this.y + y,
                 rotateValue(this.z, z, CoordinateType.Z),
                 block);
+    }
+
+    protected void get(Instance instance, int x, int y, int z) {
+        instance.getBlock(
+                rotateValue(this.x, x, CoordinateType.X),
+                this.y + y,
+                rotateValue(this.z, z, CoordinateType.Z));
     }
 
     protected void fill(Instance instance, int x1, int y1, int z1, int x2, int y2, int z2, Block block) {
