@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
+import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.updater.PlayerItemOrigin;
@@ -21,8 +22,8 @@ import net.swofty.user.categories.Rank;
 public class EnchantCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<SkyBlockEnchantment.EnchantmentType> typeArgument =
-                ArgumentType.Enum("enchantment_type", SkyBlockEnchantment.EnchantmentType.class);
+        ArgumentEnum<EnchantmentType> typeArgument =
+                ArgumentType.Enum("enchantment_type", EnchantmentType.class);
         ArgumentInteger level = ArgumentType.Integer("level");
 
         command.addSyntax((sender, context) -> {

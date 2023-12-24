@@ -9,6 +9,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
@@ -107,7 +108,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
     }
 
     @SneakyThrows
-    public void updateFromItem(SkyBlockItem item, SkyBlockEnchantment.EnchantmentType selected) {
+    public void updateFromItem(SkyBlockItem item, EnchantmentType selected) {
         setTitle("Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())));
 
         Arrays.stream(PAGINATED_SLOTS).forEach(slot -> set(slot, ItemStackCreator.createNamedItemStack(
@@ -214,8 +215,8 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         }
 
         List<ItemGroups> itemGroups = ((Enchantable) type.clazz.newInstance()).getItemGroups();
-        List<SkyBlockEnchantment.EnchantmentType> enchantments = Arrays.stream(SkyBlockEnchantment.EnchantmentType.values())
-                .filter(enchantmentType -> enchantmentType.getGroups().stream().anyMatch(itemGroups::contains))
+        List<EnchantmentType> enchantments = Arrays.stream(EnchantmentType.values())
+                .filter(enchantmentType -> enchantmentType.getEnch().getGroups().stream().anyMatch(itemGroups::contains))
                 .toList();
 
         if (enchantments.isEmpty()) {
@@ -240,13 +241,13 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         if (selected == null) {
             enchantments = enchantments.stream().limit(15).toList();
             int i = 0;
-            for (SkyBlockEnchantment.EnchantmentType enchantmentType : enchantments) {
+            for (EnchantmentType enchantmentType : enchantments) {
                 int finalI = i;
                 set(new GUIClickableItem() {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        if (bookshelfPower < enchantmentType.getRequiredBookshelfPower()) {
-                            player.sendMessage("§cThis enchantment requires " + enchantmentType.getRequiredBookshelfPower() + " Bookshelf Power!");
+                        if (bookshelfPower < enchantmentType.getAsFromTable().getRequiredEnchantingLevel()) {
+                            player.sendMessage("§cThis enchantment requires " + enchantmentType.getAsFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
                             return;
                         }
 
@@ -263,20 +264,20 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         AttributeHandler attributeHandler = item.getAttributeHandler();
 
                         List<String> lore = new ArrayList<>();
-                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(), 30, " ")
+                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1), 30, " ")
                                 .forEach(line -> lore.add("§7" + line));
                         lore.add("§a ");
 
                         if (attributeHandler.hasEnchantment(enchantmentType)) {
                             lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " " +
-                                    StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).getLevel()));
+                                    StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).level()));
                         } else {
                             lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✖");
                         }
 
                         lore.add("§a ");
-                        if (bookshelfPower < enchantmentType.getRequiredBookshelfPower()) {
-                            lore.add("§cRequires " + enchantmentType.getRequiredBookshelfPower() + " Bookshelf Power!");
+                        if (bookshelfPower < enchantmentType.getAsFromTable().getRequiredBookshelfPower()) {
+                            lore.add("§cRequires " + enchantmentType.getAsFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
                         } else {
                             lore.add("§eClick to view!");
                         }
@@ -294,14 +295,10 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        int supportedLevel = selected.getSources().stream()
-                .filter(source -> source.sourceType() == SkyBlockEnchantment.EnchantmentType.SourceType.ENCHANTMENT_TABLE)
-                .mapToInt(SkyBlockEnchantment.EnchantmentType.EnchantmentSource::maxLevel)
-                .max()
-                .orElse(0);
+        int supportedLevel = selected.getAsFromTable().getLevelsFromTableToApply().length+1;
 
-        for (int level = 0; level < supportedLevel; level++) {
-            int finalLevel = level;
+        for (int level = 1; level <= supportedLevel; level++) {
+            final int finalLevel = level;
             set(new GUIClickableItem() {
 
                 @Override

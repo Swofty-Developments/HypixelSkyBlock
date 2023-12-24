@@ -1,5 +1,6 @@
 package net.swofty.item.attribute;
 
+import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.ItemType;
 import net.swofty.item.Rarity;
@@ -37,18 +38,18 @@ public class AttributeHandler {
         ((ItemAttributeRarity) item.getAttribute("rarity")).setValue(rarity);
     }
 
-    public boolean hasEnchantment(SkyBlockEnchantment.EnchantmentType type) {
+    public boolean hasEnchantment(EnchantmentType type) {
         return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
                 .enchantments()
                 .stream()
-                .anyMatch(enchantment -> enchantment.getType() == type);
+                .anyMatch(enchantment -> enchantment.type() == type);
     }
 
-    public SkyBlockEnchantment getEnchantment(SkyBlockEnchantment.EnchantmentType type) {
+    public SkyBlockEnchantment getEnchantment(EnchantmentType type) {
         return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
                 .enchantments()
                 .stream()
-                .filter(enchantment -> enchantment.getType() == type)
+                .filter(enchantment -> enchantment.type() == type)
                 .findFirst()
                 .orElse(null);
     }

@@ -52,6 +52,10 @@ public abstract class SkyBlockNPC {
 
         npcs.put(this, entity);
     }
+    
+    public void sendMessage(SkyBlockPlayer player, String message) {
+        player.sendMessage("§e[NPC] "+getName()+": §f"+message);
+    }
 
     public static SkyBlockNPC getFromImpl(NPCEntityImpl impl) {
         for (SkyBlockNPC npc : npcs.keySet()) {
