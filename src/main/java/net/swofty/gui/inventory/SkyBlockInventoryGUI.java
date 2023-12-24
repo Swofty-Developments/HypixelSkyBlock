@@ -26,6 +26,8 @@ public abstract class SkyBlockInventoryGUI {
     protected String title;
     protected InventoryType size;
     protected List<GUIItem> items;
+    private Inventory inventory;
+    private SkyBlockPlayer player;
 
     public SkyBlockInventoryGUI(String title, InventoryType size) {
         this.title = title;
@@ -264,7 +266,8 @@ public abstract class SkyBlockInventoryGUI {
      * @param player the player the gui is being opened for
      */
     public void open(SkyBlockPlayer player) {
-        Inventory inventory = new Inventory(size, getTitle());
+        this.player = player;
+        this.inventory = new Inventory(size, getTitle());
         InventoryGUIOpenEvent openEvent = new InventoryGUIOpenEvent(player, this, inventory);
 
         // Initializing GUI

@@ -20,6 +20,7 @@ import java.util.List;
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
     public Class<? extends CustomSkyBlockItem> clazz = null;
+    private int amount = 1;
 
     public SkyBlockItem(String itemType) {
         itemType = itemType.replace("minecraft:", "").toUpperCase();
@@ -78,6 +79,8 @@ public class SkyBlockItem {
     }
 
     public SkyBlockItem(ItemStack item) {
+        amount = item.getAmount();
+
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
             if (item.hasTag(Tag.String(attribute.getKey()))) {
                 attribute.setValue(attribute.loadFromString(item.getTag(Tag.String(attribute.getKey()))));
@@ -115,7 +118,7 @@ public class SkyBlockItem {
     }
 
     public ItemStack.Builder getItemStackBuilder() {
-        ItemStack.Builder itemStackBuilder = ItemStack.builder(getMaterial());
+        ItemStack.Builder itemStackBuilder = ItemStack.builder(getMaterial()).amount(amount);
 
         for (ItemAttribute attribute : attributes) {
             itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());

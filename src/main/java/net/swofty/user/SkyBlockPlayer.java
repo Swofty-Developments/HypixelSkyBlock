@@ -7,7 +7,9 @@ import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -133,7 +135,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void addAndUpdateItem(SkyBlockItem item) {
-        ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, PlayerItemOrigin.INVENTORY_SLOT, item.getItemStack());
+        ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, PlayerItemOrigin.INVENTORY_SLOT, item.getItemStack()).build();
         this.getInventory().addItemStack(toAdd);
     }
 
@@ -239,13 +241,14 @@ public class SkyBlockPlayer extends Player {
 
     @Override
     public void closeInventory() {
+        Inventory tempInv = this.getOpenInventory();
         super.closeInventory();
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(this.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());
 
             if (gui == null) return;
 
-            gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
+            gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
         }
     }

@@ -3,8 +3,10 @@ package net.swofty.enchantment;
 import lombok.Builder;
 import lombok.Getter;
 import net.swofty.utility.ItemGroups;
+import net.swofty.utility.StringUtility;
 
 import java.util.List;
+import java.util.function.Function;
 
 @Builder
 @Getter
@@ -36,20 +38,44 @@ public class SkyBlockEnchantment {
                 0,
                 List.of(),
                 List.of(new EnchantmentSource(SourceType.ENCHANTMENT_TABLE, 1, 5)),
-                ItemGroups.SWORD, ItemGroups.FISHING_WEAPON, ItemGroups.LONG_SWORD, ItemGroups.GAUNTLET),
+                (level) -> switch (level) {
+                    case 1 -> 9;
+                    case 2 -> 14;
+                    case 3 -> 18;
+                    case 4 -> 23;
+                    case 5 -> 27;
+                    case 6 -> 91;
+                    case 7 -> 179;
+                    default -> throw new IllegalStateException("Unexpected value: " + level);
+                }, ItemGroups.SWORD, ItemGroups.FISHING_WEAPON, ItemGroups.LONG_SWORD, ItemGroups.GAUNTLET),
+        EFFICIENCY("§7Increases how quickly your tool breaks blocks.",
+                0,
+                List.of(),
+                List.of(new EnchantmentSource(SourceType.ENCHANTMENT_TABLE, 1, 5),
+                        new EnchantmentSource(SourceType.REDSTONE_COLLECTION, 4, 5)),
+                (level) -> switch (level) {
+                    case 1 -> 9;
+                    case 2 -> 14;
+                    case 3 -> 18;
+                    case 4 -> 23;
+                    case 5 -> 27;
+                    default -> throw new IllegalStateException("Unexpected value: " + level);
+                }, ItemGroups.TOOLS),
         ;
 
         private final String description;
         private final int requiredBookshelfPower;
         private final List<EnchantmentType> conflicts;
         private final List<EnchantmentSource> sources;
+        private final Function<Integer, Integer> applyCostCalculation;
         private final List<ItemGroups> groups;
 
-        EnchantmentType(String description, int requiredBookshelfPower, List<EnchantmentType> conflicts, List<EnchantmentSource> sources, ItemGroups... groups) {
+        EnchantmentType(String description, int requiredBookshelfPower, List<EnchantmentType> conflicts, List<EnchantmentSource> sources, Function<Integer, Integer> applyCostCalculation, ItemGroups... groups) {
             this.description = description;
             this.requiredBookshelfPower = requiredBookshelfPower;
             this.conflicts = conflicts;
             this.sources = sources;
+            this.applyCostCalculation = applyCostCalculation;
             this.groups = List.of(groups);
         }
 
@@ -57,7 +83,17 @@ public class SkyBlockEnchantment {
 
         public enum SourceType {
             ENCHANTMENT_TABLE,
+            REDSTONE_COLLECTION,
             BAZAAR,
+            ;
+
+            @Override
+            public String toString() {
+                return StringUtility.toNormalCase(name()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("_", " "));
+            }
         }
     }
 }

@@ -23,6 +23,10 @@ public class ItemAttributeEnchantments extends ItemAttribute<SkyBlockEnchantment
     public SkyBlockEnchantment.ItemEnchantments loadFromString(String string) {
         List<SkyBlockEnchantment> enchantments = new ArrayList<>();
 
+        if (string.isEmpty()) {
+            return new SkyBlockEnchantment.ItemEnchantments(enchantments);
+        }
+
         String[] split = string.split(",");
         for (String enchantment : split) {
             enchantments.add(SkyBlockEnchantment.deserialize(enchantment));

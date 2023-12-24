@@ -2,6 +2,7 @@ package net.swofty.item.updater;
 
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -34,18 +35,18 @@ public class PlayerItemUpdater {
         return future;
     }
 
-    public static ItemStack playerUpdate(SkyBlockPlayer player, PlayerItemOrigin origin, ItemStack stack) {
-        if (!SkyBlockItem.isSkyBlockItem(stack)) {
+    public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, PlayerItemOrigin origin, ItemStack stack) {
+        if (!SkyBlockItem.isSkyBlockItem(stack) || stack.getMaterial().equals(Material.AIR)) {
             /**
              * Item is not SkyBlock item, so we just instance it here
              */
             SkyBlockItem item = new SkyBlockItem(stack.material());
-            ItemStack toSet = item.getItemStack();
+            ItemStack.Builder itemAsBuilder = item.getItemStackBuilder();
 
             for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
-                stack = stack.withTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
+                itemAsBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
             }
-            return stack.withMeta(toSet.meta());
+            return itemAsBuilder;
         }
 
         /**
@@ -60,7 +61,7 @@ public class PlayerItemUpdater {
             }
         }
         updateManager.clearQueue(player, origin);
-        stack = item.getItemStack().withAmount(stack.getAmount());
+        ItemStack.Builder toReturn = item.getItemStackBuilder().amount(stack.getAmount());
 
         /**
          * Update SkyBlock Item Instance
@@ -84,7 +85,7 @@ public class PlayerItemUpdater {
         lore.updateLore(player);
         stack = lore.getStack();
 
-        return stack.withAmount(stack.getAmount());
+        return toReturn.amount(stack.getAmount()).lore(stack.getLore()).displayName(stack.getDisplayName());
     }
 
     public static void updateLoop(Scheduler scheduler) {
@@ -96,7 +97,7 @@ public class PlayerItemUpdater {
                     ItemStack item = origin.getStack(player);
                     if (item == null) return;
 
-                    origin.setStack(player, playerUpdate(player, origin, item));
+                    origin.setStack(player, playerUpdate(player, origin, item).build());
                 });
             });
             return TaskSchedule.tick(1);

@@ -27,7 +27,6 @@ public class ItemLore {
         this.stack = stack;
     }
 
-
     @SneakyThrows
     public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);

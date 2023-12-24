@@ -16,25 +16,4 @@ public enum ItemGroups {
     GAUNTLET(),
     DRILL(),
     ;
-
-    public List<Material> materials;
-    public List<ItemType> itemTypes;
-
-    ItemGroups(List<Material> materials, List<ItemType> itemTypes) {
-        this.materials = materials;
-        this.itemTypes = itemTypes;
-    }
-
-    ItemGroups(ItemType... itemTypes) {
-        this.itemTypes = Arrays.asList(itemTypes);
-    }
-
-    ItemGroups(Material... materials) {
-        this.materials = Arrays.asList(materials);
-    }
-
-    ItemGroups() {
-        this.materials = null;
-        this.itemTypes = null;
-    }
 }

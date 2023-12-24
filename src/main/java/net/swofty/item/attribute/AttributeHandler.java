@@ -1,10 +1,12 @@
 package net.swofty.item.attribute;
 
 import net.swofty.enchantment.SkyBlockEnchantment;
+import net.swofty.item.ItemType;
 import net.swofty.item.Rarity;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
 import net.swofty.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
@@ -17,6 +19,14 @@ public class AttributeHandler {
 
     public String getItemType() {
         return ((ItemAttributeType) item.getAttribute("item_type")).getValue();
+    }
+
+    public @Nullable ItemType getItemTypeAsType() {
+        try {
+            return ItemType.valueOf(((ItemAttributeType) item.getAttribute("item_type")).getValue());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public Rarity getRarity() {

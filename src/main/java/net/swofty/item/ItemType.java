@@ -4,16 +4,38 @@ import net.minestom.server.item.Material;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.item.items.enchantment.EnchantedBook;
-import net.swofty.item.items.mining.DiamondPickaxe;
+import net.swofty.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.item.items.mining.PioneersPickaxe;
+import net.swofty.item.items.mining.vanilla.IronPickaxe;
+import net.swofty.item.items.mining.vanilla.StonePickaxe;
+import net.swofty.item.items.mining.vanilla.WoodenPickaxe;
 import net.swofty.item.items.weapon.Hyperion;
+import net.swofty.item.items.weapon.vanilla.DiamondSword;
+import net.swofty.item.items.weapon.vanilla.IronSword;
+import net.swofty.item.items.weapon.vanilla.StoneSword;
+import net.swofty.item.items.weapon.vanilla.WoodenSword;
 
 public enum ItemType {
-    HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.EPIC),
-    DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
+
+    /**
+     * Pickaxes
+     */
     PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.SPECIAL, PioneersPickaxe.class),
+    DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
+    IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
+    STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
+    WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
+
+    /**
+     * Swords
+     */
+    HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
+    DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
+    IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
+    STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
+    WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
     ;
 
     public final Material material;
