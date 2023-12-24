@@ -155,10 +155,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void sendToHub() {
-        if (getInstance() == SkyBlock.getInstanceContainer()) return;
-
+        if (getInstance() == SkyBlock.getInstanceContainer())
+            this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
+        
         this.setInstance(SkyBlock.getInstanceContainer(), new Pos(-2.5, 70, -69.5, 180, 0));
-        this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
     }
 
     public CompletableFuture<Boolean> sendToIsland() {
