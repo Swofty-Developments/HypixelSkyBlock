@@ -2,8 +2,6 @@ package net.swofty.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -17,7 +15,9 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointMissionData;
-import net.swofty.data.datapoints.DatapointRank;
+import net.swofty.event.value.SkyBlockValueEvent;
+import net.swofty.event.value.ValueUpdateEvent;
+import net.swofty.event.value.events.MiningValueUpdateEvent;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.PlayerItemOrigin;
@@ -25,7 +25,6 @@ import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
 import net.swofty.region.mining.MineableBlock;
 import net.swofty.region.SkyBlockRegion;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.statistics.StatisticDisplayReplacement;
@@ -33,7 +32,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 public class SkyBlockPlayer extends Player {
 
@@ -181,6 +179,14 @@ public class SkyBlockPlayer extends Player {
         if (block.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) return -1;
         if (block.getStrength() > 0) {
             double time = (block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
+            ValueUpdateEvent event = new MiningValueUpdateEvent(
+                    this,
+                    time,
+                    item);
+
+            SkyBlockValueEvent.callValueUpdateEvent(event);
+            time = (double) event.getValue();
+
             double softcap = ((double) 20 / 3) * block.getStrength();
             if (time < 1)
                 return 1;

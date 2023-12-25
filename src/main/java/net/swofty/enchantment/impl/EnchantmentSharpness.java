@@ -2,6 +2,8 @@ package net.swofty.enchantment.impl;
 
 import net.swofty.enchantment.abstr.Ench;
 import net.swofty.enchantment.abstr.EnchFromTable;
+import net.swofty.event.value.SkyBlockValueEvent;
+import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.utility.ItemGroups;
 
 import java.util.HashMap;
@@ -15,11 +17,6 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
 	@Override
 	public String getDescription(int level) {
 		return "Increases melee damage dealt by §a"+ increases[level-1] +"%§7.";
-	}
-	
-	@Override
-	public int getRequiredEnchantingLevel() {
-		return 0;
 	}
 
 	@Override

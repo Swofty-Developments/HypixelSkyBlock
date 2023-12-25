@@ -35,7 +35,6 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             30, 31, 32, 33, 34,
     };
     private static final int[] PAGINATED_SLOTS_LIST_LEVELS = new int[]{
-            12, 13, 14, 15, 16,
             21, 22, 23, 24, 25,
             30, 31, 32, 33, 34,
     };
@@ -274,8 +273,9 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         lore.add("§a ");
 
                         if (attributeHandler.hasEnchantment(enchantmentType)) {
-                            lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " §a§l✓" +
-                                    StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).level()));
+                            lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " " +
+                                    StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).level())
+                                    + " §l✓");
                         } else {
                             lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✗");
                         }

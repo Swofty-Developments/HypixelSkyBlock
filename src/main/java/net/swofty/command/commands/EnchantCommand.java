@@ -29,6 +29,7 @@ public class EnchantCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             new PlayerItemUpdater((player, item) -> {
                 AttributeHandler attributeHandler = item.getAttributeHandler();
+                attributeHandler.removeEnchantment(context.get(typeArgument));
                 attributeHandler.addEnchantment(
                         SkyBlockEnchantment.builder()
                                 .level(context.get(level))

@@ -11,7 +11,6 @@ import java.util.Map;
 public interface Ench {
 	
 	String getDescription(int level);
-	int getRequiredEnchantingLevel();
 	ApplyLevels getLevelsToApply();
 	List<ItemGroups> getGroups();
 

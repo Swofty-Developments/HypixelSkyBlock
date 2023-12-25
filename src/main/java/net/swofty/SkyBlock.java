@@ -35,6 +35,7 @@ import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.SkyBlockMiningConfiguration;
@@ -214,6 +215,14 @@ public class SkyBlock {
                 });
 
         SkyBlockEvent.register(globalEventHandler);
+
+        loopThroughPackage("net.swofty.enchantment.impl", SkyBlockValueEvent.class)
+                .forEach((event) -> {
+                    try {
+                        event.cacheEvent();
+                    } catch (Exception e) {}
+                });
+        SkyBlockValueEvent.register(globalEventHandler);
 
         /**
          * Handle ConnectionManager

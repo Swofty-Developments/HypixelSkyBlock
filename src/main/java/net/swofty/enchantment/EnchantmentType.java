@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.enchantment.abstr.Ench;
 import net.swofty.enchantment.abstr.EnchFromTable;
+import net.swofty.enchantment.impl.EnchantmentEfficiency;
 import net.swofty.enchantment.impl.EnchantmentSharpness;
 import net.swofty.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 public enum EnchantmentType {
 	SHARPNESS(EnchantmentSharpness.class),
-
+	EFFICIENCY(EnchantmentEfficiency.class),
 	;
 	
 	private final Class<? extends Ench> clazz;
