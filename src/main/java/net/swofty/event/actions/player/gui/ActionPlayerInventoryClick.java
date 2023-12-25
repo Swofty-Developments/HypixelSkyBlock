@@ -36,7 +36,7 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
         if (clickedItem.getGenericInstance() != null &&
                 clickedItem.getGenericInstance() instanceof Interactable interactable) {
-            if (!interactable.onInventoryInteract(player, clickedItem)) {
+            if (interactable.onInventoryInteract(player, clickedItem)) {
                 inventoryClick.setCancelled(true);
                 return;
             }
