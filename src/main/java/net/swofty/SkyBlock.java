@@ -16,6 +16,8 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.recipe.Recipe;
+import net.minestom.server.recipe.ShapedRecipe;
 import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
@@ -36,6 +38,7 @@ import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
+import net.swofty.item.impl.Craftable;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.SkyBlockMiningConfiguration;
@@ -50,6 +53,7 @@ import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.SkyBlockPlayer;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -223,6 +227,16 @@ public class SkyBlock {
                     } catch (Exception e) {}
                 });
         SkyBlockValueEvent.register();
+
+        /**
+         * Load item recipes
+         */
+        loopThroughPackage("net.swofty.item.items", Craftable.class)
+                .forEach(recipe -> {
+                    try {
+                        recipe.getRecipe().init();
+                    } catch (Exception e) {}
+                });
 
         /**
          * Handle ConnectionManager

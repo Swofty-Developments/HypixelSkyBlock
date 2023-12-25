@@ -57,6 +57,26 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         lore);
             }
         });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUICrafting().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 31;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, (short) 0, 1,
+                        "§7Opens the crafting grid.",
+                        " ",
+                        "§eClick to open!");
+            }
+        });
     }
 
     @Override

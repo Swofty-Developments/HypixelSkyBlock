@@ -286,7 +286,6 @@ public abstract class SkyBlockInventoryGUI {
                 if (!GUI_MAP.containsKey(player.getUuid()) || GUI_MAP.get(player.getUuid()) != this) {
                     return TaskSchedule.stop();
                 }
-                items.clear();
                 gui.refreshItems(player);
                 updateItemStacks(inventory, player);
                 return TaskSchedule.tick(gui.refreshRate());
@@ -343,9 +342,10 @@ public abstract class SkyBlockInventoryGUI {
      * @param inventory an inventory object to set the items in
      */
     public void updateItemStacks(Inventory inventory, SkyBlockPlayer player) {
-        inventory.clear();
         for (GUIItem item : items) {
-            inventory.setItemStack(item.getSlot(), item.getItem(player).build());
+            ItemStack toReplace = item.getItem(player).build();
+            if (!inventory.getItemStack(item.getSlot()).equals(toReplace))
+                inventory.setItemStack(item.getSlot(), toReplace);
         }
     }
 
