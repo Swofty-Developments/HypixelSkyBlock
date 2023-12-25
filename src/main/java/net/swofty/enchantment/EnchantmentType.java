@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import net.swofty.enchantment.abstr.Ench;
 import net.swofty.enchantment.abstr.EnchFromTable;
 import net.swofty.enchantment.impl.EnchantmentSharpness;
+import net.swofty.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -49,5 +50,9 @@ public enum EnchantmentType {
 		if (ench instanceof EnchFromTable)
 			return (EnchFromTable) ench;
 		return null;
+	}
+
+	public String getName() {
+		return StringUtility.toNormalCase(this.name());
 	}
 }

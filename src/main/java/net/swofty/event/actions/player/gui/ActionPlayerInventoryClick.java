@@ -39,20 +39,16 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
             if (gui == null) return;
 
-            if (!gui.allowHotkeying() &&
-                    (inventoryClick.getClickType().equals(ClickType.LEFT_DRAGGING) ||
-                     inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK)   ||
-                     inventoryClick.getClickType().equals(ClickType.RIGHT_DRAGGING))) {
-                inventoryClick.setCancelled(true);
-                return;
-            }
-
             if (inventoryClick.getClickType().equals(ClickType.DOUBLE_CLICK)) {
                 inventoryClick.setCancelled(true);
                 return;
             }
 
             if (inventoryClick.getInventory() == null) {
+                if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
+                    inventoryClick.setCancelled(true);
+                    return;
+                }
                 gui.onBottomClick(inventoryClick);
             } else {
                 int slot = inventoryClick.getSlot();
@@ -62,6 +58,9 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
                 if (!item.canPickup()) {
                     inventoryClick.setCancelled(true);
+                } else if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
+                    inventoryClick.setCancelled(true);
+                    return;
                 }
 
                 if (item instanceof GUIClickableItem) {
@@ -82,6 +81,13 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 }
             }
         }
+    }
+
+    public boolean isHotKey(InventoryPreClickEvent inventoryClick) {
+        return inventoryClick.getClickType().equals(ClickType.LEFT_DRAGGING) ||
+                inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK)   ||
+                inventoryClick.getClickType().equals(ClickType.START_SHIFT_CLICK)   ||
+                inventoryClick.getClickType().equals(ClickType.RIGHT_DRAGGING);
     }
 }
 

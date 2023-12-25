@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
+import net.swofty.item.impl.Enchantable;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
@@ -16,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class ItemLore {
     private final ArrayList<Component> loreLines = new ArrayList<>();
@@ -55,6 +57,27 @@ public class ItemLore {
             boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.get(ItemStatistic.INTELLIGENCE));
             boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.get(ItemStatistic.MINING_SPEED));
             if (damage || defence || health || strength || intelligence || miningSpeed) addLoreLine(null);
+
+            // Handle Item Enchantments
+            if (clazz.newInstance() instanceof Enchantable) {
+                long enchantmentCount = handler.getEnchantments().toList().size();
+                if (enchantmentCount < 4) {
+                    handler.getEnchantments().forEach((enchantment) -> {
+                        addLoreLine("§9" + enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level()));
+                        StringUtility.splitByWordAndLength("§7" + enchantment.type().getDescription(enchantment.level()), 34, " ")
+                                .forEach(this::addLoreLine);
+                    });
+                } else {
+                    String enchantmentNames = handler.getEnchantments().toList().stream()
+                            .map(enchantment1 -> "§9" + enchantment1.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment1.level()))
+                            .collect(Collectors.joining(", "));
+                    StringUtility.splitByWordAndLength(enchantmentNames, 34, ",").forEach(this::addLoreLine);
+                }
+
+                if (enchantmentCount != 0) {
+                    addLoreLine(null);
+                }
+            }
 
             // Handle Custom Item Lore
             CustomSkyBlockItem skyBlockItem = ((CustomSkyBlockItem) item.clazz.newInstance());

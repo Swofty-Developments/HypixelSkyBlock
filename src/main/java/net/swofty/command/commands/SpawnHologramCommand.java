@@ -9,7 +9,11 @@ import net.swofty.entity.hologram.HologramEntity;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "spawnholo", description = "Rank command", usage = "/spawnhologram <text>", permission = Rank.ADMIN, allowsConsole = false)
+@CommandParameters(aliases = "spawnholo",
+        description = "Rank command",
+        usage = "/spawnhologram <text>",
+        permission = Rank.ADMIN,
+        allowsConsole = false)
 public class SpawnHologramCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {

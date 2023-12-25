@@ -191,6 +191,12 @@ public class DataHandler {
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {}, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
+        EXPERIENCE("experience", DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {}, (player, datapoint) -> {
+            player.setExp((Float) datapoint.getValue());
+        }, (player) -> new DatapointFloat("experience", player.getExp())),
+        LEVELS("levels", DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {}, (player, datapoint) -> {
+            player.setLevel((Integer) datapoint.getValue());
+        }, (player) -> new DatapointInteger("levels", player.getLevel())),
         MISSION_DATA("mission_data", DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {}, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();
             data.setSkyBlockPlayer(player);

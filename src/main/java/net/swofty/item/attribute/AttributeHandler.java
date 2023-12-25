@@ -45,6 +45,12 @@ public class AttributeHandler {
                 .anyMatch(enchantment -> enchantment.type() == type);
     }
 
+    public void removeEnchantment(EnchantmentType type) {
+        ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
+                .enchantments()
+                .removeIf(enchantment -> enchantment.type() == type);
+    }
+
     public SkyBlockEnchantment getEnchantment(EnchantmentType type) {
         return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
                 .enchantments()
