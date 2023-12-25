@@ -201,8 +201,7 @@ public class SkyBlockPlayer extends Player {
         float defence = 0;
 
         PlayerStatistics statistics = this.getStatistics();
-        defence += statistics.allArmorStatistics().get(ItemStatistic.DEFENSE);
-        defence += statistics.mainHandStatistics().get(ItemStatistic.DEFENSE);
+        defence += statistics.allStatistics().get(ItemStatistic.DEFENSE);
 
         return defence;
     }
@@ -218,13 +217,8 @@ public class SkyBlockPlayer extends Player {
 
     @Override
     public float getMaxHealth() {
-        float maxHealth = 100;
-
         PlayerStatistics statistics = this.getStatistics();
-        maxHealth += statistics.allArmorStatistics().get(ItemStatistic.HEALTH);
-        maxHealth += statistics.mainHandStatistics().get(ItemStatistic.HEALTH);
-
-        return maxHealth;
+        return statistics.allStatistics().get(ItemStatistic.HEALTH);
     }
 
     @Override

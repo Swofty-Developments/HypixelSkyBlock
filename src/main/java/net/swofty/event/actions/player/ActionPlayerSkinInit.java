@@ -8,6 +8,7 @@ import net.minestom.server.event.player.PlayerSkinInitEvent;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import org.tinylog.Logger;
 
 @EventParameters(description = "Sets the players skin when init",
         node = EventNodes.PLAYER,
@@ -26,6 +27,7 @@ public class ActionPlayerSkinInit extends SkyBlockEvent {
         PlayerSkinInitEvent playerSkinInitEvent = (PlayerSkinInitEvent) event;
         final Player player = playerSkinInitEvent.getPlayer();
 
-        playerSkinInitEvent.setSkin(PlayerSkin.fromUsername(player.getUsername().replace("cracked", "")));
+        PlayerSkin skin = PlayerSkin.fromUsername(player.getUsername().replace("cracked", ""));
+        playerSkinInitEvent.setSkin(skin);
     }
 }

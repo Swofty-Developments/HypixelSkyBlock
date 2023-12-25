@@ -58,6 +58,21 @@ public class PlayerStatistics {
         return statistics;
     }
 
+    public ItemStatistics allStatistics() {
+        ItemStatistics total = ItemStatistics.builder().build();
+        total = total.add(allArmorStatistics());
+        total = total.add(mainHandStatistics());
+
+        ItemStatistics baseStats = ItemStatistics.builder()
+                .with(ItemStatistic.HEALTH, 100)
+                .with(ItemStatistic.SPEED, 100)
+                .build();
+
+        total = total.add(baseStats);
+
+        return total;
+    }
+
     private ItemStatistics getReforgeStatistics(SkyBlockItem item, ItemStatistics statistics) {
         if (item.getAttributeHandler().getReforge() != null) {
             ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();

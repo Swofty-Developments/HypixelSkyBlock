@@ -2,14 +2,15 @@ package net.swofty.gui.inventory;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.item.ItemHideFlag;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
+import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.item.*;
+import net.minestom.server.item.metadata.PlayerHeadMeta;
+import net.minestom.server.tag.Tag;
+import net.swofty.utility.ExtraItemTags;
 import net.swofty.utility.StringUtility;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemStackCreator {
@@ -51,6 +52,55 @@ public class ItemStackCreator {
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
             meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
             meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
+        }).amount(amount).lore(copiedLore.stream()
+                .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                .collect(Collectors.toList()));
+    }
+
+    public static ItemStack.Builder getStackHead(String name, String texture, int amount, List<String> lore) {
+        List<String> copiedLore = new ArrayList<>();
+        for (String s : lore) {
+            copiedLore.add(color(s));
+        }
+
+        JSONObject json = new JSONObject();
+        json.put("isPublic", true);
+        json.put("signatureRequired", false);
+        json.put("textures", new JSONObject().put("SKIN",
+                new JSONObject().put("url", "http://textures.minecraft.net/texture/" + texture).put("metadata", new JSONObject().put("model", "slim"))));
+
+        String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+
+        return ItemStack.builder(Material.PLAYER_HEAD).meta(meta -> {
+            meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
+            meta.damage(3);
+            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+            meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
+            meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
+            meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
+                    "25", new PlayerSkin(texturesEncoded, null)));
+        }).amount(amount).lore(copiedLore.stream()
+                .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                .collect(Collectors.toList()));
+    }
+
+
+    public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, List<String> lore) {
+        List<String> copiedLore = new ArrayList<>();
+        for (String s : lore) {
+            copiedLore.add(color(s));
+        }
+
+        return ItemStack.builder(Material.PLAYER_HEAD).meta(meta -> {
+            meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
+            meta.damage(3);
+            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+            meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
+            meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
+            meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
+                    "25", skin));
         }).amount(amount).lore(copiedLore.stream()
                 .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                 .collect(Collectors.toList()));
