@@ -124,9 +124,7 @@ public class SkyBlockItem {
             itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
 
-        return itemStackBuilder.meta(meta -> {
-            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
-        });
+        return itemStackBuilder.meta(meta -> meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES));
     }
 
     public AttributeHandler getAttributeHandler() {

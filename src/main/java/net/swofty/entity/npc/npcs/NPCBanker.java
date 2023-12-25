@@ -39,6 +39,7 @@ public class NPCBanker extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
+        sendMessage(e.player(), "Test! GG ur very good at this");
         new GUIBanker().open(e.player());
 
         MissionData missionData = e.player().getMissionData();
