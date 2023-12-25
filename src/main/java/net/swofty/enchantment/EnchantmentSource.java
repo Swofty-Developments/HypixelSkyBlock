@@ -55,8 +55,7 @@ public class EnchantmentSource {
 		public String toString() {
 			return StringUtility.toNormalCase(name()
 				.replace("[", "")
-				.replace("]", "")
-				.replace("_", " "));
+				.replace("]", ""));
 		}
 	}
 	

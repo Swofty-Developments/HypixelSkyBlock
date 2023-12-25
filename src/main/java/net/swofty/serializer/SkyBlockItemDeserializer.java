@@ -30,6 +30,8 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
             }
         }
 
+        item.setAmount(node.get("amount").asInt());
+
         return item;
     }
 }

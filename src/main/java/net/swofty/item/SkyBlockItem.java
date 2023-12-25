@@ -1,5 +1,7 @@
 package net.swofty.item;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -20,6 +22,8 @@ import java.util.List;
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
     public Class<? extends CustomSkyBlockItem> clazz = null;
+    @Getter
+    @Setter
     private int amount = 1;
 
     public SkyBlockItem(String itemType) {
@@ -107,6 +111,8 @@ public class SkyBlockItem {
         try {
             return ItemType.valueOf(typeAttribute.getValue()).material;
         } catch (IllegalArgumentException e) {
+            if (typeAttribute.getValue().toUpperCase().equals("N/A"))
+                return Material.BEDROCK;
             return Material.values().stream().
                     filter(material -> material.name().equalsIgnoreCase("minecraft:" + typeAttribute.getValue().toLowerCase()))
                     .findFirst().get();

@@ -111,6 +111,9 @@ public abstract class SkyBlockEvent {
 
     public static void callSkyBlockEvent(Event event) {
         if (customEventNode != null) {
+            if (event instanceof PlayerEvent playerEvent) {
+                if (DataHandler.getUser(playerEvent.getPlayer()) == null) return;
+            }
             customEventNode.call(event);
         }
     }

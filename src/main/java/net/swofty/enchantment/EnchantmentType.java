@@ -2,7 +2,10 @@ package net.swofty.enchantment;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.enchantment.impl.EnchSharpness;
+import net.swofty.enchantment.abstr.Ench;
+import net.swofty.enchantment.abstr.EnchFromTable;
+import net.swofty.enchantment.impl.EnchantmentSharpness;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -11,52 +14,40 @@ import java.util.List;
  */
 @Getter
 public enum EnchantmentType {
-	SHARPNESS(EnchSharpness.class),
-	/*EFFICIENCY("§7Increases how quickly your tool breaks blocks.",
-		0, 0,
-		List.of(),
-		List.of(new EnchantmentSource(SourceType.ENCHANTMENT_TABLE, 1, 5),
-			new EnchantmentSource("Redstone Collection", 4, 5)),
-		new Integer[] {9, 14, 18, 23, 27},
-		ItemGroups.TOOLS
-	),*/
+	SHARPNESS(EnchantmentSharpness.class),
+
 	;
 	
-	private final Ench ench;
+	private final Class<? extends Ench> clazz;
 	private final List<EnchantmentType> conflicts;
+
+	private final Ench ench;
 	
 	@SneakyThrows
 	EnchantmentType(Class<? extends Ench> ench, EnchantmentType... conflicts) {
-		this.ench = (Ench) ench.getConstructor().newInstance();
+		this.clazz = ench;
 		this.conflicts = List.of(conflicts);
+
+		this.ench = ench.getConstructor().newInstance();
 	}
 	
 	public int getApplyCost(int level) {
-		if (level < 1 || level > ench.getLevelsToApply().length)
-			throw new IllegalArgumentException("level cannot be less than 1 and more than "+ ench.getLevelsToApply().length +" for "+ name());
-		return ench.getLevelsToApply()[level-1];
-	}
-	
-	/**
-	 * To use if you know it is applicable from the enchanting table
-	 */
-	public int getApplyCostFromTable(int level) {
-		EnchFromTable e = getAsFromTable();
-		if (level < 1 || level > e.getLevelsFromTableToApply().length)
-			throw new IllegalArgumentException("level cannot be less than 1 and more than "+ e.getLevelsFromTableToApply().length +" for "+ name());
-		return e.getLevelsFromTableToApply()[level-1];
+		if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
+			throw new IllegalArgumentException("level cannot be less than 1 and more than " +
+					ench.getLevelsToApply().maximumLevel() + " for "+ name());
+		return ench.getLevelsToApply().get(level);
 	}
 	
 	public String getDescription(int level) {
-		// here so it's not needed to include it every time in the statements
-		if(level < 1 || level > ench.getLevelsToApply().length)
-			throw new IllegalArgumentException("level cannot be less than 1 and more than "+ ench.getLevelsToApply().length +" for "+ name());
+		if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
+			throw new IllegalArgumentException("level cannot be less than 1 and more than " +
+					ench.getLevelsToApply().maximumLevel() + " for "+ name());
 		return ench.getDescription(level);
 	}
-	
-	@SneakyThrows
-	public EnchFromTable getAsFromTable() {
-		return (EnchFromTable) ench;
+
+	public @Nullable EnchFromTable getEnchFromTable() {
+		if (ench instanceof EnchFromTable)
+			return (EnchFromTable) ench;
+		return null;
 	}
-	
 }

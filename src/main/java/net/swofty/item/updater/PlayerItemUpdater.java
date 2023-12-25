@@ -43,10 +43,11 @@ public class PlayerItemUpdater {
             SkyBlockItem item = new SkyBlockItem(stack.material());
             ItemStack.Builder itemAsBuilder = item.getItemStackBuilder();
 
-            for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
-                itemAsBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
-            }
-            return itemAsBuilder;
+            ItemLore lore = new ItemLore(stack);
+            lore.updateLore(player);
+            stack = lore.getStack();
+
+            return itemAsBuilder.lore(stack.getLore()).amount(stack.amount());
         }
 
         /**

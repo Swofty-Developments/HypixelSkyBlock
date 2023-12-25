@@ -1,12 +1,8 @@
 package net.swofty.enchantment;
 
 import lombok.Builder;
-import lombok.Getter;
-import net.swofty.utility.ItemGroups;
-import net.swofty.utility.StringUtility;
 
 import java.util.List;
-import java.util.function.Function;
 
 @Builder
 public record SkyBlockEnchantment(EnchantmentType type, int level) {
@@ -28,5 +24,4 @@ public record SkyBlockEnchantment(EnchantmentType type, int level) {
             enchantments.add(enchantment);
         }
     }
-    
 }

@@ -5,12 +5,11 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.enchantment.EnchantmentSource;
 import net.swofty.enchantment.EnchantmentType;
-import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
@@ -19,18 +18,14 @@ import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.impl.Enchantable;
-import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.ItemGroups;
 import net.swofty.utility.StringUtility;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
     private static final int[] PAGINATED_SLOTS = new int[]{
@@ -217,6 +212,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         List<ItemGroups> itemGroups = ((Enchantable) type.clazz.newInstance()).getItemGroups();
         List<EnchantmentType> enchantments = Arrays.stream(EnchantmentType.values())
                 .filter(enchantmentType -> enchantmentType.getEnch().getGroups().stream().anyMatch(itemGroups::contains))
+                .filter(enchantmentType -> enchantmentType.getEnchFromTable() != null)
                 .toList();
 
         if (enchantments.isEmpty()) {
@@ -242,12 +238,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             enchantments = enchantments.stream().limit(15).toList();
             int i = 0;
             for (EnchantmentType enchantmentType : enchantments) {
+                assert enchantmentType.getEnchFromTable() != null;
                 int finalI = i;
                 set(new GUIClickableItem() {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        if (bookshelfPower < enchantmentType.getAsFromTable().getRequiredEnchantingLevel()) {
-                            player.sendMessage("§cThis enchantment requires " + enchantmentType.getAsFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
+                        if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
+                            player.sendMessage("§cThis enchantment requires " +
+                                    enchantmentType.getEnchFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
                             return;
                         }
 
@@ -276,8 +274,9 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         }
 
                         lore.add("§a ");
-                        if (bookshelfPower < enchantmentType.getAsFromTable().getRequiredBookshelfPower()) {
-                            lore.add("§cRequires " + enchantmentType.getAsFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
+                        if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
+                            lore.add("§cRequires " + enchantmentType.getEnchFromTable().getRequiredBookshelfPower()
+                                    + " Bookshelf Power!");
                         } else {
                             lore.add("§eClick to view!");
                         }
@@ -295,9 +294,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        int supportedLevel = selected.getAsFromTable().getLevelsFromTableToApply().length+1;
+        int minLevel = selected.getEnch().getSources().stream().filter(source ->
+                source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+                .mapToInt(value -> value.minLevel).findAny().orElse(0);
+        int maxLevel = selected.getEnch().getSources().stream().filter(source ->
+                source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+                .mapToInt(value -> value.maxLevel).findAny().orElse(0);
 
-        for (int level = 1; level <= supportedLevel; level++) {
+        for (int level = minLevel - 1; level < maxLevel; level++) {
             final int finalLevel = level;
             set(new GUIClickableItem() {
 

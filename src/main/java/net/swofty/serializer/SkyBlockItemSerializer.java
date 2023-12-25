@@ -20,6 +20,8 @@ public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
             gen.writeStringField(key, valueAsString);
         }
 
+        gen.writeNumberField("amount", value.getAmount());
+
         gen.writeEndObject();
     }
 }
