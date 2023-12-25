@@ -4,6 +4,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -104,7 +105,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
     public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(SkyBlockPlayer player) {
+    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
 
     }
 

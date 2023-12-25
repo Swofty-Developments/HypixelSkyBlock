@@ -1,15 +1,18 @@
 package net.swofty.item.items.weapon;
 
+import net.swofty.item.ReforgeType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.*;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
+import net.swofty.utility.ItemGroups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility {
+public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Reforgable, Enchantable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -52,5 +55,20 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility {
     @Override
     public AbilityActivation getAbilityActivation() {
         return AbilityActivation.RIGHT_CLICK;
+    }
+
+    @Override
+    public ReforgeType getReforgeType() {
+        return ReforgeType.SWORDS;
+    }
+
+    @Override
+    public boolean showEnchantLores() {
+        return true;
+    }
+
+    @Override
+    public List<ItemGroups> getItemGroups() {
+        return List.of(ItemGroups.SWORD);
     }
 }

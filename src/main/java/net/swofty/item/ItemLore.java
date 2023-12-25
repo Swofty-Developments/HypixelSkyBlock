@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
 import net.swofty.item.impl.Enchantable;
+import net.swofty.item.impl.Reforgable;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
@@ -44,19 +45,29 @@ public class ItemLore {
             rarity = rarity.upgrade();
         }
 
+        String displayName = StringUtility.toNormalCase(type);
+
         if (clazz != null) {
             // Handle Item Statistics
             if (handler.isMiningTool()) {
                 addLoreLine("§8Breaking Power " + handler.getBreakingPower());
                 addLoreLine(null);
             }
-            boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE));
-            boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE));
-            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH));
-            boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.get(ItemStatistic.STRENGTH));
-            boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.get(ItemStatistic.INTELLIGENCE));
-            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.get(ItemStatistic.MINING_SPEED));
-            if (damage || defence || health || strength || intelligence || miningSpeed) addLoreLine(null);
+            boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE),
+                    handler.getReforge(), rarity);
+            boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE),
+                    handler.getReforge(), rarity);
+            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH),
+                    handler.getReforge(), rarity);
+            boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.get(ItemStatistic.STRENGTH),
+                    handler.getReforge(), rarity);
+            boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.get(ItemStatistic.INTELLIGENCE),
+                    handler.getReforge(), rarity);
+            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.get(ItemStatistic.MINING_SPEED),
+                    handler.getReforge(), rarity);
+            boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.get(ItemStatistic.SPEED),
+                    handler.getReforge(), rarity);
+            if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
 
             // Handle Item Enchantments
             if (clazz.newInstance() instanceof Enchantable) {
@@ -80,14 +91,14 @@ public class ItemLore {
             }
 
             // Handle Custom Item Lore
-            CustomSkyBlockItem skyBlockItem = ((CustomSkyBlockItem) item.clazz.newInstance());
+            CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
             if (skyBlockItem.getLore(player, item) != null) {
                 skyBlockItem.getLore(player, item).forEach(line -> addLoreLine("§7" + line));
                 addLoreLine(null);
             }
 
             // Handle Custom Item Ability
-            if (clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
+            if (item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
                 addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
                         ability.getAbilityActivation().getDisplay());
                 for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34, "\\s"))
@@ -99,6 +110,14 @@ public class ItemLore {
 
                 addLoreLine(null);
             }
+
+            if (item.getGenericInstance() instanceof Reforgable) {
+                addLoreLine("§8This item can be reforged!");
+
+                if (handler.getReforge() != null) {
+                    displayName = handler.getReforge().prefix() + " " + displayName;
+                }
+            }
         }
 
         if (recombobulated) {
@@ -107,18 +126,37 @@ public class ItemLore {
             addLoreLine(rarity.getDisplay());
         }
 
+        displayName = rarity.getColor() + displayName;
         this.stack = stack.withLore(loreLines)
-                .withDisplayName(Component.text(rarity.getColor() + StringUtility.toNormalCase(type))
+                .withDisplayName(Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
     }
 
-    private boolean addPossiblePropertyInt(ItemStatistic statistic, int baseValue) {
-        if (baseValue == 0) return false;
+    public static String getBaseName(ItemStack stack) {
+        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
+    }
+
+    private boolean addPossiblePropertyInt(ItemStatistic statistic,
+                                           int overallValue,
+                                           ReforgeType.Reforge reforge,
+                                           Rarity rarity) {
+        int reforgeValue = 0;
+        if (reforge != null) {
+            overallValue += reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
+            reforgeValue = reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
+        }
+
+        if (overallValue == 0) return false;
 
         String color = statistic.isRed() ? "&c" : "&a";
-        addLoreLine("§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-                color + statistic.getPrefix() + baseValue + statistic.getSuffix());
+        String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
+                color + statistic.getPrefix() + overallValue + statistic.getSuffix() + " ";
 
+        if (reforgeValue != 0) {
+            line += "§9(" + (reforgeValue > 0 ? "+" : "") + reforgeValue + ")";
+        }
+
+        addLoreLine(line);
         return true;
     }
 

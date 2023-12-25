@@ -18,7 +18,7 @@ public abstract class SkyBlockValueEvent {
         cachedCustomEvents.add(this);
     }
 
-    public static void register(GlobalEventHandler eventHandler) {
+    public static void register() {
         cachedCustomEvents.forEach(eventClass -> {
             Class<? extends ValueUpdateEvent> clazz = eventClass.getValueEvent();
 

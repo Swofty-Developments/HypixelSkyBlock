@@ -3,6 +3,7 @@ package net.swofty.item;
 import lombok.Getter;
 import net.kyori.adventure.text.format.Style;
 
+@Getter
 public enum Rarity {
     COMMON("§f"),
     UNCOMMON("§a"),
@@ -10,13 +11,8 @@ public enum Rarity {
     EPIC("§5"),
     LEGENDARY("§6"),
     MYTHIC("§d"),
-    SUPREME("§4"),
-    SPECIAL("§c"),
-    VERY_SPECIAL("§c"),
-    ADMIN("§4"),
     ;
 
-    @Getter
     private final String color;
 
     Rarity(String color) {

@@ -10,6 +10,7 @@ public enum ItemStatistic {
     STRENGTH("Strength", true, "+", ""),
     INTELLIGENCE("Intelligence", false, "+", ""),
     MINING_SPEED("Mining Speed", false, "+", ""),
+    SPEED("Speed", false, "+", ""),
     ;
 
     private final String displayName;

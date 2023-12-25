@@ -16,4 +16,8 @@ public class MathUtility {
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }
+
+    public static int random(int min, int max) {
+        return (int) Math.round(Math.random() * (max - min) + min);
+    }
 }

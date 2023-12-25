@@ -58,7 +58,9 @@ public class ActionPlayerQuit extends SkyBlockEvent {
             SkyBlockAnvilGUI.anvilGUIs.remove(player);
         }
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
-            SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(player);
+            SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(
+                    SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).getInventory(),
+                    player);
             SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
         PacketListenerAirJump.playerData.remove(player);

@@ -222,7 +222,7 @@ public class SkyBlock {
                         event.cacheEvent();
                     } catch (Exception e) {}
                 });
-        SkyBlockValueEvent.register(globalEventHandler);
+        SkyBlockValueEvent.register();
 
         /**
          * Handle ConnectionManager

@@ -23,6 +23,9 @@ public class ItemStackCreator {
             meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
         });
     }
+    public static ItemStack.Builder createNamedItemStack(Material material) {
+        return createNamedItemStack(material, "");
+    }
 
     public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, short data, int amount, String lore) {
         List<String> l = new ArrayList<>();

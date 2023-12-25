@@ -4,6 +4,7 @@ import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.ItemType;
 import net.swofty.item.Rarity;
+import net.swofty.item.ReforgeType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
 import net.swofty.user.statistics.ItemStatistics;
@@ -49,6 +50,14 @@ public class AttributeHandler {
         ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
                 .enchantments()
                 .removeIf(enchantment -> enchantment.type() == type);
+    }
+
+    public @Nullable ReforgeType.Reforge getReforge() {
+        return ((ItemAttributeReforge) item.getAttribute("reforge")).getValue();
+    }
+
+    public void setReforge(ReforgeType.Reforge reforge) {
+        ((ItemAttributeReforge) item.getAttribute("reforge")).setValue(reforge);
     }
 
     public SkyBlockEnchantment getEnchantment(EnchantmentType type) {

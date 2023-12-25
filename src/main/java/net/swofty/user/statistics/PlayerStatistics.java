@@ -42,6 +42,7 @@ public class PlayerStatistics {
         ItemStatistics total = ItemStatistics.builder().build();
         for (SkyBlockItem item : armorPieces) {
             total = total.add(item.getAttributeHandler().getStatistics());
+            total = getReforgeStatistics(item, total);
         }
         return total;
     }
@@ -49,7 +50,25 @@ public class PlayerStatistics {
     public ItemStatistics mainHandStatistics() {
         ItemStack mainhand = player.getInventory().getItemInMainHand();
         if (!SkyBlockItem.isSkyBlockItem(mainhand)) return ItemStatistics.builder().build();
-        return new SkyBlockItem(mainhand).getAttributeHandler().getStatistics();
+
+        SkyBlockItem item = new SkyBlockItem(mainhand);
+        ItemStatistics statistics = item.getAttributeHandler().getStatistics();
+        statistics = getReforgeStatistics(item, statistics);
+
+        return statistics;
+    }
+
+    private ItemStatistics getReforgeStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        if (item.getAttributeHandler().getReforge() != null) {
+            ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();
+            for (ItemStatistic statistic : item.getAttributeHandler().getReforge().getStatistics()) {
+                builder.with(statistic, item.getAttributeHandler().getReforge().getBonusCalculation(
+                        statistic,
+                        item.getAttributeHandler().getRarity().ordinal()));
+            }
+            statistics = statistics.add(builder.build());
+        }
+        return statistics;
     }
 
     public void boostManaRegeneration(double percent, int ticks) {

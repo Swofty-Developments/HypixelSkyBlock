@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.NPCVillagerParameters;
+import net.swofty.gui.inventory.inventories.GUIReforge;
 
 import java.util.Arrays;
 
@@ -41,7 +42,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
                 e.player().sendMessage("&cGlad u finished that");
             });
         } else {
-            e.player().sendMessage("§cYou must be sneaking to talk to this NPC.");
+            new GUIReforge().open(e.player());
         }
     }
 

@@ -1,9 +1,7 @@
 package net.swofty.item.items.mining.vanilla;
 
-import net.swofty.item.impl.CustomSkyBlockItem;
-import net.swofty.item.impl.Enchantable;
-import net.swofty.item.impl.ExtraRarityDisplay;
-import net.swofty.item.impl.MiningTool;
+import net.swofty.item.ReforgeType;
+import net.swofty.item.impl.*;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
 import net.swofty.utility.ItemGroups;
@@ -12,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarityDisplay, Enchantable {
+public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarityDisplay, Enchantable, Reforgable {
       @Override
       public ItemStatistics getStatistics() {
             return ItemStatistics.builder()
@@ -39,5 +37,10 @@ public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRari
       @Override
       public List<ItemGroups> getItemGroups() {
             return List.of(ItemGroups.PICKAXE, ItemGroups.TOOLS);
+      }
+
+      @Override
+      public ReforgeType getReforgeType() {
+            return ReforgeType.PICKAXES;
       }
 }

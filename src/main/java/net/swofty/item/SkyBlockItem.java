@@ -106,6 +106,14 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {}
     }
 
+    public Object getGenericInstance() {
+        if (clazz == null) return null;
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {}
+        return null;
+    }
+
     public Material getMaterial() {
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         try {
