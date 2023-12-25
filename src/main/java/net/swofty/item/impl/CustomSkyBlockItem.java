@@ -6,11 +6,20 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CustomSkyBlockItem {
     ItemStatistics getStatistics();
 
-    default ArrayList<String> getLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+    default List<String> getLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return null;
+    }
+
+    default List<String> getAbsoluteLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return null;
+    }
+
+    default String getAbsoluteName(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return "";
     }
 }

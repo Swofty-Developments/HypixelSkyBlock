@@ -9,6 +9,7 @@ import net.swofty.item.items.mining.PioneersPickaxe;
 import net.swofty.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.item.items.mining.vanilla.WoodenPickaxe;
+import net.swofty.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.item.items.weapon.Hyperion;
 import net.swofty.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.item.items.weapon.vanilla.IronSword;
@@ -18,6 +19,7 @@ import net.swofty.item.items.weapon.vanilla.WoodenSword;
 public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.EPIC),
+    SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
 
     /**
      * Pickaxes

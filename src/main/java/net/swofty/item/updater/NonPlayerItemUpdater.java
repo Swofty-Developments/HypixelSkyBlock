@@ -27,18 +27,14 @@ public class NonPlayerItemUpdater {
 
     public ItemStack.Builder getUpdatedItem() {
         ItemStack.Builder builder = item.getItemStackBuilder();
-        AttributeHandler handler = item.getAttributeHandler();
 
-        return updateItemLore(builder)
-                .displayName(Component.text(
-                        handler.getRarity().getColor() + StringUtility.toNormalCase(handler.getItemType()))
-                        .decoration(TextDecoration.ITALIC, false));
+        return updateItemLore(builder);
     }
 
     private static ItemStack.Builder updateItemLore(ItemStack.Builder stack) {
         ItemLore lore = new ItemLore(stack.build());
         lore.updateLore(null);
 
-        return stack.lore(lore.getStack().getLore());
+        return stack.lore(lore.getStack().getLore()).displayName(lore.getStack().getDisplayName());
     }
 }

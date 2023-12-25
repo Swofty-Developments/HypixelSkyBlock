@@ -1,21 +1,19 @@
 package net.swofty.event.actions.player.gui;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.gui.SkyBlockAnvilGUI;
 import net.swofty.gui.SkyBlockSignGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.gui.inventory.item.GUIQueryItem;
+import net.swofty.item.ItemType;
+import net.swofty.item.SkyBlockItem;
+import net.swofty.item.impl.Interactable;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles when a player clicks on an InventoryGUI",
@@ -33,6 +31,22 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
     public void run(Event event) {
         InventoryPreClickEvent inventoryClick = (InventoryPreClickEvent) event;
         final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClick.getPlayer();
+        SkyBlockItem clickedItem = new SkyBlockItem(inventoryClick.getClickedItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(inventoryClick.getCursorItem());
+
+        if (clickedItem.getGenericInstance() != null &&
+                clickedItem.getGenericInstance() instanceof Interactable interactable) {
+            if (!interactable.onInventoryInteract(player, clickedItem)) {
+                inventoryClick.setCancelled(true);
+                return;
+            }
+        }
+
+        if (cursorItem.getAttributeHandler().getItemTypeAsType() != null &&
+                cursorItem.getAttributeHandler().getItemTypeAsType().equals(ItemType.SKYBLOCK_MENU)) {
+            inventoryClick.setCancelled(true);
+            return;
+        }
 
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid());

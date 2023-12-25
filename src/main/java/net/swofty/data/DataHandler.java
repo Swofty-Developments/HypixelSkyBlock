@@ -10,7 +10,9 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
@@ -154,6 +156,10 @@ public class DataHandler {
                 ItemStack loadedItem = PlayerItemUpdater.playerUpdate(player, origin, itemStack.getItemStack()).build();
                 origin.setStack(player, loadedItem);
             });
+
+            player.getInventory().setItemStack(8,
+                    new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
+                            .getUpdatedItem().build());
         }, (player) -> {
             SkyBlockInventory skyBlockInventory = new SkyBlockInventory();
 

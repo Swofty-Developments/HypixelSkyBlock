@@ -5,13 +5,10 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
-import net.swofty.item.impl.Enchantable;
-import net.swofty.item.impl.Reforgable;
+import net.swofty.item.impl.*;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
-import net.swofty.item.impl.CustomSkyBlockAbility;
-import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -46,8 +43,18 @@ public class ItemLore {
         }
 
         String displayName = StringUtility.toNormalCase(type);
+        String displayRarity = rarity.getDisplay();
 
         if (clazz != null) {
+            CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
+            if (skyBlockItem.getAbsoluteLore(player, item) != null) {
+                skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
+                this.stack = stack.withLore(loreLines)
+                        .withDisplayName(Component.text(skyBlockItem.getAbsoluteName(player, item))
+                                .decoration(TextDecoration.ITALIC, false));
+                return;
+            }
+
             // Handle Item Statistics
             if (handler.isMiningTool()) {
                 addLoreLine("§8Breaking Power " + handler.getBreakingPower());
@@ -70,28 +77,29 @@ public class ItemLore {
             if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
 
             // Handle Item Enchantments
-            if (clazz.newInstance() instanceof Enchantable) {
-                long enchantmentCount = handler.getEnchantments().toList().size();
-                if (enchantmentCount < 4) {
-                    handler.getEnchantments().forEach((enchantment) -> {
-                        addLoreLine("§9" + enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level()));
-                        StringUtility.splitByWordAndLength("§7" + enchantment.type().getDescription(enchantment.level()), 34, " ")
-                                .forEach(this::addLoreLine);
-                    });
-                } else {
-                    String enchantmentNames = handler.getEnchantments().toList().stream()
-                            .map(enchantment1 -> "§9" + enchantment1.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment1.level()))
-                            .collect(Collectors.joining(", "));
-                    StringUtility.splitByWordAndLength(enchantmentNames, 34, ",").forEach(this::addLoreLine);
-                }
+            if (clazz.newInstance() instanceof Enchantable enchantable) {
+                if (enchantable.showEnchantLores()) {
+                    long enchantmentCount = handler.getEnchantments().toList().size();
+                    if (enchantmentCount < 4) {
+                        handler.getEnchantments().forEach((enchantment) -> {
+                            addLoreLine("§9" + enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level()));
+                            StringUtility.splitByWordAndLength("§7" + enchantment.type().getDescription(enchantment.level()), 34, " ")
+                                    .forEach(this::addLoreLine);
+                        });
+                    } else {
+                        String enchantmentNames = handler.getEnchantments().toList().stream()
+                                .map(enchantment1 -> "§9" + enchantment1.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment1.level()))
+                                .collect(Collectors.joining(", "));
+                        StringUtility.splitByWordAndLength(enchantmentNames, 34, ",").forEach(this::addLoreLine);
+                    }
 
-                if (enchantmentCount != 0) {
-                    addLoreLine(null);
+                    if (enchantmentCount != 0) {
+                        addLoreLine(null);
+                    }
                 }
             }
 
             // Handle Custom Item Lore
-            CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
             if (skyBlockItem.getLore(player, item) != null) {
                 skyBlockItem.getLore(player, item).forEach(line -> addLoreLine("§7" + line));
                 addLoreLine(null);
@@ -111,6 +119,10 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
+            if (item.getGenericInstance() instanceof ExtraRarityDisplay) {
+                displayRarity = displayRarity + ((ExtraRarityDisplay) item.getGenericInstance()).getExtraRarityDisplay();
+            }
+
             if (item.getGenericInstance() instanceof Reforgable) {
                 addLoreLine("§8This item can be reforged!");
 
@@ -121,12 +133,11 @@ public class ItemLore {
         }
 
         if (recombobulated) {
-            addLoreLine(rarity.getColor() + "&kL " + rarity.getDisplay() + " &kL");
-        } else {
-            addLoreLine(rarity.getDisplay());
+            displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
         }
 
         displayName = rarity.getColor() + displayName;
+        addLoreLine(displayRarity);
         this.stack = stack.withLore(loreLines)
                 .withDisplayName(Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
