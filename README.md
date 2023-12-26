@@ -11,7 +11,7 @@ Releases are auto deployed on push onto the GitHub releases page which can be fo
 
 #### Javadocs
 
-Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/apidocs/).
+Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/).
 
 ## Execution Guide
 
