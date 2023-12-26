@@ -21,6 +21,10 @@ public class MaterialQuantifiable {
         this(material, 1);
     }
 
+    public MaterialQuantifiable(MaterialQuantifiable materialQuantifiable) {
+        this(materialQuantifiable.material, materialQuantifiable.amount);
+    }
+
     public MaterialQuantifiable setMaterial(ItemType material) {
         this.material = material;
         return this;

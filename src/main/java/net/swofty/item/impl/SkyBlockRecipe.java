@@ -20,17 +20,22 @@ import java.util.function.Function;
 public abstract class SkyBlockRecipe<T> {
     protected SkyBlockItem result;
     @Setter
-    protected Function<SkyBlockPlayer, Boolean> canCraft;
+    protected Function<SkyBlockPlayer, CraftingResult> canCraft;
 
-    protected SkyBlockRecipe(SkyBlockItem result) {
+    protected SkyBlockRecipe(SkyBlockItem result, Function<SkyBlockPlayer, CraftingResult> canCraft) {
         this.result = result;
+        this.canCraft = canCraft;
     }
 
     public abstract T setResult(SkyBlockItem result);
 
     public abstract void init();
 
+    public abstract SkyBlockItem[] consume(SkyBlockItem[] stacks);
+
     public static SkyBlockRecipe<?> parseRecipe(ItemStack[] stacks) {
         return ShapelessRecipe.parseShapelessRecipe(stacks);
     }
+
+    public record CraftingResult(boolean allowed, String[] errorMessage) {}
 }

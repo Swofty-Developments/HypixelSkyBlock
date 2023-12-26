@@ -42,7 +42,7 @@ public enum EnchantmentType {
 	
 	public String getDescription(int level) {
 		if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
-			throw new IllegalArgumentException("level cannot be less than 1 and more than " +
+			return("level cannot be less than 1 and more than " +
 					ench.getLevelsToApply().maximumLevel() + " for "+ name());
 		return ench.getDescription(level);
 	}

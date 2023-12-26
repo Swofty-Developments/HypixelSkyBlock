@@ -148,4 +148,13 @@ public class SkyBlockItem {
     public static boolean isSkyBlockItem(ItemStack item) {
         return item.hasTag(Tag.String("item_type"));
     }
+
+    @Override
+    public String toString() {
+        return "SkyBlockItem{" +
+                "type=" + getMaterial().name() +
+                ", clazz=" + clazz +
+                ", amount=" + amount +
+                '}';
+    }
 }
