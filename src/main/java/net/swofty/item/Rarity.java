@@ -11,6 +11,10 @@ public enum Rarity {
     EPIC("§5"),
     LEGENDARY("§6"),
     MYTHIC("§d"),
+    SUPREME("§4"),
+    SPECIAL("§c"),
+    VERY_SPECIAL("§c"),
+    ADMIN("§4"),
     ;
 
     private final String color;

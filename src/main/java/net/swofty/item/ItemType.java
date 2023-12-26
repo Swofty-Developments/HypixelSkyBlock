@@ -36,7 +36,7 @@ public enum ItemType {
     /**
      * Pickaxes
      */
-    PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.MYTHIC, PioneersPickaxe.class),
+    PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.SPECIAL, PioneersPickaxe.class),
     DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
     IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
     STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
