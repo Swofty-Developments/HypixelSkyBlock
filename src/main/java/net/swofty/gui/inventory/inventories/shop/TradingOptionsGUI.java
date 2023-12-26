@@ -47,7 +47,7 @@ public final class TradingOptionsGUI extends SkyBlockInventoryGUI
             set(createTradeItem(item, 23, 32, getPlayer(), stackPrice));
             set(createTradeItem(item, 24, 64, getPlayer(), stackPrice));
 
-            set(GUIClickableItem.getGoBackItem(49, retPointer, "§aGo back"));
+            set(GUIClickableItem.getGoBackItem(49, retPointer));
 
             updateItemStacks(e.inventory(), getPlayer());
       }
@@ -56,18 +56,15 @@ public final class TradingOptionsGUI extends SkyBlockInventoryGUI
             stackprice = stackprice * amount;
             SkyBlockItem sbItem = item.item();
             ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
-            List<Component> lore = new ArrayList<>(itemStack.build().getLore());
-            lore.add(Component.text(""));
-            lore.add(Component.text("§7Cost"));
-            lore.add(Component.text("§6 " + StringUtility.commaify(stackprice) + " Coin" + (stackprice != 1 ? "s" : "")));
-            lore.add(Component.text(""));
-            lore.add(Component.text("§7Stock"));
-            lore.add(Component.text("§6 " + player.getShoppingData().getStock(item.item()) + " §7remaining"));
-            lore.add(Component.text(""));
-            lore.add(Component.text("§eClick to purchase!"));
-
-            itemStack.displayName(itemStack.build().getDisplayName().append(Component.text(" §8x" + amount)));
-            itemStack.lore(lore);
+            List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+            lore.add("");
+            lore.add("§7Cost");
+            lore.add("§6 " + StringUtility.commaify(stackprice) + " Coin" + (stackprice != 1 ? "s" : ""));
+            lore.add("");
+            lore.add("§7Stock");
+            lore.add("§6 " + player.getShoppingData().getStock(item.item()) + " §7remaining");
+            lore.add("");
+            lore.add("§eClick to purchase!");
 
             double finalStackprice = stackprice;
             return new GUIClickableItem()
@@ -100,8 +97,8 @@ public final class TradingOptionsGUI extends SkyBlockInventoryGUI
 
                   @Override
                   public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        itemStack.amount(amount);
-                        return itemStack;
+                        String displayName = StringUtility.getTextFromComponent(itemStack.build().getDisplayName().append(Component.text(" §8x" + amount)));
+                        return ItemStackCreator.getStack(displayName, itemStack.build().material(), 0, amount, lore);
                   }
             };
       }

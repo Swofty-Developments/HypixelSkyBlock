@@ -42,7 +42,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu(), "SkyBlock Menu"));
+        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
         display(false);
     }
 

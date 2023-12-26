@@ -31,7 +31,7 @@ public interface GUIClickableItem extends GUIItem
         };
     }
 
-    static GUIClickableItem getGoBackItem(int slot, SkyBlockInventoryGUI gui, String name) {
+    static GUIClickableItem getGoBackItem(int slot, SkyBlockInventoryGUI gui) {
         return new GUIClickableItem() {
             @Override
             public int getSlot() {
@@ -47,7 +47,7 @@ public interface GUIClickableItem extends GUIItem
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aGo Back",
                         Material.ARROW,
-                        (short) 0, 1, "§7To " + name);
+                        (short) 0, 1, "§7To " + gui.getTitle());
             }
         };
     }

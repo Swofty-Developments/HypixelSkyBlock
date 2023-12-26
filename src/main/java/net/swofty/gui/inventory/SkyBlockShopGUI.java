@@ -103,29 +103,24 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
                   ShopItem item = p.get(i);
                   SkyBlockItem sbItem = item.item;
                   ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
-                  List<Component> lore = new ArrayList<>(itemStack.build().getLore());
+                  List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                  lore.add("");
+                  lore.add("§7Cost");
 
-
-                  lore.add(Component.text(""));
-                  lore.add(Component.text("§7Cost"));
                   double price = item.price * item.amount;
                   double stackPrice = item.price / item.modifier;
                   if (stackPrice < 1) {
                         stackPrice = 1;
                   }
-                  lore.add(Component.text("§6 " + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : "")));
-                  lore.add(Component.text(""));
-                  if (item.stackable()) {
-                        lore.add(Component.text("§7Stock"));
-                        lore.add(Component.text("§6 " + getPlayer().getShoppingData().getStock(item.item) + " §7remaining"));
-                        lore.add(Component.text(""));
-                  }
-                  lore.add(Component.text("§eClick to trade!"));
+                  lore.add("§6 " + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : ""));
+                  lore.add("");
+                  lore.add("§7Stock");
+                  lore.add("§6 " + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
+                  lore.add("");
+                  lore.add("§eClick to trade!");
                   if (item.stackable)
-                        lore.add(Component.text("§eRight-click for more trading options!"));
+                        lore.add("§eRight-click for more trading options!");
 
-                  itemStack.lore(lore);
-                  itemStack.amount(item.amount);
                   double finalStackPrice = stackPrice;
 
                   set(new GUIClickableItem()
@@ -163,7 +158,8 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
 
                         @Override
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                              return itemStack;
+                              return ItemStackCreator.getStack(StringUtility.getTextFromComponent(itemStack.build().getDisplayName()),
+                                      itemStack.build().material(), 0, item.amount(), lore);
                         }
                   });
             }
