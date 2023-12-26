@@ -12,15 +12,21 @@ public enum Rarity {
     LEGENDARY("§6"),
     MYTHIC("§d"),
     SUPREME("§4"),
-    SPECIAL("§c"),
-    VERY_SPECIAL("§c"),
-    ADMIN("§4"),
+    SPECIAL("§c", false),
+    VERY_SPECIAL("§c", false),
+    ADMIN("§4", false),
     ;
 
     private final String color;
+    private final boolean reforgable;
+
+    Rarity(String color, boolean reforgable) {
+        this.color = color;
+        this.reforgable = reforgable;
+    }
 
     Rarity(String color) {
-        this.color = color;
+        this(color, true);
     }
 
     public Rarity upgrade() {

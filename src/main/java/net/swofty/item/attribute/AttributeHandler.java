@@ -56,7 +56,9 @@ public class AttributeHandler {
         return ((ItemAttributeReforge) item.getAttribute("reforge")).getValue();
     }
 
-    public void setReforge(ReforgeType.Reforge reforge) {
+    public void setReforge(ReforgeType.Reforge reforge) throws IllegalArgumentException {
+        if (!item.getAttributeHandler().getRarity().isReforgable())
+            throw new IllegalArgumentException("The rarity " + item.getAttributeHandler().getRarity().name() + " is not reforgable.");
         ((ItemAttributeReforge) item.getAttribute("reforge")).setValue(reforge);
     }
 

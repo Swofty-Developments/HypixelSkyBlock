@@ -180,7 +180,11 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 String oldPrefix = item.getAttributeHandler().getReforge() == null ? "" :
                         " " + item.getAttributeHandler().getReforge().prefix();
 
-                item.getAttributeHandler().setReforge(reforge);
+                try {
+                    item.getAttributeHandler().setReforge(reforge);
+                } catch (IllegalArgumentException ex) {
+                    player.sendMessage("§c" + ex.getMessage());
+                }
 
                 String itemName = ItemLore.getBaseName(item.getItemStack());
 
