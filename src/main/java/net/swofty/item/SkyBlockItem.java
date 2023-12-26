@@ -26,7 +26,7 @@ public class SkyBlockItem {
     @Setter
     private int amount = 1;
 
-    public SkyBlockItem(String itemType) {
+    public SkyBlockItem(String itemType, int amount) {
         itemType = itemType.replace("minecraft:", "").toUpperCase();
 
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
@@ -68,6 +68,8 @@ public class SkyBlockItem {
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+
+        setAmount(amount);
     }
 
     public Object getAttribute(String key) {
@@ -75,11 +77,15 @@ public class SkyBlockItem {
     }
 
     public SkyBlockItem(Material material) {
-        this(material.name());
+        this(material.name(), 1);
     }
 
     public SkyBlockItem(ItemType type) {
-        this(type.name());
+        this(type.name(), 1);
+    }
+
+    public SkyBlockItem(ItemType type, int amount) {
+        this(type.name(), amount);
     }
 
     public SkyBlockItem(ItemStack item) {

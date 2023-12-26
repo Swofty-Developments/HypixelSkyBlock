@@ -7,6 +7,7 @@ import net.minestom.server.recipe.Recipe;
 import net.swofty.item.ItemType;
 import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.impl.recipes.ShapedRecipe;
 import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
 
@@ -34,6 +35,10 @@ public abstract class SkyBlockRecipe<T> {
     public abstract SkyBlockItem[] consume(SkyBlockItem[] stacks);
 
     public static SkyBlockRecipe<?> parseRecipe(ItemStack[] stacks) {
+        ShapedRecipe shapedRecipe = ShapedRecipe.parseShapedRecipe(stacks);
+        if (shapedRecipe != null) {
+            return shapedRecipe;
+        }
         return ShapelessRecipe.parseShapelessRecipe(stacks);
     }
 
