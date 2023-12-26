@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <writeAnnotations>
@@ -5,6 +6,10 @@
     </writeAnnotations>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
+    <option name="OTHER_OPTIONS" value="-encoding utf8 -docencoding utf8 -charset utf8" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

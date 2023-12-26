@@ -310,7 +310,6 @@ public abstract class SkyBlockInventoryGUI {
      * Runs when the player closes the gui
      *
      * @param e the event of the gui closing
-     * @throws ExecutionException sometimes it might fail to call this event
      */
     public abstract void onClose(InventoryCloseEvent e, CloseReason reason);
 
