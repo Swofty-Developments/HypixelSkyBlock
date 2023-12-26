@@ -3,18 +3,22 @@ package net.swofty.gui.inventory;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.gui.inventory.inventories.shop.TradingOptionsGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
+import net.swofty.item.ItemLore;
 import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.NonPlayerItemUpdater;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistics;
 import net.swofty.utility.PaginationList;
@@ -24,8 +28,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
-{
+public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
       private static final int[] INTERIOR = new int[]{
               10, 11, 12, 13, 14, 15, 16,
               19, 20, 21, 22, 23, 24, 25,
@@ -43,10 +46,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
             initializeShopItems();
       }
 
-      public SkyBlockShopGUI(String title) {
-            this(title, 1);
-      }
-
       @Override
       public void onOpen(InventoryGUIOpenEvent e) {
             border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
@@ -55,8 +54,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
 
             updateItemStacks(e.inventory(), getPlayer());
 
-            if (paginatedItems.size() == 0) page = 0;
-            int finalPage = page;
+            if (paginatedItems.isEmpty()) page = 0;
             if (page > 1)
                   set(new GUIClickableItem() {
                         @Override
@@ -102,29 +100,14 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
                   int slot = INTERIOR[i];
                   ShopItem item = p.get(i);
                   SkyBlockItem sbItem = item.item;
-                  ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
-                  List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
-                  lore.add("");
-                  lore.add("§7Cost");
-
                   double price = item.price * item.amount;
                   double stackPrice = item.price / item.modifier;
                   if (stackPrice < 1) {
                         stackPrice = 1;
                   }
-                  lore.add("§6 " + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : ""));
-                  lore.add("");
-                  lore.add("§7Stock");
-                  lore.add("§6 " + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
-                  lore.add("");
-                  lore.add("§eClick to trade!");
-                  if (item.stackable)
-                        lore.add("§eRight-click for more trading options!");
-
                   double finalStackPrice = stackPrice;
 
-                  set(new GUIClickableItem()
-                  {
+                  set(new GUIClickableItem() {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                               if (!player.getShoppingData().canPurchase(item.item, item.amount)) {
@@ -158,8 +141,30 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
 
                         @Override
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                              return ItemStackCreator.getStack(StringUtility.getTextFromComponent(itemStack.build().getDisplayName()),
-                                      itemStack.build().material(), 0, item.amount(), lore);
+                              ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                                      player, null, sbItem.getItemStackBuilder().build()
+                              );
+
+                              List<String> lore = new ArrayList<>(itemStack.build().getLore()
+                                      .stream()
+                                      .map(StringUtility::getTextFromComponent)
+                                      .toList());
+
+                              lore.add("");
+                              lore.add("§7Cost");
+                              lore.add("§6 " + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : ""));
+                              lore.add("");
+                              lore.add("§7Stock");
+                              lore.add("§6 " + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
+                              lore.add("");
+                              lore.add("§eClick to trade!");
+
+                              if (item.stackable)
+                                    lore.add("§eRight-click for more trading options!");
+
+                              return itemStack.lore(lore.stream().map(
+                                        line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
+                              ).toList());
                         }
                   });
             }

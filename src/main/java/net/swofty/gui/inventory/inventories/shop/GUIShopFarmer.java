@@ -6,13 +6,11 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.SkyBlockShopGUI;
 import net.swofty.item.ItemType;
-import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
 
-public class FarmerShopGUI extends SkyBlockShopGUI
-{
-      public FarmerShopGUI() {
+public class GUIShopFarmer extends SkyBlockShopGUI {
+      public GUIShopFarmer() {
             super("Farm Merchant", 1);
       }
 

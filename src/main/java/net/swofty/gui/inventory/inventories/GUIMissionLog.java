@@ -137,12 +137,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
         for (int i = 0; i < toShow.size(); i++) {
             MissionSet missionSet = toShow.get(i);
             int finalI = i;
-            set(new GUIClickableItem() {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    player.sendMessage("Pog");
-                }
-
+            set(new GUIItem() {
                 @Override
                 public int getSlot() {
                     return MISSION_SLOTS[finalI];

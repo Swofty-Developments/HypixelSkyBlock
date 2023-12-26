@@ -40,13 +40,12 @@ public class ItemStackCreator {
     }
 
     public static ItemStack.Builder enchant(ItemStack.Builder builder) {
-        return builder.meta(meta -> {
-            meta.enchantment(Enchantment.SHARPNESS, (short) 1);
-            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+        ItemMeta metaToSet = builder.meta(meta -> {
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
-            meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
-            meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
-        });
+            meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
+        }).build().getMeta();
+
+        return builder.meta(metaToSet);
     }
 
     public static ItemStack.Builder getStack(String name, Material material, int data, int amount, List<String> lore) {

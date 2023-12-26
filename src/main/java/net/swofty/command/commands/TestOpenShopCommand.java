@@ -2,7 +2,7 @@ package net.swofty.command.commands;
 
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
-import net.swofty.gui.inventory.inventories.shop.FarmerShopGUI;
+import net.swofty.gui.inventory.inventories.shop.GUIShopFarmer;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 
@@ -17,7 +17,7 @@ public class TestOpenShopCommand extends SkyBlockCommand
       public void run(MinestomCommand command) {
             command.addSyntax((sender, context) -> {
                   SkyBlockPlayer player = (SkyBlockPlayer) sender;
-                  new FarmerShopGUI().open(player);
+                  new GUIShopFarmer().open(player);
             });
       }
 }

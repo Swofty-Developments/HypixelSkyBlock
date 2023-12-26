@@ -3,9 +3,6 @@ package net.swofty.serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import net.swofty.item.SkyBlockItem;
 import net.swofty.mission.MissionData;
 
 import java.util.Map;

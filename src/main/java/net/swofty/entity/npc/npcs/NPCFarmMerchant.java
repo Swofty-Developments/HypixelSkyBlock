@@ -3,7 +3,7 @@ package net.swofty.entity.npc.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.entity.npc.NPCParameters;
 import net.swofty.entity.npc.SkyBlockNPC;
-import net.swofty.gui.inventory.inventories.shop.FarmerShopGUI;
+import net.swofty.gui.inventory.inventories.shop.GUIShopFarmer;
 import net.swofty.user.SkyBlockPlayer;
 
 public class NPCFarmMerchant extends SkyBlockNPC {
@@ -42,6 +42,6 @@ public class NPCFarmMerchant extends SkyBlockNPC {
         SkyBlockNPC npc = e.npc();
         String signatureTexture = npc.getParameters().signature();
 
-        new FarmerShopGUI().open(player);
+        new GUIShopFarmer().open(player);
     }
 }
