@@ -16,6 +16,7 @@ import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
+import net.swofty.user.PlayerShopData;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.datapoints.*;
 import net.swofty.user.SkyBlockInventory;
@@ -206,6 +207,10 @@ public class DataHandler {
         MISSION_DATA("mission_data", DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {}, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();
             data.setSkyBlockPlayer(player);
+            datapoint.setValue(data);
+        }),
+        SHOPPING_DATA("shopping_data", DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {}, (player, datapoint) -> {
+            PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
         ;

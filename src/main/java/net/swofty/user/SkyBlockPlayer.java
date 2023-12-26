@@ -15,6 +15,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointMissionData;
+import net.swofty.data.datapoints.DatapointShopData;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.event.value.events.MiningValueUpdateEvent;
@@ -82,6 +83,10 @@ public class SkyBlockPlayer extends Player {
 
     public MissionData getMissionData() {
         return getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+    }
+
+    public PlayerShopData getShoppingData() {
+        return getDataHandler().get(DataHandler.Data.SHOPPING_DATA, DatapointShopData.class).getValue();
     }
 
     public boolean isOnIsland() {

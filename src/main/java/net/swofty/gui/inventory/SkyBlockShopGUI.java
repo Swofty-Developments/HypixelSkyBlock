@@ -5,10 +5,12 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
+import net.swofty.gui.inventory.inventories.shop.TradingOptionsGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
@@ -38,6 +40,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
             super(title, InventoryType.CHEST_6_ROW);
             this.shopItemList = new ArrayList<>();
             this.page = page;
+            initializeShopItems();
       }
 
       public SkyBlockShopGUI(String title) {
@@ -46,7 +49,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
 
       @Override
       public void onOpen(InventoryGUIOpenEvent e) {
-            initializeShopItems();
             border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
             PaginationList<ShopItem> paginatedItems = new PaginationList<>(INTERIOR.length);
             paginatedItems.addAll(shopItemList);
@@ -92,6 +94,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
                               return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
                         }
                   });
+            updateItemStacks(e.inventory(), getPlayer());
 
             List<ShopItem> p = paginatedItems.getPage(page);
             if (p == null) return;
@@ -106,25 +109,39 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
                   lore.add(Component.text(""));
                   lore.add(Component.text("§7Cost"));
                   double price = item.price * item.amount;
-                  double stackPrice = price / item.modifier;
+                  double stackPrice = item.price / item.modifier;
                   if (stackPrice < 1) {
                         stackPrice = 1;
                   }
                   lore.add(Component.text("§6 " + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : "")));
                   lore.add(Component.text(""));
+                  if (item.stackable()) {
+                        lore.add(Component.text("§7Stock"));
+                        lore.add(Component.text("§6 " + getPlayer().getShoppingData().getStock(item.item) + " §7remaining"));
+                        lore.add(Component.text(""));
+                  }
                   lore.add(Component.text("§eClick to trade!"));
                   if (item.stackable)
                         lore.add(Component.text("§eRight-click for more trading options!"));
 
                   itemStack.lore(lore);
                   itemStack.amount(item.amount);
-                  int finalI = i;
                   double finalStackPrice = stackPrice;
 
                   set(new GUIClickableItem()
                   {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                              if (!player.getShoppingData().canPurchase(item.item, item.amount)) {
+                                    player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
+                                    return;
+                              }
+
+                              if (item.stackable() && e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                                    new TradingOptionsGUI(item, SkyBlockShopGUI.this, finalStackPrice).open(player);
+                                    return;
+                              }
+
                               double purse = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
                               if (price > purse) {
                                     player.sendMessage("§cYou don't have enough coins!");
@@ -135,6 +152,8 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
                               player.getInventory().addItemStack(cleanStack.build());
                               player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
                               player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - price);
+                              player.getShoppingData().documentPurchase(item.item(), item.amount);
+                              updateThis(player);
                         }
 
                         @Override
@@ -161,6 +180,10 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI
 
       public void attachItem(ShopItem i) {
             shopItemList.add(i);
+      }
+
+      private void updateThis(SkyBlockPlayer player) {
+            SkyBlockShopGUI.this.open(player);
       }
 
       public record ShopItem(SkyBlockItem item, int amount, double price, double modifier, boolean stackable) {
