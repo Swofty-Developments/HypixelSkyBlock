@@ -4,6 +4,7 @@ import net.minestom.server.item.Material;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.item.items.enchantment.EnchantedBook;
+import net.swofty.item.items.farming.RookieHoe;
 import net.swofty.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.item.items.mining.PioneersPickaxe;
 import net.swofty.item.items.mining.vanilla.IronPickaxe;
@@ -21,6 +22,16 @@ public enum ItemType {
     DIRT(Material.DIRT, Rarity.EPIC),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     AIR(Material.AIR, Rarity.COMMON),
+
+    /**
+     * Farming Props
+     */
+    ROOKIE_HOE(Material.STONE_HOE, Rarity.COMMON, RookieHoe.class),
+    WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON),
+    STONE_HOE(Material.STONE_HOE, Rarity.COMMON),
+    IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
+    DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
+    NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
 
     /**
      * Pickaxes

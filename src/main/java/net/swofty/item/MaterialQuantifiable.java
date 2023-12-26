@@ -68,4 +68,8 @@ public class MaterialQuantifiable {
             materials[i] = of(stacks[i]);
         return materials;
     }
+
+    public static MaterialQuantifiable one(ItemType type) {
+        return new MaterialQuantifiable(type, 1);
+    }
 }

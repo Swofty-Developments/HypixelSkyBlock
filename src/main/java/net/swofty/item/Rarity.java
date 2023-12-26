@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.Style;
 public enum Rarity {
     COMMON("§f"),
     UNCOMMON("§a"),
-    RARE("§8"),
+    RARE("§9"),
     EPIC("§5"),
     LEGENDARY("§6"),
     MYTHIC("§d"),
