@@ -2,10 +2,12 @@ package net.swofty.mission;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.region.RegionType;
 import net.swofty.serializer.MissionDataSerializer;
 import net.swofty.user.SkyBlockPlayer;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.io.Serializable;
@@ -37,6 +39,11 @@ public class MissionData {
         return null;
     }
 
+    @SneakyThrows
+    public Map.Entry<ActiveMission, Boolean> getMission(Class<? extends SkyBlockMission> skyBlockMission) {
+        return getMission(skyBlockMission.newInstance().getID());
+    }
+
     public List<ActiveMission> getActiveMissions(RegionType regionType) {
         return activeMissions.stream().filter(mission -> {
             SkyBlockMission skyBlockMission = missionClassCache.get(mission.getMissionID());
@@ -62,7 +69,7 @@ public class MissionData {
 
         try {
             SkyBlockMission mission = skyBlockMission.newInstance();
-            ActiveMission activeMission = new ActiveMission(mission.getID(), 0, mission instanceof SkyBlockMissionDynamic);
+            ActiveMission activeMission = new ActiveMission(mission.getID(), 1, mission instanceof SkyBlockProgressMission);
 
             Map<String, Object> data = mission.onStart(getSkyBlockPlayer());
             if (data != null) {
@@ -82,8 +89,17 @@ public class MissionData {
 
         ActiveMission activeMission = activeMissions.stream().filter(mission -> mission.getMissionID().equals(missionID)).findFirst().get();
         missionClassCache.get(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData());
+        activeMission.setMissionEnded((int) SkyBlockCalendar.getElapsed());
         activeMissions.remove(activeMission);
         completedMissions.add(activeMission);
+    }
+
+    public @Nullable SkyBlockProgressMission getAsProgressMission(String missionID) {
+        try {
+            return (SkyBlockProgressMission) missionClassCache.get(missionID);
+        } catch (ClassCastException e) {
+            return null;
+        }
     }
 
     public Map<String, Object> serialize() {
@@ -96,6 +112,7 @@ public class MissionData {
             m.put("isDynamic", mission.isDynamic());
             m.put("missionStarted", mission.getMissionStarted());
             m.put("customData", mission.getCustomData());
+            m.put("missionEnded", mission.getMissionEnded());
             return m;
         }).collect(Collectors.toList()));
 
@@ -106,6 +123,7 @@ public class MissionData {
             m.put("isDynamic", mission.isDynamic());
             m.put("missionStarted", mission.getMissionStarted());
             m.put("customData", mission.getCustomData());
+            m.put("missionEnded", mission.getMissionEnded());
             return m;
         }).collect(Collectors.toList()));
 
@@ -122,7 +140,9 @@ public class MissionData {
                     (int) m.get("missionProgress"),
                     (boolean) m.get("isDynamic"),
                     (int) m.get("missionStarted"),
-                    (Map<String, Object>) m.get("customData"));
+                    (Map<String, Object>) m.get("customData"),
+                    (int) m.get("missionEnded")
+            );
             return mission;
         }).collect(Collectors.toList());
 
@@ -132,7 +152,9 @@ public class MissionData {
                     (int) m.get("missionProgress"),
                     (boolean) m.get("isDynamic"),
                     (int) m.get("missionStarted"),
-                    (Map<String, Object>) m.get("customData"));
+                    (Map<String, Object>) m.get("customData"),
+                    (int) m.get("missionEnded")
+            );
             return mission;
         }).collect(Collectors.toList());
     }
@@ -142,6 +164,7 @@ public class MissionData {
     public static class ActiveMission {
         private String missionID;
         private int missionStarted;
+        private int missionEnded;
         private int missionProgress;
         private boolean isDynamic;
         private Map<String, Object> customData;
@@ -152,19 +175,29 @@ public class MissionData {
             this.isDynamic = isDynamic;
             this.missionStarted = (int) SkyBlockCalendar.getElapsed();
             this.customData = new HashMap<>();
+            this.missionEnded = 0;
         }
 
-        public ActiveMission(String missionID, int missionProgress, boolean isDynamic, int missionStarted, Map<String, Object> customData) {
+        public ActiveMission(String missionID, int missionProgress, boolean isDynamic, int missionStarted, Map<String, Object> customData, int missionEnded) {
             this.missionID = missionID;
             this.missionProgress = missionProgress;
             this.isDynamic = isDynamic;
             this.missionStarted = missionStarted;
             this.customData = customData;
+            this.missionEnded = missionEnded;
         }
 
         @Override
         public String toString() {
             return MissionData.getMissionClass(missionID).getName();
+        }
+
+        public void checkIfMissionEnded(SkyBlockPlayer player) {
+            SkyBlockProgressMission mission = (SkyBlockProgressMission) MissionData.getMissionClass(missionID);
+
+            if (missionProgress >= mission.getMaxProgress()) {
+                player.getMissionData().endMission(missionID);
+            }
         }
 
         public List<String> getObjectiveCompleteText(SkyBlockPlayer player, List<String> rewards) {

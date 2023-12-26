@@ -22,7 +22,6 @@ import java.util.concurrent.ExecutionException;
 public abstract class SkyBlockInventoryGUI {
     public static final Map<UUID, SkyBlockInventoryGUI> GUI_MAP = new HashMap<>();
 
-    @Setter
     protected String title;
     protected InventoryType size;
     protected List<GUIItem> items;

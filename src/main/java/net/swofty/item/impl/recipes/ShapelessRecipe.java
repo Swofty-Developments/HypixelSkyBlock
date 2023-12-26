@@ -104,12 +104,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     public static ShapelessRecipe parseShapelessRecipe(ItemStack[] stacks) {
         List<MaterialQuantifiable> materialsPassedThrough = Arrays.stream(stacks)
                 .map(MaterialQuantifiable::of)
+                .map(MaterialQuantifiable::clone)
                 .toList();
 
         return CACHED_RECIPES.stream()
                 .filter(recipe -> {
                     List<MaterialQuantifiable> materialsNeeded = recipe.getIngredientList().stream()
                             .map(MaterialQuantifiable::new)
+                            .map(MaterialQuantifiable::clone)
                             .collect(Collectors.toList());
                     // Checks if the recipe soft matches, meaning that materialsPassedThrough has at least the same materials as materialsNeeded
                     // and atleast the amount of materialsNeeded, but not necessarily the same amount

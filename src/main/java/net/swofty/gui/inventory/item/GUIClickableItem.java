@@ -45,7 +45,7 @@ public interface GUIClickableItem extends GUIItem
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cGo Back",
+                return ItemStackCreator.getStack("§aGo Back",
                         Material.ARROW,
                         (short) 0, 1, "§7To " + name);
             }

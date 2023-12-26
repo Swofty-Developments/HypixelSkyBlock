@@ -10,6 +10,7 @@ import net.swofty.SkyBlock;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
+import net.swofty.mission.SkyBlockProgressMission;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
@@ -65,8 +66,15 @@ public class SkyBlockScoreboard {
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
+                    MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).get(0);
+
                     addLine("§fObjective", sidebar);
-                    addLine("§e" + missionData.getActiveMissions(region.getType()).get(0), sidebar);
+                    addLine("§e" + mission, sidebar);
+
+                    SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
+                    if (progressMission != null)
+                        addLine("§7 (§e" + mission.getMissionProgress() + "§7/§a"
+                                + progressMission.getMaxProgress() + "§7)", sidebar);
                     addLine("§7 ", sidebar);
                 }
 

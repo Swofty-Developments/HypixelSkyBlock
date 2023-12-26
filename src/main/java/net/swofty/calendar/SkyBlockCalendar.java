@@ -40,6 +40,10 @@ public final class SkyBlockCalendar {
             return ((int) (getElapsed() / MONTH) % 12) + 1;
       }
 
+      public static int getMonth(long elapsed) {
+            return ((int) (elapsed / MONTH) % 12) + 1;
+      }
+
       public static int getDay() {
             return ((int) (getElapsed() / DAY) % 31) + 1;
       }
@@ -67,6 +71,14 @@ public final class SkyBlockCalendar {
             for (CalendarEvent event : eventsAtTime) {
                   event.action().accept(time);
             }
+      }
+
+      public static String getMonthName(long elapsed) {
+            return getMonthName((int) ((elapsed / MONTH) % 12) + 1);
+      }
+
+      public static int getDay(long elapsed) {
+            return ((int) (elapsed / DAY) % 31) + 1;
       }
 
       public static String getDisplay(long elapsed) {

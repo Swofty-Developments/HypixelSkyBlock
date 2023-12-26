@@ -58,6 +58,29 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             }
         });
 
+
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIMissionLog().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 23;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, (short) 0, 1,
+                        "§7View your active quests, progress",
+                        "§7and rewards.",
+                        " ",
+                        "§eClick to view!");
+            }
+        });
+
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

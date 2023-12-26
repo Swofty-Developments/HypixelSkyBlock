@@ -20,9 +20,11 @@ public abstract class SkyBlockVillagerNPC {
     private static Map<SkyBlockVillagerNPC, VillagerEntityImpl> villagers = new HashMap();
 
     private final NPCVillagerParameters parameters;
+    private final String ID;
 
     protected SkyBlockVillagerNPC(NPCVillagerParameters parameters) {
         this.parameters = parameters;
+        this.ID = this.getClass().getSimpleName();
     }
 
     public abstract void onClick(PlayerClickVillagerNPCEvent e);

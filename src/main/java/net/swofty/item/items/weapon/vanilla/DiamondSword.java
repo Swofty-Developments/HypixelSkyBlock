@@ -41,7 +41,9 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('D', new MaterialQuantifiable(ItemType.DIRT, 3));
         ingredientMap.put('P', new MaterialQuantifiable(ItemType.IRON_PICKAXE, 1));
-        List<String> pattern = List.of("DD", "PD");
+        List<String> pattern = List.of(
+                "DD",
+                "PD");
 
         return new ShapedRecipe(new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern, (player -> {
             if (player.getLevel() > 10) {

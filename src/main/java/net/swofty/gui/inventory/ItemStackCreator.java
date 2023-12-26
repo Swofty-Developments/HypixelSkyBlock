@@ -39,6 +39,16 @@ public class ItemStackCreator {
         return getStack(name, material, data, amount, Arrays.asList(lore));
     }
 
+    public static ItemStack.Builder enchant(ItemStack.Builder builder) {
+        return builder.meta(meta -> {
+            meta.enchantment(Enchantment.SHARPNESS, (short) 1);
+            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+            meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
+            meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
+        });
+    }
+
     public static ItemStack.Builder getStack(String name, Material material, int data, int amount, List<String> lore) {
         List<String> copiedLore = new ArrayList<>();
         for (String s : lore) {

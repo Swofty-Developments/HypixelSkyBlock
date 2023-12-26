@@ -1,6 +1,7 @@
 package net.swofty.gui.inventory.inventories;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -110,7 +111,9 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
     @SneakyThrows
     public void updateFromItem(SkyBlockItem item, EnchantmentType selected) {
-        setTitle("Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())));
+        getInventory().setTitle(Component.text(
+                "Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())))
+        );
 
         Arrays.stream(PAGINATED_SLOTS_LIST_ENCHANTS).forEach(slot -> set(slot, ItemStackCreator.createNamedItemStack(
                 Material.BLACK_STAINED_GLASS_PANE, "§7 "

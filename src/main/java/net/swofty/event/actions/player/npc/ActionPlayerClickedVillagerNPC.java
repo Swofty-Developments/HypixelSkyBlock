@@ -11,6 +11,7 @@ import net.swofty.entity.villager.VillagerEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.VillagerSpokenToEvent;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Checks to see if a player clicks on a Villager NPC",
@@ -33,6 +34,11 @@ public class ActionPlayerClickedVillagerNPC extends SkyBlockEvent {
         if (playerEvent.getTarget() instanceof VillagerEntityImpl npcImpl) {
             SkyBlockVillagerNPC npc = SkyBlockVillagerNPC.getFromImpl(npcImpl);
             if (npc == null) return;
+
+            VillagerSpokenToEvent spokenToEvent = new VillagerSpokenToEvent(player, npc);
+            SkyBlockEvent.callSkyBlockEvent(spokenToEvent);
+
+            if (spokenToEvent.isCancelled()) return;
 
             npc.onClick(new SkyBlockVillagerNPC.PlayerClickVillagerNPCEvent(
                     player,

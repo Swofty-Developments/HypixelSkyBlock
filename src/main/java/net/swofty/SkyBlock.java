@@ -207,7 +207,6 @@ public class SkyBlock {
          */
         loopThroughPackage("net.swofty.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
         loopThroughPackage("net.swofty.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
-        CustomEventCaller.start();
 
         // Register missions
         loopThroughPackage("net.swofty.mission.missions", SkyBlockMission.class)
@@ -217,7 +216,7 @@ public class SkyBlock {
                         MissionData.registerMission(event.getClass());
                     } catch (Exception e) {}
                 });
-
+        CustomEventCaller.start();
         SkyBlockEvent.register(globalEventHandler);
 
         loopThroughPackage("net.swofty.enchantment.impl", SkyBlockValueEvent.class)

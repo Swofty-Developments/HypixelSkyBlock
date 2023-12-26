@@ -47,7 +47,7 @@ public class MissionTalkToBanker extends SkyBlockMission {
 
     @Override
     public String getName() {
-        return "Talk to the banker";
+        return "Talk to the Banker";
     }
 
     @Override
