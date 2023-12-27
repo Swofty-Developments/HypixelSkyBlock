@@ -38,15 +38,14 @@ public class ItemLore {
         ItemStatistics statistics = handler.getStatistics();
         Class<?> clazz = item.clazz;
 
-        if (recombobulated) {
-            rarity = rarity.upgrade();
-        }
+        if (recombobulated) rarity = rarity.upgrade();
 
         String displayName = StringUtility.toNormalCase(type);
         String displayRarity = rarity.getDisplay();
 
         if (clazz != null) {
             CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
+
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
                 this.stack = stack.withLore(loreLines)
@@ -60,6 +59,7 @@ public class ItemLore {
                 addLoreLine("§8Breaking Power " + handler.getBreakingPower());
                 addLoreLine(null);
             }
+
             boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE),
                     handler.getReforge(), rarity);
             boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE),
@@ -74,28 +74,30 @@ public class ItemLore {
                     handler.getReforge(), rarity);
             boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.get(ItemStatistic.SPEED),
                     handler.getReforge(), rarity);
+
             if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
 
             // Handle Item Enchantments
-            if (clazz.newInstance() instanceof Enchantable enchantable) {
+            if (clazz.getDeclaredConstructor().newInstance() instanceof Enchantable enchantable) {
                 if (enchantable.showEnchantLores()) {
                     long enchantmentCount = handler.getEnchantments().toList().size();
                     if (enchantmentCount < 4) {
                         handler.getEnchantments().forEach((enchantment) -> {
-                            addLoreLine("§9" + enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level()));
-                            StringUtility.splitByWordAndLength("§7" + enchantment.type().getDescription(enchantment.level()), 34, " ")
-                                    .forEach(this::addLoreLine);
-                        });
+                            addLoreLine("§9" + enchantment.type().getName() +
+                                    " " + StringUtility.getAsRomanNumeral(enchantment.level()));
+                            StringUtility.splitByWordAndLength(
+                                    "§7" + enchantment.type().getDescription(enchantment.level()),
+                                    34, " ").forEach(this::addLoreLine);});
+
                     } else {
-                        String enchantmentNames = handler.getEnchantments().toList().stream()
-                                .map(enchantment1 -> "§9" + enchantment1.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment1.level()))
+                        String enchantmentNames = handler.getEnchantments().toList().stream().map(enchantment1 ->
+                                        "§9" + enchantment1.type().getName() + " " + StringUtility
+                                                .getAsRomanNumeral(enchantment1.level()))
                                 .collect(Collectors.joining(", "));
                         StringUtility.splitByWordAndLength(enchantmentNames, 34, ",").forEach(this::addLoreLine);
                     }
 
-                    if (enchantmentCount != 0) {
-                        addLoreLine(null);
-                    }
+                    if (enchantmentCount != 0) addLoreLine(null);
                 }
             }
 
@@ -119,22 +121,18 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
-            if (item.getGenericInstance() instanceof ExtraRarityDisplay) {
+            if (item.getGenericInstance() instanceof ExtraRarityDisplay)
                 displayRarity = displayRarity + ((ExtraRarityDisplay) item.getGenericInstance()).getExtraRarityDisplay();
-            }
 
             if (item.getGenericInstance() instanceof Reforgable) {
                 addLoreLine("§8This item can be reforged!");
-
-                if (handler.getReforge() != null) {
+                if (handler.getReforge() != null)
                     displayName = handler.getReforge().prefix() + " " + displayName;
-                }
             }
         }
 
-        if (recombobulated) {
+        if (recombobulated)
             displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
-        }
 
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
@@ -147,10 +145,8 @@ public class ItemLore {
         return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
     }
 
-    private boolean addPossiblePropertyInt(ItemStatistic statistic,
-                                           int overallValue,
-                                           ReforgeType.Reforge reforge,
-                                           Rarity rarity) {
+    private boolean addPossiblePropertyInt(ItemStatistic statistic, int overallValue,
+                                           ReforgeType.Reforge reforge, Rarity rarity) {
         int reforgeValue = 0;
         if (reforge != null) {
             overallValue += reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
@@ -163,9 +159,8 @@ public class ItemLore {
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
                 color + statistic.getPrefix() + overallValue + statistic.getSuffix() + " ";
 
-        if (reforgeValue != 0) {
+        if (reforgeValue != 0)
             line += "§9(" + (reforgeValue > 0 ? "+" : "") + reforgeValue + ")";
-        }
 
         addLoreLine(line);
         return true;
@@ -176,8 +171,9 @@ public class ItemLore {
             loreLines.add(Component.empty());
             return;
         }
-        line = line.replace("&", "§");
-        loreLines.add(Component.text("§r" + line)
+
+        loreLines.add(Component.text("§r" + line.replace("&", "§"))
                 .decorations(Collections.singleton(TextDecoration.ITALIC), false));
     }
 }
+
