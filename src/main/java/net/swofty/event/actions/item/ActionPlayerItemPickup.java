@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.item;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
@@ -29,7 +29,8 @@ public class ActionPlayerItemPickup extends SkyBlockEvent {
 
         DroppedItemEntityImpl.getDroppedItems().computeIfPresent(player, (unused, list) -> {
             list.forEach(item -> {
-                if (item.getPosition().distance(player.getPosition()) <= 1.5) {
+                if ((System.currentTimeMillis() > item.getEndPickupDelay())
+                        && item.getPosition().distance(player.getPosition()) <= 1.5) {
                     player.addAndUpdateItem(item.getItem());
                     item.remove();
                 }

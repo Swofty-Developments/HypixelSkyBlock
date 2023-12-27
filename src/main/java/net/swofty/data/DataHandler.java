@@ -213,6 +213,7 @@ public class DataHandler {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
+        DISABLE_DROP_MESSAGE("disable_drop_message", DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {});
         ;
 
         @Getter

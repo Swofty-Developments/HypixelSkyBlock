@@ -15,16 +15,18 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 import java.util.*;
 
+@Getter
 public class DroppedItemEntityImpl extends Entity {
     @Getter
     private static Map<SkyBlockPlayer, List<DroppedItemEntityImpl>> droppedItems = new HashMap<>();
-    @Getter
     private final SkyBlockPlayer player;
+    private final long endPickupDelay;
 
     public DroppedItemEntityImpl(SkyBlockItem item, SkyBlockPlayer player) {
         super(EntityType.ITEM_DISPLAY);
 
         this.player = player;
+        this.endPickupDelay = System.currentTimeMillis() + 1500;
 
         ItemDisplayMeta meta = (ItemDisplayMeta) this.entityMeta;
         meta.setItemStack(item.getItemStack());

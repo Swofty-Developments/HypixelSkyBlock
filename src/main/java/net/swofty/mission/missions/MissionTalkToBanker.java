@@ -1,10 +1,15 @@
 package net.swofty.mission.missions;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
+import net.minestom.server.timer.Scheduler;
+import net.minestom.server.timer.Task;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
+import net.swofty.mission.MissionRepeater;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.RegionType;
 import net.swofty.user.SkyBlockPlayer;
@@ -18,7 +23,7 @@ import java.util.Set;
         node = EventNodes.CUSTOM,
         validLocations = EventParameters.Location.HUB,
         requireDataLoaded = false)
-public class MissionTalkToBanker extends SkyBlockMission {
+public class MissionTalkToBanker extends SkyBlockMission implements MissionRepeater {
     @Override
     public Class<? extends Event> getEvent() {
         return PlayerRegionChangeEvent.class;
@@ -64,5 +69,16 @@ public class MissionTalkToBanker extends SkyBlockMission {
     @Override
     public Set<RegionType> getValidRegions() {
         return Collections.singleton(RegionType.BANK);
+    }
+
+    @Override
+    public Task getTask(Scheduler scheduler) {
+        return scheduler.submitTask(() -> {
+            getPlayersWithMissionActive().forEach((player) -> {
+
+            });
+
+            return TaskSchedule.tick(20);
+        });
     }
 }

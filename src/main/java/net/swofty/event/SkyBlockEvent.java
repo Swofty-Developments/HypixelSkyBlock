@@ -27,7 +27,7 @@ public abstract class SkyBlockEvent {
 
     public abstract Class<? extends net.minestom.server.event.Event> getEvent();
 
-    public abstract void run(Event event);
+    public abstract void run(Event tempEvent);
 
     public void cacheEvent() {
         EventNodes paramNode = params.node();

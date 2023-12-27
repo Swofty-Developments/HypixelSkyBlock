@@ -40,6 +40,7 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.item.impl.Craftable;
 import net.swofty.mission.MissionData;
+import net.swofty.mission.MissionRepeater;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
@@ -65,7 +66,6 @@ import java.util.stream.Stream;
 
 public class SkyBlock {
     private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
-    private static final String crackedDomain = Resources.get("cracked_domain");
     public static ArrayList<UUID> offlineUUIDs = new ArrayList<>();
     @Getter
     @Setter
@@ -214,6 +214,12 @@ public class SkyBlock {
                     try {
                         event.cacheEvent();
                         MissionData.registerMission(event.getClass());
+                    } catch (Exception e) {}
+                });
+        loopThroughPackage("net.swofty.mission.missions", MissionRepeater.class)
+                .forEach((event) -> {
+                    try {
+                        event.getTask(MinecraftServer.getSchedulerManager());
                     } catch (Exception e) {}
                 });
         CustomEventCaller.start();
