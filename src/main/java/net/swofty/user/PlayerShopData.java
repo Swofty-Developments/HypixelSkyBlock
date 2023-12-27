@@ -1,7 +1,6 @@
 package net.swofty.user;
 
 import net.minestom.server.item.Material;
-import net.swofty.gui.inventory.SkyBlockShopGUI;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.utility.Tuple;
@@ -38,6 +37,7 @@ public class PlayerShopData
       public int getStock(SkyBlockItem item) {
             if (!itemData.containsKey(item.getAttributeHandler().getItemType()))
                   return MAXIMUM_STOCK;
+            updateStock(item);
 
             return MAXIMUM_STOCK - itemData.get(item.getAttributeHandler().getItemType()).getKey();
       }
@@ -51,15 +51,15 @@ public class PlayerShopData
       }
 
       public void documentPurchase(SkyBlockItem item, int amount) {
-            Tuple<Integer, Long> t;
+            Tuple<Integer, Long> data;
             if (itemData.containsKey(item.getAttributeHandler().getItemType())) {
-                  t = itemData.get(item.getAttributeHandler().getItemType());
-                  t.setKey(t.getKey() + amount);
-                  t.setValue(System.currentTimeMillis());
+                  data = itemData.get(item.getAttributeHandler().getItemType());
+                  data.setKey(data.getKey() + amount);
+                  data.setValue(System.currentTimeMillis());
             } else {
-                  t = new Tuple<>(amount, System.currentTimeMillis());
+                  data = new Tuple<>(amount, System.currentTimeMillis());
             }
-            itemData.put(item.getAttributeHandler().getItemType(), t);
+            itemData.put(item.getAttributeHandler().getItemType(), data);
       }
 
       private void resetStock(SkyBlockItem item) {
@@ -68,6 +68,35 @@ public class PlayerShopData
 
       public void resetStocks() {
             itemData.keySet().forEach(it -> itemData.put(it, new Tuple<>(0, System.currentTimeMillis())));
+      }
+
+      public int pushBuyback(SkyBlockItem item, int amount) {
+            buybackData.add(new Tuple<>(item, amount));
+            return buybackData.size() - 1;
+      }
+
+      public Tuple<SkyBlockItem, Integer> popBuyback() {
+            if (buybackData.isEmpty())
+                  throw new IndexOutOfBoundsException("Woah there!");
+            Tuple<SkyBlockItem, Integer> last = buybackData.get(buybackData.size() - 1);
+            buybackData.remove(buybackData.size() - 1);
+            return last;
+      }
+
+      public Tuple<SkyBlockItem, Integer> lastBuyback() {
+            if (buybackData.isEmpty())
+                  throw new IndexOutOfBoundsException("Woah there!");
+            return buybackData.get(buybackData.size() - 1);
+      }
+
+      public Tuple<SkyBlockItem, Integer> firstBuyback() {
+            if (buybackData.isEmpty())
+                  throw new IndexOutOfBoundsException("Woah there!");
+            return buybackData.get(0);
+      }
+
+      public boolean hasAnythingToBuyback() {
+            return buybackData.size() > 0;
       }
 
       public Map<String, Object> serialize() {

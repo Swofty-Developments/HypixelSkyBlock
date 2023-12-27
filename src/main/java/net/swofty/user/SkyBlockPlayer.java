@@ -2,6 +2,8 @@ package net.swofty.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -214,6 +216,10 @@ public class SkyBlockPlayer extends Player {
     public void setHearts(float hearts) {
         this.health = hearts;
         this.sendPacket(new UpdateHealthPacket((hearts / getMaxHealth()) * 20, 20, 20));
+    }
+
+    public void playSuccessSound() {
+        playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
     }
 
     public void closeInventoryBypass() {

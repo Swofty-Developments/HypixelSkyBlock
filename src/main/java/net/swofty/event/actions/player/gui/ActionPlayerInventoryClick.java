@@ -2,6 +2,9 @@ package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.AbstractInventory;
+import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.ClickType;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
@@ -58,7 +61,7 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 return;
             }
 
-            if (inventoryClick.getInventory() == null) {
+            if (!inventoryClick.getInventory().getInventoryType().equals(gui.getInventory().getInventoryType())) {
                 if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
                     inventoryClick.setCancelled(true);
                     return;

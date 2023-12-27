@@ -14,6 +14,7 @@ import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.gui.inventory.inventories.shop.TradingOptionsGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.impl.Sellable;
 import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
@@ -88,6 +89,79 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                               return ItemStackCreator.createNamedItemStack(Material.ARROW, "§a->");
                         }
                   });
+
+            set(new GUIClickableItem()
+            {
+                  @Override
+                  public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        if (!player.getShoppingData().hasAnythingToBuyback())
+                              return;
+
+                        SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
+                        int amountOfLast = player.getShoppingData().lastBuyback().getValue();
+                        ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                                player, null, last.getItemStackBuilder().build()
+                        );
+                        itemStack.amount(amountOfLast);
+
+                        double value = (last.getGenericInstance() instanceof Sellable ? ((Sellable) last.getGenericInstance()).getSellValue() : 1)
+                                * amountOfLast;
+
+                        double playerCoins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
+                        if (playerCoins < value) {
+                              player.sendMessage("§cYou don't have enough coins!");
+                              return;
+                        }
+                        boolean canHave = player.getInventory().addItemStack(itemStack.build());
+                        if (!canHave) {
+                              player.sendMessage("§cYou need to free up inventory space in order to buyback this item!");
+                              return;
+                        }
+                        player.playSuccessSound();
+                        player.getShoppingData().popBuyback();
+                        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
+                        updateThis(player);
+                  }
+
+                  @Override
+                  public int getSlot() {
+                        return 49;
+                  }
+
+                  @Override
+                  public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        if (!player.getShoppingData().hasAnythingToBuyback()) {
+                              return ItemStackCreator.getStack("§aSell Item", Material.HOPPER, (short) 0, 1,
+                                      "§7Click items in your inventory to",
+                                      "§7sell them to this Shop!");
+                        }
+
+                        SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
+                        int amountOfLast = player.getShoppingData().lastBuyback().getValue();
+                        ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                                player, null, last.getItemStackBuilder().build()
+                        );
+
+                        double buyBackPrice = (last.getGenericInstance() instanceof Sellable ? ((Sellable) last.getGenericInstance()).getSellValue() : 1)
+                                * amountOfLast;
+
+                        List<String> lore = new ArrayList<>(itemStack.build().getLore()
+                                .stream()
+                                .map(StringUtility::getTextFromComponent)
+                                .toList());
+                        lore.add("");
+                        lore.add("§7Cost");
+                        lore.add("§6 " + StringUtility.commaify(buyBackPrice) + " Coin" + (buyBackPrice != 1 ? "s" : ""));
+                        lore.add("");
+                        lore.add("§eClick to buyback!");
+
+                        itemStack.amount(amountOfLast);
+                        return itemStack.lore(lore.stream().map(
+                                line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
+                        ).toList());
+                  }
+            });
+
             updateItemStacks(e.inventory(), getPlayer());
 
             List<ShopItem> p = paginatedItems.getPage(page);
@@ -170,7 +244,24 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
       @Override
       public void onBottomClick(InventoryPreClickEvent e) {
             ItemStack stack = e.getClickedItem();
+            e.getPlayer().sendMessage("btm clock");
+            e.setCancelled(true);
             if (stack.getMaterial().equals(Material.AIR)) return;
+            SkyBlockItem item = new SkyBlockItem(stack);
+
+            double sellprice = 1;
+            if (item.getGenericInstance() instanceof Sellable)
+                  sellprice = ((Sellable) item.getGenericInstance()).getSellValue();
+            sellprice *= stack.getAmount();
+
+            getPlayer().getShoppingData().pushBuyback(item, stack.getAmount());
+            getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
+                    getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + sellprice
+            );
+            getPlayer().sendMessage("§aYou sold §f" + StringUtility.getTextFromComponent(stack.getDisplayName()) + " §8x" + stack.getAmount() + "§a for §6"
+            + StringUtility.commaify(sellprice) + " Coin" + (sellprice != 1 ? "s" : "") + "§a!");
+            getPlayer().getInventory().setItemStack(e.getSlot(), ItemStack.AIR);
+            updateThis(getPlayer());
       }
 
       public abstract void initializeShopItems();
