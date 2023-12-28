@@ -61,7 +61,7 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 return;
             }
 
-            if (!inventoryClick.getInventory().getInventoryType().equals(gui.getInventory().getInventoryType())) {
+            if (inventoryClick.getInventory() == null) {
                 if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
                     inventoryClick.setCancelled(true);
                     return;

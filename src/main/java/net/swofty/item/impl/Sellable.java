@@ -1,6 +1,5 @@
 package net.swofty.item.impl;
 
-public interface Sellable
-{
+public interface Sellable {
       double getSellValue();
 }

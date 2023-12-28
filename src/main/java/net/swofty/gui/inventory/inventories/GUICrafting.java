@@ -1,5 +1,6 @@
 package net.swofty.gui.inventory.inventories;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -7,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
@@ -15,6 +17,7 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.utility.MathUtility;
 import org.tinylog.Logger;
 
 import java.util.Arrays;
@@ -58,7 +61,8 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {}
+    public void onBottomClick(InventoryPreClickEvent e) {
+    }
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
@@ -92,15 +96,19 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                e.setCancelled(false);
+
                 if (e.getClickType().equals(ClickType.LEFT_CLICK)) {
                     if (!e.getCursorItem().isAir()) {
                         player.getInventory().addItemStack(e.getCursorItem());
                     }
 
-                    e.setCursorItem(PlayerItemUpdater.playerUpdate(
-                            player,
-                            null,
-                            recipe.getResult().getItemStack()).build());
+                    MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+                        e.setCursorItem(PlayerItemUpdater.playerUpdate(
+                                player,
+                                null,
+                                recipe.getResult().getItemStack()).build());
+                    }, TaskSchedule.tick(2), TaskSchedule.stop());
                 }
 
                 SkyBlockItem[] toReplace = recipe.consume(getCurrentRecipeAsItems(inventory));
@@ -117,8 +125,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                 refreshItems(player);
             }
-
-
 
             @Override
             public int getSlot() {

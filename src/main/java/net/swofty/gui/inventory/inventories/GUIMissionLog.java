@@ -174,14 +174,14 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
                         lore.add("§7Started:");
                         lore.add("§f  " + SkyBlockCalendar.getMonthName(
-                                            SkyBlockCalendar.getMonth(firstMissionInSet.getMissionStarted()))
+                                SkyBlockCalendar.getMonth(firstMissionInSet.getMissionStarted()))
                                 + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionStarted())));
                         lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionStarted()));
                         if (completed) {
                             lore.add("§7 ");
                             lore.add("§7Completed:");
                             lore.add("§f  " + SkyBlockCalendar.getMonthName(
-                                                SkyBlockCalendar.getMonth(firstMissionInSet.getMissionEnded()))
+                                    SkyBlockCalendar.getMonth(firstMissionInSet.getMissionEnded()))
                                     + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionEnded())));
                             lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionEnded()));
                         }
@@ -191,8 +191,8 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
                     return ItemStackCreator.enchant(
                             ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(missionSet.name()),
-                            Material.PAPER, (short) 0, 1,
-                            lore));
+                                    Material.PAPER, (short) 0, 1,
+                                    lore));
                 }
             });
         }
@@ -206,10 +206,12 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    }
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

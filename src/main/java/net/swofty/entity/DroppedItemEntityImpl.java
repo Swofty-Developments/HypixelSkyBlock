@@ -5,12 +5,10 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
+import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.*;
@@ -31,34 +29,13 @@ public class DroppedItemEntityImpl extends Entity {
         ItemDisplayMeta meta = (ItemDisplayMeta) this.entityMeta;
         meta.setItemStack(item.getItemStack());
         meta.setDisplayContext(ItemDisplayMeta.DisplayContext.GROUND);
-        meta.setInterpolationDuration(5);
-        meta.setInterpolationStartDelta(5);
-
         meta.setShadowRadius(0.2f);
-        meta.setShadowStrength(5);
+        meta.setShadowStrength(2);
 
         setAutoViewable(false);
 
         this.scheduleRemove(Duration.ofSeconds(60));
         this.addViewer(player);
-
-        MinecraftServer.getSchedulerManager().submitTask(() -> {
-            if (instance == null) {
-                return TaskSchedule.tick(1);
-            }
-
-            if (this.isRemoved()) {
-                droppedItems.computeIfPresent(player, (key, value) -> {
-                    value.remove(this);
-                    return value;
-                });
-                return TaskSchedule.stop();
-            }
-
-            setInstance(getInstance(), getPosition().withYaw(getPosition().yaw() + 3));
-
-            return TaskSchedule.tick(1);
-        });
 
         droppedItems.computeIfPresent(player, (key, value) -> {
             if (value.size() > 50) {
@@ -72,5 +49,32 @@ public class DroppedItemEntityImpl extends Entity {
 
     public SkyBlockItem getItem() {
         return new SkyBlockItem(((ItemDisplayMeta) this.entityMeta).getItemStack());
+    }
+
+    public static void spinLoop() {
+        MinecraftServer.getSchedulerManager().submitTask(() -> {
+            droppedItems.forEach((player, items) -> {
+                List<DroppedItemEntityImpl> toRemove = new ArrayList<>();
+                items.forEach(item -> {
+                    if (item.instance == null) {
+                        // Only runs max once
+                        return;
+                    }
+
+                    if (item.isRemoved()) {
+                        toRemove.add(item);
+                        return;
+                    }
+
+                    if (item.isOnGround())
+                        item.setInstance(item.getInstance(), item.getPosition().withYaw(item.getPosition().yaw() + 6));
+                });
+
+                toRemove.forEach(item -> {
+                    droppedItems.get(player).remove(item);
+                });
+            });
+            return TaskSchedule.tick(1);
+        }, ExecutionType.ASYNC);
     }
 }

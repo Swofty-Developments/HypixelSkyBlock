@@ -105,7 +105,8 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    }
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {

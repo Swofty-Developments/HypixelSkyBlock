@@ -16,8 +16,6 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
-import net.minestom.server.recipe.Recipe;
-import net.minestom.server.recipe.ShapedRecipe;
 import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
@@ -30,6 +28,7 @@ import net.swofty.data.mongodb.AttributeDatabase;
 import net.swofty.data.mongodb.IslandDatabase;
 import net.swofty.data.mongodb.RegionDatabase;
 import net.swofty.data.mongodb.UserDatabase;
+import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
 import net.swofty.entity.npc.NPCDialogue;
@@ -54,7 +53,6 @@ import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -201,6 +199,7 @@ public class SkyBlock {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+        DroppedItemEntityImpl.spinLoop();
 
         /**
          * Register events
@@ -263,6 +262,7 @@ public class SkyBlock {
         MinecraftServer.getConnectionManager().getOnlinePlayers()
                 .stream()
                 .filter(player -> DataHandler.getUser(player) != null)
+                .filter(player -> player.getInstance() != null)
                 .forEach(player -> players.add((SkyBlockPlayer) player));
         return players;
     }

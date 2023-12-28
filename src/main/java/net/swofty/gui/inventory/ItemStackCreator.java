@@ -24,6 +24,7 @@ public class ItemStackCreator {
             meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
         });
     }
+
     public static ItemStack.Builder createNamedItemStack(Material material) {
         return createNamedItemStack(material, "");
     }

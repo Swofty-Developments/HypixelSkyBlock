@@ -14,8 +14,10 @@ import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.NonPlayerItemUpdater;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,11 +74,12 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot) {
-        ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
+    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot, SkyBlockPlayer player) {
+        ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                player, null, skyBlockItem.getItemStack()
+        );
 
-        return new GUIClickableItem()
-        {
+        return new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
@@ -102,7 +105,8 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    }
 
     @Override
     public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {

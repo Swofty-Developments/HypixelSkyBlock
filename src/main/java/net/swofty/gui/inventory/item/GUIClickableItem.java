@@ -8,8 +8,7 @@ import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.user.SkyBlockPlayer;
 
-public interface GUIClickableItem extends GUIItem
-{
+public interface GUIClickableItem extends GUIItem {
     void run(InventoryPreClickEvent e, SkyBlockPlayer player);
 
     static GUIClickableItem getCloseItem(int slot) {

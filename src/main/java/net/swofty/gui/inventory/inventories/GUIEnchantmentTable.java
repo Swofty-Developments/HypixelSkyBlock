@@ -306,10 +306,10 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         }
 
         int minLevel = selected.getEnch().getSources().stream().filter(source ->
-                source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+                        source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.minLevel).findAny().orElse(0);
         int maxLevel = selected.getEnch().getSources().stream().filter(source ->
-                source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+                        source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.maxLevel).findAny().orElse(0);
 
         int hasLevel = 0;
@@ -435,7 +435,8 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {}
+    public void onBottomClick(InventoryPreClickEvent e) {
+    }
 
     public static Integer getBookshelfPower(Instance instance, Pos pos) {
         int power = 0;

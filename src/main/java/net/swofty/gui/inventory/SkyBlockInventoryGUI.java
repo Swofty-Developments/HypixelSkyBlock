@@ -47,8 +47,8 @@ public abstract class SkyBlockInventoryGUI {
     /**
      * Set an item inside the gui
      *
-     * @param slot the slot the item should be in (any number between 0-53 depending on your GUI size)
-     * @param stack the {@link ItemStack} that should be in the slot
+     * @param slot   the slot the item should be in (any number between 0-53 depending on your GUI size)
+     * @param stack  the {@link ItemStack} that should be in the slot
      * @param pickup can the player pick up the item by clicking on it or no
      */
     public void set(int slot, ItemStack.Builder stack, boolean pickup) {
@@ -78,7 +78,7 @@ public abstract class SkyBlockInventoryGUI {
      * Set an item inside the gui
      * In this method pickup is set to false by default
      *
-     * @param slot the slot the item should be in (any number between 0-53 depending on your GUI size)
+     * @param slot  the slot the item should be in (any number between 0-53 depending on your GUI size)
      * @param stack the {@link ItemStack} that should be in the slot
      */
     public void set(int slot, ItemStack.Builder stack) {
@@ -102,11 +102,11 @@ public abstract class SkyBlockInventoryGUI {
     /**
      * Fill a rectangle between two corners of the GUI
      *
-     * @param stack what {@link ItemStack} are we filling our rectangle with
-     * @param cornerSlot the top left corner of our rectangle
+     * @param stack       what {@link ItemStack} are we filling our rectangle with
+     * @param cornerSlot  the top left corner of our rectangle
      * @param cornerSlot2 the bottom right corner of our rectangle
-     * @param overwrite if this is set to true, the method will ignore any items in the rectangle and replace them with 'stack'
-     * @param pickup is the player able to pick up the items in the rectangle?
+     * @param overwrite   if this is set to true, the method will ignore any items in the rectangle and replace them with 'stack'
+     * @param pickup      is the player able to pick up the items in the rectangle?
      */
     public void fill(ItemStack.Builder stack, int cornerSlot, int cornerSlot2, boolean overwrite, boolean pickup) {
         if (cornerSlot < 0 || cornerSlot > size.getSize())
@@ -130,14 +130,15 @@ public abstract class SkyBlockInventoryGUI {
             }
         }
     }
+
     /**
      * Fill a rectangle between two corners of the GUI
      * Overwrite is set to true by default in this method
      *
-     * @param stack what {@link ItemStack} are we filling our rectangle with
-     * @param cornerSlot the top left corner of our rectangle
+     * @param stack       what {@link ItemStack} are we filling our rectangle with
+     * @param cornerSlot  the top left corner of our rectangle
      * @param cornerSlot2 the bottom right corner of our rectangle
-     * @param pickup is the player able to pick up the items in the rectangle?
+     * @param pickup      is the player able to pick up the items in the rectangle?
      */
     public void fill(ItemStack.Builder stack, int cornerSlot, int cornerSlot2, boolean pickup) {
         fill(stack, cornerSlot, cornerSlot2, true, pickup);
@@ -148,8 +149,8 @@ public abstract class SkyBlockInventoryGUI {
      * Overwrite is set to true by default in this method
      * Pickup is set to false by default in this method
      *
-     * @param stack what {@link ItemStack} are we filling our rectangle with
-     * @param cornerSlot the top left corner of our rectangle
+     * @param stack       what {@link ItemStack} are we filling our rectangle with
+     * @param cornerSlot  the top left corner of our rectangle
      * @param cornerSlot2 the bottom right corner of our rectangle
      */
     public void fill(ItemStack.Builder stack, int cornerSlot, int cornerSlot2) {
@@ -177,11 +178,11 @@ public abstract class SkyBlockInventoryGUI {
     /**
      * Fills the border of a rectangle between two slots
      *
-     * @param stack the {@link ItemStack} of your choice
-     * @param cornerSlot the top left corner of your rectangle
+     * @param stack       the {@link ItemStack} of your choice
+     * @param cornerSlot  the top left corner of your rectangle
      * @param cornerSlot2 the bottom right corner of your rectangle
-     * @param overwrite if this is set to true, the method will ignore any items in between the lines and replace them
-     * @param pickup if this is set to true, players will be able to pick up the items in your border
+     * @param overwrite   if this is set to true, the method will ignore any items in between the lines and replace them
+     * @param pickup      if this is set to true, players will be able to pick up the items in your border
      */
     public void border(ItemStack.Builder stack, int cornerSlot, int cornerSlot2, boolean overwrite, boolean pickup) {
         if (cornerSlot < 0 || cornerSlot > size.getSize())
@@ -213,10 +214,10 @@ public abstract class SkyBlockInventoryGUI {
      * Fills the border in a rectangle between two slots\
      * Overwrite is set to true by default in this method
      *
-     * @param stack the {@link ItemStack} of your choice
-     * @param cornerSlot the top left corner of your rectangle
+     * @param stack       the {@link ItemStack} of your choice
+     * @param cornerSlot  the top left corner of your rectangle
      * @param cornerSlot2 the bottom right corner of your rectangle
-     * @param pickup if this is set to true, players will be able to pick up the items in your border
+     * @param pickup      if this is set to true, players will be able to pick up the items in your border
      */
     public void border(ItemStack.Builder stack, int cornerSlot, int cornerSlot2, boolean pickup) {
         border(stack, cornerSlot, cornerSlot2, true, pickup);
@@ -227,8 +228,8 @@ public abstract class SkyBlockInventoryGUI {
      * Overwrite is set to true by default in this method
      * Pickup is set to false by default in this method
      *
-     * @param stack the {@link ItemStack} of your choice
-     * @param cornerSlot the top left corner of your rectangle
+     * @param stack       the {@link ItemStack} of your choice
+     * @param cornerSlot  the top left corner of your rectangle
      * @param cornerSlot2 the bottom right corner of your rectangle
      */
     public void border(ItemStack.Builder stack, int cornerSlot, int cornerSlot2) {
@@ -267,6 +268,16 @@ public abstract class SkyBlockInventoryGUI {
     public void open(SkyBlockPlayer player) {
         this.player = player;
         this.inventory = new Inventory(size, getTitle());
+
+        SkyBlockInventoryGUI previouslyOpen = GUI_MAP.get(player.getUuid());
+        if (previouslyOpen != null) {
+            previouslyOpen.onClose(
+                    new InventoryCloseEvent(previouslyOpen.getInventory(), player),
+                    SkyBlockInventoryGUI.CloseReason.SERVER_EXITED
+            );
+            GUI_MAP.remove(player.getUuid());
+        }
+
         InventoryGUIOpenEvent openEvent = new InventoryGUIOpenEvent(player, this, inventory);
 
         // Initializing GUI
@@ -276,7 +287,6 @@ public abstract class SkyBlockInventoryGUI {
         player.openInventory(inventory);
         onOpen(openEvent);
 
-        GUI_MAP.remove(player.getUuid());
         GUI_MAP.put(player.getUuid(), this);
         afterOpen(openEvent);
         if (this instanceof RefreshingGUI gui) {
@@ -294,6 +304,7 @@ public abstract class SkyBlockInventoryGUI {
 
     /**
      * Method to allow people to hotkey items into the GUI or not
+     *
      * @return a boolean
      */
     public abstract boolean allowHotkeying();
@@ -303,7 +314,8 @@ public abstract class SkyBlockInventoryGUI {
      *
      * @param e the event of the gui opening
      */
-    public void onOpen(InventoryGUIOpenEvent e) {}
+    public void onOpen(InventoryGUIOpenEvent e) {
+    }
 
     /**
      * Runs when the player closes the gui
@@ -326,17 +338,20 @@ public abstract class SkyBlockInventoryGUI {
      *
      * @param e the event of the gui opening
      */
-    public void afterOpen(InventoryGUIOpenEvent e) {}
+    public void afterOpen(InventoryGUIOpenEvent e) {
+    }
 
     /**
      * Runs before the GUI opens, in order to set the items in
      *
      * @param e the event of the GUI opening
      */
-    public void setItems(InventoryGUIOpenEvent e) {}
+    public void setItems(InventoryGUIOpenEvent e) {
+    }
 
     /**
      * re-set all the GUIItems inside of the inventory
+     *
      * @param inventory an inventory object to set the items in
      */
     public void updateItemStacks(Inventory inventory, SkyBlockPlayer player) {
@@ -347,7 +362,8 @@ public abstract class SkyBlockInventoryGUI {
         }
     }
 
-    public record InventoryGUIOpenEvent(SkyBlockPlayer player, SkyBlockInventoryGUI opened, Inventory inventory) {}
+    public record InventoryGUIOpenEvent(SkyBlockPlayer player, SkyBlockInventoryGUI opened, Inventory inventory) {
+    }
 
     public enum CloseReason {
         SIGN_OPENED,

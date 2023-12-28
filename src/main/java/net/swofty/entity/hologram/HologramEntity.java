@@ -1,10 +1,14 @@
 package net.swofty.entity.hologram;
 
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 
+@Getter
 public class HologramEntity extends Entity {
     private String text = "";
 
@@ -37,7 +41,4 @@ public class HologramEntity extends Entity {
         meta.setNotifyAboutChanges(true);
     }
 
-    public String getText() {
-        return text;
-    }
 }
