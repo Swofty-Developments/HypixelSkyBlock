@@ -30,7 +30,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 
 ## Setup Guide
 1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
-   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0"}
+   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0", "port": 25530}
 2. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
 3. Get the Hypixel SkyBlock hub from the above download and put it in the same directory as your jar under the name `hypixel_hub`.
 4. Get the Hypixel Island default template from the above download and put it in the same directory as your jar under the name `hypixel_island_template`.
@@ -40,5 +40,5 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 ## Credits
 
 Thanks to:
-* All of the lovely people in the Minestom discord for single handedly carrying all of my knowledge about this API.
-* Myself and any other contributors which can be viewed on this Git page.
+* All the lovely people in the Minestom discord for single-handedly carrying all of my knowledge about this API.
+* Myself and any other contributors, which can be viewed on this Git page.

@@ -256,10 +256,11 @@ public class SkyBlock {
         /**
          * Start the server
          */
-        minecraftServer.start("0.0.0.0", 25530);
+		int port = Resources.getOrDefault("port", 25530);
+        minecraftServer.start("0.0.0.0", port);
         long endTime = System.currentTimeMillis();
         MinecraftServer.setBrandName("SkyBlock");
-        Logger.info("Started server in " + (endTime - startTime) + "ms");
+        Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {
