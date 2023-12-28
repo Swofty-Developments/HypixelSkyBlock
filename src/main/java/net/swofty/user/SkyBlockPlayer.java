@@ -84,7 +84,9 @@ public class SkyBlockPlayer extends Player {
     }
 
     public MissionData getMissionData() {
-        return getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+        MissionData data = getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+        data.setSkyBlockPlayer(this);
+        return data;
     }
 
     public PlayerShopData getShoppingData() {
