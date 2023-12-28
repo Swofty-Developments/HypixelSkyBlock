@@ -71,7 +71,7 @@ public class MissionData {
             SkyBlockMission mission = skyBlockMission.newInstance();
             ActiveMission activeMission = new ActiveMission(mission.getID(), 1, mission instanceof SkyBlockProgressMission);
 
-            Map<String, Object> data = mission.onStart(getSkyBlockPlayer());
+            Map<String, Object> data = mission.onStart(getSkyBlockPlayer(), activeMission);
             if (data != null) {
                 activeMission.setCustomData(data);
             }

@@ -25,6 +25,7 @@ public class ActionPlayerInventoryClose extends SkyBlockEvent {
     public void run(Event event) {
         InventoryCloseEvent inventoryClose = (InventoryCloseEvent) event;
         final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClose.getPlayer();
+        player.updateCursor();
 
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid());

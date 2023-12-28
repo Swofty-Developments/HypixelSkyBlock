@@ -5,6 +5,7 @@ import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointMissionData;
 import net.swofty.mission.MissionData;
+import net.swofty.mission.missions.MissionBreakLog;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 
@@ -21,6 +22,7 @@ public class ClearMissionCommand extends SkyBlockCommand {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class)
                     .setValue(new MissionData());
+            player.getMissionData().startMission(MissionBreakLog.class);
         });
     }
 }

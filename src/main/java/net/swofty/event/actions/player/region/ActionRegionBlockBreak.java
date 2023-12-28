@@ -11,6 +11,7 @@ import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.CustomBlockBreak;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.RegionType;
@@ -55,6 +56,9 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         }
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
+        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreak(
+                player, block, playerBreakEvent.getBlockPosition()
+        ));
 
         /**
          * Handle block dropping

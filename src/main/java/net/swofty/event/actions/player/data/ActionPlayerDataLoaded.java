@@ -38,13 +38,6 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
             CustomGroups.staffMembers.add(player);
         }
 
-        Team team = new TeamBuilder(player.getUsername(), MinecraftServer.getTeamManager())
-                .prefix(Component.text(rank.getPrefix()))
-                .teamColor(rank.getTextColor())
-                .build();
-        player.setTeam(team);
-        player.getTeam().sendUpdatePacket();
-
         player.sendMessage("§eWelcome to §aHypixel SkyBlock§e!");
         player.setHearts(player.getMaxHealth());
 

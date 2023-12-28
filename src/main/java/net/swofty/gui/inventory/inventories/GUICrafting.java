@@ -1,5 +1,6 @@
 package net.swofty.gui.inventory.inventories;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -7,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
@@ -15,9 +17,9 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, (short) 0, 1, "§7Add the items for a valid recipe in", "§7the crafting grid to the left!");
@@ -58,7 +60,8 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {}
+    public void onBottomClick(InventoryPreClickEvent e) {
+    }
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
@@ -85,6 +88,8 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             return;
         }
 
+        int amount = recipe.getAmount();
+
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
         border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
@@ -92,16 +97,26 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (e.getClickType().equals(ClickType.LEFT_CLICK)) {
-                    if (!e.getCursorItem().isAir()) {
-                        player.getInventory().addItemStack(e.getCursorItem());
-                    }
+                e.setCancelled(false);
 
-                    e.setCursorItem(PlayerItemUpdater.playerUpdate(
+                if (!e.getCursorItem().isAir()) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage("§cYou must empty your cursor first!");
+                    return;
+                }
+
+                AtomicInteger stopAfter = new AtomicInteger();
+                MinecraftServer.getSchedulerManager().submitTask(() -> {
+                    stopAfter.getAndIncrement();
+                    player.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(
                             player,
                             null,
-                            recipe.getResult().getItemStack()).build());
-                }
+                            recipe.getResult().getItemStack()).amount(amount).build());
+                    if (stopAfter.get() == 2) {
+                        return TaskSchedule.tick(1);
+                    }
+                    return TaskSchedule.tick(1);
+                });
 
                 SkyBlockItem[] toReplace = recipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {
@@ -115,10 +130,9 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     }
                 }
 
+                player.getInventory().update();
                 refreshItems(player);
             }
-
-
 
             @Override
             public int getSlot() {
@@ -132,7 +146,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack()).amount(amount);
             }
         });
     }

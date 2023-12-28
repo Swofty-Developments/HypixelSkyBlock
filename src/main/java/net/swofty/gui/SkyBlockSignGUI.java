@@ -68,5 +68,6 @@ public class SkyBlockSignGUI {
         return future;
     }
 
-    public record SignGUI(CompletableFuture<String> future, Pos pos, Block block) { }
+    public record SignGUI(CompletableFuture<String> future, Pos pos, Block block) {
+    }
 }

@@ -10,6 +10,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -84,7 +85,9 @@ public class SkyBlockPlayer extends Player {
     }
 
     public MissionData getMissionData() {
-        return getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+        MissionData data = getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
+        data.setSkyBlockPlayer(this);
+        return data;
     }
 
     public PlayerShopData getShoppingData() {
@@ -172,7 +175,8 @@ public class SkyBlockPlayer extends Player {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         skyBlockIsland.getSharedInstance().thenAccept(sharedInstance -> {
-            this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
+            if (sharedInstance != getInstance())
+                this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
             this.teleport(new Pos(0.5, 100, 0.5, 0, 0));
         });
 
@@ -224,8 +228,13 @@ public class SkyBlockPlayer extends Player {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
     }
 
-    public void closeInventoryBypass() {
-        super.closeInventory();
+    public void updateCursor() {
+        getInventory().setCursorItem(getInventory().getCursorItem());
+    }
+
+    @Override
+    public @NotNull PlayerInventory getInventory() {
+        return super.getInventory();
     }
 
     @Override

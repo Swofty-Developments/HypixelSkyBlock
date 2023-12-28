@@ -1,6 +1,8 @@
 package net.swofty.item.updater;
 
 import lombok.Getter;
+import net.minestom.server.item.Enchantment;
+import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
@@ -86,7 +88,14 @@ public class PlayerItemUpdater {
         lore.updateLore(player);
         stack = lore.getStack();
 
-        return toReturn.amount(stack.getAmount()).lore(stack.getLore()).displayName(stack.getDisplayName());
+        if (handler.shouldBeEnchanted()) {
+            toReturn.meta(meta -> {
+                meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
+                meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            });
+        }
+
+        return toReturn.amount(stack.amount()).lore(stack.getLore()).displayName(stack.getDisplayName());
     }
 
     public static void updateLoop(Scheduler scheduler) {

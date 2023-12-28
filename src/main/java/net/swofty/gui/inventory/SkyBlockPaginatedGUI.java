@@ -8,7 +8,6 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIQueryItem;
-import net.swofty.item.ItemType;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
 
@@ -28,7 +27,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     protected abstract boolean shouldFilterFromSearch(String query, T item);
     protected abstract void performSearch(SkyBlockPlayer player, String query, int page, int maxPage);
     protected abstract String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<T> paged);
-    protected abstract GUIClickableItem createItemFor(T item, int slot);
+    protected abstract GUIClickableItem createItemFor(T item, int slot, SkyBlockPlayer player);
 
     @Override
     public void open(SkyBlockPlayer player) {
@@ -46,7 +45,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         latestPaged = paged;
 
         try {
-            updatePagedItems(paged, page);
+            updatePagedItems(paged, page, player);
         } catch (IllegalStateException ex) {
             player.sendMessage("§cOops! It seems like there are no results for your query! ('" + query + "')");
             return;
@@ -55,11 +54,11 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         super.open(player);
     }
 
-    private void updatePagedItems(PaginationList<?> paged, int page) {
+    private void updatePagedItems(PaginationList<?> paged, int page, SkyBlockPlayer player) {
         List<?> thisPage = paged.getPage(page);
         if (thisPage == null) throw new IllegalStateException();
         for (int i = 0; i < thisPage.size(); i++) {
-            set(createItemFor((T) thisPage.get(i), getPaginatedSlots()[i]));
+            set(createItemFor((T) thisPage.get(i), getPaginatedSlots()[i], player));
         }
     }
 

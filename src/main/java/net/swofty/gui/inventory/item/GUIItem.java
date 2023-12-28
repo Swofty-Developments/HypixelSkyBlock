@@ -3,8 +3,7 @@ package net.swofty.gui.inventory.item;
 import net.minestom.server.item.ItemStack;
 import net.swofty.user.SkyBlockPlayer;
 
-public interface GUIItem
-{
+public interface GUIItem {
     int getSlot();
 
     ItemStack.Builder getItem(SkyBlockPlayer player);

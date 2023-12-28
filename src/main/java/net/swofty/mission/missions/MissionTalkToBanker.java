@@ -56,7 +56,7 @@ public class MissionTalkToBanker extends SkyBlockMission implements MissionRepea
     }
 
     @Override
-    public HashMap<String, Object> onStart(SkyBlockPlayer player) {
+    public HashMap<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
         player.sendMessage("On start thrown");
         return new HashMap<>();
     }

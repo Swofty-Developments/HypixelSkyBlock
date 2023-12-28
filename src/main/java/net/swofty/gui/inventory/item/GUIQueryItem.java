@@ -7,8 +7,7 @@ import net.swofty.gui.SkyBlockSignGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.user.SkyBlockPlayer;
 
-public interface GUIQueryItem extends GUIClickableItem
-{
+public interface GUIQueryItem extends GUIClickableItem {
     /**
      * Run when the player clicks this item
      *

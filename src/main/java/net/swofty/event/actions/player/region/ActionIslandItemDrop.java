@@ -10,6 +10,7 @@ import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.CustomBlockBreak;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.region.RegionType;
 import net.swofty.region.SkyBlockMiningConfiguration;
@@ -36,6 +37,10 @@ public class ActionIslandItemDrop extends SkyBlockEvent {
         Material material = Material.fromNamespaceId(block.name().toString());
 
         if (material == null) return;
+
+        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreak(
+                player, block, playerBreakEvent.getBlockPosition()
+        ));
 
         /**
          * Handle block dropping

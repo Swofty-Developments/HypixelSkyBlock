@@ -7,8 +7,7 @@ import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public class RookieHoe implements CustomSkyBlockItem
-{
+public class RookieHoe implements CustomSkyBlockItem {
       @Override
       public ItemStatistics getStatistics() {
             return ItemStatistics.EMPTY;

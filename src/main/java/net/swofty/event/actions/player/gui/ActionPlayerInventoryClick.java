@@ -18,6 +18,7 @@ import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.Interactable;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 @EventParameters(description = "Handles when a player clicks on an InventoryGUI",
         node = EventNodes.PLAYER,
@@ -36,6 +37,8 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClick.getPlayer();
         SkyBlockItem clickedItem = new SkyBlockItem(inventoryClick.getClickedItem());
         SkyBlockItem cursorItem = new SkyBlockItem(inventoryClick.getCursorItem());
+
+        player.updateCursor();
 
         if (clickedItem.getGenericInstance() != null &&
                 clickedItem.getGenericInstance() instanceof Interactable interactable) {
@@ -61,7 +64,7 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 return;
             }
 
-            if (!inventoryClick.getInventory().getInventoryType().equals(gui.getInventory().getInventoryType())) {
+            if (inventoryClick.getInventory() == null) {
                 if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
                     inventoryClick.setCancelled(true);
                     return;

@@ -74,7 +74,6 @@ public class PlayerShopData
             buybackData.add(new Tuple<>(item, amount));
             return buybackData.size() - 1;
       }
-
       public Tuple<SkyBlockItem, Integer> popBuyback() {
             if (buybackData.isEmpty())
                   throw new IndexOutOfBoundsException("Woah there!");

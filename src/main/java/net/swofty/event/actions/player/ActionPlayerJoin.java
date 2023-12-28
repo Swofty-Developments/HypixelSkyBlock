@@ -26,11 +26,13 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
         final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
-        playerLoginEvent.setSpawningInstance(SkyBlock.getInstanceContainer());
+        playerLoginEvent.setSpawningInstance(player.getSkyBlockIsland().getSharedInstance().join());
 
         player.sendMessage("§7Sending to server mini1A...");
         player.sendMessage("§7 ");
+        player.sendMessage("§aYour profile is: §eOrange");
+        player.sendMessage("§8Profile ID: " + player.getUuid().toString());
 
-        player.setRespawnPoint(new Pos(-2.5, 70, -69.5, 180, 0));
+        player.setRespawnPoint(new Pos(0, 100, 0));
     }
 }

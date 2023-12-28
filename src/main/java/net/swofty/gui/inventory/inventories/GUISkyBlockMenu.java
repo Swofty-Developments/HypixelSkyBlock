@@ -59,7 +59,6 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
         });
 
 
-
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

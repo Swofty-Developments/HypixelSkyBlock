@@ -203,6 +203,7 @@ public class SkyBlock {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+        DroppedItemEntityImpl.spinLoop();
 
         /**
          * Register events
@@ -265,6 +266,7 @@ public class SkyBlock {
         MinecraftServer.getConnectionManager().getOnlinePlayers()
                 .stream()
                 .filter(player -> DataHandler.getUser(player) != null)
+                .filter(player -> player.getInstance() != null)
                 .forEach(player -> players.add((SkyBlockPlayer) player));
         return players;
     }

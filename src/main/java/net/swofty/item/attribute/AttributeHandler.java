@@ -7,6 +7,8 @@ import net.swofty.item.Rarity;
 import net.swofty.item.ReforgeType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
+import net.swofty.item.impl.Enchantable;
+import net.swofty.item.impl.Enchanted;
 import net.swofty.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +23,12 @@ public class AttributeHandler {
 
     public String getItemType() {
         return ((ItemAttributeType) item.getAttribute("item_type")).getValue();
+    }
+
+    public boolean shouldBeEnchanted() {
+        if (item.getGenericInstance() == null)
+            return false;
+        return item.getGenericInstance() instanceof Enchanted;
     }
 
     public @Nullable ItemType getItemTypeAsType() {
