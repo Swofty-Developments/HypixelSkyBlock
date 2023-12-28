@@ -3,7 +3,6 @@ package net.swofty.packet.packets.client.anticheat;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerPacketEvent;
-import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
@@ -11,7 +10,6 @@ import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.user.AntiCheatHandler;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 
 public class PacketListenerAirJump extends SkyBlockPacketClientListener {
@@ -35,7 +33,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
 
         boolean isOnGround = distance == 1.0;
 
-        if (isOnGround || player.getGameMode() == GameMode.CREATIVE) {
+        if (isOnGround || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
             data.yLevel = null;
             data.hasChangedVelocity = false;
             return;

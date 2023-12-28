@@ -41,7 +41,7 @@ public class SkyBlockPlayer extends Player {
     @Getter
     private float mana = 100;
     public float health = 100;
-    public long joined = 0;
+    public long joined;
     @Setter
     @Getter
     public boolean bypassBuild = false;
@@ -53,7 +53,7 @@ public class SkyBlockPlayer extends Player {
     @Getter
     private PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     @Getter
-    private SkyBlockIsland skyBlockIsland = null;
+    private SkyBlockIsland skyBlockIsland;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -160,8 +160,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void sendToHub() {
-        if (getInstance() == SkyBlock.getInstanceContainer())
+        if (getInstance() == SkyBlock.getInstanceContainer()) {
             this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
+            return;
+        }
         
         this.setInstance(SkyBlock.getInstanceContainer(), new Pos(-2.5, 70, -69.5, 180, 0));
     }

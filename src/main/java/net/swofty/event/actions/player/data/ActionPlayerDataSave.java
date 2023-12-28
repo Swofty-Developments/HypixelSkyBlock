@@ -3,15 +3,11 @@ package net.swofty.event.actions.player.data;
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.minestom.server.item.ItemStack;
 import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointInventory;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.item.SkyBlockItem;
-import net.swofty.user.SkyBlockInventory;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.UUID;
@@ -38,7 +34,7 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         player.getDataHandler().runOnSave(player);
 
         /*
-        Save the data into the DB
+         * Save the data into the DB
          */
         UserDatabase userDatabase = new UserDatabase(uuid.toString());
         if (userDatabase.exists()) {
