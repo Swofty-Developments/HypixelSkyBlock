@@ -160,8 +160,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void sendToHub() {
-        if (getInstance() == SkyBlock.getInstanceContainer())
+        if (getInstance() == SkyBlock.getInstanceContainer()) {
             this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
+            return;
+        }
         
         this.setInstance(SkyBlock.getInstanceContainer(), new Pos(-2.5, 70, -69.5, 180, 0));
     }
@@ -170,7 +172,8 @@ public class SkyBlockPlayer extends Player {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         skyBlockIsland.getSharedInstance().thenAccept(sharedInstance -> {
-            this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
+            if (sharedInstance != getInstance())
+                this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
             this.teleport(new Pos(0.5, 100, 0.5, 0, 0));
         });
 

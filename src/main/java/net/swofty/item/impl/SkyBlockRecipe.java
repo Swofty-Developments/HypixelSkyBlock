@@ -22,6 +22,8 @@ public abstract class SkyBlockRecipe<T> {
     protected SkyBlockItem result;
     @Setter
     protected Function<SkyBlockPlayer, CraftingResult> canCraft;
+    @Setter
+    protected int amount = 1;
 
     protected SkyBlockRecipe(SkyBlockItem result, Function<SkyBlockPlayer, CraftingResult> canCraft) {
         this.result = result;

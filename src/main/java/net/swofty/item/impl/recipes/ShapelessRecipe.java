@@ -22,9 +22,23 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
 
     private final List<MaterialQuantifiable> ingredientList;
 
+    public ShapelessRecipe(SkyBlockItem result, int amount, Function<SkyBlockPlayer, CraftingResult> canCraft) {
+        super(result, canCraft);
+
+        setAmount(amount);
+        this.ingredientList = new ArrayList<>();
+    }
+
     public ShapelessRecipe(SkyBlockItem result, Function<SkyBlockPlayer, CraftingResult> canCraft) {
         super(result, canCraft);
 
+        this.ingredientList = new ArrayList<>();
+    }
+
+    public ShapelessRecipe(SkyBlockItem result, int amount) {
+        super(result, (player) -> new CraftingResult(true, null));
+
+        setAmount(amount);
         this.ingredientList = new ArrayList<>();
     }
 

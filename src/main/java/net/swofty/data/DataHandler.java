@@ -138,7 +138,14 @@ public class DataHandler {
                     .build();
             player.setTeam(team);
             player.getTeam().sendUpdatePacket();
-        }),
+        }, ((player, datapoint) -> {
+            Team team = new TeamBuilder(player.getUsername(), MinecraftServer.getTeamManager())
+                    .prefix(Component.text(((Rank) datapoint.getValue()).getPrefix()))
+                    .teamColor(((Rank) datapoint.getValue()).getTextColor())
+                    .build();
+            player.setTeam(team);
+            player.getTeam().sendUpdatePacket();
+        })),
         COINS("coins", DatapointDouble.class, new DatapointDouble("coins", 0.0)),
         INVENTORY("inventory", DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();

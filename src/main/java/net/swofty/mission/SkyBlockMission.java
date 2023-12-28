@@ -13,7 +13,7 @@ public abstract class SkyBlockMission extends SkyBlockEvent {
 
     public abstract String getName();
 
-    public abstract Map<String, Object> onStart(SkyBlockPlayer player);
+    public abstract Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission);
 
     public abstract void onEnd(SkyBlockPlayer player, Map<String, Object> customData);
 

@@ -12,6 +12,7 @@ import net.swofty.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.item.items.mining.vanilla.WoodenPickaxe;
 import net.swofty.item.items.miscellaneous.SkyBlockMenu;
+import net.swofty.item.items.vanilla.Stick;
 import net.swofty.item.items.weapon.Hyperion;
 import net.swofty.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.item.items.weapon.vanilla.IronSword;
@@ -27,6 +28,7 @@ public enum ItemType {
     /**
      * Vanilla Items
      */
+    STICK(Material.STICK, Rarity.COMMON, Stick.class),
     ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.COMMON),
     BAKED_POTATO(Material.BAKED_POTATO, Rarity.COMMON),
     BIRCH_WOOD(Material.BIRCH_WOOD, Rarity.COMMON),
@@ -65,6 +67,8 @@ public enum ItemType {
     LEATHER(Material.LEATHER, Rarity.COMMON),
     MAGMA_CREAM(Material.MAGMA_CREAM, Rarity.COMMON),
     OAK_WOOD(Material.OAK_WOOD, Rarity.COMMON),
+    OAK_LOG(Material.OAK_LOG, Rarity.COMMON),
+    OAK_PLANKS(Material.OAK_PLANKS, Rarity.COMMON),
     OBSIDIAN(Material.OBSIDIAN, Rarity.COMMON),
     PACKED_ICE(Material.PACKED_ICE, Rarity.COMMON),
     PAPER(Material.PAPER, Rarity.COMMON),

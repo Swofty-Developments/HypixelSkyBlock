@@ -17,10 +17,9 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
-import net.swofty.utility.MathUtility;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, (short) 0, 1, "§7Add the items for a valid recipe in", "§7the crafting grid to the left!");
@@ -89,6 +88,8 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             return;
         }
 
+        int amount = recipe.getAmount();
+
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 13, 34);
         border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
@@ -98,18 +99,24 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 e.setCancelled(false);
 
-                if (e.getClickType().equals(ClickType.LEFT_CLICK)) {
-                    if (!e.getCursorItem().isAir()) {
-                        player.getInventory().addItemStack(e.getCursorItem());
-                    }
-
-                    MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                        e.setCursorItem(PlayerItemUpdater.playerUpdate(
-                                player,
-                                null,
-                                recipe.getResult().getItemStack()).build());
-                    }, TaskSchedule.tick(2), TaskSchedule.stop());
+                if (!e.getCursorItem().isAir()) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage("§cYou must empty your cursor first!");
+                    return;
                 }
+
+                AtomicInteger stopAfter = new AtomicInteger();
+                MinecraftServer.getSchedulerManager().submitTask(() -> {
+                    stopAfter.getAndIncrement();
+                    player.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(
+                            player,
+                            null,
+                            recipe.getResult().getItemStack()).amount(amount).build());
+                    if (stopAfter.get() == 2) {
+                        return TaskSchedule.tick(1);
+                    }
+                    return TaskSchedule.tick(1);
+                });
 
                 SkyBlockItem[] toReplace = recipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {
@@ -123,6 +130,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     }
                 }
 
+                player.getInventory().update();
                 refreshItems(player);
             }
 
@@ -138,7 +146,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack()).amount(amount);
             }
         });
     }
