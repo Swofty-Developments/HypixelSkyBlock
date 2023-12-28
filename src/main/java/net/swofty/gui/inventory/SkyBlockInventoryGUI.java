@@ -285,6 +285,7 @@ public abstract class SkyBlockInventoryGUI {
         updateItemStacks(inventory, player);
 
         player.openInventory(inventory);
+        player.getInventory().update();
         onOpen(openEvent);
 
         GUI_MAP.put(player.getUuid(), this);

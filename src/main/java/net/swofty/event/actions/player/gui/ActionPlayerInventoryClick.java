@@ -18,6 +18,7 @@ import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.Interactable;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 @EventParameters(description = "Handles when a player clicks on an InventoryGUI",
         node = EventNodes.PLAYER,
