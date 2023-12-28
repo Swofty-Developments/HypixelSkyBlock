@@ -10,6 +10,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -227,8 +228,13 @@ public class SkyBlockPlayer extends Player {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
     }
 
-    public void closeInventoryBypass() {
-        super.closeInventory();
+    public void updateCursor() {
+        getInventory().setCursorItem(getInventory().getCursorItem());
+    }
+
+    @Override
+    public @NotNull PlayerInventory getInventory() {
+        return super.getInventory();
     }
 
     @Override

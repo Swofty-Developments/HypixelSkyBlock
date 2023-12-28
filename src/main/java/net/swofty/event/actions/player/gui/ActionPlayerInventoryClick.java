@@ -38,6 +38,8 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
         SkyBlockItem clickedItem = new SkyBlockItem(inventoryClick.getClickedItem());
         SkyBlockItem cursorItem = new SkyBlockItem(inventoryClick.getCursorItem());
 
+        player.updateCursor();
+
         if (clickedItem.getGenericInstance() != null &&
                 clickedItem.getGenericInstance() instanceof Interactable interactable) {
             if (interactable.onInventoryInteract(player, clickedItem)) {
