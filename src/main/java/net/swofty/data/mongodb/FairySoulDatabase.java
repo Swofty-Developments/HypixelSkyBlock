@@ -44,7 +44,7 @@ public class FairySoulDatabase {
 			int z = doc.getInteger("z");
 			FairySoul soul = new FairySoul(
 				id,
-				new Pos(x+0.5, y, z+0.5, 30f, 0f),
+				new Pos(x + 0.5, y, z + 0.5),
 				zone
 			);
 			souls.add(soul);

@@ -33,23 +33,24 @@ public class FairySoul {
 		SOULS_CACHE.remove(id);
 	}
 	
+	public void spawnEntity(Instance instance) {
+		new EntityFairySoul(this).spawn(instance);
+	}
+	
+	public void collect(SkyBlockPlayer player) {
+		if(player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).hasOrAdd(id)) {
+			player.sendMessage("§d§lSOUL! §fYou found a §dFairy Soul§f!");
+		} else {
+			player.sendMessage("§dYou have already found that Fairy Soul!");
+		}
+	}
+	
 	public static List<FairySoul> getFairySouls() {
 		return new ArrayList<>(SOULS_CACHE.values());
 	}
 	
 	public static FairySoul getFairySoul(int id) {
 		return SOULS_CACHE.get(id);
-	}
-	
-	public static FairySoul getRegionOfPosition(Pos position) {
-		List<FairySoul> possible = new ArrayList<>();
-		for (FairySoul soul : getFairySouls()) {
-			if (soul.location == position)
-				possible.add(soul);
-		}
-		possible.sort(Comparator.comparingInt(r -> r.getZone().ordinal()));
-		Collections.reverse(possible);
-		return !possible.isEmpty() ? possible.get(0) : null;
 	}
 	
 	public static void cacheFairySouls() {
@@ -71,18 +72,6 @@ public class FairySoul {
 			if (soul.zone == zone)
 				soul.spawnEntity(instance);
 		});
-	}
-
-	public void spawnEntity(Instance instance) {
-		new EntityFairySoul(this).spawn(instance);
-	}
-	
-	public void collect(SkyBlockPlayer player) {
-		if(player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).hasOrAdd(id)) {
-			player.sendMessage("§d§lSOUL! §fYou found a §dFairy Soul§f!");
-		} else {
-			player.sendMessage("§dYou have already found that Fairy Soul!");
-		}
 	}
 	
 }

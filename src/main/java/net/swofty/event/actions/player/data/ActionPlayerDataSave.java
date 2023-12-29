@@ -34,7 +34,7 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         player.getDataHandler().runOnSave(player);
 
         /*
-         * Save the data into the DB
+        Save the data into the DB
          */
         UserDatabase userDatabase = new UserDatabase(uuid.toString());
         if (userDatabase.exists()) {

@@ -9,7 +9,7 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.fairysouls.EntityFairySoul;
 import net.swofty.user.fairysouls.FairySoul;
 
-@EventParameters(description = "Checks to see if a player clicks on a Villager NPC",
+@EventParameters(description = "Checks to see if a player clicks on a Fairy Soul",
 	node = EventNodes.PLAYER,
 	validLocations = EventParameters.Location.HUB,
 	requireDataLoaded = true)

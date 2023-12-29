@@ -28,10 +28,13 @@ public class EntityFairySoul extends EntityCreature {
 		
 		setHelmet(ItemStack.builder(Material.PLAYER_HEAD).meta(iMeta -> {
 			iMeta.damage(3);
-			iMeta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(UUID.fromString("7c47e205-ffff-ffff-ffff-ffffffffffff"), null, new PlayerSkin(SKULL_TEXTURES, null)));
+			iMeta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(UUID.randomUUID(), null, new PlayerSkin(SKULL_TEXTURES, null)));
 		}).build());
 	}
 	
+	/**
+	 * Sets the location of the Fairy Soul and spawn the entity
+	 */
 	public void spawn(Instance instance) {
 		setInstance(instance, parent.getLocation().sub(0, 1.46875, 0).withYaw(118.125f));
 		spawn();
