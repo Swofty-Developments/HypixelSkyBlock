@@ -8,6 +8,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.structure.SkyBlockStructure;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -20,7 +21,7 @@ public class IslandPortal extends SkyBlockStructure {
     }
 
     @Override
-    public void build(Instance instance) {
+    public void setBlocks(Instance instance) {
         fill(instance,
                 -1, 0, 0,
                 1, 4, 0,
@@ -69,6 +70,13 @@ public class IslandPortal extends SkyBlockStructure {
         set(instance, -2, 0, 1, Block.COBBLESTONE_WALL);
         set(instance, 2, 1, 1, Block.TORCH);
         set(instance, -2, 1, 1, Block.TORCH);
+    }
+
+    @Override
+    public List<StructureHologram> getHolograms() {
+        return List.of(
+                new StructureHologram(new String[]{"§bTravel to:", "§aHub Island"}, 0, 1, 1)
+        );
     }
 
     public enum PortalType {

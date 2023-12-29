@@ -16,6 +16,7 @@ import net.swofty.event.custom.IslandCreatedEvent;
 import net.swofty.event.custom.IslandLoadedEvent;
 import net.swofty.event.custom.IslandUnloadEvent;
 import org.bson.types.Binary;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;

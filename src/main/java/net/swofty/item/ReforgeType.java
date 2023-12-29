@@ -11,7 +11,11 @@ import java.util.function.Function;
 
 @Getter
 public enum ReforgeType {
-    SWORDS(List.of()),
+    SWORDS(List.of(
+            new Reforge("Epic", List.of(
+                    new Reforge.ReforgeSet(ItemStatistic.STRENGTH, level -> (double) (10 + (level * 5)))
+            ))
+    )),
     BOWS(List.of()),
     ARMOR(List.of()),
     EQUIPMENT(List.of()),

@@ -3,7 +3,11 @@ package net.swofty.structure;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
+import net.swofty.entity.hologram.ServerHolograms;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,7 +24,16 @@ public abstract class SkyBlockStructure {
         this.z = z;
     }
 
-    public abstract void build(Instance instance);
+    public abstract void setBlocks(Instance instance);
+
+    public abstract List<StructureHologram> getHolograms();
+
+    public void build(SharedInstance instance) {
+        setBlocks(instance);
+        getHolograms().forEach(hologram -> {
+            ServerHolograms.addExternalHologram(hologram.getHologram(this, instance));
+        });
+    }
 
     protected void set(Instance instance, int x, int y, int z, Block block) {
         instance.setBlock(
@@ -74,6 +87,21 @@ public abstract class SkyBlockStructure {
                 }
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
+        }
+    }
+
+    public record StructureHologram(String[] text, int x, int y, int z) {
+        public ServerHolograms.ExternalHologram getHologram(SkyBlockStructure structure, SharedInstance instance) {
+
+            return ServerHolograms.ExternalHologram.builder()
+                    .instance(instance)
+                    .pos(new net.minestom.server.coordinate.Pos(
+                            structure.rotateValue(structure.getX(), x, CoordinateType.X) + 0.5,
+                            structure.getY() + y + 0.5,
+                            structure.rotateValue(structure.getZ(), z, CoordinateType.Z) + 0.5
+                    ))
+                    .text(text)
+                    .build();
         }
     }
 
