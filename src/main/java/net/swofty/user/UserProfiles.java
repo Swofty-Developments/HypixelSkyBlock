@@ -6,8 +6,9 @@ import lombok.Setter;
 import java.util.*;
 
 @Getter
+@Setter
 public class UserProfiles {
-    public final static String[] PROFILE_NAMES = {
+    private final static String[] PROFILE_NAMES = {
             "Zucchini", "Papaya", "Watermelon", "Pineapple",
             "Lemon", "Apple", "Banana", "Orange", "Pear",
             "Coconuts", "Cherry", "Strawberry", "Raspberry",
@@ -18,17 +19,23 @@ public class UserProfiles {
     };
     private static final Map<UUID, UserProfiles> profilesCache = new HashMap<>();
 
-    @Setter
     UUID currentlySelected = null;
-    List<UUID> profiles = new ArrayList<>();
+    ArrayList<UUID> profiles = new ArrayList<>();
 
     public UserProfiles(UUID playerUuid) {
         profilesCache.put(playerUuid, this);
     }
 
+    public UserProfiles() {}
+
     public void addProfile(UUID profile) {
         profiles.add(profile);
         profilesCache.put(profile, this);
+    }
+
+    public void removeProfile(UUID profile) {
+        profiles.remove(profile);
+        profilesCache.remove(profile);
     }
 
     public Map<String, Object> serialize() {
@@ -41,7 +48,10 @@ public class UserProfiles {
     public static UserProfiles deserialize(Map<String, Object> map) {
         UserProfiles userProfiles = new UserProfiles(UUID.fromString((String) map.get("_id"))); // Player UUID
         userProfiles.currentlySelected = UUID.fromString((String) map.get("selected")); // Profile UUID
-        userProfiles.profiles = ((List<String>) map.get("profiles")).stream().map(UUID::fromString).toList();
+        userProfiles.profiles = new ArrayList<>();
+        for (String profile : (List<String>) map.get("profiles")) {
+            userProfiles.profiles.add(UUID.fromString(profile));
+        }
         return userProfiles;
     }
 

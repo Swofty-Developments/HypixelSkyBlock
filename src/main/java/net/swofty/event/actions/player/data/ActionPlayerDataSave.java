@@ -1,5 +1,6 @@
 package net.swofty.event.actions.player.data;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
@@ -12,7 +13,9 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,17 +56,25 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
             ProfilesDatabase.collection.replaceOne(
                     profilesDatabase.getDocument(), player.getDataHandler().toDocument(profileId)
             );
-            DataHandler.userCache.remove(uuid);
         } else {
             ProfilesDatabase.collection.insertOne(player.getDataHandler().toDocument(profileId));
-            DataHandler.userCache.remove(uuid);
         }
 
         Map<String, Object> persistentValues = player.getDataHandler().getPersistentValues();
         player.getProfiles().getProfiles().stream().filter(profile -> profile != profileId).forEach(profile -> {
             ProfilesDatabase otherProfileDatabase = new ProfilesDatabase(profile.toString());
 
-            persistentValues.forEach(otherProfileDatabase::insertOrUpdate);
+            Arrays.stream(DataHandler.Data.values()).forEach(data -> {
+                if (persistentValues.containsKey(data.getKey())) {
+                    try {
+                        otherProfileDatabase.insertOrUpdate(data.getKey(), player.getDataHandler().getDatapoint(data.getKey()).getSerializedValue());
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
         });
+
+        DataHandler.userCache.remove(uuid);
     }
 }

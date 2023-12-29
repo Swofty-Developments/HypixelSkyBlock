@@ -1,5 +1,6 @@
 package net.swofty.event.actions.player.data;
 
+import com.mongodb.client.model.Filters;
 import lombok.SneakyThrows;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
@@ -13,6 +14,7 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.user.UserProfiles;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @EventParameters(description = "Load player data on join",
@@ -33,16 +35,18 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
 
         // Ensure we use player here
         final Player player = playerLoginEvent.getPlayer();
-        UUID uuid = player.getUuid();
+        UUID playerUuid = player.getUuid();
 
-        UserProfiles profiles = new UserDatabase(uuid).getProfiles();
-        UUID profileId = profiles.getCurrentlySelected();
+        UserProfiles profiles = new UserDatabase(playerUuid).getProfiles();
+        UUID profileId;
         if (profiles.getCurrentlySelected() == null) {
             // Player has never played before
             profileId = UUID.randomUUID();
 
             profiles.setCurrentlySelected(profileId);
             profiles.addProfile(profileId);
+        } else {
+            profileId = profiles.getCurrentlySelected();
         }
 
         ProfilesDatabase profilesDatabase = new ProfilesDatabase(profileId.toString());
@@ -51,10 +55,22 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
         if (profilesDatabase.exists()) {
             Document document = profilesDatabase.getDocument();
             handler = DataHandler.fromDocument(document);
-            DataHandler.userCache.put(uuid, handler);
+            DataHandler.userCache.put(playerUuid, handler);
         } else {
-            handler = DataHandler.initUserWithDefaultData(uuid);
-            DataHandler.userCache.put(uuid, handler);
+            handler = DataHandler.initUserWithDefaultData(playerUuid);
+            DataHandler.userCache.put(playerUuid, handler);
+        }
+
+        if (profiles.getProfiles().size() >= 2) {
+            Document previousProfile = ProfilesDatabase.collection
+                    .find(Filters.eq("_owner", playerUuid.toString())).into(new ArrayList<>())
+                    .stream().filter(document -> !document.get("_id").equals(profileId.toString()))
+                    .findFirst().get();
+
+            DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
+            previousHandler.getPersistentValues().forEach((key, value) -> {
+                handler.getDatapoint(key).setValue(value);
+            });
         }
 
         handler.runOnLoad();

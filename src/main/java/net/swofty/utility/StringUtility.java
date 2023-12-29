@@ -9,6 +9,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,15 @@ public class StringUtility {
 
     public static Material getMaterialFromBlock(Block block) {
         return Material.fromNamespaceId(block.namespace());
+    }
+
+    public static String profileAge(long tbf) {
+        if (tbf > 86400000) return commaify(tbf / 86400000) + "d ";
+        if (tbf > 3600000) return commaify(tbf / 3600000) + "h ";
+        if (tbf > 60000) return commaify(tbf / 60000) + "m ";
+        if (tbf > 1000) return commaify(tbf / 1000) + "s";
+        if (tbf < 1000) return commaify(tbf) + "ms";
+        return "";
     }
 
     public static String getAsRomanNumeral(int num) {
@@ -97,6 +107,10 @@ public class StringUtility {
 
     public static String zeroed(long l) {
         return l > 9 ? "" + l : "0" + l;
+    }
+
+    public static String commaify(long l) {
+        return NumberFormat.getInstance().format(l);
     }
 
     public static String limitStringLength(String s, int charLimit) {

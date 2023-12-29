@@ -9,14 +9,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.gui.inventory.inventories.profiles.GUIProfileManagement;
 import net.swofty.gui.inventory.item.GUIClickableItem;
-import net.swofty.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GUISkyBlockMenu extends SkyBlockInventoryGUI {

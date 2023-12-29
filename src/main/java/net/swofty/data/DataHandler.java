@@ -37,7 +37,7 @@ public class DataHandler {
     private UUID uuid;
     private Map<String, Datapoint> datapoints = new HashMap<>();
 
-    private Datapoint getDatapoint(String key) {
+    public Datapoint getDatapoint(String key) {
         return this.datapoints.get(key);
     }
 
@@ -237,7 +237,12 @@ public class DataHandler {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {});
+        DISABLE_DROP_MESSAGE("disable_drop_message", true, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
+        CREATED("created", false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {}, (player, datapoint) -> {
+            if (datapoint.getValue().equals(0L)) {
+                datapoint.setValue(System.currentTimeMillis());
+            }
+        }),
         ;
 
         @Getter
