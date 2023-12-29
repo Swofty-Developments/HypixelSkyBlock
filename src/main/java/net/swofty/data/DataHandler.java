@@ -25,15 +25,13 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 import org.bson.Document;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class DataHandler {
     public static Map<UUID, DataHandler> userCache = new HashMap<>();
+    @Getter
     private UUID uuid;
     private Map<String, Datapoint> datapoints = new HashMap<>();
 
@@ -51,12 +49,8 @@ public class DataHandler {
     public static DataHandler getUser(Player player) {
         return getUser(player.getUuid());
     }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public static DataHandler fromDocument(Document document) throws JsonProcessingException {
+    
+    public static DataHandler fromDocument(Document document) {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = UUID.fromString(document.getString("_owner"));
         Arrays.stream(Data.values()).forEach(data -> {
@@ -238,6 +232,7 @@ public class DataHandler {
             datapoint.setValue(data);
         }),
         DISABLE_DROP_MESSAGE("disable_drop_message", true, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
+        FAIRY_SOULS("fairy_souls", false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {}),
         CREATED("created", false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {}, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
                 datapoint.setValue(System.currentTimeMillis());

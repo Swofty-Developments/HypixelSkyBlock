@@ -281,7 +281,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                                     StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).level())
                                     + " §l✓");
                         } else {
-                            lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✗");
+                            lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✖");
                         }
 
                         lore.add("§a ");
@@ -335,16 +335,30 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                             .forEach(line -> lore.add("§7" + line));
 
                     lore.add("§a ");
-                    if (finalHasLevel >= finalLevel) {
+                    if (finalHasLevel == finalLevel) {
                         lore.add("§cThis enchantment is already present");
                         lore.add("§cand can be removed.");
                         lore.add("§a ");
                     }
 
                     lore.add("§7Cost");
+                    
+                    if (finalHasLevel > finalLevel) {
+                        if (levelCost > player.getLevel())
+                            lore.add("§3" + levelCost + " Exp Levels §c§l✖");
+                        else lore.add("§3" + levelCost + " Exp Levels §a§l✓");
+                        
+                        lore.add("§a ");
+                        lore.add("§cHigher level already present!");
+                        return ItemStackCreator.getStack(
+                            "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
+                            Material.GRAY_DYE, (short) 0, 1,
+                            lore
+                        );
+                    }
 
                     if (levelCost > player.getLevel()) {
-                        lore.add("§3" + levelCost + " Exp Levels §c§l✗");
+                        lore.add("§3" + levelCost + " Exp Levels §c§l✖");
                         lore.add("§a ");
                         lore.add("§cYou have insufficient levels!");
                     } else {
@@ -366,6 +380,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    if(e.getClickedItem().getMaterial() == Material.GRAY_DYE)
+                        return;
+                    
+                    // TODO if someone know how to get the itemstack name, do it
+                    // I can't find it, I keep getting null...
+                    // Because it should be, let's say, "§6Heroic Hyperion", and not "Hyperion"
+                    String itemName = StringUtility.toNormalCase(type.name());
+                    
                     if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel)) {
                         player.sendMessage("§cYou have insufficient levels!");
                         return;
@@ -378,7 +400,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         );
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel));
-                        player.sendMessage("§aYou enchanted your §f" + StringUtility.toNormalCase(type.name()) + " §awith " +
+                        player.sendMessage("§aYou enchanted your " + itemName + " §awith " +
                                 StringUtility.toNormalCase(selected.name()) + " " + StringUtility.getAsRomanNumeral(finalLevel) + "!");
                     } else {
                         int difference = finalHasLevel - finalLevel;
@@ -390,6 +412,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         }
 
                         player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel));
+                        player.sendMessage("§cYou removed " + StringUtility.toNormalCase(selected.name()) + " from your " + itemName + "§c!");
                     }
 
                     updateFromItem(item, selected);
@@ -453,9 +476,6 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 }
             }
         }
-        if (power > 60) {
-            return 60;
-        }
-        return power;
+        return Math.min(power, 60);
     }
 }

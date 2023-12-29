@@ -34,22 +34,23 @@ import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
+import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.item.impl.Craftable;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.MissionRepeater;
 import net.swofty.mission.SkyBlockMission;
+import net.swofty.packet.SkyBlockPacketClientListener;
 import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.server.attribute.SkyBlockServerAttributes;
 import net.swofty.server.eventcaller.CustomEventCaller;
 import net.swofty.user.SkyBlockIsland;
-import net.swofty.user.SkyBlockScoreboard;
-import net.swofty.item.updater.PlayerItemUpdater;
-import net.swofty.item.attribute.ItemAttribute;
-import net.swofty.packet.SkyBlockPacketClientListener;
-import net.swofty.user.categories.CustomGroups;
-import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.SkyBlockScoreboard;
+import net.swofty.user.categories.CustomGroups;
+import net.swofty.user.fairysouls.FairySoul;
+import net.swofty.user.statistics.PlayerStatistics;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -93,6 +94,7 @@ public class SkyBlock {
         new ProfilesDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new RegionDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new IslandDatabase("_placeHolder").connect(Resources.get("mongodb"));
+        FairySoulDatabase.connect(Resources.get("mongodb"));
         AttributeDatabase.connect(Resources.get("mongodb"));
         UserDatabase.connect(Resources.get("mongodb"));
 
@@ -148,7 +150,12 @@ public class SkyBlock {
                         .ambientLight(2)
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
-
+        
+        /**
+         * Load fairy souls
+         */
+        FairySoul.cacheFairySouls();
+        
         /**
          * Debugging
          */
@@ -188,9 +195,10 @@ public class SkyBlock {
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());
 
         /**
-         * Register holograms
+         * Register holograms and fairy souls
          */
         ServerHolograms.spawnAll(instanceContainer);
+        FairySoul.spawnEntities(instanceContainer);
 
         /**
          * Register items
@@ -249,10 +257,11 @@ public class SkyBlock {
         /**
          * Start the server
          */
-        minecraftServer.start("0.0.0.0", 25530);
+		int port = Resources.getOrDefault("port", 25530);
+        minecraftServer.start("0.0.0.0", port);
         long endTime = System.currentTimeMillis();
         MinecraftServer.setBrandName("SkyBlock");
-        Logger.info("Started server in " + (endTime - startTime) + "ms");
+        Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {
