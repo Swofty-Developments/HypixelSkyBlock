@@ -11,6 +11,7 @@ import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
 import org.bson.Document;
 
@@ -37,17 +38,8 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
         final Player player = playerLoginEvent.getPlayer();
         UUID playerUuid = player.getUuid();
 
-        UserProfiles profiles = new UserDatabase(playerUuid).getProfiles();
-        UUID profileId;
-        if (profiles.getCurrentlySelected() == null) {
-            // Player has never played before
-            profileId = UUID.randomUUID();
-
-            profiles.setCurrentlySelected(profileId);
-            profiles.addProfile(profileId);
-        } else {
-            profileId = profiles.getCurrentlySelected();
-        }
+        UserProfiles profiles = ((SkyBlockPlayer) playerLoginEvent.getPlayer()).getProfiles();
+        UUID profileId = profiles.getCurrentlySelected();
 
         ProfilesDatabase profilesDatabase = new ProfilesDatabase(profileId.toString());
         DataHandler handler;

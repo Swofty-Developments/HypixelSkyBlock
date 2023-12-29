@@ -27,7 +27,7 @@ public class SkyBlockIsland {
     private static final String ISLAND_TEMPLATE_NAME = "hypixel_island_template";
 
     @Getter
-    private final IslandDatabase database;
+    private IslandDatabase database = null;
     private final SkyBlockPlayer owner;
     private final UUID profileId;
     @Getter
@@ -36,10 +36,11 @@ public class SkyBlockIsland {
     private SharedInstance islandInstance;
     private PolarWorld world;
 
-    public SkyBlockIsland(SkyBlockPlayer player) {
+    public SkyBlockIsland(SkyBlockPlayer player, UUID profileId) {
         // Fetch from UserDatabase because SkyBlockPlayer hasn't necessarily been loaded yet
-        this.profileId = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
-        this.database = new IslandDatabase(profileId.toString());
+        this.profileId = profileId;
+        if (profileId != null)
+            this.database = new IslandDatabase(profileId.toString());
         this.owner = player;
     }
 

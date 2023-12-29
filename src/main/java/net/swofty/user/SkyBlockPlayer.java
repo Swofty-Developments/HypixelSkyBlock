@@ -64,8 +64,12 @@ public class SkyBlockPlayer extends Player {
             SkyBlock.offlineUUIDs.remove(uuid);
         }
 
-        skyBlockIsland = new SkyBlockIsland(this);
+        skyBlockIsland = new SkyBlockIsland(this, null);
         joined = System.currentTimeMillis();
+    }
+
+    public void setSkyBlockIsland(SkyBlockIsland island) {
+        this.skyBlockIsland = island;
     }
 
     public DataHandler getDataHandler() {
@@ -99,7 +103,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public boolean isOnIsland() {
-        return skyBlockIsland.getCreated();
+        return getInstance() != null && getInstance() != SkyBlock.getInstanceContainer();
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {

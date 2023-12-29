@@ -8,6 +8,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
+import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointIntegerList;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
 
@@ -58,10 +60,20 @@ public class PlayerStatistics {
         return statistics;
     }
 
+    public ItemStatistics spareStatistics() {
+        ItemStatistics spare = ItemStatistics.builder().build();
+
+        int fairySouls = player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size();
+        spare = spare.add(ItemStatistics.builder().with(ItemStatistic.HEALTH, fairySouls * 2).build());
+
+        return spare;
+    }
+
     public ItemStatistics allStatistics() {
         ItemStatistics total = ItemStatistics.builder().build();
         total = total.add(allArmorStatistics());
         total = total.add(mainHandStatistics());
+        total = total.add(spareStatistics());
 
         ItemStatistics baseStats = ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100)
