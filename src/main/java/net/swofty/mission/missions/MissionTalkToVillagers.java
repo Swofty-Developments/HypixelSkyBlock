@@ -43,13 +43,13 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
         if (data.hasCompleted("speak_to_villagers")) return;
 
         MissionData.ActiveMission mission = data.getMission(MissionTalkToVillagers.class).getKey();
-        mission.setMissionProgress(mission.getMissionProgress() + 1);
 
         Map<String, Object> customData = mission.getCustomData();
 
-        if (customData.values().stream().anyMatch(value -> value.equals(event.getVillager().getID()))) return;
+        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getID()))) return;
         customData.put("villager_" + mission.getMissionProgress(), event.getVillager().getID());
 
+        mission.setMissionProgress(mission.getMissionProgress() + 1);
         mission.checkIfMissionEnded(event.getPlayer());
     }
 
@@ -65,7 +65,6 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
     @Override
     public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
-        player.sendMessage("On start thrown");
         return new HashMap<>();
     }
 
