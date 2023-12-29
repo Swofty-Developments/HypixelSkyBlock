@@ -30,7 +30,8 @@ public class ActionPlayerItemPickup extends SkyBlockEvent {
         DroppedItemEntityImpl.getDroppedItems().computeIfPresent(player, (unused, list) -> {
             list.forEach(item -> {
                 if ((System.currentTimeMillis() > item.getEndPickupDelay())
-                        && item.getPosition().distance(player.getPosition()) <= 1.5) {
+                        && item.getPosition().distance(player.getPosition()) <= 1.5
+                        && !item.isRemoved()) {
                     player.addAndUpdateItem(item.getItem());
                     item.remove();
                 }
