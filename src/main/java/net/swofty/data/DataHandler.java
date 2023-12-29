@@ -232,7 +232,7 @@ public class DataHandler {
             datapoint.setValue(data);
         }),
         DISABLE_DROP_MESSAGE("disable_drop_message", true, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
-        FAIRY_SOULS("fairy_souls", false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {})
+        FAIRY_SOULS("fairy_souls", false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {}),
         CREATED("created", false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {}, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
                 datapoint.setValue(System.currentTimeMillis());
