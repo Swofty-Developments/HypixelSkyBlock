@@ -63,7 +63,8 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         if (patternMaterial != null) {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
 
-                            if (stackMaterial.matches(patternMaterial.getMaterial())) {
+                            if (stackMaterial.matches(patternMaterial.getMaterial())
+                                    || ExchangeableType.isExchangeable(stackMaterial.getMaterial(), patternMaterial.getMaterial())) {
                                 int stackAmount = stackMaterial.getAmount();
                                 int consumeAmount = patternMaterial.getAmount();
 
@@ -136,7 +137,9 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
                 if (!gridMaterial.matches(patternMaterial.getMaterial()) ||
                         gridMaterial.getAmount() < patternMaterial.getAmount()) {
-                    return false;
+                    if (!ExchangeableType.isExchangeable(gridMaterial.getMaterial(), patternMaterial.getMaterial())) {
+                        return false;
+                    }
                 }
             }
         }

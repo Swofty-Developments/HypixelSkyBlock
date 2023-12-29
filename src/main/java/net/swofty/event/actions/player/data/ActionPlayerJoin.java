@@ -1,4 +1,4 @@
-package net.swofty.event.actions.player;
+package net.swofty.event.actions.player.data;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
@@ -30,8 +30,6 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
         player.sendMessage("§7Sending to server mini1A...");
         player.sendMessage("§7 ");
-        player.sendMessage("§aYour profile is: §eOrange");
-        player.sendMessage("§8Profile ID: " + player.getUuid().toString());
 
         player.setRespawnPoint(new Pos(0, 100, 0));
     }

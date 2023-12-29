@@ -2,15 +2,13 @@ package net.swofty.mission;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.mission.missions.MissionBreakLog;
-import net.swofty.mission.missions.MissionTalkToBanker;
-import net.swofty.mission.missions.MissionTalkToVillagers;
+import net.swofty.mission.missions.*;
 import net.swofty.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
 public enum MissionSet {
-    GETTING_STARTED(MissionBreakLog.class),
+    GETTING_STARTED(MissionBreakLog.class, MissionCraftWorkbench.class, MissionCraftWoodenPickaxe.class),
     SAVING_UP(MissionTalkToVillagers.class, MissionTalkToBanker.class),
     ;
 

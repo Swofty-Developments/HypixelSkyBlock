@@ -30,7 +30,13 @@ public abstract class SkyBlockEvent {
     public abstract void run(Event tempEvent);
 
     public void cacheEvent() {
-        EventNodes paramNode = params.node();
+        EventNodes paramNode;
+        try {
+            paramNode = params.node();
+        } catch (NullPointerException ex) {
+            System.out.println("Event " + this.getClass().getSimpleName() + " has no node specified!");
+            return;
+        }
 
         if (paramNode == EventNodes.CUSTOM) {
             cachedCustomEvents.add(this);

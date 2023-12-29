@@ -20,7 +20,7 @@ public class DeleteIslandCommand extends SkyBlockCommand {
                 ((SkyBlockPlayer) sender).sendToHub();
                 ((SkyBlockPlayer) sender).getSkyBlockIsland().runVacantCheck();
             } catch (Exception e) {}
-            IslandDatabase.collection.deleteMany(Filters.eq("_id", ((SkyBlockPlayer) sender).getUuid().toString()));
+            IslandDatabase.collection.deleteMany(Filters.eq("_id", ((SkyBlockPlayer) sender).getProfiles().getCurrentlySelected()));
 
             sender.sendMessage("§aYou have successfully deleted your island.");
         });

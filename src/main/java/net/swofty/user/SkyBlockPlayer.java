@@ -84,6 +84,10 @@ public class SkyBlockPlayer extends Player {
         return new LogHandler(this);
     }
 
+    public UserProfiles getProfiles() {
+        return UserProfiles.get(this.getUuid());
+    }
+
     public MissionData getMissionData() {
         MissionData data = getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);

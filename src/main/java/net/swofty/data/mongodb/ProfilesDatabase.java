@@ -9,7 +9,7 @@ import org.bson.Document;
 
 import java.util.*;
 
-public record IslandDatabase(String profileUuid) implements MongoDB {
+public record ProfilesDatabase(String id) implements MongoDB {
     public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
@@ -21,7 +21,7 @@ public record IslandDatabase(String profileUuid) implements MongoDB {
         client = MongoClients.create(settings);
 
         database = client.getDatabase("Minestom");
-        collection = database.getCollection("island");
+        collection = database.getCollection("data");
         return this;
     }
 
@@ -32,7 +32,7 @@ public record IslandDatabase(String profileUuid) implements MongoDB {
 
     @Override
     public Object get(String key, Object def) {
-        Document doc = collection.find(Filters.eq("_id", profileUuid)).first();
+        Document doc = collection.find(Filters.eq("_id", id)).first();
         if (doc == null) {
             return def;
         }
@@ -54,7 +54,7 @@ public record IslandDatabase(String profileUuid) implements MongoDB {
     }
 
     public Document getDocument() {
-        Document query = new Document("_id", profileUuid);
+        Document query = new Document("_id", id);
         return collection.find(query).first();
     }
 
@@ -73,21 +73,32 @@ public record IslandDatabase(String profileUuid) implements MongoDB {
 
     public void insertOrUpdate(String key, Object value) {
         if (exists()) {
-            Document query = new Document("_id", profileUuid);
+            Document query = new Document("_id", id);
             Document found = collection.find(query).first();
 
             assert found != null;
             collection.updateOne(found, Updates.set(key, value));
             return;
         }
-        Document New = new Document("_id", profileUuid);
+        Document New = new Document("_id", id);
         New.append(key, value);
         collection.insertOne(New);
     }
 
     public boolean exists() {
-        Document query = new Document("_id", profileUuid);
+        Document query = new Document("_id", id);
         Document found = collection.find(query).first();
         return found != null;
+    }
+
+    public static UUID fetchUUID(String username) {
+        Document doc = collection.find(Filters.eq("ignLowercase", username.toLowerCase())).first();
+        if (doc == null)
+            return null;
+        return UUID.fromString(doc.getString("_id"));
+    }
+
+    public static Document fetchDocument(String uniqueId) {
+        return collection.find(Filters.eq("_id", uniqueId)).first();
     }
 }

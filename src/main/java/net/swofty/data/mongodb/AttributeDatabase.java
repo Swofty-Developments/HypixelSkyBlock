@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttributeDatabase {
-
     public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;

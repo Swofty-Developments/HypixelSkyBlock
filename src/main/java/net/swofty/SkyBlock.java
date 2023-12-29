@@ -91,11 +91,12 @@ public class SkyBlock {
         /**
          * Register database
          */
-        new UserDatabase("_placeHolder").connect(Resources.get("mongodb"));
+        new ProfilesDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new RegionDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new IslandDatabase("_placeHolder").connect(Resources.get("mongodb"));
         FairySoulDatabase.connect(Resources.get("mongodb"));
         AttributeDatabase.connect(Resources.get("mongodb"));
+        UserDatabase.connect(Resources.get("mongodb"));
 
         /**
          * Register commands

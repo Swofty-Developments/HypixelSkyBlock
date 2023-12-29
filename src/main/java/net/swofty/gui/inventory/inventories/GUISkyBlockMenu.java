@@ -9,14 +9,13 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.gui.inventory.inventories.profiles.GUIProfileManagement;
 import net.swofty.gui.inventory.item.GUIClickableItem;
-import net.swofty.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
@@ -97,6 +96,32 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7Opens the crafting grid.",
                         " ",
                         "§eClick to open!");
+            }
+        });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIProfileManagement().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 48;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, (short) 0, 1,
+                        "§7You can have multiple SkyBlock",
+                        "§7profiles at the same time.",
+                        " ",
+                        "§7Each profile has its own island,",
+                        "§7inventory, quest log...",
+                        " ",
+                        "§7Profiles: §e" + player.getProfiles().getProfiles().size() + "§6/§e4",
+                        " ",
+                        "§eClick to manage!");
             }
         });
     }

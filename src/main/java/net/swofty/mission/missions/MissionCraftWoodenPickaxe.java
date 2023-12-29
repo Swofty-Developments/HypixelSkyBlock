@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Craft workbench mission",
+@EventParameters(description = "Craft wooden pickaxe mission",
         node = EventNodes.CUSTOM,
         validLocations = EventParameters.Location.ISLAND,
         requireDataLoaded = false)
-public class MissionCraftWorkbench extends SkyBlockMission {
+public class MissionCraftWoodenPickaxe extends SkyBlockMission {
     @Override
     public Class<? extends Event> getEvent() {
         return ItemCraftEvent.class;
@@ -30,23 +30,23 @@ public class MissionCraftWorkbench extends SkyBlockMission {
         ItemCraftEvent event = (ItemCraftEvent) tempEvent;
         ItemType type = event.getCraftedItem().getAttributeHandler().getItemTypeAsType();
 
-        if (type == ItemType.CRAFTING_TABLE) {
+        if (type == ItemType.WOODEN_PICKAXE) {
             MissionData data = event.getPlayer().getMissionData();
 
-            if (data.isCurrentlyActive("craft_workbench")) {
-                data.endMission("craft_workbench");
+            if (data.isCurrentlyActive("craft_wood_pickaxe")) {
+                data.endMission("craft_wood_pickaxe");
             }
         }
     }
 
     @Override
     public String getID() {
-        return "craft_workbench";
+        return "craft_wood_pickaxe";
     }
 
     @Override
     public String getName() {
-        return "Craft a workbench";
+        return "Craft a wood pickaxe";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MissionCraftWorkbench extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData) {
-        player.getMissionData().startMission(MissionCraftWoodenPickaxe.class);
+
     }
 
     @Override

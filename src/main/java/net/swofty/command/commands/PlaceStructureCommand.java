@@ -2,6 +2,7 @@ package net.swofty.command.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
+import net.minestom.server.instance.SharedInstance;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.structure.structures.IslandPortal;
@@ -27,7 +28,7 @@ public class PlaceStructureCommand extends SkyBlockCommand {
                     player.getPosition().blockZ());
 
             portal.setType(IslandPortal.PortalType.HUB);
-            portal.build(player.getInstance());
+            portal.build((SharedInstance) player.getInstance());
         }, rotation);
     }
 }
