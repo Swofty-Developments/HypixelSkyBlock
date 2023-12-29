@@ -24,10 +24,7 @@ import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.Resources;
-import net.swofty.data.mongodb.AttributeDatabase;
-import net.swofty.data.mongodb.IslandDatabase;
-import net.swofty.data.mongodb.RegionDatabase;
-import net.swofty.data.mongodb.UserDatabase;
+import net.swofty.data.mongodb.*;
 import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.hologram.ServerHolograms;
@@ -93,10 +90,11 @@ public class SkyBlock {
         /**
          * Register database
          */
-        new UserDatabase("_placeHolder").connect(Resources.get("mongodb"));
+        new ProfilesDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new RegionDatabase("_placeHolder").connect(Resources.get("mongodb"));
         new IslandDatabase("_placeHolder").connect(Resources.get("mongodb"));
         AttributeDatabase.connect(Resources.get("mongodb"));
+        UserDatabase.connect(Resources.get("mongodb"));
 
         /**
          * Register commands

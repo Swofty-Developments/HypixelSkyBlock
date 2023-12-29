@@ -8,6 +8,7 @@ import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
+import net.swofty.data.datapoints.DatapointString;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.EventNodes;
@@ -38,7 +39,9 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
             CustomGroups.staffMembers.add(player);
         }
 
-        player.sendMessage("§eWelcome to §aHypixel SkyBlock§e!");
+        player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
+                DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
+        player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
         player.setHearts(player.getMaxHealth());
 
         PlayerHolograms.spawnAll(player);

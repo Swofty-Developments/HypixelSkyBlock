@@ -10,6 +10,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.NamespaceID;
 import net.swofty.SkyBlock;
 import net.swofty.data.mongodb.IslandDatabase;
+import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.IslandCreatedEvent;
 import net.swofty.event.custom.IslandLoadedEvent;
@@ -18,6 +19,7 @@ import org.bson.types.Binary;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockIsland {
@@ -26,6 +28,7 @@ public class SkyBlockIsland {
     @Getter
     private final IslandDatabase database;
     private final SkyBlockPlayer owner;
+    private final UUID profileId;
     @Getter
     private Boolean created = false;
     @Getter
@@ -33,7 +36,9 @@ public class SkyBlockIsland {
     private PolarWorld world;
 
     public SkyBlockIsland(SkyBlockPlayer player) {
-        this.database = new IslandDatabase(player.getUuid().toString());
+        // Fetch from UserDatabase because SkyBlockPlayer hasn't necessarily been loaded yet
+        this.profileId = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
+        this.database = new IslandDatabase(profileId.toString());
         this.owner = player;
     }
 
@@ -105,7 +110,7 @@ public class SkyBlockIsland {
             SkyBlock.getLoadedPlayers().forEach(player -> {
                 player.getSkyBlockIsland().runVacantCheck();
             });
-            return TaskSchedule.tick(10);
+            return TaskSchedule.tick(4);
         }, ExecutionType.ASYNC);
     }
 }

@@ -13,14 +13,6 @@ public interface MongoDB {
 
     default void insertOrUpdate(String key, Object value) { }
 
-    int getInt(String key, int def);
-
-    long getLong(String key, long def);
-
-    boolean getBoolean(String key, boolean def);
-
-    <T> List<T> getList(String key, Class<T> t);
-
     boolean remove(String id);
 
     boolean exists();

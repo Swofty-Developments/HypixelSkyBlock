@@ -99,6 +99,32 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§eClick to open!");
             }
         });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIProfileManagement().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 48;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, (short) 0, 1,
+                        "§7You can have multiple SkyBlock",
+                        "§7profiles at the same time.",
+                        " ",
+                        "§7Each profile has its own island,",
+                        "§7inventory, quest log...",
+                        " ",
+                        "§7Profiles: §e" + player.getProfiles().getProfiles().size() + "§6/§e4",
+                        " ",
+                        "§eClick to manage!");
+            }
+        });
     }
 
     @Override
