@@ -73,7 +73,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
             // Get the MaterialQuantifiable representation of the current stack
             MaterialQuantifiable currentStackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
             MaterialQuantifiable toConsume = materialsToConsume.stream()
-                    .filter(material -> material.matches(currentStackMaterial.getMaterial()))
+                    .filter(material -> material.matches(currentStackMaterial.getMaterial())
+                            || ExchangeableType.isExchangeable(material.getMaterial(), currentStackMaterial.getMaterial()))
                     .findFirst()
                     .orElse(null);
 
@@ -131,7 +132,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                     // and atleast the amount of materialsNeeded, but not necessarily the same amount
                     materialsPassedThrough.forEach(material -> {
                         MaterialQuantifiable found = materialsNeeded.stream()
-                                .filter(needed -> needed.matches(material.getMaterial()))
+                                .filter(needed -> needed.matches(material.getMaterial())
+                                        || ExchangeableType.isExchangeable(needed.getMaterial(), material.getMaterial()))
                                 .findFirst()
                                 .orElse(null);
 

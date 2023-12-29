@@ -200,7 +200,7 @@ public class MissionData {
             }
         }
 
-        public List<String> getObjectiveCompleteText(SkyBlockPlayer player, List<String> rewards) {
+        public List<String> getObjectiveCompleteText(List<String> rewards) {
             SkyBlockMission mission = MissionData.getMissionClass(missionID);
 
             if (rewards == null || rewards.isEmpty())
@@ -222,7 +222,7 @@ public class MissionData {
             return display;
         }
 
-        public List<String> getNewObjectiveText(SkyBlockPlayer player) {
+        public List<String> getNewObjectiveText() {
             SkyBlockMission mission = MissionData.getMissionClass(missionID);
 
             return Arrays.asList(

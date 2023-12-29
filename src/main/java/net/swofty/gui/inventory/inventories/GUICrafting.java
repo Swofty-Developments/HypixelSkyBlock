@@ -9,6 +9,8 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.ItemCraftEvent;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
@@ -99,6 +101,12 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 e.setCancelled(false);
 
+                ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
+                        player,
+                        null,
+                        recipe.getResult().getItemStack()).amount(amount).build();
+                SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
+
                 if (!e.getCursorItem().isAir()) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
@@ -108,12 +116,9 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 AtomicInteger stopAfter = new AtomicInteger();
                 MinecraftServer.getSchedulerManager().submitTask(() -> {
                     stopAfter.getAndIncrement();
-                    player.getInventory().setCursorItem(PlayerItemUpdater.playerUpdate(
-                            player,
-                            null,
-                            recipe.getResult().getItemStack()).amount(amount).build());
-                    if (stopAfter.get() == 2) {
-                        return TaskSchedule.tick(1);
+                    player.getInventory().setCursorItem(craftedItem);
+                    if (stopAfter.get() == 3) {
+                        return TaskSchedule.stop();
                     }
                     return TaskSchedule.tick(1);
                 });
