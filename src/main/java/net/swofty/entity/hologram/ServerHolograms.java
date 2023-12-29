@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum ServerHolograms {
-    TO_ISLAND(new Pos(-6.5, 71, -74), "§a§l» §f§lSkyBlock §a§l«", "§7Teleport to your island"),
+    TO_ISLAND(new Pos(5.5, 33.8, -104.5), "§bTravel to:", "§aYour Island"),
     ;
 
     private static boolean spawned = false;

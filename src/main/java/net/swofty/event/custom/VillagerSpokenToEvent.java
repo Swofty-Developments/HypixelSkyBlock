@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.mission.MissionData;
 import net.swofty.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 

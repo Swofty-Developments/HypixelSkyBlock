@@ -5,6 +5,7 @@ import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.NPCVillagerParameters;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.mission.MissionData;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ public class VillagerDuke extends NPCVillagerDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-6.5, 70, -89.5, -40f, 0f);
+                return new Pos(-11.5, 70, -95.5, -40f, 0f);
             }
 
             @Override
@@ -38,6 +39,20 @@ public class VillagerDuke extends NPCVillagerDialogue {
     public void onClick(PlayerClickVillagerNPCEvent e) {
         if (isInDialogue(e.player())) return;
 
+        MissionData data = e.player().getMissionData();
+        if (data.isCurrentlyActive("speak_to_villagers")) {
+            if (data.getMission("speak_to_villagers").getKey().getCustomData()
+                    .values()
+                    .stream()
+                    .anyMatch(value -> value.toString().contains(getID()))) {
+                if (System.currentTimeMillis() -
+                        (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
+                    setDialogue(e.player(), "quest-hello");
+                    return;
+                }
+            }
+        }
+
         setDialogue(e.player(), "initial-hello");
     }
 
@@ -48,6 +63,12 @@ public class VillagerDuke extends NPCVillagerDialogue {
                         .key("initial-hello").lines(new String[]{
                                 "§e[NPC] Duke§f: I found a few Fairly Souls during my travels, they are usually pretty hard to find!",
                                 "§e[NPC] Duke§f: I would not venture South of the §bVillage§f, it seems like this place was abandoned."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                                "§e[NPC] Duke§f: Are you new here? As you can see there is alot to explore!",
+                                "§e[NPC] Duke§f: My advice is to start by visiting the §bFarm §for the §bCoal Mine§f, both North of here.",
+                                "§e[NPC] Duke§f: If you do need some wood, the best place to get some is West of the §bVillage§f!"
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
