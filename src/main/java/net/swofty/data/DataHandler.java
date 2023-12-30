@@ -238,6 +238,12 @@ public class DataHandler {
                 datapoint.setValue(System.currentTimeMillis());
             }
         }),
+        ISLAND_UUID("island_uuid", false, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {}, (player, datapoint) -> {
+            if (datapoint.getValue() == null) {
+                datapoint.setValue(player.getSkyBlockIsland().getIslandID());
+            }
+        }),
+        COOP_INVITES("coop_invites", true, DatapointCoopInvitation.class, new DatapointCoopInvitation("coop_invites", new ArrayList<>()), (player, datapoint) -> {}, (player, datapoint) -> {}),
         ;
 
         @Getter

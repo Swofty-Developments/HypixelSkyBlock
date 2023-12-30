@@ -18,6 +18,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointMissionData;
+import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointShopData;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
@@ -96,6 +97,10 @@ public class SkyBlockPlayer extends Player {
         MissionData data = getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);
         return data;
+    }
+
+    public String getFullDisplayName() {
+        return getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + this.getUsername();
     }
 
     public PlayerShopData getShoppingData() {
