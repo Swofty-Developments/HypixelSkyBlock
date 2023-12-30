@@ -67,6 +67,14 @@ public class ItemStackCreator {
                 .collect(Collectors.toList()));
     }
 
+    public static ItemStack.Builder getStackHead(String name, String texture, int amount, String... lore) {
+        return getStackHead(name, texture, amount, Arrays.asList(lore));
+    }
+
+    public static ItemStack.Builder getStackHead(String name, PlayerSkin skin, int amount, String... lore) {
+        return getStackHead(name, skin, amount, Arrays.asList(lore));
+    }
+
     public static ItemStack.Builder getStackHead(String name, String texture, int amount, List<String> lore) {
         List<String> copiedLore = new ArrayList<>();
         for (String s : lore) {

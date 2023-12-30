@@ -97,6 +97,7 @@ public class SkyBlock {
         FairySoulDatabase.connect(Resources.get("mongodb"));
         AttributeDatabase.connect(Resources.get("mongodb"));
         UserDatabase.connect(Resources.get("mongodb"));
+        CoopDatabase.connect(Resources.get("mongodb"));
 
         /**
          * Register commands

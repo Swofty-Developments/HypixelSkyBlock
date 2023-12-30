@@ -1,18 +1,15 @@
 package net.swofty.command.commands;
 
-import kotlin.reflect.jvm.internal.impl.types.model.ArgumentList;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.swofty.SkyBlock;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointCoopInvitation;
+import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,13 +54,10 @@ public class CoopCommand extends SkyBlockCommand {
                 return;
             }
 
-            if (Arrays.stream(players).anyMatch(player1 -> {
-                SkyBlockPlayer player2 = SkyBlock.getLoadedPlayers().stream().filter(player3 -> player3.getUsername().equalsIgnoreCase(player1)).findFirst().orElse(null);
-                if (player2 == null) return false;
-
-                return !player2.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).getValue().isEmpty();
-            })) {
-                player.sendMessage("§b[Co-op] §cOne or more of the players you specified already have an incoming co-op invite!");
+            if (Arrays.stream(players).anyMatch(player1 -> CoopDatabase.getFromMember(
+                    SkyBlock.getLoadedPlayers().stream().filter(player2 -> player2.getUsername().equalsIgnoreCase(player1)).findFirst().get().getUuid()
+            ) != null)) {
+                player.sendMessage("§b[Co-op] §cOne or more of the players you specified already have a co-op or an invite pending!");
                 return;
             }
 
@@ -73,27 +67,21 @@ public class CoopCommand extends SkyBlockCommand {
                 return;
             }
 
+            // Check if there are more than 4 names
+            if (players.length > 4) {
+                player.sendMessage("§b[Co-op] §cYou can't invite more than 4 players!");
+                return;
+            }
+
             List<SkyBlockPlayer> invitedPlayers = SkyBlock.getLoadedPlayers().stream().filter(player1 -> {
                 return Arrays.stream(players).anyMatch(player2 -> player2.equalsIgnoreCase(player1.getUsername()));
             }).toList();
 
+            CoopDatabase.Coop coop = CoopDatabase.getClean(player.getUuid());
+
             invitedPlayers.forEach(invitedPlayer -> {
-                DatapointCoopInvitation senderInvitationData = player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
-
+                coop.addInvite(invitedPlayer.getUuid());
                 player.sendMessage("§b[Co-op] §eYou invited " + invitedPlayer.getUsername() + " to a SkyBlock co-op!");
-                player.sendMessage(Component.text("§eUse §b/coop §eor §a§lCLICK THIS §efor status!")
-                        .hoverEvent(Component.text("§eClick here to view the invite"))
-                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
-
-                DatapointCoopInvitation.CoopInvitation senderInvitation = new DatapointCoopInvitation.CoopInvitation(
-                        true,
-                        invitedPlayer.getUuid(),
-                        false,
-                        System.currentTimeMillis());
-
-                List<DatapointCoopInvitation.CoopInvitation> senderInvitations = senderInvitationData.getValue();
-                senderInvitations.add(senderInvitation);
-                senderInvitationData.setValue(senderInvitations);
 
                 invitedPlayer.sendMessage("§b----------------------------------------");
                 invitedPlayer.sendMessage(player.getFullDisplayName() + " §einvited you to a SkyBlock co-op!");
@@ -101,29 +89,23 @@ public class CoopCommand extends SkyBlockCommand {
                                 .hoverEvent(Component.text("§eClick here to view the invite"))
                                 .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
                 invitedPlayer.sendMessage("§b----------------------------------------");
-
-                DatapointCoopInvitation.CoopInvitation targetInvitation = new DatapointCoopInvitation.CoopInvitation(
-                        false,
-                        player.getUuid(),
-                        false,
-                        System.currentTimeMillis());
-
-                DatapointCoopInvitation targetInvitationData = invitedPlayer.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
-
-                List<DatapointCoopInvitation.CoopInvitation> targetInvitations = targetInvitationData.getValue();
-                targetInvitations.add(targetInvitation);
-                targetInvitationData.setValue(senderInvitations);
             });
+
+            player.sendMessage(Component.text("§eUse §b/coop §eor §a§lCLICK THIS §efor status!")
+                    .hoverEvent(Component.text("§eClick here to view the invite"))
+                    .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
+
+            coop.save();
         }, args);
     }
 
     private boolean checkIfAlreadyExisting(SkyBlockPlayer player) {
-        DatapointCoopInvitation coopInvitation = player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
+        CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
 
-        if (!coopInvitation.getValue().isEmpty()) {
-            boolean hasOutgoing = coopInvitation.getValue().stream().anyMatch(DatapointCoopInvitation.CoopInvitation::outgoing);
+        if (coop != null) {
+            boolean isOriginator = coop.isOriginator(player.getUuid());
 
-            if (hasOutgoing) {
+            if (isOriginator) {
                 player.sendMessage(Component.text("§eYou already have an outgoing co-op invite! §a§lCLICK TO VIEW!")
                         .hoverEvent(Component.text("§eClick here to view the invite"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));

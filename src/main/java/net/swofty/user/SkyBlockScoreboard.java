@@ -7,6 +7,7 @@ import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
+import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
@@ -50,7 +51,9 @@ public class SkyBlockScoreboard {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
 
-                Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false));
+                Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false)
+                        + (player.getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue() ?
+                        "  §b§lCO-OP" : ""));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8???", sidebar);
                 addLine("§7 ", sidebar);

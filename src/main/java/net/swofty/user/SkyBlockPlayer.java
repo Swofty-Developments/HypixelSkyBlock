@@ -20,6 +20,9 @@ import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointMissionData;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointShopData;
+import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.mongodb.ProfilesDatabase;
+import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.event.value.events.MiningValueUpdateEvent;
@@ -285,6 +288,23 @@ public class SkyBlockPlayer extends Player {
 
             gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
+        }
+    }
+
+    public static String getDisplayName(UUID uuid) {
+        if (SkyBlock.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
+            return SkyBlock.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
+        } else {
+            UserProfiles profiles = new UserDatabase(uuid).getProfiles();
+            UUID selected = profiles.getCurrentlySelected();
+
+            if (selected == null) {
+                return "§7Unknown";
+            } else {
+                DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
+                return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                        handler.get(DataHandler.Data.IGN_LOWER, DatapointString.class).getValue();
+            }
         }
     }
 }

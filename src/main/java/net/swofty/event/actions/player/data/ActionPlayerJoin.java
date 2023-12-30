@@ -11,8 +11,10 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.user.SkyBlockIsland;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
+import org.tinylog.Logger;
 
 import java.util.UUID;
+
 
 @EventParameters(description = "Miscellaneous join stuff",
         node = EventNodes.PLAYER,
@@ -31,15 +33,19 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
         final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
+        UUID islandUUID;
         if (new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected() == null) {
             UserProfiles profiles = new UserDatabase(player.getUuid()).getProfiles();
             UUID profileId = UUID.randomUUID();
 
+            islandUUID = profileId;
             profiles.setCurrentlySelected(profileId);
             profiles.addProfile(profileId);
+        } else {
+            islandUUID = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
         }
 
-        player.setSkyBlockIsland(new SkyBlockIsland(player, player.getProfiles().getCurrentlySelected()));
+        player.setSkyBlockIsland(new SkyBlockIsland(player, islandUUID));
         playerLoginEvent.setSpawningInstance(player.getSkyBlockIsland().getSharedInstance().join());
 
         player.sendMessage("§7Sending to server mini1A...");

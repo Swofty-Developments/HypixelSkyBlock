@@ -3,13 +3,14 @@ package net.swofty.data.datapoints;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.swofty.data.Datapoint;
 import net.swofty.serializer.Serializer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointIntegerList extends Datapoint<List<Integer>> {
 	
-	public DatapointIntegerList(String key, List<Integer> value) {
+	public DatapointIntegerList(String key, ArrayList<Integer> value) {
 		super(key, value, new Serializer<>() {
             @Override
             public String serialize(List<Integer> value) {
