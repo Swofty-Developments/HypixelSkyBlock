@@ -16,12 +16,9 @@ import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
-import net.swofty.user.PlayerShopData;
-import net.swofty.user.UserProfiles;
+import net.swofty.user.*;
 import net.swofty.utility.StringUtility;
 import net.swofty.data.datapoints.*;
-import net.swofty.user.SkyBlockInventory;
-import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 import org.bson.Document;
 
@@ -238,7 +235,13 @@ public class DataHandler {
                 datapoint.setValue(System.currentTimeMillis());
             }
         }),
-        ISLAND_UUID("island_uuid", false, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {}, (player, datapoint) -> {
+        ISLAND_UUID("island_uuid", false, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {
+            ((SkyBlockPlayer) player).setSkyBlockIsland(
+                    new SkyBlockIsland(
+                            ((SkyBlockPlayer) player),
+                            (UUID) datapoint.getValue()
+                    ));
+        }, (player, datapoint) -> {
             if (datapoint.getValue() == null) {
                 datapoint.setValue(player.getSkyBlockIsland().getIslandID());
             }

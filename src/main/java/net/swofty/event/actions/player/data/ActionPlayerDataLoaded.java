@@ -12,6 +12,7 @@ import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.datapoints.DatapointUUID;
 import net.swofty.entity.hologram.PlayerHolograms;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.EventNodes;
@@ -21,6 +22,8 @@ import net.swofty.user.SkyBlockIsland;
 import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+
+import java.util.UUID;
 
 @EventParameters(description = "Join miscellaneous stuff with data being loaded",
         node = EventNodes.PLAYER,
@@ -47,6 +50,11 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
         player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
                 DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
         player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
+
+        UUID islandUuid = player.getDataHandler().get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
+        if (islandUuid != player.getProfiles().getCurrentlySelected())
+            player.sendMessage("§8Island ID: " + islandUuid);
+
         player.setHearts(player.getMaxHealth());
 
         PlayerHolograms.spawnAll(player);

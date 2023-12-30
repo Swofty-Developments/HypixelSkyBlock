@@ -30,6 +30,8 @@ public class CoopCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
+            if (checkIfAlreadyExisting(player)) return;
+
             player.sendMessage("§cYou don't have an outgoing co-op invite!");
             player.sendMessage("§eUse §b/coop <player 1> <player 2>... §eto create one!");
             player.sendMessage("§eUse §a/coopadd <player> §eto add a player to your current co-op!");
@@ -38,23 +40,8 @@ public class CoopCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             String[] players = context.get(args);
-            DatapointCoopInvitation coopInvitation = player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
 
-            if (!coopInvitation.getValue().isEmpty()) {
-                boolean hasOutgoing = coopInvitation.getValue().stream().anyMatch(DatapointCoopInvitation.CoopInvitation::outgoing);
-
-                if (hasOutgoing) {
-                    player.sendMessage(Component.text("§eYou already have an outgoing co-op invite! §a§lCLICK TO VIEW!")
-                            .hoverEvent(Component.text("§eClick here to view the invite"))
-                            .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
-                    return;
-                } else {
-                    player.sendMessage(Component.text("§cYou already have an incoming co-op invite! §a§lCLICK TO VIEW!")
-                            .hoverEvent(Component.text("§eClick here to view the invite"))
-                            .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
-                    return;
-                }
-            }
+            if (checkIfAlreadyExisting(player)) return;
 
             player.sendMessage("§7Validating invite...");
 
@@ -91,6 +78,8 @@ public class CoopCommand extends SkyBlockCommand {
             }).toList();
 
             invitedPlayers.forEach(invitedPlayer -> {
+                DatapointCoopInvitation senderInvitationData = player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
+
                 player.sendMessage("§b[Co-op] §eYou invited " + invitedPlayer.getUsername() + " to a SkyBlock co-op!");
                 player.sendMessage(Component.text("§eUse §b/coop §eor §a§lCLICK THIS §efor status!")
                         .hoverEvent(Component.text("§eClick here to view the invite"))
@@ -102,10 +91,9 @@ public class CoopCommand extends SkyBlockCommand {
                         false,
                         System.currentTimeMillis());
 
-                Logger.info("Adding to " + player.getUsername() + "'s coop invites");
-                Logger.info(player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).getValue().size());
-                player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).add(senderInvitation);
-                Logger.info(player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).getValue().size());
+                List<DatapointCoopInvitation.CoopInvitation> senderInvitations = senderInvitationData.getValue();
+                senderInvitations.add(senderInvitation);
+                senderInvitationData.setValue(senderInvitations);
 
                 invitedPlayer.sendMessage("§b----------------------------------------");
                 invitedPlayer.sendMessage(player.getFullDisplayName() + " §einvited you to a SkyBlock co-op!");
@@ -120,11 +108,33 @@ public class CoopCommand extends SkyBlockCommand {
                         false,
                         System.currentTimeMillis());
 
-                Logger.info("Adding to " + invitedPlayer.getUsername() + "'s coop invites");
-                Logger.info(invitedPlayer.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).getValue().size());
-                invitedPlayer.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).add(targetInvitation);
-                Logger.info(invitedPlayer.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class).getValue().size());
+                DatapointCoopInvitation targetInvitationData = invitedPlayer.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
+
+                List<DatapointCoopInvitation.CoopInvitation> targetInvitations = targetInvitationData.getValue();
+                targetInvitations.add(targetInvitation);
+                targetInvitationData.setValue(senderInvitations);
             });
         }, args);
+    }
+
+    private boolean checkIfAlreadyExisting(SkyBlockPlayer player) {
+        DatapointCoopInvitation coopInvitation = player.getDataHandler().get(DataHandler.Data.COOP_INVITES, DatapointCoopInvitation.class);
+
+        if (!coopInvitation.getValue().isEmpty()) {
+            boolean hasOutgoing = coopInvitation.getValue().stream().anyMatch(DatapointCoopInvitation.CoopInvitation::outgoing);
+
+            if (hasOutgoing) {
+                player.sendMessage(Component.text("§eYou already have an outgoing co-op invite! §a§lCLICK TO VIEW!")
+                        .hoverEvent(Component.text("§eClick here to view the invite"))
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
+                return true;
+            } else {
+                player.sendMessage(Component.text("§cYou already have an incoming co-op invite! §a§lCLICK TO VIEW!")
+                        .hoverEvent(Component.text("§eClick here to view the invite"))
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
+                return true;
+            }
+        }
+        return false;
     }
 }

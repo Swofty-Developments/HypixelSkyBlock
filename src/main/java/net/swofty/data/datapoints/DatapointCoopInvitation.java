@@ -15,7 +15,7 @@ public class DatapointCoopInvitation extends Datapoint<List<DatapointCoopInvitat
         super(key, value, new Serializer<>() {
 
             @Override
-            public String serialize(List<CoopInvitation> value) throws JsonProcessingException {
+            public String serialize(List<CoopInvitation> value) {
                 JSONObject json = new JSONObject();
                 for (CoopInvitation invitation : value) {
                     JSONObject invitationJson = new JSONObject();
@@ -29,7 +29,7 @@ public class DatapointCoopInvitation extends Datapoint<List<DatapointCoopInvitat
             }
 
             @Override
-            public List<CoopInvitation> deserialize(String json) throws JsonProcessingException {
+            public List<CoopInvitation> deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
                 List<CoopInvitation> list = new ArrayList<>();
                 for (String key : jsonObject.keySet()) {
@@ -43,22 +43,6 @@ public class DatapointCoopInvitation extends Datapoint<List<DatapointCoopInvitat
                 return list;
             }
         });
-    }
-
-    public void add(CoopInvitation value) {
-        List<CoopInvitation> current = getValue();
-        current.add(value);
-        setValue(current);
-    }
-
-    public void remove(CoopInvitation value) {
-        List<CoopInvitation> current = getValue();
-        current.remove(value);
-        setValue(current);
-    }
-
-    public boolean has(CoopInvitation value) {
-        return getValue().contains(value);
     }
 
     public record CoopInvitation(boolean outgoing, UUID target, boolean accepted, long timestamp) { }
