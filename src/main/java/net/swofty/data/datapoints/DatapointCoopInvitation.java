@@ -1,8 +1,6 @@
 package net.swofty.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.swofty.data.Datapoint;
-import net.swofty.serializer.JacksonSerializer;
 import net.swofty.serializer.Serializer;
 import org.json.JSONObject;
 
@@ -43,6 +41,10 @@ public class DatapointCoopInvitation extends Datapoint<List<DatapointCoopInvitat
                 return list;
             }
         });
+    }
+
+    public DatapointCoopInvitation(String key) {
+        this(key, new ArrayList<>());
     }
 
     public record CoopInvitation(boolean outgoing, UUID target, boolean accepted, long timestamp) { }

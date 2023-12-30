@@ -1,32 +1,30 @@
-package net.swofty.event.actions.custom;
+package net.swofty.event.actions.player;
 
 import net.minestom.server.event.Event;
+import net.minestom.server.event.player.PlayerLoginEvent;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.missions.MissionBreakLog;
-import net.swofty.mission.missions.MissionTalkToVillagers;
-import net.swofty.region.RegionType;
+import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 @EventParameters(description = "Handles the the starting of the getting started mission",
-        node = EventNodes.CUSTOM,
-        validLocations = EventParameters.Location.ISLAND,
-        requireDataLoaded = false)
+        node = EventNodes.PLAYER,
+        validLocations = EventParameters.Location.EITHER,
+        requireDataLoaded = true)
 public class ActionStartIslandMission extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
+        return PlayerLoginEvent.class;
     }
 
     @Override
     public void run(Event tempEvent) {
-        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
-        if (event.getTo() == null) return;
-        if (event.getTo() != RegionType.PRIVATE_ISLAND) return;
+        PlayerLoginEvent event = (PlayerLoginEvent) tempEvent;
+        MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 
-        MissionData data = event.getPlayer().getMissionData();
         if (data.isCurrentlyActive("break_log")) return;
         if (data.hasCompleted("break_log")) return;
 

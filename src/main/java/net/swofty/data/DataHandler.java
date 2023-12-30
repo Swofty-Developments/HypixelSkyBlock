@@ -30,7 +30,7 @@ public class DataHandler {
     public static Map<UUID, DataHandler> userCache = new HashMap<>();
     @Getter
     private UUID uuid;
-    private Map<String, Datapoint> datapoints = new HashMap<>();
+    private final Map<String, Datapoint> datapoints = new HashMap<>();
 
     public Datapoint getDatapoint(String key) {
         return this.datapoints.get(key);
