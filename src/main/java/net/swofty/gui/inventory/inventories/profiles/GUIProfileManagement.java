@@ -92,10 +92,14 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
             UUID profileId = profileIds.get(profileCount);
             boolean selected = profileId.equals(profiles.getCurrentlySelected());
             DataHandler dataHandler;
-            try {
-                dataHandler = DataHandler.fromDocument(new ProfilesDatabase(profileId.toString()).getDocument());
-            } catch (NullPointerException profileNotYetSaved) {
-                dataHandler = DataHandler.initUserWithDefaultData(profileId);
+            if (selected) {
+                dataHandler = player.getDataHandler();
+            } else {
+                try {
+                    dataHandler = DataHandler.fromDocument(new ProfilesDatabase(profileId.toString()).getDocument());
+                } catch (NullPointerException profileNotYetSaved) {
+                    dataHandler = DataHandler.initUserWithDefaultData(profileId);
+                }
             }
 
             if (selected) {

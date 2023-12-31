@@ -13,6 +13,7 @@ import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.datapoints.DatapointUUID;
 import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
@@ -58,23 +59,17 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
                 coop.members().add(player.getUuid());
                 coop.save();
 
-                if (coop.members().size() > 1) {
-                    // Someone has already initialized the profile
-                    // TODO
-                    return;
-                }
-
-                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
-                handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
                 UUID profileId = UUID.randomUUID();
+                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
 
-                Logger.info("Creating new profile with ID " + profileId.toString());
+                handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
+                handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
+
+                player.kick("§cYou must reconnect to switch profiles");
 
                 ProfilesDatabase.collection.insertOne(handler.toDocument(profileId));
                 coop.memberProfiles().add(profileId);
                 coop.save();
-
-                player.kick("§cYou must reconnect to switch profiles");
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
                     UserProfiles profiles = player.getProfiles();

@@ -5,7 +5,18 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.swofty.SkyBlock;
+import net.swofty.data.datapoints.DatapointBoolean;
+import net.swofty.data.mongodb.CoopDatabase;
+import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.serializer.Serializer;
+import net.swofty.user.SkyBlockPlayer;
+import org.bson.Document;
+import org.tinylog.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Datapoint<T> {
     DataHandler dataHandler;
@@ -55,8 +66,49 @@ public abstract class Datapoint<T> {
         this.value = value;
 
         Player player = MinecraftServer.getConnectionManager().getPlayer(dataHandler.getUuid());
-        if (player != null && data.onChange != null) {
-            data.onChange.accept(player, this);
+        if (player != null) {
+            if (data.onChange != null)
+                data.onChange.accept(player, this);
+
+            // Handle coop datapoints
+            if (data.getIsCoopPersistent() && dataHandler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
+                List<UUID> coopMembers = CoopDatabase.getFromMember(dataHandler.getUuid()).members();
+
+                List<UUID> coopMembersProfiles = CoopDatabase.getFromMember(dataHandler.getUuid()).memberProfiles();
+                List<UUID> updatedProfiles = new ArrayList<>();
+
+                for (UUID member : coopMembers) {
+                    // Handle online coop members datapoints
+                    SkyBlockPlayer skyBlockPlayer = SkyBlock.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(member)).findFirst().orElse(null);
+                    if (skyBlockPlayer != null) {
+                        UUID selectedProfile = skyBlockPlayer.getProfiles().getCurrentlySelected();
+
+                        if (skyBlockPlayer.getDataHandler().getUuid() == dataHandler.getUuid()) {
+                            // Ensure we don't update the player's own datapoints
+                            updatedProfiles.add(selectedProfile);
+                            return;
+                        }
+
+                        // Player is not on their coop profile
+                        if (!coopMembersProfiles.contains(selectedProfile)) continue;
+
+                        DataHandler dataHandler = skyBlockPlayer.getDataHandler();
+                        dataHandler.getDatapoint(key).setValue(value);
+                        updatedProfiles.add(selectedProfile);
+                    }
+                }
+
+                coopMembersProfiles.removeAll(updatedProfiles);
+                coopMembersProfiles.remove(dataHandler.getUuid());
+                coopMembersProfiles.forEach(uuid -> {
+                    ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
+                    DataHandler dataHandler = DataHandler.fromDocument(profilesDatabase.getDocument());
+                    dataHandler.getDatapoint(key).value = value;
+                    Document document = dataHandler.toDocument(uuid);
+
+                    ProfilesDatabase.collection.replaceOne(profilesDatabase.getDocument(), document);
+                });
+            }
         }
     }
 }

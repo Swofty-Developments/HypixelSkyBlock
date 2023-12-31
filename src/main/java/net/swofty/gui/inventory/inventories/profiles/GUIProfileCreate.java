@@ -22,6 +22,7 @@ import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
 import net.swofty.utility.StringUtility;
+import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,9 +37,8 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        SkyBlockPlayer player = e.player();
-
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
+        String profileName = UserProfiles.getRandomName();
 
         set(new GUIClickableItem() {
 
@@ -53,7 +53,7 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
                         "§7You are creating a new SkyBlock",
                         "§7profile.",
                         "",
-                        "§7Profile name: §e" + UserProfiles.getRandomName(),
+                        "§7Profile name: §e" + profileName,
                         "",
                         "§7You won't lose any progress.",
                         "§7You can switch between profiles.",
@@ -70,6 +70,12 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
                 toSet.setProfiles(profiles.getProfiles());
 
                 UUID profileId = UUID.randomUUID();
+
+                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
+                handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
+                Document document = handler.toDocument(profileId);
+
+                ProfilesDatabase.collection.insertOne(document);
 
                 // TODO: Proxy support
                 player.kick("§cYou must relog for this change to take effect");

@@ -17,10 +17,7 @@ import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointMissionData;
-import net.swofty.data.datapoints.DatapointRank;
-import net.swofty.data.datapoints.DatapointShopData;
-import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.datapoints.*;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.value.SkyBlockValueEvent;
@@ -112,6 +109,10 @@ public class SkyBlockPlayer extends Player {
 
     public boolean isOnIsland() {
         return getInstance() != null && getInstance() != SkyBlock.getInstanceContainer();
+    }
+
+    public boolean isCoop() {
+        return getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {

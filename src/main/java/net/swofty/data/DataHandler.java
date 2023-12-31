@@ -95,6 +95,16 @@ public class DataHandler {
         return values;
     }
 
+    public Map<String, Object> getCoopValues() {
+        Map<String, Object> values = new HashMap<>();
+        Arrays.stream(Data.values()).forEach(data -> {
+            if (data.isCoopPersistent) {
+                values.put(data.getKey(), getDatapoint(data.getKey()).getValue());
+            }
+        });
+        return values;
+    }
+
     public <R extends Datapoint<T>, T> R get(Data datapoint, Class<R> type) {
         if (!this.datapoints.containsKey(datapoint.key))
             return type.cast(datapoint.defaultDatapoint);

@@ -52,8 +52,7 @@ public class SkyBlockScoreboard {
                 }
 
                 Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false)
-                        + (player.getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue() ?
-                        "  §b§lCO-OP" : ""));
+                        + (player.isCoop() ? " §b§lCO-OP" : ""));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8???", sidebar);
                 addLine("§7 ", sidebar);

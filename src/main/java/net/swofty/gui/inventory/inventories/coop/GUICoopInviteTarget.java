@@ -1,5 +1,6 @@
 package net.swofty.gui.inventory.inventories.coop;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -7,13 +8,20 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
+import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointBoolean;
+import net.swofty.data.datapoints.DatapointUUID;
 import net.swofty.data.mongodb.CoopDatabase;
+import net.swofty.data.mongodb.ProfilesDatabase;
+import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.UserProfiles;
 
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +103,8 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
                 player.closeInventory();
 
                 SkyBlockPlayer target = SkyBlock.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
-                if (target != null)
+                if (target != null &&
+                        (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
                     target.sendMessage("§b[Co-op] §e" + player.getUsername() + " §chas denied your co-op invite!");
             }
 
@@ -114,7 +123,33 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                // TODO
+                coop.memberInvites().remove(player.getUuid());
+                coop.members().add(player.getUuid());
+                coop.save();
+
+                UUID profileId = UUID.randomUUID();
+                DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
+
+                handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
+                handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
+
+                player.kick("§cYou must reconnect to switch profiles");
+
+                ProfilesDatabase.collection.insertOne(handler.toDocument(profileId));
+                coop.memberProfiles().add(profileId);
+                coop.save();
+
+                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+                    UserProfiles profiles = player.getProfiles();
+                    profiles.getProfiles().add(profileId);
+                    profiles.setCurrentlySelected(profileId);
+                    new UserDatabase(player.getUuid()).saveProfiles(profiles);
+                }, TaskSchedule.tick(5), TaskSchedule.stop());
+
+                SkyBlockPlayer target = SkyBlock.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(coop.originator())).findFirst().orElse(null);
+                if (target != null &&
+                        (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
+                    target.sendMessage("§b[Co-op] §a" + player.getUsername() + " §ahas accepted your co-op invite!");
             }
 
             @Override

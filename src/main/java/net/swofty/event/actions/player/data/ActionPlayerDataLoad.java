@@ -5,8 +5,11 @@ import lombok.SneakyThrows;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.event.EventNodes;
@@ -63,6 +66,30 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
 
             DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
             previousHandler.getPersistentValues().forEach((key, value) -> {
+                handler.getDatapoint(key).setValue(value);
+            });
+        }
+
+        if (handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
+            CoopDatabase.Coop coop = CoopDatabase.getFromMember(playerUuid);
+            if (coop.members().size() == 1) {
+                // Player is the only member of their coop, no need to load other members' data
+                return;
+            }
+
+            DataHandler data;
+
+            if (SkyBlock.getLoadedPlayers().stream().anyMatch(player1 -> coop.members().contains(player1.getUuid()))) {
+                // A coop member is online, use their data
+                SkyBlockPlayer otherCoopMember = SkyBlock.getLoadedPlayers().stream().filter(player1 -> coop.members().contains(player1.getUuid())).findFirst().get();
+                data = otherCoopMember.getDataHandler();
+            } else {
+                // No coop members are online, use the first member's data
+                data = DataHandler.fromDocument(new ProfilesDatabase(coop.memberProfiles().stream().filter(
+                        uuid -> !uuid.equals(profileId)).findFirst().get().toString()).getDocument());
+            }
+
+            data.getCoopValues().forEach((key, value) -> {
                 handler.getDatapoint(key).setValue(value);
             });
         }
