@@ -103,6 +103,12 @@ public class CoopCommand extends SkyBlockCommand {
         CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
 
         if (coop != null) {
+            if (coop.members().contains(player.getUuid())) {
+                player.sendMessage("§cYou are already in a co-op!");
+                player.sendMessage("§eRun §a/coop leave §eto leave your current co-op.");
+                return true;
+            }
+
             boolean isOriginator = coop.isOriginator(player.getUuid());
 
             if (isOriginator) {

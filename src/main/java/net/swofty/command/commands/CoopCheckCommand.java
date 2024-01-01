@@ -25,6 +25,11 @@ public class CoopCheckCommand extends SkyBlockCommand {
                 return;
             }
 
+            if (coop.members().contains(player.getUuid())) {
+                player.sendMessage("§b[Co-op] §cYou are already in a co-op!");
+                return;
+            }
+
             if (coop.isOriginator(player.getUuid())) {
                 new GUICoopInviteSender(coop).open(player);
             } else {

@@ -71,9 +71,10 @@ public enum PlayerHolograms {
 
     public static void updateAll(Scheduler scheduler) {
         scheduler.submitTask(() -> {
+            List<SkyBlockPlayer> toRemove = new ArrayList<>();
             for (SkyBlockPlayer skyBlockPlayer : entities.keySet()) {
                 if (!skyBlockPlayer.isOnline()) {
-                    remove(skyBlockPlayer);
+                    toRemove.add(skyBlockPlayer);
                     continue;
                 }
 
@@ -119,6 +120,7 @@ public enum PlayerHolograms {
                     }
                 }
             }
+            toRemove.forEach(PlayerHolograms::remove);
             return TaskSchedule.tick(10);
         });
     }

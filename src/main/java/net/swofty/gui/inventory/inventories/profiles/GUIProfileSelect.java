@@ -12,6 +12,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.gui.inventory.ItemStackCreator;
@@ -96,6 +97,12 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
             @SneakyThrows
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
+                    player.sendMessage("§cYou cannot delete a profile that is in a coop!");
+                    player.sendMessage("§eInstead run §a/coop leave §eto leave your coop.");
+                    return;
+                }
+
                 UserProfiles profiles = player.getProfiles();
                 profiles.removeProfile(profileUuid);
 
