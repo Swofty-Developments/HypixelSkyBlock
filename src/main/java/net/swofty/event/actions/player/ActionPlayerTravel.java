@@ -10,6 +10,7 @@ import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.actions.player.fall.ActionPlayerFall;
 import net.swofty.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
@@ -56,5 +57,7 @@ public class ActionPlayerTravel extends SkyBlockEvent {
                     .delay(Duration.ofMillis(500))
                     .schedule();
         }
+
+        ActionPlayerFall.fallHeight.remove(player);
     }
 }
