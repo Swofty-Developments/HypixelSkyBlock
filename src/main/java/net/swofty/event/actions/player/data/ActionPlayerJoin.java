@@ -4,6 +4,9 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.swofty.SkyBlock;
+import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointUUID;
+import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
@@ -34,7 +37,8 @@ public class ActionPlayerJoin extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
         UUID islandUUID;
-        if (new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected() == null) {
+        UUID currentlySelectedUUID = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
+        if (currentlySelectedUUID == null) {
             UserProfiles profiles = new UserDatabase(player.getUuid()).getProfiles();
             UUID profileId = UUID.randomUUID();
 
@@ -42,10 +46,19 @@ public class ActionPlayerJoin extends SkyBlockEvent {
             profiles.setCurrentlySelected(profileId);
             profiles.addProfile(profileId);
         } else {
-            islandUUID = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
+            islandUUID = DataHandler.fromDocument(new ProfilesDatabase(currentlySelectedUUID.toString()).getDocument())
+                    .get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
         }
 
-        player.setSkyBlockIsland(new SkyBlockIsland(player, islandUUID));
+        SkyBlockIsland island;
+        Logger.info(islandUUID.toString());
+        if (SkyBlockIsland.getIsland(islandUUID) == null) {
+            island = new SkyBlockIsland(islandUUID, currentlySelectedUUID);
+        } else {
+            // Island is already loaded, presumably from a coop
+            island = SkyBlockIsland.getIsland(islandUUID);
+        }
+        player.setSkyBlockIsland(island);
         playerLoginEvent.setSpawningInstance(player.getSkyBlockIsland().getSharedInstance().join());
 
         player.sendMessage("§7Sending to server mini1A...");

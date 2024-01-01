@@ -9,6 +9,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.data.datapoints.DatapointRank;
@@ -63,7 +64,27 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
                 DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
 
                 handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).setValue(true);
-                handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
+
+                if (coop.memberProfiles().isEmpty()) {
+                    handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
+                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(UserProfiles.getRandomName());
+                } else {
+                    UUID otherCoopMember = coop.memberProfiles().get(0);
+                    ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
+                    if (islandDatabase.exists()) {
+                        DataHandler islandHandler = DataHandler.fromDocument(islandDatabase.getDocument());
+                        handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                        handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
+                    } else {
+                        SkyBlockPlayer profileOwner = SkyBlock.getPlayerFromProfileUUID(otherCoopMember);
+
+                        handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
+                                profileOwner.getDataHandler().get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                        handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
+                                profileOwner.getDataHandler().get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                        );
+                    }
+                }
 
                 player.kick("§cYou must reconnect to switch profiles");
 

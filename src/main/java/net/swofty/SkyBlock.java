@@ -289,4 +289,8 @@ public class SkyBlock {
                 })
                 .filter(java.util.Objects::nonNull);
     }
+
+    public static SkyBlockPlayer getPlayerFromProfileUUID(UUID uuid) {
+        return getLoadedPlayers().stream().filter(player -> player.getProfiles().getCurrentlySelected().equals(uuid)).findFirst().orElse(null);
+    }
 }

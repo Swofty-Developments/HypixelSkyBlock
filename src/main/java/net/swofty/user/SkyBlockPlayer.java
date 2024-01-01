@@ -20,6 +20,8 @@ import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.*;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
+import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.custom.IslandPlayerLoadedEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.event.value.events.MiningValueUpdateEvent;
@@ -35,6 +37,7 @@ import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.statistics.StatisticDisplayReplacement;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -65,7 +68,6 @@ public class SkyBlockPlayer extends Player {
             SkyBlock.offlineUUIDs.remove(uuid);
         }
 
-        skyBlockIsland = new SkyBlockIsland(this, null);
         joined = System.currentTimeMillis();
     }
 
@@ -195,6 +197,16 @@ public class SkyBlockPlayer extends Player {
             if (sharedInstance != getInstance())
                 this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
             this.teleport(new Pos(0.5, 100, 0.5, 0, 0));
+
+            SkyBlockEvent.callSkyBlockEvent(new IslandPlayerLoadedEvent(
+                    skyBlockIsland,
+                    this,
+                    skyBlockIsland.getCoop() != null,
+                    skyBlockIsland.getCoop() != null ? skyBlockIsland.getCoop().getOnlineMembers() : List.of(this),
+                    skyBlockIsland.getCoop() != null ? skyBlockIsland.getCoop().memberProfiles() : List.of(this.getUuid())
+            ));
+
+            future.complete(true);
         });
 
         return future;
@@ -297,7 +309,7 @@ public class SkyBlockPlayer extends Player {
             return SkyBlock.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
         } else {
             UserProfiles profiles = new UserDatabase(uuid).getProfiles();
-            UUID selected = profiles.getCurrentlySelected();
+            UUID selected = profiles.getProfiles().get(0);
 
             if (selected == null) {
                 return "§7Unknown";

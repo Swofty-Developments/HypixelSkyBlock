@@ -4,7 +4,7 @@ import net.minestom.server.event.Event;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.IslandUnloadEvent;
+import net.swofty.event.custom.IslandSavedIntoDatabaseEvent;
 
 @EventParameters(description = "Handles saving portals on the players Island",
         node = EventNodes.CUSTOM,
@@ -13,11 +13,13 @@ import net.swofty.event.custom.IslandUnloadEvent;
 public class ActionIslandSavePortals extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
-        return IslandUnloadEvent.class;
+        return IslandSavedIntoDatabaseEvent.class;
     }
 
     @Override
-    public void run(Event event) {
+    public void run(Event tempEvent) {
+        IslandSavedIntoDatabaseEvent event = (IslandSavedIntoDatabaseEvent) tempEvent;
+
 
     }
 }

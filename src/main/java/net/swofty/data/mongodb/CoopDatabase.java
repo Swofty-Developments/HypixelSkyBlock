@@ -60,6 +60,19 @@ public class CoopDatabase {
         return null;
     }
 
+    public static Coop getFromMemberProfile(UUID memberProfile) {
+        // Search through all coop documents and find the one that contains the UUID in the memberProfiles list
+        for (Document document : collection.find()) {
+            List<String> memberProfiles = (List<String>) document.get("memberProfiles");
+
+            if (memberProfiles.contains(memberProfile.toString())) {
+                return Coop.deserialize(document);
+            }
+        }
+
+        return null;
+    }
+
     public static Coop getClean(UUID originator) {
         return new Coop(UUID.randomUUID(), originator, new ArrayList<>(), new ArrayList<>(List.of(originator)), new ArrayList<>());
     }
@@ -97,6 +110,10 @@ public class CoopDatabase {
 
         public List<SkyBlockPlayer> getOnlineInvitedPlayers() {
             return SkyBlock.getLoadedPlayers().stream().filter(player -> memberInvites.contains(player.getUuid())).toList();
+        }
+
+        public List<SkyBlockPlayer> getOnlineMembers() {
+            return SkyBlock.getLoadedPlayers().stream().filter(player -> members.contains(player.getUuid())).toList();
         }
 
         public void save() {

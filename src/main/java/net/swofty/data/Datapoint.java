@@ -62,6 +62,15 @@ public abstract class Datapoint<T> {
         this.value = serializer.deserialize(json);
     }
 
+    public void setValueBypassCoop(T value) {
+        this.value = value;
+
+        Player player = MinecraftServer.getConnectionManager().getPlayer(dataHandler.getUuid());
+        if (player != null)
+            if (data.onChange != null)
+                data.onChange.accept(player, this);
+    }
+
     public void setValue(T value) {
         this.value = value;
 
