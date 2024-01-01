@@ -12,6 +12,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.packet.server.play.SetSlotPacket;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
@@ -255,10 +256,6 @@ public class SkyBlockPlayer extends Player {
 
     public void playSuccessSound() {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-    }
-
-    public void updateCursor() {
-        getInventory().setCursorItem(getInventory().getCursorItem());
     }
 
     @Override

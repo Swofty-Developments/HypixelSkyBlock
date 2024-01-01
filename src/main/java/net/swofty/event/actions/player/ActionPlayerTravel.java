@@ -44,7 +44,7 @@ public class ActionPlayerTravel extends SkyBlockEvent {
             delay.add(player.getUuid());
 
             MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
-                    .delay(Duration.ofMillis(200))
+                    .delay(Duration.ofMillis(500))
                     .schedule();
         }
 
@@ -53,7 +53,7 @@ public class ActionPlayerTravel extends SkyBlockEvent {
             delay.add(player.getUuid());
 
             MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
-                    .delay(Duration.ofMillis(200))
+                    .delay(Duration.ofMillis(500))
                     .schedule();
         }
     }

@@ -45,12 +45,6 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
                 "DD",
                 "PD");
 
-        return new ShapedRecipe(new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern, (player -> {
-            if (player.getLevel() > 10) {
-                return new SkyBlockRecipe.CraftingResult(true, null);
-            } else {
-                return new SkyBlockRecipe.CraftingResult(false, new String[] {"§cLevel Issue", "§7You must be at least §eLevel 10 §7to craft this item!"});
-            }
-        }));
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern);
     }
 }

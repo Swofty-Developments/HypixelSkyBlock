@@ -38,7 +38,8 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
         UUID islandUUID;
         UUID currentlySelectedUUID = new UserDatabase(player.getUuid()).getProfiles().getCurrentlySelected();
-        if (currentlySelectedUUID == null) {
+        if (currentlySelectedUUID == null
+                || !new ProfilesDatabase(currentlySelectedUUID.toString()).exists()) {
             UserProfiles profiles = new UserDatabase(player.getUuid()).getProfiles();
             UUID profileId = UUID.randomUUID();
 
@@ -50,8 +51,11 @@ public class ActionPlayerJoin extends SkyBlockEvent {
                     .get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
         }
 
+        if (islandUUID == null) {
+            islandUUID = currentlySelectedUUID;
+        }
+
         SkyBlockIsland island;
-        Logger.info(islandUUID.toString());
         if (SkyBlockIsland.getIsland(islandUUID) == null) {
             island = new SkyBlockIsland(islandUUID, currentlySelectedUUID);
         } else {

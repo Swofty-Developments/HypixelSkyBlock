@@ -7,13 +7,18 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.recipe.Recipe;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.inventories.profiles.GUIProfileManagement;
 import net.swofty.gui.inventory.item.GUIClickableItem;
+import net.swofty.item.impl.SkyBlockRecipe;
+import net.swofty.item.impl.recipes.ShapedRecipe;
+import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.utility.StringUtility;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +59,35 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStackHead("§aYour SkyBlock Profile",
                         PlayerSkin.fromUuid(player.getUuid().toString()), 1,
                         lore);
+            }
+        });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIRecipeBook().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 21;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>(List.of(
+                        "§7Through your adventure, you will",
+                        "§7unlock recipes for all kinds of",
+                        "§7special items! You can view how to",
+                        "§7craft these items here.",
+                        " "
+                ));
+
+                SkyBlockRecipe.getMissionDisplay(lore, player.getUuid());
+
+                lore.add(" ");
+                lore.add("§eClick to view!");
+                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore.toArray(new String[0]));
             }
         });
 

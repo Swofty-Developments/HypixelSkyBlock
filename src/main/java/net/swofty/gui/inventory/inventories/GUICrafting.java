@@ -15,6 +15,7 @@ import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
+import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
@@ -126,12 +127,44 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 SkyBlockItem[] toReplace = recipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {
                     if (toReplace[i] == null || toReplace[i].getItemStack().getMaterial() == Material.BEDROCK) {
-                        inventory.setItemStack(CRAFT_SLOTS[i], ItemStack.AIR);
+                        int finalI = i;
+                        set(new GUIItem() {
+                            @Override
+                            public boolean canPickup() {
+                                return true;
+                            }
+
+                            @Override
+                            public int getSlot() {
+                                return CRAFT_SLOTS[finalI];
+                            }
+
+                            @Override
+                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                                return ItemStack.builder(Material.AIR);
+                            }
+                        });
                     } else {
-                        inventory.setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
-                                player,
-                                null,
-                                toReplace[i].getItemStack()).build());
+                        int finalI1 = i;
+                        set(new GUIItem() {
+                            @Override
+                            public boolean canPickup() {
+                                return true;
+                            }
+
+                            @Override
+                            public int getSlot() {
+                                return CRAFT_SLOTS[finalI1];
+                            }
+
+                            @Override
+                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                                return PlayerItemUpdater.playerUpdate(
+                                        player,
+                                        null,
+                                        toReplace[finalI1].getItemStack());
+                            }
+                        });
                     }
                 }
 

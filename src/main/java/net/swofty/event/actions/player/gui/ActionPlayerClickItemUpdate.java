@@ -31,8 +31,6 @@ public class ActionPlayerClickItemUpdate extends SkyBlockEvent {
                     player, null, inventoryClick.getNewItem())
                     .build());
         }
-
-        player.updateCursor();
     }
 }
 

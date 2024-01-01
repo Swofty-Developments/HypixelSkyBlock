@@ -77,18 +77,15 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
 
                 if (SkyBlock.getLoadedPlayers().stream().anyMatch(player1 -> coop.members().contains(player1.getUuid()))) {
                     // A coop member is online, use their data
-                    Logger.info("A coop member is online, using their data");
                     SkyBlockPlayer otherCoopMember = SkyBlock.getLoadedPlayers().stream().filter(player1 -> coop.members().contains(player1.getUuid())).findFirst().get();
                     data = otherCoopMember.getDataHandler();
                 } else {
                     // No coop members are online, use the first member's data
-                    Logger.info("No coop members are online, using the first member's data");
                     data = DataHandler.fromDocument(new ProfilesDatabase(coop.memberProfiles().stream().filter(
                             uuid -> !uuid.equals(profileId)).findFirst().get().toString()).getDocument());
                 }
 
                 data.getCoopValues().forEach((key, value) -> {
-                    Logger.info("Setting coop value " + key + " to " + value);
                     handler.getDatapoint(key).setValueBypassCoop(value);
                 });
             }

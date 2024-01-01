@@ -18,11 +18,18 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
     private final Map<Character, MaterialQuantifiable> ingredientMap;
     private final List<String> pattern; // Using a list of strings for simplicity
 
-    public ShapedRecipe(SkyBlockItem result, Map<Character, MaterialQuantifiable> ingredientMap,
+    public ShapedRecipe(RecipeType type,
+                        SkyBlockItem result, Map<Character, MaterialQuantifiable> ingredientMap,
                         List<String> pattern, Function<SkyBlockPlayer, CraftingResult> canCraft) {
-        super(result, canCraft);
+        super(result, type, canCraft);
         this.ingredientMap = ingredientMap;
         this.pattern = pattern;
+    }
+
+    public ShapedRecipe(RecipeType type,
+                        SkyBlockItem result, Map<Character, MaterialQuantifiable> ingredientMap,
+                        List<String> pattern) {
+        this(type, result, ingredientMap, pattern, (player) -> new CraftingResult(true, new String[]{}));
     }
 
 

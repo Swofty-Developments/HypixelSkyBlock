@@ -18,6 +18,8 @@ public interface Enchanted extends CustomSkyBlockItem, Craftable {
 
     ItemType getCraftingMaterial();
 
+    SkyBlockRecipe.RecipeType getRecipeType();
+
     @Override
     default SkyBlockRecipe<?> getRecipe() {
         List<ItemType> matchTypes = Arrays.stream(ItemType.values())
@@ -28,7 +30,7 @@ public interface Enchanted extends CustomSkyBlockItem, Craftable {
         if (matchTypes.isEmpty()) {
             throw new RuntimeException("No matching ItemType found");
         } else {
-            return new ShapelessRecipe(new SkyBlockItem(matchTypes.get(0)))
+            return new ShapelessRecipe(getRecipeType(), new SkyBlockItem(matchTypes.get(0)))
                     .add(this.getCraftingMaterial(), 64)
                     .add(this.getCraftingMaterial(), 64)
                     .add(this.getCraftingMaterial(), 64)

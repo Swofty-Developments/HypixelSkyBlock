@@ -7,15 +7,21 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.data.datapoints.DatapointLong;
 import net.swofty.data.datapoints.DatapointString;
+import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
 import net.swofty.gui.inventory.item.GUIClickableItem;
+import net.swofty.item.impl.SkyBlockRecipe;
+import net.swofty.item.impl.recipes.ShapedRecipe;
+import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
 import net.swofty.utility.StringUtility;
@@ -118,19 +124,10 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        String age = StringUtility.profileAge(
-                                System.currentTimeMillis() - finalDataHandler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue())
-                                .replaceFirst("s", " second(s)").replaceFirst("m", " minute(s)")
-                                .replaceFirst("h", " hour(s)");
-
-                        if (!age.contains("second"))
-                            age = age.replaceFirst("d", " day(s)");
-
                         List<String> lore = new ArrayList<>(Arrays.asList("§8Selected slot", " "));
 
-                        if (finalDataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
-                            lore.add("§7Purse Coins: §6" + finalDataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue());
-                        lore.add("§7Age: §9" + age);
+                        updateLore(player.getUuid(), finalDataHandler, lore);
+
 
                         lore.add(" ");
                         lore.add("§aYou are playing on this profile!");
@@ -158,19 +155,9 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    String age = StringUtility.profileAge(
-                                    System.currentTimeMillis() - finalDataHandler1.get(DataHandler.Data.CREATED, DatapointLong.class).getValue())
-                            .replaceFirst("s", " second(s)").replaceFirst("m", " minute(s)")
-                            .replaceFirst("h", " hour(s)");
-
-                    if (!age.contains("second"))
-                        age = age.replaceFirst("d", " day(s)");
-
                     List<String> lore = new ArrayList<>(Arrays.asList("§8Slot in use", " "));
 
-                    if (finalDataHandler1.get(DataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
-                        lore.add("§7Purse Coins: §6" + finalDataHandler1.get(DataHandler.Data.COINS, DatapointDouble.class).getValue());
-                    lore.add("§7Age: §9" + age);
+                    updateLore(player.getUuid(), finalDataHandler1, lore);
 
                     lore.add(" ");
                     lore.add("§eClick to manage!");
@@ -203,5 +190,40 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         e.setCancelled(true);
+    }
+
+    public static List<String> updateLore(UUID playerUuid, DataHandler handler, List<String> lore) {
+        if (handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
+            lore.add("§bCo-op:");
+
+            CoopDatabase.Coop coop = CoopDatabase.getFromMember(playerUuid);
+            coop.members().forEach(member -> {
+                lore.add("§7Member " + SkyBlockPlayer.getDisplayName(member));
+            });
+            coop.memberInvites().forEach(invite -> {
+                lore.add("§7Invited " + SkyBlockPlayer.getDisplayName(invite));
+            });
+        }
+
+        SkyBlockRecipe.getMissionDisplay(lore, playerUuid);
+        lore.add(" ");
+
+        lore.add("§cNo Skills Yet!");
+        lore.add(" ");
+
+        if (handler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue() > 0)
+            lore.add("§7Purse Coins: §6" + handler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue());
+
+        String age = StringUtility.profileAge(
+                        System.currentTimeMillis() - handler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue())
+                .replaceFirst("s", " second(s)").replaceFirst("m", " minute(s)")
+                .replaceFirst("h", " hour(s)");
+
+        if (!age.contains("second"))
+            age = age.replaceFirst("d", " day(s)");
+
+        lore.add("§7Age: §9" + age);
+
+        return lore;
     }
 }

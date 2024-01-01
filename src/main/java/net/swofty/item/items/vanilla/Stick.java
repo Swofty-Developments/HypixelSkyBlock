@@ -11,7 +11,7 @@ import net.swofty.user.statistics.ItemStatistics;
 public class Stick implements CustomSkyBlockItem, Craftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(new SkyBlockItem(ItemType.STICK), 4)
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STICK), 4)
                 .add(ItemType.OAK_PLANKS, 2);
     }
 

@@ -14,6 +14,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -285,7 +286,6 @@ public abstract class SkyBlockInventoryGUI {
         updateItemStacks(inventory, player);
 
         player.openInventory(inventory);
-        player.updateCursor();
         onOpen(openEvent);
 
         GUI_MAP.put(player.getUuid(), this);

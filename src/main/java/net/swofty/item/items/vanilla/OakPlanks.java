@@ -11,7 +11,7 @@ import net.swofty.user.statistics.ItemStatistics;
 public class OakPlanks implements CustomSkyBlockItem, Craftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(new SkyBlockItem(ItemType.OAK_PLANKS), 4)
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.OAK_PLANKS), 4)
                 .add(ItemType.OAK_LOG, 1);
     }
 

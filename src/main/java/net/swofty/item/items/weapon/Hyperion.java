@@ -77,7 +77,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Refo
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(new SkyBlockItem(ItemType.HYPERION), (player -> {
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT, new SkyBlockItem(ItemType.HYPERION), (player -> {
             if (player.getLevel() > 10) {
                 return new SkyBlockRecipe.CraftingResult(true, null);
             } else {

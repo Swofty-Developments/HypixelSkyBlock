@@ -82,27 +82,27 @@ public abstract class Datapoint<T> {
             // Handle coop datapoints
             if (data.getIsCoopPersistent() && dataHandler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
                 List<UUID> coopMembers = CoopDatabase.getFromMember(dataHandler.getUuid()).members();
-
                 List<UUID> coopMembersProfiles = CoopDatabase.getFromMember(dataHandler.getUuid()).memberProfiles();
+
                 List<UUID> updatedProfiles = new ArrayList<>();
 
                 for (UUID member : coopMembers) {
                     // Handle online coop members datapoints
-                    SkyBlockPlayer skyBlockPlayer = SkyBlock.getLoadedPlayers().stream().filter(player1 -> player1.getUuid().equals(member)).findFirst().orElse(null);
+                    SkyBlockPlayer skyBlockPlayer = SkyBlock.getFromUUID(member);
                     if (skyBlockPlayer != null) {
                         UUID selectedProfile = skyBlockPlayer.getProfiles().getCurrentlySelected();
 
                         if (skyBlockPlayer.getDataHandler().getUuid() == dataHandler.getUuid()) {
                             // Ensure we don't update the player's own datapoints
                             updatedProfiles.add(selectedProfile);
-                            return;
+                            continue;
                         }
 
                         // Player is not on their coop profile
                         if (!coopMembersProfiles.contains(selectedProfile)) continue;
 
                         DataHandler dataHandler = skyBlockPlayer.getDataHandler();
-                        dataHandler.getDatapoint(key).setValue(value);
+                        dataHandler.getDatapoint(key).setValueBypassCoop(value);
                         updatedProfiles.add(selectedProfile);
                     }
                 }
@@ -113,8 +113,8 @@ public abstract class Datapoint<T> {
                     ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
                     DataHandler dataHandler = DataHandler.fromDocument(profilesDatabase.getDocument());
                     dataHandler.getDatapoint(key).value = value;
-                    Document document = dataHandler.toDocument(uuid);
 
+                    Document document = dataHandler.toDocument(uuid);
                     ProfilesDatabase.collection.replaceOne(profilesDatabase.getDocument(), document);
                 });
             }
