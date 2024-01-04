@@ -1,7 +1,6 @@
-package net.swofty.gui.inventory.inventories;
+package net.swofty.gui.inventory.inventories.crafting;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -12,19 +11,16 @@ import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
-import net.swofty.item.ItemType;
-import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.impl.recipes.ShapedRecipe;
 import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.item.updater.NonPlayerItemUpdater;
+import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
 import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
@@ -105,14 +101,17 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
     @Override
     protected GUIClickableItem createItemFor(SkyBlockRecipe item, int slot, SkyBlockPlayer player) {
         SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) item.getCanCraft().apply(player);
-        ItemStack.Builder itemStack = new NonPlayerItemUpdater(item.getResult()).getUpdatedItem();
+        ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                player, null, item.getResult().getItemStack()
+        );
 
         if (result.allowed()) {
             return new GUIClickableItem() {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    player.sendMessage("§cThis feature is not yet implemented!");
-                    player.sendMessage(StringUtility.getTextFromComponent(itemStack.build().getDisplayName()));
+                    new GUIRecipe(
+                            item.getResult().getAttributeHandler().getItemTypeAsType(),
+                            GUIRecipeCategory.this).open(player);
                 }
 
                 @Override

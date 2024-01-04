@@ -57,7 +57,5 @@ public class ActionPlayerTravel extends SkyBlockEvent {
                     .delay(Duration.ofMillis(500))
                     .schedule();
         }
-
-        ActionPlayerFall.fallHeight.remove(player);
     }
 }

@@ -40,6 +40,10 @@ public class ItemStackCreator {
         return getStack(name, material, data, amount, Arrays.asList(lore));
     }
 
+    public static ItemStack.Builder getStack(String name, Material material, int amount, String... lore) {
+        return getStack(name, material, (short) 0, amount, Arrays.asList(lore));
+    }
+
     public static ItemStack.Builder enchant(ItemStack.Builder builder) {
         ItemMeta metaToSet = builder.meta(meta -> {
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);

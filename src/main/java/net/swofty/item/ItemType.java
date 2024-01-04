@@ -18,6 +18,7 @@ import net.swofty.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.item.items.weapon.vanilla.IronSword;
 import net.swofty.item.items.weapon.vanilla.StoneSword;
 import net.swofty.item.items.weapon.vanilla.WoodenSword;
+import net.swofty.utility.StringUtility;
 
 public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
@@ -178,6 +179,10 @@ public enum ItemType {
         this.rarity = rarity;
         this.clazz = null;
         this.bookType = bookType;
+    }
+
+    public String getDisplayName() {
+        return StringUtility.toNormalCase(this.name());
     }
 
     public static ItemType get(String s) {

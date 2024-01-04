@@ -24,7 +24,7 @@ public class DroppedItemEntityImpl extends Entity {
         super(EntityType.ITEM_DISPLAY);
 
         this.player = player;
-        this.endPickupDelay = System.currentTimeMillis() + 1500;
+        this.endPickupDelay = System.currentTimeMillis() + 500;
 
         ItemDisplayMeta meta = (ItemDisplayMeta) this.entityMeta;
         meta.setItemStack(item.getItemStack());

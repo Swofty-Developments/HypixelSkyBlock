@@ -81,6 +81,8 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             return;
         }
 
+        recipe = recipe.clone();
+
         SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply(player);
         if (!result.allowed()) {
             set(RESULT_SLOT, ItemStackCreator.getStack(result.errorMessage()[0],
@@ -97,74 +99,31 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
 
+        SkyBlockRecipe<?> finalRecipe = recipe;
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                e.setCancelled(false);
-
-                ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
-                        player,
-                        null,
-                        recipe.getResult().getItemStack()).amount(amount).build();
-                SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), recipe));
-
                 if (!e.getCursorItem().isAir()) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
                     return;
                 }
 
-                AtomicInteger stopAfter = new AtomicInteger();
-                MinecraftServer.getSchedulerManager().submitTask(() -> {
-                    stopAfter.getAndIncrement();
-                    player.getInventory().setCursorItem(craftedItem);
-                    if (stopAfter.get() == 3) {
-                        return TaskSchedule.stop();
-                    }
-                    return TaskSchedule.tick(1);
-                });
+                ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
+                        player,
+                        null,
+                        finalRecipe.getResult().getItemStack()).amount(amount).build();
+                SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
 
-                SkyBlockItem[] toReplace = recipe.consume(getCurrentRecipeAsItems(inventory));
+                SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {
                     if (toReplace[i] == null || toReplace[i].getItemStack().getMaterial() == Material.BEDROCK) {
-                        int finalI = i;
-                        set(new GUIItem() {
-                            @Override
-                            public boolean canPickup() {
-                                return true;
-                            }
-
-                            @Override
-                            public int getSlot() {
-                                return CRAFT_SLOTS[finalI];
-                            }
-
-                            @Override
-                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                                return ItemStack.builder(Material.AIR);
-                            }
-                        });
+                        inventory.setItemStack(CRAFT_SLOTS[i], ItemStack.builder(Material.AIR).build());
                     } else {
-                        int finalI1 = i;
-                        set(new GUIItem() {
-                            @Override
-                            public boolean canPickup() {
-                                return true;
-                            }
-
-                            @Override
-                            public int getSlot() {
-                                return CRAFT_SLOTS[finalI1];
-                            }
-
-                            @Override
-                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                                return PlayerItemUpdater.playerUpdate(
-                                        player,
-                                        null,
-                                        toReplace[finalI1].getItemStack());
-                            }
-                        });
+                        inventory.setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
+                                player,
+                                null,
+                                toReplace[i].getItemStack()).build());
                     }
                 }
 
@@ -184,7 +143,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack()).amount(amount);
+                return PlayerItemUpdater.playerUpdate(player, null, finalRecipe.getResult().getItemStack()).amount(amount);
             }
         });
     }

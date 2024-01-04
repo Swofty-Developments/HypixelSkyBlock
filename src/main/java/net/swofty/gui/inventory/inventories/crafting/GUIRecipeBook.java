@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories;
+package net.swofty.gui.inventory.inventories.crafting;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -6,15 +6,14 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.SkyBlock;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.impl.recipes.ShapedRecipe;
 import net.swofty.item.impl.recipes.ShapelessRecipe;
-import net.swofty.user.SkyBlockIsland;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 

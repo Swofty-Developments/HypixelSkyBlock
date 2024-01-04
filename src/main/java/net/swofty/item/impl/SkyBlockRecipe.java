@@ -42,6 +42,10 @@ public abstract class SkyBlockRecipe<T> {
 
     public abstract SkyBlockItem[] consume(SkyBlockItem[] stacks);
 
+    public abstract SkyBlockItem[] getRecipeDisplay();
+
+    public abstract SkyBlockRecipe clone();
+
     public static SkyBlockRecipe<?> parseRecipe(ItemStack[] stacks) {
         ShapedRecipe shapedRecipe = ShapedRecipe.parseShapedRecipe(stacks);
         if (shapedRecipe != null) {

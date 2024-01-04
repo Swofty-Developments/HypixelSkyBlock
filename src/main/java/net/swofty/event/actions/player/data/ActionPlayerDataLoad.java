@@ -12,6 +12,7 @@ import net.swofty.data.datapoints.DatapointString;
 import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
+import net.swofty.event.EventException;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
@@ -27,7 +28,7 @@ import java.util.UUID;
         node = EventNodes.PLAYER,
         validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
-public class ActionPlayerDataLoad extends SkyBlockEvent {
+public class ActionPlayerDataLoad extends SkyBlockEvent implements EventException {
 
     @Override
     public Class<? extends Event> getEvent() {
@@ -92,5 +93,36 @@ public class ActionPlayerDataLoad extends SkyBlockEvent {
         }
 
         handler.runOnLoad();
+    }
+
+    @Override
+    public void onException(Exception e, Event tempEvent) {
+        PlayerLoginEvent event = (PlayerLoginEvent) tempEvent;
+        e.printStackTrace();
+
+        if (e instanceof NullPointerException) {
+            event.getPlayer().sendMessage("§cAn error occurred while loading your data.");
+
+            UUID playerUuid = event.getPlayer().getUuid();
+
+            DataHandler handler = DataHandler.initUserWithDefaultData(playerUuid);
+            DataHandler.userCache.put(playerUuid, handler);
+
+            handler.runOnLoad();
+
+            UserProfiles profiles = ((SkyBlockPlayer) event.getPlayer()).getProfiles();
+
+            if (profiles.getProfiles().size() >= 2) {
+                Document previousProfile = ProfilesDatabase.collection
+                        .find(Filters.eq("_owner", playerUuid.toString())).into(new ArrayList<>())
+                        .stream().filter(document -> !document.get("_id").equals(profiles.getCurrentlySelected().toString()))
+                        .findFirst().get();
+
+                DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
+                previousHandler.getPersistentValues().forEach((key, value) -> {
+                    handler.getDatapoint(key).setValue(value);
+                });
+            }
+        }
     }
 }

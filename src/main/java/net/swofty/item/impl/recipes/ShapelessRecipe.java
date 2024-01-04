@@ -3,6 +3,7 @@ package net.swofty.item.impl.recipes;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.item.ItemType;
 import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
@@ -12,6 +13,7 @@ import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -108,6 +110,27 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
         return modifiedStacks;
     }
 
+    @Override
+    public SkyBlockItem[] getRecipeDisplay() {
+        SkyBlockItem[] display = new SkyBlockItem[9];
+        int i = 0;
+
+        for (MaterialQuantifiable material : ingredientList) {
+            display[i] = new SkyBlockItem(material.getMaterial());
+            display[i].setAmount(material.getAmount());
+            i++;
+        }
+
+        return display;
+    }
+
+    @Override
+    public SkyBlockRecipe clone() {
+        ShapelessRecipe recipe = new ShapelessRecipe(recipeType, result, amount, canCraft);
+        recipe.ingredientList.addAll(ingredientList.stream().map(MaterialQuantifiable::clone).toList());
+        return recipe;
+    }
+
     public ShapelessRecipe add(ItemType material, int amount) {
         return add(new MaterialQuantifiable(material, amount));
     }
@@ -123,14 +146,30 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 .map(MaterialQuantifiable::clone)
                 .toList();
 
+        List<ItemType> uniqueMaterials = new ArrayList<>(materialsPassedThrough.stream()
+                .map(MaterialQuantifiable::getMaterial)
+                .distinct()
+                .toList());
+        uniqueMaterials.removeIf(material -> material.material == null || material.material == Material.AIR);
+
         return CACHED_RECIPES.stream()
                 .filter(recipe -> {
+                    // Check if the recipe has the same amount of materials as the passed through materials
+                    List<ItemType> recipeMaterials = recipe.getIngredientList().stream()
+                            .map(MaterialQuantifiable::getMaterial)
+                            .distinct()
+                            .toList();
+
+                    return recipeMaterials.equals(uniqueMaterials);
+                })
+                .filter(recipe -> {
+                    // Checks if the recipe soft matches, meaning that materialsPassedThrough has at least the same materials as materialsNeeded
+                    // and atleast the amount of materialsNeeded, but not necessarily the same amount
                     List<MaterialQuantifiable> materialsNeeded = recipe.getIngredientList().stream()
                             .map(MaterialQuantifiable::new)
                             .map(MaterialQuantifiable::clone)
                             .collect(Collectors.toList());
-                    // Checks if the recipe soft matches, meaning that materialsPassedThrough has at least the same materials as materialsNeeded
-                    // and atleast the amount of materialsNeeded, but not necessarily the same amount
+
                     materialsPassedThrough.forEach(material -> {
                         MaterialQuantifiable found = materialsNeeded.stream()
                                 .filter(needed -> needed.matches(material.getMaterial())

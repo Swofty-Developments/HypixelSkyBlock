@@ -113,10 +113,14 @@ public class SkyBlockItem {
     }
 
     public Object getGenericInstance() {
-        if (clazz == null) return null;
         try {
             return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {}
+        } catch (Exception e) {}
+
+        try {
+            return getAttributeHandler().getItemTypeAsType().clazz.newInstance();
+        } catch (Exception e) {}
+
         return null;
     }
 

@@ -22,6 +22,7 @@ import net.swofty.data.datapoints.*;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.event.SkyBlockEvent;
+import net.swofty.event.actions.player.fall.ActionPlayerFall;
 import net.swofty.event.custom.IslandPlayerLoadedEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
@@ -168,21 +169,17 @@ public class SkyBlockPlayer extends Player {
     }
 
     public float getMaxMana() {
-        float maxMana = 100;
-
-        PlayerStatistics statistics = this.getStatistics();
-        maxMana += statistics.allArmorStatistics().get(ItemStatistic.INTELLIGENCE);
-        maxMana += statistics.mainHandStatistics().get(ItemStatistic.INTELLIGENCE);
-
-        return maxMana;
+        return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
     }
 
     public int getMiningSpeed() {
-        return this.getStatistics().mainHandStatistics().get(ItemStatistic.MINING_SPEED) +
-                this.getStatistics().allArmorStatistics().get(ItemStatistic.MINING_SPEED);
+        return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
     }
 
     public void sendToHub() {
+        // Allows fall damage system to recalculate using new teleported Y value
+        ActionPlayerFall.fallHeight.remove(this);
+
         if (getInstance() == SkyBlock.getInstanceContainer()) {
             this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
             return;
@@ -195,6 +192,9 @@ public class SkyBlockPlayer extends Player {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
 
         skyBlockIsland.getSharedInstance().thenAccept(sharedInstance -> {
+            // Allows fall damage system to recalculate using new teleported Y value
+            ActionPlayerFall.fallHeight.remove(this);
+
             if (sharedInstance != getInstance())
                 this.setInstance(sharedInstance, new Pos(0.5, 100, 0.5, 0, 0));
             this.teleport(new Pos(0.5, 100, 0.5, 0, 0));

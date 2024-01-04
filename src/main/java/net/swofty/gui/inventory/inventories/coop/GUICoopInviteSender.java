@@ -43,12 +43,12 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
             )
     );
 
-    private final CoopDatabase.Coop coop;
+    private CoopDatabase.Coop coop;
 
-    public GUICoopInviteSender(CoopDatabase.Coop coop) {
+    public GUICoopInviteSender(CoopDatabase.Coop coopTemp) {
         super("Co-op Invitation", InventoryType.CHEST_6_ROW);
 
-        this.coop = coop;
+        this.coop = coopTemp;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
@@ -56,6 +56,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                coop = CoopDatabase.getFromMember(player.getUuid());
                 coop.memberInvites().clear();
                 coop.members().add(player.getUuid());
                 coop.save();
@@ -117,6 +118,8 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                coop = CoopDatabase.getFromMember(player.getUuid());
+
                 coop.removeInvite(player.getUuid());
                 coop.save();
                 player.closeInventory();

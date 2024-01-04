@@ -2,6 +2,7 @@ package net.swofty.item.impl.recipes;
 
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
+import net.swofty.item.ItemType;
 import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
@@ -46,8 +47,13 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     @Override
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
-        Map<Character, MaterialQuantifiable> materialsToConsume = new HashMap<>(ingredientMap); // Make a copy of mapped ingredients
+        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>(this.ingredientMap);
+        // Remove AIR from the ingredient map
+        ingredientMap.remove(' ');
+
+        Map<Character, MaterialQuantifiable> materialsToConsume = new HashMap<>(ingredientMap);
         SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length);
+
         int patternRows = pattern.size();
         int patternCols = pattern.get(0).length();
 
@@ -67,8 +73,13 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
                         MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
 
-                        if (patternMaterial != null) {
+                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR))  {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
+
+                            // skip the iteration if stackMaterial is AIR
+                            if (stackMaterial.getMaterial().equals(ItemType.AIR))  {
+                                continue;
+                            }
 
                             if (stackMaterial.matches(patternMaterial.getMaterial())
                                     || ExchangeableType.isExchangeable(stackMaterial.getMaterial(), patternMaterial.getMaterial())) {
@@ -104,6 +115,31 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
         // If there are still materials left to consume, there were not enough materials in the stacks
         throw new IllegalStateException("Not enough materials to consume!");
+    }
+
+    @Override
+    public SkyBlockItem[] getRecipeDisplay() {
+        SkyBlockItem[] recipeDisplay = new SkyBlockItem[9];
+        int patternRows = pattern.size();
+        int patternCols = pattern.get(0).length();
+
+        for (int row = 0; row < patternRows; row++) {
+            for (int col = 0; col < patternCols; col++) {
+                char patternChar = pattern.get(row).charAt(col);
+                MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
+
+                if (patternMaterial != null) {
+                    recipeDisplay[row * 3 + col] = new SkyBlockItem(patternMaterial.getMaterial(), patternMaterial.getAmount());
+                }
+            }
+        }
+
+        return recipeDisplay;
+    }
+
+    @Override
+    public SkyBlockRecipe clone() {
+        return new ShapedRecipe(recipeType, result, ingredientMap, pattern, canCraft);
     }
 
     public static ShapedRecipe parseShapedRecipe(ItemStack[] stacks) {

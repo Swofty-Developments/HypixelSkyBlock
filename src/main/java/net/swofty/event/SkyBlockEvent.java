@@ -10,6 +10,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,7 +107,16 @@ public abstract class SkyBlockEvent {
                         });
                     } else {
                         // Now run the event with the properly casted type
-                        skyBlockEvent.run(concreteEvent);
+                        try {
+                            skyBlockEvent.run(concreteEvent);
+                        } catch (Exception ex) {
+                            Logger.info("Exception occurred while running event " + skyBlockEvent.getClass().getSimpleName() + " with event type " + concreteEvent.getClass().getSimpleName());
+                            if (skyBlockEvent instanceof EventException exceptionEvent) {
+                                exceptionEvent.onException(ex, concreteEvent);
+                                return;
+                            }
+                            ex.printStackTrace();
+                        }
                     }
                 });
             });
