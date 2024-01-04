@@ -33,6 +33,10 @@ public class MissionUseTeleporter extends SkyBlockMission {
             return;
         }
 
+        if (!event.getPlayer().getMissionData().isCurrentlyActive(this.getClass())) {
+            return;
+        }
+
         MissionData data = event.getPlayer().getMissionData();
         data.endMission(this.getClass());
     }

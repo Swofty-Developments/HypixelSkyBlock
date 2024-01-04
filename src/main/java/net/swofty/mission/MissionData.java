@@ -55,6 +55,10 @@ public class MissionData {
         return getMission(missionID) != null && !getMission(missionID).getValue();
     }
 
+    public boolean isCurrentlyActive(Class<? extends SkyBlockMission> skyBlockMission) {
+        return getMission(skyBlockMission) != null && !getMission(skyBlockMission).getValue();
+    }
+
     public boolean hasCompleted(String missionID) {
         return getMission(missionID) != null && getMission(missionID).getValue();
     }
