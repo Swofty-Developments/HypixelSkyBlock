@@ -15,7 +15,7 @@ public abstract class SkyBlockMission extends SkyBlockEvent {
 
     public abstract Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission);
 
-    public abstract void onEnd(SkyBlockPlayer player, Map<String, Object> customData);
+    public abstract void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission);
 
     public abstract Set<RegionType> getValidRegions();
 

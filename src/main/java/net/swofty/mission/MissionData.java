@@ -88,10 +88,15 @@ public class MissionData {
         }
 
         ActiveMission activeMission = activeMissions.stream().filter(mission -> mission.getMissionID().equals(missionID)).findFirst().get();
-        missionClassCache.get(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData());
+        missionClassCache.get(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData(), activeMission);
         activeMission.setMissionEnded((int) SkyBlockCalendar.getElapsed());
         activeMissions.remove(activeMission);
         completedMissions.add(activeMission);
+    }
+
+    @SneakyThrows
+    public void endMission(Class<? extends SkyBlockMission> skyBlockMission) {
+        endMission(skyBlockMission.newInstance().getID());
     }
 
     public @Nullable SkyBlockProgressMission getAsProgressMission(String missionID) {
@@ -200,23 +205,23 @@ public class MissionData {
             }
         }
 
-        public List<String> getObjectiveCompleteText(List<String> rewards) {
+        public List<String> getObjectiveCompleteText(ArrayList<String> rewards) {
             SkyBlockMission mission = MissionData.getMissionClass(missionID);
 
             if (rewards == null || rewards.isEmpty())
                 return Arrays.asList(
                         "§7 ",
                         "§6§l  OBJECTIVE COMPLETE",
-                        "§7  " + mission.getName(),
+                        "§f  " + mission.getName(),
                         "§7 ");
 
-            List<String> display = Arrays.asList(
+            ArrayList<String> display = new ArrayList<>(Arrays.asList(
                     "§7 ",
                     "§6§l  OBJECTIVE COMPLETE",
-                    "§7  " + mission.getName(),
+                    "§f  " + mission.getName(),
                     "§7 ",
                     "§a§l    REWARDS"
-            );
+            ));
             display.addAll(rewards.stream().map(reward -> "§8    +" + reward).toList());
             display.add("§7 ");
             return display;

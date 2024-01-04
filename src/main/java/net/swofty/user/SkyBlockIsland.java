@@ -1,8 +1,10 @@
 package net.swofty.user;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.hollowcube.polar.*;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.*;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
@@ -27,21 +29,22 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+@Getter
 public class SkyBlockIsland {
     private static final String ISLAND_TEMPLATE_NAME = "hypixel_island_template";
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
 
-    @Getter
-    private IslandDatabase database = null;
-    @Getter
+    // Internal Island Data
+    private final IslandDatabase database;
+    private final CoopDatabase.Coop coop;
     private final UUID islandID;
-    @Getter
     private Boolean created = false;
-    @Getter
-    private CoopDatabase.Coop coop = null;
-    @Getter
     private SharedInstance islandInstance;
     private PolarWorld world;
+
+    // External Island Data
+    @Setter
+    private Pos jerryPosition = null;
 
     public SkyBlockIsland(UUID islandID, UUID profileID) {
         this.islandID = islandID;
@@ -86,12 +89,9 @@ public class SkyBlockIsland {
                     throw new RuntimeException(e);
                 }
 
-                List<SkyBlockPlayer> finalOnlinePlayers = onlinePlayers;
-                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    SkyBlockEvent.callSkyBlockEvent(new IslandFirstCreatedEvent(
-                            this, coop != null, finalOnlinePlayers, coop != null ? coop.memberProfiles() : List.of(islandID)
-                    ));
-                }, TaskSchedule.tick(1), TaskSchedule.stop());
+                SkyBlockEvent.callSkyBlockEvent(new IslandFirstCreatedEvent(
+                        this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
+                ));
             } else {
                 world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
             }

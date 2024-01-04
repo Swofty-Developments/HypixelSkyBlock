@@ -13,6 +13,10 @@ public class MathUtility {
         }
     }
 
+    public static Float fromDouble(double value) {
+        return (float) value;
+    }
+
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }

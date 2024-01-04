@@ -23,7 +23,7 @@ import java.util.Set;
         node = EventNodes.CUSTOM,
         validLocations = EventParameters.Location.HUB,
         requireDataLoaded = false)
-public class MissionTalkToBanker extends SkyBlockMission implements MissionRepeater {
+public class MissionTalkToBanker extends SkyBlockMission {
     @Override
     public Class<? extends Event> getEvent() {
         return PlayerRegionChangeEvent.class;
@@ -62,23 +62,12 @@ public class MissionTalkToBanker extends SkyBlockMission implements MissionRepea
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.sendMessage("You did it my g");
     }
 
     @Override
     public Set<RegionType> getValidRegions() {
         return Collections.singleton(RegionType.BANK);
-    }
-
-    @Override
-    public Task getTask(Scheduler scheduler) {
-        return scheduler.submitTask(() -> {
-            getPlayersWithMissionActive().forEach((player) -> {
-
-            });
-
-            return TaskSchedule.tick(20);
-        });
     }
 }

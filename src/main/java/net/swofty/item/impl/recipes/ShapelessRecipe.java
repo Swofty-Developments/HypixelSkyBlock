@@ -155,12 +155,21 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
         return CACHED_RECIPES.stream()
                 .filter(recipe -> {
                     // Check if the recipe has the same amount of materials as the passed through materials
+                    // Updated to consider exchangeable materials.
                     List<ItemType> recipeMaterials = recipe.getIngredientList().stream()
                             .map(MaterialQuantifiable::getMaterial)
                             .distinct()
                             .toList();
 
-                    return recipeMaterials.equals(uniqueMaterials);
+                    boolean materialsMatch = recipeMaterials.size() == uniqueMaterials.size();
+
+                    for (ItemType recipeMaterial : recipeMaterials) {
+                        materialsMatch &= uniqueMaterials.stream()
+                                .anyMatch(material -> material == recipeMaterial
+                                        || ExchangeableType.isExchangeable(material, recipeMaterial));
+                    }
+
+                    return materialsMatch;
                 })
                 .filter(recipe -> {
                     // Checks if the recipe soft matches, meaning that materialsPassedThrough has at least the same materials as materialsNeeded

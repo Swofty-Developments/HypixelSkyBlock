@@ -2,6 +2,7 @@ package net.swofty.command.commands;
 
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
+import net.swofty.mission.MissionSet;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 
@@ -15,6 +16,12 @@ public class HubCommand extends SkyBlockCommand {
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = ((SkyBlockPlayer) sender);
+
+            if (!MissionSet.SAVING_UP.hasCompleted(player)) {
+                player.sendMessage("§cYou must complete your starting missions!");
+                return;
+            }
+
             player.sendToHub();
         });
     }

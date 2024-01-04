@@ -1,5 +1,7 @@
 package net.swofty.gui.inventory.inventories;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -16,13 +18,18 @@ import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
+import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.utility.StringUtility;
+import org.tinylog.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, (short) 0, 1, "§7Add the items for a valid recipe in", "§7the crafting grid to the left!");
@@ -103,9 +110,20 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (!e.getCursorItem().isAir()) {
+                SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
+                ItemType cursorItemType = cursorItem.getAttributeHandler().getItemTypeAsType();
+                ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getItemTypeAsType();
+
+                if (!e.getCursorItem().isAir() &&
+                        (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
+                    return;
+                }
+
+                if (e.getClickType().equals(ClickType.SHIFT_CLICK)) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage("§cYou cannot shift click items");
                     return;
                 }
 
@@ -113,6 +131,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                         player,
                         null,
                         finalRecipe.getResult().getItemStack()).amount(amount).build();
+                e.setClickedItem(craftedItem);
                 SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
 
                 SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
@@ -125,6 +144,13 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                                 null,
                                 toReplace[i].getItemStack()).build());
                     }
+                }
+
+                if (cursorItemType != null && cursorItemType.equals(resultItemType)) {
+                    e.setCancelled(true);
+                    e.getPlayer().getInventory().addItemStack(
+                            PlayerItemUpdater.playerUpdate(player, null, cursorItem.getItemStack()).build()
+                    );
                 }
 
                 player.getInventory().update();
@@ -143,7 +169,16 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, finalRecipe.getResult().getItemStack()).amount(amount);
+                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, null, finalRecipe.getResult().getItemStack()).amount(amount);
+
+                ArrayList<String> lore = new ArrayList<>();
+                builder.build().getLore().stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
+                lore.add("§8§m------------------");
+                lore.add("§7This is the item you are crafting.");
+                builder.lore(lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                        .collect(Collectors.toList()));
+
+                return builder;
             }
         });
     }

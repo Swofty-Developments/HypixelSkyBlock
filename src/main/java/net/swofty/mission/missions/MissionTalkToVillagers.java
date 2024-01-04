@@ -87,7 +87,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData) {
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         player.sendMessage("On end thrown");
 
         for (Map.Entry<String, Object> entry : customData.entrySet()) {

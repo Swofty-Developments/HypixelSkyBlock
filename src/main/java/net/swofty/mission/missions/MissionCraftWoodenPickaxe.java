@@ -56,8 +56,8 @@ public class MissionCraftWoodenPickaxe extends SkyBlockMission {
     }
 
     @Override
-    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData) {
-
+    public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
+        player.getMissionData().startMission(MissionTalkJerry.class);
     }
 
     @Override

@@ -1,52 +1,50 @@
 package net.swofty.mission.missions;
 
 import net.minestom.server.event.Event;
+import net.swofty.data.DataHandler;
+import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.custom.ItemCraftEvent;
+import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.item.ItemType;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.RegionType;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-@EventParameters(description = "Craft workbench mission",
+@EventParameters(description = "Use teleporter mission",
         node = EventNodes.CUSTOM,
-        validLocations = EventParameters.Location.ISLAND,
+        validLocations = EventParameters.Location.EITHER,
         requireDataLoaded = false)
-public class MissionCraftWorkbench extends SkyBlockMission {
+public class MissionUseTeleporter extends SkyBlockMission {
     @Override
     public Class<? extends Event> getEvent() {
-        return ItemCraftEvent.class;
+        return PlayerRegionChangeEvent.class;
     }
 
     @Override
     public void run(Event tempEvent) {
-        ItemCraftEvent event = (ItemCraftEvent) tempEvent;
-        ItemType type = event.getCraftedItem().getAttributeHandler().getItemTypeAsType();
+        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
 
-        if (type == ItemType.CRAFTING_TABLE) {
-            MissionData data = event.getPlayer().getMissionData();
-
-            if (data.isCurrentlyActive("craft_workbench")) {
-                data.endMission("craft_workbench");
-            }
+        if (event.getTo() == null || !event.getTo().equals(RegionType.VILLAGE)) {
+            return;
         }
+
+        MissionData data = event.getPlayer().getMissionData();
+        data.endMission(this.getClass());
     }
 
     @Override
     public String getID() {
-        return "craft_workbench";
+        return "use_teleporter";
     }
 
     @Override
     public String getName() {
-        return "Craft a workbench";
+        return "Use the teleporter";
     }
 
     @Override
@@ -57,7 +55,10 @@ public class MissionCraftWorkbench extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.getMissionData().startMission(MissionCraftWoodenPickaxe.class);
+        mission.getObjectiveCompleteText(new ArrayList<>(List.of("§61000 Gold"))).forEach(player::sendMessage);
+        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
+                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
+        );
     }
 
     @Override
