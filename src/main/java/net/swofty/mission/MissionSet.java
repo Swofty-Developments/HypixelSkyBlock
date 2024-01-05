@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public enum MissionSet {
     GETTING_STARTED(MissionBreakLog.class, MissionCraftWorkbench.class, MissionCraftWoodenPickaxe.class, MissionTalkJerry.class, MissionUseTeleporter.class),
     SAVING_UP(MissionTalkToVillagers.class, MissionTalkToBanker.class),
+    LIBRARY_CARD(MissionTalkToLibrarian.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

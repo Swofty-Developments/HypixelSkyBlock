@@ -15,27 +15,6 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.*;
 
 public enum PlayerHolograms {
-    PURSE(new Pos(6.5, 71, -74), (skyblockPlayer) -> {
-        return new String[] {
-                "§a§l» §f§lPurse §a§l«",
-                "§7Balance: §a" + skyblockPlayer.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue()
-        };
-    }),
-    PURSE2(new Pos(3.5, 71, -74), (skyblockPlayer) -> {
-        return null;
-    }),
-    PURSE3(new Pos(0.5, 71, -74), (skyblockPlayer) -> {
-        Double purseBalance = skyblockPlayer.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
-        if (purseBalance == 0) {
-            return new String[] {
-                    "§a0"
-            };
-        } else {
-            return new String[] {
-                    "§a0", "2"
-            };
-        }
-    }),
     ;
 
     private static HashMap<SkyBlockPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();

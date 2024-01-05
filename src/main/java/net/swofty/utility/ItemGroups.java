@@ -16,4 +16,9 @@ public enum ItemGroups {
     GAUNTLET(),
     DRILL(),
     ;
+
+    @Override
+    public String toString() {
+        return StringUtility.toNormalCase(super.toString().toLowerCase());
+    }
 }

@@ -7,6 +7,7 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistics;
+import net.swofty.utility.ItemGroups;
 import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
@@ -39,12 +40,16 @@ public class EnchantedBook implements CustomSkyBlockItem {
         lore.add(" ");
 
         Set<String> sourceTypes = enchantments.stream()
-                .flatMap(enchantment -> enchantment.type().getEnch().getSources().stream())
-                .map(EnchantmentSource::toString)
+                .flatMap(enchantment -> enchantment.type().getEnch().getGroups().stream())
+                .map(ItemGroups::toString)
                 .collect(Collectors.toSet());
 
         if (sourceTypes.size() == 1) {
             lore.add("§7Applicable on: §9" + sourceTypes.iterator().next());
+        } else {
+            lore.addAll(StringUtility.splitByWordAndLength(
+                    "§7Applicable on: §9" + String.join("§7, §9", sourceTypes), 36, ",")
+            );
         }
 
         lore.add("§7Use this on an item in an Anvil to");
