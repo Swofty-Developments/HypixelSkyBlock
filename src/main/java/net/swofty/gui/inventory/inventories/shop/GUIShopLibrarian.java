@@ -34,7 +34,22 @@ public class GUIShopLibrarian extends SkyBlockShopGUI {
         sharpness.getAttributeHandler().addEnchantment(
                 new SkyBlockEnchantment(EnchantmentType.SHARPNESS, 1)
         );
+        SkyBlockItem scavenger = new SkyBlockItem(ItemType.ENCHANTED_BOOK);
+        scavenger.getAttributeHandler().addEnchantment(
+                new SkyBlockEnchantment(EnchantmentType.SCAVENGER, 1)
+        );
+        SkyBlockItem protection = new SkyBlockItem(ItemType.ENCHANTED_BOOK);
+        protection.getAttributeHandler().addEnchantment(
+                new SkyBlockEnchantment(EnchantmentType.PROTECTION, 1)
+        );
+        SkyBlockItem efficiency = new SkyBlockItem(ItemType.ENCHANTED_BOOK);
+        efficiency.getAttributeHandler().addEnchantment(
+                new SkyBlockEnchantment(EnchantmentType.EFFICIENCY, 1)
+        );
 
         attachItem(ShopItem.Single(sharpness, 1, 30, 1));
+        attachItem(ShopItem.Single(scavenger, 1, 40, 1));
+        attachItem(ShopItem.Single(protection, 1, 20, 1));
+        attachItem(ShopItem.Single(efficiency, 1, 20, 1));
     }
 }

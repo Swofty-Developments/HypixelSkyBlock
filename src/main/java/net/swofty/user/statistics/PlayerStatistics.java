@@ -2,8 +2,10 @@ package net.swofty.user.statistics;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -13,11 +15,18 @@ import net.swofty.data.datapoints.DatapointIntegerList;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.mission.MissionData;
+import net.swofty.mission.SkyBlockProgressMission;
+import net.swofty.region.RegionType;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerStatistics {
+    private static final Map<Player, BossBar> barCache = new HashMap<>();
 
     private final SkyBlockPlayer player;
     @Setter
@@ -120,6 +129,7 @@ public class PlayerStatistics {
         barLoop();
         healthLoop();
         manaLoop();
+        missionLoop();
     }
 
     public static void barLoop() {
@@ -167,6 +177,56 @@ public class PlayerStatistics {
 
                     player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + healthToIncreaseBy));
                 }
+            });
+            return TaskSchedule.tick(30);
+        });
+    }
+
+    public static void missionLoop() {
+        Scheduler scheduler = MinecraftServer.getSchedulerManager();
+        scheduler.submitTask(() -> {
+            SkyBlock.getLoadedPlayers().forEach(player -> {
+                if (player.getRegion() == null) return;
+                RegionType region = player.getRegion().getType();
+                List<MissionData.ActiveMission> activeMissions = player.getMissionData().getActiveMissions(region);
+
+                if (activeMissions.isEmpty()) {
+                    if (barCache.containsKey(player)) {
+                        BossBar oldBar = barCache.get(player);
+                        player.hideBossBar(oldBar);
+                        barCache.remove(player);
+                    }
+                    return;
+                }
+                MissionData.ActiveMission activeMission = activeMissions.get(0);
+                BossBar bar;
+
+                if (activeMission.isProgress()) {
+                    int maxProgress = ((SkyBlockProgressMission) MissionData.getMissionClass(activeMission)).getMaxProgress();
+                    float progress = (float) activeMission.getMissionProgress() / maxProgress;
+
+                    bar = BossBar.bossBar(
+                            Component.text(
+                                    "Objective: §e" + MissionData.getMissionClass(activeMission).getName()
+                                            + "  §7(§e" + activeMission.getMissionProgress() + "§7/§a" + maxProgress + "§7)"),
+                            progress,
+                            BossBar.Color.YELLOW,
+                            BossBar.Overlay.PROGRESS);
+                } else {
+                    bar = BossBar.bossBar(
+                            Component.text("Objective: §e" + MissionData.getMissionClass(activeMission).getName()),
+                            1f,
+                            BossBar.Color.YELLOW,
+                            BossBar.Overlay.NOTCHED_6);
+                }
+
+                if (barCache.containsKey(player)) {
+                    BossBar oldBar = barCache.get(player);
+                    if (oldBar.equals(bar)) return;
+                    player.hideBossBar(oldBar);
+                }
+                player.showBossBar(bar);
+                barCache.put(player, bar);
             });
             return TaskSchedule.tick(30);
         });

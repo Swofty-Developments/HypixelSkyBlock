@@ -26,9 +26,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
 				2, 14,
 				3, 18,
 				4, 23,
-				5, 27,
-				6, 91,
-				7, 179
+				5, 27
 		)));
 	}
 

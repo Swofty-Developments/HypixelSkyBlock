@@ -5,19 +5,20 @@ import lombok.SneakyThrows;
 import net.swofty.enchantment.abstr.Ench;
 import net.swofty.enchantment.abstr.EnchFromTable;
 import net.swofty.enchantment.impl.EnchantmentEfficiency;
+import net.swofty.enchantment.impl.EnchantmentProtection;
+import net.swofty.enchantment.impl.EnchantmentScavenger;
 import net.swofty.enchantment.impl.EnchantmentSharpness;
 import net.swofty.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * Note: Maybe make a new system to replace the enumeration and put every fields needed in the {@link Ench} class, or minimize its use
- */
 @Getter
 public enum EnchantmentType {
 	SHARPNESS(EnchantmentSharpness.class),
 	EFFICIENCY(EnchantmentEfficiency.class),
+	SCAVENGER(EnchantmentScavenger.class),
+	PROTECTION(EnchantmentProtection.class)
 	;
 	
 	private final Class<? extends Ench> clazz;
