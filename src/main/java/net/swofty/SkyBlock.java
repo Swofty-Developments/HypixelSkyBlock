@@ -36,6 +36,7 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.item.impl.Craftable;
+import net.swofty.item.set.impl.SetRepeatable;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.MissionRepeater;
@@ -106,7 +107,7 @@ public class SkyBlock {
             // Large amount of Clients (such as Lunar) send a `/tip all` when joining
             // due to the scoreboard containing `hypixel.net`
             if (command.startsWith("tip ")) return;
-            sender.sendMessage("§cUnknown command!");
+            sender.sendMessage("§fUnknown command. Type \"/help\" for help. ('" + command + "')");
         });
         loopThroughPackage("net.swofty.command.commands", SkyBlockCommand.class).forEach(command -> {
                 MinecraftServer.getCommandManager().register(command.getCommand());
@@ -228,10 +229,22 @@ public class SkyBlock {
                         event.getTask(MinecraftServer.getSchedulerManager());
                     } catch (Exception e) {}
                 });
+        loopThroughPackage("net.swofty.item.set.sets", SetRepeatable.class)
+                .forEach((event) -> {
+                    try {
+                        event.getTask(MinecraftServer.getSchedulerManager());
+                    } catch (Exception e) {}
+                });
         CustomEventCaller.start();
         SkyBlockEvent.register(globalEventHandler);
 
         loopThroughPackage("net.swofty.enchantment.impl", SkyBlockValueEvent.class)
+                .forEach((event) -> {
+                    try {
+                        event.cacheEvent();
+                    } catch (Exception e) {}
+                });
+        loopThroughPackage("net.swofty.item.set.sets", SkyBlockValueEvent.class)
                 .forEach((event) -> {
                     try {
                         event.cacheEvent();

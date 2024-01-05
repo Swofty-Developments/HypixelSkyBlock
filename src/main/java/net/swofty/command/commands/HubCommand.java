@@ -17,7 +17,7 @@ public class HubCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = ((SkyBlockPlayer) sender);
 
-            if (!MissionSet.SAVING_UP.hasCompleted(player)) {
+            if (!MissionSet.GETTING_STARTED.hasCompleted(player)) {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
             }

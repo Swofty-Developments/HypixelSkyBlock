@@ -9,6 +9,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.entity.villager.villagers.VillagerDuke;
+import net.swofty.entity.villager.villagers.VillagerLeo;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
@@ -27,7 +28,8 @@ import java.util.*;
         requireDataLoaded = false)
 public class MissionTalkToVillagers extends SkyBlockProgressMission implements MissionRepeater {
     private static final List<Class<? extends SkyBlockVillagerNPC>> villagers = List.of(
-            VillagerDuke.class
+            VillagerDuke.class,
+            VillagerLeo.class
     );
 
     @Override

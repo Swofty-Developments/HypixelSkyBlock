@@ -76,7 +76,6 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
         });
 
         SkyBlockItem[] ingredients = recipe.getRecipeDisplay();
-        Logger.info(Arrays.toString(ingredients));
         int slot = 0;
 
         for (int craftSlot : CRAFT_SLOTS) {

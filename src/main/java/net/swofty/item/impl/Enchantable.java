@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface Enchantable {
     boolean showEnchantLores();
-
     List<ItemGroups> getItemGroups();
 }

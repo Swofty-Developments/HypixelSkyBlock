@@ -10,6 +10,8 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointIntegerList;
+import net.swofty.event.value.SkyBlockValueEvent;
+import net.swofty.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
 
@@ -155,9 +157,15 @@ public class PlayerStatistics {
                 if (player.getHealth() > player.getMaxHealth())
                     player.setHealth(player.getMaxHealth());
 
-                if (player.getHealth() <= player.getMaxHealth()) {
-                    player.setHealth((float) Math.min(player.getMaxHealth(), player.getHealth() + 1.5 + ((int) player.getMaxHealth() * 0.01) +
-                            ((1.5 + ((int) player.getMaxHealth() * 0.01)) * player.getStatistics().getHealthRegenerationPercentBonus())));
+                if (player.getHealth() < player.getMaxHealth()) {
+                    float healthToIncreaseBy = (float) (1.5 + ((int) player.getMaxHealth() * 0.01) +
+                            ((1.5 + ((int) player.getMaxHealth() * 0.01)) * player.getStatistics().getHealthRegenerationPercentBonus()));
+
+                    RegenerationValueUpdateEvent event = new RegenerationValueUpdateEvent(player, healthToIncreaseBy);
+                    SkyBlockValueEvent.callValueUpdateEvent(event);
+                    healthToIncreaseBy = (float) event.getValue();
+
+                    player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + healthToIncreaseBy));
                 }
             });
             return TaskSchedule.tick(30);

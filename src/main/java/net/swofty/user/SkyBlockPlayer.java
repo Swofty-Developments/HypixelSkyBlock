@@ -12,7 +12,6 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.network.packet.server.play.SetSlotPacket;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
@@ -28,7 +27,10 @@ import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.event.value.events.MiningValueUpdateEvent;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
+import net.swofty.item.set.ArmorSetRegistry;
+import net.swofty.item.set.impl.ArmorSet;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
@@ -117,6 +119,39 @@ public class SkyBlockPlayer extends Player {
 
     public boolean isCoop() {
         return getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
+    }
+
+    public ArmorSetRegistry getArmorSet() {
+        ItemType helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getItemTypeAsType();
+        ItemType chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getItemTypeAsType();
+        ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getItemTypeAsType();
+        ItemType boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getItemTypeAsType();
+
+        if (helmet == null || chestplate == null || leggings == null || boots == null) return null;
+
+        return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
+    }
+
+    public boolean isWearingItem(SkyBlockItem item) {
+        SkyBlockItem[] armor = getArmor();
+
+        for (SkyBlockItem armorItem : armor) {
+            if (armorItem == null) continue;
+            if (armorItem.getAttributeHandler().getItemTypeAsType() == item.getAttributeHandler().getItemTypeAsType()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public SkyBlockItem[] getArmor() {
+        return new SkyBlockItem[] {
+                new SkyBlockItem(getInventory().getHelmet()),
+                new SkyBlockItem(getInventory().getChestplate()),
+                new SkyBlockItem(getInventory().getLeggings()),
+                new SkyBlockItem(getInventory().getBoots())
+        };
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {

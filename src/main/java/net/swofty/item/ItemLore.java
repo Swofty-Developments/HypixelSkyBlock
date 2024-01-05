@@ -6,12 +6,15 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
 import net.swofty.item.impl.*;
+import net.swofty.item.set.ArmorSetRegistry;
+import net.swofty.item.set.impl.ArmorSet;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -118,6 +121,27 @@ public class ItemLore {
                 if (ability.getAbilityCooldownTicks() > 20)
                     addLoreLine("§8Cooldown: §a" + StringUtility.commaify((double) ability.getAbilityCooldownTicks() / 20) + "s");
 
+                addLoreLine(null);
+            }
+
+            // Handle full set abilities
+            if (ArmorSetRegistry.getArmorSet(handler.getItemTypeAsType()) != null) {
+                ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getItemTypeAsType()).getClazz().getDeclaredConstructor().newInstance();
+
+                int wearingAmount = 0;
+                if (player != null && player.isWearingItem(item)) {
+                    for (SkyBlockItem armorItem : player.getArmor()) {
+                        if (armorItem == null) continue;
+                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()) == null) continue;
+                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()).getClazz() == armorSet.getClass()) {
+                            wearingAmount++;
+                        }
+                    }
+                }
+
+                addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/4)");
+                for (String line : StringUtility.splitByWordAndLength(armorSet.getDescription(), 36, "\\s"))
+                    addLoreLine("§7" + line);
                 addLoreLine(null);
             }
 

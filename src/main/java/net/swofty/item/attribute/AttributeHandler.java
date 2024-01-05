@@ -9,10 +9,12 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
 import net.swofty.item.impl.Enchantable;
 import net.swofty.item.impl.Enchanted;
+import net.swofty.item.impl.LeatherColour;
 import net.swofty.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
+import net.minestom.server.color.Color;
 
 public class AttributeHandler {
     SkyBlockItem item;
@@ -29,6 +31,14 @@ public class AttributeHandler {
         if (item.getGenericInstance() == null)
             return false;
         return item.getGenericInstance() instanceof Enchanted;
+    }
+
+    public Color getLeatherColour() {
+        if (item.getGenericInstance() == null)
+            return null;
+        if (item.getGenericInstance() instanceof LeatherColour colour)
+            return colour.getLeatherColour();
+        return null;
     }
 
     public @Nullable ItemType getItemTypeAsType() {

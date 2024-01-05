@@ -3,6 +3,10 @@ package net.swofty.item;
 import net.minestom.server.item.Material;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.impl.CustomSkyBlockItem;
+import net.swofty.item.items.armor.LeafletHat;
+import net.swofty.item.items.armor.LeafletPants;
+import net.swofty.item.items.armor.LeafletSandals;
+import net.swofty.item.items.armor.LeafletTunic;
 import net.swofty.item.items.enchanted.*;
 import net.swofty.item.items.enchantment.EnchantedBook;
 import net.swofty.item.items.farming.RookieHoe;
@@ -27,9 +31,46 @@ public enum ItemType {
     AIR(Material.AIR, Rarity.COMMON),
 
     /**
+     * Farming Props
+     */
+    ROOKIE_HOE(Material.STONE_HOE, Rarity.COMMON, RookieHoe.class),
+    WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON),
+    STONE_HOE(Material.STONE_HOE, Rarity.COMMON),
+    IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
+    DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
+    NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
+
+    /**
+     * Armor Sets
+     */
+    LEAFLET_HAT(Material.OAK_LEAVES, Rarity.COMMON, LeafletHat.class),
+    LEAFLET_TUNIC(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeafletTunic.class),
+    LEAFLET_PANTS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeafletPants.class),
+    LEAFLET_SANDALS(Material.LEATHER_BOOTS, Rarity.COMMON, LeafletSandals.class),
+
+    /**
+     * Pickaxes
+     */
+    PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.SPECIAL, PioneersPickaxe.class),
+    DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
+    IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
+    STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
+    WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
+
+    /**
+     * Swords
+     */
+    HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
+    DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
+    IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
+    STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
+    WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
+
+    /**
      * Vanilla Items
      */
     CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON),
+    OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON),
     STICK(Material.STICK, Rarity.COMMON, Stick.class),
     ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.COMMON),
     BAKED_POTATO(Material.BAKED_POTATO, Rarity.COMMON),
@@ -125,34 +166,6 @@ public enum ItemType {
     ENCHANTED_SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.UNCOMMON, EnchantedSpruceWood.class),
     ENCHANTED_STRING(Material.STRING, Rarity.UNCOMMON, EnchantedString.class),
     ENCHANTED_SUGAR(Material.SUGAR, Rarity.UNCOMMON, EnchantedSugar.class),
-
-    /**
-     * Farming Props
-     */
-    ROOKIE_HOE(Material.STONE_HOE, Rarity.COMMON, RookieHoe.class),
-    WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON),
-    STONE_HOE(Material.STONE_HOE, Rarity.COMMON),
-    IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
-    DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
-    NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
-
-    /**
-     * Pickaxes
-     */
-    PIONEERS_PICKAXE(Material.WOODEN_PICKAXE, Rarity.SPECIAL, PioneersPickaxe.class),
-    DIAMOND_PICKAXE(Material.DIAMOND_PICKAXE, Rarity.UNCOMMON, DiamondPickaxe.class),
-    IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
-    STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
-    WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
-
-    /**
-     * Swords
-     */
-    HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
-    DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
-    IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
-    STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
-    WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
     ;
 
     public final Material material;

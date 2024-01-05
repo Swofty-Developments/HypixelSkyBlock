@@ -1,10 +1,12 @@
 package net.swofty.item.updater;
 
 import lombok.Getter;
+import net.minestom.server.color.Color;
 import net.minestom.server.item.Enchantment;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -16,6 +18,7 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -91,7 +94,20 @@ public class PlayerItemUpdater {
         if (handler.shouldBeEnchanted()) {
             toReturn.meta(meta -> {
                 meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
-                meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+                meta.hideFlag(ItemHideFlag.HIDE_DYE,
+                        ItemHideFlag.HIDE_ATTRIBUTES,
+                        ItemHideFlag.HIDE_ENCHANTS);
+            });
+        }
+
+        Color leatherColour = handler.getLeatherColour();
+        if (leatherColour != null) {
+            toReturn.meta(meta -> {
+                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
+                leatherMeta.color(leatherColour);
+                meta.hideFlag(ItemHideFlag.HIDE_DYE,
+                        ItemHideFlag.HIDE_ATTRIBUTES,
+                        ItemHideFlag.HIDE_ENCHANTS);
             });
         }
 
@@ -106,6 +122,7 @@ public class PlayerItemUpdater {
 
                     ItemStack item = origin.getStack(player);
                     if (item == null) return;
+                    if (item.isAir()) return;
 
                     origin.setStack(player, playerUpdate(player, origin, item).build());
                 });
