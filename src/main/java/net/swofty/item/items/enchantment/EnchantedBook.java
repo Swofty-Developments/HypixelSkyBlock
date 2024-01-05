@@ -41,17 +41,10 @@ public class EnchantedBook implements CustomSkyBlockItem {
 
         Set<String> sourceTypes = enchantments.stream()
                 .flatMap(enchantment -> enchantment.type().getEnch().getGroups().stream())
-                .map(ItemGroups::toString)
+                .map(ItemGroups::getDisplayName)
                 .collect(Collectors.toSet());
 
-        if (sourceTypes.size() == 1) {
-            lore.add("§7Applicable on: §9" + sourceTypes.iterator().next());
-        } else {
-            lore.addAll(StringUtility.splitByWordAndLength(
-                    "§7Applicable on: §9" + String.join("§7, §9", sourceTypes), 36, ",")
-            );
-        }
-
+        lore.add("§7Applicable on: §9" + String.join("§7, §9", sourceTypes));
         lore.add("§7Use this on an item in an Anvil to");
         lore.add("§7apply it!");
 
