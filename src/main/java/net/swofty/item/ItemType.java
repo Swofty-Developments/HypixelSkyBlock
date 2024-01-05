@@ -39,6 +39,7 @@ public enum ItemType {
     IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
     DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
     NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
+    WHEAT(Material.WHEAT, Rarity.COMMON),
 
     /**
      * Armor Sets

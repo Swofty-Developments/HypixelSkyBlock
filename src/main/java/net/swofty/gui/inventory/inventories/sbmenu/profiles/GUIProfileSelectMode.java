@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories.profiles;
+package net.swofty.gui.inventory.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -9,7 +9,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.user.SkyBlockPlayer;
 

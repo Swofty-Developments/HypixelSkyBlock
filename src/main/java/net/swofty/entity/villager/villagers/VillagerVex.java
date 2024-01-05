@@ -4,8 +4,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.NPCVillagerParameters;
-import net.swofty.gui.inventory.inventories.crafting.GUIRecipe;
-import net.swofty.item.ItemType;
 import net.swofty.mission.MissionData;
 
 import java.util.stream.Stream;

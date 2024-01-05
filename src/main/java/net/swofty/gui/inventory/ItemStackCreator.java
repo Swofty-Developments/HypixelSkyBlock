@@ -53,6 +53,10 @@ public class ItemStackCreator {
         return builder.meta(metaToSet);
     }
 
+    public static ItemStack.Builder getStack(String name, Material material, int amount, List<String> lore) {
+        return getStack(name, material, (short) 0, amount, lore);
+    }
+
     public static ItemStack.Builder getStack(String name, Material material, int data, int amount, List<String> lore) {
         List<String> copiedLore = new ArrayList<>();
         for (String s : lore) {

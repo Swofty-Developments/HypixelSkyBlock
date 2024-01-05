@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories;
+package net.swofty.gui.inventory.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -18,13 +18,11 @@ import net.swofty.mission.SkyBlockMission;
 import net.swofty.mission.SkyBlockProgressMission;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIMissionLog extends SkyBlockInventoryGUI {
     private static final int[] MISSION_SLOTS = {

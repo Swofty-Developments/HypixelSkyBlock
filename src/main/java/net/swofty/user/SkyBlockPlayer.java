@@ -113,6 +113,10 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.SHOPPING_DATA, DatapointShopData.class).getValue();
     }
 
+    public DatapointCollection.PlayerCollection getCollection() {
+        return getDataHandler().get(DataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
+    }
+
     public boolean isOnIsland() {
         return getInstance() != null && getInstance() != SkyBlock.getInstanceContainer();
     }

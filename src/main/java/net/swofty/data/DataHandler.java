@@ -250,6 +250,7 @@ public class DataHandler {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());
         }),
         IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {}),
+        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {}, (player, datapoint) -> {}),
         ;
 
         @Getter

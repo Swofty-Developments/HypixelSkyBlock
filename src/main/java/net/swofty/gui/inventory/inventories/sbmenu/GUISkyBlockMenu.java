@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories;
+package net.swofty.gui.inventory.inventories.sbmenu;
 
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -9,8 +9,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.gui.inventory.inventories.crafting.GUIRecipeBook;
-import net.swofty.gui.inventory.inventories.profiles.GUIProfileManagement;
+import net.swofty.gui.inventory.inventories.sbmenu.collection.GUICollections;
+import net.swofty.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
+import net.swofty.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.user.SkyBlockPlayer;
@@ -84,10 +85,9 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
                 lore.add(" ");
                 lore.add("§eClick to view!");
-                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore.toArray(new String[0]));
+                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore);
             }
         });
-
 
         set(new GUIClickableItem() {
             @Override
@@ -107,6 +107,35 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7and rewards.",
                         " ",
                         "§eClick to view!");
+            }
+        });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUICollections().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 20;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>(List.of(
+                        "§7View all of the items available in",
+                        "§7SkyBlock. Collect more of an item to",
+                        "§7unlock rewards on your way to",
+                        "§7becoming a master of SkyBlock!",
+                        " "
+                ));
+
+                player.getCollection().getDisplay(lore);
+
+                lore.add(" ");
+                lore.add("§eClick to view!");
+                return ItemStackCreator.getStack("§aCollections", Material.PAINTING, 1, lore.toArray(new String[0]));
             }
         });
 

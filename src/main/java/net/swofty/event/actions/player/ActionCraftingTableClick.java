@@ -1,14 +1,12 @@
 package net.swofty.event.actions.player;
 
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.gui.inventory.inventories.GUICrafting;
-import net.swofty.gui.inventory.inventories.GUIEnchantmentTable;
+import net.swofty.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles clicking on the crafting table",

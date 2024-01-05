@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories.profiles;
+package net.swofty.gui.inventory.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
@@ -10,23 +10,16 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointDouble;
-import net.swofty.data.datapoints.DatapointLong;
 import net.swofty.data.datapoints.DatapointString;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
-import net.swofty.utility.StringUtility;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class GUIProfileCreate extends SkyBlockInventoryGUI {

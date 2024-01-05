@@ -2,12 +2,11 @@ package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.gui.inventory.inventories.GUICrafting;
+import net.swofty.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles opening the crafting menu when interacting with the vanilla one",

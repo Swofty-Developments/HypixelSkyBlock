@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories.profiles;
+package net.swofty.gui.inventory.inventories.sbmenu.profiles;
 
 import com.mongodb.client.model.Filters;
 import lombok.SneakyThrows;

@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories.profiles;
+package net.swofty.gui.inventory.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -7,7 +7,6 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.data.datapoints.DatapointDouble;
@@ -17,11 +16,9 @@ import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
+import net.swofty.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.impl.SkyBlockRecipe;
-import net.swofty.item.impl.recipes.ShapedRecipe;
-import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
 import net.swofty.utility.StringUtility;

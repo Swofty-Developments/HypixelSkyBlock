@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories.crafting;
+package net.swofty.gui.inventory.inventories.sbmenu.crafting;
 
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -18,11 +18,8 @@ import net.swofty.item.impl.Craftable;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};

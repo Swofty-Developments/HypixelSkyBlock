@@ -1,4 +1,4 @@
-package net.swofty.gui.inventory.inventories;
+package net.swofty.gui.inventory.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;

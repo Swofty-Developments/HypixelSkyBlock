@@ -1,6 +1,6 @@
 package net.swofty.item.items.miscellaneous;
 
-import net.swofty.gui.inventory.inventories.GUISkyBlockMenu;
+import net.swofty.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.item.impl.Interactable;
