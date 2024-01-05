@@ -1,6 +1,5 @@
 package net.swofty.entity.villager;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
@@ -59,6 +58,7 @@ public abstract class NPCVillagerDialogue extends SkyBlockVillagerNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines) { }
+    public record DialogueSet(String key, String[] lines) {
+    }
 
 }

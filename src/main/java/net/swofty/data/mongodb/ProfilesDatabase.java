@@ -7,7 +7,9 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public record ProfilesDatabase(String id) implements MongoDB {
     public static MongoClient client;

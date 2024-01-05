@@ -6,13 +6,13 @@ import net.swofty.item.impl.Enchanted;
 import net.swofty.item.impl.SkyBlockRecipe;
 
 public class EnchantedPumpkin implements Enchanted {
-      @Override
-      public ItemType getCraftingMaterial() {
-            return ItemType.PUMPKIN;
-      }
+    @Override
+    public ItemType getCraftingMaterial() {
+        return ItemType.PUMPKIN;
+    }
 
-      @Override
-      public SkyBlockRecipe.RecipeType getRecipeType() {
-            return SkyBlockRecipe.RecipeType.FARMING;
-      }
+    @Override
+    public SkyBlockRecipe.RecipeType getRecipeType() {
+        return SkyBlockRecipe.RecipeType.FARMING;
+    }
 }

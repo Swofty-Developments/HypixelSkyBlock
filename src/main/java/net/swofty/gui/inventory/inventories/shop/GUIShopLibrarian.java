@@ -1,7 +1,6 @@
 package net.swofty.gui.inventory.inventories.shop;
 
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;

@@ -1,7 +1,6 @@
 package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;

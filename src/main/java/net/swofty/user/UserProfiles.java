@@ -26,7 +26,8 @@ public class UserProfiles {
         profilesCache.put(playerUuid, this);
     }
 
-    public UserProfiles() {}
+    public UserProfiles() {
+    }
 
     public void addProfile(UUID profile) {
         profiles.add(profile);

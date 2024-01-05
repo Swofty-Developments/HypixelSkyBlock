@@ -10,8 +10,8 @@ import net.swofty.item.items.armor.LeafletTunic;
 import net.swofty.item.items.enchanted.*;
 import net.swofty.item.items.enchantment.EnchantedBook;
 import net.swofty.item.items.farming.RookieHoe;
-import net.swofty.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.item.items.mining.PioneersPickaxe;
+import net.swofty.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.item.items.mining.vanilla.WoodenPickaxe;
@@ -23,6 +23,7 @@ import net.swofty.item.items.weapon.vanilla.IronSword;
 import net.swofty.item.items.weapon.vanilla.StoneSword;
 import net.swofty.item.items.weapon.vanilla.WoodenSword;
 import net.swofty.utility.StringUtility;
+import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
@@ -199,12 +200,16 @@ public enum ItemType {
         return StringUtility.toNormalCase(this.name());
     }
 
-    public static ItemType get(String s) {
+    public static ItemType get(String name) {
         try {
-            return ItemType.valueOf(s);
+            return ItemType.valueOf(name);
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static @Nullable ItemType fromMaterial(Material material) {
+        return new SkyBlockItem(material).getAttributeHandler().getItemTypeAsType();
     }
 
     public static boolean isVanillaReplaced(String item) {

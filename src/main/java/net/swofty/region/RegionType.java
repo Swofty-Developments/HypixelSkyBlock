@@ -3,6 +3,7 @@ package net.swofty.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.region.mining.configurations.MineCoalConfiguration;
+import net.swofty.region.mining.configurations.MineWheatConfiguration;
 
 @Getter
 public enum RegionType {
@@ -10,7 +11,7 @@ public enum RegionType {
     VILLAGE("Village"),
     MOUNTAIN("Mountain"),
     FOREST("Forest"),
-    FARM("Farm"),
+    FARM("Farm", MineWheatConfiguration.class),
     RUINS("Ruins"),
     COLOSSEUM("Colosseum"),
     GRAVEYARD("Graveyard", "§c"),
@@ -71,7 +72,7 @@ public enum RegionType {
 
     private final String name;
     private final String color;
-    private SkyBlockMiningConfiguration miningHandler;
+    private final SkyBlockMiningConfiguration miningHandler;
 
     @SneakyThrows
     RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {

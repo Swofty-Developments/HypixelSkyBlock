@@ -1,7 +1,6 @@
 package net.swofty.event.custom;
 
 import lombok.Getter;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.swofty.user.SkyBlockIsland;
 

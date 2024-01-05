@@ -8,14 +8,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.swofty.SkyBlock;
-import net.swofty.data.DataHandler;
 import net.swofty.user.SkyBlockPlayer;
 import org.bson.Document;
-import org.w3c.dom.UserDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class CoopDatabase {
@@ -77,7 +74,8 @@ public class CoopDatabase {
         return new Coop(UUID.randomUUID(), originator, new ArrayList<>(), new ArrayList<>(List.of(originator)), new ArrayList<>());
     }
 
-    public record Coop(UUID coopUUID, UUID originator, List<UUID> members, List<UUID> memberInvites, List<UUID> memberProfiles) {
+    public record Coop(UUID coopUUID, UUID originator, List<UUID> members, List<UUID> memberInvites,
+                       List<UUID> memberProfiles) {
         public boolean isOriginator(UUID uuid) {
             return uuid.equals(originator);
         }

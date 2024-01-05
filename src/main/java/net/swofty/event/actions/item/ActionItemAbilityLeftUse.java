@@ -3,7 +3,6 @@ package net.swofty.event.actions.item;
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerHandAnimationEvent;
-import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;

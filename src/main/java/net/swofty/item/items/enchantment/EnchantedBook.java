@@ -2,7 +2,6 @@ package net.swofty.item.items.enchantment;
 
 import com.mongodb.lang.Nullable;
 import net.swofty.enchantment.SkyBlockEnchantment;
-import net.swofty.enchantment.EnchantmentSource;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;

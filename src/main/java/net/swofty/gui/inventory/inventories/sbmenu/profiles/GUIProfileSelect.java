@@ -24,7 +24,7 @@ import net.swofty.user.UserProfiles;
 import java.util.UUID;
 
 public class GUIProfileSelect extends SkyBlockInventoryGUI {
-    private UUID profileUuid;
+    private final UUID profileUuid;
 
     public GUIProfileSelect(UUID profileUuid) {
         super("Profile Management", InventoryType.CHEST_4_ROW);
@@ -110,8 +110,8 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
 
                 player.sendMessage(
                         "§aDone! Your §e"
-                        + handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
-                        + " §aprofile was deleted!");
+                                + handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                                + " §aprofile was deleted!");
 
                 ProfilesDatabase.collection.deleteOne(Filters.eq("_id", profileUuid.toString()));
 

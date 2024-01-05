@@ -2,11 +2,11 @@ package net.swofty.collection;
 
 import lombok.Getter;
 import net.swofty.collection.collections.FarmingCollection;
+import net.swofty.item.ItemType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
@@ -20,11 +20,16 @@ public enum CollectionCategories {
         this.clazz = clazz;
     }
 
+    public static CollectionCategory getCategory(ItemType type) {
+        return getCategories().stream().filter(category -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)).findFirst().orElse(null);
+    }
+
     public static ArrayList<CollectionCategory> getCategories() {
         return new ArrayList<>(Arrays.stream(values()).map(CollectionCategories::getClazz).map(clazz -> {
             try {
                 return clazz.getDeclaredConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return null;

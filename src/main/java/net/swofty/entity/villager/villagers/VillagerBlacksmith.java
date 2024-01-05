@@ -7,6 +7,7 @@ import net.swofty.entity.villager.NPCVillagerParameters;
 import net.swofty.gui.inventory.inventories.GUIReforge;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class VillagerBlacksmith extends NPCVillagerDialogue {
     public VillagerBlacksmith() {
@@ -48,8 +49,8 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
 
     @Override
     public NPCVillagerDialogue.DialogueSet[] getDialogueSets() {
-        return Arrays.asList(
-                NPCVillagerDialogue.DialogueSet.builder()
+        return Collections.singletonList(
+                DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
                                 "Hello there, I'm the blacksmith.",
                                 "I can repair your tools for a price.",

@@ -9,12 +9,8 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.IslandFetchedFromDatabaseEvent;
-import net.swofty.event.custom.IslandPlayerLoadedEvent;
-import net.swofty.structure.structures.IslandPortal;
-import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.MathUtility;
 import org.bson.Document;
-import org.tinylog.Logger;
 
 @EventParameters(description = "Handles loading Jerry on the players Island",
         node = EventNodes.CUSTOM,

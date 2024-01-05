@@ -5,7 +5,7 @@ import lombok.Getter;
 import net.swofty.serializer.Serializer;
 
 public abstract class ServerAttribute<T> {
-    private String key;
+    private final String key;
     @Getter
     private T value;
     protected Serializer<T> serializer;

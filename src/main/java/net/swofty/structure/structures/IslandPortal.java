@@ -1,9 +1,7 @@
 package net.swofty.structure.structures;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.structure.SkyBlockStructure;

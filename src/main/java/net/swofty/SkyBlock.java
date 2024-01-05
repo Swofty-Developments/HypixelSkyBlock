@@ -110,7 +110,7 @@ public class SkyBlock {
             sender.sendMessage("§fUnknown command. Type \"/help\" for help. ('" + command + "')");
         });
         loopThroughPackage("net.swofty.command.commands", SkyBlockCommand.class).forEach(command -> {
-                MinecraftServer.getCommandManager().register(command.getCommand());
+            MinecraftServer.getCommandManager().register(command.getCommand());
         });
 
         /**
@@ -152,12 +152,12 @@ public class SkyBlock {
                         .ambientLight(2)
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());
-        
+
         /**
          * Load fairy souls
          */
         FairySoul.cacheFairySouls();
-        
+
         /**
          * Debugging
          */
@@ -221,19 +221,22 @@ public class SkyBlock {
                     try {
                         event.cacheEvent();
                         MissionData.registerMission(event.getClass());
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
         loopThroughPackage("net.swofty.mission.missions", MissionRepeater.class)
                 .forEach((event) -> {
                     try {
                         event.getTask(MinecraftServer.getSchedulerManager());
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
         loopThroughPackage("net.swofty.item.set.sets", SetRepeatable.class)
                 .forEach((event) -> {
                     try {
                         event.getTask(MinecraftServer.getSchedulerManager());
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
         CustomEventCaller.start();
         SkyBlockEvent.register(globalEventHandler);
@@ -242,13 +245,15 @@ public class SkyBlock {
                 .forEach((event) -> {
                     try {
                         event.cacheEvent();
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
         loopThroughPackage("net.swofty.item.set.sets", SkyBlockValueEvent.class)
                 .forEach((event) -> {
                     try {
                         event.cacheEvent();
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
         SkyBlockValueEvent.register();
 
@@ -259,7 +264,8 @@ public class SkyBlock {
                 .forEach(recipe -> {
                     try {
                         recipe.getRecipe().init();
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                    }
                 });
 
         /**
@@ -271,7 +277,7 @@ public class SkyBlock {
         /**
          * Start the server
          */
-		int port = Resources.getOrDefault("port", 25530);
+        int port = Resources.getOrDefault("port", 25530);
         minecraftServer.start("0.0.0.0", port);
         long endTime = System.currentTimeMillis();
         MinecraftServer.setBrandName("SkyBlock");
@@ -296,7 +302,8 @@ public class SkyBlock {
                 .map(subClass -> {
                     try {
                         return clazz.cast(subClass.getDeclaredConstructor().newInstance());
-                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                             InvocationTargetException e) {
                         return null;
                     }
                 })

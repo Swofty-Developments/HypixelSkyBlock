@@ -15,9 +15,9 @@ public enum Rank {
     DEFAULT("§7", false, NamedTextColor.GRAY),
     ;
 
-    private String prefix;
-    private boolean isStaff;
-    private NamedTextColor textColor;
+    private final String prefix;
+    private final boolean isStaff;
+    private final NamedTextColor textColor;
 
     Rank(String prefix, boolean isStaff, NamedTextColor textColor) {
         this.prefix = prefix;

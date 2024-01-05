@@ -3,18 +3,18 @@ package net.swofty.packet;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
-import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.event.player.PlayerPacketOutEvent;
-import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 
 import java.util.ArrayList;
 
 public abstract class SkyBlockPacketServerListener {
-    private static ArrayList<SkyBlockPacketServerListener> cachedEvents = new ArrayList<>();
+    private static final ArrayList<SkyBlockPacketServerListener> cachedEvents = new ArrayList<>();
+
     public abstract Class<? extends ServerPacket> getPacket();
 
     public abstract void run(ServerPacket packet);
+
     public void cacheListener() {
         cachedEvents.add(this);
     }

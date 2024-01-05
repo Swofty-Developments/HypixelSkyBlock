@@ -1,7 +1,5 @@
 package net.swofty.command.commands;
 
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.instance.SharedInstance;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.user.SkyBlockPlayer;

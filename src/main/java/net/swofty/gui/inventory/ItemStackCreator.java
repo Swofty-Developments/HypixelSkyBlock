@@ -4,13 +4,14 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.*;
-import net.minestom.server.item.metadata.PlayerHeadMeta;
-import net.minestom.server.tag.Tag;
 import net.swofty.utility.ExtraItemTags;
 import net.swofty.utility.StringUtility;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ItemStackCreator {

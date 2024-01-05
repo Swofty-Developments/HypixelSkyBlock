@@ -4,11 +4,9 @@ import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.statistics.ItemStatistics;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public interface Enchanted extends CustomSkyBlockItem, Craftable {
     @Override

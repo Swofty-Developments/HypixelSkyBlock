@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ArmorSet {
     String getName();
+
     String getDescription();
 
     default boolean isWearingSet(SkyBlockPlayer player) {

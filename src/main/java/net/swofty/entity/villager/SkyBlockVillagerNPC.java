@@ -6,18 +6,16 @@ import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.SkyBlock;
 import net.swofty.entity.hologram.ServerHolograms;
-import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.MathUtility;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 public abstract class SkyBlockVillagerNPC {
     private static final int LOOK_DISTANCE = 16;
-    private static Map<SkyBlockVillagerNPC, VillagerEntityImpl> villagers = new HashMap();
+    private static final Map<SkyBlockVillagerNPC, VillagerEntityImpl> villagers = new HashMap();
 
     private final NPCVillagerParameters parameters;
     private final String ID;
@@ -80,5 +78,6 @@ public abstract class SkyBlockVillagerNPC {
         return null;
     }
 
-    public record PlayerClickVillagerNPCEvent(SkyBlockPlayer player, SkyBlockVillagerNPC npc) {}
+    public record PlayerClickVillagerNPCEvent(SkyBlockPlayer player, SkyBlockVillagerNPC npc) {
+    }
 }

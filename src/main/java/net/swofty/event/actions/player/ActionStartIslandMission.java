@@ -8,7 +8,6 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.missions.MissionBreakLog;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 @EventParameters(description = "Handles the the starting of the getting started mission",
         node = EventNodes.PLAYER,

@@ -5,16 +5,15 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public enum ServerHolograms {
     TO_ISLAND(new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),
     ;
 
     private static boolean spawned = false;
-    private static ArrayList<ExternalHologram> externalHolograms = new ArrayList<>();
+    private static final ArrayList<ExternalHologram> externalHolograms = new ArrayList<>();
 
-    private Pos pos;
+    private final Pos pos;
     private final String[] text;
 
     ServerHolograms(Pos pos, String... text) {

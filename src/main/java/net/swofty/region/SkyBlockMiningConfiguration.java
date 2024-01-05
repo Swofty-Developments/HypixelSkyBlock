@@ -19,8 +19,11 @@ public abstract class SkyBlockMiningConfiguration {
     public ArrayList<MiningTask> activeMiningTasks = new ArrayList<>();
 
     public abstract MiningTask handleStageOne(MiningTask task, Pos brokenBlock);
+
     public abstract MiningTask handleStageTwo(MiningTask task, Pos brokenBlock);
+
     public abstract List<Material> getMineableBlocks();
+
     public abstract long getRegenerationTime();
 
     public void addToQueue(SkyBlockPlayer player, Pos block, SharedInstance instance) {
@@ -129,7 +132,8 @@ public abstract class SkyBlockMiningConfiguration {
 
     @AllArgsConstructor
     @Builder
-    @Getter @Setter
+    @Getter
+    @Setter
     public static class MiningTask {
         SkyBlockPlayer playerWhoInitiated;
         Pos position;
@@ -146,6 +150,7 @@ public abstract class SkyBlockMiningConfiguration {
         }
     }
 
-    public record RegenerationConfig(int chance, Block block) {}
+    public record RegenerationConfig(int chance, Block block) {
+    }
 
 }

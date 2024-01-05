@@ -3,7 +3,6 @@ package net.swofty.event.custom;
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.region.RegionType;
-import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 

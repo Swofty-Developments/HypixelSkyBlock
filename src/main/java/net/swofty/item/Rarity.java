@@ -1,7 +1,6 @@
 package net.swofty.item;
 
 import lombok.Getter;
-import net.kyori.adventure.text.format.Style;
 
 @Getter
 public enum Rarity {
@@ -44,7 +43,7 @@ public enum Rarity {
     }
 
     public String getDisplay() {
-        return "" + color + "§l" + name().replaceAll("_", " ");
+        return color + "§l" + name().replaceAll("_", " ");
     }
 
     public String getDisplayCaplitalized() {
@@ -52,7 +51,7 @@ public enum Rarity {
     }
 
     public String getBoldedColor() {
-        return "" + color + "§l";
+        return color + "§l";
     }
 
     public static Rarity getRarity(String string) {

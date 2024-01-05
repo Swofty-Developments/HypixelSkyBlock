@@ -4,18 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.recipe.Recipe;
 import net.swofty.SkyBlock;
-import net.swofty.item.ItemType;
-import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.recipes.ShapedRecipe;
 import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -109,5 +104,6 @@ public abstract class SkyBlockRecipe<T> {
         }
     }
 
-    public record CraftingResult(boolean allowed, String[] errorMessage) {}
+    public record CraftingResult(boolean allowed, String[] errorMessage) {
+    }
 }

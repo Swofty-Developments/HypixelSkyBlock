@@ -23,10 +23,15 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     }
 
     protected abstract int[] getPaginatedSlots();
+
     protected abstract PaginationList<T> fillPaged(SkyBlockPlayer player, PaginationList<T> paged);
+
     protected abstract boolean shouldFilterFromSearch(String query, T item);
+
     protected abstract void performSearch(SkyBlockPlayer player, String query, int page, int maxPage);
+
     protected abstract String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<T> paged);
+
     protected abstract GUIClickableItem createItemFor(T item, int slot, SkyBlockPlayer player);
 
     @Override
@@ -66,7 +71,8 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         return new GUIQueryItem() {
 
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {}
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            }
 
             @Override
             public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {

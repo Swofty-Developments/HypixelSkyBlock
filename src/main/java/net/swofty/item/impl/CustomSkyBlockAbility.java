@@ -6,10 +6,15 @@ import net.swofty.user.SkyBlockPlayer;
 
 public interface CustomSkyBlockAbility {
     String getAbilityName();
+
     String getAbilityDescription();
+
     void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem);
+
     int getManaCost();
+
     int getAbilityCooldownTicks();
+
     AbilityActivation getAbilityActivation();
 
     @Getter
@@ -18,7 +23,7 @@ public interface CustomSkyBlockAbility {
         LEFT_CLICK("LEFT CLICK"),
         ;
 
-        private String display;
+        private final String display;
 
         AbilityActivation(String display) {
             this.display = display;

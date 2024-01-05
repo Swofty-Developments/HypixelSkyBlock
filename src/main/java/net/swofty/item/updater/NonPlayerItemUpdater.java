@@ -1,20 +1,14 @@
 package net.swofty.item.updater;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.color.Color;
 import net.minestom.server.item.Enchantment;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
-import net.swofty.item.impl.Enchanted;
-import net.swofty.utility.StringUtility;
 import net.swofty.item.ItemLore;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.item.attribute.AttributeHandler;
-import org.tinylog.Logger;
-import net.minestom.server.color.Color;
+import net.swofty.item.impl.Enchanted;
 
 @Getter
 public class NonPlayerItemUpdater {

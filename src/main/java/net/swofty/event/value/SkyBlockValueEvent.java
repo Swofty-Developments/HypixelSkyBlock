@@ -2,7 +2,6 @@ package net.swofty.event.value;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
-import net.minestom.server.event.GlobalEventHandler;
 
 import java.util.ArrayList;
 

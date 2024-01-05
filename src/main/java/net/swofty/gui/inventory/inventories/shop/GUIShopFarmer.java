@@ -1,7 +1,5 @@
 package net.swofty.gui.inventory.inventories.shop;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.Material;
 import net.swofty.gui.inventory.SkyBlockShopGUI;

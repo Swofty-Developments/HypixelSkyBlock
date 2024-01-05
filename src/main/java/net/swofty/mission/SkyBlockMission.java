@@ -4,7 +4,6 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.region.RegionType;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 

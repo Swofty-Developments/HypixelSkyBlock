@@ -52,7 +52,8 @@ public class SkyBlockItem {
             breakingPower.setValue(0);
 
             // Any other exception must be ignored.
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
 
         ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
         try {
@@ -109,17 +110,20 @@ public class SkyBlockItem {
             // All items re-retrieve their base stats when loaded from an itemstack
             ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
             statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics());
-        } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {}
+        } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {
+        }
     }
 
     public Object getGenericInstance() {
         try {
             return clazz.newInstance();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         try {
             return getAttributeHandler().getItemTypeAsType().clazz.newInstance();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return null;
     }
@@ -129,7 +133,7 @@ public class SkyBlockItem {
         try {
             return ItemType.valueOf(typeAttribute.getValue()).material;
         } catch (IllegalArgumentException e) {
-            if (typeAttribute.getValue().toUpperCase().equals("N/A"))
+            if (typeAttribute.getValue().equalsIgnoreCase("N/A"))
                 return Material.BEDROCK;
             return Material.values().stream().
                     filter(material -> material.name().equalsIgnoreCase("minecraft:" + typeAttribute.getValue().toLowerCase()))

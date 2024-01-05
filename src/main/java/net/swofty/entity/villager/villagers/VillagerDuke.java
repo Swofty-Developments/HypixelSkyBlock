@@ -4,10 +4,8 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.entity.villager.NPCVillagerDialogue;
 import net.swofty.entity.villager.NPCVillagerParameters;
-import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.mission.MissionData;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class VillagerDuke extends NPCVillagerDialogue {

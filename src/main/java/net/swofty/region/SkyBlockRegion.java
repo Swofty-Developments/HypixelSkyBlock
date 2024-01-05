@@ -14,7 +14,7 @@ public class SkyBlockRegion {
     private static final Map<String, SkyBlockRegion> REGION_CACHE = new HashMap<>();
 
     private final String name;
-    private RegionDatabase regionDatabase;
+    private final RegionDatabase regionDatabase;
 
     @Setter
     private Pos firstLocation;
@@ -89,7 +89,7 @@ public class SkyBlockRegion {
         double z = location.z();
         if (firstLocation == null)
             return false;
-        return  x >= (double) bounds.get(0) && x <= (double) bounds.get(1) &&
+        return x >= (double) bounds.get(0) && x <= (double) bounds.get(1) &&
                 y >= (double) bounds.get(2) && y <= (double) bounds.get(3) &&
                 z >= (double) bounds.get(4) && z <= (double) bounds.get(5);
     }

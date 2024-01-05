@@ -6,7 +6,6 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.IslandFirstCreatedEvent;
-import org.tinylog.Logger;
 
 @EventParameters(description = "Handles creating Jerry on the players Island",
         node = EventNodes.CUSTOM,

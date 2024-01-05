@@ -2,8 +2,6 @@ package net.swofty.gui.inventory.item;
 
 import com.mongodb.lang.Nullable;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.swofty.gui.SkyBlockAnvilGUI;
-import net.swofty.gui.SkyBlockSignGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.user.SkyBlockPlayer;
 

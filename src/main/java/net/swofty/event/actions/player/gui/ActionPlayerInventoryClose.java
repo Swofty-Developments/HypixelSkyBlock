@@ -2,11 +2,9 @@ package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.inventory.InventoryType;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.gui.SkyBlockAnvilGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.user.SkyBlockPlayer;
 

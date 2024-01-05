@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.region.RegionType;
-import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class PlayerValues {

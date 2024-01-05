@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class SkyBlockServerAttributes {
-    private static Map<Attributes, ServerAttribute> serverAttributes = new HashMap<>();
+    private static final Map<Attributes, ServerAttribute> serverAttributes = new HashMap<>();
 
     public static void loadAttributes(Document document) throws JsonProcessingException {
         Arrays.stream(Attributes.values()).forEach(data -> {
@@ -71,7 +71,6 @@ public class SkyBlockServerAttributes {
         CALENDER_ELAPSED_TIME("elapsed", AttributeLong.class, new AttributeLong("elapsed", 0L), (attribute) -> {
             SkyBlockCalendar.setElapsed((Long) attribute.getValue());
         }, (server) -> new AttributeLong("elapsed", SkyBlockCalendar.getElapsed()));
-        ;
 
         @Getter
         private final String key;

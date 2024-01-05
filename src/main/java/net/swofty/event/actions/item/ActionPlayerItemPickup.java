@@ -1,10 +1,7 @@
 package net.swofty.event.actions.item;
 
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
-import net.swofty.SkyBlock;
 import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;

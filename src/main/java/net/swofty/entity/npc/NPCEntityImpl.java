@@ -18,7 +18,7 @@ import java.util.UUID;
 public class NPCEntityImpl extends Entity {
     @Getter
     private ArrayList<SkyBlockPlayer> inRangeOf = new ArrayList<>();
-    private ArrayList<Player> packetsSent = new ArrayList<>();
+    private final ArrayList<Player> packetsSent = new ArrayList<>();
     private final String username;
 
     private final String skinTexture;
@@ -81,6 +81,7 @@ public class NPCEntityImpl extends Entity {
 
     /**
      * Clears the cache for a player, is only run on quit, {@see QuitAction.java}
+     *
      * @param player
      */
     public void clearCache(SkyBlockPlayer player) {

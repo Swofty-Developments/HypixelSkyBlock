@@ -31,7 +31,6 @@ public class ActionRegionChangeDisplay extends SkyBlockEvent {
                     .display(regionChangeEvent.getTo().getColor() + " ⏣ " + regionChangeEvent.getTo().getName())
                     .build(), StatisticDisplayReplacement.DisplayType.DEFENSE
             );
-            return;
         }
     }
 }

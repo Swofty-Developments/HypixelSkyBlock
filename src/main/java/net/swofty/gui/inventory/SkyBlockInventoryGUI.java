@@ -1,23 +1,19 @@
 package net.swofty.gui.inventory;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 @Getter
 public abstract class SkyBlockInventoryGUI {

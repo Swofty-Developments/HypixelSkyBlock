@@ -81,7 +81,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
                                 "§cpunished.",
                                 " ",
                                 "§eClick to create solo profile!"
-                                );
+                        );
                     }
 
                     @Override

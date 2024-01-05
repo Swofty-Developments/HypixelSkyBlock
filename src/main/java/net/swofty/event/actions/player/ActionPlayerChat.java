@@ -8,8 +8,8 @@ import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @EventParameters(description = "Handles chat stuff",
         node = EventNodes.PLAYER,

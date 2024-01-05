@@ -8,7 +8,6 @@ import net.minestom.server.event.player.PlayerSkinInitEvent;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import org.tinylog.Logger;
 
 @EventParameters(description = "Sets the players skin when init",
         node = EventNodes.PLAYER,

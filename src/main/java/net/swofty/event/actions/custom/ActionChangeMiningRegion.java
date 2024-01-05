@@ -8,7 +8,6 @@ import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.region.RegionType;
-import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.Groups;
 

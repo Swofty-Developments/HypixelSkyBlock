@@ -2,9 +2,6 @@ package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.AbstractInventory;
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.ClickType;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
@@ -18,7 +15,6 @@ import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.Interactable;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 @EventParameters(description = "Handles when a player clicks on an InventoryGUI",
         node = EventNodes.PLAYER,
@@ -81,13 +77,11 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                     return;
                 }
 
-                if (item instanceof GUIClickableItem) {
-                    GUIClickableItem clickable = (GUIClickableItem) item;
+                if (item instanceof GUIClickableItem clickable) {
                     clickable.run(inventoryClick, player);
                 }
 
-                if (item instanceof GUIQueryItem) {
-                    GUIQueryItem query = (GUIQueryItem) item;
+                if (item instanceof GUIQueryItem query) {
 
                     gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
 
@@ -103,8 +97,8 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
     public boolean isHotKey(InventoryPreClickEvent inventoryClick) {
         return inventoryClick.getClickType().equals(ClickType.LEFT_DRAGGING) ||
-                inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK)   ||
-                inventoryClick.getClickType().equals(ClickType.START_SHIFT_CLICK)   ||
+                inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK) ||
+                inventoryClick.getClickType().equals(ClickType.START_SHIFT_CLICK) ||
                 inventoryClick.getClickType().equals(ClickType.RIGHT_DRAGGING);
     }
 }

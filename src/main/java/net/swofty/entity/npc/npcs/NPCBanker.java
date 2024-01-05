@@ -5,7 +5,6 @@ import net.swofty.entity.npc.NPCParameters;
 import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.gui.inventory.inventories.GUIBanker;
 import net.swofty.mission.MissionData;
-import net.swofty.user.SkyBlockPlayer;
 
 public class NPCBanker extends SkyBlockNPC {
     public NPCBanker() {

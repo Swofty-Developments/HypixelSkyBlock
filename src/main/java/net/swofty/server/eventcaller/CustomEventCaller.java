@@ -4,8 +4,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
-import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.AbstractMap;
@@ -14,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomEventCaller {
-    private static Map<SkyBlockPlayer, PlayerValues> playerValuesCache = new HashMap<>();
+    private static final Map<SkyBlockPlayer, PlayerValues> playerValuesCache = new HashMap<>();
     private static ServerValues serverValuesCache = null;
 
     public static void start() {

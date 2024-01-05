@@ -2,7 +2,6 @@ package net.swofty.item;
 
 import lombok.Getter;
 import net.swofty.user.statistics.ItemStatistic;
-import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -60,6 +59,7 @@ public enum ReforgeType {
             }
         }
 
-        public record ReforgeSet(ItemStatistic statistic, Function<Integer, Double> bonusCalculation) {}
+        public record ReforgeSet(ItemStatistic statistic, Function<Integer, Double> bonusCalculation) {
+        }
     }
 }

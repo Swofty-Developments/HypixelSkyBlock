@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
     @Override
-    public SkyBlockItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public SkyBlockItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode node = p.getCodec().readTree(p);
         SkyBlockItem item = new SkyBlockItem(Material.AIR); // Start with a base SkyBlockItem
 

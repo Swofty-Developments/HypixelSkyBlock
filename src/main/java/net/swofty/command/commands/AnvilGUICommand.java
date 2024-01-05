@@ -5,8 +5,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.gui.SkyBlockAnvilGUI;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "anvilgraphicaluserinterface",
         description = "Opens a graphical user interface",

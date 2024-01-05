@@ -1,7 +1,6 @@
 package net.swofty.item.attribute.attributes;
 
 import net.swofty.enchantment.SkyBlockEnchantment;
-import net.swofty.item.Rarity;
 import net.swofty.item.attribute.ItemAttribute;
 
 import java.util.ArrayList;

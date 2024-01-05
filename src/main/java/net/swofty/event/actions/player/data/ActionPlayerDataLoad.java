@@ -8,9 +8,7 @@ import net.minestom.server.event.player.PlayerLoginEvent;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
-import net.swofty.data.datapoints.DatapointString;
 import net.swofty.data.mongodb.CoopDatabase;
-import net.swofty.data.mongodb.UserDatabase;
 import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.event.EventException;
 import net.swofty.event.EventNodes;
@@ -19,7 +17,6 @@ import net.swofty.event.SkyBlockEvent;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
 import org.bson.Document;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.UUID;

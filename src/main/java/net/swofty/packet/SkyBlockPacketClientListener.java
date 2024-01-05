@@ -11,7 +11,8 @@ import net.swofty.user.SkyBlockPlayer;
 import java.util.ArrayList;
 
 public abstract class SkyBlockPacketClientListener {
-    private static ArrayList<SkyBlockPacketClientListener> cachedEvents = new ArrayList<>();
+    private static final ArrayList<SkyBlockPacketClientListener> cachedEvents = new ArrayList<>();
+
     public abstract Class<? extends ClientPacket> getPacket();
 
     public abstract void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player);

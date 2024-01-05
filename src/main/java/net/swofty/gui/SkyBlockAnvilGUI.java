@@ -1,7 +1,6 @@
 package net.swofty.gui;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -9,7 +8,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.swofty.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class SkyBlockAnvilGUI {

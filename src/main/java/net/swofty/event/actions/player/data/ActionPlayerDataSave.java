@@ -13,7 +13,6 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.Map;

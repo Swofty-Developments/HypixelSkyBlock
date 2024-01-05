@@ -2,11 +2,11 @@ package net.swofty.command.commands;
 
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
+import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
-import net.swofty.item.attribute.AttributeHandler;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "recomb",
         description = "Recombobulates the item in the players hand",

@@ -1,6 +1,5 @@
 package net.swofty.gui.inventory.inventories;
 
-import lombok.SneakyThrows;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -9,7 +8,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
-import net.swofty.enchantment.EnchantmentType;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
@@ -22,7 +20,6 @@ import net.swofty.item.impl.Reforgable;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.MathUtility;
-import net.swofty.utility.StringUtility;
 
 import java.util.HashMap;
 import java.util.Map;

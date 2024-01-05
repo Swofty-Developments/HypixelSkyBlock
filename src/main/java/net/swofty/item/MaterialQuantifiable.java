@@ -4,7 +4,6 @@ import com.mongodb.annotations.Immutable;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.user.SkyBlockIsland;
 
 @Immutable
 @Getter
@@ -37,8 +36,7 @@ public class MaterialQuantifiable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof MaterialQuantifiable)) return false;
-        MaterialQuantifiable material = (MaterialQuantifiable) o;
+        if (!(o instanceof MaterialQuantifiable material)) return false;
         return material.material == this.material && material.amount == this.amount;
     }
 

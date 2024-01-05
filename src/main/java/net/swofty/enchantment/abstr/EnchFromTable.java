@@ -4,20 +4,21 @@ import java.util.Map;
 
 public interface EnchFromTable {
 
-	TableLevels getLevelsFromTableToApply();
-	int getRequiredBookshelfPower();
+    TableLevels getLevelsFromTableToApply();
 
-	record TableLevels(Map<Integer, Integer> levelsFromTableToApply) {
-		public int get(int level) {
-			return levelsFromTableToApply.get(level);
-		}
+    int getRequiredBookshelfPower();
 
-		public int minimumLevel() {
-			return levelsFromTableToApply.keySet().stream().min(Integer::compareTo).orElseThrow();
-		}
+    record TableLevels(Map<Integer, Integer> levelsFromTableToApply) {
+        public int get(int level) {
+            return levelsFromTableToApply.get(level);
+        }
 
-		public int maximumLevel() {
-			return levelsFromTableToApply.keySet().stream().max(Integer::compareTo).orElseThrow();
-		}
-	}
+        public int minimumLevel() {
+            return levelsFromTableToApply.keySet().stream().min(Integer::compareTo).orElseThrow();
+        }
+
+        public int maximumLevel() {
+            return levelsFromTableToApply.keySet().stream().max(Integer::compareTo).orElseThrow();
+        }
+    }
 }

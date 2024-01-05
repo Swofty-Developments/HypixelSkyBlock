@@ -2,11 +2,9 @@ package net.swofty.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.item.SkyBlockItem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,5 +22,6 @@ public class SkyBlockInventory {
     @Setter
     private SkyBlockItem boots = new SkyBlockItem(Material.AIR);
 
-    public SkyBlockInventory() {}
+    public SkyBlockInventory() {
+    }
 }

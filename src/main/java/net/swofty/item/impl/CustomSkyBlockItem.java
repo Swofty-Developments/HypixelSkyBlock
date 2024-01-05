@@ -5,7 +5,6 @@ import net.swofty.item.SkyBlockItem;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface CustomSkyBlockItem {

@@ -12,7 +12,6 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
-import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointString;
 import net.swofty.data.datapoints.DatapointUUID;
 import net.swofty.data.mongodb.CoopDatabase;
@@ -25,7 +24,6 @@ import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.UserProfiles;
-import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.List;

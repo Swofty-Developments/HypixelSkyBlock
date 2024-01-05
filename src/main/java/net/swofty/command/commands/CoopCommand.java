@@ -6,7 +6,6 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.SkyBlock;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
-import net.swofty.data.DataHandler;
 import net.swofty.data.mongodb.CoopDatabase;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
@@ -47,7 +46,7 @@ public class CoopCommand extends SkyBlockCommand {
                 return;
             }
 
-            if (Arrays.stream(players).anyMatch(player1 ->  {
+            if (Arrays.stream(players).anyMatch(player1 -> {
                 return SkyBlock.getLoadedPlayers().stream().map(SkyBlockPlayer::getUsername).noneMatch(player1::equalsIgnoreCase);
             })) {
                 player.sendMessage("§b[Co-op] §cOne or more of the players you specified are not online!");
@@ -86,8 +85,8 @@ public class CoopCommand extends SkyBlockCommand {
                 invitedPlayer.sendMessage("§b----------------------------------------");
                 invitedPlayer.sendMessage(player.getFullDisplayName() + " §einvited you to a SkyBlock co-op!");
                 invitedPlayer.sendMessage(Component.text("§6Click here §eto view!")
-                                .hoverEvent(Component.text("§eClick here to view the invite"))
-                                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
+                        .hoverEvent(Component.text("§eClick here to view the invite"))
+                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
                 invitedPlayer.sendMessage("§b----------------------------------------");
             });
 

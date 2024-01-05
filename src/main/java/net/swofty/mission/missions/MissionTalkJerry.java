@@ -2,16 +2,12 @@ package net.swofty.mission.missions;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
-import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.SchedulerManager;
-import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.custom.JerryClickedEvent;
-import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.mission.MissionData;
-import net.swofty.mission.MissionRepeater;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.RegionType;
 import net.swofty.user.SkyBlockPlayer;
@@ -53,7 +49,7 @@ public class MissionTalkJerry extends SkyBlockMission {
         player.sendMessage("§e[NPC] Jerry§f: Your SkyBlock island is part of a much larger universe.");
         scheduler.scheduleTask(() -> {
             player.sendMessage("§e[NPC] Jerry§f: The SkyBlock universe is full of islands to explore and resources to discover!");
-        }, TaskSchedule.tick(20 * 1), TaskSchedule.stop());
+        }, TaskSchedule.tick(20), TaskSchedule.stop());
         scheduler.scheduleTask(() -> {
             player.sendMessage("§e[NPC] Jerry§f: Use the §dPortal§f to warp to the first of those islands - the SkyBlock Hub!");
         }, TaskSchedule.tick(20 * 2), TaskSchedule.stop());

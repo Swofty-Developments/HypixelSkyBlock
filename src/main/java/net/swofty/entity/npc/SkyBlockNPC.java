@@ -3,7 +3,6 @@ package net.swofty.entity.npc;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
-import net.minestom.server.network.packet.server.play.EntityPositionAndRotationPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.SkyBlock;
 import net.swofty.entity.hologram.ServerHolograms;
@@ -52,9 +51,9 @@ public abstract class SkyBlockNPC {
 
         npcs.put(this, entity);
     }
-    
+
     public void sendMessage(SkyBlockPlayer player, String message) {
-        player.sendMessage("§e[NPC] "+getName()+": §f"+message);
+        player.sendMessage("§e[NPC] " + getName() + ": §f" + message);
     }
 
     public static SkyBlockNPC getFromImpl(NPCEntityImpl impl) {
@@ -105,5 +104,6 @@ public abstract class SkyBlockNPC {
         });
     }
 
-    public record PlayerClickNPCEvent(SkyBlockPlayer player, int entityId, SkyBlockNPC npc) {}
+    public record PlayerClickNPCEvent(SkyBlockPlayer player, int entityId, SkyBlockNPC npc) {
+    }
 }

@@ -1,14 +1,8 @@
 package net.swofty.event.actions.player.data;
 
 import lombok.SneakyThrows;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
-import net.minestom.server.scoreboard.Team;
-import net.minestom.server.scoreboard.TeamBuilder;
-import net.minestom.server.timer.TaskSchedule;
-import net.swofty.SkyBlock;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.data.datapoints.DatapointString;
@@ -18,10 +12,9 @@ import net.swofty.entity.npc.SkyBlockNPC;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.user.SkyBlockIsland;
+import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.CustomGroups;
 import net.swofty.user.categories.Rank;
-import net.swofty.user.SkyBlockPlayer;
 
 import java.util.UUID;
 

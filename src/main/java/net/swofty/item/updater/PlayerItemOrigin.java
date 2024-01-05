@@ -14,16 +14,15 @@ public enum PlayerItemOrigin {
         if (player.getOpenInventory() == null)
             return entry.getKey().getItemInMainHand();
         return null;
-    }, (player, entry) -> player.setItemInMainHand(entry.getKey()),true),
-    OFF_HAND((entry) -> entry.getKey().getItemInOffHand(), (player, entry) -> player.setItemInOffHand(entry.getKey()),true),
-    HELMET((entry) -> entry.getKey().getHelmet(), (player, entry) -> player.setHelmet(entry.getKey()),true),
-    CHESTPLATE((entry) -> entry.getKey().getChestplate(), (player, entry) -> player.setChestplate(entry.getKey()),true),
-    LEGGINGS((entry) -> entry.getKey().getLeggings(), (player, entry) -> player.setLeggings(entry.getKey()),true),
-    BOOTS((entry) -> entry.getKey().getBoots(), (player, entry) -> player.setBoots(entry.getKey()),true),
+    }, (player, entry) -> player.setItemInMainHand(entry.getKey()), true),
+    OFF_HAND((entry) -> entry.getKey().getItemInOffHand(), (player, entry) -> player.setItemInOffHand(entry.getKey()), true),
+    HELMET((entry) -> entry.getKey().getHelmet(), (player, entry) -> player.setHelmet(entry.getKey()), true),
+    CHESTPLATE((entry) -> entry.getKey().getChestplate(), (player, entry) -> player.setChestplate(entry.getKey()), true),
+    LEGGINGS((entry) -> entry.getKey().getLeggings(), (player, entry) -> player.setLeggings(entry.getKey()), true),
+    BOOTS((entry) -> entry.getKey().getBoots(), (player, entry) -> player.setBoots(entry.getKey()), true),
     INVENTORY_SLOT((entry) -> entry.getKey().getInventory().getItemStack((Integer) entry.getValue()),
             (player, entry) -> player.getInventory().setItemStack((Integer) entry.getValue(), entry.getKey()),
-            false)
-    ;
+            false);
 
     private final Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever;
     private final BiConsumer<SkyBlockPlayer, Map.Entry<ItemStack, Object>> setter;

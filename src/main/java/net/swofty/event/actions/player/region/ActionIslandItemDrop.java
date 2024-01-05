@@ -3,18 +3,14 @@ package net.swofty.event.actions.player.region;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.CustomBlockBreak;
+import net.swofty.event.custom.CustomBlockBreakEvent;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.region.RegionType;
-import net.swofty.region.SkyBlockMiningConfiguration;
-import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles item drops on the Island",
@@ -34,11 +30,11 @@ public class ActionIslandItemDrop extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
         Block block = playerBreakEvent.getBlock();
-        Material material = Material.fromNamespaceId(block.name().toString());
+        Material material = Material.fromNamespaceId(block.name());
 
         if (material == null) return;
 
-        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreak(
+        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
                 player, block, playerBreakEvent.getBlockPosition()
         ));
 

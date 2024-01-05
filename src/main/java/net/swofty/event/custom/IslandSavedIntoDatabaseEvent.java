@@ -1,12 +1,8 @@
 package net.swofty.event.custom;
 
 import lombok.Getter;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.user.SkyBlockIsland;
-import net.swofty.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;

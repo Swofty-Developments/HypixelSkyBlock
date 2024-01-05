@@ -27,7 +27,7 @@ public class ExtraItemTags {
             public @Nullable SkullOwner read(@NotNull TagReadable reader) {
                 String name = reader.getTag(NAME_TAG);
                 if (name == null) return null;
-                
+
                 UUID uuid = reader.getTag(UUID_TAG);
                 PlayerSkin skin = null;
                 var props = (NBTCompound) reader.getTag(PROPERTIES_TAG);

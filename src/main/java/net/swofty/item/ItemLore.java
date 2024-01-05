@@ -5,16 +5,15 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
+import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.impl.*;
 import net.swofty.item.set.ArmorSetRegistry;
 import net.swofty.item.set.impl.ArmorSet;
 import net.swofty.user.SkyBlockPlayer;
-import net.swofty.utility.StringUtility;
-import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
+import net.swofty.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +89,8 @@ public class ItemLore {
                                     " " + StringUtility.getAsRomanNumeral(enchantment.level()));
                             StringUtility.splitByWordAndLength(
                                     "§7" + enchantment.type().getDescription(enchantment.level()),
-                                    34, " ").forEach(this::addLoreLine);});
+                                    34, " ").forEach(this::addLoreLine);
+                        });
 
                     } else {
                         String enchantmentNames = handler.getEnchantments().toList().stream().map(enchantment1 ->
@@ -132,7 +132,8 @@ public class ItemLore {
                 if (player != null && player.isWearingItem(item)) {
                     for (SkyBlockItem armorItem : player.getArmor()) {
                         if (armorItem == null) continue;
-                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()) == null) continue;
+                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()) == null)
+                            continue;
                         if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()).getClazz() == armorSet.getClass()) {
                             wearingAmount++;
                         }

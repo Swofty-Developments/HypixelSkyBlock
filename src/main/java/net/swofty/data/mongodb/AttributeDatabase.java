@@ -2,16 +2,12 @@ package net.swofty.data.mongodb;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.client.*;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
-import net.minestom.server.coordinate.Pos;
-import net.swofty.region.RegionType;
-import net.swofty.region.SkyBlockRegion;
 import org.bson.Document;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AttributeDatabase {
     public static MongoClient client;

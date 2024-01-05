@@ -12,7 +12,6 @@ import net.swofty.data.mongodb.ProfilesDatabase;
 import net.swofty.serializer.Serializer;
 import net.swofty.user.SkyBlockPlayer;
 import org.bson.Document;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

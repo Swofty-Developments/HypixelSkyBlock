@@ -1,17 +1,15 @@
 package net.swofty.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.swofty.data.Datapoint;
 import net.swofty.serializer.Serializer;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointIntegerList extends Datapoint<List<Integer>> {
-	
-	public DatapointIntegerList(String key, ArrayList<Integer> value) {
-		super(key, value, new Serializer<>() {
+
+    public DatapointIntegerList(String key, ArrayList<Integer> value) {
+        super(key, value, new Serializer<>() {
             @Override
             public String serialize(List<Integer> value) {
                 ArrayList<String> list = new ArrayList<>(value.size());
@@ -29,37 +27,37 @@ public class DatapointIntegerList extends Datapoint<List<Integer>> {
                 return list;
             }
         });
-	}
-	
-	public DatapointIntegerList(String key) {
-		this(key, new ArrayList<>());
-	}
-	
-	public void add(Integer value) {
-		List<Integer> current = getValue();
-		current.add(value);
-		setValue(current);
-	}
-	
-	public void remove(Integer value) {
-		List<Integer> current = getValue();
-		current.remove(value);
-		setValue(current);
-	}
-	
-	public boolean has(Integer value) {
-		return getValue().contains(value);
-	}
-	
-	/**
-	 * @param value
-	 * @return true if it was added, false if it wasn't
-	 */
-	public boolean hasOrAdd(Integer value) {
-		if (has(value))
-			return false;
-		add(value);
-		return true;
-	}
-	
+    }
+
+    public DatapointIntegerList(String key) {
+        this(key, new ArrayList<>());
+    }
+
+    public void add(Integer value) {
+        List<Integer> current = getValue();
+        current.add(value);
+        setValue(current);
+    }
+
+    public void remove(Integer value) {
+        List<Integer> current = getValue();
+        current.remove(value);
+        setValue(current);
+    }
+
+    public boolean has(Integer value) {
+        return getValue().contains(value);
+    }
+
+    /**
+     * @param value
+     * @return true if it was added, false if it wasn't
+     */
+    public boolean hasOrAdd(Integer value) {
+        if (has(value))
+            return false;
+        add(value);
+        return true;
+    }
+
 }

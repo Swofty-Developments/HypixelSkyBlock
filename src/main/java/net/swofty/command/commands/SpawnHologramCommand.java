@@ -1,13 +1,14 @@
 package net.swofty.command.commands;
 
-import net.minestom.server.command.builder.arguments.*;
+import net.minestom.server.command.builder.arguments.ArgumentStringArray;
+import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Entity;
 import net.swofty.SkyBlock;
 import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.entity.hologram.HologramEntity;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "spawnholo",
         description = "Rank command",

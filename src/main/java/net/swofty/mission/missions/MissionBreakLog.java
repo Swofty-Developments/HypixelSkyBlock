@@ -4,7 +4,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.item.Material;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
-import net.swofty.event.custom.CustomBlockBreak;
+import net.swofty.event.custom.CustomBlockBreakEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.SkyBlockMission;
 import net.swofty.region.RegionType;
@@ -22,12 +22,12 @@ import java.util.Set;
 public class MissionBreakLog extends SkyBlockMission {
     @Override
     public Class<? extends Event> getEvent() {
-        return CustomBlockBreak.class;
+        return CustomBlockBreakEvent.class;
     }
 
     @Override
     public void run(Event tempEvent) {
-        CustomBlockBreak event = (CustomBlockBreak) tempEvent;
+        CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
         Material material = Material.fromNamespaceId(event.getBlock().namespace());
         MissionData data = event.getPlayer().getMissionData();
 

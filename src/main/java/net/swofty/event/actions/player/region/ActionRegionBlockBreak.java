@@ -5,16 +5,15 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.CustomBlockBreak;
+import net.swofty.event.custom.CustomBlockBreakEvent;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.RegionType;
+import net.swofty.region.SkyBlockMiningConfiguration;
 import net.swofty.region.SkyBlockRegion;
 import net.swofty.user.SkyBlockPlayer;
 
@@ -48,7 +47,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         RegionType type = region.getType();
 
         Block block = playerBreakEvent.getBlock();
-        Material material = Material.fromNamespaceId(block.name().toString());
+        Material material = Material.fromNamespaceId(block.name());
         SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
         if (mining == null || material == null || !mining.getMineableBlocks().contains(material)) {
@@ -56,7 +55,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         }
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
-        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreak(
+        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
                 player, block, playerBreakEvent.getBlockPosition()
         ));
 

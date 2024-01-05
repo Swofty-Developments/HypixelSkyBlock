@@ -1,12 +1,9 @@
 package net.swofty.entity.hologram;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
-import net.swofty.data.DataHandler;
-import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.*;
@@ -17,9 +14,9 @@ import static java.util.stream.Collectors.*;
 public enum PlayerHolograms {
     ;
 
-    private static HashMap<SkyBlockPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();
+    private static final HashMap<SkyBlockPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();
 
-    private Pos pos;
+    private final Pos pos;
     private final Function<SkyBlockPlayer, String[]> displayFunction;
 
     PlayerHolograms(Pos pos, Function<SkyBlockPlayer, String[]> displayFunction) {

@@ -30,12 +30,11 @@ import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.set.ArmorSetRegistry;
-import net.swofty.item.set.impl.ArmorSet;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
-import net.swofty.region.mining.MineableBlock;
 import net.swofty.region.SkyBlockRegion;
+import net.swofty.region.mining.MineableBlock;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.PlayerStatistics;
 import net.swofty.user.statistics.StatisticDisplayReplacement;
@@ -150,7 +149,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public SkyBlockItem[] getArmor() {
-        return new SkyBlockItem[] {
+        return new SkyBlockItem[]{
                 new SkyBlockItem(getInventory().getHelmet()),
                 new SkyBlockItem(getInventory().getChestplate()),
                 new SkyBlockItem(getInventory().getLeggings()),
@@ -164,30 +163,26 @@ public class SkyBlockPlayer extends Player {
                 (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
                         this.defenseDisplayReplacement;
 
-        // Check if the replacement needs to be updated
-        if (currentReplacement == null || currentReplacement.getTicksToLast() > replacement.getTicksToLast()) {
-            // Update the appropriate replacement based on type
-            if (type == StatisticDisplayReplacement.DisplayType.MANA) {
-                this.manaDisplayReplacement = replacement;
-            } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
-                this.defenseDisplayReplacement = replacement;
-            }
-
-            int hashCode = replacement.hashCode();
-
-            MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                StatisticDisplayReplacement scheduledReplacement =
-                        (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
-                                this.defenseDisplayReplacement;
-                if (hashCode == scheduledReplacement.hashCode()) {
-                    if (type == StatisticDisplayReplacement.DisplayType.MANA) {
-                        this.manaDisplayReplacement = null;
-                    } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
-                        this.defenseDisplayReplacement = null;
-                    }
-                }
-            }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
+        if (type == StatisticDisplayReplacement.DisplayType.MANA) {
+            this.manaDisplayReplacement = replacement;
+        } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
+            this.defenseDisplayReplacement = replacement;
         }
+
+        int hashCode = replacement.hashCode();
+
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            StatisticDisplayReplacement scheduledReplacement =
+                    (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
+                            this.defenseDisplayReplacement;
+            if (hashCode == scheduledReplacement.hashCode()) {
+                if (type == StatisticDisplayReplacement.DisplayType.MANA) {
+                    this.manaDisplayReplacement = null;
+                } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
+                    this.defenseDisplayReplacement = null;
+                }
+            }
+        }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
     }
 
     public SkyBlockRegion getRegion() {
@@ -223,7 +218,7 @@ public class SkyBlockPlayer extends Player {
             this.teleport(new Pos(-2.5, 70, -69.5, 180, 0));
             return;
         }
-        
+
         this.setInstance(SkyBlock.getInstanceContainer(), new Pos(-2.5, 70, -69.5, 180, 0));
     }
 

@@ -1,7 +1,6 @@
 package net.swofty.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.inventory.PlayerInventoryItemChangeEvent;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
@@ -28,7 +27,7 @@ public class ActionPlayerClickItemUpdate extends SkyBlockEvent {
 
         if (!SkyBlockItem.isSkyBlockItem(inventoryClick.getNewItem())) {
             player.getInventory().setItemStack(inventoryClick.getSlot(), PlayerItemUpdater.playerUpdate(
-                    player, null, inventoryClick.getNewItem())
+                            player, null, inventoryClick.getNewItem())
                     .build());
         }
     }

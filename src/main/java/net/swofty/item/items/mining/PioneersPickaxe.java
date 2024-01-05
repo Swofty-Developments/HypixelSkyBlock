@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool {
-      @Override
-      public ItemStatistics getStatistics() {
-            return ItemStatistics.builder()
-                    .with(ItemStatistic.MINING_SPEED, 1)
-                    .build();
-      }
+    @Override
+    public ItemStatistics getStatistics() {
+        return ItemStatistics.builder()
+                .with(ItemStatistic.MINING_SPEED, 1)
+                .build();
+    }
 
-      @Override
-      public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-            return new ArrayList<>(Arrays.asList(
-                    "§7§oThe very first pickaxe",
-                    "§7§omodel! Invented by the famous",
-                    "§7§oThomas Pickson."
-            ));
-      }
+    @Override
+    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(Arrays.asList(
+                "§7§oThe very first pickaxe",
+                "§7§omodel! Invented by the famous",
+                "§7§oThomas Pickson."
+        ));
+    }
 
-      @Override
-      public int getBreakingPower() {
-            return 1;
-      }
+    @Override
+    public int getBreakingPower() {
+        return 1;
+    }
 }

@@ -5,8 +5,8 @@ import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.ItemAttribute;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "iteminfo",
         description = "Returns the players held item info",

@@ -7,16 +7,13 @@ import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
-import net.swofty.data.datapoints.DatapointBoolean;
-import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.custom.PlayerRegionChangeEvent;
-import net.swofty.mission.MissionData;
-import net.swofty.mission.SkyBlockProgressMission;
-import net.swofty.utility.StringUtility;
+import net.swofty.calendar.SkyBlockCalendar;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
+import net.swofty.mission.MissionData;
+import net.swofty.mission.SkyBlockProgressMission;
 import net.swofty.region.SkyBlockRegion;
-import net.swofty.calendar.SkyBlockCalendar;
+import net.swofty.utility.StringUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SkyBlockScoreboard {
-    private static Map<UUID, Sidebar> sidebarCache = new HashMap<>();
+    private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
     private static Integer skyblockName = 0;
 
     public static void start() {
@@ -101,6 +98,7 @@ public class SkyBlockScoreboard {
 
         sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
     }
+
     private static String getSidebarName(int counter, boolean isGuest) {
         String baseText = "SKYBLOCK";
         String[] colors = {"§f§l", "§6§l", "§e§l"};
@@ -109,7 +107,7 @@ public class SkyBlockScoreboard {
 
         if (counter > 0 && counter <= 8) {
             return colors[0] + baseText.substring(0, counter - 1) +
-                    colors[1] + baseText.substring(counter - 1, counter) +
+                    colors[1] + baseText.charAt(counter - 1) +
                     colors[2] + baseText.substring(counter) +
                     endColor + endText;
         } else if ((counter >= 9 && counter <= 19) ||

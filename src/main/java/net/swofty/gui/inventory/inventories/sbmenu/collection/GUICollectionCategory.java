@@ -1,7 +1,5 @@
 package net.swofty.gui.inventory.inventories.sbmenu.collection;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -9,26 +7,17 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.collection.CollectionCategory;
+import net.swofty.data.datapoints.DatapointCollection;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
-import net.swofty.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
-import net.swofty.gui.inventory.inventories.sbmenu.crafting.GUIRecipeCategory;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
-import net.swofty.item.impl.SkyBlockRecipe;
-import net.swofty.item.impl.recipes.ShapedRecipe;
-import net.swofty.item.impl.recipes.ShapelessRecipe;
-import net.swofty.item.updater.NonPlayerItemUpdater;
-import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
-import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCategory.ItemCollection> {
     private final CollectionCategory type;
@@ -124,6 +113,59 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
 
     @Override
     public GUIClickableItem createItemFor(CollectionCategory.ItemCollection item, int slot, SkyBlockPlayer player) {
-        return null;
+        DatapointCollection.PlayerCollection collection = player.getCollection();
+
+        if (!collection.unlocked(item.type())) {
+            return new GUIClickableItem() {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    player.sendMessage("§cYou haven't found this item yet!");
+                }
+
+                @Override
+                public int getSlot() {
+                    return slot;
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack(
+                            "§c" + item.type().getDisplayName(), Material.GRAY_DYE, 1,
+                            "§7Find this item to add it to your",
+                            "§7collection and unlock collection",
+                            "§7rewards!");
+                }
+            };
+        }
+
+        int collected = collection.get(item.type());
+
+        return new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                player.sendMessage("§aTesting");
+            }
+
+            @Override
+            public int getSlot() {
+                return slot;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>(List.of(
+                        "§7View all your " + item.type().getDisplayName() + " Collection",
+                        "§7progress and rewards!",
+                        " "
+                ));
+
+                collection.getDisplay(lore, item);
+
+                lore.add(" ");
+                lore.add("§eClick to view!");
+
+                return ItemStackCreator.getStack("§e" + item.type().getDisplayName(), item.type().material, 1, lore);
+            }
+        };
     }
 }

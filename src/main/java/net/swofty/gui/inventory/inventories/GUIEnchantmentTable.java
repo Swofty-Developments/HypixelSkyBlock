@@ -342,18 +342,18 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                     }
 
                     lore.add("§7Cost");
-                    
+
                     if (finalHasLevel > finalLevel) {
                         if (levelCost > player.getLevel())
                             lore.add("§3" + levelCost + " Exp Levels §c§l✖");
                         else lore.add("§3" + levelCost + " Exp Levels §a§l✓");
-                        
+
                         lore.add("§a ");
                         lore.add("§cHigher level already present!");
                         return ItemStackCreator.getStack(
-                            "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
-                            Material.GRAY_DYE, (short) 0, 1,
-                            lore
+                                "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
+                                Material.GRAY_DYE, (short) 0, 1,
+                                lore
                         );
                     }
 
@@ -380,14 +380,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if(e.getClickedItem().getMaterial() == Material.GRAY_DYE)
+                    if (e.getClickedItem().getMaterial() == Material.GRAY_DYE)
                         return;
-                    
+
                     // TODO if someone know how to get the itemstack name, do it
                     // I can't find it, I keep getting null...
                     // Because it should be, let's say, "§6Heroic Hyperion", and not "Hyperion"
                     String itemName = StringUtility.toNormalCase(type.name());
-                    
+
                     if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel)) {
                         player.sendMessage("§cYou have insufficient levels!");
                         return;

@@ -6,7 +6,6 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.utility.StringUtility;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointDouble;
 import net.swofty.gui.inventory.ItemStackCreator;
@@ -15,6 +14,7 @@ import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIQueryItem;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.utility.StringUtility;
 
 public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
     public GUIBanker() {

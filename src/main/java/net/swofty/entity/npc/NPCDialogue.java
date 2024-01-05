@@ -4,9 +4,6 @@ import lombok.Builder;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.entity.villager.NPCVillagerDialogue;
-import net.swofty.entity.villager.NPCVillagerParameters;
-import net.swofty.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.user.SkyBlockPlayer;
 
 import java.util.HashMap;
@@ -62,8 +59,7 @@ public abstract class NPCDialogue extends SkyBlockNPC {
 
     public static void remove(SkyBlockPlayer player) {
         for (SkyBlockNPC npc : SkyBlockNPC.getNpcs().keySet()) {
-            if (npc instanceof NPCDialogue) {
-                NPCDialogue dialogue = (NPCDialogue) npc;
+            if (npc instanceof NPCDialogue dialogue) {
                 if (dialogue.isInDialogue(player)) {
                     dialogue.dialogueSets.get(player).getValue().complete(null);
                     dialogue.dialogueSets.remove(player);
@@ -73,6 +69,7 @@ public abstract class NPCDialogue extends SkyBlockNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines) { }
+    public record DialogueSet(String key, String[] lines) {
+    }
 
 }

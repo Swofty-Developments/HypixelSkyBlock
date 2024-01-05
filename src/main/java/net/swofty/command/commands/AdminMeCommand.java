@@ -4,8 +4,8 @@ import net.swofty.command.CommandParameters;
 import net.swofty.command.SkyBlockCommand;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
-import net.swofty.user.categories.Rank;
 import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.categories.Rank;
 
 @CommandParameters(aliases = "forceadmin", description = "Literally just gives me admin", usage = "/adminme", permission = Rank.DEFAULT, allowsConsole = false)
 public class AdminMeCommand extends SkyBlockCommand {

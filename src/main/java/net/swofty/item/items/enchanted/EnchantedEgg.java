@@ -6,13 +6,13 @@ import net.swofty.item.impl.Enchanted;
 import net.swofty.item.impl.SkyBlockRecipe;
 
 public class EnchantedEgg implements Enchanted {
-      @Override
-      public ItemType getCraftingMaterial() {
-            return ItemType.EGG;
-      }
+    @Override
+    public ItemType getCraftingMaterial() {
+        return ItemType.EGG;
+    }
 
-      @Override
-      public SkyBlockRecipe.RecipeType getRecipeType() {
-            return SkyBlockRecipe.RecipeType.FORAGING;
-      }
+    @Override
+    public SkyBlockRecipe.RecipeType getRecipeType() {
+        return SkyBlockRecipe.RecipeType.FORAGING;
+    }
 }

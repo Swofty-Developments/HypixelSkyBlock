@@ -1,11 +1,6 @@
 package net.swofty.utility;
 
 import lombok.Getter;
-import net.minestom.server.item.Material;
-import net.swofty.item.ItemType;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Getter
 public enum ItemGroups {

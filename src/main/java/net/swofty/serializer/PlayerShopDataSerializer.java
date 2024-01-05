@@ -7,27 +7,26 @@ import net.swofty.user.PlayerShopData;
 
 import java.util.Map;
 
-public class PlayerShopDataSerializer implements Serializer<PlayerShopData>
-{
-      private final ObjectMapper mapper;
+public class PlayerShopDataSerializer implements Serializer<PlayerShopData> {
+    private final ObjectMapper mapper;
 
-      public PlayerShopDataSerializer() {
-            mapper = new ObjectMapper();
-      }
+    public PlayerShopDataSerializer() {
+        mapper = new ObjectMapper();
+    }
 
-      @Override
-      public String serialize(PlayerShopData value) throws JsonProcessingException {
-            return mapper.writeValueAsString(value.serialize());
-      }
+    @Override
+    public String serialize(PlayerShopData value) throws JsonProcessingException {
+        return mapper.writeValueAsString(value.serialize());
+    }
 
-      @Override
-      public PlayerShopData deserialize(String json) throws JsonProcessingException {
-            JsonNode node = mapper.readTree(json);
-            Map<String, Object> map = mapper.convertValue(node, Map.class);
+    @Override
+    public PlayerShopData deserialize(String json) throws JsonProcessingException {
+        JsonNode node = mapper.readTree(json);
+        Map<String, Object> map = mapper.convertValue(node, Map.class);
 
-            PlayerShopData shopData = new PlayerShopData();
-            shopData.deserialize(map);
+        PlayerShopData shopData = new PlayerShopData();
+        shopData.deserialize(map);
 
-            return shopData;
-      }
+        return shopData;
+    }
 }

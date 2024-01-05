@@ -9,7 +9,6 @@ import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.statistics.ItemStatistic;
 import net.swofty.user.statistics.ItemStatistics;
 import net.swofty.utility.ItemGroups;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +80,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Refo
             if (player.getLevel() > 10) {
                 return new SkyBlockRecipe.CraftingResult(true, null);
             } else {
-                return new SkyBlockRecipe.CraftingResult(false, new String[] {"§cLevel Issue", "§7You must be at least §eLevel 10 §7to craft this item!"});
+                return new SkyBlockRecipe.CraftingResult(false, new String[]{"§cLevel Issue", "§7You must be at least §eLevel 10 §7to craft this item!"});
             }
         })).add(ItemType.DIRT, 10)
                 .add(ItemType.IRON_PICKAXE, 1);

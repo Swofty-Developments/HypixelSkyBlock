@@ -15,46 +15,45 @@ import java.util.List;
 
 @Getter
 public enum EnchantmentType {
-	SHARPNESS(EnchantmentSharpness.class),
-	EFFICIENCY(EnchantmentEfficiency.class),
-	SCAVENGER(EnchantmentScavenger.class),
-	PROTECTION(EnchantmentProtection.class)
-	;
-	
-	private final Class<? extends Ench> clazz;
-	private final List<EnchantmentType> conflicts;
+    SHARPNESS(EnchantmentSharpness.class),
+    EFFICIENCY(EnchantmentEfficiency.class),
+    SCAVENGER(EnchantmentScavenger.class),
+    PROTECTION(EnchantmentProtection.class);
 
-	private final Ench ench;
-	
-	@SneakyThrows
-	EnchantmentType(Class<? extends Ench> ench, EnchantmentType... conflicts) {
-		this.clazz = ench;
-		this.conflicts = List.of(conflicts);
+    private final Class<? extends Ench> clazz;
+    private final List<EnchantmentType> conflicts;
 
-		this.ench = ench.getConstructor().newInstance();
-	}
-	
-	public int getApplyCost(int level) {
-		if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
-			throw new IllegalArgumentException("level cannot be less than 1 and more than " +
-					ench.getLevelsToApply().maximumLevel() + " for "+ name());
-		return ench.getLevelsToApply().get(level);
-	}
-	
-	public String getDescription(int level) {
-		if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
-			return("level cannot be less than 1 and more than " +
-					ench.getLevelsToApply().maximumLevel() + " for "+ name());
-		return ench.getDescription(level);
-	}
+    private final Ench ench;
 
-	public @Nullable EnchFromTable getEnchFromTable() {
-		if (ench instanceof EnchFromTable)
-			return (EnchFromTable) ench;
-		return null;
-	}
+    @SneakyThrows
+    EnchantmentType(Class<? extends Ench> ench, EnchantmentType... conflicts) {
+        this.clazz = ench;
+        this.conflicts = List.of(conflicts);
 
-	public String getName() {
-		return StringUtility.toNormalCase(this.name());
-	}
+        this.ench = ench.getConstructor().newInstance();
+    }
+
+    public int getApplyCost(int level) {
+        if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
+            throw new IllegalArgumentException("level cannot be less than 1 and more than " +
+                    ench.getLevelsToApply().maximumLevel() + " for " + name());
+        return ench.getLevelsToApply().get(level);
+    }
+
+    public String getDescription(int level) {
+        if (level < 1 || level > ench.getLevelsToApply().maximumLevel())
+            return ("level cannot be less than 1 and more than " +
+                    ench.getLevelsToApply().maximumLevel() + " for " + name());
+        return ench.getDescription(level);
+    }
+
+    public @Nullable EnchFromTable getEnchFromTable() {
+        if (ench instanceof EnchFromTable)
+            return (EnchFromTable) ench;
+        return null;
+    }
+
+    public String getName() {
+        return StringUtility.toNormalCase(this.name());
+    }
 }

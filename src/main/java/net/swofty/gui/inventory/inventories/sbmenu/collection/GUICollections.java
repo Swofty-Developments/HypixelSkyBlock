@@ -11,24 +11,18 @@ import net.swofty.collection.CollectionCategory;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.gui.inventory.inventories.sbmenu.crafting.GUIRecipeCategory;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.gui.inventory.item.GUIItem;
-import net.swofty.item.impl.SkyBlockRecipe;
-import net.swofty.item.impl.recipes.ShapedRecipe;
-import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.SkyBlockPlayer;
-import net.swofty.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GUICollections extends SkyBlockInventoryGUI {
     private final int[] borderSlots = {
             //20, 21, 22, 23, 24,
-                    31,
+            31,
     };
 
     public GUICollections() {

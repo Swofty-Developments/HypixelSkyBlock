@@ -1,5 +1,6 @@
 package net.swofty.item.attribute;
 
+import net.minestom.server.color.Color;
 import net.swofty.enchantment.EnchantmentType;
 import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.ItemType;
@@ -7,14 +8,12 @@ import net.swofty.item.Rarity;
 import net.swofty.item.ReforgeType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.attributes.*;
-import net.swofty.item.impl.Enchantable;
 import net.swofty.item.impl.Enchanted;
 import net.swofty.item.impl.LeatherColour;
 import net.swofty.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
-import net.minestom.server.color.Color;
 
 public class AttributeHandler {
     SkyBlockItem item;

@@ -10,20 +10,25 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.data.datapoints.*;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.mission.MissionData;
-import net.swofty.user.*;
-import net.swofty.utility.StringUtility;
-import net.swofty.data.datapoints.*;
+import net.swofty.user.PlayerShopData;
+import net.swofty.user.SkyBlockInventory;
+import net.swofty.user.SkyBlockPlayer;
+import net.swofty.user.UserProfiles;
 import net.swofty.user.categories.Rank;
+import net.swofty.utility.StringUtility;
 import org.bson.Document;
-import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -47,7 +52,7 @@ public class DataHandler {
     public static DataHandler getUser(Player player) {
         return getUser(player.getUuid());
     }
-    
+
     public static DataHandler fromDocument(Document document) {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = UUID.fromString(document.getString("_owner"));
@@ -131,7 +136,7 @@ public class DataHandler {
     public static DataHandler initUserWithDefaultData(UUID uuid) {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = uuid;
-        for(Data data : Data.values()) {
+        for (Data data : Data.values()) {
             dataHandler.datapoints.put(
                     data.getKey(),
                     data.getDefaultDatapoint().deepClone().setUser(dataHandler).setData(data)
@@ -141,7 +146,8 @@ public class DataHandler {
     }
 
     public enum Data {
-        PROFILE_NAME("profile_name", false, true, DatapointString.class, new DatapointString("profile_name", "null"), (player, datapoint) -> {}, (player, datapoint) -> {
+        PROFILE_NAME("profile_name", false, true, DatapointString.class, new DatapointString("profile_name", "null"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             if (datapoint.getValue().equals("null")) {
                 datapoint.setValue(UserProfiles.getRandomName());
             }
@@ -166,7 +172,8 @@ public class DataHandler {
             player.getTeam().sendUpdatePacket();
         })),
         COINS("coins", false, false, DatapointDouble.class, new DatapointDouble("coins", 0.0)),
-        INVENTORY("inventory", false, false, DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {}, (player, datapoint) -> {
+        INVENTORY("inventory", false, false, DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();
 
             player.setHelmet(skyBlockInventory.getHelmet().getItemStack());
@@ -215,42 +222,56 @@ public class DataHandler {
             }
             return new DatapointInventory("inventory", skyBlockInventory);
         }),
-        IGN_LOWER("ignLowercase", true, false, DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {}, (player, datapoint) -> {
+        IGN_LOWER("ignLowercase", true, false, DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername().toLowerCase());
         }),
-        BUILD_MODE("build_mode", true, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {}, (player, datapoint) -> {
+        BUILD_MODE("build_mode", true, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());
         }, (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
-        GAMEMODE("gamemode", true, false, DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {}, (player, datapoint) -> {
+        GAMEMODE("gamemode", true, false, DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
-        EXPERIENCE("experience", false, false, DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {}, (player, datapoint) -> {
+        EXPERIENCE("experience", false, false, DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             player.setExp((Float) datapoint.getValue());
         }, (player) -> new DatapointFloat("experience", player.getExp())),
-        LEVELS("levels", false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {}, (player, datapoint) -> {
+        LEVELS("levels", false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             player.setLevel((Integer) datapoint.getValue());
         }, (player) -> new DatapointInteger("levels", player.getLevel())),
-        MISSION_DATA("mission_data", false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {}, (player, datapoint) -> {
+        MISSION_DATA("mission_data", false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();
             data.setSkyBlockPlayer(player);
             datapoint.setValue(data);
         }),
-        SHOPPING_DATA("shopping_data", false, false, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {}, (player, datapoint) -> {
+        SHOPPING_DATA("shopping_data", false, false, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
-        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {}),
-        CREATED("created", false, true, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {}, (player, datapoint) -> {
+        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {
+        }),
+        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {
+        }),
+        CREATED("created", false, true, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
                 datapoint.setValue(System.currentTimeMillis());
             }
         }),
-        ISLAND_UUID("island_uuid", false, true, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {}, (player, datapoint) -> {
+        ISLAND_UUID("island_uuid", false, true, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {
+        }, (player, datapoint) -> {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());
         }),
-        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {}),
-        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {}, (player, datapoint) -> {}),
+        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {
+        }),
+        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+        }),
         ;
 
         @Getter
@@ -313,7 +334,7 @@ public class DataHandler {
 
         public static Data fromKey(String key) {
             for (Data data : values()) {
-                if(data.getKey().equals(key)) {
+                if (data.getKey().equals(key)) {
                     return data;
                 }
             }

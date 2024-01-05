@@ -9,37 +9,39 @@ import java.util.List;
 import java.util.Map;
 
 public interface Ench {
-	
-	String getDescription(int level);
-	ApplyLevels getLevelsToApply();
-	List<ItemGroups> getGroups();
 
-	default ItemStatistics getStatistics() {
-		return ItemStatistics.EMPTY;
-	}
+    String getDescription(int level);
 
-	default List<EnchantmentSource> getSources() {
-		List<EnchantmentSource> sources = new ArrayList<>(List.of());
+    ApplyLevels getLevelsToApply();
 
-		if (this instanceof EnchFromTable tableEnchant)
-			sources.add(new EnchantmentSource(EnchantmentSource.SourceType.ENCHANTMENT_TABLE,
-					tableEnchant.getLevelsFromTableToApply().minimumLevel(),
-					tableEnchant.getLevelsFromTableToApply().maximumLevel()));
+    List<ItemGroups> getGroups();
 
-		return sources;
-	}
+    default ItemStatistics getStatistics() {
+        return ItemStatistics.EMPTY;
+    }
 
-	record ApplyLevels(Map<Integer, Integer> levelsFromTableToApply) {
-		public int get(int level) {
-			return levelsFromTableToApply.get(level);
-		}
+    default List<EnchantmentSource> getSources() {
+        List<EnchantmentSource> sources = new ArrayList<>(List.of());
 
-		public int minimumLevel() {
-			return levelsFromTableToApply.keySet().stream().min(Integer::compareTo).orElseThrow();
-		}
+        if (this instanceof EnchFromTable tableEnchant)
+            sources.add(new EnchantmentSource(EnchantmentSource.SourceType.ENCHANTMENT_TABLE,
+                    tableEnchant.getLevelsFromTableToApply().minimumLevel(),
+                    tableEnchant.getLevelsFromTableToApply().maximumLevel()));
 
-		public int maximumLevel() {
-			return levelsFromTableToApply.keySet().stream().max(Integer::compareTo).orElseThrow();
-		}
-	}
+        return sources;
+    }
+
+    record ApplyLevels(Map<Integer, Integer> levelsFromTableToApply) {
+        public int get(int level) {
+            return levelsFromTableToApply.get(level);
+        }
+
+        public int minimumLevel() {
+            return levelsFromTableToApply.keySet().stream().min(Integer::compareTo).orElseThrow();
+        }
+
+        public int maximumLevel() {
+            return levelsFromTableToApply.keySet().stream().max(Integer::compareTo).orElseThrow();
+        }
+    }
 }

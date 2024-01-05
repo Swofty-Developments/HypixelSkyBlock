@@ -7,7 +7,6 @@ import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
-import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.SkyBlock;
@@ -16,9 +15,7 @@ import net.swofty.item.ItemType;
 import net.swofty.item.Rarity;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.attribute.AttributeHandler;
-import net.swofty.item.attribute.ItemAttribute;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -135,8 +132,8 @@ public class PlayerItemUpdater {
 
         @Getter
         private static final class UpdatePair {
-            private BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction;
-            private CompletableFuture<SkyBlockItem> future;
+            private final BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction;
+            private final CompletableFuture<SkyBlockItem> future;
 
             public UpdatePair(BiFunction<SkyBlockPlayer, SkyBlockItem, SkyBlockItem> updateFunction, CompletableFuture<SkyBlockItem> future) {
                 this.updateFunction = updateFunction;

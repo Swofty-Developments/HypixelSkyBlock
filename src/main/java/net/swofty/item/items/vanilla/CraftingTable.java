@@ -7,7 +7,6 @@ import net.swofty.item.impl.Craftable;
 import net.swofty.item.impl.CustomSkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.impl.recipes.ShapedRecipe;
-import net.swofty.item.impl.recipes.ShapelessRecipe;
 import net.swofty.user.statistics.ItemStatistics;
 
 import java.util.HashMap;

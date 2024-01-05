@@ -2,7 +2,6 @@ package net.swofty.gui.inventory.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -10,25 +9,21 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.ItemCraftEvent;
 import net.swofty.gui.inventory.ItemStackCreator;
 import net.swofty.gui.inventory.RefreshingGUI;
 import net.swofty.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
-import net.swofty.gui.inventory.item.GUIItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.StringUtility;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {

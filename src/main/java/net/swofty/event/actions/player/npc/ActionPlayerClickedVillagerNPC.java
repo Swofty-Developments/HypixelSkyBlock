@@ -9,7 +9,6 @@ import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.VillagerSpokenToEvent;
-import net.swofty.mission.MissionData;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Checks to see if a player clicks on a Villager NPC",

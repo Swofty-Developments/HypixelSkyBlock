@@ -2,10 +2,8 @@ package net.swofty.event.actions.item;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.item.ItemDropEvent;
-import net.minestom.server.event.player.PlayerItemAnimationEvent;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointBoolean;
 import net.swofty.entity.DroppedItemEntityImpl;

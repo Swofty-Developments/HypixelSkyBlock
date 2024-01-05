@@ -4,13 +4,10 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.swofty.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.entity.villager.VillagerEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
 import net.swofty.event.custom.JerryClickedEvent;
-import net.swofty.event.custom.VillagerSpokenToEvent;
 import net.swofty.user.SkyBlockPlayer;
 
 @EventParameters(description = "Checks to see if a player clicks on Jerry",

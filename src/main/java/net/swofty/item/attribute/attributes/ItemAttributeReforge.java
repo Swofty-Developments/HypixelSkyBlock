@@ -2,12 +2,6 @@ package net.swofty.item.attribute.attributes;
 
 import net.swofty.item.ReforgeType;
 import net.swofty.item.attribute.ItemAttribute;
-import net.swofty.user.statistics.ItemStatistic;
-import net.swofty.user.statistics.ItemStatistics;
-import net.swofty.utility.MathUtility;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ItemAttributeReforge extends ItemAttribute<ReforgeType.Reforge> {
 

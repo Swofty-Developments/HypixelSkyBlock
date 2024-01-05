@@ -14,7 +14,6 @@ import net.swofty.entity.villager.villagers.VillagerLeo;
 import net.swofty.entity.villager.villagers.VillagerVex;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
-import net.swofty.event.custom.PlayerRegionChangeEvent;
 import net.swofty.event.custom.VillagerSpokenToEvent;
 import net.swofty.mission.MissionData;
 import net.swofty.mission.MissionRepeater;
@@ -58,7 +57,8 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
         Map<String, Object> customData = mission.getCustomData();
 
-        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getID()))) return;
+        if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getID())))
+            return;
         // Check if villager is a part of the mission
         if (villagers.stream().noneMatch(villager ->
                 {

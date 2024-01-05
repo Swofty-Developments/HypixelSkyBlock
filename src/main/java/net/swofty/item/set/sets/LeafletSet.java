@@ -3,11 +3,9 @@ package net.swofty.item.set.sets;
 import net.swofty.event.value.SkyBlockValueEvent;
 import net.swofty.event.value.ValueUpdateEvent;
 import net.swofty.event.value.events.RegenerationValueUpdateEvent;
-import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.item.set.impl.ArmorSet;
 import net.swofty.region.RegionType;
 import net.swofty.region.SkyBlockRegion;
-import org.tinylog.Logger;
 
 public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     @Override

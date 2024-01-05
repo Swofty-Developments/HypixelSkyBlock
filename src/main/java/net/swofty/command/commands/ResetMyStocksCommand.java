@@ -10,14 +10,13 @@ import net.swofty.user.categories.Rank;
         usage = "/resetmystocks",
         permission = Rank.ADMIN,
         allowsConsole = false)
-public class ResetMyStocksCommand extends SkyBlockCommand
-{
-      @Override
-      public void run(MinestomCommand command) {
-            command.addSyntax((sender, context) -> {
-                  SkyBlockPlayer player = (SkyBlockPlayer) sender;
-                  player.getShoppingData().resetStocks();
-                  player.sendMessage("§aWhoop!");
-            });
-      }
+public class ResetMyStocksCommand extends SkyBlockCommand {
+    @Override
+    public void run(MinestomCommand command) {
+        command.addSyntax((sender, context) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) sender;
+            player.getShoppingData().resetStocks();
+            player.sendMessage("§aWhoop!");
+        });
+    }
 }

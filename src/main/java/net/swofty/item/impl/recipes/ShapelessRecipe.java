@@ -1,7 +1,6 @@
 package net.swofty.item.impl.recipes;
 
 import lombok.Getter;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.item.ItemType;
@@ -9,11 +8,9 @@ import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;

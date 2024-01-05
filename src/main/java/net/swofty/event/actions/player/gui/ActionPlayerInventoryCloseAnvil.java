@@ -1,12 +1,8 @@
 package net.swofty.event.actions.player.gui;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;

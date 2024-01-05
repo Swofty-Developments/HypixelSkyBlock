@@ -7,7 +7,6 @@ import net.swofty.item.MaterialQuantifiable;
 import net.swofty.item.SkyBlockItem;
 import net.swofty.item.impl.SkyBlockRecipe;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.function.Function;
@@ -73,11 +72,11 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
                         MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
 
-                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR))  {
+                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR)) {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
 
                             // skip the iteration if stackMaterial is AIR
-                            if (stackMaterial.getMaterial().equals(ItemType.AIR))  {
+                            if (stackMaterial.getMaterial().equals(ItemType.AIR)) {
                                 continue;
                             }
 
@@ -144,9 +143,9 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     public static ShapedRecipe parseShapedRecipe(ItemStack[] stacks) {
         ItemStack[][] grid = {
-                { stacks[0], stacks[1], stacks[2] },
-                { stacks[3], stacks[4], stacks[5] },
-                { stacks[6], stacks[7], stacks[8] }
+                {stacks[0], stacks[1], stacks[2]},
+                {stacks[3], stacks[4], stacks[5]},
+                {stacks[6], stacks[7], stacks[8]}
         };
 
         return CACHED_RECIPES.stream()

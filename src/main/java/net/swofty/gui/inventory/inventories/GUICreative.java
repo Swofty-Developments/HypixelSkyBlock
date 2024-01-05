@@ -13,11 +13,9 @@ import net.swofty.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.gui.inventory.item.GUIClickableItem;
 import net.swofty.item.ItemType;
 import net.swofty.item.SkyBlockItem;
-import net.swofty.item.updater.NonPlayerItemUpdater;
 import net.swofty.item.updater.PlayerItemUpdater;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.utility.PaginationList;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;

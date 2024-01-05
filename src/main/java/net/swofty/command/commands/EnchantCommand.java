@@ -10,7 +10,6 @@ import net.swofty.enchantment.SkyBlockEnchantment;
 import net.swofty.item.attribute.AttributeHandler;
 import net.swofty.item.updater.PlayerItemOrigin;
 import net.swofty.item.updater.PlayerItemUpdater;
-import net.swofty.structure.structures.IslandPortal;
 import net.swofty.user.SkyBlockPlayer;
 import net.swofty.user.categories.Rank;
 

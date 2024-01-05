@@ -2,7 +2,6 @@ package net.swofty.command;
 
 import lombok.Getter;
 import net.minestom.server.command.builder.Command;
-import net.minestom.server.entity.Player;
 import net.swofty.data.DataHandler;
 import net.swofty.data.datapoints.DatapointRank;
 import net.swofty.user.SkyBlockPlayer;
@@ -22,6 +21,7 @@ public abstract class SkyBlockCommand {
         this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase();
         this.command = new MinestomCommand(this);
     }
+
     public abstract void run(MinestomCommand command);
 
     public static class MinestomCommand extends Command {
@@ -35,21 +35,13 @@ public abstract class SkyBlockCommand {
 
             setCondition((commandSender, string) -> {
                 if (commandSender.isConsole()) {
-                    if (!command.getParams().allowsConsole()) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return command.getParams().allowsConsole();
                 }
 
                 SkyBlockPlayer player = (SkyBlockPlayer) commandSender;
                 DataHandler dataHandler = player.getDataHandler();
 
-                if (!dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(command.getParams().permission())) {
-                    return false;
-                }
-
-                return true;
+                return dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(command.getParams().permission());
             });
 
             command.run(this);

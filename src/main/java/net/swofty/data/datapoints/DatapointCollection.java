@@ -7,7 +7,7 @@ import net.swofty.collection.CollectionCategory;
 import net.swofty.data.Datapoint;
 import net.swofty.item.ItemType;
 import net.swofty.serializer.Serializer;
-import net.swofty.user.SkyBlockPlayer;
+import net.swofty.utility.StringUtility;
 
 import java.util.*;
 
@@ -51,6 +51,20 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
     public static class PlayerCollection {
         private Map<ItemType, Integer> items;
 
+        public CollectionCategory.ItemCollectionReward getReward(CollectionCategory.ItemCollection collection) {
+            // Reverse the array so that we can get the highest reward that the player has unlocked
+            List<CollectionCategory.ItemCollectionReward> rewards = Arrays.asList(collection.rewards());
+            Collections.reverse(rewards);
+
+            for (CollectionCategory.ItemCollectionReward reward : rewards) {
+                if (get(collection.type()) <= reward.requirement()) {
+                    return reward;
+                }
+            }
+
+            return null;
+        }
+
         public void increase(ItemType type) {
             items.put(type, get(type) + 1);
         }
@@ -86,6 +100,30 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             return lore;
         }
 
+        public List<String> getDisplay(List<String> lore, CollectionCategory.ItemCollection collection) {
+            CollectionCategory.ItemCollectionReward reward = getReward(collection);
+            int collected = get(collection.type());
+            int required = reward == null ? 0 : reward.requirement();
+
+            String collectedPercentage = String.format("%.2f", (collected / (double) required) * 100);
+            lore.add("§7Progress to Wheat " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
+                    ": §e" + collectedPercentage + "§6%");
+
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+            int completedLength = (int) ((collected / (double) required) * maxBarLength);
+
+            String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+            int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
+            String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
+                    completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                    maxBarLength
+            ));
+
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + collected + "§6/§e" + required);
+
+            return lore;
+        }
 
         public List<String> getDisplay(List<String> lore, CollectionCategory category) {
             int allCollections = category.getCollections().length;

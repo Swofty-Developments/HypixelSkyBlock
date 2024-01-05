@@ -4,15 +4,11 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.Material;
 import net.minestom.server.utils.NamespaceID;
-import net.swofty.entity.DroppedItemEntityImpl;
 import net.swofty.event.EventNodes;
 import net.swofty.event.EventParameters;
 import net.swofty.event.SkyBlockEvent;
-import net.swofty.event.actions.player.fall.ActionPlayerFall;
 import net.swofty.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;

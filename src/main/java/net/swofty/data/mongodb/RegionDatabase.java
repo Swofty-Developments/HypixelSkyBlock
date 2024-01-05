@@ -10,7 +10,8 @@ import net.swofty.region.RegionType;
 import net.swofty.region.SkyBlockRegion;
 import org.bson.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public record RegionDatabase(String id) implements MongoDB {
     public static MongoClient client;
