@@ -39,3 +39,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/configuration/hypixel_island_template/
+/configuration/hypixel_hub/

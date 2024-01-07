@@ -29,6 +29,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 5. Scroll down to Setup Guide to continue.
 
 ## Setup Guide
+
 1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
    {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0", "port": 25530}
 2. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
