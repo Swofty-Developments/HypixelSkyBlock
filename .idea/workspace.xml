@@ -4,49 +4,839 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/HubCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerTravel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/swofty/utility/PasterService.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Start to modularization">
+      <change afterPath="$PROJECT_DIR$/commons/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/CustomWorlds.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/ServerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/vanilla/OakPlanks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/velocity-extension/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/SkyBlockVelocity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Minestom.fairysouls.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Minestom.regions.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/IslandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/IslandCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventParameters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeMiningRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeMiningRegion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeTimeCalender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeTimeCalender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionPlayerDamageBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionPlayerDamageBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionRegionChangeDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionRegionChangeDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionEnchantmentTableClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionEnchantmentTableClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataLoaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoaded.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerDataSave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataSave.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerGUIItemRestore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerGUIItemRestore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerItemPickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerItemPickup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerSkinInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerSkinInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionRegionBlockBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockBreak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionRegionBlockPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockPlace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/PlayerActionDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/PlayerActionDamage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockIsland.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockIsland.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/allclasses-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/allpackages-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/constant-values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/element-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-10.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-11.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-12.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-13.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-14.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-15.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-16.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-17.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-18.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-19.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-20.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-21.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-22.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-23.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-24.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-25.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-26.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-6.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-7.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-8.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-9.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/jquery-ui.overrides.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/legal/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/legal/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/legal/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/legal/jquery.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/legal/jqueryUI.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/member-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/module-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/SkyBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/calendar/CalendarEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/calendar/SkyBlockCalendar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/calendar/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/calendar/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/CommandParameters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/SkyBlockCommand.MinestomCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/SkyBlockCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/AdminMeCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/AnvilGUICommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/BuildCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/CoinsCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/DebugDisplayDICommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/DeleteIslandCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/EnchantCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/GamemodeCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/HubCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/IslandCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/ItemCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/ItemListCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/MissionCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/NBTCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/PlaceStructureCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/RankCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/RecombobulateCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/ReforgeCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/RegionCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/SignGUICommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/SpawnHologramCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/XpCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/commands/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/command/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/DataHandler.Data.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/DataHandler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/Datapoint.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/Resources.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointBoolean.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointDouble.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointFloat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointGamemode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointInteger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointInventory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointMissionData.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointRank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/DatapointString.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/datapoints/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/AttributeDatabase.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/IslandDatabase.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/MongoDB.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/RegionDatabase.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/UserDatabase.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/mongodb/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/data/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/EnchantmentSource.SourceType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/EnchantmentSource.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/EnchantmentType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/SkyBlockEnchantment.ItemEnchantments.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/SkyBlockEnchantment.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/Ench.ApplyLevels.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/Ench.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/EnchFromTable.TableLevels.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/EnchFromTable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/abstr/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/impl/EnchantmentEfficiency.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/impl/EnchantmentSharpness.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/impl/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/impl/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/enchantment/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/DroppedItemEntityImpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/HologramEntity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/PlayerHolograms.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/ServerHolograms.ExternalHologram.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/ServerHolograms.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/hologram/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/NPCDialogue.DialogueSet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/NPCDialogue.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/NPCEntityImpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/NPCParameters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/SkyBlockNPC.PlayerClickNPCEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/SkyBlockNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/npcs/NPCBanker.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/npcs/NPCFarmMerchant.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/npcs/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/npcs/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/npc/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/NPCVillagerDialogue.DialogueSet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/NPCVillagerDialogue.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/NPCVillagerParameters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/SkyBlockVillagerNPC.PlayerClickVillagerNPCEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/SkyBlockVillagerNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/VillagerEntityImpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/villagers/VillagerBlacksmith.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/villagers/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/entity/villager/villagers/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/EventNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/EventParameters.Location.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/EventParameters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/SkyBlockEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/ActionChangeMiningRegion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/ActionChangeTimeCalender.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/ActionPlayerDamageBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/ActionRegionChangeDisplay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/island/ActionIslandCreatePortals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/island/ActionIslandLoadPortals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/island/ActionIslandSavePortals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/island/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/island/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/custom/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/ActionItemAbilityLeftUse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/ActionItemAbilityRightUse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/ActionItemLeftUse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/ActionItemRightUse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/item/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionEnchantmentTableClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerChat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerGUIItemRestore.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerItemPickup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerJoin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerQuit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerSkinInit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/ActionPlayerTravel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/data/ActionPlayerDataLoad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/data/ActionPlayerDataLoaded.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/data/ActionPlayerDataSave.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/data/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/data/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/fall/ActionPlayerFall.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/fall/PlayerActionDamage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/fall/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/fall/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerClickItemUpdate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/gui/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/npc/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/region/ActionIslandItemDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/region/ActionRegionBlockBreak.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/region/ActionRegionBlockPlace.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/region/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/actions/player/region/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/CalenderHourlyUpdateEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/IslandCreatedEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/IslandLoadedEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/IslandUnloadEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/PlayerDamageSkyBlockBlockEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/PlayerRegionChangeEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/custom/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/SkyBlockValueEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/ValueUpdateEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/events/MiningValueUpdateEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/events/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/events/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/event/value/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/SkyBlockAnvilGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/SkyBlockSignGUI.SignGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/SkyBlockSignGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/ItemStackCreator.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/RefreshingGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/SkyBlockInventoryGUI.CloseReason.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/SkyBlockInventoryGUI.InventoryGUIOpenEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/SkyBlockInventoryGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/SkyBlockPaginatedGUI.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUIBanker.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUICrafting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUICreative.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUIReforge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/GUISkyBlockMenu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/inventories/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/item/GUIClickableItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/item/GUIItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/item/GUIQueryItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/item/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/item/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/inventory/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/gui/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/ItemLore.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/ItemType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/MaterialQuantifiable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/Rarity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/ReforgeType.Reforge.ReforgeSet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/ReforgeType.Reforge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/ReforgeType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/SkyBlockItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/AttributeHandler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/ItemAttribute.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeBreakingPower.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeEnchantments.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeRarity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeRecombobulated.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeReforge.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeStatistics.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/ItemAttributeType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/attributes/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/attribute/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/Craftable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/CustomSkyBlockAbility.AbilityActivation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/CustomSkyBlockAbility.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/CustomSkyBlockItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/Enchantable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/ExtraRarityDisplay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/Interactable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/MiningTool.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/Reforgable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/SkyBlockRecipe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/recipes/ShapelessRecipe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/recipes/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/impl/recipes/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/enchantment/EnchantedBook.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/enchantment/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/enchantment/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/PioneersPickaxe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/DiamondPickaxe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/IronPickaxe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/StonePickaxe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/WoodenPickaxe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/mining/vanilla/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/miscellaneous/SkyBlockMenu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/miscellaneous/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/miscellaneous/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/Hyperion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/DiamondSword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/IronSword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/StoneSword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/WoodenSword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/items/weapon/vanilla/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/NonPlayerItemUpdater.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/PlayerItemOrigin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/PlayerItemUpdater.QueuedUpdateManager.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/PlayerItemUpdater.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/item/updater/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/MissionData.ActiveMission.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/MissionData.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/SkyBlockMission.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/SkyBlockMissionDynamic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/MissionTalkToBanker.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/dynamic/MissionDynamicTalkToVillagers.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/dynamic/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/dynamic/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/missions/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/mission/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/SkyBlockPacketClientListener.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/SkyBlockPacketServerListener.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/PacketListenerNameItem.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/PacketListenerPlayerDig.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/PacketListenerSignUpdate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/anticheat/PacketListenerAirJump.PlayerData.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/anticheat/PacketListenerAirJump.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/anticheat/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/anticheat/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/packet/packets/client/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/RegionType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/SkyBlockMiningConfiguration.MiningTask.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/SkyBlockMiningConfiguration.RegenerationConfig.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/SkyBlockMiningConfiguration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/SkyBlockRegion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/BreakingTask.PositionedBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/BreakingTask.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/MineableBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/MiningLoot.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/configurations/MineCoalConfiguration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/configurations/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/configurations/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/mining/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/region/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/InventorySerializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/JacksonSerializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/MissionDataSerializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/Serializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/SkyBlockItemDeserializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/SkyBlockItemSerializer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/serializer/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/ServerAttribute.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/SkyBlockServerAttributes.Attributes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/SkyBlockServerAttributes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/attributes/AttributeLong.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/attributes/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/attributes/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/attribute/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/CustomEventCaller.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/PlayerValues.Value.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/PlayerValues.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/ServerValues.Value.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/ServerValues.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/server/eventcaller/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/PasterService.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/SkyBlockStructure.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/structures/IslandPortal.PortalType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/structures/IslandPortal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/structures/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/structure/structures/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/AntiCheatHandler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/LogHandler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/PlayerAbilityHandler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/SkyBlockInventory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/SkyBlockIsland.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/SkyBlockPlayer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/SkyBlockScoreboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/categories/CustomGroups.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/categories/Rank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/categories/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/categories/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/ItemStatistic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/ItemStatistics.ItemStatisticsBuilder.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/ItemStatistics.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/PlayerStatistics.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/StatisticDisplayReplacement.DisplayType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/StatisticDisplayReplacement.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/user/statistics/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/Acronym.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/DamageIndicator.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/ExtraItemTags.SkullOwner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/ExtraItemTags.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/Groups.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/ItemGroups.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/MaterialQuantifiableRandom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/MathUtility.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/PaginationList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/StringUtility.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/net/swofty/utility/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/package-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/resources/glass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/resources/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_glass_55_fbf9ee_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_glass_65_dadada_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_glass_75_dadada_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_glass_75_e6e6e6_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_glass_95_fef1ec_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-bg_highlight-soft_75_cccccc_1x100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-icons_222222_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-icons_2e83ff_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-icons_454545_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-icons_888888_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/images/ui-icons_cd0a0a_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/jquery-3.5.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/jquery-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script-dir/jquery-ui.structure.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/serialized-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/tag-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/type-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/SkyBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/calendar/CalendarEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/calendar/SkyBlockCalendar.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/CollectionCategories.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/CollectionCategory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/BossCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/CombatCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/FarmingCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/FishingCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/ForagingCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/collection/collections/MiningCollection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/CommandParameters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/SkyBlockCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AdminMeCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/AnvilGUICommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/BuildCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ClearCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ClearMissionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoinsCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoopCheckCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/CoopCheckCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoopCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/CoopLeaveCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/DebugDisplayDICommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/DeleteIslandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/DeleteIslandCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/EnchantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/EnchantCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/GamemodeCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/HubCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/IslandCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/ItemCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ItemListCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/MissionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/NBTCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/PlaceStructureCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/PlaceStructureCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RankCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RecombobulateCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ReforgeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/ReforgeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/RegionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ResetMyStocksCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/ResetMyStocksCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SignGUICommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/SpawnHologramCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/TestOpenShopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/TestOpenShopCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ToggleDropAlertCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/ViewCollectionCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/command/commands/XpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/command/commands/XpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/DataHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/Datapoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointBoolean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/data/datapoints/DatapointCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointDouble.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointFloat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointGamemode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/data/datapoints/DatapointGamemode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointInteger.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/data/datapoints/DatapointInteger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointIntegerList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointLong.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointMissionData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointRank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointShopData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointStringList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/datapoints/DatapointUUID.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/data/datapoints/DatapointUUID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/AttributeDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/CoopDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/FairySoulDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/IslandDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/MongoDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/data/mongodb/MongoDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/ProfilesDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/RegionDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/data/mongodb/UserDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/EnchantmentSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/EnchantmentType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/SkyBlockEnchantment.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/enchantment/SkyBlockEnchantment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/abstr/Ench.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/abstr/EnchFromTable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/impl/EnchantmentEfficiency.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/impl/EnchantmentProtection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/impl/EnchantmentScavenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/enchantment/impl/EnchantmentScavenger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/enchantment/impl/EnchantmentSharpness.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/enchantment/impl/EnchantmentSharpness.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/DroppedItemEntityImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/HologramEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/PlayerHolograms.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/hologram/ServerHolograms.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/NPCDialogue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/NPCEntityImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/NPCParameters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/SkyBlockNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/entity/npc/SkyBlockNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/npcs/NPCBanker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/npc/npcs/NPCFarmMerchant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/NPCVillagerDialogue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/NPCVillagerParameters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/SkyBlockVillagerNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/entity/villager/SkyBlockVillagerNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/VillagerEntityImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerAndrew.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerBlacksmith.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerDuke.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerFelix.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerLeo.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/entity/villager/villagers/VillagerLeo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerLibrarian.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/entity/villager/villagers/VillagerLibrarian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/entity/villager/villagers/VillagerVex.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventNodes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/EventParameters.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/SkyBlockEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeMiningRegion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionChangeTimeCalender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionPlayerDamageBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionRegionChangeDisplay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/ActionStartHubMission.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/custom/ActionStartHubMission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/collection/ActionCollectionAdd.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/custom/collection/ActionCollectionAdd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/collection/ActionCollectionDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/custom/collection/ActionCollectionDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/island/ActionIslandCreatePortals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/island/ActionIslandInitJerry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/island/ActionIslandLoadJerry.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/custom/island/ActionIslandLoadJerry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/island/ActionIslandSaveJerry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/custom/island/ActionIslandSavePortals.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityLeftUse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemAbilityRightUse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemDrop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemLeftUse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionItemRightUse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/item/ActionPlayerItemPickup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionCraftingTableClick.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionEnchantmentTableClick.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/player/ActionPlayerChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerInteractFairySoul.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerQuit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerSkinInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/player/ActionPlayerSkinInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionPlayerTravel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/player/ActionPlayerTravel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/ActionStartIslandMission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataLoaded.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerDataSave.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/data/ActionPlayerJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/fall/PlayerActionDamage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerClickItemUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInteractWithCrafting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClick.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClickAnvil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryClose.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/player/gui/ActionPlayerInventoryClose.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerInventoryCloseAnvil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/gui/ActionPlayerMoveWhileInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedJerryNPC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedNPC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerClickedVillagerNPC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/actions/player/npc/ActionPlayerMoveNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/npc/ActionPlayerMoveVillagerNPC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionIslandItemDrop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockBreak.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/actions/player/region/ActionRegionBlockPlace.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/CalenderHourlyUpdateEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/CollectionUpdateEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/CustomBlockBreakEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/IslandFetchedFromDatabaseEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/IslandFirstCreatedEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/IslandPlayerLoadedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/custom/IslandPlayerLoadedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/IslandSavedIntoDatabaseEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/ItemCraftEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/JerryClickedEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/PlayerDamageSkyBlockBlockEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/PlayerRegionChangeEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/custom/VillagerSpokenToEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/custom/VillagerSpokenToEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/value/SkyBlockValueEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/value/ValueUpdateEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/value/events/MiningValueUpdateEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/event/value/events/RegenerationValueUpdateEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/event/value/events/RegenerationValueUpdateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/SkyBlockAnvilGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/SkyBlockSignGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/SkyBlockSignGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/ItemStackCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/RefreshingGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockInventoryGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/SkyBlockInventoryGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockPaginatedGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/SkyBlockShopGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/SkyBlockShopGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIBanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/GUIBanker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUICreative.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIEnchantmentTable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/GUIReforge.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/GUIReforge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/coop/GUICoopInviteSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/coop/GUICoopInviteSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/coop/GUICoopInviteTarget.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/GUICrafting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/GUIMissionLog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/GUISkyBlockMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/collection/GUICollectionCategory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/collection/GUICollections.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/crafting/GUIRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/sbmenu/crafting/GUIRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/crafting/GUIRecipeBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/sbmenu/crafting/GUIRecipeBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/crafting/GUIRecipeCategory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/profiles/GUIProfileCreate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/profiles/GUIProfileManagement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/profiles/GUIProfileSelect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/sbmenu/profiles/GUIProfileSelectMode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/shop/GUIGenericTradingOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/gui/inventory/inventories/shop/GUIGenericTradingOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/shop/GUIShopFarmer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/inventories/shop/GUIShopLibrarian.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIClickableItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/gui/inventory/item/GUIQueryItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemLore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ItemType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/MaterialQuantifiable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/Rarity.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/Rarity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/ReforgeType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/SkyBlockItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/AttributeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/ItemAttribute.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeBreakingPower.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeEnchantments.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/attribute/attributes/ItemAttributeEnchantments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeRarity.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/attribute/attributes/ItemAttributeRarity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeRecombobulated.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeReforge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeStatistics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/attribute/attributes/ItemAttributeType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Craftable.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/impl/Craftable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockAbility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/CustomSkyBlockItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Enchantable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Enchanted.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/ExtraRarityDisplay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Interactable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/LeatherColour.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/MiningTool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Reforgable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/Sellable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/SkyBlockRecipe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/recipes/ExchangeableType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/recipes/ShapedRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/impl/recipes/ShapedRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/impl/recipes/ShapelessRecipe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/armor/LeafletHat.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/armor/LeafletHat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/armor/LeafletPants.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/armor/LeafletPants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/armor/LeafletSandals.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/armor/LeafletSandals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/armor/LeafletTunic.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/armor/LeafletTunic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedAcaciaWood.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedAcaciaWood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedBakedPotato.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedBirchWood.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedBlazeRod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedBone.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedBone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedCarrot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedCharcoal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedCoal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedCobblestone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedCocoa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedDarkOakWood.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedDiamond.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedDiamondBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedDiamondBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEgg.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedEgg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEmerald.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEmeraldBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedEmeraldBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEndStone.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedEndStone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEnderPearl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedEyeOfEnder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedEyeOfEnder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedGold.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedGoldBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedGunpowder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedIce.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedIce.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedIron.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedIronBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedJungleWood.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedJungleWood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedLeather.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedLeather.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedMagmaCream.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedOakWood.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedObsidian.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedObsidian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedPackedIce.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedPotato.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedPotato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedPumpkin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedRedstone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedRedstoneBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/enchanted/EnchantedRedstoneBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedRottenFlesh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedSponge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedSpruceWood.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchanted/EnchantedSugar.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/enchantment/EnchantedBook.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/farming/RookieHoe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/mining/PioneersPickaxe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/mining/vanilla/DiamondPickaxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/mining/vanilla/DiamondPickaxe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/mining/vanilla/IronPickaxe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/mining/vanilla/StonePickaxe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/mining/vanilla/WoodenPickaxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/mining/vanilla/WoodenPickaxe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/miscellaneous/SkyBlockMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/vanilla/CraftingTable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/vanilla/OakPlanks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/vanilla/Stick.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/Hyperion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/vanilla/DiamondSword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/vanilla/IronSword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/vanilla/StoneSword.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/weapon/vanilla/StoneSword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/items/weapon/vanilla/WoodenSword.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/items/weapon/vanilla/WoodenSword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/set/ArmorSetRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/set/impl/ArmorSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/set/impl/SetRepeatable.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/set/impl/SetRepeatable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/set/sets/LeafletSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/NonPlayerItemUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/item/updater/NonPlayerItemUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemOrigin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/item/updater/PlayerItemUpdater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/MissionData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/MissionRepeater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/MissionSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/SkyBlockMission.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/mission/SkyBlockMission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/SkyBlockProgressMission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionBreakLog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionCraftWoodenPickaxe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionCraftWorkbench.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionTalkJerry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionTalkToBanker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionTalkToLibrarian.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionTalkToVillagers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/mission/missions/MissionUseTeleporter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketClientListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/SkyBlockPacketServerListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/packets/client/PacketListenerNameItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/packets/client/PacketListenerPlayerDig.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/packet/packets/client/PacketListenerPlayerDig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/packets/client/PacketListenerSignUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/packet/packets/client/anticheat/PacketListenerAirJump.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/packet/packets/client/anticheat/PacketListenerAirJump.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/RegionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/region/RegionType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockMiningConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/SkyBlockRegion.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/region/SkyBlockRegion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/mining/BreakingTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/mining/MineableBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/mining/MiningLoot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/mining/configurations/MineCoalConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/region/mining/configurations/MineWheatConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/region/mining/configurations/MineWheatConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/InventorySerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/JacksonSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/MissionDataSerializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/PlayerShopDataSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/serializer/PlayerShopDataSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/Serializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/SkyBlockItemDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/serializer/SkyBlockItemDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/serializer/SkyBlockItemSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/serializer/SkyBlockItemSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/attribute/ServerAttribute.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/attribute/SkyBlockServerAttributes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/attribute/attributes/AttributeLong.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/eventcaller/CustomEventCaller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/eventcaller/PlayerValues.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/server/eventcaller/ServerValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/server/eventcaller/ServerValues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/structure/PasterService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/structure/SkyBlockStructure.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/structure/structures/IslandPortal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/AntiCheatHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/LogHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/PlayerAbilityHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/PlayerShopData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockIsland.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/user/SkyBlockPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/SkyBlockScoreboard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/UserProfiles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/categories/CustomGroups.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/categories/Rank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/fairysouls/EntityFairySoul.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/fairysouls/FairySoul.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/fairysouls/FairySoulZone.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/ItemStatistics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/PlayerStatistics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/user/statistics/StatisticDisplayReplacement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/Acronym.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/utility/Acronym.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/DamageIndicator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/ExtraItemTags.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/utility/ExtraItemTags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/Groups.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/ItemGroups.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/MaterialQuantifiableRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/utility/MaterialQuantifiableRandom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/MathUtility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/PaginationList.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/net/swofty/commons/skyblock/utility/PaginationList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/StringUtility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/swofty/utility/Tuple.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tinylog.properties" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/tinylog.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,13 +844,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="239997" />
+    <option name="totalTimeSeconds" value="343539" />
+    <option name="gitIntegration" value="true" />
+    <option name="naggedAbout" value="1" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -86,6 +878,13 @@
     <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/8a9029c80c/minestom-ce-8a9029c80c.jar!/net/minestom/server/network/packet/server/play/PlayerInfoUpdatePacket.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/net/kyori/adventure-api/4.11.0/adventure-api-4.11.0-sources.jar!/net/kyori/adventure/text/Component.java" root0="SKIP_INSPECTION" />
   </component>
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="commons/invalid/Minecraft" />
+      <facet id="core/invalid/Minecraft" />
+      <facet id="velocity/invalid/Minecraft" />
+    </ignored-facets>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -106,32 +905,43 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;temurin-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlock/bungee&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\bungee" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockMinestom" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\proxy\src" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\proxy\src\main\resources" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\commons-skyblock\src\main" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\commons-skyblock\src" />
+      <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="SkyBlock" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="net.swofty.SkyBlock" />
-      <module name="skyblock" />
+  <component name="RunManager" selected="Application.SkyBlock">
+    <configuration name="ProxyInternal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.proxy.ProxyInternal" />
+      <module name="proxy" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="net.swofty.user.statistics.*" />
+          <option name="PATTERN" value="net.swofty.proxy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -139,9 +949,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SkyBlock" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.commons.skyblock.SkyBlock" />
+      <module name="core" />
+      <option name="PROGRAM_PARAMETERS" value="ISLAND" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.swofty.commons.skyblock.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ProxyInternal" />
+      <item itemvalue="Application.SkyBlock" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.SkyBlock" />
+        <item itemvalue="Application.ProxyInternal" />
       </list>
     </recent_temporary>
   </component>
@@ -164,86 +993,24 @@
       <workItem from="1703075679888" duration="103000" />
       <workItem from="1703113181512" duration="30578000" />
       <workItem from="1703200685542" duration="6547000" />
-    </task>
-    <task id="LOCAL-00001" summary="Initial Commit (v1.0)">
-      <option name="closed" value="true" />
-      <created>1702547488297</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1702547488297</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Updated POM.xml compilation for Manifest attributes">
-      <option name="closed" value="true" />
-      <created>1702549436416</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1702549436416</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Updated AnvilGUI from using packets to Minestoms API">
-      <option name="closed" value="true" />
-      <created>1702555381423</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1702555381423</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Implemented logging and updated GUI system">
-      <option name="closed" value="true" />
-      <created>1702572788165</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1702572788165</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Update all libraries">
-      <option name="closed" value="true" />
-      <created>1702573269819</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1702573269819</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Cleaned up GUIs in terms of Close events, removed Italic styling off of ItemStackCreator.java items, and cleaned up console messages using tinylog.properties">
-      <option name="closed" value="true" />
-      <created>1702576024901</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1702576024901</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Changed Holograms to being bottom-aligned">
-      <option name="closed" value="true" />
-      <created>1702580292756</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1702580292756</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Minor improvements across everything, implementation of ManaDisplayReplacement">
-      <option name="closed" value="true" />
-      <created>1702583917182</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1702583917182</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's">
-      <option name="closed" value="true" />
-      <created>1702590462654</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1702590462654</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Added NonPlayerItemUpdater system and fixed Attribute hiding">
-      <option name="closed" value="true" />
-      <created>1702596480162</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1702596480162</updated>
+      <workItem from="1703755599671" duration="9117000" />
+      <workItem from="1703813706706" duration="24487000" />
+      <workItem from="1703862067237" duration="2657000" />
+      <workItem from="1703902742690" duration="3348000" />
+      <workItem from="1703915811337" duration="17766000" />
+      <workItem from="1704019430028" duration="3259000" />
+      <workItem from="1704074130552" duration="8748000" />
+      <workItem from="1704098341645" duration="10717000" />
+      <workItem from="1704344631881" duration="10260000" />
+      <workItem from="1704358048736" duration="24991000" />
+      <workItem from="1704444162313" duration="8760000" />
+      <workItem from="1704623926973" duration="2157000" />
+      <workItem from="1704626100111" duration="165000" />
+      <workItem from="1704626275317" duration="614000" />
+      <workItem from="1704627103762" duration="8641000" />
+      <workItem from="1704636433541" duration="144000" />
+      <workItem from="1704636680179" duration="986000" />
+      <workItem from="1704645096606" duration="340000" />
     </task>
     <task id="LOCAL-00011" summary="Implemented Regions">
       <option name="closed" value="true" />
@@ -429,7 +1196,215 @@
       <option name="project" value="LOCAL" />
       <updated>1703160363069</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Implemented some missions, fixed GUICrafting bugs and made some more recipes">
+      <option name="closed" value="true" />
+      <created>1703765431889</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1703765431889</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Woops, fixed bug with missions">
+      <option name="closed" value="true" />
+      <created>1703765509331</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1703765509331</updated>
+    </task>
+    <task id="LOCAL-00036" summary="When clicking on the vanilla crafting GUI the SkyBlock one now pops up">
+      <option name="closed" value="true" />
+      <created>1703767135549</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1703767135549</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Start of profile support">
+      <option name="closed" value="true" />
+      <created>1703832394564</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1703832394564</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Finished profiles, with deletion, selection and creation.">
+      <option name="closed" value="true" />
+      <created>1703842023710</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1703842023710</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Updated handling of missions in accordance to spawn location being on Player Island rather than the Hub">
+      <option name="closed" value="true" />
+      <created>1703842459149</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1703842459149</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Added ability for SkyBlockStructure's to have holograms">
+      <option name="closed" value="true" />
+      <created>1703848099307</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1703848099307</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Added particles to the Speak To Villagers mission">
+      <option name="closed" value="true" />
+      <created>1703850780128</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1703850780128</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Fixed how data loading with profiles and islands work">
+      <option name="closed" value="true" />
+      <created>1703864986899</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1703864986899</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Bit more work on coop">
+      <option name="closed" value="true" />
+      <created>1703917099020</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1703917099020</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Wonder why it doesn't work">
+      <option name="closed" value="true" />
+      <created>1703918720882</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1703918720882</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Fixed massive user data bugs and further impl coop">
+      <option name="closed" value="true" />
+      <created>1703937051409</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1703937051409</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Added island support for coops">
+      <option name="closed" value="true" />
+      <created>1704080591085</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1704080591085</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Implemented /coopleave aswell as extra safety checks around profile selection">
+      <option name="closed" value="true" />
+      <created>1704081455951</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1704081455951</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Added GUIRecipeBook aswell as fixing cursor bugs">
+      <option name="closed" value="true" />
+      <created>1704115133225</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1704115133225</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Fixed cross-transfer fall damage">
+      <option name="closed" value="true" />
+      <created>1704115439576</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1704115439576</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Finished recipes and cleaned up bugs">
+      <option name="closed" value="true" />
+      <created>1704366973986</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1704366973987</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Added Jerry and finished all island quests">
+      <option name="closed" value="true" />
+      <created>1704375132541</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1704375132541</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Added Jerry and finished all island quests">
+      <option name="closed" value="true" />
+      <created>1704375247662</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1704375247662</updated>
+    </task>
+    <task id="LOCAL-00053" summary="File apparently didn't commit">
+      <option name="closed" value="true" />
+      <created>1704375350258</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1704375350258</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Implemented Armor Set abilities aswell as added Leo and fixed up a couple bugs">
+      <option name="closed" value="true" />
+      <created>1704425892897</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1704425892897</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Added more villagers and start of librarian">
+      <option name="closed" value="true" />
+      <created>1704431890796</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1704431890796</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Fixed EnchantedBook display">
+      <option name="closed" value="true" />
+      <created>1704433581918</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1704433581918</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Added bossbar display for missions">
+      <option name="closed" value="true" />
+      <created>1704438536217</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1704438536217</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Start of collections">
+      <option name="closed" value="true" />
+      <created>1704446007623</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1704446007623</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Further implemented collections">
+      <option name="closed" value="true" />
+      <created>1704454681762</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1704454681763</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,31 +1422,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implemented Abilities, their cooldowns and StatisticDisplayReplacement's" />
-    <MESSAGE value="Added NonPlayerItemUpdater system and fixed Attribute hiding" />
-    <MESSAGE value="Implemented Regions" />
-    <MESSAGE value="Actually added paginated GUIs" />
-    <MESSAGE value="Cleaned up implementation of Pagination with minor refractoring and method name changes" />
-    <MESSAGE value="Finished ServerAttribute implementation" />
-    <MESSAGE value="Fully implemented mining with SkyBlockMiningConfiguration in RegionType" />
-    <MESSAGE value="Added regions support within GitHub project and touched up Coal Mine configuration" />
-    <MESSAGE value="Added Villagers with the blacksmith already being there, comes with a VillagerEntityImpl" />
-    <MESSAGE value="Implemented Dialogue abstraction for both types of NPCs (Villagers and Player)" />
-    <MESSAGE value="Implemented Custom Event support aswell as preparation for SkyBlock Missions" />
-    <MESSAGE value="Removed accidental logging, woops" />
-    <MESSAGE value="Added base of onLoad and onSave for a players DataHandler" />
-    <MESSAGE value="Finished implementation of onSave and onLoad aswell as /build inside of BuildCommand.java" />
-    <MESSAGE value="Completely finished mining implementation aswell as onLoad and onSave, aswell as Villager and NPC looking" />
-    <MESSAGE value="Fixed Mining, playerId + 1" />
-    <MESSAGE value="Added AntiAirJump, fixed cache removal aswell as cleaned up general logging, fixed Build Mode in regards to placing in ActionRegionBlockPlace.java" />
-    <MESSAGE value="Fixed liquid and misc block checks for AirJump" />
-    <MESSAGE value="Updated libraries (12/20/2023)" />
-    <MESSAGE value="Updated to 1.20.1 through Minestom-CE and started work on SkyBlockIsland" />
-    <MESSAGE value="Fixed minor bug" />
-    <MESSAGE value="Miscellaneous patches and README changes" />
-    <MESSAGE value="Implemented 1.20.1 support fully aswell as implementing item dropping and picking up. Also refractored CustomEventCaller for a cleaner result" />
-    <MESSAGE value="Per-player items" />
-    <MESSAGE value="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland" />
-    <option name="LAST_COMMIT_MESSAGE" value="Progress made on GUIs aswell as Enchanting system - Start of SkyBlockIsland" />
+    <MESSAGE value="Woops, fixed bug with missions" />
+    <MESSAGE value="When clicking on the vanilla crafting GUI the SkyBlock one now pops up" />
+    <MESSAGE value="Start of profile support" />
+    <MESSAGE value="Finished profiles, with deletion, selection and creation." />
+    <MESSAGE value="Updated handling of missions in accordance to spawn location being on Player Island rather than the Hub" />
+    <MESSAGE value="Added ability for SkyBlockStructure's to have holograms" />
+    <MESSAGE value="Added particles to the Speak To Villagers mission" />
+    <MESSAGE value="Fixed how data loading with profiles and islands work" />
+    <MESSAGE value="Bit more work on coop" />
+    <MESSAGE value="Wonder why it doesn't work" />
+    <MESSAGE value="Fixed massive user data bugs and further impl coop" />
+    <MESSAGE value="Added island support for coops" />
+    <MESSAGE value="Implemented /coopleave aswell as extra safety checks around profile selection" />
+    <MESSAGE value="Added GUIRecipeBook aswell as fixing cursor bugs" />
+    <MESSAGE value="Fixed cross-transfer fall damage" />
+    <MESSAGE value="Finished recipes and cleaned up bugs" />
+    <MESSAGE value="Added Jerry and finished all island quests" />
+    <MESSAGE value="File apparently didn't commit" />
+    <MESSAGE value="Implemented Armor Set abilities aswell as added Leo and fixed up a couple bugs" />
+    <MESSAGE value="Added more villagers and start of librarian" />
+    <MESSAGE value="Fixed EnchantedBook display" />
+    <MESSAGE value="Added bossbar display for missions" />
+    <MESSAGE value="Start of collections" />
+    <MESSAGE value="Further implemented collections" />
+    <MESSAGE value="Start to modularization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start to modularization" />
   </component>
 </project>
