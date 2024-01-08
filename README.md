@@ -13,30 +13,38 @@ Releases are auto deployed on push onto the GitHub releases page which can be fo
 
 Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/).
 
-## Execution Guide
+## Setup Guide
 
 1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
 2. Ensure you have the `Java 17` SDK installed.
-3. Download the JAR file from the latest release on the GitHub page, it'll be whichever one has a large file size and doesn't have 'ORIGINAL' in its name.
-4. Scroll down to Setup Guide to continue.
+3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
+4. Follow the 'Proxy Setup Guide' below.
+5. Follow the 'Game Server Setup Guide' below.
 
-## Compilation Guide
+### Proxy Setup Guide
+1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
+2. Download the Velocity proxy from [here](https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/316/downloads/velocity-3.3.0-SNAPSHOT-316.jar)
+3. Download `velocity.toml` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and move it to where you want your Proxy server to run.
+4. Move your Velocity proxy JAR into that folder aswell, and run the proxy using `java -jar velocity-3.3.0-SNAPSHOT-316.jar` as a command in that directory.
+5. Close this proxy once it has generated the `plugins` folder, just by pressing `CTRL + C` or closing the CMD Prompt.
+6. Move the `SkyBlockProxy.jar` from earlier into the plugins folder.
+7. Make a new folder where your `velocity.toml` is and call it `configuration`
+8. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
+9. Move this file into the `configuration` folder you just made.
+10. Start the proxy again using `java -jar velocity-3.3.0-SNAPSHOT-316.jar`. This will need to be on for your game servers to work.
 
-1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
-2. Load the project into your IntelliJ or in another Maven-enabled environment.
-3. Ensure you have the `Java 17` JDK installed.
-4. Run the `package` lifecycle either through `mvn package` or your Maven-enabled environment.
-5. Scroll down to Setup Guide to continue.
-
-## Setup Guide
-
-1. With the resulting JAR file insert a `resources.json` in the same directory with the following setup ensuring you change the values in accordance to your setup;
-   {"mongodb": "mongodb://localhost", "cracked_domain": "0.0.0.0", "port": 25530}
-2. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
-3. Get the Hypixel SkyBlock hub from the above download and put it in the same directory as your jar under the name `hypixel_hub`.
-4. Get the Hypixel Island default template from the above download and put it in the same directory as your jar under the name `hypixel_island_template`.
-5. Run the jar using `java -jar {Insert the JAR file}` and connect through port 25530.
-6. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+### Game Server Setup Guide
+1. Download 'SkyBlockCore.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
+2. Make a folder called `configuration` in the same directory as the JAR file. (Note this should be placed differently to where your Proxy is)
+3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
+4. Move this file into the `configuration` folder you just made.
+5. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
+6. Get the Hypixel SkyBlock hub from the above download and put it in the same directory as your jar under the name `hypixel_hub`.
+7. Get the Hypixel Island default template from the above download and put it in the same directory as your jar under the name `hypixel_island_template`.
+8. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
+9. Run the jar using `java -jar {Insert the JAR file} ISLAND`, this will create an Island server that will latch onto your running proxy.
+10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
+11. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 
 ## Credits
 

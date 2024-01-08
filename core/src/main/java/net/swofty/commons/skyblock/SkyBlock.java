@@ -67,6 +67,7 @@ import org.tinylog.Logger;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -306,19 +307,23 @@ public class SkyBlock {
         /**
          * Start the server
          */
-        AtomicInteger port = new AtomicInteger();
-        RedisMessage.sendMessageToProxy(
-                "server-initialized",
-                new JSONObject().put("type", serverType.name()).toString(),
-                (response) -> port.set(Integer.parseInt(response)));
-        minecraftServer.start("0.0.0.0", port.get());
         MinecraftServer.setBrandName("SkyBlock");
         checkProxyConnected(MinecraftServer.getSchedulerManager());
 
-        long endTime = System.currentTimeMillis();
-        Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
-        Logger.info("Server Type: " + serverType.name());
-        Logger.info("Internal ID: " + serverUUID.toString());
+        CompletableFuture<Integer> startServer = new CompletableFuture<>();
+        startServer.whenComplete((port, throwable) -> {
+            minecraftServer.start("0.0.0.0", port);
+
+            long endTime = System.currentTimeMillis();
+            Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
+            Logger.info("Server Type: " + serverType.name());
+            Logger.info("Internal ID: " + serverUUID.toString());
+        });
+
+        RedisMessage.sendMessageToProxy(
+                "server-initialized",
+                new JSONObject().put("type", serverType.name()).toString(),
+                (response) -> startServer.complete(Integer.parseInt(response)));
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {
