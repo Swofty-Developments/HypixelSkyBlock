@@ -28,6 +28,7 @@ public class ActionCraftingTableClick extends SkyBlockEvent {
         if (Material.fromNamespaceId(interactEvent.getBlock().namespace()) != Material.CRAFTING_TABLE) {
             return;
         }
+        ((PlayerBlockInteractEvent) event).setBlockingItemUse(true);
 
         new GUICrafting().open(player);
     }

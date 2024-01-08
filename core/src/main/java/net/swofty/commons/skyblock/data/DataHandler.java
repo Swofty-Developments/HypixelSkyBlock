@@ -172,6 +172,7 @@ public class DataHandler {
             player.getTeam().sendUpdatePacket();
         })),
         COINS("coins", false, false, DatapointDouble.class, new DatapointDouble("coins", 0.0)),
+        BANK_COINS("bank_coins" , false , false , DatapointDouble.class , new DatapointDouble("bank_coins" , 0.0)),
         INVENTORY("inventory", false, false, DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();

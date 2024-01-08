@@ -29,6 +29,7 @@ public class ActionEnchantmentTableClick extends SkyBlockEvent {
         if (Material.fromNamespaceId(interactEvent.getBlock().namespace()) != Material.ENCHANTING_TABLE) {
             return;
         }
+        ((PlayerBlockInteractEvent) event).setBlockingItemUse(true);
 
         new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(interactEvent.getBlockPosition())).open(player);
     }

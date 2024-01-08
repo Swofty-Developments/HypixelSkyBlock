@@ -61,7 +61,7 @@ public class SkyBlockScoreboard {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine("§fPurse: §6" + dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue(), sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {

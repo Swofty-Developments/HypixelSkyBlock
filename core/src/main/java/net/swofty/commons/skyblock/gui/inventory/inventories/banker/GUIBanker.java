@@ -1,4 +1,4 @@
-package net.swofty.commons.skyblock.gui.inventory.inventories;
+package net.swofty.commons.skyblock.gui.inventory.inventories.banker;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -34,10 +34,8 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem() {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cThis feature is currently unavailable.");
-                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
-                        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
-                );
+              new GUIDeposit().open(player);
+
             }
 
             @Override
@@ -49,7 +47,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, (short) 0, 1,
                         "§7Current balance: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue()),
+                                player.getDataHandler().get(DataHandler.Data.BANK_COINS, DatapointDouble.class).getValue()),
                         " ",
                         "§7Store coins in the bank to keep",
                         "§7them safe while you go on",
@@ -64,6 +62,34 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                         "§eClick to make a deposit!");
             }
         });
+
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+               new GUIWithdraw().open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 13;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack(
+                        "§aWithdraw Coins", Material.DROPPER, (short) 0, 1,
+                        "§7Current balance: §6" + StringUtility.commaify(player.getDataHandler().get(DataHandler.Data.BANK_COINS , DatapointDouble.class).getValue()),
+                        " ",
+                        "§7Take your coins out of the",
+                        "§7bank in order to spend",
+                        "§7them.",
+                        " ",
+                        "§eClick to withdraw coins!"
+                );
+            }
+        });
+
 
         set(new GUIQueryItem() {
             @Override

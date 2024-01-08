@@ -1,7 +1,7 @@
 package net.swofty.commons.skyblock.entity.npc.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.skyblock.gui.inventory.inventories.GUIBanker;
+import net.swofty.commons.skyblock.gui.inventory.inventories.banker.GUIBanker;
 import net.swofty.commons.skyblock.entity.npc.NPCParameters;
 import net.swofty.commons.skyblock.entity.npc.SkyBlockNPC;
 import net.swofty.commons.skyblock.mission.MissionData;
