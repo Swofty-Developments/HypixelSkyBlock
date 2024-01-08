@@ -54,6 +54,7 @@ import net.swofty.commons.skyblock.server.eventcaller.CustomEventCaller;
 import net.swofty.commons.skyblock.user.SkyBlockScoreboard;
 import net.swofty.commons.skyblock.user.categories.CustomGroups;
 import net.swofty.commons.skyblock.user.statistics.PlayerStatistics;
+import net.swofty.proxyapi.ProxyAPI;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -68,6 +69,9 @@ public class SkyBlock {
     @Getter
     @Setter
     private static SharedInstance instanceContainer;
+    @Getter
+    @Setter
+    private static UUID serverUUID;
     @Getter
     @Setter
     private static GlobalEventHandler globalEventHandler;
@@ -87,6 +91,7 @@ public class SkyBlock {
          */
         MinecraftServer minecraftServer = MinecraftServer.init();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
+        serverUUID = UUID.randomUUID();
 
         /**
          * Handle instances
@@ -291,6 +296,12 @@ public class SkyBlock {
         MinecraftServer.setBrandName("SkyBlock");
         Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
         Logger.info("Server Type: " + serverType.name());
+
+        /**
+         * Initialize Proxy support
+         */
+        Logger.info("Initializing proxy support...");
+        new ProxyAPI(serverType, Configuration.get("redis-uri"), serverUUID);
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {
