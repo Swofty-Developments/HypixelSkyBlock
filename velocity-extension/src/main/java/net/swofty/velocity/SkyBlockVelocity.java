@@ -2,23 +2,29 @@ package net.swofty.velocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
+import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
+import net.swofty.velocity.redis.RedisMessage;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Plugin(
@@ -29,8 +35,8 @@ import java.util.stream.Stream;
         authors = {"Swofty"}
 )
 public class SkyBlockVelocity {
+    @Getter
     private static ProxyServer server = null;
-    private static Logger logger = null;
     @Getter
     private static SkyBlockVelocity plugin;
 
@@ -38,7 +44,6 @@ public class SkyBlockVelocity {
     public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
         plugin = this;
         server = tempServer;
-        logger = tempLogger;
     }
 
     @Subscribe
@@ -56,8 +61,26 @@ public class SkyBlockVelocity {
                                 listener.onMessage(event2.channel, event2.message);
                             });
                 });
+        RedisMessage.registerProxyToServer("ping");
+        RedisAPI.getInstance().startListeners();
 
+        /**
+         * Setup GameManager
+         */
         GameManager.loopServers(server);
+    }
+
+    @Subscribe
+    public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
+        if (!GameManager.hasType(ServerType.ISLAND)) {
+            event.getPlayer().disconnect(
+                    Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
+            );
+            return;
+        }
+
+        RegisteredServer server = GameManager.getFromType(ServerType.ISLAND).get(0).server();
+        event.setInitialServer(server);
     }
 
     public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {

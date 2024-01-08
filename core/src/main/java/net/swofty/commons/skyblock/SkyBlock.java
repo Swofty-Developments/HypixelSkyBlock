@@ -10,12 +10,15 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.extras.MojangAuth;
+import net.minestom.server.extras.velocity.VelocityProxy;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.timer.Scheduler;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
@@ -28,6 +31,7 @@ import net.swofty.commons.skyblock.data.mongodb.*;
 import net.swofty.commons.skyblock.event.SkyBlockEvent;
 import net.swofty.commons.skyblock.packet.SkyBlockPacketClientListener;
 import net.swofty.commons.skyblock.command.SkyBlockCommand;
+import net.swofty.commons.skyblock.redis.RedisPing;
 import net.swofty.commons.skyblock.user.SkyBlockIsland;
 import net.swofty.commons.skyblock.user.SkyBlockPlayer;
 import net.swofty.commons.skyblock.user.fairysouls.FairySoul;
@@ -55,12 +59,16 @@ import net.swofty.commons.skyblock.user.SkyBlockScoreboard;
 import net.swofty.commons.skyblock.user.categories.CustomGroups;
 import net.swofty.commons.skyblock.user.statistics.PlayerStatistics;
 import net.swofty.proxyapi.ProxyAPI;
+import net.swofty.proxyapi.redis.RedisMessage;
+import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -284,24 +292,33 @@ public class SkyBlock {
         /**
          * Handle ConnectionManager
          */
-        MojangAuth.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(SkyBlockPlayer::new);
-
-        /**
-         * Start the server
-         */
-        int port = Configuration.getOrDefault("port", 25530);
-        minecraftServer.start("0.0.0.0", port);
-        long endTime = System.currentTimeMillis();
-        MinecraftServer.setBrandName("SkyBlock");
-        Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
-        Logger.info("Server Type: " + serverType.name());
 
         /**
          * Initialize Proxy support
          */
         Logger.info("Initializing proxy support...");
-        new ProxyAPI(serverType, Configuration.get("redis-uri"), serverUUID);
+        ProxyAPI proxyAPI = new ProxyAPI(serverType, Configuration.get("redis-uri"), serverUUID);
+        proxyAPI.registerProxyToClient("ping", RedisPing.class);
+        proxyAPI.start();
+        VelocityProxy.enable(Configuration.get("velocity-secret"));
+
+        /**
+         * Start the server
+         */
+        AtomicInteger port = new AtomicInteger();
+        RedisMessage.sendMessageToProxy(
+                "server-initialized",
+                new JSONObject().put("type", serverType.name()).toString(),
+                (response) -> port.set(Integer.parseInt(response)));
+        minecraftServer.start("0.0.0.0", port.get());
+        MinecraftServer.setBrandName("SkyBlock");
+        checkProxyConnected(MinecraftServer.getSchedulerManager());
+
+        long endTime = System.currentTimeMillis();
+        Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
+        Logger.info("Server Type: " + serverType.name());
+        Logger.info("Internal ID: " + serverUUID.toString());
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {
@@ -336,5 +353,22 @@ public class SkyBlock {
 
     public static SkyBlockPlayer getPlayerFromProfileUUID(UUID uuid) {
         return getLoadedPlayers().stream().filter(player -> player.getProfiles().getCurrentlySelected().equals(uuid)).findFirst().orElse(null);
+    }
+
+    private static void checkProxyConnected(Scheduler scheduler) {
+        scheduler.submitTask(() -> {
+            AtomicBoolean responded = new AtomicBoolean(false);
+
+            RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> responded.set(true));
+
+            scheduler.scheduleTask(() -> {
+                if (!responded.get()) {
+                    Logger.error("Proxy did not respond to alive check. Shutting down...");
+                    System.exit(0);
+                }
+            }, TaskSchedule.tick(2), TaskSchedule.stop());
+
+            return TaskSchedule.tick(10);
+        });
     }
 }
