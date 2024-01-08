@@ -21,7 +21,9 @@ public class GameManager {
                 new ServerInfo(serverID.toString(), new InetSocketAddress(port))
         );
 
-        GameServer server = new GameServer(type.toString(), serverID, registeredServer);
+        String displayName = getNextAvailableDisplayName() + "" + (char) (new Random().nextInt(26) + 'a');
+
+        GameServer server = new GameServer(displayName, serverID, registeredServer);
         if (!servers.containsKey(type)) servers.put(type, new ArrayList<>(List.of(server)));
         else servers.get(type).add(server);
 
@@ -34,6 +36,15 @@ public class GameManager {
 
     public static List<GameServer> getFromType(ServerType type){
         return servers.get(type);
+    }
+
+    public static GameServer getFromUUID(UUID uuid) {
+        for (ArrayList<GameServer> gameServers : servers.values()) {
+            for (GameServer gameServer : gameServers) {
+                if (gameServer.internalID().equals(uuid)) return gameServer;
+            }
+        }
+        return null;
     }
 
     public static void loopServers(ProxyServer server) {
@@ -56,6 +67,17 @@ public class GameManager {
                 });
             });
         }).repeat(Duration.ofMillis(300)).schedule();
+    }
+
+    private static int getNextAvailableDisplayName() {
+        if (servers.isEmpty()) return 1;
+        if (servers.values().stream().allMatch(ArrayList::isEmpty)) return 1;
+
+        int highestDisplayName = servers.values().stream().mapToInt(servers -> servers.stream().mapToInt(server -> {
+            String displayName = server.displayName().replaceAll("[^0-9]", "");
+            return Integer.parseInt(displayName);
+        }).max().getAsInt()).max().getAsInt();
+        return highestDisplayName + 1;
     }
 
     private static int getNextAvailablePort() {

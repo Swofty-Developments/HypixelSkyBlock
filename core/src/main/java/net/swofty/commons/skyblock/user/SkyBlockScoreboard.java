@@ -51,7 +51,7 @@ public class SkyBlockScoreboard {
                 Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false)
                         + (player.isCoop() ? " §b§lCO-OP" : ""));
 
-                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8???", sidebar);
+                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8mini" + SkyBlock.getServerName(), sidebar);
                 addLine("§7 ", sidebar);
                 addLine("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()), sidebar);
                 addLine("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()), sidebar);

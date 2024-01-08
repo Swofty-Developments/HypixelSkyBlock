@@ -7,14 +7,15 @@ import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.tinylog.Logger;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class ProxyAPI {
-    public ProxyAPI(ServerType type, String URI, UUID serverUUID) {
+    public ProxyAPI(String URI, UUID serverUUID, String... toRegister) {
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterID(serverUUID.toString());
 
-        registerChannels();
+        registerChannels(toRegister);
     }
 
     public void registerProxyToClient(String channelID, Class<? extends ProxyToClient> clazz) {
@@ -41,8 +42,7 @@ public class ProxyAPI {
         RedisAPI.getInstance().startListeners();
     }
 
-    public static void registerChannels() {
-        RedisMessage.register("server-initialized");
-        RedisMessage.register("proxy-online");
+    public static void registerChannels(String[] channels) {
+        Arrays.stream(channels).forEach(RedisMessage::register);
     }
 }

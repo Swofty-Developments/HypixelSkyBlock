@@ -9,7 +9,6 @@ import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
-import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.extras.velocity.VelocityProxy;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
@@ -27,15 +26,9 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.skyblock.calendar.SkyBlockCalendar;
-import net.swofty.commons.skyblock.data.mongodb.*;
-import net.swofty.commons.skyblock.event.SkyBlockEvent;
-import net.swofty.commons.skyblock.packet.SkyBlockPacketClientListener;
 import net.swofty.commons.skyblock.command.SkyBlockCommand;
-import net.swofty.commons.skyblock.redis.RedisPing;
-import net.swofty.commons.skyblock.user.SkyBlockIsland;
-import net.swofty.commons.skyblock.user.SkyBlockPlayer;
-import net.swofty.commons.skyblock.user.fairysouls.FairySoul;
 import net.swofty.commons.skyblock.data.DataHandler;
+import net.swofty.commons.skyblock.data.mongodb.*;
 import net.swofty.commons.skyblock.entity.DroppedItemEntityImpl;
 import net.swofty.commons.skyblock.entity.hologram.PlayerHolograms;
 import net.swofty.commons.skyblock.entity.hologram.ServerHolograms;
@@ -43,6 +36,7 @@ import net.swofty.commons.skyblock.entity.npc.NPCDialogue;
 import net.swofty.commons.skyblock.entity.npc.SkyBlockNPC;
 import net.swofty.commons.skyblock.entity.villager.NPCVillagerDialogue;
 import net.swofty.commons.skyblock.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.commons.skyblock.event.SkyBlockEvent;
 import net.swofty.commons.skyblock.event.value.SkyBlockValueEvent;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.impl.Craftable;
@@ -51,12 +45,17 @@ import net.swofty.commons.skyblock.item.updater.PlayerItemUpdater;
 import net.swofty.commons.skyblock.mission.MissionData;
 import net.swofty.commons.skyblock.mission.MissionRepeater;
 import net.swofty.commons.skyblock.mission.SkyBlockMission;
+import net.swofty.commons.skyblock.packet.SkyBlockPacketClientListener;
+import net.swofty.commons.skyblock.redis.RedisPing;
 import net.swofty.commons.skyblock.region.SkyBlockMiningConfiguration;
 import net.swofty.commons.skyblock.region.SkyBlockRegion;
 import net.swofty.commons.skyblock.server.attribute.SkyBlockServerAttributes;
 import net.swofty.commons.skyblock.server.eventcaller.CustomEventCaller;
+import net.swofty.commons.skyblock.user.SkyBlockIsland;
+import net.swofty.commons.skyblock.user.SkyBlockPlayer;
 import net.swofty.commons.skyblock.user.SkyBlockScoreboard;
 import net.swofty.commons.skyblock.user.categories.CustomGroups;
+import net.swofty.commons.skyblock.user.fairysouls.FairySoul;
 import net.swofty.commons.skyblock.user.statistics.PlayerStatistics;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.redis.RedisMessage;
@@ -69,7 +68,6 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -84,6 +82,9 @@ public class SkyBlock {
     @Getter
     @Setter
     private static GlobalEventHandler globalEventHandler;
+    @Getter
+    @Setter
+    private static String serverName = "???";
 
     public static void main(String[] args) throws JsonProcessingException {
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
@@ -299,7 +300,10 @@ public class SkyBlock {
          * Initialize Proxy support
          */
         Logger.info("Initializing proxy support...");
-        ProxyAPI proxyAPI = new ProxyAPI(serverType, Configuration.get("redis-uri"), serverUUID);
+        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID,
+                "proxy-online",
+                "server-initialized",
+                "server-name");
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.start();
         VelocityProxy.enable(Configuration.get("velocity-secret"));
@@ -318,6 +322,10 @@ public class SkyBlock {
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
+
+            RedisMessage.sendMessageToProxy(
+                    "server-name", "",
+                    SkyBlock::setServerName);
         });
 
         RedisMessage.sendMessageToProxy(

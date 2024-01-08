@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @ChannelListener(channel = "server-initialized")
 public class ListenerServerInitialized extends RedisListener {
-
     @Override
     public String receivedMessage(String message, UUID serverUUID) {
         JSONObject json = new JSONObject(message);
