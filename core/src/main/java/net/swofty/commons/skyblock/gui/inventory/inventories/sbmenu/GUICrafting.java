@@ -108,6 +108,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
                 ItemType cursorItemType = cursorItem.getAttributeHandler().getItemTypeAsType();
                 ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getItemTypeAsType();
+                boolean isShift = e.getClickType().equals(ClickType.START_SHIFT_CLICK);
 
                 if (!e.getCursorItem().isAir() &&
                         (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
@@ -116,11 +117,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     return;
                 }
 
-                if (e.getClickType().equals(ClickType.SHIFT_CLICK)) {
-                    e.setCancelled(true);
-                    e.getPlayer().sendMessage("§cYou cannot shift click items");
-                    return;
-                }
 
                 ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
                         player,
@@ -140,8 +136,19 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                                 toReplace[i].getItemStack()).build());
                     }
                 }
+                if (isShift){
+                    // if is shift click add updated item to player inventory
+                    e.setCancelled(true);
+                    e.getPlayer().getInventory().addItemStack(
+                      PlayerItemUpdater.playerUpdate(
+                              player,
+                              null,
+                                e.getClickedItem()
+                            ).build()
+                    );
+                }
 
-                if (cursorItemType != null && cursorItemType.equals(resultItemType)) {
+                if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
                     e.setCancelled(true);
                     e.getPlayer().getInventory().addItemStack(
                             PlayerItemUpdater.playerUpdate(player, null, cursorItem.getItemStack()).build()
