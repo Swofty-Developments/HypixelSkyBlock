@@ -12,8 +12,13 @@
     <modules>
         <module>commons</module>
         <module>core</module>
+
         <module>velocity-extension</module>
         <module>proxy-api</module>
+
+        <module>commons-server-type</module>
+        <module>type-island</module>
+        <module>type-village</module>
     </modules>
 
     <properties>

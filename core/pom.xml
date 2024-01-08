@@ -46,6 +46,17 @@
     <dependencies>
         <dependency>
             <groupId>net.swofty</groupId>
+            <artifactId>type.island</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>type.village</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.swofty</groupId>
             <artifactId>commons</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

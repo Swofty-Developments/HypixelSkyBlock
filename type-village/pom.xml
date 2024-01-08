@@ -9,12 +9,30 @@
         <version>3.0</version>
     </parent>
 
-    <artifactId>commons</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>type.village</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>types</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>proxy.api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

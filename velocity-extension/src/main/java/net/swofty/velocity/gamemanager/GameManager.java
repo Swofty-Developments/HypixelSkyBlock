@@ -65,6 +65,8 @@ public class GameManager {
                         }
                     }).delay(Duration.ofMillis(15)).schedule();
                 });
+
+                System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());
             });
         }).repeat(Duration.ofMillis(300)).schedule();
     }

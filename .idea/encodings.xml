@@ -41,6 +41,8 @@
     <file url="file://$PROJECT_DIR$/bungee/slf4j/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bungee/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bungee/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons-server-type/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons-server-type/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commons/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commons/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core/commons-skyblock/src/src/main/resources" charset="UTF-8" />
@@ -90,6 +92,10 @@
     <file url="file://$PROJECT_DIR$/proxy/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-island/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-island/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-village/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-village/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/velocity-extension/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/velocity-extension/src/main/resources" charset="UTF-8" />
   </component>

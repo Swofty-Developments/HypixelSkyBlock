@@ -7,13 +7,13 @@ public enum CustomWorlds {
     HUB("hypixel_hub"),
     ;
 
-    private String folderName;
+    private final String folderName;
 
     CustomWorlds(String folderName) {
         this.folderName = folderName;
     }
 
     public String getFolderName() {
-        return "./configuration/ " + folderName;
+        return "./configuration/" + folderName;
     }
 }

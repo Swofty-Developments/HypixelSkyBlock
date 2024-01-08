@@ -3,6 +3,8 @@ package net.swofty.commons.skyblock;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
@@ -59,6 +61,7 @@ import net.swofty.commons.skyblock.user.fairysouls.FairySoul;
 import net.swofty.commons.skyblock.user.statistics.PlayerStatistics;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.types.SkyBlockTypeLoader;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
@@ -85,8 +88,12 @@ public class SkyBlock {
     @Getter
     @Setter
     private static String serverName = "???";
+    @Getter
+    @Setter
+    private static SkyBlockTypeLoader typeLoader;
 
-    public static void main(String[] args) throws JsonProcessingException {
+    @SneakyThrows
+    public static void main(String[] args) {
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
@@ -97,11 +104,33 @@ public class SkyBlock {
         long startTime = System.currentTimeMillis();
 
         /**
+         * Initialize TypeLoader
+         */
+        Reflections reflections = new Reflections("net.swofty.type");
+        Set<Class<? extends SkyBlockTypeLoader>> subTypes = reflections.getSubTypesOf(SkyBlockTypeLoader.class);
+        if (subTypes.isEmpty()) {
+            Logger.error("No TypeLoader found!");
+            System.exit(0);
+            return;
+        }
+        typeLoader = subTypes.stream().filter(clazz -> {
+            try {
+                ServerType type = clazz.getDeclaredConstructor().newInstance().getType();
+                Logger.info("Found TypeLoader: " + type.name());
+                return type == serverType;
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                return false;
+            }
+        }).findFirst().orElse(null).getDeclaredConstructor().newInstance();
+
+        /**
          * Initialize the server
          */
         MinecraftServer minecraftServer = MinecraftServer.init();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         serverUUID = UUID.randomUUID();
+        typeLoader.onInitialize(minecraftServer);
 
         /**
          * Handle instances
@@ -303,7 +332,8 @@ public class SkyBlock {
         ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID,
                 "proxy-online",
                 "server-initialized",
-                "server-name");
+                "server-name",
+                "player-handler");
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.start();
         VelocityProxy.enable(Configuration.get("velocity-secret"));
@@ -327,6 +357,17 @@ public class SkyBlock {
                     "server-name", "",
                     SkyBlock::setServerName);
         });
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (startServer.isDone()) return;
+            Logger.error("Couldn't connect to proxy. Shutting down...");
+            System.exit(0);
+        }).start();
 
         RedisMessage.sendMessageToProxy(
                 "server-initialized",

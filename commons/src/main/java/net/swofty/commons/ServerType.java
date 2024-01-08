@@ -1,5 +1,7 @@
 package net.swofty.commons;
 
+import lombok.Getter;
+@Getter
 public enum ServerType {
     ISLAND,
     VILLAGE,

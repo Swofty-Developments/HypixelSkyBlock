@@ -4,11 +4,13 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import com.velocitypowered.api.proxy.server.ServerPing;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
@@ -81,6 +83,16 @@ public class SkyBlockVelocity {
 
         RegisteredServer server = GameManager.getFromType(ServerType.ISLAND).get(0).server();
         event.setInitialServer(server);
+    }
+
+    @Subscribe
+    public void onPing(ProxyPingEvent event) {
+        event.setPing(new ServerPing(
+                event.getPing().getVersion(),
+                null,
+                Component.text("                §aSkyBlock Recreation §c[1.8-1.20]"),
+                event.getPing().getFavicon().orElse(null)
+        ));
     }
 
     public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {

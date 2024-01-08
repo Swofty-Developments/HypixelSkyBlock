@@ -38,6 +38,7 @@ import net.swofty.commons.skyblock.region.mining.MineableBlock;
 import net.swofty.commons.skyblock.user.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.user.statistics.PlayerStatistics;
 import net.swofty.commons.skyblock.user.statistics.StatisticDisplayReplacement;
+import net.swofty.proxyapi.ProxyPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -150,6 +151,10 @@ public class SkyBlockPlayer extends Player {
                 new SkyBlockItem(getInventory().getLeggings()),
                 new SkyBlockItem(getInventory().getBoots())
         };
+    }
+
+    public ProxyPlayer asProxyPlayer() {
+        return new ProxyPlayer(this.getUuid());
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
