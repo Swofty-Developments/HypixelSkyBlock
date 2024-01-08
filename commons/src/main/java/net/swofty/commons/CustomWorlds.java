@@ -14,6 +14,6 @@ public enum CustomWorlds {
     }
 
     public String getFolderName() {
-        return "./configuration/ " + folderName;
+        return "./configuration/" + folderName;
     }
 }
