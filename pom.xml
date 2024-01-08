@@ -11,7 +11,7 @@
 
     <modules>
         <module>commons</module>
-        <module>core</module>
+        <module>loader</module>
 
         <module>velocity-extension</module>
         <module>proxy-api</module>

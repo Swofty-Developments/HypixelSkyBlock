@@ -1,28 +1,42 @@
 package net.swofty.velocity;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.velocitypowered.api.event.AwaitingEventExecutor;
+import com.velocitypowered.api.event.EventTask;
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.LoginEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
+import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
+import com.velocitypowered.proxy.network.Connections;
+import io.netty.channel.Channel;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.gamemanager.GameManager;
+import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -41,15 +55,37 @@ public class SkyBlockVelocity {
     private static ProxyServer server = null;
     @Getter
     private static SkyBlockVelocity plugin;
+    @Getter
+    private static RegisteredServer limboServer;
+    @Inject
+    private Injector injector;
 
     @Inject
     public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
         plugin = this;
         server = tempServer;
+
+        limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(
+                Integer.parseInt(Configuration.get("limbo-port")))));
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        /**
+         * Register packets
+         */
+        server.getEventManager().register(this, PostLoginEvent.class,
+                (AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
+                    injectPlayer(postLoginEvent.getPlayer());
+                    continuation.resume();
+                }));
+        server.getEventManager().register(this, DisconnectEvent.class, PostOrder.LAST,
+                (AwaitingEventExecutor<DisconnectEvent>) disconnectEvent ->
+                        disconnectEvent.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN
+                                ? null
+                                : EventTask.async(() -> removePlayer(disconnectEvent.getPlayer()))
+        );
+
         /**
          * Setup Redis
          */
@@ -109,5 +145,21 @@ public class SkyBlockVelocity {
                     }
                 })
                 .filter(java.util.Objects::nonNull);
+    }
+
+    private void injectPlayer(final Player player) {
+        final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
+        connectedPlayer.getConnection()
+                .getChannel()
+                .pipeline()
+                .addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
+    }
+
+    private void removePlayer(final Player player) {
+        final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
+        final Channel channel = connectedPlayer.getConnection().getChannel();
+        channel.eventLoop().submit(() -> {
+            channel.pipeline().remove("PACKET");
+        });
     }
 }

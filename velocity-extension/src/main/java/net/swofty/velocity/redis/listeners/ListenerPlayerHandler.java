@@ -1,9 +1,11 @@
 package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
+import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import org.json.JSONObject;
@@ -23,7 +25,12 @@ public class ListenerPlayerHandler extends RedisListener {
         switch (action) {
             case "transfer" -> {
                 ServerType type = ServerType.valueOf(json.getString("type"));
-                player.createConnectionRequest(GameManager.getFromType(type).get(0).server()).fireAndForget();
+                if (!GameManager.hasType(type)) {
+                    return "false";
+                }
+
+                RegisteredServer toSendTo = GameManager.getFromType(type).get(0).server();
+                new TransferHandler(player).transferTo(toSendTo);
             }
         }
 

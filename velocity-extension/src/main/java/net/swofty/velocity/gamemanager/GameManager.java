@@ -75,10 +75,13 @@ public class GameManager {
         if (servers.isEmpty()) return 1;
         if (servers.values().stream().allMatch(ArrayList::isEmpty)) return 1;
 
-        int highestDisplayName = servers.values().stream().mapToInt(servers -> servers.stream().mapToInt(server -> {
+        List<GameServer> gameServers = new ArrayList<>();
+        servers.values().forEach(gameServers::addAll);
+
+        int highestDisplayName = (gameServers.stream().mapToInt(server -> {
             String displayName = server.displayName().replaceAll("[^0-9]", "");
             return Integer.parseInt(displayName);
-        }).max().getAsInt()).max().getAsInt();
+        }).max().getAsInt());
         return highestDisplayName + 1;
     }
 
@@ -86,7 +89,10 @@ public class GameManager {
         if (servers.isEmpty()) return 20000;
         if (servers.values().stream().allMatch(ArrayList::isEmpty)) return 20000;
 
-        int highestPort = servers.values().stream().mapToInt(servers -> servers.stream().mapToInt(server -> server.server().getServerInfo().getAddress().getPort()).max().getAsInt()).max().getAsInt();
+        ArrayList<GameServer> gameServers = new ArrayList<>();
+        servers.values().forEach(gameServers::addAll);
+
+        int highestPort = gameServers.stream().mapToInt(gameServer -> gameServer.server().getServerInfo().getAddress().getPort()).max().getAsInt();
         return highestPort + 1;
     }
 

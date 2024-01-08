@@ -44,7 +44,8 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 8. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
 9. Run the jar using `java -jar {Insert the JAR file} ISLAND`, this will create an Island server that will latch onto your running proxy.
 10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
-11. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+11. Download `NanoLimbo-1.7-all.jar` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and start it in the background using `java -jar NanoLimbo-1.7-all.jar`.
+12. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 
 ## Credits
 
