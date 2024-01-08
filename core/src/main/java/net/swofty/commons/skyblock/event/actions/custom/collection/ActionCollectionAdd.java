@@ -38,6 +38,7 @@ public class ActionCollectionAdd extends SkyBlockEvent {
         SkyBlockEvent.callSkyBlockEvent(new CollectionUpdateEvent(player, type, oldValue));
 
         CollectionCategory category = CollectionCategories.getCategory(type);
+        if (category == null) return;
         CollectionCategory.ItemCollection collection = category.getCollection(type);
         CollectionCategory.ItemCollectionReward reward = player.getCollection().getReward(collection);
 

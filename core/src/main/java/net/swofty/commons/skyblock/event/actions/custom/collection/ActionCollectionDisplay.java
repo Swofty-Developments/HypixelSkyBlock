@@ -36,6 +36,7 @@ public class ActionCollectionDisplay extends SkyBlockEvent {
             );
             return;
         }
+        if (CollectionCategories.getCategory(event.getItemType()) == null) return;
 
         CollectionCategory.ItemCollection collection = CollectionCategories.getCategory(event.getItemType()).getCollection(event.getItemType());
         List<CollectionCategory.ItemCollectionReward> rewards = Arrays.asList(collection.rewards());
