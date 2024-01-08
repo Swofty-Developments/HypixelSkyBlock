@@ -28,7 +28,10 @@ jobs:
         prerelease: false
         title: "Automatic Build from Pull Request"
         files: |
-          target/*.jar
+          velocity-extension/target/*.jar
+          proxy-api/target/*.jar
+          core/target/*.jar
+          commons/target/*.jar
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
