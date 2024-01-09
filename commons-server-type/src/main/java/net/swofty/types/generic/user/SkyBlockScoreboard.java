@@ -49,10 +49,10 @@ public class SkyBlockScoreboard {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
 
-                Sidebar sidebar = new Sidebar(getSidebarName(skyblockName, false)
-                        + (player.isCoop() ? " §b§lCO-OP" : ""));
+                Sidebar sidebar = new Sidebar("  " + getSidebarName(skyblockName, false)
+                        + (player.isCoop() ? " §b§lCO-OP  " : "  "));
 
-                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8mini" + SkyBlockConst.getServerName(), sidebar);
+                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8m" + SkyBlockConst.getServerName() + "   ", sidebar);
                 addLine("§7 ", sidebar);
                 addLine("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()), sidebar);
                 addLine("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()), sidebar);

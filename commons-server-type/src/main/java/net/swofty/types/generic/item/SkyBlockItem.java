@@ -22,6 +22,7 @@ import java.util.List;
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
     public Class<? extends CustomSkyBlockItem> clazz = null;
+    public Object instance = null;
     @Getter
     @Setter
     private int amount = 1;
@@ -115,15 +116,18 @@ public class SkyBlockItem {
     }
 
     public Object getGenericInstance() {
-        try {
-            return clazz.newInstance();
-        } catch (Exception e) {
-        }
+        if (instance != null)
+            return instance;
 
         try {
-            return getAttributeHandler().getItemTypeAsType().clazz.newInstance();
-        } catch (Exception e) {
-        }
+            instance = clazz.newInstance();
+            return instance;
+        } catch (Exception e) {}
+
+        try {
+            instance = getAttributeHandler().getItemTypeAsType().clazz.newInstance();
+            return instance;
+        } catch (Exception e) {}
 
         return null;
     }

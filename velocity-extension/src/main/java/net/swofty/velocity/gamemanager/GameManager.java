@@ -21,7 +21,8 @@ public class GameManager {
                 new ServerInfo(serverID.toString(), new InetSocketAddress(port))
         );
 
-        String displayName = getNextAvailableDisplayName() + "" + (char) (new Random().nextInt(26) + 'a');
+        String displayName = getNextAvailableDisplayName() + "" +
+                Character.toUpperCase((char) (new Random().nextInt(26) + 'a'));
 
         GameServer server = new GameServer(displayName, serverID, registeredServer);
         if (!servers.containsKey(type)) servers.put(type, new ArrayList<>(List.of(server)));

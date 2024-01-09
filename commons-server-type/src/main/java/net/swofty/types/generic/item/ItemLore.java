@@ -80,7 +80,7 @@ public class ItemLore {
             if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
 
             // Handle Item Enchantments
-            if (clazz.getDeclaredConstructor().newInstance() instanceof Enchantable enchantable) {
+            if (item.getGenericInstance() instanceof Enchantable enchantable) {
                 if (enchantable.showEnchantLores()) {
                     long enchantmentCount = handler.getEnchantments().toList().size();
                     if (enchantmentCount < 4) {

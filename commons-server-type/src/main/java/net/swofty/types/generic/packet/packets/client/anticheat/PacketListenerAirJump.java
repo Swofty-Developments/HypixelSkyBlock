@@ -31,36 +31,25 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
 
         if (isInFluid(player)) return;
 
-        boolean isOnGround = distance == 1.0;
+        boolean isOnGround = (distance <= 1.0);
 
         if (isOnGround || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
-            data.yLevel = null;
-            data.hasChangedVelocity = false;
+            data.startY = null;
+            data.highestY = null;
             return;
         }
 
-        if (data.yLevel == null) {
-            data.yLevel = newY;
-            data.hasChangedVelocity = false;
+        if (data.startY == null) {
+            data.startY = newY;
+            data.highestY = newY;
             return;
         }
 
-        boolean yIncreased = newY > data.yLevel;
-        if (newY.equals(data.yLevel)) return;
+        data.highestY = Math.max(newY, data.highestY);
 
-        if (yIncreased) {
-            if (data.hasChangedVelocity) {
-                player.teleport(player.getPosition().sub(0, distance - 1, 0));
-                event.setCancelled(true);
-                return;
-            }
-            data.isDropping = false;
-        } else {
-            data.isDropping = true;
-            data.hasChangedVelocity = true;
+        if (data.highestY - data.startY > 0.5) {
+            player.teleport(player.getPosition().sub(0, 1, 0));
         }
-
-        data.yLevel = newY;
     }
 
     private boolean isInFluid(SkyBlockPlayer player) {
@@ -76,8 +65,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
     }
 
     public static class PlayerData {
-        public boolean isDropping;
-        public Double yLevel;
-        public boolean hasChangedVelocity;
+        public Double startY;
+        public Double highestY;
     }
 }
