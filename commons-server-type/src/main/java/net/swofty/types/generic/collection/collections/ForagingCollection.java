@@ -9,12 +9,12 @@ import java.util.List;
 public class ForagingCollection extends CollectionCategory {
     @Override
     public Material getDisplayIcon() {
-        return Material.STONE_PICKAXE;
+        return Material.JUNGLE_SAPLING;
     }
 
     @Override
     public String getName() {
-        return "Mining";
+        return "Foraging";
     }
 
     @Override

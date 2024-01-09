@@ -25,6 +25,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
@@ -154,7 +155,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          * Register holograms and fairy souls
          */
         ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
-        FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
+        if (!SkyBlockConst.isIslandServer())
+            FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
 
         /**
          * Register items
@@ -219,9 +221,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.types.generic.item.items", Craftable.class)
                 .forEach(recipe -> {
                     try {
-                        recipe.getRecipe().init();
-                    } catch (Exception e) {
-                    }
+                        recipe.getRecipes().forEach(SkyBlockRecipe::init);
+                    } catch (Exception e) {}
                 });
 
         /**

@@ -11,7 +11,7 @@ public class MineWheatConfiguration extends SkyBlockMiningConfiguration {
     @Override
     public MiningTask handleStageOne(MiningTask task, Pos brokenBlock) {
         task.setIntermediaryBlock(Block.AIR);
-        task.setReviveBlock(Block.WHEAT);
+        task.setReviveBlock(Block.AIR);
 
         return task;
     }
@@ -28,6 +28,6 @@ public class MineWheatConfiguration extends SkyBlockMiningConfiguration {
 
     @Override
     public long getRegenerationTime() {
-        return 3000;
+        return 1;
     }
 }

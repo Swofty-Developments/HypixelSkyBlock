@@ -1,7 +1,7 @@
 package net.swofty.types.generic.collection;
 
 import lombok.Getter;
-import net.swofty.types.generic.collection.collections.FarmingCollection;
+import net.swofty.types.generic.collection.collections.*;
 import net.swofty.types.generic.item.ItemType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 @Getter
 public enum CollectionCategories {
     FARMING(FarmingCollection.class),
+    MINING(MiningCollection.class),
+    COMBAT(CombatCollection.class),
+    FORAGING(ForagingCollection.class),
+    FISHING(FishingCollection.class),
+    BOSS(BossCollection.class),
     ;
 
     private final Class<? extends CollectionCategory> clazz;

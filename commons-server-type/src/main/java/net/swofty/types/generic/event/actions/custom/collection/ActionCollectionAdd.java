@@ -43,7 +43,6 @@ public class ActionCollectionAdd extends SkyBlockEvent {
         CollectionCategory category = CollectionCategories.getCategory(type);
         if (category == null) return;
         CollectionCategory.ItemCollection collection = category.getCollection(type);
-        CollectionCategory.ItemCollectionReward reward = player.getCollection().getReward(collection);
 
         if (player.getDefenseDisplayReplacement() != null) {
             String addedAmountString = player.getDefenseDisplayReplacement().getDisplay();
@@ -51,8 +50,7 @@ public class ActionCollectionAdd extends SkyBlockEvent {
 
             try {
                 addedAmount = Integer.parseInt(addedAmountString.substring(2, addedAmountString.indexOf(" "))) + 1;
-            } catch (NumberFormatException ignored) {
-            }
+            } catch (NumberFormatException ignored) {}
 
             player.setDisplayReplacement(StatisticDisplayReplacement.builder()
                     .ticksToLast(20)

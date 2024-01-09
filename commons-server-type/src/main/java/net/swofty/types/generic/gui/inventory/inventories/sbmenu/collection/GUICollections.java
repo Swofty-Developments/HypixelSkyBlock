@@ -21,8 +21,8 @@ import java.util.List;
 
 public class GUICollections extends SkyBlockInventoryGUI {
     private final int[] borderSlots = {
-            //20, 21, 22, 23, 24,
-            31,
+            20, 21, 22, 23, 24,
+                    31
     };
 
     public GUICollections() {

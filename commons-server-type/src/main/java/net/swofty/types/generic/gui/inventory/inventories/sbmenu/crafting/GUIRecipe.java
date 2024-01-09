@@ -20,6 +20,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
@@ -58,7 +59,8 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        SkyBlockRecipe recipe = ((Craftable) type.clazz.newInstance()).getRecipe();
+        List<SkyBlockRecipe<?>> recipes = ((Craftable) type.clazz.newInstance()).getRecipes();
+        SkyBlockRecipe recipe = recipes.get(0);
 
         set(new GUIItem() {
             @Override
@@ -86,7 +88,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                                 return;
 
                             new GUIRecipe(
-                                    ((Craftable) ingredient.getGenericInstance()).getRecipe().getResult().getAttributeHandler().getItemTypeAsType(),
+                                    ((Craftable) ingredient.getGenericInstance()).getRecipes().get(0).getResult().getAttributeHandler().getItemTypeAsType(),
                                     GUIRecipe.this).open(player);
                         }
 

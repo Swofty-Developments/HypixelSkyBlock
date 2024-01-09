@@ -52,12 +52,10 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
         private Map<ItemType, Integer> items;
 
         public CollectionCategory.ItemCollectionReward getReward(CollectionCategory.ItemCollection collection) {
-            // Reverse the array so that we can get the highest reward that the player has unlocked
-            List<CollectionCategory.ItemCollectionReward> rewards = Arrays.asList(collection.rewards());
-            Collections.reverse(rewards);
+            int collected = get(collection.type());
 
-            for (CollectionCategory.ItemCollectionReward reward : rewards) {
-                if (get(collection.type()) <= reward.requirement()) {
+            for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
+                if (collected <= reward.requirement()) {
                     return reward;
                 }
             }
@@ -106,7 +104,8 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             int required = reward == null ? 0 : reward.requirement();
 
             String collectedPercentage = String.format("%.2f", (collected / (double) required) * 100);
-            lore.add("§7Progress to Wheat " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
+            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
+                    StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
                     ": §e" + collectedPercentage + "§6%");
 
             String baseLoadingBar = "─────────────────";
@@ -122,12 +121,54 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
 
             lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + collected + "§6/§e" + required);
 
+            if (reward.unlocks().length > 0) {
+                lore.add(" ");
+                reward.getDisplay(lore,
+                        collection.type().getDisplayName() + " "
+                                + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
+            }
+
+            return lore;
+        }
+
+        public List<String> getDisplay(List<String> lore, CollectionCategory.ItemCollection collection,
+                                       CollectionCategory.ItemCollectionReward reward) {
+            int collected = get(collection.type());
+
+            String collectedPercentage = String.format("%.2f", Math.min(((collected / (double) reward.requirement()) * 100), 100));
+            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
+                    StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
+                    ": §e" + collectedPercentage + "§6%");
+
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+
+            int completedLength = (int) ((collected / (double) reward.requirement()) * maxBarLength);
+
+            String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+            int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
+            String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
+                    completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                    maxBarLength
+            ));
+
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + collected + "§6/§e" + reward.requirement());
+
+            if (reward.unlocks().length > 0) {
+                lore.add(" ");
+                reward.getDisplay(lore,
+                        collection.type().getDisplayName() + " "
+                                + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
+            }
+
             return lore;
         }
 
         public List<String> getDisplay(List<String> lore, CollectionCategory category) {
             int allCollections = category.getCollections().length;
-            int unlockedCollections = (int) items.keySet().stream().filter(this::unlocked).count();
+            int unlockedCollections = (int) items.keySet().stream().filter(
+                    type -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)
+            ).filter(this::unlocked).count();
 
             String unlockedPercentage = String.format("%.2f", (unlockedCollections / (double) allCollections) * 100);
             lore.add("§7Collections Unlocked: §e" + unlockedPercentage + "§6%");
