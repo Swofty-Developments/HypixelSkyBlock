@@ -39,8 +39,8 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 4. Move this file into the `configuration` folder you just made.
 5. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/ugdq2fycq0weval/HypixelSkyBlockMinestom.zip/file)
-6. Get the Hypixel SkyBlock hub from the above download and put it in the same directory as your jar under the name `hypixel_hub`.
-7. Get the Hypixel Island default template from the above download and put it in the same directory as your jar under the name `hypixel_island_template`.
+6. Get the Hypixel SkyBlock hub from the above download and put it in the configuration folder you made under the name `hypixel_hub`.
+7. Get the Hypixel Island default template from the above download and put it in the configuration folder you made under the name `hypixel_island_template`.
 8. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
 9. Run the jar using `java -jar {Insert the JAR file} ISLAND`, this will create an Island server that will latch onto your running proxy.
 10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).

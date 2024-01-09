@@ -53,6 +53,7 @@ public class GameManager {
                 registeredServers.forEach(registeredServer -> {
                     RegisteredServer givenServer = registeredServer.server();
                     AtomicBoolean pingSuccess = new AtomicBoolean(false);
+                    long startTime = System.currentTimeMillis();
 
                     RedisMessage.sendMessageToServer(registeredServer.internalID(), "ping", "check", (response) -> {
                         pingSuccess.set(true);
@@ -61,6 +62,7 @@ public class GameManager {
                     server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
                         if (!pingSuccess.get()) {
                             System.out.println("Server " + givenServer.getServerInfo().getName() + " is offline! Removing from list...");
+                            System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
                             servers.get(serverType).remove(registeredServer);
                         }
                     }).delay(Duration.ofMillis(50)).schedule();
