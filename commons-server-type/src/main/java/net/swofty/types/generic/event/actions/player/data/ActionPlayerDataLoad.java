@@ -42,7 +42,6 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
         // Ensure we use player here
         final Player player = playerLoginEvent.getPlayer();
-        Logger.info("Loading data for " + player.getUsername());
         UUID playerUuid = player.getUuid();
         UUID islandUUID;
 

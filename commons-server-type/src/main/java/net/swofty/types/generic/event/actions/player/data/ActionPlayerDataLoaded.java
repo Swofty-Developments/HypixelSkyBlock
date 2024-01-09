@@ -36,7 +36,6 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
     public void run(Event event) {
         PlayerLoginEvent playerLoginEvent = (PlayerLoginEvent) event;
         SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
-        Logger.info("Loaded data for " + player.getUsername());
 
         Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
         if (rank.isStaff()) {

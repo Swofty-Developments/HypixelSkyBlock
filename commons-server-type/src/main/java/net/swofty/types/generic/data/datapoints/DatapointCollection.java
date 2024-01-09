@@ -8,6 +8,7 @@ import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.serializer.Serializer;
 import net.swofty.types.generic.utility.StringUtility;
+import org.json.JSONObject;
 
 import java.util.*;
 
@@ -31,11 +32,10 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
 
             @Override
             public DatapointCollection.PlayerCollection deserialize(String json) {
+                JSONObject jsonObject = new JSONObject(json);
                 Map<ItemType, Integer> items = new HashMap<>();
-                String[] pairs = json.substring(1, json.length() - 1).split(",");
-                for (String pair : pairs) {
-                    String[] keyValue = pair.split(":");
-                    items.put(ItemType.valueOf(keyValue[0]), Integer.valueOf(keyValue[1]));
+                for (String key : jsonObject.keySet()) {
+                    items.put(ItemType.valueOf(key), jsonObject.getInt(key));
                 }
                 return new PlayerCollection(items);
             }
