@@ -92,7 +92,6 @@ public class SkyBlock {
          * Start the server
          */
         MinecraftServer.setBrandName("SkyBlock");
-        checkProxyConnected(MinecraftServer.getSchedulerManager());
 
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
@@ -106,6 +105,7 @@ public class SkyBlock {
             RedisMessage.sendMessageToProxy(
                     "server-name", "",
                     SkyBlockConst::setServerName);
+            checkProxyConnected(MinecraftServer.getSchedulerManager());
         });
         new Thread(() -> {
             try {
@@ -129,16 +129,19 @@ public class SkyBlock {
         scheduler.submitTask(() -> {
             AtomicBoolean responded = new AtomicBoolean(false);
 
-            RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> responded.set(true));
+            RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
+                if (response.equals("true"))
+                    responded.set(true);
+            });
 
             scheduler.scheduleTask(() -> {
                 if (!responded.get()) {
                     Logger.error("Proxy did not respond to alive check. Shutting down...");
                     System.exit(0);
                 }
-            }, TaskSchedule.tick(2), TaskSchedule.stop());
+            }, TaskSchedule.tick(4), TaskSchedule.stop());
 
-            return TaskSchedule.tick(10);
+            return TaskSchedule.seconds(1);
         });
     }
 }

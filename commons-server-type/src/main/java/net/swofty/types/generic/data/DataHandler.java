@@ -22,6 +22,7 @@ import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.UserProfiles;
 import net.swofty.types.generic.user.categories.Rank;
+import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 
@@ -156,13 +157,17 @@ public class DataHandler {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
 
             Rank rank = (Rank) datapoint.getValue();
-            String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
-            Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
-                    .prefix(Component.text(rank.getPrefix()))
-                    .teamColor(rank.getTextColor())
-                    .build();
-            player.setTeam(team);
-            player.getTeam().sendUpdatePacket();
+
+            // Delay this as player needs to be loaded
+            MathUtility.delay(() -> {
+                String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
+                Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
+                        .prefix(Component.text(rank.getPrefix()))
+                        .teamColor(rank.getTextColor())
+                        .build();
+                player.setTeam(team);
+                player.getTeam().sendUpdatePacket();
+            }, 5);
         }, ((player, datapoint) -> {
             Team team = new TeamBuilder(player.getUsername(), MinecraftServer.getTeamManager())
                     .prefix(Component.text(((Rank) datapoint.getValue()).getPrefix()))

@@ -17,7 +17,7 @@ public record TransferHandler(Player player) {
             player.createConnectionRequest(limboServer).connectWithIndication().join();
 
             try {
-                Thread.sleep(200);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -213,9 +213,13 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void sendTo(ServerType type) {
+        sendTo(type, false);
+    }
+
+    public void sendTo(ServerType type, boolean force) {
         ProxyPlayer player = asProxyPlayer();
 
-        if (type == SkyBlockConst.getTypeLoader().getType()) {
+        if (type == SkyBlockConst.getTypeLoader().getType() && !force) {
             this.teleport(SkyBlockConst.getTypeLoader().getLoaderValues().spawnPosition());
             return;
         }

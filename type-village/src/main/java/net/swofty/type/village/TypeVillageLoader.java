@@ -6,6 +6,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        System.out.println("TypeVillageLoader initialized!");
+        Logger.info("TypeVillageLoader initialized!");
     }
 
     @Override

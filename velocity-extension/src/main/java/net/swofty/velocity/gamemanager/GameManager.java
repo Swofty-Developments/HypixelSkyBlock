@@ -63,7 +63,7 @@ public class GameManager {
                             System.out.println("Server " + givenServer.getServerInfo().getName() + " is offline! Removing from list...");
                             servers.get(serverType).remove(registeredServer);
                         }
-                    }).delay(Duration.ofMillis(15)).schedule();
+                    }).delay(Duration.ofMillis(50)).schedule();
                 });
 
                 System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());

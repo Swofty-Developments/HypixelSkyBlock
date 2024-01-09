@@ -10,6 +10,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointString;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
@@ -45,8 +46,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                 toSet.setProfiles(profiles.getProfiles());
                 toSet.setCurrentlySelected(profileUuid);
 
-                // TODO: Proxy support
-                player.kick("§cYou must relog for this change to take effect");
+                player.sendTo(ServerType.ISLAND, true);
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
                     UserDatabase database = new UserDatabase(player.getUuid());

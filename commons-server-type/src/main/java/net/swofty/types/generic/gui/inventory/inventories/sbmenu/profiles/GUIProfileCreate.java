@@ -9,8 +9,10 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointString;
+import net.swofty.types.generic.data.datapoints.DatapointUUID;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -66,12 +68,12 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
 
                 DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
                 handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
+                handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
                 Document document = handler.toDocument(profileId);
 
                 ProfilesDatabase.collection.insertOne(document);
 
-                // TODO: Proxy support
-                player.kick("§cYou must relog for this change to take effect");
+                player.sendTo(ServerType.ISLAND, true);
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
                     toSet.addProfile(profileId);

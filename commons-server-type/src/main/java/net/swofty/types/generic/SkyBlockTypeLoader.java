@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import org.tinylog.Logger;
 
 import java.util.List;
 

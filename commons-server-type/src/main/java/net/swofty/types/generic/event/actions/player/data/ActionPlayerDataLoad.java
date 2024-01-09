@@ -42,6 +42,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
         // Ensure we use player here
         final Player player = playerLoginEvent.getPlayer();
+        Logger.info("Loading data for " + player.getUsername());
         UUID playerUuid = player.getUuid();
         UUID islandUUID;
 
@@ -80,6 +81,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
         } else {
             handler = DataHandler.initUserWithDefaultData(playerUuid);
         }
+        DataHandler.userCache.put(playerUuid, handler);
 
         if (profiles.getProfiles().size() >= 2) {
             UUID finalProfileId1 = profileId;
@@ -118,7 +120,6 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
         player.sendMessage("");
 
-        DataHandler.userCache.put(playerUuid, handler);
         handler.runOnLoad();
     }
 

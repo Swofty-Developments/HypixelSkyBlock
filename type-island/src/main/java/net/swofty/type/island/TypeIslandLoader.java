@@ -6,6 +6,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        System.out.println("TypeIslandLoader initialized!");
+        Logger.info("TypeIslandLoader initialized!");
     }
 
     @Override
