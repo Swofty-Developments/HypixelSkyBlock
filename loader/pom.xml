@@ -21,7 +21,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>net.swofty.commons.skyblock</mainClass>
+                            <mainClass>net.swofty.loader.skyblock</mainClass>
                         </manifest>
                     </archive>
                     <finalName>SkyBlockCore</finalName>
@@ -52,6 +52,11 @@
         <dependency>
             <groupId>net.swofty</groupId>
             <artifactId>type.village</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>generic</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

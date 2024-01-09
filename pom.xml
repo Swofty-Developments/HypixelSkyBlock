@@ -16,7 +16,7 @@
         <module>velocity-extension</module>
         <module>proxy-api</module>
 
-        <module>commons-server-type</module>
+        <module>generic</module>
         <module>type-island</module>
         <module>type-village</module>
     </modules>

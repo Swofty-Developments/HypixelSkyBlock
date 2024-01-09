@@ -1,4 +1,4 @@
-package net.swofty.commons.skyblock;
+package net.swofty.loader;
 
 import lombok.Getter;
 import lombok.Setter;
