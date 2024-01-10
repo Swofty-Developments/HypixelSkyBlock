@@ -2,9 +2,12 @@ package net.swofty.type.village;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.EntityType;
 import net.swofty.commons.ServerType;
+import net.swofty.type.village.mobs.PogSkelebones;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
+import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import org.tinylog.Logger;
 
@@ -36,6 +39,13 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
                 "net.swofty.type.village.events",
                 SkyBlockEvent.class
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MobRegistry> getMobs() {
+        return new ArrayList<>(List.of(
+                new MobRegistry(EntityType.SKELETON, PogSkelebones.class)
+        ));
     }
 
     @Override

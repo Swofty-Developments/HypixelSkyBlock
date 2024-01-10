@@ -52,31 +52,4 @@ public class DroppedItemEntityImpl extends Entity {
     public SkyBlockItem getItem() {
         return new SkyBlockItem(((ItemEntityMeta) this.entityMeta).getItem());
     }
-
-    public static void spinLoop() {
-        MinecraftServer.getSchedulerManager().submitTask(() -> {
-            droppedItems.forEach((player, items) -> {
-                List<DroppedItemEntityImpl> toRemove = new ArrayList<>();
-                items.forEach(item -> {
-                    if (item.instance == null) {
-                        // Only runs max once
-                        return;
-                    }
-
-                    if (item.isRemoved()) {
-                        toRemove.add(item);
-                        return;
-                    }
-
-                    if (item.isOnGround())
-                        item.setInstance(item.getInstance(), item.getPosition().withYaw(item.getPosition().yaw() + 6));
-                });
-
-                toRemove.forEach(item -> {
-                    droppedItems.get(player).remove(item);
-                });
-            });
-            return TaskSchedule.tick(1);
-        }, ExecutionType.ASYNC);
-    }
 }

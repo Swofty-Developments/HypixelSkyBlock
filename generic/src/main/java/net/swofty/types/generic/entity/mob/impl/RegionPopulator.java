@@ -1,0 +1,29 @@
+package net.swofty.types.generic.entity.mob.impl;
+
+import lombok.Builder;
+import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.entity.mob.MobRegistry;
+import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.region.SkyBlockRegion;
+
+import java.util.List;
+
+public interface RegionPopulator {
+    List<Populator> getPopulators();
+
+    static void populateRegion(MobRegistry registry, Populator populator) {
+        SkyBlockRegion region = SkyBlockRegion.getRandomRegionOfType(populator.regionType());
+        Pos randomPosition = region.getRandomPositionForEntity(SkyBlockConst.getInstanceContainer());
+
+        if (randomPosition == null) return;
+
+        SkyBlockMob mob = registry.asMob();
+        mob.setInstance(SkyBlockConst.getInstanceContainer(), randomPosition);
+        mob.spawn();
+    }
+
+    @Builder
+    record Populator(RegionType regionType, int minimumAmountToPopulate) {}
+}

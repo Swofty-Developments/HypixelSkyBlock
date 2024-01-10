@@ -5,7 +5,10 @@ import lombok.Setter;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.data.mongodb.RegionDatabase;
+import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -44,6 +47,43 @@ public class SkyBlockRegion {
         regionDatabase.insertOrUpdate("type", type.name());
     }
 
+    public Pos getRandomPosition() {
+        List<Integer> bounds = getBounds();
+        int x = new Random().nextInt(bounds.get(1) - bounds.get(0)) + bounds.get(0);
+        int y = new Random().nextInt(bounds.get(3) - bounds.get(2)) + bounds.get(2);
+        int z = new Random().nextInt(bounds.get(5) - bounds.get(4)) + bounds.get(4);
+        return new Pos(x, y, z);
+    }
+
+    /**
+     * Gets a random position for an entity to spawn in the region
+     * @param instance The instance to check if the position is valid in
+     * @return A random position in the region, or null if there is no valid position
+     * @see SkyBlockMob#spawn()
+     * @see SkyBlockMob#setInstance(Instance, Pos)
+     */
+    public @Nullable Pos getRandomPositionForEntity(Instance instance) {
+        // Checks if there is a 2 block gap up the Y level and if the block below is solid
+
+        int tries = 0;
+        while (true) {
+            tries++;
+            Pos randomPosition = getRandomPosition();
+            Pos blockAbove = randomPosition.add(0, 1, 0);
+            Pos blockBelow = randomPosition.sub(0, 1, 0);
+
+            if (tries > 5) {
+                return null;
+            }
+
+            if (instance.isChunkLoaded(randomPosition)
+                    && instance.getBlock(randomPosition).isAir()
+                    && instance.getBlock(blockAbove).isAir()
+                    && !instance.getBlock(blockBelow).isAir())
+                return randomPosition;
+        }
+    }
+
     public void delete() {
         REGION_CACHE.remove(name);
         regionDatabase.remove(name);
@@ -63,8 +103,30 @@ public class SkyBlockRegion {
         return getRegionOfPosition(entity.getPosition());
     }
 
+    public static List<SkyBlockMob> getMobsInRegion(RegionType region) {
+        List<SkyBlockMob> mobs = new ArrayList<>();
+        for (SkyBlockMob mob : SkyBlockMob.getMobs()) {
+            SkyBlockRegion regionOfEntity = getRegionOfEntity(mob);
+
+            if (regionOfEntity != null && regionOfEntity.getType() == region)
+                mobs.add(mob);
+        }
+        return mobs;
+    }
+
     public static SkyBlockRegion getRegionOfPosition(Point point) {
         return getRegionOfPosition(Pos.fromPoint(point));
+    }
+
+    public static SkyBlockRegion getRandomRegionOfType(RegionType type) {
+        List<SkyBlockRegion> regions = new ArrayList<>();
+        for (SkyBlockRegion region : getRegions()) {
+            if (region.getType() == type)
+                regions.add(region);
+        }
+        double random = Math.random();
+        int index = (int) (random * regions.size());
+        return regions.get(index);
     }
 
     public static SkyBlockRegion getRegionOfPosition(Pos position) {

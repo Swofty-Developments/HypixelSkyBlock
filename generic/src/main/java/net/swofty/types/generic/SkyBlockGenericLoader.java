@@ -17,6 +17,8 @@ import net.swofty.types.generic.data.mongodb.*;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
+import net.swofty.types.generic.entity.mob.MobRegistry;
+import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
@@ -42,6 +44,7 @@ import net.swofty.types.generic.user.SkyBlockScoreboard;
 import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
+import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -107,6 +110,14 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 .forEach(SkyBlockVillagerNPC::register);
 
         /**
+         * Register entities
+         */
+        typeLoader.getMobs().forEach(mob -> {
+            MobRegistry.registerExtraMob(mob.getEntityType(), mob.getClazz());
+        });
+        MathUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
+
+        /**
          * Handle server attributes
          */
         SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
@@ -163,7 +174,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        // DroppedItemEntityImpl.spinLoop();
 
         /**
          * Register events
