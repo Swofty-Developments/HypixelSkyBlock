@@ -1,4 +1,4 @@
-package net.swofty.types.generic.event.actions.player.fall;
+package net.swofty.types.generic.event.actions.player;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;

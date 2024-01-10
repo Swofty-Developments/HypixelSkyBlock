@@ -1,25 +1,24 @@
 package net.swofty.types.generic.entity.mob.mobs;
 
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.ai.EntityAIGroup;
+import net.minestom.server.entity.ai.GoalSelector;
+import net.minestom.server.entity.ai.TargetSelector;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
-import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GraveyardZombie extends SkyBlockMob implements RegionPopulator {
-
-    public GraveyardZombie(EntityType entityType) {
+public class MobSheep extends SkyBlockMob {
+    public MobSheep(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Graveyard Zombie";
+        return "Sheep";
     }
 
     @Override
@@ -28,17 +27,19 @@ public class GraveyardZombie extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public ItemStatistics getStatistics() {
-        return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 100)
-                .with(ItemStatistic.DAMAGE, 20)
-                .build();
+    public List<GoalSelector> getGoalSelectors() {
+        return new ArrayList<>();
     }
 
     @Override
-    public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 50)
-        );
+    public List<TargetSelector> getTargetSelectors() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ItemStatistics getStatistics() {
+        return ItemStatistics.builder()
+                .with(ItemStatistic.HEALTH, 100)
+                .build();
     }
 }

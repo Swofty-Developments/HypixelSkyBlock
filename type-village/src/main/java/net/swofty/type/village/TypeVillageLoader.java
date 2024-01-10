@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
-import net.swofty.type.village.mobs.PogSkelebones;
+import net.swofty.type.village.mobs.MobGraveyardZombie;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
@@ -46,7 +46,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public List<MobRegistry> getMobs() {
         return new ArrayList<>(List.of(
-                new MobRegistry(EntityType.SKELETON, PogSkelebones.class)
+                new MobRegistry(EntityType.ZOMBIE, MobGraveyardZombie.class)
         ));
     }
 

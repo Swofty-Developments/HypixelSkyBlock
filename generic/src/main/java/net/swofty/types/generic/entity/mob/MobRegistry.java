@@ -3,18 +3,17 @@ package net.swofty.types.generic.entity.mob;
 import lombok.Getter;
 import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.types.generic.entity.mob.mobs.GraveyardZombie;
+import net.swofty.types.generic.entity.mob.mobs.MobSheep;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class MobRegistry {
     private static List<MobRegistry> REGISTERED_MOBS = new ArrayList<>(Arrays.asList(
-            new MobRegistry(EntityType.ZOMBIE, GraveyardZombie.class)
+            new MobRegistry(EntityType.SHEEP, MobSheep.class)
     ));
 
     private final EntityType entityType;
