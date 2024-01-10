@@ -21,7 +21,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>net.swofty.loader.skyblock</mainClass>
+                            <mainClass>net.swofty.loader.SkyBlock</mainClass>
                         </manifest>
                     </archive>
                     <finalName>SkyBlockCore</finalName>
