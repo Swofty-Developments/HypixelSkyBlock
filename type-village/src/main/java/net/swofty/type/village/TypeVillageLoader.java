@@ -3,12 +3,14 @@ package net.swofty.type.village;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
+import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.type.village.mobs.PogSkelebones;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -51,5 +53,10 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockEvent> getCustomEvents() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public @Nullable CustomWorlds getMainInstance() {
+        return CustomWorlds.HUB;
     }
 }

@@ -29,7 +29,6 @@ public class ActionChangeTimeCalender extends SkyBlockEvent {
             time = 24000 + time; // add a full day to move into the previous day
         }
 
-        SkyBlockConst.getInstanceContainer().setTime(time);
         SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
             player.sendPacket(player.getInstance().createTimePacket());
         });

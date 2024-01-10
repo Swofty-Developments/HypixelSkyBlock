@@ -1,6 +1,7 @@
 package net.swofty.types.generic.entity.hologram;
 
 import lombok.Builder;
+import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 
@@ -10,6 +11,7 @@ public enum ServerHolograms {
     TO_ISLAND(new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),
     ;
 
+    @Setter
     private static boolean spawned = false;
     private static final ArrayList<ExternalHologram> externalHolograms = new ArrayList<>();
 

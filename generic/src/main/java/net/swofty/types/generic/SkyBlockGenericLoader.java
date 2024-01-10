@@ -67,10 +67,13 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Handle instances
          */
-        InstanceContainer temporaryInstance = instanceManager.createInstanceContainer();
-        temporaryInstance.setChunkLoader(new AnvilLoader(CustomWorlds.HUB.getFolderName()));
+        CustomWorlds mainInstance = typeLoader.getMainInstance();
+        if (mainInstance != null) {
+            InstanceContainer temporaryInstance = instanceManager.createInstanceContainer();
+            temporaryInstance.setChunkLoader(new AnvilLoader(typeLoader.getMainInstance().getFolderName()));
 
-        SkyBlockConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
+            SkyBlockConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
+        }
         SkyBlockConst.setEventHandler(MinecraftServer.getGlobalEventHandler());
 
         /**
@@ -100,14 +103,16 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register NPCs
          */
-        loopThroughPackage("net.swofty.types.generic.entity.npc.npcs", SkyBlockNPC.class)
-                .forEach(SkyBlockNPC::register);
-        loopThroughPackage("net.swofty.types.generic.entity.npc.npcs", NPCDialogue.class)
-                .forEach(SkyBlockNPC::register);
-        loopThroughPackage("net.swofty.types.generic.entity.villager.villagers", SkyBlockVillagerNPC.class)
-                .forEach(SkyBlockVillagerNPC::register);
-        loopThroughPackage("net.swofty.types.generic.entity.villager.villagers", NPCVillagerDialogue.class)
-                .forEach(SkyBlockVillagerNPC::register);
+        if (mainInstance != null) {
+            loopThroughPackage("net.swofty.types.generic.entity.npc.npcs", SkyBlockNPC.class)
+                    .forEach(SkyBlockNPC::register);
+            loopThroughPackage("net.swofty.types.generic.entity.npc.npcs", NPCDialogue.class)
+                    .forEach(SkyBlockNPC::register);
+            loopThroughPackage("net.swofty.types.generic.entity.villager.villagers", SkyBlockVillagerNPC.class)
+                    .forEach(SkyBlockVillagerNPC::register);
+            loopThroughPackage("net.swofty.types.generic.entity.villager.villagers", NPCVillagerDialogue.class)
+                    .forEach(SkyBlockVillagerNPC::register);
+        }
 
         /**
          * Register entities
@@ -165,9 +170,12 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register holograms and fairy souls
          */
-        ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
-        if (!SkyBlockConst.isIslandServer())
+        if (mainInstance != null) {
+            ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
+        } else {
+            ServerHolograms.setSpawned(true);
+        }
 
         /**
          * Register items

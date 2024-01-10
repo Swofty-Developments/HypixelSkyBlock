@@ -2,11 +2,13 @@ package net.swofty.type.island;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -50,5 +52,10 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
                 "net.swofty.type.island.events.custom",
                 SkyBlockEvent.class
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public @Nullable CustomWorlds getMainInstance() {
+        return null;
     }
 }
