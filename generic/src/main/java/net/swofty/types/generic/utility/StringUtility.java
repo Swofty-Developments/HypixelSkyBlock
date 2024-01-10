@@ -18,6 +18,10 @@ public class StringUtility {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
 
+    public static String commaify(int i) {
+        return NumberFormat.getInstance().format(i);
+    }
+
     public static Material getMaterialFromBlock(Block block) {
         return Material.fromNamespaceId(block.namespace());
     }

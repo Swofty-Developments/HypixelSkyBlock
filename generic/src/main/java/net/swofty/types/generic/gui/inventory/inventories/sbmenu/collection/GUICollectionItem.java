@@ -66,7 +66,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
             set(new GUIClickableItem() {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-
+                    new GUICollectionReward(item, reward).open(player);
                 }
 
                 @Override

@@ -2,6 +2,7 @@ package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
@@ -32,12 +33,14 @@ public class MissionCraftWorkbench extends SkyBlockMission {
 
         if (!SkyBlockConst.isIslandServer()) return;
 
-        if (type == ItemType.CRAFTING_TABLE) {
-            MissionData data = event.getPlayer().getMissionData();
+        if (type != ItemType.CRAFTING_TABLE) {
+            return;
+        }
 
-            if (data.isCurrentlyActive("craft_workbench")) {
-                data.endMission("craft_workbench");
-            }
+        MissionData data = event.getPlayer().getMissionData();
+
+        if (data.isCurrentlyActive(MissionCraftWorkbench.class)) {
+            data.endMission(MissionCraftWorkbench.class);
         }
     }
 

@@ -150,7 +150,5 @@ public abstract class SkyBlockMiningConfiguration {
         }
     }
 
-    public record RegenerationConfig(int chance, Block block) {
-    }
-
+    public record RegenerationConfig(int chance, Block block) { }
 }

@@ -59,7 +59,14 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        List<SkyBlockRecipe<?>> recipes = ((Craftable) type.clazz.newInstance()).getRecipes();
+        List<SkyBlockRecipe<?>> recipes = null;
+        try {
+            ((Craftable) type.clazz.newInstance()).getRecipes();
+        } catch (ClassCastException e2) {
+            getPlayer().closeInventory();
+            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
+            return;
+        }
         SkyBlockRecipe recipe = recipes.get(0);
 
         set(new GUIItem() {

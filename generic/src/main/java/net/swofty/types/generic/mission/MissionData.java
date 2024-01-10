@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -59,6 +60,10 @@ public class MissionData {
 
     public boolean hasCompleted(String missionID) {
         return getMission(missionID) != null && getMission(missionID).getValue();
+    }
+
+    public boolean hasCompleted(Class<? extends SkyBlockMission> skyBlockMission) {
+        return getMission(skyBlockMission) != null && getMission(skyBlockMission).getValue();
     }
 
     public void startMission(Class<? extends SkyBlockMission> skyBlockMission) {

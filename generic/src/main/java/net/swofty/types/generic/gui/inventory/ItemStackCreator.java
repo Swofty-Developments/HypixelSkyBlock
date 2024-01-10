@@ -41,6 +41,24 @@ public class ItemStackCreator {
         return getStack(name, material, data, amount, Arrays.asList(lore));
     }
 
+    public static ItemStack.Builder updateLore(ItemStack.Builder builder, List<String> lore) {
+        List<String> copiedLore = new ArrayList<>();
+        for (String s : lore) {
+            copiedLore.add(color(s));
+        }
+
+        return builder.meta(meta -> {
+            meta.lore(copiedLore.stream()
+                    .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                    .collect(Collectors.toList()));
+
+            meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
+            meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
+            meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
+        });
+    }
+
     public static ItemStack.Builder getStack(String name, Material material, int amount, String... lore) {
         return getStack(name, material, (short) 0, amount, Arrays.asList(lore));
     }

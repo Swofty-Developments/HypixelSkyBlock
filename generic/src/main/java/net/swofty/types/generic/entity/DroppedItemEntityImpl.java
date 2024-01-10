@@ -5,6 +5,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
+import net.minestom.server.entity.metadata.item.ItemEntityMeta;
+import net.minestom.server.item.ItemMeta;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -24,16 +26,13 @@ public class DroppedItemEntityImpl extends Entity {
     private final long endPickupDelay;
 
     public DroppedItemEntityImpl(SkyBlockItem item, SkyBlockPlayer player) {
-        super(EntityType.ITEM_DISPLAY);
+        super(EntityType.ITEM);
 
         this.player = player;
         this.endPickupDelay = System.currentTimeMillis() + 500;
 
-        ItemDisplayMeta meta = (ItemDisplayMeta) this.entityMeta;
-        meta.setItemStack(item.getItemStack());
-        meta.setDisplayContext(ItemDisplayMeta.DisplayContext.GROUND);
-        meta.setShadowRadius(0.2f);
-        meta.setShadowStrength(2);
+        ItemEntityMeta meta = (ItemEntityMeta) this.entityMeta;
+        meta.setItem(item.getItemStack());
 
         setAutoViewable(false);
 
@@ -51,7 +50,7 @@ public class DroppedItemEntityImpl extends Entity {
     }
 
     public SkyBlockItem getItem() {
-        return new SkyBlockItem(((ItemDisplayMeta) this.entityMeta).getItemStack());
+        return new SkyBlockItem(((ItemEntityMeta) this.entityMeta).getItem());
     }
 
     public static void spinLoop() {

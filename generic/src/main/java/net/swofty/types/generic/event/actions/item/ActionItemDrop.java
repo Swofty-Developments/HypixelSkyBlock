@@ -49,12 +49,12 @@ public class ActionItemDrop extends SkyBlockEvent {
                 player);
         Pos pos = Pos.fromPoint(player.getPosition().add(0, 1, 0));
 
-        droppedItem.setVelocity(player.getPosition().direction()
-                .mul(7)
-                .add(0, 1.5, 0)
-        );
-
         droppedItem.setInstance(player.getInstance(), pos);
         droppedItem.spawn();
+
+        droppedItem.setVelocity(player.getPosition().direction()
+                .mul(5)
+                .add(0, 1.5, 0)
+        );
     }
 }

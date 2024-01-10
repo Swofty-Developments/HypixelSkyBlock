@@ -163,7 +163,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        DroppedItemEntityImpl.spinLoop();
+        // DroppedItemEntityImpl.spinLoop();
 
         /**
          * Register events

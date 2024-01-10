@@ -44,7 +44,8 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
         VillagerSpokenToEvent event = (VillagerSpokenToEvent) tempEvent;
         MissionData data = event.getPlayer().getMissionData();
 
-        if (!data.isCurrentlyActive("speak_to_villagers") && !data.hasCompleted("speak_to_villagers")) {
+        if (!data.isCurrentlyActive(MissionTalkToVillagers.class) &&
+                !data.hasCompleted(MissionTalkToVillagers.class)) {
             data.setSkyBlockPlayer(event.getPlayer());
             data.startMission(MissionTalkToVillagers.class);
             return;
@@ -58,6 +59,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
         if (customData.values().stream().anyMatch(value -> value.toString().contains(event.getVillager().getID())))
             return;
+
         // Check if villager is a part of the mission
         if (villagers.stream().noneMatch(villager ->
                 {
@@ -134,6 +136,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                     try {
                         Pos villagerPosition = villager.newInstance().getParameters().position();
 
+                        // TODO: make particle maker
                         player.sendPacket(new ParticlePacket(
                                 37,
                                 false,
