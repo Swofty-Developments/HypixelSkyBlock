@@ -30,7 +30,7 @@ public class ActionItemAbilityLeftUse extends SkyBlockEvent {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) playerUseItemEvent.getPlayer();
 
-        if (item.clazz != null && item.clazz.newInstance() instanceof CustomSkyBlockAbility ability) {
+        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
             if (ability.getAbilityActivation() == CustomSkyBlockAbility.AbilityActivation.LEFT_CLICK) {
                 if (ability.getManaCost() > player.getMana()) {
                     player.setDisplayReplacement(StatisticDisplayReplacement.builder()

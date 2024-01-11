@@ -10,6 +10,8 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.*;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.LeatherColour;
+import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,6 +73,33 @@ public class AttributeHandler {
 
     public @Nullable ReforgeType.Reforge getReforge() {
         return ((ItemAttributeReforge) item.getAttribute("reforge")).getValue();
+    }
+
+    public MinionRegistry getMinionType() {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
+        if (item.getGenericInstance() instanceof Minion minion) {
+            return minion.getMinionRegistry();
+        } else {
+            throw new RuntimeException("Item is not a minion");
+        }
+    }
+
+    public ItemAttributeMinionData.MinionData getMinionData() {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
+        if (item.getGenericInstance() instanceof Minion) {
+            return ((ItemAttributeMinionData) item.getAttribute("minion_tier")).getValue();
+        } else {
+            throw new RuntimeException("Item is not a minion");
+        }
+    }
+
+    public void setMinionData(ItemAttributeMinionData.MinionData data) {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
+        if (item.getGenericInstance() instanceof Minion) {
+            ((ItemAttributeMinionData) item.getAttribute("minion_tier")).setValue(data);
+        } else {
+            throw new RuntimeException("Item is not a minion");
+        }
     }
 
     public void setReforge(ReforgeType.Reforge reforge) throws IllegalArgumentException {

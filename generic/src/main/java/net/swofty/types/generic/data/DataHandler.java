@@ -231,6 +231,10 @@ public class DataHandler {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername().toLowerCase());
         }),
+        IGN("ign", true, false, DatapointString.class, new DatapointString("ign", "null"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            datapoint.setValue(player.getUsername());
+        }),
         BUILD_MODE("build_mode", true, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());
@@ -258,10 +262,8 @@ public class DataHandler {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {
-        }),
-        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {
-        }),
+        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
+        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {}),
         CREATED("created", false, true, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
@@ -272,11 +274,9 @@ public class DataHandler {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());
         }),
-        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {
-        }),
-        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {
-        }, (player, datapoint) -> {
-        }),
+        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {}),
+        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {}, (player, datapoint) -> {}),
+        MINION_DATA("minions", false, true, DatapointMinionData.class, new DatapointMinionData("minions"), (player, datapoint) -> {}, (player, datapoint) -> {}),
         ;
 
         @Getter

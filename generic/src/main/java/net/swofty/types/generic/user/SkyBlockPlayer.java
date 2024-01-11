@@ -344,7 +344,7 @@ public class SkyBlockPlayer extends Player {
             } else {
                 DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
                 return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
-                        handler.get(DataHandler.Data.IGN_LOWER, DatapointString.class).getValue();
+                        handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
             }
         }
     }

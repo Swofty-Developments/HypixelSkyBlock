@@ -27,23 +27,29 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
     }
 
     @Override
-    public void run(Event event) {
-        InventoryPreClickEvent inventoryClick = (InventoryPreClickEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClick.getPlayer();
-        SkyBlockItem clickedItem = new SkyBlockItem(inventoryClick.getClickedItem());
-        SkyBlockItem cursorItem = new SkyBlockItem(inventoryClick.getCursorItem());
+    public void run(Event tempEvent) {
+        InventoryPreClickEvent event = (InventoryPreClickEvent) tempEvent;
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(event.getCursorItem());
+
+        // Check for offhand
+        if (event.getSlot() == 45 && event.getInventory() == null) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (clickedItem.getGenericInstance() != null &&
                 clickedItem.getGenericInstance() instanceof Interactable interactable) {
             if (interactable.onInventoryInteract(player, clickedItem)) {
-                inventoryClick.setCancelled(true);
+                event.setCancelled(true);
                 return;
             }
         }
 
         if (cursorItem.getAttributeHandler().getItemTypeAsType() != null &&
                 cursorItem.getAttributeHandler().getItemTypeAsType().equals(ItemType.SKYBLOCK_MENU)) {
-            inventoryClick.setCancelled(true);
+            event.setCancelled(true);
             return;
         }
 
@@ -52,32 +58,32 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
             if (gui == null) return;
 
-            if (inventoryClick.getClickType().equals(ClickType.DOUBLE_CLICK)) {
-                inventoryClick.setCancelled(true);
+            if (event.getClickType().equals(ClickType.DOUBLE_CLICK)) {
+                event.setCancelled(true);
                 return;
             }
 
-            if (inventoryClick.getInventory() == null) {
-                if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
-                    inventoryClick.setCancelled(true);
+            if (event.getInventory() == null) {
+                if (!gui.allowHotkeying() && isHotKey(event)) {
+                    event.setCancelled(true);
                     return;
                 }
-                gui.onBottomClick(inventoryClick);
+                gui.onBottomClick(event);
             } else {
-                int slot = inventoryClick.getSlot();
+                int slot = event.getSlot();
                 GUIItem item = gui.get(slot);
 
                 if (item == null) return;
 
                 if (!item.canPickup()) {
-                    inventoryClick.setCancelled(true);
-                } else if (!gui.allowHotkeying() && isHotKey(inventoryClick)) {
-                    inventoryClick.setCancelled(true);
+                    event.setCancelled(true);
+                } else if (!gui.allowHotkeying() && isHotKey(event)) {
+                    event.setCancelled(true);
                     return;
                 }
 
                 if (item instanceof GUIClickableItem clickable) {
-                    clickable.run(inventoryClick, player);
+                    clickable.run(event, player);
                 }
 
                 if (item instanceof GUIQueryItem query) {

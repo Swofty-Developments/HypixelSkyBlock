@@ -28,7 +28,7 @@ public class ActionItemLeftUse extends SkyBlockEvent {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) playerUseItemEvent.getPlayer();
 
-        if (item.clazz != null && item.clazz.newInstance() instanceof Interactable interactable) {
+        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof Interactable interactable) {
             interactable.onLeftInteract(player, item);
         }
     }

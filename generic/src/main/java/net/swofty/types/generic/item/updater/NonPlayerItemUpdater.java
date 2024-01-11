@@ -2,6 +2,7 @@ package net.swofty.types.generic.item.updater;
 
 import lombok.Getter;
 import net.minestom.server.color.Color;
+import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.Enchantment;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
@@ -9,6 +10,11 @@ import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.utility.ExtraItemTags;
+import org.json.JSONObject;
+
+import java.util.Base64;
 
 @Getter
 public class NonPlayerItemUpdater {
@@ -35,6 +41,23 @@ public class NonPlayerItemUpdater {
             stack.meta(meta -> {
                 meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
                 meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            });
+        }
+
+        if (item.getGenericInstance() != null
+                && item.getGenericInstance() instanceof SkullHead skullHead) {
+            JSONObject json = new JSONObject();
+            json.put("isPublic", true);
+            json.put("signatureRequired", false);
+            json.put("textures", new JSONObject().put("SKIN", new JSONObject()
+                    .put("url", "http://textures.minecraft.net/texture/" + skullHead.getSkullTexture(null, item))
+                    .put("metadata", new JSONObject().put("model", "slim"))));
+
+            String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+
+            stack.meta(meta -> {
+                meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
+                        "25", new PlayerSkin(texturesEncoded, null)));
             });
         }
 

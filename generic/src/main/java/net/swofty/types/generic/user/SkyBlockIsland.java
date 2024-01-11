@@ -20,6 +20,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
+import net.swofty.types.generic.minion.IslandMinionData;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,6 +48,8 @@ public class SkyBlockIsland {
     // External Island Data
     @Setter
     private Pos jerryPosition = null;
+    @Setter
+    private IslandMinionData minionData = null;
 
     public SkyBlockIsland(UUID islandID, UUID profileID) {
         this.islandID = islandID;

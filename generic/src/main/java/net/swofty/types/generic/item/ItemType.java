@@ -15,6 +15,7 @@ import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
+import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
@@ -30,6 +31,11 @@ public enum ItemType {
     DIRT(Material.DIRT, Rarity.EPIC),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     AIR(Material.AIR, Rarity.COMMON),
+
+    /**
+     * Minions
+     */
+    COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
 
     /**
      * Farming Props
