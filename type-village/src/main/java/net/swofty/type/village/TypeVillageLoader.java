@@ -31,7 +31,8 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                new Pos(-2.5, 70, -69.5, 180, 0) // Spawn position
+                new Pos(-2.5, 70, -69.5, 180, 0), // Spawn position
+                false // Announce death messages
         );
     }
 

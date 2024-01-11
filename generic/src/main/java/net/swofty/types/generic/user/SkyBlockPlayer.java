@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -26,9 +25,6 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
-import net.swofty.types.generic.event.custom.IslandPlayerLoadedEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
@@ -41,11 +37,12 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
+import net.swofty.types.generic.utility.DeathMessageCreator;
+import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 public class SkyBlockPlayer extends Player {
 
@@ -263,18 +260,34 @@ public class SkyBlockPlayer extends Player {
         return defence;
     }
 
-    public void setHearts(float hearts) {
-        this.health = hearts;
-        this.sendPacket(new UpdateHealthPacket((hearts / getMaxHealth()) * 20, 20, 20));
-    }
-
     public void playSuccessSound() {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
     }
 
     @Override
-    public @NotNull PlayerInventory getInventory() {
-        return super.getInventory();
+    public void kill() {
+        setHealth(getMaxHealth());
+        sendTo(SkyBlockConst.getTypeLoader().getType());
+
+        DeathMessageCreator creator = new DeathMessageCreator(lastDamageSource);
+
+        sendMessage("§c☠ §7You " + creator.createPersonal());
+
+        DatapointDouble coins = getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
+        coins.setValue(coins.getValue() / 2);
+
+        playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
+
+        sendMessage("§cYou died and lost " + StringUtility.commaify(coins.getValue()) + " coins!");
+
+        if (!SkyBlockConst.getTypeLoader().getLoaderValues().announceDeathMessages()) return;
+
+        SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+            if (player.getUuid().equals(getUuid())) return;
+            if (player.getInstance() != getInstance()) return;
+
+            player.sendMessage("§c☠ §7" + getFullDisplayName() + " §7" + creator.createOther());
+        });
     }
 
     @Override
@@ -292,6 +305,10 @@ public class SkyBlockPlayer extends Player {
     public void setHealth(float health) {
         if ((System.currentTimeMillis() - joined) < 3000)
             return;
+        if (health < 0) {
+            kill();
+            return;
+        }
         this.health = health;
         this.sendPacket(new UpdateHealthPacket((health / getMaxHealth()) * 20, 20, 20));
     }

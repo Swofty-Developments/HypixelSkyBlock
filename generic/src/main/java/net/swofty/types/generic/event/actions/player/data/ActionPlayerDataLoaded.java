@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
@@ -52,7 +53,13 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
             player.sendMessage("§8Island ID: " + islandUuid);
         player.sendMessage(" ");
 
-        player.setHearts(player.getMaxHealth());
+
+        player.health = player.getMaxHealth();
+        player.sendPacket(new UpdateHealthPacket(
+                (player.health / player.getMaxHealth()) * 20,
+                20,
+                20));
+
         MinecraftServer.getBossBarManager().removeAllBossBars(player);
 
         if (SkyBlockConst.isIslandServer()) return;

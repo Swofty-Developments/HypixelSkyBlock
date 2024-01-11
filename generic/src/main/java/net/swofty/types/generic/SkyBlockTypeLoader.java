@@ -30,5 +30,5 @@ public interface SkyBlockTypeLoader {
 
     @Nullable CustomWorlds getMainInstance();
 
-    record LoaderValues(Pos spawnPosition) { }
+    record LoaderValues(Pos spawnPosition, boolean announceDeathMessages) { }
 }

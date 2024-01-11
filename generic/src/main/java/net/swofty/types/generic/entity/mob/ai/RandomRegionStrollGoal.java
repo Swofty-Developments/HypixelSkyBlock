@@ -82,10 +82,6 @@ public class RandomRegionStrollGoal extends GoalSelector {
                     if (region == null)
                         continue;
 
-                    System.out.println(region.getType() + " : " +
-                            new Pos(entityX, entityY, entityZ) + " : " + x + " : " + y + " : " + z + " --- "
-                    + getEntityCreature().getPosition().blockX() + " : " + getEntityCreature().getPosition().blockY() + " : " + getEntityCreature().getPosition().blockZ());
-
                     if (region.getType() == type)
                         blocks.add(new Vec(x, y, z));
                 }
