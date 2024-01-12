@@ -26,7 +26,7 @@ public class ProxyPlayer {
     public void transferTo(ServerType serverType) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("action", "transfer");
+        json.put("actions", "transfer");
         json.put("type", serverType.toString());
 
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});

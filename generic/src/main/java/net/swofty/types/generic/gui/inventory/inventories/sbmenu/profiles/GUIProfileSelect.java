@@ -89,7 +89,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                         "§7deleting the profile forever.",
                         "",
                         "§cWarning!",
-                        "§fYou cannot revert this action!",
+                        "§fYou cannot revert this actions!",
                         "",
                         "§eClick to continue!");
             }

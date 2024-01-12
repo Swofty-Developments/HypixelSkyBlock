@@ -1,8 +1,11 @@
 package net.swofty.types.generic.minion.minions;
 
 import net.minestom.server.color.Color;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.actions.MinionMineAction;
 
 import java.util.List;
 
@@ -47,5 +50,17 @@ public class MinionCobblestone extends SkyBlockMinion {
     @Override
     public Material getHeldItem() {
         return Material.IRON_PICKAXE;
+    }
+
+    @Override
+    public List<MinionExpectations> getExpectations() {
+        return List.of(
+                new MinionExpectations(-1, Block.COBBLESTONE, Block.AIR)
+        );
+    }
+
+    @Override
+    public MinionAction getAction() {
+        return new MinionMineAction(Block.COBBLESTONE);
     }
 }

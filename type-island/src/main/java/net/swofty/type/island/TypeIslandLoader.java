@@ -8,6 +8,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.minion.MinionHandler;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -24,6 +25,11 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public void onInitialize(MinecraftServer server) {
         Logger.info("TypeIslandLoader initialized!");
+
+        /**
+         * Initialize Minions
+         */
+        new MinionHandler(MinecraftServer.getSchedulerManager()).start();
     }
 
     @Override

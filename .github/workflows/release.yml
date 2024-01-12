@@ -21,7 +21,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Add Jar to GitHub releases
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: "marvinpinto/actions-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.TOKEN_GITHUB }}"
         automatic_release_tag: "latest"

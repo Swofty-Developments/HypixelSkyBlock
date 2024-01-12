@@ -18,7 +18,7 @@ public class ListenerPlayerHandler extends RedisListener {
     public String receivedMessage(String message, UUID serverUUID) {
         JSONObject json = new JSONObject(message);
         UUID uuid = UUID.fromString(json.getString("uuid"));
-        String action = json.getString("action");
+        String action = json.getString("actions");
 
         Player player = SkyBlockVelocity.getServer().getPlayer(uuid).get();
 

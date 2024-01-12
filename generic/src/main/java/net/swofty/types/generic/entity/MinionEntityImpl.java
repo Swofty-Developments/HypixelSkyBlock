@@ -1,5 +1,6 @@
 package net.swofty.types.generic.entity;
 
+import lombok.Getter;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
@@ -7,16 +8,25 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class MinionEntityImpl extends LivingEntity {
-    private static final List<MinionEntityImpl> ACTIVE_MINIONS = new ArrayList<>();
+    @Getter
+    private static final List<MinionEntityImpl> activeMinions = new ArrayList<>();
 
-    public MinionEntityImpl(SkyBlockMinion minion) {
+    private final IslandMinionData.IslandMinion islandMinion;
+    private final SkyBlockMinion minion;
+
+    public MinionEntityImpl(IslandMinionData.IslandMinion islandMinion, SkyBlockMinion minion) {
         super(EntityType.ARMOR_STAND);
+
+        this.islandMinion = islandMinion;
+        this.minion = minion;
 
         setAutoViewable(true);
         setAutoViewEntities(true);
@@ -24,6 +34,9 @@ public class MinionEntityImpl extends LivingEntity {
         ArmorStandMeta meta = (ArmorStandMeta) this.entityMeta;
         meta.setSmall(true);
         meta.setHasNoBasePlate(true);
+        meta.setHasNoGravity(true);
+
+        setInvisible(false);
 
         setBoots(ItemStack.builder(Material.LEATHER_BOOTS).meta(bootMeta -> {
             LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(bootMeta.tagHandler());
@@ -45,6 +58,12 @@ public class MinionEntityImpl extends LivingEntity {
 
     @Override
     public void spawn() {
-        ACTIVE_MINIONS.add(this);
+        activeMinions.add(this);
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        activeMinions.remove(this);
     }
 }

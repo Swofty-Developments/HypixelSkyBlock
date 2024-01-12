@@ -10,7 +10,7 @@ public record CalendarEvent(List<Long> times, Consumer<Long> action) {
     private static final Map<Long, List<CalendarEvent>> eventCache = new HashMap<>();
 
     public static CalendarEvent NEW_YEAR = new CalendarEvent(List.of(10L), time -> {
-        // New Year's action
+        // New Year's actions
     });
 
     static {

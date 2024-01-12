@@ -173,8 +173,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         if (mainInstance != null) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
-        } else {
-            ServerHolograms.setSpawned(true);
         }
 
         /**
