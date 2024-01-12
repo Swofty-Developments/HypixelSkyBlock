@@ -66,7 +66,7 @@ public class GameManager {
                             System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
                             servers.get(serverType).remove(registeredServer);
                         }
-                    }).delay(Duration.ofMillis(50)).schedule();
+                    }).delay(Duration.ofMillis(100)).schedule();
                 });
 
                 System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());

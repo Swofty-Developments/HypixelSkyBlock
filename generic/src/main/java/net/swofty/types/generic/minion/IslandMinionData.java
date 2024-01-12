@@ -9,6 +9,7 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.user.SkyBlockIsland;
 
@@ -28,7 +29,8 @@ public class IslandMinionData {
         IslandMinion islandMinion = new IslandMinion(
                 UUID.randomUUID(), position, minion,
                 previousData.tier(), new ArrayList<>(),
-                previousData.generatedResources(), null,
+                previousData.generatedResources(),
+                System.currentTimeMillis(), null,
                 new MinionHandler.InternalMinionTags());
         minions.add(islandMinion);
         return islandMinion;
@@ -48,6 +50,7 @@ public class IslandMinionData {
         private final int tier;
         private List<MaterialQuantifiable> itemsInMinion;
         private int generatedItems;
+        private long lastAction;
         private MinionEntityImpl minionEntity;
         private MinionHandler.InternalMinionTags internalMinionTags;
 
@@ -61,15 +64,35 @@ public class IslandMinionData {
             minionEntity.remove();
         }
 
+        public void addItem(SkyBlockItem item) {
+            setGeneratedItems(getGeneratedItems() + item.getAmount());
+
+            if (itemsInMinion.stream().anyMatch(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())) {
+                itemsInMinion.stream()
+                        .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
+                        .findFirst()
+                        .get()
+                        .setAmount(itemsInMinion.stream()
+                                .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
+                                .findFirst()
+                                .get().getAmount() + item.getAmount());
+                return;
+            }
+
+            itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
+        }
+
         public Map<String, Object> serialize() {
+            List<String> itemsInMinionAsString = new ArrayList<>();
+            itemsInMinion.forEach(item -> {
+                itemsInMinionAsString.add(item.getMaterial().name() + "," + item.getAmount());
+            });
+
             Map<String, Object> data = new HashMap<>();
             data.put("position", position.blockX() + "," + position.blockY() + "," + position.blockZ());
-            List<String> generatedItems = new ArrayList<>();
-            itemsInMinion.forEach(item -> {
-                generatedItems.add(item.getMaterial().name() + "," + item.getAmount());
-            });
-            data.put("itemsInMinion", itemsInMinion.size());
+            data.put("itemsInMinion", itemsInMinionAsString);
             data.put("minion", minion.name());
+            data.put("lastAction", lastAction);
             data.put("tier", tier);
             data.put("generatedItems", generatedItems);
             data.put("minionUUID", minionUUID.toString());
@@ -77,14 +100,12 @@ public class IslandMinionData {
         }
 
         public static IslandMinion deserialize(Map<String, Object> data) {
-            List<MaterialQuantifiable> generatedItems = new ArrayList<>();
-            data.forEach((key, value) -> {
-                if (key.startsWith("generatedItems")) {
-                    generatedItems.add(new MaterialQuantifiable(
-                            ItemType.valueOf(key.split(",")[0]),
-                            Integer.parseInt(key.split(",")[1])
-                    ));
-                }
+            List<MaterialQuantifiable> itemsInMinion = new ArrayList<>();
+            ((List<String>) data.get("itemsInMinion")).forEach(item -> {
+                itemsInMinion.add(new MaterialQuantifiable(
+                        ItemType.valueOf(item.split(",")[0]),
+                        Integer.parseInt(item.split(",")[1])
+                ));
             });
 
             return new IslandMinion(
@@ -96,8 +117,9 @@ public class IslandMinionData {
                     ),
                     MinionRegistry.valueOf(data.get("minion").toString()),
                     (int) data.get("tier"),
-                    generatedItems,
+                    itemsInMinion,
                     (int) data.get("generatedItems"),
+                    System.currentTimeMillis(),
                     null,
                     new MinionHandler.InternalMinionTags()
             );

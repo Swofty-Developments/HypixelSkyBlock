@@ -2,13 +2,16 @@ package net.swofty.types.generic.minion.actions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.user.SkyBlockIsland;
+import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.List;
 
@@ -18,8 +21,30 @@ public class MinionMineAction extends MinionAction {
     private final Block toMine;
 
     @Override
-    public void onAction(IslandMinionData.IslandMinion minion, Instance island) {
+    public void onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
+        List<Pos> minePositions = MathUtility.getRangeExcludingSelf(
+                minion.getPosition().sub(0, 1, 0), 2
+        );
 
+        boolean hasAir = minePositions.stream().anyMatch(pos -> island.getBlock(pos).isAir());
+
+        List<Pos> possiblePositions = MathUtility.getRangeExcludingSelf(
+                minion.getPosition().sub(0, 1, 0), 2
+        ).stream().filter(pos -> !hasAir || island.getBlock(pos).isAir()).toList();
+
+        event.setToLook(MathUtility.getRandomElement(possiblePositions));
+
+        event.setAction(() -> {
+            if (island.getBlock(event.getToLook()) == toMine || island.getBlock(event.getToLook()).isAir()) {
+                if (hasAir) {
+                    island.setBlock(event.getToLook(), toMine);
+                    return;
+                }
+
+                island.setBlock(event.getToLook(), Block.AIR);
+                minion.addItem(new SkyBlockItem(Material.fromNamespaceId(toMine.namespace())));
+            }
+        });
     }
 
     @Override
@@ -41,6 +66,6 @@ public class MinionMineAction extends MinionAction {
             }
         }
 
-        return shouldAllow;
+        return !shouldAllow;
     }
 }
