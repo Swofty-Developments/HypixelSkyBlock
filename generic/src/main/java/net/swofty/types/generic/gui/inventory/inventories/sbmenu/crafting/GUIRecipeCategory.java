@@ -102,7 +102,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
     protected GUIClickableItem createItemFor(SkyBlockRecipe item, int slot, SkyBlockPlayer player) {
         SkyBlockRecipe.CraftingResult result = (SkyBlockRecipe.CraftingResult) item.getCanCraft().apply(player);
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                player, null, item.getResult().getItemStack()
+                player, item.getResult().getItemStack()
         );
 
         if (result.allowed()) {

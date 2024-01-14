@@ -68,7 +68,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             SkyBlockItem item = new SkyBlockItem(stack);
             if (item.getGenericInstance() instanceof Sellable sellable) {
                 ItemStack.Builder toReplace = PlayerItemUpdater.playerUpdate(
-                        getPlayer(), null, stack
+                        getPlayer(), stack
                 );
 
                 double sellPrice = sellable.getSellValue() * stack.amount();
@@ -147,7 +147,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
                 int amountOfLast = player.getShoppingData().lastBuyback().getValue();
                 ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                        player, null, last.getItemStackBuilder().build()
+                        player, last.getItemStackBuilder().build()
                 );
                 itemStack.amount(amountOfLast);
 
@@ -186,7 +186,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
                 int amountOfLast = player.getShoppingData().lastBuyback().getValue();
                 ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                        player, null, last.getItemStackBuilder().build()
+                        player, last.getItemStackBuilder().build()
                 );
 
                 double buyBackPrice = ((Sellable) last.getGenericInstance()).getSellValue() * amountOfLast;
@@ -258,7 +258,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                            player, null, sbItem.getItemStackBuilder().build()
+                            player, sbItem.getItemStackBuilder().build()
                     );
 
                     List<String> lore = new ArrayList<>(itemStack.build().getLore()

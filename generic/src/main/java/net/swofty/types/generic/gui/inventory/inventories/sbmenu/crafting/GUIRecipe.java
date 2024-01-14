@@ -77,7 +77,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, recipe.getResult().getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack());
             }
         });
 
@@ -106,7 +106,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
 
                         @Override
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                            ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, null, ingredient.getItemStack());
+                            ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
                             if (ingredient.getGenericInstance() instanceof Craftable) {
                                 ArrayList<Component> lore = new ArrayList<>(builder.build().getLore());

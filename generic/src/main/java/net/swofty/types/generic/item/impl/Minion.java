@@ -48,18 +48,22 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, Placeable, Unstac
             SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemType());
             item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(tier.tier(), 0));
 
-            if (MinionRecipe.fromNumber(tier.tier()) == null) {
-                return;
-            }
-
             ShapedRecipe recipe = new ShapedRecipe(
                     SkyBlockRecipe.RecipeType.MINION,
                     item,
-                    MinionRecipe.fromNumber(tier.tier()).getRecipeFunction().apply(
-                            Map.entry(getBaseCraftMaterial(), getEnchantedCraftMaterial()), getFirstBaseItem()
-                    ),
+                    MinionRecipe.fromNumber(tier.tier() - 1).getRecipeFunction().apply(new MinionRecipe.MinionRecipeData(
+                            getBaseCraftMaterial(),
+                            getEnchantedCraftMaterial(),
+                            getFirstBaseItem(),
+                            getMinionRegistry().getItemType()
+                    )),
                     pattern
             );
+            recipe.addExtraRequirement('B', (minionItem) -> {
+                if (minionItem.getGenericInstance() instanceof Minion)
+                    return minionItem.getAttributeHandler().getMinionData().tier() == Math.max(1, tier.tier() - 1);
+                return true;
+            });
 
             toReturn.add(recipe);
         });

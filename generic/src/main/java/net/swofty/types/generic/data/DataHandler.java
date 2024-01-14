@@ -192,7 +192,7 @@ public class DataHandler {
 
                 player.getInventory().setItemStack(integer, itemStack.getItemStack());
 
-                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(player, origin, itemStack.getItemStack()).build();
+                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(player, itemStack.getItemStack()).build();
                 origin.setStack(player, loadedItem);
             });
 

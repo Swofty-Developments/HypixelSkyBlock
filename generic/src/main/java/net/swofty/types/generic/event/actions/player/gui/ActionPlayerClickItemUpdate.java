@@ -26,8 +26,7 @@ public class ActionPlayerClickItemUpdate extends SkyBlockEvent {
 
         if (!SkyBlockItem.isSkyBlockItem(inventoryClick.getNewItem())) {
             player.getInventory().setItemStack(inventoryClick.getSlot(), PlayerItemUpdater.playerUpdate(
-                            player, null, inventoryClick.getNewItem())
-                    .build());
+                    player, inventoryClick.getNewItem()).build());
         }
     }
 }

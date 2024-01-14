@@ -20,19 +20,15 @@ public class ReforgeCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
-            new PlayerItemUpdater((player, item) -> {
+            ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 AttributeHandler attributeHandler = item.getAttributeHandler();
                 ReforgeType reforgeType = ((Reforgable) item.getGenericInstance()).getReforgeType();
                 ReforgeType.Reforge reforge = reforgeType.getReforges().get(MathUtility.random(0, reforgeType.getReforges().size() - 1));
                 try {
                     attributeHandler.setReforge(reforge);
                 } catch (IllegalArgumentException e) {
-                    player.sendMessage("§c" + e.getMessage());
+                    sender.sendMessage("§c" + e.getMessage());
                 }
-                return attributeHandler.asSkyBlockItem();
-            }).queueUpdate((SkyBlockPlayer) sender, PlayerItemOrigin.MAIN_HAND).thenAccept((item) -> {
-                AttributeHandler attributeHandler = new AttributeHandler(item);
-                sender.sendMessage("§aReforge: §d" + attributeHandler.getReforge().prefix());
             });
         });
     }

@@ -26,17 +26,14 @@ public class EnchantCommand extends SkyBlockCommand {
         ArgumentInteger level = ArgumentType.Integer("level");
 
         command.addSyntax((sender, context) -> {
-            new PlayerItemUpdater((player, item) -> {
+            ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 AttributeHandler attributeHandler = item.getAttributeHandler();
-                attributeHandler.removeEnchantment(context.get(typeArgument));
                 attributeHandler.addEnchantment(
                         SkyBlockEnchantment.builder()
                                 .level(context.get(level))
                                 .type(context.get(typeArgument))
                                 .build()
                 );
-                return attributeHandler.asSkyBlockItem();
-            }).queueUpdate((SkyBlockPlayer) sender, PlayerItemOrigin.MAIN_HAND).thenAccept((item) -> {
                 sender.sendMessage("§aYour item has been enchanted");
             });
         }, typeArgument, level);

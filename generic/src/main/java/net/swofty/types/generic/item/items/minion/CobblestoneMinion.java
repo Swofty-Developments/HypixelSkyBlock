@@ -24,7 +24,7 @@ public class CobblestoneMinion implements CustomSkyBlockItem, Minion {
 
     @Override
     public ItemType getFirstBaseItem() {
-        return ItemType.STONE_PICKAXE;
+        return ItemType.WOODEN_PICKAXE;
     }
 
 }

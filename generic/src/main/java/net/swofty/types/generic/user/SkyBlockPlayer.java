@@ -42,6 +42,8 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class SkyBlockPlayer extends Player {
@@ -184,6 +186,17 @@ public class SkyBlockPlayer extends Player {
         }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
     }
 
+    public SkyBlockItem updateItem(PlayerItemOrigin origin, Consumer<SkyBlockItem> update) {
+        ItemStack toUpdate = origin.getStack(this);
+        if (toUpdate == null) return null;
+
+        SkyBlockItem item = new SkyBlockItem(toUpdate);
+        update.accept(item);
+
+        origin.setStack(this, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+        return item;
+    }
+
     public SkyBlockRegion getRegion() {
         if (isOnIsland()) {
             return SkyBlockRegion.getIslandRegion();
@@ -197,7 +210,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void addAndUpdateItem(SkyBlockItem item) {
-        ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, PlayerItemOrigin.INVENTORY_SLOT, item.getItemStack()).build();
+        ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build();
         this.getInventory().addItemStack(toAdd);
     }
 

@@ -22,7 +22,10 @@ public class CraftingTable implements CustomSkyBlockItem, Craftable {
                 "PP",
                 "PP");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
+        ShapedRecipe recipe = new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
+        recipe.addExtraRequirement('P', (item) -> item.getAttributeHandler().isRecombobulated());
+
+        return recipe;
     }
 
     @Override

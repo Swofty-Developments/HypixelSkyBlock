@@ -74,7 +74,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
     @Override
     protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot, SkyBlockPlayer player) {
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                player, null, skyBlockItem.getItemStack()
+                player, skyBlockItem.getItemStack()
         );
 
         return new GUIClickableItem() {

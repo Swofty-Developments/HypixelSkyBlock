@@ -18,12 +18,17 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
@@ -120,7 +125,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                 ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
                         player,
-                        null,
                         finalRecipe.getResult().getItemStack()).amount(amount).build();
                 e.setClickedItem(craftedItem);
                 SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
@@ -132,7 +136,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     } else {
                         inventory.setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
                                 player,
-                                null,
                                 toReplace[i].getItemStack()).build());
                     }
                 }
@@ -142,7 +145,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     e.getPlayer().getInventory().addItemStack(
                       PlayerItemUpdater.playerUpdate(
                               player,
-                              null,
                                 e.getClickedItem()
                             ).build()
                     );
@@ -151,7 +153,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
                     e.setCancelled(true);
                     e.getPlayer().getInventory().addItemStack(
-                            PlayerItemUpdater.playerUpdate(player, null, cursorItem.getItemStack()).build()
+                            PlayerItemUpdater.playerUpdate(player, cursorItem.getItemStack()).build()
                     );
                 }
 
@@ -171,7 +173,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, null, finalRecipe.getResult().getItemStack()).amount(amount);
+                ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();
                 builder.build().getLore().stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);

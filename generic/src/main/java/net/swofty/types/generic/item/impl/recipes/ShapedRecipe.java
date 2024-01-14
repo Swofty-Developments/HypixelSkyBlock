@@ -9,6 +9,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Getter
@@ -16,6 +17,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
     public static final List<ShapedRecipe> CACHED_RECIPES = new ArrayList<>();
 
     private final Map<Character, MaterialQuantifiable> ingredientMap;
+    private final Map<Character, Function<SkyBlockItem, Boolean>> extraRequirements = new HashMap<>();
     private final List<String> pattern; // Using a list of strings for simplicity
 
     public ShapedRecipe(RecipeType type,
@@ -30,6 +32,10 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         SkyBlockItem result, Map<Character, MaterialQuantifiable> ingredientMap,
                         List<String> pattern) {
         this(type, result, ingredientMap, pattern, (player) -> new CraftingResult(true, new String[]{}));
+    }
+
+    public void addExtraRequirement(char patternChar, Function<SkyBlockItem, Boolean> requirement) {
+        extraRequirements.put(patternChar, requirement);
     }
 
 
@@ -141,6 +147,62 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         return new ShapedRecipe(recipeType, result, ingredientMap, pattern, canCraft);
     }
 
+    public Map<Character, List<Integer>> getPositionsOfItems(ItemStack[] stacks) {
+        Map<Character, List<Integer>> positions = new HashMap<>();
+
+        int patternRows = pattern.size();
+        int patternCols = pattern.get(0).length();
+
+        // Try all possible starting positions (top-left corners) for the pattern in the grid
+        for (int startRow = 0; startRow <= 3 - patternRows; startRow++) {
+            for (int startCol = 0; startCol <= 3 - patternCols; startCol++) {
+
+                // Iterate through stacks within the potentially shifted pattern
+                for (int i = 0; i < stacks.length; i++) {
+                    int gridRow = i / 3;
+                    int gridCol = i % 3;
+
+                    // If this stack is within our shifted pattern on the grid
+                    if (gridRow >= startRow && gridRow < startRow + patternRows &&
+                            gridCol >= startCol && gridCol < startCol + patternCols) {
+
+                        char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
+                        MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
+
+                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR)) {
+                            MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(stacks[i]);
+
+                            // skip the iteration if stackMaterial is AIR
+                            if (stackMaterial.getMaterial().equals(ItemType.AIR)) {
+                                continue;
+                            }
+
+                            if (stackMaterial.matches(patternMaterial.getMaterial())
+                                    || ExchangeableType.isExchangeable(stackMaterial.getMaterial(), patternMaterial.getMaterial())) {
+                                int stackAmount = stackMaterial.getAmount();
+                                int consumeAmount = patternMaterial.getAmount();
+
+                                if (stackAmount >= consumeAmount) {
+                                    stackMaterial.setAmount(stackAmount - consumeAmount);
+                                    positions.computeIfAbsent(patternChar, k -> new ArrayList<>()).add(i);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Remove duplicate positions from the same character
+        positions.forEach((character, positionsList) -> {
+            Set<Integer> positionsSet = new HashSet<>(positionsList);
+            positionsList.clear();
+            positionsList.addAll(positionsSet);
+        });
+
+        return positions;
+    }
+
     public static ShapedRecipe parseShapedRecipe(ItemStack[] stacks) {
         ItemStack[][] grid = {
                 {stacks[0], stacks[1], stacks[2]},
@@ -163,6 +225,25 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                     }
 
                     return false;
+                })
+                .filter(recipe -> {
+                    for (Map.Entry<Character, List<Integer>> entry : recipe.getPositionsOfItems(stacks).entrySet()) {
+                        Character character = entry.getKey();
+
+                        Function<SkyBlockItem, Boolean> extraRequirements = recipe.getExtraRequirements().get(character);
+                        if (extraRequirements == null) {
+                            continue;
+                        }
+
+                        for (int position : entry.getValue()) {
+                            SkyBlockItem item = new SkyBlockItem(stacks[position]);
+                            if (!extraRequirements.apply(item)) {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
                 })
                 .findFirst()
                 .orElse(null);

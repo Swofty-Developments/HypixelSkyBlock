@@ -192,7 +192,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, null, item.getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
         });
 
