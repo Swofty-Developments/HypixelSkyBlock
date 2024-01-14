@@ -2,11 +2,19 @@ package net.swofty.types.generic;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.adventure.audience.Audiences;
+import net.minestom.server.entity.Player;
+import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.monitoring.BenchmarkManager;
+import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.NamespaceID;
+import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
@@ -48,13 +56,14 @@ import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Duration;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
+    private static final AtomicReference<TickMonitor> LAST_TICK = new AtomicReference<>();
+
     @Getter
     private static MinecraftServer server;
 
@@ -166,6 +175,47 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         SkyBlockScoreboard.start();
         PlayerHolograms.updateAll(MinecraftServer.getSchedulerManager());
+
+        /**
+         * Start generic tablist
+         */
+        MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
+                LAST_TICK.set(event.getTickMonitor()));
+        BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
+        benchmarkManager.enable(Duration.ofDays(3));
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            Collection<SkyBlockPlayer> players = getLoadedPlayers();
+            if (players.isEmpty())
+                return;
+
+            long ramUsage = benchmarkManager.getUsedMemory();
+            ramUsage /= (long) 1e6; // bytes to MB
+            TickMonitor tickMonitor = LAST_TICK.get();
+
+            final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
+                    .append(Component.newline())
+                    .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
+                    .append(Component.newline())
+                    .append(Component.text("§7TPS: §8" + (1000 / tickMonitor.getTickTime())))
+                    .append(Component.newline());
+            final Component footer = Component.newline()
+                    .append(Component.text("§a§lActive Effects"))
+                    .append(Component.newline())
+                    .append(Component.text("§7No effects active. Drink potions or splash them on the"))
+                    .append(Component.newline())
+                    .append(Component.text("§7ground to buff yourself!"))
+                    .append(Component.newline())
+                    .append(Component.newline())
+                    .append(Component.text("§d§lCookie Buff"))
+                    .append(Component.newline())
+                    .append(Component.text("§7Not active! Obtain booster cookies from the community"))
+                    .append(Component.newline())
+                    .append(Component.text("§7shop in the hub."))
+                    .append(Component.newline())
+                    .append(Component.newline())
+                    .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+            Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+        }).repeat(10, TimeUnit.SERVER_TICK).schedule();
 
         /**
          * Register holograms and fairy souls

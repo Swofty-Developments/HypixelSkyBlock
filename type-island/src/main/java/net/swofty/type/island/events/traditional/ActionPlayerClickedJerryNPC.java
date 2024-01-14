@@ -4,6 +4,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
+import net.swofty.type.island.gui.GUIJerry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -33,6 +34,6 @@ public class ActionPlayerClickedJerryNPC extends SkyBlockEvent {
 
         if (jerryClickedEvent.isCancelled()) return;
 
-        player.sendMessage("§eTesting");
+        new GUIJerry().open(player);
     }
 }
