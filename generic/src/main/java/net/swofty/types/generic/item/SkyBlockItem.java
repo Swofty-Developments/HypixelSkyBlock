@@ -173,6 +173,7 @@ public class SkyBlockItem {
                 "type=" + getMaterial().name() +
                 ", clazz=" + clazz +
                 ", amount=" + amount +
+                ", attributes=" + attributes.stream().map(attribute -> attribute.getKey() + "=" + attribute.getValue()).reduce((s, s2) -> s + ", " + s2).orElse("null") +
                 '}';
     }
 }

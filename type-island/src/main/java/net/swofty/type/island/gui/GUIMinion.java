@@ -11,6 +11,7 @@ import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.inventories.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.MaterialQuantifiable;
@@ -22,6 +23,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
     private static final int[] SLOTS = new int[]{
@@ -114,6 +116,34 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                 return ItemStackCreator.getStack("§aIdeal Layout", Material.REDSTONE_TORCH, 1,
                         "§7View the most efficient spot for this",
                         "§7minion to be placed in.",
+                        " ",
+                        "§eClick to view!");
+            }
+        });
+
+        set(new GUIClickableItem() {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIMinionRecipes(minion.getMinion(), GUIMinion.this).open(player);
+            }
+
+            @Override
+            public int getSlot() {
+                return 5;
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<SkyBlockMinion.MinionTier> minionTiers = minion.getMinion().asSkyBlockMinion().getTiers();
+
+                return ItemStackCreator.getStack("§aNext Tier", Material.GOLD_INGOT, 1,
+                        "§7View the items required to upgrade",
+                        "§7this minion to the next tier.",
+                        " ",
+                        "§7Time Between Actions: §8" + minionTiers.get(minion.getTier() - 1).timeBetweenActions() + "s"
+                             + " §l> §a" + minionTiers.get(minion.getTier()).timeBetweenActions() + "s",
+                        "§7Max Storage: §8" + minionTiers.get(minion.getTier() - 1).storage() + " §l> " +
+                                "§e" + minionTiers.get(minion.getTier()).storage(),
                         " ",
                         "§eClick to view!");
             }

@@ -16,22 +16,29 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Craftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
 
-    ItemType type;
+    SkyBlockItem item;
     SkyBlockInventoryGUI previousGUI;
 
     public GUIRecipe(ItemType type, SkyBlockInventoryGUI previousGUI) {
-        super(type.getDisplayName() + " Recipe", InventoryType.CHEST_6_ROW);
+        this(new SkyBlockItem(type), previousGUI);
+    }
 
-        this.type = type;
+    public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI) {
+        super(item.getAttributeHandler().getItemTypeAsType().getDisplayName() + " Recipe", InventoryType.CHEST_6_ROW);
+
+        this.item = item;
         this.previousGUI = previousGUI;
     }
 
@@ -61,14 +68,31 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
 
         List<SkyBlockRecipe<?>> recipes = null;
         try {
-            ((Craftable) type.clazz.newInstance()).getRecipes();
+            recipes = ((Craftable) item.getGenericInstance()).getRecipes();
         } catch (ClassCastException e2) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
-        SkyBlockRecipe recipe = recipes.get(0);
+        SkyBlockRecipe recipe = null;
+        if (recipes.size() == 1) {
+            recipe = recipes.get(0);
+        } else {
+            for (SkyBlockRecipe<?> r : recipes) {
+                if (r.getResult().toString().equals(item.toString())) {
+                    recipe = r;
+                    break;
+                }
+            }
+        }
 
+        if (recipe == null) {
+            getPlayer().closeInventory();
+            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
+            return;
+        }
+
+        SkyBlockRecipe finalRecipe = recipe;
         set(new GUIItem() {
             @Override
             public int getSlot() {
@@ -77,7 +101,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack());
             }
         });
 
