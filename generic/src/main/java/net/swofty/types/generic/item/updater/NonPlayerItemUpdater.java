@@ -7,14 +7,17 @@ import net.minestom.server.item.Enchantment;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
 
 import java.util.Base64;
+import java.util.UUID;
 
 @Getter
 public class NonPlayerItemUpdater {
@@ -41,6 +44,13 @@ public class NonPlayerItemUpdater {
             stack.meta(meta -> {
                 meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
                 meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+            });
+        }
+
+        if (item.getGenericInstance() != null
+                && item.getGenericInstance() instanceof Unstackable) {
+            stack.meta(meta -> {
+                meta.set(Tag.UUID("stackable"), UUID.randomUUID());
             });
         }
 

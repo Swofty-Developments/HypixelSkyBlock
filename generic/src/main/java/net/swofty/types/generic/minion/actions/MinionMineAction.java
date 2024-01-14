@@ -37,10 +37,12 @@ public class MinionMineAction extends MinionAction {
         event.setAction(() -> {
             if (island.getBlock(event.getToLook()) == toMine || island.getBlock(event.getToLook()).isAir()) {
                 if (hasAir) {
+                    minion.getMinionEntity().placeAnimation();
                     island.setBlock(event.getToLook(), toMine);
                     return;
                 }
 
+                minion.getMinionEntity().swingAnimation();
                 island.setBlock(event.getToLook(), Block.AIR);
                 minion.addItem(new SkyBlockItem(Material.fromNamespaceId(toMine.namespace())));
             }

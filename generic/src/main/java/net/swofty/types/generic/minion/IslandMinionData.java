@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.SharedInstance;
-import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
@@ -80,6 +79,15 @@ public class IslandMinionData {
             }
 
             itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
+        }
+
+        public SkyBlockItem asSkyBlockItem() {
+            SkyBlockItem toReturn = new SkyBlockItem(getMinion().getItemType());
+            toReturn.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(
+                    getTier(),
+                    getGeneratedItems()
+            ));
+            return toReturn;
         }
 
         public Map<String, Object> serialize() {

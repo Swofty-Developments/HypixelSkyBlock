@@ -11,11 +11,11 @@ public enum MinionRegistry {
 
     private final Class<? extends SkyBlockMinion> minionClass;
     @Getter
-    private final ItemType item;
+    private final ItemType itemType;
 
-    MinionRegistry(Class<? extends SkyBlockMinion> minionClass, ItemType item) {
+    MinionRegistry(Class<? extends SkyBlockMinion> minionClass, ItemType itemType) {
         this.minionClass = minionClass;
-        this.item = item;
+        this.itemType = itemType;
     }
 
     public SkyBlockMinion asSkyBlockMinion() {

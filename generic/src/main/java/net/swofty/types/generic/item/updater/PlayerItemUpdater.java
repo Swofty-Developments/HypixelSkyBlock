@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -17,6 +18,7 @@ import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
@@ -113,6 +115,17 @@ public class PlayerItemUpdater {
         }
 
         if (item.getGenericInstance() != null
+                && item.getGenericInstance() instanceof Unstackable
+                && handler.getStackable().equals("none")) {
+            UUID randomUUID = UUID.randomUUID();
+
+            handler.setStackable(randomUUID.toString());
+            toReturn.meta(meta -> {
+                meta.set(Tag.String("stackable"), randomUUID.toString());
+            });
+        }
+
+        if (item.getGenericInstance() != null
                 && item.getGenericInstance() instanceof SkullHead skullHead) {
             JSONObject json = new JSONObject();
             json.put("isPublic", true);
@@ -145,7 +158,7 @@ public class PlayerItemUpdater {
                     origin.setStack(player, playerUpdate(player, origin, item).build());
                 });
             });
-            return TaskSchedule.tick(1);
+            return TaskSchedule.tick(40);
         });
     }
 

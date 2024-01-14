@@ -15,6 +15,7 @@ import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 public class AttributeHandler {
@@ -52,6 +53,14 @@ public class AttributeHandler {
 
     public Rarity getRarity() {
         return ((ItemAttributeRarity) item.getAttribute("rarity")).getValue();
+    }
+
+    public String getStackable() {
+        return ((ItemAttributeStackable) item.getAttribute("stackable")).getValue();
+    }
+
+    public void setStackable(String stackableID) {
+        ((ItemAttributeStackable) item.getAttribute("stackable")).setValue(stackableID);
     }
 
     public void setRarity(Rarity rarity) {

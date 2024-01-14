@@ -30,7 +30,7 @@ public class ActionPlayerSpawnFirstMinion extends SkyBlockEvent {
 
         MathUtility.delay(() -> {
             IslandMinionData.IslandMinion minion = event.getIsland().getMinionData().initializeMinion(
-                    new Pos(-4, 100, 28),
+                    new Pos(-4, 100, 28), // Default Cobble Minion position
                     MinionRegistry.COBBLESTONE,
                     new ItemAttributeMinionData.MinionData(1, 0)
             );

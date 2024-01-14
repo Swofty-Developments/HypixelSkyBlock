@@ -94,6 +94,7 @@ public abstract class SkyBlockRecipe<T> {
         ALCHEMY(Material.BREWING_STAND),
         CARPENTRY(Material.CRAFTING_TABLE),
         SPECIAL(Material.NETHER_STAR),
+        MINION(Material.AIR),
         NONE(Material.AIR),
         ;
 
