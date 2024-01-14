@@ -13,7 +13,7 @@ public class MinionCobblestone extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
         return List.of(
-                new MinionTier(1, 4, 64),
+                new MinionTier(1, 16, 64),
                 new MinionTier(2, 14, 192),
                 new MinionTier(3, 12, 192),
                 new MinionTier(4, 12, 384),

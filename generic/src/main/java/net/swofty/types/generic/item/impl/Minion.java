@@ -4,15 +4,19 @@ import com.mongodb.lang.Nullable;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.Material;
 import net.minestom.server.recipe.Recipe;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.minion.IslandMinionData;
+import net.swofty.types.generic.minion.MinionRecipe;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -22,9 +26,46 @@ import net.swofty.types.generic.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-public interface Minion extends CustomSkyBlockItem, SkullHead, Placeable, Unstackable {
+public interface Minion extends CustomSkyBlockItem, SkullHead, Placeable, Unstackable, Craftable {
     MinionRegistry getMinionRegistry();
+
+    ItemType getBaseCraftMaterial();
+    ItemType getEnchantedCraftMaterial();
+    ItemType getFirstBaseItem();
+
+    default List<SkyBlockRecipe<?>> getRecipes() {
+        List<SkyBlockRecipe<?>> toReturn = new ArrayList<>();
+
+        getMinionRegistry().asSkyBlockMinion().getTiers().forEach(tier -> {
+            List<String> pattern = new ArrayList<>(Arrays.asList(
+                    "AAA",
+                    "ABA",
+                    "AAA"
+            ));
+
+            SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemType());
+            item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(tier.tier(), 0));
+
+            if (MinionRecipe.fromNumber(tier.tier()) == null) {
+                return;
+            }
+
+            ShapedRecipe recipe = new ShapedRecipe(
+                    SkyBlockRecipe.RecipeType.MINION,
+                    item,
+                    MinionRecipe.fromNumber(tier.tier()).getRecipeFunction().apply(
+                            Map.entry(getBaseCraftMaterial(), getEnchantedCraftMaterial()), getFirstBaseItem()
+                    ),
+                    pattern
+            );
+
+            toReturn.add(recipe);
+        });
+
+        return toReturn;
+    }
 
     @Override
     default void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
@@ -100,5 +141,10 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, Placeable, Unstac
         lore.add("§9§lRARE");
 
         return lore;
+    }
+
+    @Override
+    default SkyBlockRecipe<?> getRecipe() {
+        return null;
     }
 }
