@@ -269,15 +269,19 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 .forEach((event) -> {
                     try {
                         event.cacheEvent();
-                    } catch (Exception e) {
-                    }
+                    } catch (Exception e) {}
                 });
         loopThroughPackage("net.swofty.types.generic.item.set.sets", SkyBlockValueEvent.class)
                 .forEach((event) -> {
                     try {
                         event.cacheEvent();
-                    } catch (Exception e) {
-                    }
+                    } catch (Exception e) {}
+                });
+        loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockValueEvent.class)
+                .forEach((event) -> {
+                    try {
+                        event.cacheEvent();
+                    } catch (Exception e) {}
                 });
         SkyBlockValueEvent.register();
 

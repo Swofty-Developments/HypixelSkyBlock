@@ -11,7 +11,7 @@ public abstract class SkyBlockValueEvent {
 
     public abstract Class<? extends ValueUpdateEvent> getValueEvent();
 
-    public abstract void run(ValueUpdateEvent event);
+    public abstract void run(ValueUpdateEvent tempEvent);
 
     public void cacheEvent() {
         cachedCustomEvents.add(this);

@@ -9,6 +9,8 @@ import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.value.SkyBlockValueEvent;
+import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.DamageIndicator;
@@ -29,7 +31,12 @@ public class PlayerActionDamagedAttacked extends SkyBlockEvent {
 
         if (event.getEntity() instanceof SkyBlockMob mob) {
             float damageDealt = mob.getStatistics().get(ItemStatistic.DAMAGE);
-            ((SkyBlockPlayer) event.getTarget()).damage(DamageType.fromEntity(mob), damageDealt);
+
+            PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
+                    (SkyBlockPlayer) event.getTarget(), damageDealt, mob);
+            SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
+
+            ((SkyBlockPlayer) event.getTarget()).damage(DamageType.fromEntity(mob), (float) valueEvent.getValue());
         }
     }
 

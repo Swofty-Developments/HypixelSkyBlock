@@ -18,6 +18,8 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -41,9 +43,12 @@ import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SkyBlockPlayer extends Player {
@@ -115,6 +120,23 @@ public class SkyBlockPlayer extends Player {
 
     public boolean isOnIsland() {
         return getInstance() != null && getInstance() != SkyBlockConst.getInstanceContainer();
+    }
+
+    public boolean hasTalisman(Talisman talisman) {
+        return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
+    }
+
+    public List<Talisman> getTalismans() {
+        return Stream.of(getAllPlayerItems())
+                .filter(item -> item.getGenericInstance() instanceof Talisman)
+                .map(item -> (Talisman) item.getGenericInstance()).collect(Collectors.toList());
+    }
+
+    public SkyBlockItem[] getAllPlayerItems() {
+        return Stream.of(getInventory().getItemStacks())
+                .map(SkyBlockItem::new)
+                .filter(item -> item.getGenericInstance() instanceof CustomSkyBlockItem)
+                .toArray(SkyBlockItem[]::new);
     }
 
     public boolean isCoop() {
