@@ -77,17 +77,12 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 player, skyBlockItem.getItemStack()
         );
 
-        return new GUIClickableItem() {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
                 player.sendMessage("§aGave you a §e" + skyBlockItem.getAttributeHandler().getItemType() + "§a.");
                 player.addAndUpdateItem(skyBlockItem);
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override

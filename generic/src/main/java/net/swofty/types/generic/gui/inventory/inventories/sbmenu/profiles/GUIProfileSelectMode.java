@@ -23,12 +23,7 @@ public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIProfileManagement()));
 
-        set(new GUIClickableItem() {
-            @Override
-            public int getSlot() {
-                return 11;
-            }
-
+        set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, (short) 0, 1,
@@ -53,12 +48,7 @@ public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
-            @Override
-            public int getSlot() {
-                return 15;
-            }
-
+        set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, (short) 0, 1,

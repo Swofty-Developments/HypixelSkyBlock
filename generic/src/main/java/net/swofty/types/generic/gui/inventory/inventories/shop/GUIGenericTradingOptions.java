@@ -64,7 +64,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         lore.add("§eClick to purchase!");
 
         double finalStackprice = stackprice;
-        return new GUIClickableItem() {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (!player.getShoppingData().canPurchase(item.item(), amount)) {
@@ -79,16 +79,11 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
                 }
                 ItemStack.Builder cleanStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
                 cleanStack.amount(amount);
-                player.getInventory().addItemStack(cleanStack.build());
+                player.addAndUpdateItem(cleanStack.build());
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
                 player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - finalStackprice);
                 player.getShoppingData().documentPurchase(item.item(), amount);
                 updateThis(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override

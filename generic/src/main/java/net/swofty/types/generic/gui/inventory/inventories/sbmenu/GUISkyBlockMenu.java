@@ -12,6 +12,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -28,15 +29,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage("§cNot yet implemented");
-            }
-
-            @Override
-            public int getSlot() {
-                return 13;
             }
 
             @Override
@@ -60,15 +56,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(21) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUIRecipeBook().open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 21;
             }
 
             @Override
@@ -88,16 +79,27 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore);
             }
         });
-
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(25) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIMissionLog().open(player);
+                new GUIStorage().open(player);
             }
 
             @Override
-            public int getSlot() {
-                return 23;
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aStorage", Material.CHEST, 1,
+                        "§7Store global items that you",
+                        "§7want to access at any time",
+                        "§7from anywhere here.",
+                        " ",
+                        "§eClick to view!");
+            }
+        });
+
+        set(new GUIClickableItem(23) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIMissionLog().open(player);
             }
 
             @Override
@@ -110,15 +112,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(20) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUICollections().open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 20;
             }
 
             @Override
@@ -139,15 +136,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUICrafting().open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 31;
             }
 
             @Override
@@ -159,15 +151,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUIProfileManagement().open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 48;
             }
 
             @Override

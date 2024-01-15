@@ -3,6 +3,7 @@ package net.swofty.types.generic.event.actions.player;
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
+import net.swofty.commons.ServerType;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;

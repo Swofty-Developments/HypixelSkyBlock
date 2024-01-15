@@ -46,27 +46,17 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
     public void display(boolean completed) {
         getInventory().setTitle(Component.text("Quest Log " + (completed ? "(Completed)" : "")));
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, (short) 0, 1, "§7View your active quests, progress,", "§7and rewards.");
             }
         });
         if (completed) {
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(50) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     display(false);
-                }
-
-                @Override
-                public int getSlot() {
-                    return 50;
                 }
 
                 @Override
@@ -79,15 +69,10 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
                 }
             });
         } else {
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(50) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     display(true);
-                }
-
-                @Override
-                public int getSlot() {
-                    return 50;
                 }
 
                 @Override
@@ -134,13 +119,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
         for (int i = 0; i < toShow.size(); i++) {
             MissionSet missionSet = toShow.get(i);
-            int finalI = i;
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return MISSION_SLOTS[finalI];
-                }
-
+            set(new GUIItem(MISSION_SLOTS[i]) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     List<String> lore = new ArrayList<>(List.of("§7 "));

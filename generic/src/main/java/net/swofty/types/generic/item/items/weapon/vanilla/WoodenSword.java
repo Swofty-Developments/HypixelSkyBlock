@@ -1,5 +1,7 @@
 package net.swofty.types.generic.item.items.weapon.vanilla;
 
+import net.swofty.types.generic.item.ReforgeType;
+import net.swofty.types.generic.item.impl.Reforgable;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.ItemGroups;
@@ -9,7 +11,7 @@ import net.swofty.types.generic.item.impl.ExtraRarityDisplay;
 
 import java.util.List;
 
-public class WoodenSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay {
+public class WoodenSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Reforgable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -30,5 +32,10 @@ public class WoodenSword implements CustomSkyBlockItem, Enchantable, ExtraRarity
     @Override
     public String getExtraRarityDisplay() {
         return " SWORD";
+    }
+
+    @Override
+    public ReforgeType getReforgeType() {
+        return ReforgeType.SWORDS;
     }
 }

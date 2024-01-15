@@ -16,14 +16,11 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Craftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
@@ -50,12 +47,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             set(GUIClickableItem.getGoBackItem(48, previousGUI));
         set(GUIClickableItem.getCloseItem(49));
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 23;
-            }
-
+        set(new GUIItem(23) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
@@ -93,12 +85,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
         }
 
         SkyBlockRecipe finalRecipe = recipe;
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 25;
-            }
-
+        set(new GUIItem(25) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack());
@@ -112,7 +99,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             if (slot < ingredients.length) {
                 SkyBlockItem ingredient = ingredients[slot];
                 if (ingredient != null) {
-                    set(new GUIClickableItem() {
+                    set(new GUIClickableItem(craftSlot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                             if (!(ingredient.getGenericInstance() instanceof Craftable))
@@ -121,11 +108,6 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                             new GUIRecipe(
                                     ((Craftable) ingredient.getGenericInstance()).getRecipes().get(0).getResult().getAttributeHandler().getItemTypeAsType(),
                                     GUIRecipe.this).open(player);
-                        }
-
-                        @Override
-                        public int getSlot() {
-                            return craftSlot;
                         }
 
                         @Override

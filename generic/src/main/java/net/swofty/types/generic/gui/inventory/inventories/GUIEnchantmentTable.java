@@ -54,11 +54,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(49));
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 48;
-            }
+        set(new GUIItem(48) {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -73,12 +69,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         "§d" + bookshelfPower);
             }
         });
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 50;
-            }
-
+        set(new GUIItem(50) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
@@ -90,12 +81,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         "§eClick to view!");
             }
         });
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 28;
-            }
-
+        set(new GUIItem(28) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
@@ -121,12 +107,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         set(45, ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "§7 "));
 
         if (item == null) {
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return 23;
-                }
-
+            set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
@@ -136,7 +117,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                     );
                 }
             });
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(19) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
@@ -153,11 +134,6 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 }
 
                 @Override
-                public int getSlot() {
-                    return 19;
-                }
-
-                @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStack.builder(Material.AIR);
                 }
@@ -166,7 +142,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(19) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ItemStack stack = e.getCursorItem();
@@ -186,11 +162,6 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 19;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
@@ -200,12 +171,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         if (item.getItemStack().getAmount() > 1 ||
                 type == null ||
                 !(type.clazz.newInstance() instanceof Enchantable)) {
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return 23;
-                }
-
+            set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
@@ -226,12 +192,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 .toList();
 
         if (enchantments.isEmpty()) {
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return 23;
-                }
-
+            set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
@@ -250,7 +211,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             for (EnchantmentType enchantmentType : enchantments) {
                 assert enchantmentType.getEnchFromTable() != null;
                 int finalI = i;
-                set(new GUIClickableItem() {
+                set(new GUIClickableItem(PAGINATED_SLOTS_LIST_ENCHANTS[finalI]) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                         if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
@@ -260,11 +221,6 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         }
 
                         updateFromItem(item, enchantmentType);
-                    }
-
-                    @Override
-                    public int getSlot() {
-                        return PAGINATED_SLOTS_LIST_ENCHANTS[finalI];
                     }
 
                     @Override
@@ -320,12 +276,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         for (int level = minLevel; level <= maxLevel; level++) {
             int finalLevel = level;
             int finalHasLevel = hasLevel;
-            set(new GUIClickableItem() {
-
-                @Override
-                public int getSlot() {
-                    return PAGINATED_SLOTS_LIST_LEVELS[finalLevel - 1];
-                }
+            set(new GUIClickableItem(PAGINATED_SLOTS_LIST_LEVELS[finalLevel - 1]) {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -420,15 +371,10 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             });
         }
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(45) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 updateFromItem(item, null);
-            }
-
-            @Override
-            public int getSlot() {
-                return 45;
             }
 
             @Override
@@ -449,12 +395,12 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        e.getPlayer().getInventory().addItemStack(e.getInventory().getItemStack(19));
+        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(19)));
     }
 
     @Override
     public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.getInventory().addItemStack(inventory.getItemStack(19));
+        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(19)));
     }
 
     @Override

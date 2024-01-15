@@ -58,14 +58,14 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
-            e.getPlayer().getInventory().addItemStack(e.getInventory().getItemStack(slot));
+            ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(slot)));
         });
     }
 
     @Override
     public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
-            player.getInventory().addItemStack(inventory.getItemStack(slot));
+            player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(slot)));
         });
     }
 
@@ -107,7 +107,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE), 0, 44);
 
         SkyBlockRecipe<?> finalRecipe = recipe;
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(RESULT_SLOT) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
@@ -142,28 +142,16 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 if (isShift){
                     // if is shift click add updated item to player inventory
                     e.setCancelled(true);
-                    e.getPlayer().getInventory().addItemStack(
-                      PlayerItemUpdater.playerUpdate(
-                              player,
-                                e.getClickedItem()
-                            ).build()
-                    );
+                    player.addAndUpdateItem(e.getClickedItem());
                 }
 
                 if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
                     e.setCancelled(true);
-                    e.getPlayer().getInventory().addItemStack(
-                            PlayerItemUpdater.playerUpdate(player, cursorItem.getItemStack()).build()
-                    );
+                    player.addAndUpdateItem(cursorItem);
                 }
 
                 player.getInventory().update();
                 refreshItems(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return RESULT_SLOT;
             }
 
             @Override

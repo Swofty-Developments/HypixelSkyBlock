@@ -21,7 +21,6 @@ public class CraftingTable implements CustomSkyBlockItem, Craftable {
         List<String> pattern = List.of(
                 "PP",
                 "PP");
-
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
     }

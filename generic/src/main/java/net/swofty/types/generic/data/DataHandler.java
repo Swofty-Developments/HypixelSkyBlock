@@ -22,6 +22,7 @@ import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.UserProfiles;
 import net.swofty.types.generic.user.categories.Rank;
+import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
@@ -72,6 +73,8 @@ public class DataHandler {
             } catch (Exception e) {
                 // Issue with data, revert back to default
                 dataHandler.datapoints.put(data.getKey(), data.getDefaultDatapoint().setUser(dataHandler).setData(data));
+
+                e.printStackTrace();
             }
         });
         return dataHandler;
@@ -262,8 +265,8 @@ public class DataHandler {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false), (player, datapoint) -> {}),
-        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls"), (player, datapoint) -> {}),
+        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false)),
+        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
         CREATED("created", false, true, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
@@ -274,9 +277,10 @@ public class DataHandler {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());
         }),
-        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false), (player, datapoint) -> {}),
-        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection"), (player, datapoint) -> {}, (player, datapoint) -> {}),
-        MINION_DATA("minions", false, true, DatapointMinionData.class, new DatapointMinionData("minions"), (player, datapoint) -> {}, (player, datapoint) -> {}),
+        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false)),
+        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection")),
+        MINION_DATA("minions", false, true, DatapointMinionData.class, new DatapointMinionData("minions")),
+        STORAGE("storage", false, false, DatapointStorage.class, new DatapointStorage("storage")),
         ;
 
         @Getter

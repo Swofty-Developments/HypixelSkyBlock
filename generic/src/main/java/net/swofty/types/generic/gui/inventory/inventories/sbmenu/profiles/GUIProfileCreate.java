@@ -35,13 +35,7 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         String profileName = UserProfiles.getRandomName();
 
-        set(new GUIClickableItem() {
-
-            @Override
-            public int getSlot() {
-                return 11;
-            }
-
+        set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, (short) 0, 1,
@@ -85,13 +79,7 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
-
-            @Override
-            public int getSlot() {
-                return 15;
-            }
-
+        set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, "§cCancel");

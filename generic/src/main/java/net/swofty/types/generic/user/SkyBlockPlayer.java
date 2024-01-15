@@ -66,6 +66,8 @@ public class SkyBlockPlayer extends Player {
     @Getter
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     @Getter
+    private StatisticDisplayReplacement coinsDisplayReplacement = null;
+    @Getter
     private PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     @Getter
     private SkyBlockIsland skyBlockIsland;
@@ -181,28 +183,31 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
-        // Determine which replacement to update based on type
-        StatisticDisplayReplacement currentReplacement =
-                (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
-                        this.defenseDisplayReplacement;
-
-        if (type == StatisticDisplayReplacement.DisplayType.MANA) {
-            this.manaDisplayReplacement = replacement;
-        } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
-            this.defenseDisplayReplacement = replacement;
+        switch (type) {
+            case MANA:
+                this.manaDisplayReplacement = replacement;
+                break;
+            case DEFENSE:
+                this.defenseDisplayReplacement = replacement;
+                break;
+            case COINS:
+                this.coinsDisplayReplacement = replacement;
+                break;
         }
 
         int hashCode = replacement.hashCode();
 
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-            StatisticDisplayReplacement scheduledReplacement =
-                    (type == StatisticDisplayReplacement.DisplayType.MANA) ? this.manaDisplayReplacement :
-                            this.defenseDisplayReplacement;
+            StatisticDisplayReplacement scheduledReplacement = switch (type) {
+                case MANA -> this.manaDisplayReplacement;
+                case DEFENSE -> this.defenseDisplayReplacement;
+                case COINS -> this.coinsDisplayReplacement;
+            };
             if (hashCode == scheduledReplacement.hashCode()) {
-                if (type == StatisticDisplayReplacement.DisplayType.MANA) {
-                    this.manaDisplayReplacement = null;
-                } else if (type == StatisticDisplayReplacement.DisplayType.DEFENSE) {
-                    this.defenseDisplayReplacement = null;
+                switch (type) {
+                    case MANA -> this.manaDisplayReplacement = null;
+                    case DEFENSE -> this.defenseDisplayReplacement = null;
+                    case COINS -> this.coinsDisplayReplacement = null;
                 }
             }
         }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
@@ -234,6 +239,10 @@ public class SkyBlockPlayer extends Player {
     public void addAndUpdateItem(SkyBlockItem item) {
         ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build();
         this.getInventory().addItemStack(toAdd);
+    }
+
+    public void addAndUpdateItem(ItemStack item) {
+        addAndUpdateItem(new SkyBlockItem(item));
     }
 
     public float getMaxMana() {

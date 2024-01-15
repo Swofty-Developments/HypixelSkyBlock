@@ -37,12 +37,7 @@ public class GUICollections extends SkyBlockInventoryGUI {
 
         ArrayList<CollectionCategory> allCategories = CollectionCategories.getCategories();
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(List.of(
@@ -68,15 +63,10 @@ public class GUICollections extends SkyBlockInventoryGUI {
             ArrayList<String> display = new ArrayList<>();
             getPlayer().getCollection().getDisplay(display, category);
 
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUICollectionCategory(category, display).open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

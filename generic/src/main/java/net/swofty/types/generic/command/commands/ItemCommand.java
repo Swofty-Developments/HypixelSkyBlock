@@ -25,7 +25,7 @@ public class ItemCommand extends SkyBlockCommand {
             final ItemType itemType = context.get(itemArgument);
 
             SkyBlockItem item = new SkyBlockItem(itemType);
-            ((SkyBlockPlayer) sender).getInventory().addItemStack(item.getItemStack());
+            ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
             sender.sendMessage("§aGiven you item §e" + itemType.name() + "§a.");
         }, itemArgument);
@@ -36,7 +36,7 @@ public class ItemCommand extends SkyBlockCommand {
 
             SkyBlockItem item = new SkyBlockItem(itemType);
             item.setAmount(amount);
-            ((SkyBlockPlayer) sender).getInventory().addItemStack(item.getItemStack());
+            ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
             sender.sendMessage("§aGiven you item §e" + itemType.name() + "§8 x" + amount + "§a.");
         }, itemArgument, amountArgument);

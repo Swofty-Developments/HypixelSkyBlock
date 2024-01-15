@@ -98,16 +98,11 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
         if (paginatedItems.isEmpty()) page = 0;
         if (page > 1)
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(45) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     SkyBlockShopGUI.this.page -= 1;
                     SkyBlockShopGUI.this.open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return 45;
                 }
 
                 @Override
@@ -117,16 +112,11 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             });
 
         if (page != paginatedItems.getPageCount())
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(53) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     SkyBlockShopGUI.this.page += 1;
                     SkyBlockShopGUI.this.open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return 53;
                 }
 
                 @Override
@@ -138,7 +128,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         /*
             Buyback item
         */
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(49) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (!player.getShoppingData().hasAnythingToBuyback())
@@ -159,20 +149,11 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                boolean canHave = player.getInventory().addItemStack(itemStack.build());
-                if (!canHave) {
-                    player.sendMessage("§cYou need to free up inventory space in order to buyback this item!");
-                    return;
-                }
+                player.addAndUpdateItem(new SkyBlockItem(itemStack.build()));
                 player.playSuccessSound();
                 player.getShoppingData().popBuyback();
                 player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
                 updateThis(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 49;
             }
 
             @Override
@@ -223,7 +204,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             }
             double finalStackPrice = stackPrice;
 
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (!player.getShoppingData().canPurchase(item.item, item.amount)) {
@@ -241,18 +222,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         player.sendMessage("§cYou don't have enough coins!");
                         return;
                     }
-                    ItemStack.Builder cleanStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
-                    cleanStack.amount(item.amount);
-                    player.getInventory().addItemStack(cleanStack.build());
+                    sbItem.setAmount(item.amount);
+                    player.addAndUpdateItem(sbItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
                     player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - price);
                     player.getShoppingData().documentPurchase(item.item(), item.amount);
                     updateThis(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

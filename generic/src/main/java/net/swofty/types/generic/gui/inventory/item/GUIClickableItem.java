@@ -8,19 +8,18 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public interface GUIClickableItem extends GUIItem {
-    void run(InventoryPreClickEvent e, SkyBlockPlayer player);
+public abstract class GUIClickableItem extends GUIItem {
+    public GUIClickableItem(int slot) {
+        super(slot);
+    }
 
-    static GUIClickableItem getCloseItem(int slot) {
-        return new GUIClickableItem() {
+    public abstract void run(InventoryPreClickEvent e, SkyBlockPlayer player);
+
+    public static GUIClickableItem getCloseItem(int slot) {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.closeInventory();
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override
@@ -30,13 +29,8 @@ public interface GUIClickableItem extends GUIItem {
         };
     }
 
-    static GUIClickableItem getGoBackItem(int slot, SkyBlockInventoryGUI gui) {
-        return new GUIClickableItem() {
-            @Override
-            public int getSlot() {
-                return slot;
-            }
-
+    public static GUIClickableItem getGoBackItem(int slot, SkyBlockInventoryGUI gui) {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 gui.open(player);
@@ -51,8 +45,10 @@ public interface GUIClickableItem extends GUIItem {
         };
     }
 
-    static GUIClickableItem createGUIOpenerItem(SkyBlockInventoryGUI gui, SkyBlockPlayer player, String name, int slot, Material type, short data, String... lore) {
-        return new GUIClickableItem() {
+    static GUIClickableItem createGUIOpenerItem(SkyBlockInventoryGUI gui,
+                                                String name, int slot,
+                                                Material type, short data, String... lore) {
+        return new GUIClickableItem(slot) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(name, type, data, 1, lore);
@@ -62,11 +58,6 @@ public interface GUIClickableItem extends GUIItem {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (gui == null) return;
                 gui.open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
         };
     }

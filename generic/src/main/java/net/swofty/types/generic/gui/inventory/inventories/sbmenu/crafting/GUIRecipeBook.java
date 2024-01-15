@@ -24,7 +24,7 @@ import java.util.List;
 public class GUIRecipeBook extends SkyBlockInventoryGUI {
     private final int[] borderSlots = {
             20, 21, 22, 23, 24,
-            30, 31, 32, 33,
+            30, 31, 32
     };
 
     public GUIRecipeBook() {
@@ -41,12 +41,7 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(List.of(
@@ -80,15 +75,10 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                 }
             });
 
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipeCategory(type).open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override
