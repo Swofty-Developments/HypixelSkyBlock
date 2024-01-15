@@ -35,7 +35,7 @@ public class ZombieTalisman extends SkyBlockValueEvent implements Talisman {
         if (!player.hasTalisman(this)) return;
 
         if (event.getMob().getEntityType() == EntityType.ZOMBIE) {
-            event.setValue((float) (((float) event.getValue()) * 0.5));
+            event.setValue((float) (((float) event.getValue()) * 0.95));
         }
     }
 }
