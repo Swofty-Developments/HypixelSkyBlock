@@ -66,12 +66,12 @@ public class GameManager {
                             System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
                             servers.get(serverType).remove(registeredServer);
                         }
-                    }).delay(Duration.ofMillis(100)).schedule();
+                    }).delay(Duration.ofMillis(300)).schedule();
                 });
 
                 System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());
             });
-        }).repeat(Duration.ofMillis(300)).schedule();
+        }).repeat(Duration.ofMillis(500)).schedule();
     }
 
     private static int getNextAvailableDisplayName() {
