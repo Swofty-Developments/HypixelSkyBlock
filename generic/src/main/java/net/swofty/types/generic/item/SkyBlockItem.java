@@ -163,6 +163,10 @@ public class SkyBlockItem {
         return new AttributeHandler(this);
     }
 
+    public boolean isNA() {
+        return getMaterial() == Material.BEDROCK;
+    }
+
     public static boolean isSkyBlockItem(ItemStack item) {
         return item.hasTag(Tag.String("item_type"));
     }

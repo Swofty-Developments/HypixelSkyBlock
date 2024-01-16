@@ -16,7 +16,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.*;
@@ -53,12 +52,7 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUICollectionItem(item)));
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(Arrays.asList(
@@ -79,18 +73,13 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             int slot = slots[i];
             i++;
 
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
                         SkyBlockItem item = ((CollectionCategory.UnlockRecipe) unlock).getItem();
                         new GUIRecipe(item.getAttributeHandler().getItemTypeAsType(), null).open(player);
                     }
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

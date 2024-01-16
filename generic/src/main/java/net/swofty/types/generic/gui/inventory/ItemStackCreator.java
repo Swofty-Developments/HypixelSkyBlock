@@ -98,6 +98,10 @@ public class ItemStackCreator {
         return getStackHead(name, texture, amount, Arrays.asList(lore));
     }
 
+    public static ItemStack.Builder getStackHead(String name, String texture) {
+        return getStackHead(name, texture, 1, new ArrayList<>());
+    }
+
     public static ItemStack.Builder getStackHead(String texture) {
         return getStackHead("", texture, 1, new ArrayList<>());
     }

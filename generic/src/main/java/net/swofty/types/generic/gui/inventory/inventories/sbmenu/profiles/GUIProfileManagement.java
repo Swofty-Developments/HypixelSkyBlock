@@ -52,12 +52,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
             int slot = PROFILE_SLOTS[profileCount];
 
             if (profileIds.size() <= profileCount) {
-                set(new GUIClickableItem() {
-
-                    @Override
-                    public int getSlot() {
-                        return slot;
-                    }
+                set(new GUIClickableItem(slot) {
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -107,17 +102,13 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
             if (selected) {
                 DataHandler finalDataHandler = dataHandler;
-                set(new GUIClickableItem() {
+                set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                         player.sendMessage("§aYep! §e" + finalDataHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue() + "§a is the profile you are playing on!");
                         player.sendMessage("§cIf you want to delete this profile, switch to another one first!");
                     }
 
-                    @Override
-                    public int getSlot() {
-                        return slot;
-                    }
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -139,15 +130,10 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
             }
 
             DataHandler finalDataHandler1 = dataHandler;
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIProfileSelect(profileId).open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

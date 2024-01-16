@@ -56,12 +56,7 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
         // Remove originator
         invites.remove(coop.originator());
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return slots[0];
-            }
-
+        set(new GUIItem(slots[0]) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStackHead(
@@ -78,12 +73,7 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
             String displayName = SkyBlockPlayer.getDisplayName(target);
 
             int finalI = i;
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return slots[finalI + 1];
-                }
-
+            set(new GUIItem(slots[finalI + 1]) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStackHead(
@@ -95,7 +85,7 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
             });
         }
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(33) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 coop.removeInvite(player.getUuid());
@@ -110,18 +100,13 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 33;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§cDeny Invite", Material.BARRIER, (short) 0, 1);
             }
         });
 
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 coop.memberInvites().remove(player.getUuid());
@@ -170,11 +155,6 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
                 if (target != null &&
                         (coop.memberInvites().contains(target.getUuid()) || coop.members().contains(target.getUuid())))
                     target.sendMessage("§b[Co-op] §a" + player.getUsername() + " §ahas accepted your co-op invite!");
-            }
-
-            @Override
-            public int getSlot() {
-                return 29;
             }
 
             @Override

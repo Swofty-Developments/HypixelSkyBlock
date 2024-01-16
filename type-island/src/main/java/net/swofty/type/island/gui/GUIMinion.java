@@ -44,7 +44,7 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(53) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.closeInventory();
@@ -61,18 +61,13 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 53;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aPickup Minion", Material.BEDROCK, 1,
                         "§eClick to pickup!");
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (minion.getItemsInMinion().isEmpty()) {
@@ -89,26 +84,16 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 48;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aCollect All", Material.CHEST, 1,
                         "§eClick to collect all items!");
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(3) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
 
-            }
-
-            @Override
-            public int getSlot() {
-                return 3;
             }
 
             @Override
@@ -121,15 +106,10 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             }
         });
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(5) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUIMinionRecipes(minion.getMinion(), GUIMinion.this).open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return 5;
             }
 
             @Override
@@ -149,18 +129,6 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             }
         });
 
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return new NonPlayerItemUpdater(minion.asSkyBlockItem()).getUpdatedItem();
-            }
-        });
-
         SkyBlockMinion.MinionTier minionTier = minion.getMinion().asSkyBlockMinion().getTiers().get(
                 minion.getTier() - 1
         );
@@ -170,12 +138,7 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             i++;
             boolean unlocked = minionTier.getSlots() >= i;
 
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return slot;
-                }
-
+            set(new GUIItem(slot) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return unlocked ? ItemStack.builder(Material.AIR) :
@@ -202,7 +165,7 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             boolean unlocked = minionTier.getSlots() >= i;
 
             int finalI = i;
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public boolean canPickup() {
                     return true;
@@ -222,11 +185,6 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                     MaterialQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
                     minion.getItemsInMinion().remove(item);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.weapon.vanilla;
 
+import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Craftable {
+public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Craftable, Reforgable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -47,5 +48,10 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
                 "PD");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern);
+    }
+
+    @Override
+    public ReforgeType getReforgeType() {
+        return ReforgeType.SWORDS;
     }
 }

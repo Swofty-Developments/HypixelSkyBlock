@@ -38,7 +38,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIProfileManagement()));
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 UserProfiles profiles = player.getProfiles();
@@ -52,11 +52,6 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                     UserDatabase database = new UserDatabase(player.getUuid());
                     database.saveProfiles(toSet);
                 }, TaskSchedule.tick(2), TaskSchedule.stop());
-            }
-
-            @Override
-            public int getSlot() {
-                return 11;
             }
 
             @SneakyThrows
@@ -75,13 +70,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem() {
-
-            @Override
-            public int getSlot() {
-                return 15;
-            }
-
+        set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, (short) 0, 1,

@@ -20,6 +20,9 @@ public class DatapointIntegerList extends Datapoint<List<Integer>> {
 
             @Override
             public List<Integer> deserialize(String json) {
+                if (json.isEmpty())
+                    return new ArrayList<>();
+
                 String[] split = json.split(",");
                 ArrayList<Integer> list = new ArrayList<>(split.length);
                 for (String s : split)

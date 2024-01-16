@@ -10,6 +10,7 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.region.SkyBlockRegion;
+import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.StringUtility;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
@@ -40,6 +41,7 @@ public class SkyBlockScoreboard {
                 DataHandler dataHandler = player.getDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();
+                StatisticDisplayReplacement coinReplacement = player.getCoinsDisplayReplacement();
 
                 if (dataHandler == null) {
                     continue;
@@ -62,7 +64,8 @@ public class SkyBlockScoreboard {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())
+                        + (coinReplacement == null ? "" : " §e(+" + coinReplacement.getDisplay() + ")"), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {

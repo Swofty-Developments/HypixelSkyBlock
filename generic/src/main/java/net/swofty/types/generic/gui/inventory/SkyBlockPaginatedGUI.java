@@ -68,11 +68,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     }
 
     public static GUIQueryItem createSearchItem(SkyBlockPaginatedGUI<?> gui, int slot, String search) {
-        return new GUIQueryItem() {
-
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-            }
+        return new GUIQueryItem(slot) {
 
             @Override
             public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
@@ -80,11 +76,6 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
                 gui.performSearch(player, query, 1, gui.latestPaged.getPageCount());
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> gui.open(player, query, 1), TaskSchedule.tick(1), TaskSchedule.stop());
                 return null;
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override
@@ -96,16 +87,11 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     }
 
     public static GUIClickableItem createNavigationButton(SkyBlockPaginatedGUI<?> gui, int slot, String search, int page, boolean forward) {
-        return new GUIClickableItem() {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 int newPage = forward ? page + 1 : page - 1;
                 gui.open(player, search, newPage);
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override

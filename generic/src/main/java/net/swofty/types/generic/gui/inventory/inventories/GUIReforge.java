@@ -55,7 +55,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
         border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
 
         if (item == null) {
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
@@ -72,24 +72,14 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 }
 
                 @Override
-                public int getSlot() {
-                    return 13;
-                }
-
-                @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStack.builder(Material.AIR);
                 }
             });
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(22) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     player.sendMessage("§cPlace an item in the empty slot above to reforge it!");
-                }
-
-                @Override
-                public int getSlot() {
-                    return 22;
                 }
 
                 @Override
@@ -107,7 +97,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             return;
         }
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ItemStack stack = e.getCursorItem();
@@ -127,11 +117,6 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 13;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
             }
@@ -140,12 +125,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
         if (item.getAmount() > 1 ||
                 item.getGenericInstance() == null ||
                 !(item.getGenericInstance() instanceof Reforgable)) {
-            set(new GUIItem() {
-                @Override
-                public int getSlot() {
-                    return 22;
-                }
-
+            set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
@@ -159,7 +139,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
         }
 
         border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
@@ -194,11 +174,6 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             }
 
             @Override
-            public int getSlot() {
-                return 22;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
                         "§eReforge Item", Material.ANVIL, (short) 0, 1,
@@ -223,12 +198,12 @@ public class GUIReforge extends SkyBlockInventoryGUI {
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        e.getPlayer().getInventory().addItemStack(e.getInventory().getItemStack(13));
+        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(13)));
     }
 
     @Override
     public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.getInventory().addItemStack(inventory.getItemStack(13));
+        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
     }
 
     @Override

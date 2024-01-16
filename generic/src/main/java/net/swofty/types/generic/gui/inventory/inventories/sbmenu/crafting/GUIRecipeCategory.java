@@ -106,17 +106,12 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
         );
 
         if (result.allowed()) {
-            return new GUIClickableItem() {
+            return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipe(
                             item.getResult().getAttributeHandler().getItemTypeAsType(),
                             GUIRecipeCategory.this).open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override
@@ -134,15 +129,10 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 }
             };
         } else {
-            return new GUIClickableItem() {
+            return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     player.sendMessage("§cYou haven't unlocked that recipe!");
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override

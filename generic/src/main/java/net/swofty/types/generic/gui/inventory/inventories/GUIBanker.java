@@ -31,18 +31,13 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(31));
 
-        set(new GUIClickableItem() {
+        set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage("§cThis feature is currently unavailable.");
                 player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
                         player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
                 );
-            }
-
-            @Override
-            public int getSlot() {
-                return 11;
             }
 
             @Override
@@ -65,7 +60,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             }
         });
 
-        set(new GUIQueryItem() {
+        set(new GUIQueryItem(0) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage("Poggers");
@@ -75,11 +70,6 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
                 player.sendMessage("§aYoza how is the §c" + query + "§a going?");
                 return new GUIBanker();
-            }
-
-            @Override
-            public int getSlot() {
-                return 0;
             }
 
             @Override

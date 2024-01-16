@@ -18,7 +18,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GUICollectionItem extends SkyBlockInventoryGUI {
@@ -42,12 +41,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
                 category,
                 getPlayer().getCollection().getDisplay(new ArrayList<>(), category)
         )));
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§e" + item.getDisplayName(), item.material, 1,
@@ -61,17 +55,11 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
         int slot = 17;
         for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
             slot++;
-            int finalSlot = slot;
 
-            set(new GUIClickableItem() {
+            set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUICollectionReward(item, reward).open(player);
-                }
-
-                @Override
-                public int getSlot() {
-                    return finalSlot;
                 }
 
                 @Override

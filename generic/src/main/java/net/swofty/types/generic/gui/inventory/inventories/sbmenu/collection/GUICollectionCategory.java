@@ -78,12 +78,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
         set(GUIClickableItem.getCloseItem(50));
         set(createSearchItem(this, 48, query));
         set(GUIClickableItem.getGoBackItem(49, new GUICollections()));
-        set(new GUIItem() {
-            @Override
-            public int getSlot() {
-                return 4;
-            }
-
+        set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(List.of(
@@ -116,15 +111,10 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
         DatapointCollection.PlayerCollection collection = player.getCollection();
 
         if (!collection.unlocked(item.type())) {
-            return new GUIClickableItem() {
+            return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     player.sendMessage("§cYou haven't found this item yet!");
-                }
-
-                @Override
-                public int getSlot() {
-                    return slot;
                 }
 
                 @Override
@@ -138,15 +128,10 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
             };
         }
 
-        return new GUIClickableItem() {
+        return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUICollectionItem(item.type()).open(player);
-            }
-
-            @Override
-            public int getSlot() {
-                return slot;
             }
 
             @Override

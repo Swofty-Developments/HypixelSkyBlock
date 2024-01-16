@@ -84,10 +84,12 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
                 if (item instanceof GUIClickableItem clickable) {
                     clickable.run(event, player);
+                    if (!cursorItem.isNA() && player.getOpenInventory() != event.getInventory()
+                            && player.getOpenInventory() != null)
+                        player.addAndUpdateItem(cursorItem);
                 }
 
                 if (item instanceof GUIQueryItem query) {
-
                     gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
 
                     new SkyBlockSignGUI(player).open(query.lines()).thenAccept(string -> {

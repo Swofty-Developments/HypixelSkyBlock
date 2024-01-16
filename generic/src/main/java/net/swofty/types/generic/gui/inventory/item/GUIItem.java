@@ -1,19 +1,18 @@
 package net.swofty.types.generic.gui.inventory.item;
 
+import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public interface GUIItem {
-    int getSlot();
+public abstract class GUIItem {
+    public final int slot;
+    public abstract ItemStack.Builder getItem(SkyBlockPlayer player);
 
-    ItemStack.Builder getItem(SkyBlockPlayer player);
+    public GUIItem(int slot) {
+        this.slot = slot;
+    }
 
-    /**
-     * If the player can pick up the item from the inventory or not
-     *
-     * @return a boolean
-     */
-    default boolean canPickup() {
+    public boolean canPickup() {
         return false;
     }
 }

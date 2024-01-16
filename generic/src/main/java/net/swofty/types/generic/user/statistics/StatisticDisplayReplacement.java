@@ -12,6 +12,7 @@ public class StatisticDisplayReplacement {
 
     public enum DisplayType {
         MANA,
-        DEFENSE
+        DEFENSE,
+        COINS,
     }
 }

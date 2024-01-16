@@ -17,9 +17,16 @@ public class DatapointMinionData extends Datapoint<DatapointMinionData.ProfileMi
             @Override
             public String serialize(DatapointMinionData.ProfileMinionData value) {
                 StringBuilder sb = new StringBuilder();
+                sb.append("{");
+
                 for (Map.Entry<String, Integer> entry : value.craftedMinions) {
                     sb.append(entry.getKey()).append(":").append(entry.getValue()).append(",");
                 }
+
+                if (sb.length() > 1) {
+                    sb.deleteCharAt(sb.length() - 1);
+                }
+                sb.append("}");
                 return sb.toString();
             }
 

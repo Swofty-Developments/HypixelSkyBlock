@@ -4,6 +4,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUICrafting;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -26,7 +27,7 @@ public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
         if (event.getInventory() != null) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
-        player.getInventory().addItemStack(event.getCursorItem());
+        player.addAndUpdateItem(new SkyBlockItem(event.getCursorItem()));
 
         event.setCancelled(true);
         event.setCursorItem(ItemStack.AIR);
