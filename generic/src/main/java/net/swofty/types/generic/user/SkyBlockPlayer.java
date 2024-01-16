@@ -237,6 +237,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void addAndUpdateItem(SkyBlockItem item) {
+        if (item.isNA()) return;
         ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build();
         this.getInventory().addItemStack(toAdd);
     }

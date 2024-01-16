@@ -82,7 +82,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
 
                             // skip the iteration if stackMaterial is AIR
-                            if (stackMaterial.getMaterial().equals(ItemType.AIR)) {
+                            if (stackMaterial.getMaterial() == null || stackMaterial.getMaterial().equals(ItemType.AIR)) {
                                 continue;
                             }
 
