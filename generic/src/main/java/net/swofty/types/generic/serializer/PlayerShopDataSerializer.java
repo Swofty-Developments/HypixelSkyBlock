@@ -29,4 +29,9 @@ public class PlayerShopDataSerializer implements Serializer<PlayerShopData> {
 
         return shopData;
     }
+
+    @Override
+    public PlayerShopData clone(PlayerShopData value) {
+        return value;
+    }
 }

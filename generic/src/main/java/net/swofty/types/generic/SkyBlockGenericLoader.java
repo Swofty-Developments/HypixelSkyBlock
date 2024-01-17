@@ -139,6 +139,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockServerAttributes.saveAttributeLoop();
 
         /**
+         * Start data loop
+         */
+        DataHandler.startRepeatSetValueLoop();
+
+        /**
          * Register packet events
          */
         loopThroughPackage("net.swofty.types.generic.packet.packets.client", SkyBlockPacketClientListener.class)

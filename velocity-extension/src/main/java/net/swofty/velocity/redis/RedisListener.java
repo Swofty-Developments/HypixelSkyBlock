@@ -22,7 +22,14 @@ public abstract class RedisListener {
         UUID filterID = UUID.fromString(split[2]);
 
         String messageWithoutFilter = rawMessage.substring(rawMessage.indexOf(";") + 1);
-        String response = receivedMessage(messageWithoutFilter, filterID);
+        String response;
+        try {
+            response = receivedMessage(messageWithoutFilter, filterID);
+        } catch (Exception e) {
+            System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
+            e.printStackTrace();
+            response = "error";
+        }
 
         RedisAPI.getInstance().publishMessage(
                 filterID.toString(),

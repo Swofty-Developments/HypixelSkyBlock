@@ -1,5 +1,6 @@
 package net.swofty.types.generic.enchantment.abstr;
 
+import net.minestom.server.entity.Player;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.ItemGroups;

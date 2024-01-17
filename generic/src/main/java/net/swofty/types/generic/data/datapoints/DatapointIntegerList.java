@@ -29,6 +29,11 @@ public class DatapointIntegerList extends Datapoint<List<Integer>> {
                     list.add(Integer.parseInt(s));
                 return list;
             }
+
+            @Override
+            public List<Integer> clone(List<Integer> value) {
+                return new ArrayList<>(value);
+            }
         });
     }
 

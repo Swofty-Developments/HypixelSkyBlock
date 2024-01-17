@@ -24,7 +24,9 @@ public class FinishMissionSetCommand extends SkyBlockCommand {
             MissionSet missionSet = context.get(set);
 
             Arrays.stream(missionSet.getMissions()).forEach(mission -> {
-                ((SkyBlockPlayer) sender).getMissionData().endMission(mission);
+                try {
+                    ((SkyBlockPlayer) sender).getMissionData().endMission(mission);
+                } catch (Exception e) {}
             });
 
             sender.sendMessage("§aSuccessfully finished mission set §e" + missionSet.name());

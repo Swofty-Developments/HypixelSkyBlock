@@ -104,7 +104,7 @@ public class CoopCommand extends SkyBlockCommand {
         if (coop != null) {
             if (coop.members().contains(player.getUuid())) {
                 player.sendMessage("§cYou are already in a co-op!");
-                player.sendMessage("§eRun §a/coop leave §eto leave your current co-op.");
+                player.sendMessage("§eRun §a/coopleave §eto leave your current co-op.");
                 return true;
             }
 

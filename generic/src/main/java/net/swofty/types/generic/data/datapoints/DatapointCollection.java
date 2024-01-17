@@ -39,6 +39,17 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
                 }
                 return new PlayerCollection(items);
             }
+
+            @Override
+            public PlayerCollection clone(PlayerCollection value) {
+                PlayerCollection toReturn = new PlayerCollection(new HashMap<>());
+
+                for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
+                    toReturn.getItems().put(entry.getKey(), entry.getValue());
+                }
+
+                return toReturn;
+            }
         });
     }
 
@@ -187,6 +198,22 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + unlockedCollections + "§6/§e" + allCollections);
 
             return lore;
+        }
+
+        public static Map<ItemType, Map.Entry<Integer, Integer>> getDifferentValues(
+                DatapointCollection.PlayerCollection oldCollection, DatapointCollection.PlayerCollection newCollection) {
+            Map<ItemType, Map.Entry<Integer, Integer>> toReturn = new HashMap<>();
+
+            for (ItemType type : ItemType.values()) {
+                int oldValue = oldCollection.get(type);
+                int newValue = newCollection.get(type);
+
+                if (oldValue != newValue) {
+                    toReturn.put(type, new AbstractMap.SimpleEntry<>(oldValue, newValue));
+                }
+            }
+
+            return toReturn;
         }
     }
 }

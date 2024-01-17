@@ -29,12 +29,16 @@ public class StorageSerializer implements Serializer<DatapointStorage.PlayerStor
 
     @Override
     public String serialize(DatapointStorage.PlayerStorage value) throws JsonProcessingException {
-        System.out.println(mapper.writeValueAsString(value));
         return mapper.writeValueAsString(value);
     }
 
     @Override
     public DatapointStorage.PlayerStorage deserialize(String json) throws JsonProcessingException {
         return mapper.readValue(json, DatapointStorage.PlayerStorage.class);
+    }
+
+    @Override
+    public DatapointStorage.PlayerStorage clone(DatapointStorage.PlayerStorage value) {
+        return value;
     }
 }

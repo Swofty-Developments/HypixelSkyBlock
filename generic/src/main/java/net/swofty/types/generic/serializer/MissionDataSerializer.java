@@ -30,4 +30,9 @@ public class MissionDataSerializer implements Serializer<MissionData> {
 
         return missionData;
     }
+
+    @Override
+    public MissionData clone(MissionData value) {
+        return value;
+    }
 }

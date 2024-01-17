@@ -67,7 +67,7 @@ public class StringUtility {
 
         for (int i = 0; i < spl.length; i++) {
             String s = spl[i];
-            if (s.length() == 0) {
+            if (s.isEmpty()) {
                 continue;
             }
             if (s.length() == 1) {
@@ -77,7 +77,7 @@ public class StringUtility {
             }
             // Append the processed string to the StringBuilder
             // Only add a space if it's not the first word
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 sb.append(" ");
             }
             sb.append(s);
@@ -94,7 +94,7 @@ public class StringUtility {
 
     public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
         List<String> result = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\G" + separator + "*(.{1," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
+        Pattern pattern = Pattern.compile("\\G" + separator + "*(.+," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(string);
         while (matcher.find())
             result.add(matcher.group(1));
@@ -123,15 +123,11 @@ public class StringUtility {
             return i + "th";
         String s = String.valueOf(i);
         char last = s.charAt(s.length() - 1);
-        switch (last) {
-            case '1':
-                return i + "st";
-            case '2':
-                return i + "nd";
-            case '3':
-                return i + "rd";
-            default:
-                return i + "th";
-        }
+        return switch (last) {
+            case '1' -> i + "st";
+            case '2' -> i + "nd";
+            case '3' -> i + "rd";
+            default -> i + "th";
+        };
     }
 }

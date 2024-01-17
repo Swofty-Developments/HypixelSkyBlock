@@ -22,4 +22,9 @@ public class JacksonSerializer<T> implements Serializer<T> {
     public T deserialize(String json) throws JsonProcessingException {
         return mapper.readValue(json, clazz);
     }
+
+    @Override
+    public T clone(T value) {
+        return value;
+    }
 }

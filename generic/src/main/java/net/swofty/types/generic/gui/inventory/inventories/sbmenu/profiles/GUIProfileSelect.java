@@ -88,7 +88,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
                     player.sendMessage("§cYou cannot delete a profile that is in a coop!");
-                    player.sendMessage("§eInstead run §a/coop leave §eto leave your coop.");
+                    player.sendMessage("§eInstead run §a/coopleave §eto leave your coop.");
                     return;
                 }
 

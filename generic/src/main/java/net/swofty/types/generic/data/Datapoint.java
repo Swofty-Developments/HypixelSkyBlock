@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
@@ -36,7 +37,8 @@ public abstract class Datapoint<T> {
     public Datapoint deepClone() {
         Datapoint toReturn;
         if (this.value != null) {
-            toReturn = this.getClass().getConstructor(String.class, this.value.getClass()).newInstance(this.key, this.value);
+            T clonedValue = serializer.clone(this.value);
+            toReturn = this.getClass().getConstructor(String.class, this.value.getClass()).newInstance(this.key, clonedValue);
         } else {
             toReturn = this.getClass().getConstructor(String.class).newInstance(this.key);
         }
@@ -61,6 +63,7 @@ public abstract class Datapoint<T> {
         this.value = serializer.deserialize(json);
     }
 
+    @SneakyThrows
     public void setValueBypassCoop(T value) {
         this.value = value;
 
@@ -70,6 +73,7 @@ public abstract class Datapoint<T> {
                 data.onChange.accept(player, this);
     }
 
+    @SneakyThrows
     public void setValue(T value) {
         this.value = value;
 
@@ -113,8 +117,15 @@ public abstract class Datapoint<T> {
                     DataHandler dataHandler = DataHandler.fromDocument(profilesDatabase.getDocument());
                     dataHandler.getDatapoint(key).value = value;
 
+                    UUID playerUUID = dataHandler.getUuid();
+                    ProxyPlayer proxyPlayer = new ProxyPlayer(playerUUID);
+
                     Document document = dataHandler.toDocument(uuid);
                     ProfilesDatabase.collection.replaceOne(profilesDatabase.getDocument(), document);
+
+                    if (proxyPlayer.isOnline().join()) {
+                        proxyPlayer.refreshCoopData(key);
+                    }
                 });
             }
         }

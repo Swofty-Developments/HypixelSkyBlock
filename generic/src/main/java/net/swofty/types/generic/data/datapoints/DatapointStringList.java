@@ -25,6 +25,11 @@ public class DatapointStringList extends Datapoint<List<String>> {
                 list.addAll(Arrays.asList(split));
                 return list;
             }
+
+            @Override
+            public List<String> clone(List<String> value) {
+                return new ArrayList<>(value);
+            }
         });
     }
 

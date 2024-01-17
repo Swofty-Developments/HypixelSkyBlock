@@ -8,7 +8,7 @@ import net.swofty.types.generic.region.mining.configurations.MineWheatConfigurat
 @Getter
 public enum RegionType {
     PRIVATE_ISLAND("Your Island", "§a"),
-    VILLAGE("Village"),
+    VILLAGE("Village", MineWheatConfiguration.class),
     MOUNTAIN("Mountain"),
     FOREST("Forest"),
     FARM("Farm", MineWheatConfiguration.class),

@@ -39,6 +39,11 @@ public class DatapointMinionData extends Datapoint<DatapointMinionData.ProfileMi
                 }
                 return new ProfileMinionData(craftedMinions);
             }
+
+            @Override
+            public ProfileMinionData clone(ProfileMinionData value) {
+                return new ProfileMinionData(new ArrayList<>(value.craftedMinions));
+            }
         });
     }
 

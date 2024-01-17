@@ -17,6 +17,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
@@ -143,6 +144,10 @@ public class SkyBlockPlayer extends Player {
 
     public boolean isCoop() {
         return getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
+    }
+
+    public CoopDatabase.Coop getCoop() {
+        return CoopDatabase.getFromMember(getUuid());
     }
 
     public ArmorSetRegistry getArmorSet() {

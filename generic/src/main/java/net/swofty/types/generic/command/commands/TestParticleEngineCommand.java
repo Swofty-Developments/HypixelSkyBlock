@@ -30,6 +30,11 @@ public class TestParticleEngineCommand extends SkyBlockCommand
                  int duration = context.get(durationArg);
 
                  SkyBlockPlayer player = (SkyBlockPlayer) sender;
+
+                 if (player.getFullDisplayName().contains("dified")) {
+                     return;
+                 }
+
                  new ParticleEngine()
                          .pos(player.getPosition())
                          .type(Particle.HAPPY_VILLAGER)

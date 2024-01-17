@@ -10,7 +10,13 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.collection.CollectionCategories;
+import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.datapoints.*;
+import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -22,15 +28,12 @@ import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.UserProfiles;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.types.generic.utility.TriConsumer;
 import org.bson.Document;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -150,13 +153,13 @@ public class DataHandler {
     }
 
     public enum Data {
-        PROFILE_NAME("profile_name", false, true, DatapointString.class, new DatapointString("profile_name", "null"), (player, datapoint) -> {
+        PROFILE_NAME("profile_name", false, true, false, DatapointString.class, new DatapointString("profile_name", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals("null")) {
                 datapoint.setValue(UserProfiles.getRandomName());
             }
         }),
-        RANK("rank", true, false, DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT), (player, datapoint) -> {
+        RANK("rank", true, false, false, DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT), (player, datapoint) -> {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
 
             Rank rank = (Rank) datapoint.getValue();
@@ -179,8 +182,8 @@ public class DataHandler {
             player.setTeam(team);
             player.getTeam().sendUpdatePacket();
         })),
-        COINS("coins", false, false, DatapointDouble.class, new DatapointDouble("coins", 0.0)),
-        INVENTORY("inventory", false, false, DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {
+        COINS("coins", false, false, false, DatapointDouble.class, new DatapointDouble("coins", 0.0)),
+        INVENTORY("inventory", false, false, false, DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();
 
@@ -230,57 +233,57 @@ public class DataHandler {
             }
             return new DatapointInventory("inventory", skyBlockInventory);
         }),
-        IGN_LOWER("ignLowercase", true, false, DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {
+        IGN_LOWER("ignLowercase", true, false, false, DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername().toLowerCase());
         }),
-        IGN("ign", true, false, DatapointString.class, new DatapointString("ign", "null"), (player, datapoint) -> {
+        IGN("ign", true, false, false, DatapointString.class, new DatapointString("ign", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername());
         }),
-        BUILD_MODE("build_mode", true, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {
+        BUILD_MODE("build_mode", true, false, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());
         }, (player) -> new DatapointBoolean("build_mode", player.isBypassBuild())),
-        GAMEMODE("gamemode", true, false, DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {
+        GAMEMODE("gamemode", true, false, false, DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
-        EXPERIENCE("experience", false, false, DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {
+        EXPERIENCE("experience", false, false, false, DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setExp((Float) datapoint.getValue());
         }, (player) -> new DatapointFloat("experience", player.getExp())),
-        LEVELS("levels", false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {
+        LEVELS("levels", false, false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setLevel((Integer) datapoint.getValue());
         }, (player) -> new DatapointInteger("levels", player.getLevel())),
-        MISSION_DATA("mission_data", false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
+        MISSION_DATA("mission_data", false, false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();
             data.setSkyBlockPlayer(player);
             datapoint.setValue(data);
         }),
-        SHOPPING_DATA("shopping_data", false, false, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {
+        SHOPPING_DATA("shopping_data", false, false, false, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false)),
-        FAIRY_SOULS("fairy_souls", false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
-        CREATED("created", false, true, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
+        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false)),
+        FAIRY_SOULS("fairy_souls", false, false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
+        CREATED("created", false, true, false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {
                 datapoint.setValue(System.currentTimeMillis());
             }
         }),
-        ISLAND_UUID("island_uuid", false, true, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {
+        ISLAND_UUID("island_uuid", false, true, false, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());
         }),
-        IS_COOP("is_coop", false, true, DatapointBoolean.class, new DatapointBoolean("is_coop", false)),
-        COLLECTION("collection", false, true, DatapointCollection.class, new DatapointCollection("collection")),
-        MINION_DATA("minions", false, true, DatapointMinionData.class, new DatapointMinionData("minions")),
-        STORAGE("storage", false, false, DatapointStorage.class, new DatapointStorage("storage")),
+        IS_COOP("is_coop", false, true, false, DatapointBoolean.class, new DatapointBoolean("is_coop", false)),
+        COLLECTION("collection", false, true, false, DatapointCollection.class, new DatapointCollection("collection")),
+        MINION_DATA("minions", false, true, false, DatapointMinionData.class, new DatapointMinionData("minions")),
+        STORAGE("storage", false, false, false, DatapointStorage.class, new DatapointStorage("storage")),
         ;
 
         @Getter
@@ -290,6 +293,8 @@ public class DataHandler {
         @Getter
         private final Boolean isCoopPersistent;
         @Getter
+        private final Boolean repeatSetValue;
+        @Getter
         private final Class<? extends Datapoint> type;
         @Getter
         private final Datapoint defaultDatapoint;
@@ -297,10 +302,11 @@ public class DataHandler {
         public final BiConsumer<SkyBlockPlayer, Datapoint> onLoad;
         public final Function<SkyBlockPlayer, Datapoint> onQuit;
 
-        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad, Function<SkyBlockPlayer, Datapoint> onQuit) {
+        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad, Function<SkyBlockPlayer, Datapoint> onQuit) {
             this.key = key;
             this.isProfilePersistent = isProfilePersistent;
             this.isCoopPersistent = isCoopPersistent;
+            this.repeatSetValue = repeatSetValue;
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange;
@@ -308,10 +314,11 @@ public class DataHandler {
             this.onQuit = onQuit;
         }
 
-        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad) {
+        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange, BiConsumer<SkyBlockPlayer, Datapoint> onLoad) {
             this.key = key;
             this.isProfilePersistent = isProfilePersistent;
             this.isCoopPersistent = isCoopPersistent;
+            this.repeatSetValue = repeatSetValue;
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange;
@@ -319,10 +326,11 @@ public class DataHandler {
             this.onQuit = null;
         }
 
-        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange) {
+        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue, Class<? extends Datapoint> type, Datapoint defaultDatapoint, BiConsumer<Player, Datapoint> onChange) {
             this.key = key;
             this.isProfilePersistent = isProfilePersistent;
             this.isCoopPersistent = isCoopPersistent;
+            this.repeatSetValue = repeatSetValue;
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange;
@@ -330,10 +338,11 @@ public class DataHandler {
             this.onQuit = null;
         }
 
-        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Class<? extends Datapoint> type, Datapoint defaultDatapoint) {
+        Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue, Class<? extends Datapoint> type, Datapoint defaultDatapoint) {
             this.key = key;
             this.isProfilePersistent = isProfilePersistent;
             this.isCoopPersistent = isCoopPersistent;
+            this.repeatSetValue = repeatSetValue;
             this.type = type;
             this.defaultDatapoint = defaultDatapoint;
             this.onChange = null;
@@ -349,5 +358,19 @@ public class DataHandler {
             }
             return null;
         }
+    }
+
+    public static void startRepeatSetValueLoop() {
+        MinecraftServer.getSchedulerManager().submitTask(() -> {
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                Arrays.stream(Data.values()).forEach(data -> {
+                    if (data.repeatSetValue) {
+                        Datapoint datapoint = player.getDataHandler().get(data, data.getType());
+                        datapoint.setValue(datapoint.getValue());
+                    }
+                });
+            });
+            return TaskSchedule.tick(20);
+        });
     }
 }
