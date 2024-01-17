@@ -6,20 +6,24 @@ import net.swofty.redisapi.api.RedisAPI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class RedisMessage {
-    private static final Map<UUID, Consumer<String>> callbacks = new HashMap<>();
+    private static final Map<UUID, CompletableFuture<String>> callbacks = new HashMap<>();
 
-    public static void sendMessageToServer(UUID server, String channel, String message, Consumer<String> callback) {
+    public static CompletableFuture<String> sendMessageToServer(UUID server, String channel, String message) {
         UUID requestID = UUID.randomUUID();
+        CompletableFuture<String> future = new CompletableFuture<>();
 
-        callbacks.put(requestID, callback);
+        callbacks.put(requestID, future);
 
         RedisAPI.getInstance().publishMessage(
                 server.toString(),
                 ChannelRegistry.getFromName(channel),
                 requestID + "}=-=-={" + message);
+
+        return future;
     }
 
     public static void registerProxyToServer(String channelID) {
@@ -28,7 +32,7 @@ public class RedisMessage {
             String rawMessage = split[1];
             UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
 
-            callbacks.get(request).accept(rawMessage);
+            callbacks.get(request).complete(rawMessage);
             callbacks.remove(request);
         });
     }

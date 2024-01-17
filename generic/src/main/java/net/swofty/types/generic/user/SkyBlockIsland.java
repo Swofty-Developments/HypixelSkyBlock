@@ -139,6 +139,10 @@ public class SkyBlockIsland {
         database.insertOrUpdate("data", new Binary(PolarWriter.write(world)));
     }
 
+    public static boolean hasIsland(UUID islandID) {
+        return loadedIslands.containsKey(islandID);
+    }
+
     public static @Nullable SkyBlockIsland getIsland(UUID islandID) {
         if (!loadedIslands.containsKey(islandID)) return null;
         return loadedIslands.get(islandID);

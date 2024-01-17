@@ -89,10 +89,10 @@ public record ProfilesDatabase(String id) implements MongoDB {
     }
 
     public static UUID fetchUUID(String username) {
-        Document doc = collection.find(Filters.eq("ignLowercase", username.toLowerCase())).first();
+        Document doc = collection.find(Filters.eq("ignLowercase", "\"" + username.toLowerCase() + "\"")).first();
         if (doc == null)
             return null;
-        return UUID.fromString(doc.getString("_id"));
+        return UUID.fromString(doc.getString("_owner"));
     }
 
     public static Document fetchDocument(String uniqueId) {

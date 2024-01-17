@@ -1,17 +1,23 @@
 package net.swofty.types.generic.command.commands;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.swofty.proxyapi.ProxyPlayer;
+import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
+import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @CommandParameters(aliases = "cooperative",
         description = "Primary coop command",
@@ -46,16 +52,30 @@ public class CoopCommand extends SkyBlockCommand {
                 return;
             }
 
-            if (Arrays.stream(players).anyMatch(player1 -> {
-                return SkyBlockGenericLoader.getLoadedPlayers().stream().map(SkyBlockPlayer::getUsername).noneMatch(player1::equalsIgnoreCase);
-            })) {
+            ProxyPlayerSet chosenPlayers;
+
+            try {
+                chosenPlayers = new ProxyPlayerSet(Arrays.stream(players).map(
+                        ProfilesDatabase::fetchUUID
+                ).collect(Collectors.toList()));
+            } catch (Exception e) {
                 player.sendMessage("§b[Co-op] §cOne or more of the players you specified are not online!");
                 return;
             }
 
-            if (Arrays.stream(players).anyMatch(player1 -> CoopDatabase.getFromMember(
-                    SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player2 -> player2.getUsername().equalsIgnoreCase(player1)).findFirst().get().getUuid()
-            ) != null)) {
+            if (chosenPlayers.getPlayers().stream().anyMatch(Objects::isNull)) {
+                player.sendMessage("§b[Co-op] §cOne or more of the players you specified are not online!");
+                return;
+            }
+
+            if (chosenPlayers.asProxyPlayers().stream().anyMatch(player1 -> !player1.isOnline().join())) {
+                player.sendMessage("§b[Co-op] §cOne or more of the players you specified are not online!");
+                return;
+            }
+
+            if (chosenPlayers.asProxyPlayers().stream().anyMatch(player1 -> {
+                return CoopDatabase.getFromMember(player1.getUuid()) != null;
+            })) {
                 player.sendMessage("§b[Co-op] §cOne or more of the players you specified already have a co-op or an invite pending!");
                 return;
             }
@@ -72,23 +92,23 @@ public class CoopCommand extends SkyBlockCommand {
                 return;
             }
 
-            List<SkyBlockPlayer> invitedPlayers = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> {
-                return Arrays.stream(players).anyMatch(player2 -> player2.equalsIgnoreCase(player1.getUsername()));
-            }).toList();
-
             CoopDatabase.Coop coop = CoopDatabase.getClean(player.getUuid());
 
-            invitedPlayers.forEach(invitedPlayer -> {
+            int i = 0;
+            for (ProxyPlayer invitedPlayer : chosenPlayers.asProxyPlayers()) {
                 coop.addInvite(invitedPlayer.getUuid());
-                player.sendMessage("§b[Co-op] §eYou invited " + invitedPlayer.getUsername() + " to a SkyBlock co-op!");
+                player.sendMessage("§b[Co-op] §eYou invited " + players[i] + " to a SkyBlock co-op!");
+                i++;
+
+                if (!invitedPlayer.isOnline().join()) continue;
 
                 invitedPlayer.sendMessage("§b----------------------------------------");
                 invitedPlayer.sendMessage(player.getFullDisplayName() + " §einvited you to a SkyBlock co-op!");
                 invitedPlayer.sendMessage(Component.text("§6Click here §eto view!")
                         .hoverEvent(Component.text("§eClick here to view the invite"))
-                        .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
+                        .clickEvent(ClickEvent.runCommand("/coopcheck")));
                 invitedPlayer.sendMessage("§b----------------------------------------");
-            });
+            }
 
             player.sendMessage(Component.text("§eUse §b/coop §eor §a§lCLICK THIS §efor status!")
                     .hoverEvent(Component.text("§eClick here to view the invite"))

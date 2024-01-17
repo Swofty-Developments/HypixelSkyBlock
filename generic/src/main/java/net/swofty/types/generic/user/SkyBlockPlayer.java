@@ -1,5 +1,6 @@
 package net.swofty.types.generic.user;
 
+import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
@@ -42,6 +43,7 @@ import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.types.generic.utility.StringUtility;
+import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -387,15 +389,20 @@ public class SkyBlockPlayer extends Player {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
         } else {
             UserProfiles profiles = new UserDatabase(uuid).getProfiles();
-            UUID selected = profiles.getProfiles().get(0);
-
-            if (selected == null) {
-                return "§7Unknown";
-            } else {
-                DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
+            if (profiles.getProfiles().isEmpty()) {
+                Document document = ProfilesDatabase.collection.find(Filters.eq("_owner", uuid.toString())).first();
+                if (document == null)
+                    return "§7Unknown";
+                DataHandler handler = DataHandler.fromDocument(document);
                 return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                         handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
             }
+
+            UUID selected = profiles.getProfiles().get(0);
+
+            DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
+            return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                    handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 }

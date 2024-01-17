@@ -3,6 +3,7 @@ package net.swofty.velocity.gamemanager;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
+import lombok.Getter;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameManager {
+    @Getter
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
     public static GameServer addServer(ServerType type, UUID serverID) {
@@ -65,7 +67,7 @@ public class GameManager {
                     AtomicBoolean pingSuccess = new AtomicBoolean(false);
                     long startTime = System.currentTimeMillis();
 
-                    RedisMessage.sendMessageToServer(registeredServer.internalID(), "ping", "check", (response) -> {
+                    RedisMessage.sendMessageToServer(registeredServer.internalID(), "ping", "check").thenRun(() -> {
                         pingSuccess.set(true);
                     });
 

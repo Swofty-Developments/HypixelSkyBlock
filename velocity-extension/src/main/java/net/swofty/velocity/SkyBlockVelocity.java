@@ -113,6 +113,9 @@ public class SkyBlockVelocity {
                             });
                 });
         RedisMessage.registerProxyToServer("ping");
+        RedisMessage.registerProxyToServer("run-event");
+        RedisMessage.registerProxyToServer("refresh-data");
+        RedisMessage.registerProxyToServer("has-island");
         RedisAPI.getInstance().startListeners();
 
         /**

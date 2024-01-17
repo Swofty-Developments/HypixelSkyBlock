@@ -1,7 +1,7 @@
 package net.swofty.velocity.gamemanager;
 
 import net.swofty.commons.ServerType;
-import net.swofty.velocity.gamemanager.balanceconfigurations.HasCoopIsland;
+import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class BalanceConfigurations {
                     new LowestPlayerCount()
             ),
             ServerType.ISLAND, List.of(
-                    new HasCoopIsland(),
+                    new IslandCheck(),
                     new LowestPlayerCount()
             )
     );

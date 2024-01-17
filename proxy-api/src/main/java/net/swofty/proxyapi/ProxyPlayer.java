@@ -1,6 +1,9 @@
 package net.swofty.proxyapi;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -27,6 +30,19 @@ public class ProxyPlayer {
 
     public ProxyPlayer(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public void sendMessage(TextComponent message) {
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("actions", "message");
+        json.put("message", JSONComponentSerializer.json().serialize(message));
+
+        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+    }
+
+    public void sendMessage(String message) {
+        sendMessage(Component.text(message));
     }
 
     public CompletableFuture<Boolean> isOnline() {

@@ -14,6 +14,7 @@ import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
+import net.swofty.types.generic.redis.RedisHasIslandLoaded;
 import net.swofty.types.generic.redis.RedisPing;
 import net.swofty.types.generic.redis.RedisRefreshCoopData;
 import net.swofty.types.generic.redis.RedisRunEvent;
@@ -89,6 +90,7 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);
+        proxyAPI.registerProxyToClient("has-island", RedisHasIslandLoaded.class);
         proxyAPI.start();
         VelocityProxy.enable(Configuration.get("velocity-secret"));
 

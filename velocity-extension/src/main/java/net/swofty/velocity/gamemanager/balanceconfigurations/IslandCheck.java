@@ -1,0 +1,47 @@
+package net.swofty.velocity.gamemanager.balanceconfigurations;
+
+import com.velocitypowered.api.proxy.Player;
+import net.swofty.commons.ServerType;
+import net.swofty.velocity.data.ProfilesDatabase;
+import net.swofty.velocity.data.UserDatabase;
+import net.swofty.velocity.gamemanager.BalanceConfiguration;
+import net.swofty.velocity.gamemanager.GameManager;
+import net.swofty.velocity.redis.RedisMessage;
+import org.bson.Document;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class IslandCheck extends BalanceConfiguration {
+    @Override
+    public GameManager.GameServer getServer(Player player, List<GameManager.GameServer> servers) {
+        Document userDatabase = new UserDatabase(player.getUniqueId()).getDocument();
+        if (userDatabase == null) {
+            return null;
+        }
+        UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));
+        Document document = new ProfilesDatabase(activeProfile.toString()).getDocument();
+        UUID islandUUID = UUID.fromString(document.getString("island_uuid").replace("\"", ""));
+
+        AtomicReference<GameManager.GameServer> toSendTo = new AtomicReference<>(null);
+
+        for (Map.Entry<ServerType, ArrayList<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
+            ServerType serverType = entry.getKey();
+            if (serverType == ServerType.ISLAND) {
+                ArrayList<GameManager.GameServer> gameServers = entry.getValue();
+
+                gameServers.forEach(gameServer -> {
+                    String hasIsland = RedisMessage.sendMessageToServer(
+                            gameServer.internalID(), "has-island", islandUUID.toString())
+                            .join();
+
+                    if (hasIsland.equals("true")) {
+                        toSendTo.set(gameServer);
+                    }
+                });
+            }
+        }
+
+        return toSendTo.get();
+    }
+}

@@ -2,6 +2,9 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
@@ -64,8 +67,7 @@ public class ListenerPlayerHandler extends RedisListener {
                 RedisMessage.sendMessageToServer(playerServer, "run-event",
                         player.getUniqueId().toString() + "," +
                         event + "," +
-                        data,
-                        (s) -> {}
+                        data
                 );
             }
             case "refresh-coop-data" -> {
@@ -73,9 +75,12 @@ public class ListenerPlayerHandler extends RedisListener {
 
                 RedisMessage.sendMessageToServer(playerServer, "refresh-data",
                         player.getUniqueId().toString() + "," +
-                        datapoint,
-                        (s) -> {}
+                        datapoint
                 );
+            }
+            case "message" -> {
+                String messageToSend = json.getString("message");
+                player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
             }
         }
 
