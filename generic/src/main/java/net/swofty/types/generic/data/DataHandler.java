@@ -121,7 +121,8 @@ public class DataHandler {
     public void runOnLoad() {
         Arrays.stream(Data.values()).forEach(data -> {
             if (data.onLoad != null) {
-                data.onLoad.accept((SkyBlockPlayer) MinecraftServer.getConnectionManager().getPlayer(uuid), get(data, data.getType()));
+                data.onLoad.accept((SkyBlockPlayer) MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid),
+                        get(data, data.getType()));
             }
         });
     }

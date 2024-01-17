@@ -2,7 +2,7 @@ package net.swofty.type.village.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -16,13 +16,13 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerLoginEvent.class;
+        return AsyncPlayerConfigurationEvent.class;
     }
 
     @SneakyThrows
     @Override
     public void run(Event event) {
-        PlayerLoginEvent playerLoginEvent = (PlayerLoginEvent) event;
+        AsyncPlayerConfigurationEvent playerLoginEvent = (AsyncPlayerConfigurationEvent) event;
 
         final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 

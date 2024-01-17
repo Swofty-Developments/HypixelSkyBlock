@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.*;
+import net.minestom.server.event.entity.EntitySpawnEvent;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -56,7 +57,13 @@ public class NPCEntityImpl extends Entity {
                                 GameMode.CREATIVE,
                                 Component.text("§8[NPC] " + this.uuid.toString().substring(0, 8)),
                                 null)),
-                new SpawnPlayerPacket(getEntityId(), getUuid(), getPosition()),
+                new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER.id(),
+                        getPosition(),
+                        (float) 0,
+                        0,
+                        (short) 0,
+                        (short) 0,
+                        (short) 0),
                 new EntityHeadLookPacket(getEntityId(), getPosition().yaw()),
                 new EntityMetaDataPacket(getEntityId(), Map.of(17, Metadata.Byte((byte) 127)))
         );

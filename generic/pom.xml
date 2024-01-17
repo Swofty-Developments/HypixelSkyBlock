@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.github.hollow-cube</groupId>
             <artifactId>minestom-ce</artifactId>
-            <version>8a9029c80c</version>
+            <version>5347c0b11f</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.shrinkwrap.resolver</groupId>

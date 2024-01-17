@@ -1,7 +1,7 @@
 {
   "mongodb": "mongodb://localhost",
-  "cracked_domain": "0.0.0.0",
   "redis-uri": "redis://localhost:6379",
   "velocity-secret": "1LAGCe86cZvG",
-  "limbo-port": "65535"
+  "limbo-port": "65535",
+  "host-name": "0.0.0.0"
 }

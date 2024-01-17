@@ -28,7 +28,7 @@ public abstract class SkyBlockPacketClientListener {
             cachedEvents.forEach((packetEvent) -> {
                 Class<?> packetType = packetEvent.getPacket();
                 if (packetType.isInstance(rawEvent.getPacket())) {
-                    if (SkyBlockGenericLoader.getLoadedPlayers().contains((SkyBlockPlayer) rawEvent.getPlayer()))
+                    if (SkyBlockGenericLoader.getFromUUID(rawEvent.getPlayer().getUuid()) != null)
                         packetEvent.run(rawEvent, rawEvent.getPacket(), (SkyBlockPlayer) rawEvent.getPlayer());
                 }
             });

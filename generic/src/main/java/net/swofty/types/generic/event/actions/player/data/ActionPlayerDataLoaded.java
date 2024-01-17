@@ -3,7 +3,8 @@ package net.swofty.types.generic.event.actions.player.data;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
@@ -29,13 +30,13 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
 
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerLoginEvent.class;
+        return PlayerSpawnEvent.class;
     }
 
     @SneakyThrows
     @Override
     public void run(Event event) {
-        PlayerLoginEvent playerLoginEvent = (PlayerLoginEvent) event;
+        PlayerSpawnEvent playerLoginEvent = (PlayerSpawnEvent) event;
         SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
         Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();

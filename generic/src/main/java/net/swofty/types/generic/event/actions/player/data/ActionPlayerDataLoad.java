@@ -4,7 +4,9 @@ import com.mongodb.client.model.Filters;
 import lombok.SneakyThrows;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.event.player.AsyncPlayerPreLoginEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
@@ -31,13 +33,13 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerLoginEvent.class;
+        return AsyncPlayerConfigurationEvent.class;
     }
 
     @SneakyThrows
     @Override
     public void run(Event event) {
-        PlayerLoginEvent playerLoginEvent = (PlayerLoginEvent) event;
+        AsyncPlayerConfigurationEvent playerLoginEvent = (AsyncPlayerConfigurationEvent) event;
 
         // Ensure we use player here
         final Player player = playerLoginEvent.getPlayer();
@@ -80,50 +82,11 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
             handler = DataHandler.initUserWithDefaultData(playerUuid);
         }
         DataHandler.userCache.put(playerUuid, handler);
-
-        if (profiles.getProfiles().size() >= 2) {
-            UUID finalProfileId1 = profileId;
-            Document previousProfile = ProfilesDatabase.collection
-                    .find(Filters.eq("_owner", playerUuid.toString())).into(new ArrayList<>())
-                    .stream().filter(document -> !document.get("_id").equals(finalProfileId1.toString()))
-                    .findFirst().get();
-
-            DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
-            previousHandler.getPersistentValues().forEach((key, value) -> {
-                handler.getDatapoint(key).setValue(value);
-            });
-        }
-
-        if (handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
-            CoopDatabase.Coop coop = CoopDatabase.getFromMember(playerUuid);
-            if (coop.members().size() != 1) {
-                DataHandler data;
-
-                if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player1 -> coop.members().contains(player1.getUuid()))) {
-                    // A coop member is online, use their data
-                    SkyBlockPlayer otherCoopMember = SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player1 -> coop.members().contains(player1.getUuid())).findFirst().get();
-                    data = otherCoopMember.getDataHandler();
-                } else {
-                    // No coop members are online, use the first member's data
-                    UUID finalProfileId = profileId;
-                    data = DataHandler.fromDocument(new ProfilesDatabase(coop.memberProfiles().stream().filter(
-                            uuid -> !uuid.equals(finalProfileId)).findFirst().get().toString()).getDocument());
-                }
-
-                data.getCoopValues().forEach((key, value) -> {
-                    handler.getDatapoint(key).setValueBypassCoop(value);
-                });
-            }
-        }
-
-        player.sendMessage("");
-
-        handler.runOnLoad();
     }
 
     @Override
     public void onException(Exception e, Event tempEvent) {
-        PlayerLoginEvent event = (PlayerLoginEvent) tempEvent;
+        AsyncPlayerConfigurationEvent event = (AsyncPlayerConfigurationEvent) tempEvent;
         e.printStackTrace();
 
         if (e instanceof NullPointerException) {

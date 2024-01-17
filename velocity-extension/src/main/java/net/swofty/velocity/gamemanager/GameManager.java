@@ -4,6 +4,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.Getter;
+import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
@@ -20,7 +21,7 @@ public class GameManager {
     public static GameServer addServer(ServerType type, UUID serverID) {
         int port = getNextAvailablePort();
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
-                new ServerInfo(serverID.toString(), new InetSocketAddress(port))
+                new ServerInfo(serverID.toString(), new InetSocketAddress(Configuration.get("host-name"), port))
         );
 
         String displayName = getNextAvailableDisplayName() + "" +

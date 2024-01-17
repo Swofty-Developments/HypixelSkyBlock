@@ -27,7 +27,7 @@ public class PlayerActionDamage extends SkyBlockEvent {
         EntityDamageEvent e = (EntityDamageEvent) event;
         if (!e.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
 
-        float damageDealt = e.getDamage();
+        float damageDealt = e.getDamage().getAmount();
         new DamageIndicator().damage(damageDealt).pos(e.getEntity().getPosition()).display();
     }
 }

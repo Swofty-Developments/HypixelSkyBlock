@@ -1,5 +1,7 @@
 package net.swofty.type.island.gui;
 
+import net.minestom.server.entity.fakeplayer.FakePlayer;
+import net.minestom.server.entity.fakeplayer.FakePlayerController;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -17,6 +19,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -103,6 +106,13 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                         "§7minion to be placed in.",
                         " ",
                         "§eClick to view!");
+            }
+        });
+
+        set(new GUIItem(4) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return PlayerItemUpdater.playerUpdate(player, minion.asSkyBlockItem().getItemStack());
             }
         });
 

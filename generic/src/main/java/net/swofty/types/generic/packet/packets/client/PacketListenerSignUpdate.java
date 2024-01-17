@@ -7,6 +7,7 @@ import net.minestom.server.network.packet.server.play.BlockChangePacket;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
     @Override
@@ -17,6 +18,9 @@ public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
     @Override
     public void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player) {
         ClientUpdateSignPacket signPacket = (ClientUpdateSignPacket) packet;
+
+        Logger.info(signPacket.lines().get(0));
+        Logger.info("We got it boys");
 
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {
             SkyBlockSignGUI.SignGUI signGUI = SkyBlockSignGUI.signGUIs.get(player);

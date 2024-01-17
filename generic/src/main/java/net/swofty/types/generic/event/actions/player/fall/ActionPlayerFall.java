@@ -43,7 +43,7 @@ public class ActionPlayerFall extends SkyBlockEvent {
             int fallDistance = currentHeight - newPosition.blockY();
 
             if (fallDistance > 4) {
-                player.damage(DamageType.GRAVITY, (float) ((fallDistance * 2) - 4));
+                player.damage(DamageType.FALL, (float) ((fallDistance * 2) - 4));
             }
 
             fallHeight.put(player, currentPosition.blockY());

@@ -7,6 +7,9 @@ import com.velocitypowered.proxy.protocol.StateRegistry;
 import com.velocitypowered.proxy.protocol.packet.BossBar;
 import com.velocitypowered.proxy.protocol.packet.JoinGame;
 import com.velocitypowered.proxy.protocol.packet.Respawn;
+import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdate;
+import com.velocitypowered.proxy.protocol.packet.config.RegistrySync;
+import com.velocitypowered.proxy.protocol.packet.config.StartUpdate;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -31,6 +34,9 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != Respawn.class
                     && packet.getClass() != JoinGame.class
                     && packet.getClass() != BossBar.class
+                    && packet.getClass() != StartUpdate.class
+                    && packet.getClass() != RegistrySync.class
+                    && packet.getClass() != FinishedUpdate.class
             ) {
                 System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;

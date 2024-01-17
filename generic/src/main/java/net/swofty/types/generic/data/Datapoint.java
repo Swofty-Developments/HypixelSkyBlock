@@ -67,7 +67,7 @@ public abstract class Datapoint<T> {
     public void setValueBypassCoop(T value) {
         this.value = value;
 
-        Player player = MinecraftServer.getConnectionManager().getPlayer(dataHandler.getUuid());
+        Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(dataHandler.getUuid());
         if (player != null)
             if (data.onChange != null)
                 data.onChange.accept(player, this);
@@ -77,7 +77,7 @@ public abstract class Datapoint<T> {
     public void setValue(T value) {
         this.value = value;
 
-        Player player = MinecraftServer.getConnectionManager().getPlayer(dataHandler.getUuid());
+        Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(dataHandler.getUuid());
         if (player != null) {
             if (data.onChange != null)
                 data.onChange.accept(player, this);

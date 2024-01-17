@@ -101,7 +101,7 @@ public class SkyBlock {
 
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
-            minecraftServer.start("0.0.0.0", port);
+            minecraftServer.start(Configuration.get("host-name"), port);
 
             long endTime = System.currentTimeMillis();
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");

@@ -138,7 +138,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
                         // TODO: make particle maker
                         player.sendPacket(new ParticlePacket(
-                                37,
+                                38,
                                 false,
                                 villagerPosition.x(),
                                 villagerPosition.y() + 3f,
@@ -147,7 +147,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                                 0.1f,
                                 0.1f,
                                 0f,
-                                5,
+                                3,
                                 new byte[]{}
                         ));
                     } catch (InstantiationException | IllegalAccessException e) {

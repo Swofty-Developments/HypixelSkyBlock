@@ -321,7 +321,7 @@ public class SkyBlockPlayer extends Player {
         setHealth(getMaxHealth());
         sendTo(SkyBlockConst.getTypeLoader().getType());
 
-        DeathMessageCreator creator = new DeathMessageCreator(lastDamageSource);
+        DeathMessageCreator creator = new DeathMessageCreator(this.lastDamage);
 
         sendMessage("§c☠ §7You " + creator.createPersonal());
 
