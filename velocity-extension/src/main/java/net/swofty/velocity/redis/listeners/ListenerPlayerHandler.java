@@ -2,16 +2,18 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
+import net.swofty.velocity.gamemanager.BalanceConfiguration;
+import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,8 +43,19 @@ public class ListenerPlayerHandler extends RedisListener {
                     return "true";
                 }
 
-                RegisteredServer toSendTo = GameManager.getFromType(type).get(0).server();
-                new TransferHandler(player).transferTo(toSendTo);
+                List<GameManager.GameServer> gameServers = GameManager.getFromType(type);
+                List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(type);
+                GameManager.GameServer toSendTo = gameServers.get(0);
+
+                for (BalanceConfiguration configuration : configurations) {
+                    GameManager.GameServer server = configuration.getServer(player, gameServers);
+                    if (server != null) {
+                        toSendTo = server;
+                        break;
+                    }
+                }
+
+                new TransferHandler(player).transferTo(toSendTo.server());
             }
             case "event" -> {
                 String event = json.getString("event");

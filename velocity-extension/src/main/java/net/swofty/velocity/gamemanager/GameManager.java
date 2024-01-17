@@ -31,6 +31,15 @@ public class GameManager {
         return server;
     }
 
+    public static ServerType getTypeFromUUID(UUID uuid) {
+        for (ServerType type : servers.keySet()) {
+            for (GameServer gameServer : servers.get(type)) {
+                if (gameServer.internalID().equals(uuid)) return type;
+            }
+        }
+        return null;
+    }
+
     public static boolean hasType(ServerType type) {
         return servers.containsKey(type) && !servers.get(type).isEmpty();
     }

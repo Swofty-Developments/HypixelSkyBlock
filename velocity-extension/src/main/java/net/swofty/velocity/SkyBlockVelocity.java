@@ -28,6 +28,11 @@ import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.velocity.data.CoopDatabase;
+import net.swofty.velocity.data.ProfilesDatabase;
+import net.swofty.velocity.data.UserDatabase;
+import net.swofty.velocity.gamemanager.BalanceConfiguration;
+import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
@@ -38,6 +43,7 @@ import org.reflections.Reflections;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -87,6 +93,13 @@ public class SkyBlockVelocity {
         );
 
         /**
+         * Handle database
+         */
+        new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));
+        UserDatabase.connect(Configuration.get("mongodb"));
+        CoopDatabase.connect(Configuration.get("mongodb"));
+
+        /**
          * Setup Redis
          */
         RedisAPI.generateInstance(Configuration.get("redis-uri"));
@@ -117,8 +130,19 @@ public class SkyBlockVelocity {
             return;
         }
 
-        RegisteredServer server = GameManager.getFromType(ServerType.ISLAND).get(0).server();
-        event.setInitialServer(server);
+        List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.ISLAND);
+        List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.ISLAND);
+        GameManager.GameServer toSendTo = gameServers.get(0);
+
+        for (BalanceConfiguration configuration : configurations) {
+            GameManager.GameServer server = configuration.getServer(event.getPlayer(), gameServers);
+            if (server != null) {
+                toSendTo = server;
+                break;
+            }
+        }
+
+        event.setInitialServer(toSendTo.server());
     }
 
     @Subscribe

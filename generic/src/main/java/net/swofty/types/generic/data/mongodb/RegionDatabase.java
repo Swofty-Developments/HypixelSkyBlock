@@ -52,11 +52,6 @@ public record RegionDatabase(String id) implements MongoDB {
         return list;
     }
 
-    @Override
-    public String getString(String key, String def) {
-        return get(key, def).toString();
-    }
-
     public Document getDocument() {
         Document query = new Document("_id", id);
         return collection.find(query).first();

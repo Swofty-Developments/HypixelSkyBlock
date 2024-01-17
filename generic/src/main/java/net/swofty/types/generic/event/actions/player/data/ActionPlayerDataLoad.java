@@ -14,13 +14,12 @@ import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.user.SkyBlockIsland;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
 import net.swofty.types.generic.event.EventException;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.user.UserProfiles;
 import org.bson.Document;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.data.mongodb;
+package net.swofty.velocity.data;
 
 public interface MongoDB {
     MongoDB connect(String connectionString);
