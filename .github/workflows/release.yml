@@ -18,7 +18,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -pl '!proxy-api' -B package --file pom.xml
+      run: mvn -B package --file pom.xml
 
     - name: Add Jar to GitHub releases
       uses: "marvinpinto/action-automatic-releases@latest"
