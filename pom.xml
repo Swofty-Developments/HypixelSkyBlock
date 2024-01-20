@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>packer</module>
         <module>commons</module>
         <module>loader</module>
 

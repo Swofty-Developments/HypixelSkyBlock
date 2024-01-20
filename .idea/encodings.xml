@@ -48,6 +48,8 @@
     <file url="file://$PROJECT_DIR$/loader/commons-skyblock/src/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loader/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loader/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/packer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/packer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/proxy-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/proxy-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/proxy/api/src/main/java" charset="UTF-8" />

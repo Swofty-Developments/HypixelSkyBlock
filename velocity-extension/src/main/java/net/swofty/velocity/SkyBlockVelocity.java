@@ -24,6 +24,9 @@ import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
 import io.netty.channel.Channel;
 import lombok.Getter;
+import net.kyori.adventure.resource.ResourcePackInfo;
+import net.kyori.adventure.resource.ResourcePackInfoLike;
+import net.kyori.adventure.resource.ResourcePackRequest;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
@@ -63,8 +66,6 @@ public class SkyBlockVelocity {
     private static SkyBlockVelocity plugin;
     @Getter
     private static RegisteredServer limboServer;
-    @Inject
-    private Injector injector;
 
     @Inject
     public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
@@ -144,6 +145,8 @@ public class SkyBlockVelocity {
                 break;
             }
         }
+
+        // TODO: Force Resource Pack
 
         event.setInitialServer(toSendTo.server());
     }

@@ -33,4 +33,9 @@ public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
             SkyBlockSignGUI.signGUIs.remove(player);
         }
     }
+
+    @Override
+    public boolean overrideMinestomProcessing() {
+        return true;
+    }
 }

@@ -151,7 +151,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.types.generic.packet.packets.server", SkyBlockPacketClientListener.class)
                 .forEach(SkyBlockPacketClientListener::cacheListener);
         SkyBlockPacketClientListener.register(SkyBlockConst.getEventHandler());
-        SkyBlockPacketClientListener.register(SkyBlockConst.getEventHandler());
 
         /**
          * Load regions

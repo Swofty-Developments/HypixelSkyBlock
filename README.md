@@ -20,6 +20,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
 4. Follow the 'Proxy Setup Guide' below.
 5. Follow the 'Game Server Setup Guide' below.
+6. Follow the 'Resource Pack Setup Guide' below.
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
@@ -46,6 +47,12 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
 11. Download `NanoLimbo-1.7-all.jar` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and start it in the background using `java -jar NanoLimbo-1.7-all.jar`.
 12. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+
+### Resource Pack Setup Guide
+1. In preparation for SkyBlock version 1, we already have a resource pack system setup. To start, download the `SkyBlockPacker.jar` from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest).
+2. Download the [pack_textures](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and [SkyBlockPack](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) folders and move them where the packer JAR is.
+3. Run the packer JAR using `java -jar SkyBlockPacker.jar -v (Location of SkyBlockPack) -o (Output Directory) -t (Location of Pack Textures)`.
+4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
 
 ## Credits
 

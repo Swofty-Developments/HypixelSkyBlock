@@ -24,4 +24,9 @@ public class PacketListenerNameItem extends SkyBlockPacketClientListener {
             player.sendPacket(new WindowPropertyPacket(player.getOpenInventory().getWindowId(), (short) 0, (short) 0));
         }
     }
+
+    @Override
+    public boolean overrideMinestomProcessing() {
+        return true;
+    }
 }

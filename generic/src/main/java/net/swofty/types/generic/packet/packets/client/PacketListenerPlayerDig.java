@@ -22,4 +22,9 @@ public class PacketListenerPlayerDig extends SkyBlockPacketClientListener {
                 digPacket.blockPosition(),
                 digPacket.status()));
     }
+
+    @Override
+    public boolean overrideMinestomProcessing() {
+        return false;
+    }
 }

@@ -46,19 +46,21 @@ public class ListenerPlayerHandler extends RedisListener {
                     return "true";
                 }
 
-                List<GameManager.GameServer> gameServers = GameManager.getFromType(type);
-                List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(type);
-                GameManager.GameServer toSendTo = gameServers.get(0);
+                new Thread(() -> {
+                    List<GameManager.GameServer> gameServers = GameManager.getFromType(type);
+                    List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(type);
+                    GameManager.GameServer toSendTo = gameServers.get(0);
 
-                for (BalanceConfiguration configuration : configurations) {
-                    GameManager.GameServer server = configuration.getServer(player, gameServers);
-                    if (server != null) {
-                        toSendTo = server;
-                        break;
+                    for (BalanceConfiguration configuration : configurations) {
+                        GameManager.GameServer server = configuration.getServer(player, gameServers);
+                        if (server != null) {
+                            toSendTo = server;
+                            break;
+                        }
                     }
-                }
 
-                new TransferHandler(player).transferTo(toSendTo.server());
+                    new TransferHandler(player).transferTo(toSendTo.server());
+                }).start();
             }
             case "event" -> {
                 String event = json.getString("event");

@@ -52,6 +52,11 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
         }
     }
 
+    @Override
+    public boolean overrideMinestomProcessing() {
+        return false;
+    }
+
     private boolean isInFluid(SkyBlockPlayer player) {
         Block blockBelow = player.getInstance().getBlock(player.getPosition().sub(0, 1, 0));
         Block block = player.getInstance().getBlock(player.getPosition());
