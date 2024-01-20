@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
+import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -16,6 +18,7 @@ import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
+import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
@@ -46,6 +49,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -273,7 +277,15 @@ public class SkyBlockPlayer extends Player {
             return;
         }
 
-        player.transferTo(type);
+        showTitle(Title.title(
+                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
+                Component.empty(),
+                Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
+        ));
+
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            player.transferTo(type);
+        }, TaskSchedule.tick(20), TaskSchedule.stop());
     }
 
     public double getTimeToMine(SkyBlockItem item, Block b) {

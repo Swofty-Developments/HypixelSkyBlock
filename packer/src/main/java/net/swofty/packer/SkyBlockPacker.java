@@ -32,15 +32,17 @@ public class SkyBlockPacker {
 
         System.out.println("Starting packer...");
 
-        // Copy vanilla pack to output directory, deleting any existing files
-        System.out.println("Copying vanilla pack to output directory...");
-        try {
-            FileUtils.deleteDirectory(values.outputDirectory());
-            FileUtils.copyDirectory(values.vanillaPack(), values.outputDirectory());
-        } catch (IOException e) {
-            System.out.println("Failed to copy vanilla pack to output directory");
-            e.printStackTrace();
-            return;
+        if (!values.skip()) {
+            // Copy vanilla pack to output directory, deleting any existing files
+            System.out.println("Copying vanilla pack to output directory...");
+            try {
+                FileUtils.deleteDirectory(values.outputDirectory());
+                FileUtils.copyDirectory(values.vanillaPack(), values.outputDirectory());
+            } catch (IOException e) {
+                System.out.println("Failed to copy vanilla pack to output directory");
+                e.printStackTrace();
+                return;
+            }
         }
 
         // Modify lang file
@@ -84,6 +86,7 @@ public class SkyBlockPacker {
         String vanillaPack = null;
         String outputDirectory = null;
         String textureCategory = null;
+        boolean skip = false;
 
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
@@ -95,17 +98,22 @@ public class SkyBlockPacker {
                     case VANILLA_PACK -> vanillaPack = args[++i];
                     case OUTPUT_DIRECTORY -> outputDirectory = args[++i];
                     case TEXTURE_DIRECTORY -> textureCategory = args[++i];
+                    case SKIP_VANILLA_CREATION -> {
+                        skip = true;
+                        i++;
+                    }
                 }
             }
         }
 
-        return new PackerValues(vanillaPack, outputDirectory, textureCategory);
+        return new PackerValues(vanillaPack, outputDirectory, textureCategory, skip);
     }
 
     enum Options {
         VANILLA_PACK("-v", "--vanilla-pack"),
         OUTPUT_DIRECTORY("-o", "--output-directory"),
         TEXTURE_DIRECTORY("-t", "--texture-directory"),
+        SKIP_VANILLA_CREATION("-s", "--skip-vanilla-creation")
         ;
 
         private final String[] options;
@@ -127,5 +135,5 @@ public class SkyBlockPacker {
         }
     }
 
-    public record PackerValues(String vanillaPack, String outputDirectory, String textureCategory) { }
+    public record PackerValues(String vanillaPack, String outputDirectory, String textureCategory, boolean skip) { }
 }

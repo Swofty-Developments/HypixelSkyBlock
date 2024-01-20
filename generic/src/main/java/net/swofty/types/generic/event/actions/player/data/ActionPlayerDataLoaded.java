@@ -1,11 +1,14 @@
 package net.swofty.types.generic.event.actions.player.data;
 
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
@@ -21,6 +24,7 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import org.tinylog.Logger;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @EventParameters(description = "Join miscellaneous stuff with data being loaded",
@@ -38,6 +42,12 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
     public void run(Event event) {
         PlayerSpawnEvent playerLoginEvent = (PlayerSpawnEvent) event;
         SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
+
+        player.showTitle(Title.title(
+                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
+                Component.empty(),
+                Title.Times.times(Duration.ZERO, Duration.ofMillis(300), Duration.ofSeconds(1))
+        ));
 
         Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
         if (rank.isStaff()) {

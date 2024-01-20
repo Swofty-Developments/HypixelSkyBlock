@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum SkyBlockTexture {
-    FULL_SCREEN_BLACK("\uE000", IntendedLocation.CENTRE_SCREEN, 25, 60),
+    FULL_SCREEN_BLACK("\uE000", IntendedLocation.CENTRE_SCREEN, 40, 80),
     ;
 
     @Getter
