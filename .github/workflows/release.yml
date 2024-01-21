@@ -32,3 +32,4 @@ jobs:
           proxy-api/target/*.jar
           loader/target/*.jar
           commons/target/*.jar
+          packer/target/*.jar
