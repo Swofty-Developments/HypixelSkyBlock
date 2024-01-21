@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum SkyBlockTexture {
-    FULL_SCREEN_BLACK("\uE000", IntendedLocation.TITLE, 100, 300),
-    VILLAGER_SPEAK_OUTLINE("\uE001", IntendedLocation.TITLE, 40, 98),
+    FULL_SCREEN_BLACK("\uE000", IntendedLocation.TITLE, 200, 600),
+    VILLAGER_SPEAK_OUTLINE("\uE001", IntendedLocation.TITLE, -10, 20),
     ;
 
     @Getter

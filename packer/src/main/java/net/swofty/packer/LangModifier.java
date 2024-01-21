@@ -8,7 +8,6 @@ public enum LangModifier {
     LOADING_TERRAIN("multiplayer.downloadingTerrain", "\uE000ffffffffffffffffffffffffffffffff\uE000"),
     RECONFIGURING_1("connect.reconfiging", "\uE000ffffffffffffffffffffffffffffffff\uE000"),
     RECONFIGURING_2("connect.reconfiguring", "\uE000fffffffffffffffffffffffffff\uE000"),
-    MENU_DISCONNECT("menu.disconnect", "\uE000"),
     CONNECT_JOINING("connect.joining", "\uE000fffffffffffffffffffffffffff\uE000"),
     ;
 

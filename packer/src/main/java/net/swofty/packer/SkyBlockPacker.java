@@ -74,6 +74,7 @@ public class SkyBlockPacker {
             // Remove all double backslash from the file and replace with a single backslash
             String defaultJson = new String(Files.readAllBytes(new File(values.outputDirectory() + "/assets/minecraft/font/default.json").toPath()));
             defaultJson = defaultJson.replaceAll("\\\\\\\\", "\\\\");
+
             Files.write(new File(values.outputDirectory() + "/assets/minecraft/font/default.json").toPath(), defaultJson.getBytes());
         } catch (IOException e) {
             System.out.println("Failed to override default.json with our textures");
