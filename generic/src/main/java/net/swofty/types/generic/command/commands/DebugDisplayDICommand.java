@@ -27,7 +27,7 @@ public class DebugDisplayDICommand extends SkyBlockCommand {
                     .damage(context.get(damage))
                     .pos(player.getPosition())
                     .critical(context.get(crit))
-                    .display();
+                    .display(player.getInstance());
 
         }, damage, crit);
     }

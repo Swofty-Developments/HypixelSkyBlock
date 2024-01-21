@@ -9,6 +9,8 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.packer.NegativeSpace;
+import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
@@ -152,9 +154,9 @@ public class PlayerStatistics {
                     defenseText = player.getDefenseDisplayReplacement().getDisplay();
                 }
 
-                player.sendActionBar(Component.text(
-                        healthText + "     " + defenseText + "     " + manaText
-                ));
+                String toSend = healthText + "     " + defenseText + "     " + manaText;
+
+                player.sendActionBar(Component.text(toSend));
             });
             return TaskSchedule.tick(4);
         });

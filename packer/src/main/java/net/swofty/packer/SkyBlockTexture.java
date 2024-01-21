@@ -4,12 +4,14 @@ import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public enum SkyBlockTexture {
     FULL_SCREEN_BLACK("\uE000", IntendedLocation.TITLE, 200, 600),
     VILLAGER_SPEAK_OUTLINE("\uE001", IntendedLocation.TITLE, -10, 20),
+    HUD_BACK_PLATE("\uE002", IntendedLocation.ACTIONBAR, -25, 10),
     ;
 
     @Getter
@@ -68,6 +70,7 @@ public enum SkyBlockTexture {
 
     enum IntendedLocation {
         TITLE,
-        BOSSBAR
+        BOSSBAR,
+        ACTIONBAR
     }
 }

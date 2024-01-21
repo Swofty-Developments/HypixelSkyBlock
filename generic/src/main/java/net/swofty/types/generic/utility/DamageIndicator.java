@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.hologram.HologramEntity;
@@ -21,14 +22,13 @@ public class DamageIndicator {
         crit = false;
     }
 
-    public void display() {
+    public void display(Instance instance) {
         if (this.pos == null) return;
 
         String name = crit ? getRainbowEffect("✧" + damage + "✧") : "§7" + damage;
 
         Entity entity = new HologramEntity(name);
-        entity.setInstance(SkyBlockConst.getInstanceContainer(),
-                utilRandomizeLoc(pos));
+        entity.setInstance(instance, utilRandomizeLoc(pos));
         entity.setAutoViewable(true);
         entity.spawn();
         MinecraftServer.getSchedulerManager().scheduleTask(entity::remove, TaskSchedule.seconds(1), TaskSchedule.stop());
