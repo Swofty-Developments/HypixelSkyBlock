@@ -43,7 +43,7 @@ public enum SkyBlockTexture {
         for (SkyBlockTexture texture : values()) {
             JSONObject textureJson = new JSONObject();
             textureJson.put("type", "bitmap");
-            textureJson.put("file", "minecraft:custom/" + texture.name().toLowerCase() + ".png");
+            textureJson.put("file", "skyblock:" + texture.name().toLowerCase() + ".png");
             textureJson.put("height", texture.height);
             textureJson.put("ascent", texture.ascent);
 

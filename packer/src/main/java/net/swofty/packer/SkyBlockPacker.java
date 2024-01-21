@@ -58,7 +58,7 @@ public class SkyBlockPacker {
         // Move textures into custom
         System.out.println("Moving textures into custom...");
         try {
-            FileUtils.copyDirectory(values.textureCategory(), values.outputDirectory() + "/assets/minecraft/textures/custom");
+            FileUtils.copyDirectory(values.textureCategory(), values.outputDirectory() + "/assets/skyblock/textures/");
         } catch (IOException e) {
             System.out.println("Failed to move textures into custom");
             e.printStackTrace();

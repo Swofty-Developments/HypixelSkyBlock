@@ -33,11 +33,17 @@ public class ActionPlayerChat extends SkyBlockEvent {
 
         String message = playerChatEvent.getMessage();
         Rank rank = dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+
+        // Sanitize message to remove any special unicode characters
+        if (!rank.isStaff())
+            message = message.replaceAll("[^\\x00-\\x7F]", "");
+
+        String finalMessage = message;
         MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(onlinePlayer -> {
             if (rank.equals(Rank.DEFAULT)) {
-                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§7: " + message);
+                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§7: " + finalMessage);
             } else {
-                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§f: " + message);
+                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§f: " + finalMessage);
             }
         });
     }

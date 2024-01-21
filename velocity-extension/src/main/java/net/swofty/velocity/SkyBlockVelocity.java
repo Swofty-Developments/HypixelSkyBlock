@@ -22,12 +22,22 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.connection.UserConnection;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import com.viaversion.viaversion.api.protocol.version.VersionProvider;
+import com.viaversion.viaversion.connection.UserConnectionImpl;
+import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
+import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
 import io.netty.channel.Channel;
 import lombok.Getter;
 import net.kyori.adventure.resource.ResourcePackInfo;
 import net.kyori.adventure.resource.ResourcePackInfoLike;
 import net.kyori.adventure.resource.ResourcePackRequest;
 import net.kyori.adventure.text.Component;
+import net.raphimc.vialoader.ViaLoader;
+import net.raphimc.vialoader.netty.VLPipeline;
+import net.raphimc.vialoader.netty.ViaCodec;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
@@ -78,6 +88,11 @@ public class SkyBlockVelocity {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        /**
+         * Register cross-version support
+         */
+        ViaLoader.init(null, new SkyBlockVLoader(), null, null);
+
         /**
          * Register packets
          */
@@ -179,10 +194,16 @@ public class SkyBlockVelocity {
 
     private void injectPlayer(final Player player) {
         final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
-        connectedPlayer.getConnection()
-                .getChannel()
-                .pipeline()
-                .addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
+        Channel channel = connectedPlayer.getConnection().getChannel();
+
+        channel.pipeline().addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
+
+        final UserConnection user = new UserConnectionImpl(channel, true);
+        new ProtocolPipelineImpl(user);
+
+        channel.pipeline().addBefore(Connections.HANDLER,
+                VLPipeline.VIA_CODEC_NAME,
+                new ViaCodec(user));
     }
 
     private void removePlayer(final Player player) {
@@ -190,6 +211,7 @@ public class SkyBlockVelocity {
         final Channel channel = connectedPlayer.getConnection().getChannel();
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove("PACKET");
+            channel.pipeline().remove(VLPipeline.VIA_CODEC_NAME);
         });
     }
 }

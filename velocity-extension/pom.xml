@@ -30,6 +30,10 @@
             <id>sonatype-oss-snapshots1</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>viaversion</id>
+            <url>https://repo.viaversion.com</url>
+        </repository>
     </repositories>
 
     <build>
@@ -94,6 +98,31 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.104.Final</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>commons</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.raphimc</groupId>
+            <artifactId>ViaLoader</artifactId>
+            <version>2.2.12</version> <!-- Get latest version from releases -->
+        </dependency>
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viaversion</artifactId>
+            <version>4.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viabackwards-common</artifactId>
+            <version>4.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viarewind-common</artifactId>
+            <version>3.0.5</version>
         </dependency>
     </dependencies>
 
