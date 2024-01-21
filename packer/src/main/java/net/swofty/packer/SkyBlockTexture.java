@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum SkyBlockTexture {
-    FULL_SCREEN_BLACK("\uE000", IntendedLocation.CENTRE_SCREEN, 40, 80),
+    FULL_SCREEN_BLACK("\uE000", IntendedLocation.TITLE, 100, 300),
+    VILLAGER_SPEAK_OUTLINE("\uE001", IntendedLocation.TITLE, 40, 98),
     ;
 
     @Getter
@@ -66,6 +67,7 @@ public enum SkyBlockTexture {
     }
 
     enum IntendedLocation {
-        CENTRE_SCREEN
+        TITLE,
+        BOSSBAR
     }
 }

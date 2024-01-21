@@ -17,9 +17,6 @@ public class TestBlackCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
-            System.out.println(NegativeSpace.getNegativeSpace(10));
-            System.out.println(SkyBlockTexture.FULL_SCREEN_BLACK);
-
             sender.showTitle(Title.title(
                     Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
                     Component.text(NegativeSpace.getNegativeSpace(10) + "§7This is a test")
