@@ -15,8 +15,6 @@ public class VillageServerModule extends TablistModule {
                 new TablistEntry(getCentered("§3§lServer Info"), TablistSkinRegistry.CYAN)
         ));
 
-        entries.add(getGrayEntry());
-
         entries.add(new TablistEntry("§b§lArea: §7Private Island", TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Server: §8mini" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
 

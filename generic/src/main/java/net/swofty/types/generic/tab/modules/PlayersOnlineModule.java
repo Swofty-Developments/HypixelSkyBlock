@@ -55,7 +55,6 @@ public class PlayersOnlineModule extends TablistModule {
             entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
         }
 
-
         return entries;
     }
 }

@@ -26,11 +26,11 @@ public abstract class TablistModule {
         // Pad text with spaces so that the entire string is 24 characters long
         // This will center the text on the tablist
 
-        if (text.length() > 24) {
-            return text.substring(0, 24);
+        if (text.length() > 30) {
+            return text.substring(0, 30);
         }
 
-        int spaces = (24 - text.length()) / 2;
+        int spaces = (30 - text.length()) / 2;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < spaces; i++) {
             builder.append(" ");

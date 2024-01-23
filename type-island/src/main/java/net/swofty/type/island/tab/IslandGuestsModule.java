@@ -1,10 +1,14 @@
 package net.swofty.type.island.tab;
 
+import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.TablistSkinRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class IslandGuestsModule extends TablistModule {
@@ -13,7 +17,6 @@ public class IslandGuestsModule extends TablistModule {
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
                 new TablistEntry(getCentered("§d§lGuests"), TablistSkinRegistry.PURPLE)
         ));
-
 
         fillRestWithGray(entries);
 

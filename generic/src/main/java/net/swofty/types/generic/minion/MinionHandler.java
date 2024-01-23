@@ -157,7 +157,7 @@ public record MinionHandler(Scheduler scheduler) {
                 ServerHolograms.removeExternalHologram(associatedHologram);
         }
 
-        enum State {
+        public enum State {
             IDLE,
             NOT_PERFECT,
             ROTATING
