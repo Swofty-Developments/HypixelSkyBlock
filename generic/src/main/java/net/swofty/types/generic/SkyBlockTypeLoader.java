@@ -8,6 +8,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.tab.TablistManager;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -21,6 +22,8 @@ public interface SkyBlockTypeLoader {
     void onInitialize(MinecraftServer server);
 
     LoaderValues getLoaderValues();
+
+    TablistManager getTablistManager();
 
     List<SkyBlockEvent> getTraditionalEvents();
 

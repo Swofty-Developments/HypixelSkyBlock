@@ -4,11 +4,17 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
+import net.swofty.type.island.tab.IslandGuestsModule;
+import net.swofty.type.island.tab.IslandMemberModule;
+import net.swofty.type.island.tab.IslandServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.minion.MinionHandler;
+import net.swofty.types.generic.tab.TablistManager;
+import net.swofty.types.generic.tab.TablistModule;
+import net.swofty.types.generic.tab.modules.AccountInformationModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -38,6 +44,21 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
                 new Pos(0, 100 ,0), // Spawn position
                 true // Announce death messages
         );
+    }
+
+    @Override
+    public TablistManager getTablistManager() {
+        return new TablistManager() {
+            @Override
+            public List<TablistModule> getModules() {
+                return new ArrayList<>(List.of(
+                        new IslandMemberModule(),
+                        new IslandGuestsModule(),
+                        new IslandServerModule(),
+                        new AccountInformationModule()
+                ));
+            }
+        };
     }
 
     @Override

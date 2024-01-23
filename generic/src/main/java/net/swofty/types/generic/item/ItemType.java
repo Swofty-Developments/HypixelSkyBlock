@@ -7,6 +7,7 @@ import net.swofty.types.generic.item.items.armor.LeafletHat;
 import net.swofty.types.generic.item.items.armor.LeafletPants;
 import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
+import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
@@ -42,6 +43,16 @@ public enum ItemType {
      * Minions
      */
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
+
+    /**
+     * Backpacks
+     */
+    SMALL_BACKPACK(Material.PLAYER_HEAD, Rarity.UNCOMMON, SmallBackpack.class),
+    MEDIUM_BACKPACK(Material.PLAYER_HEAD, Rarity.RARE, MediumBackpack.class),
+    LARGE_BACKPACK(Material.PLAYER_HEAD, Rarity.EPIC, LargeBackpack.class),
+    GREATER_BACKPACK(Material.PLAYER_HEAD, Rarity.EPIC, GreaterBackpack.class),
+    JUMBO_BACKPACK(Material.PLAYER_HEAD, Rarity.LEGENDARY, JumboBackpack.class),
+    JUMBO_BACKPACK_UPGRADE(Material.PLAYER_HEAD, Rarity.SPECIAL, JumboBackpackUpgrade.class),
 
     /**
      * Farming Props
@@ -209,7 +220,7 @@ public enum ItemType {
     }
 
     public String getDisplayName() {
-        return StringUtility.toNormalCase(this.name());
+        return this.rarity.getColor() + StringUtility.toNormalCase(this.name());
     }
 
     public static ItemType get(String name) {

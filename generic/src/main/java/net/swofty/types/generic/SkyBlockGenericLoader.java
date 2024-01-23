@@ -144,6 +144,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         DataHandler.startRepeatSetValueLoop();
 
         /**
+         * Start Tablist loop
+         */
+        typeLoader.getTablistManager().runScheduler(MinecraftServer.getSchedulerManager());
+
+        /**
          * Register packet events
          */
         loopThroughPackage("net.swofty.types.generic.packet.packets.client", SkyBlockPacketClientListener.class)

@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.*;
+import net.swofty.types.generic.item.impl.Backpack;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.LeatherColour;
 import net.swofty.types.generic.item.impl.Minion;
@@ -41,6 +42,24 @@ public class AttributeHandler {
         if (item.getGenericInstance() instanceof LeatherColour colour)
             return colour.getLeatherColour();
         return null;
+    }
+
+    public ItemAttributeBackpackData.BackpackData getBackpackData() {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
+        if (item.getGenericInstance() instanceof Backpack) {
+            return ((ItemAttributeBackpackData) item.getAttribute("backpack_data")).getValue();
+        } else {
+            throw new RuntimeException("Item is not a backpack");
+        }
+    }
+
+    public void setBackpackData(ItemAttributeBackpackData.BackpackData data) {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
+        if (item.getGenericInstance() instanceof Backpack) {
+            ((ItemAttributeBackpackData) item.getAttribute("backpack_data")).setValue(data);
+        } else {
+            throw new RuntimeException("Item is not a backpack");
+        }
     }
 
     public @Nullable ItemType getItemTypeAsType() {

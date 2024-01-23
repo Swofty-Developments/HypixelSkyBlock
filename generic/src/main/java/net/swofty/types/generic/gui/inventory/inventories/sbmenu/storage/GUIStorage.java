@@ -8,13 +8,20 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Backpack;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.List;
+import java.util.Map;
 
 public class GUIStorage extends SkyBlockInventoryGUI {
     public GUIStorage() {
@@ -31,6 +38,15 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         "§7Store global items you can",
                         "§7access anywhere in your ender",
                         "§7chest.");
+            }
+        });
+        set(new GUIItem(22) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
+                        "§7Place backpack items in these slots",
+                        "§7to use them as additional storage",
+                        "§7that can be accessed anywhere.");
             }
         });
     }
@@ -79,6 +95,93 @@ public class GUIStorage extends SkyBlockInventoryGUI {
             });
         }
 
+        DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
+                DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+        ).getValue();
+
+        Map<Integer, SkyBlockItem> backpackItems = backpacks.backpacks();
+
+        for (int backpack_slot = 27; backpack_slot < 44; backpack_slot++) {
+            int slot = backpack_slot - 26;
+
+            if (backpacks.unlockedSlots() < slot) {
+                set(new GUIItem(backpack_slot) {
+                    @Override
+                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
+                                Material.GRAY_DYE, 1,
+                                "§7Talk to Tia the Fairy to unlock more",
+                                "§7Backpack Slots!");
+                    }
+                });
+                continue;
+            }
+
+            if (!backpackItems.containsKey(slot)) {
+                set(new GUIClickableItem(backpack_slot) {
+                    @Override
+                    public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
+                        SkyBlockItem item = new SkyBlockItem(e2.getCursorItem());
+
+                        if (item.isNA()) return;
+                        if (!(item.getGenericInstance() instanceof Backpack)) return;
+
+                        backpackItems.put(slot, item);
+                        player.getInventory().setCursorItem(ItemStack.AIR);
+                        e2.setCursorItem(ItemStack.AIR);
+
+                        player.sendMessage("§ePlacing backpack in slot " + slot + "...");
+                        player.sendMessage("§aSuccess!");
+
+                        onOpen(e);
+                    }
+
+                    @Override
+                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        return ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
+                                Material.BROWN_STAINED_GLASS_PANE, slot,
+                                " ",
+                                "§eLeft-click a backpack item on this",
+                                "§eslot to place it!");
+                    }
+                });
+                continue;
+            }
+
+            SkyBlockItem item = backpackItems.get(slot);
+
+            set(new GUIClickableItem(backpack_slot) {
+                @Override
+                public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
+                    if (e2.getClickType() == ClickType.RIGHT_CLICK) {
+                        if (!item.getAttributeHandler().getBackpackData().items().isEmpty()) {
+                            player.sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
+                            return;
+                        }
+
+                        player.sendMessage("§aRemoved backpack from slot " + slot + "!");
+
+                        backpackItems.remove(slot);
+                        onOpen(e);
+                        return;
+                    }
+
+
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
+                            ((SkullHead) item.getGenericInstance()).getSkullTexture(player, item), slot,
+                            item.getAttributeHandler().getItemTypeAsType().getDisplayName(),
+                            "§7This backpack has §a" + (((Backpack) item.getGenericInstance()).getRows() * 9) + " §7slots.",
+                            " ",
+                            "§eLeft-click to open!",
+                            "§eRight-click to remove!");
+                }
+            });
+        }
+
         updateItemStacks(getInventory(), getPlayer());
     }
 
@@ -99,6 +202,15 @@ public class GUIStorage extends SkyBlockInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+        ItemStack stack = e.getClickedItem();
+        SkyBlockItem item = new SkyBlockItem(stack);
+
+        if (item.isNA()) return;
+
+        if (item.getGenericInstance() == null)
+            e.setCancelled(true);
+
+        if (!(item.getGenericInstance() instanceof Backpack))
+            e.setCancelled(true);
     }
 }

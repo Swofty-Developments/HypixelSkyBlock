@@ -163,7 +163,7 @@ public class DataHandler {
             // Delay this as player needs to be loaded
             MathUtility.delay(() -> {
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
-                Team team = new TeamBuilder(teamName, MinecraftServer.getTeamManager())
+                Team team = new TeamBuilder("ZZZZZ" + teamName, MinecraftServer.getTeamManager())
                         .prefix(Component.text(rank.getPrefix()))
                         .teamColor(rank.getTextColor())
                         .build();
@@ -280,6 +280,7 @@ public class DataHandler {
         COLLECTION("collection", false, true, false, DatapointCollection.class, new DatapointCollection("collection")),
         MINION_DATA("minions", false, true, false, DatapointMinionData.class, new DatapointMinionData("minions")),
         STORAGE("storage", false, false, false, DatapointStorage.class, new DatapointStorage("storage")),
+        BACKPACKS("backpacks", false, false, false, DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
         ;
 
         @Getter
