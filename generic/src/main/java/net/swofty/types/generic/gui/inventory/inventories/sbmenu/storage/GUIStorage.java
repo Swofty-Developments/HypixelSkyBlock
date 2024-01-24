@@ -127,11 +127,16 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         if (!(item.getGenericInstance() instanceof Backpack)) return;
 
                         backpackItems.put(slot, item);
+                        player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
+                                new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.unlockedSlots())
+                        );
                         player.getInventory().setCursorItem(ItemStack.AIR);
                         e2.setCursorItem(ItemStack.AIR);
 
                         player.sendMessage("§ePlacing backpack in slot " + slot + "...");
                         player.sendMessage("§aSuccess!");
+
+                        e2.setCancelled(false);
 
                         onOpen(e);
                     }

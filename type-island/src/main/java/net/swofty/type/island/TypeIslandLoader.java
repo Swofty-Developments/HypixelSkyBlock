@@ -10,6 +10,8 @@ import net.swofty.type.island.tab.IslandServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
+import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.minion.MinionHandler;
 import net.swofty.types.generic.tab.TablistManager;
@@ -80,6 +82,16 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
                 "net.swofty.type.island.events.custom",
                 SkyBlockEvent.class
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SkyBlockNPC> getNPCs() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<SkyBlockVillagerNPC> getVillagerNPCs() {
+        return new ArrayList<>();
     }
 
     @Override

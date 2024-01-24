@@ -10,6 +10,9 @@ import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.entity.mob.MobRegistry;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
+import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
@@ -72,6 +75,26 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<SkyBlockEvent> getCustomEvents() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<SkyBlockNPC> getNPCs() {
+        List<SkyBlockNPC> npcs = new ArrayList<>();
+        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.village.npcs",
+                SkyBlockNPC.class
+        ).toList());
+        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.village.npcs",
+                NPCDialogue.class
+        ).toList());
+
+        return npcs;
+    }
+
+    @Override
+    public List<SkyBlockVillagerNPC> getVillagerNPCs() {
         return new ArrayList<>();
     }
 

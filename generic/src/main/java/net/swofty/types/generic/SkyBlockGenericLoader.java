@@ -121,6 +121,9 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     .forEach(SkyBlockVillagerNPC::register);
             loopThroughPackage("net.swofty.types.generic.entity.villager.villagers", NPCVillagerDialogue.class)
                     .forEach(SkyBlockVillagerNPC::register);
+
+            typeLoader.getNPCs().forEach(SkyBlockNPC::register);
+            typeLoader.getVillagerNPCs().forEach(SkyBlockVillagerNPC::register);
         }
 
         /**

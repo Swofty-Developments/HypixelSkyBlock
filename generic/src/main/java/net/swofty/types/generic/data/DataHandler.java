@@ -281,6 +281,7 @@ public class DataHandler {
         MINION_DATA("minions", false, true, false, DatapointMinionData.class, new DatapointMinionData("minions")),
         STORAGE("storage", false, false, false, DatapointStorage.class, new DatapointStorage("storage")),
         BACKPACKS("backpacks", false, false, false, DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
+        VISITED_REGIONS("visited_regions", false, false, false, DatapointStringList.class, new DatapointStringList("visited_regions")),
         ;
 
         @Getter
