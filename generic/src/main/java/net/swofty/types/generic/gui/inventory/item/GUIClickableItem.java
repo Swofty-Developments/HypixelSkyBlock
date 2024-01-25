@@ -1,5 +1,6 @@
 package net.swofty.types.generic.gui.inventory.item;
 
+import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -14,6 +15,8 @@ public abstract class GUIClickableItem extends GUIItem {
     }
 
     public abstract void run(InventoryPreClickEvent e, SkyBlockPlayer player);
+
+    public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {}
 
     public static GUIClickableItem getCloseItem(int slot) {
         return new GUIClickableItem(slot) {

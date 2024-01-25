@@ -220,7 +220,7 @@ public enum ItemType {
     }
 
     public String getDisplayName() {
-        return this.rarity.getColor() + StringUtility.toNormalCase(this.name());
+        return StringUtility.toNormalCase(this.name());
     }
 
     public static ItemType get(String name) {

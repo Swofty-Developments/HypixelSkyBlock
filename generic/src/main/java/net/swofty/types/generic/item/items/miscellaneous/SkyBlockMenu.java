@@ -45,6 +45,8 @@ public class SkyBlockMenu implements CustomSkyBlockItem, Interactable {
     @Override
     public boolean onInventoryInteract(SkyBlockPlayer player, SkyBlockItem item) {
         if (!player.getInventory().getCursorItem().isAir()) return true;
+        if (player.getOpenInventory() != null && !player.getOpenInventory().getCursorItem(player).isAir())
+            return true;
 
         new GUISkyBlockMenu().open(player);
         return true;

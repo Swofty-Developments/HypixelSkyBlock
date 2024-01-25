@@ -1,5 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage;
 
+import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -18,6 +19,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Backpack;
 import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -101,7 +103,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
 
         Map<Integer, SkyBlockItem> backpackItems = backpacks.backpacks();
 
-        for (int backpack_slot = 27; backpack_slot < 44; backpack_slot++) {
+        for (int backpack_slot = 27; backpack_slot <= 44; backpack_slot++) {
             int slot = backpack_slot - 26;
 
             if (backpacks.unlockedSlots() < slot) {
@@ -120,7 +122,18 @@ public class GUIStorage extends SkyBlockInventoryGUI {
             if (!backpackItems.containsKey(slot)) {
                 set(new GUIClickableItem(backpack_slot) {
                     @Override
-                    public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
+                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
+
+                        if (item.isNA()) return;
+                        if (!(item.getGenericInstance() instanceof Backpack)) return;
+
+                        e.setClickedItem(ItemStack.AIR);
+                        e.setCancelled(false);
+                    }
+
+                    @Override
+                    public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
                         SkyBlockItem item = new SkyBlockItem(e2.getCursorItem());
 
                         if (item.isNA()) return;
@@ -130,13 +143,9 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
                                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.unlockedSlots())
                         );
-                        player.getInventory().setCursorItem(ItemStack.AIR);
-                        e2.setCursorItem(ItemStack.AIR);
 
                         player.sendMessage("§ePlacing backpack in slot " + slot + "...");
                         player.sendMessage("§aSuccess!");
-
-                        e2.setCancelled(false);
 
                         onOpen(e);
                     }
@@ -165,20 +174,25 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         }
 
                         player.sendMessage("§aRemoved backpack from slot " + slot + "!");
+                        e2.setClickedItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
+                        e2.setCancelled(false);
 
                         backpackItems.remove(slot);
-                        onOpen(e);
                         return;
                     }
+                }
 
-
+                @Override
+                public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
+                    onOpen(e);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
                             ((SkullHead) item.getGenericInstance()).getSkullTexture(player, item), slot,
-                            item.getAttributeHandler().getItemTypeAsType().getDisplayName(),
+                            item.getAttributeHandler().getRarity().getColor() +
+                                    item.getAttributeHandler().getItemTypeAsType().getDisplayName(),
                             "§7This backpack has §a" + (((Backpack) item.getGenericInstance()).getRows() * 9) + " §7slots.",
                             " ",
                             "§eLeft-click to open!",

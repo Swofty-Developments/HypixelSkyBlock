@@ -37,7 +37,7 @@ public abstract class SkyBlockInventoryGUI {
      * @param a the item you want to set
      */
     public void set(GUIItem a) {
-        items.removeIf(i -> i.slot == a.slot);
+        items.removeIf(i -> i.itemSlot == a.itemSlot);
         items.add(a);
     }
 
@@ -50,7 +50,7 @@ public abstract class SkyBlockInventoryGUI {
      */
     public void set(int slot, ItemStack.Builder stack, boolean pickup) {
         if (stack == null) {
-            items.removeIf(i -> i.slot == slot);
+            items.removeIf(i -> i.itemSlot == slot);
             return;
         }
         set(new GUIItem(slot) {
@@ -85,7 +85,7 @@ public abstract class SkyBlockInventoryGUI {
      */
     public GUIItem get(int slot) {
         for (GUIItem item : items) {
-            if (item.slot == slot)
+            if (item.itemSlot == slot)
                 return item;
         }
         return null;
@@ -116,7 +116,7 @@ public abstract class SkyBlockInventoryGUI {
         for (int y = topLeft; y <= bottomLeft; y += 9) {
             for (int x = y; x <= topRight - topLeft + y; x++) {
                 int f = x;
-                if (items.stream().filter(item -> item.slot == f).toArray().length != 0 && !overwrite)
+                if (items.stream().filter(item -> item.itemSlot == f).toArray().length != 0 && !overwrite)
                     continue;
                 set(x, stack, pickup);
             }
@@ -192,7 +192,7 @@ public abstract class SkyBlockInventoryGUI {
         for (int y = topLeft; y <= bottomLeft; y += 9) {
             for (int x = y; x <= topRight - topLeft + y; x++) {
                 int f = x;
-                if (items.stream().filter(item -> item.slot == f).toArray().length != 0 && !overwrite)
+                if (items.stream().filter(item -> item.itemSlot == f).toArray().length != 0 && !overwrite)
                     continue;
                 if (y == topLeft || y == bottomLeft)
                     set(x, stack, pickup);
@@ -245,7 +245,7 @@ public abstract class SkyBlockInventoryGUI {
     public int firstEmpty() {
         for (int i = 0; i < size.getSize(); i++) {
             int finalI = i;
-            long found = items.stream().filter((item) -> item.slot == finalI).count();
+            long found = items.stream().filter((item) -> item.itemSlot == finalI).count();
             if (found == 0)
                 return i;
         }
@@ -349,8 +349,8 @@ public abstract class SkyBlockInventoryGUI {
     public void updateItemStacks(Inventory inventory, SkyBlockPlayer player) {
         for (GUIItem item : items) {
             ItemStack toReplace = item.getItem(player).build();
-            if (!inventory.getItemStack(item.slot).equals(toReplace))
-                inventory.setItemStack(item.slot, toReplace);
+            if (!inventory.getItemStack(item.itemSlot).equals(toReplace))
+                inventory.setItemStack(item.itemSlot, toReplace);
         }
     }
 
