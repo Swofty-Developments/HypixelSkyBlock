@@ -1,6 +1,7 @@
 package net.swofty.types.generic.entity.hologram;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
@@ -61,6 +62,7 @@ public enum ServerHolograms {
     }
 
     @Builder
+    @Getter
     public static class ExternalHologram {
         private final Instance instance;
         private final Pos pos;

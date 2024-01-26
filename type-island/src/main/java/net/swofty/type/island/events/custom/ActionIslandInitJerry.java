@@ -6,6 +6,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
+import net.swofty.types.generic.utility.JerryInformation;
 
 @EventParameters(description = "Handles creating Jerry on the players Island",
         node = EventNodes.CUSTOM,
@@ -20,8 +21,8 @@ public class ActionIslandInitJerry extends SkyBlockEvent {
     public void run(Event tempEvent) {
         IslandFirstCreatedEvent event = (IslandFirstCreatedEvent) tempEvent;
 
-        event.getIsland().setJerryPosition(
-                new Pos(2.5, 100, 24.5, 145, 0)
+        event.getIsland().setJerryInformation(
+                new JerryInformation(null, new Pos(2.5, 100, 24.5, 145, 0), null)
         );
     }
 }

@@ -5,6 +5,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
+import net.swofty.types.generic.utility.JerryInformation;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -26,9 +27,14 @@ public class ActionIslandLoadJerry extends SkyBlockEvent {
         IslandFetchedFromDatabaseEvent event = (IslandFetchedFromDatabaseEvent) tempEvent;
 
         Document document = event.getIsland().getDatabase().getDocument();
+        JerryInformation jerryInformation = event.getIsland().getJerryInformation();
+
+        if (jerryInformation == null) {
+            jerryInformation = new JerryInformation(null, null, null);
+        }
 
         if (document != null && document.getDouble("jerry_position_x") != null) {
-            event.getIsland().setJerryPosition(
+            jerryInformation.setJerryPosition(
                     new Pos(
                             document.getDouble("jerry_position_x"),
                             document.getDouble("jerry_position_y"),
@@ -42,14 +48,22 @@ public class ActionIslandLoadJerry extends SkyBlockEvent {
         Entity jerry = new Entity(EntityType.VILLAGER);
         jerry.setInstance(
                 event.getIsland().getIslandInstance(),
-                event.getIsland().getJerryPosition()
+                jerryInformation.getJerryPosition()
         );
 
-        ServerHolograms.addExternalHologram(ServerHolograms.ExternalHologram.builder()
+        jerryInformation.setJerry(jerry);
+
+        ServerHolograms.ExternalHologram hologram = ServerHolograms.ExternalHologram.builder()
                 .text(new String[]{"§6§lNEW UPDATE", "Jerry", "§e§lCLICK"})
                 .instance(event.getIsland().getIslandInstance())
-                .pos(event.getIsland().getJerryPosition().add(0, 1, 0))
-                .build());
+                .pos(jerryInformation.getJerryPosition().add(0, 1, 0))
+                .build();
+
+        ServerHolograms.addExternalHologram(hologram);
+
+        jerryInformation.setHologram(hologram);
+
+        event.getIsland().setJerryInformation(jerryInformation);
 
         event.getMembersOnline().forEach(player -> {
             jerry.addViewer(player);

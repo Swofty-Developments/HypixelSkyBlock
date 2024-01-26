@@ -253,6 +253,10 @@ public class SkyBlockPlayer extends Player {
         this.getInventory().addItemStack(toAdd);
     }
 
+    public void addAndUpdateItem(ItemType item) {
+        addAndUpdateItem(new SkyBlockItem(item));
+    }
+
     public void addAndUpdateItem(ItemStack item) {
         addAndUpdateItem(new SkyBlockItem(item));
     }

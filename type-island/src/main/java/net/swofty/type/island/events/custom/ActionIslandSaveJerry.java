@@ -5,6 +5,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
+import net.swofty.types.generic.utility.JerryInformation;
 
 @EventParameters(description = "Handles Jerry on the players Island",
         node = EventNodes.CUSTOM,
@@ -19,13 +20,12 @@ public class ActionIslandSaveJerry extends SkyBlockEvent {
     public void run(Event tempEvent) {
         IslandSavedIntoDatabaseEvent event = (IslandSavedIntoDatabaseEvent) tempEvent;
 
-        if (event.getIsland().getJerryPosition() == null)
-            return;
+        JerryInformation jerryInformation = event.getIsland().getJerryInformation();
 
-        event.getIsland().getDatabase().insertOrUpdate("jerry_position_x", event.getIsland().getJerryPosition().x());
-        event.getIsland().getDatabase().insertOrUpdate("jerry_position_y", event.getIsland().getJerryPosition().y());
-        event.getIsland().getDatabase().insertOrUpdate("jerry_position_z", event.getIsland().getJerryPosition().z());
-        event.getIsland().getDatabase().insertOrUpdate("jerry_position_yaw", (double) event.getIsland().getJerryPosition().yaw());
-        event.getIsland().getDatabase().insertOrUpdate("jerry_position_pitch", (double) event.getIsland().getJerryPosition().pitch());
+        event.getIsland().getDatabase().insertOrUpdate("jerry_position_x", jerryInformation.getJerryPosition().x());
+        event.getIsland().getDatabase().insertOrUpdate("jerry_position_y", jerryInformation.getJerryPosition().y());
+        event.getIsland().getDatabase().insertOrUpdate("jerry_position_z", jerryInformation.getJerryPosition().z());
+        event.getIsland().getDatabase().insertOrUpdate("jerry_position_yaw", (double) jerryInformation.getJerryPosition().yaw());
+        event.getIsland().getDatabase().insertOrUpdate("jerry_position_pitch", (double) jerryInformation.getJerryPosition().pitch());
     }
 }
