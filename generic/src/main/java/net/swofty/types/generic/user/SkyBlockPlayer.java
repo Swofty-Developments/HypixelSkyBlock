@@ -127,6 +127,10 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
     }
 
+    public DatapointSkills.PlayerSkills getSkills() {
+        return getDataHandler().get(DataHandler.Data.SKILLS, DatapointSkills.class).getValue();
+    }
+
     public boolean isOnIsland() {
         return getInstance() != null && getInstance() != SkyBlockConst.getInstanceContainer();
     }

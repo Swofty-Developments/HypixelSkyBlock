@@ -82,16 +82,16 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return ItemStack.builder(material).meta(meta -> {
+        return ItemStack.builder(material).amount(amount).lore(copiedLore.stream()
+                .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                .collect(Collectors.toList())).meta(meta -> {
             meta.damage(data);
             meta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
             meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES);
             meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
             meta.hideFlag(ItemHideFlag.HIDE_POTION_EFFECTS);
             meta.hideFlag(ItemHideFlag.HIDE_UNBREAKABLE);
-        }).amount(amount).lore(copiedLore.stream()
-                .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
-                .collect(Collectors.toList()));
+        });
     }
 
     public static ItemStack.Builder getStackHead(String name, String texture, int amount, String... lore) {

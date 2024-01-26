@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -6,27 +6,26 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.collection.CollectionCategories;
-import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class GUICollections extends SkyBlockInventoryGUI {
+public class GUISkills extends SkyBlockInventoryGUI {
     private final int[] displaySlots = {
             20, 21, 22, 23, 24,
-                    31
+            31
     };
 
-    public GUICollections() {
-        super("Collections", InventoryType.CHEST_6_ROW);
+    public GUISkills() {
+        super("Your Skills", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -35,52 +34,55 @@ public class GUICollections extends SkyBlockInventoryGUI {
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
 
-        ArrayList<CollectionCategory> allCategories = CollectionCategories.getCategories();
+        SkillCategories[] allCategories = SkillCategories.values();
 
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7View all of the items available in",
-                        "§7SkyBlock. Collect more of an item to",
-                        "§7unlock rewards on your way to",
-                        "§7becoming a master of SkyBlock!",
-                        " "
-                ));
-
-                player.getCollection().getDisplay(lore);
-
-                lore.add(" ");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack("§aCollections", Material.PAINTING, 1, lore.toArray(new String[0]));
+                return ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
+                        "§7View your Skill progression and",
+                        "§7rewards.");
             }
         });
 
         int index = 0;
         for (int slot : displaySlots) {
-            CollectionCategory category = allCategories.get(index);
-
-            ArrayList<String> display = new ArrayList<>();
-            getPlayer().getCollection().getDisplay(display, category);
+            SkillCategories category = allCategories[index];
+            SkillCategory skillCategory = category.asCategory();
 
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUICollectionCategory(category, display).open(player);
+                    new GUISkillCategory(category).open(player);
                 }
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                            "§7View your " + category.getName() + " Collections!",
-                            " "
-                    ));
+                    ArrayList<String> lore = new ArrayList<>(skillCategory.getDescription());
+                    lore.add(" ");
 
-                    lore.addAll(display);
+                    Integer nextLevel = player.getSkills().getNextLevel(category);
+
+                    if (nextLevel != null) {
+                        player.getSkills().getDisplay(lore, category, skillCategory.getRewards()[nextLevel - 1].requirement(),
+                                "§7Progress to Level " + StringUtility.getAsRomanNumeral(nextLevel) + ": ");
+                        lore.add(" ");
+
+                        SkillCategory.SkillReward[] rewards = skillCategory.getRewards();
+                        SkillCategory.SkillReward reward = rewards[nextLevel - 1];
+
+                        reward.getDisplay(lore);
+                    } else {
+                        lore.add("§cMax Level Reached!");
+                    }
+
+                    lore.add(" ");
+                    lore.add("§eClick to view!");
 
                     return ItemStackCreator.getStack(
-                            "§a" + category.getName() + " Collections", category.getDisplayIcon(),
-                            1, lore);
+                            "§a" + skillCategory.getName() +
+                                    StringUtility.getAsRomanNumeral(player.getSkills().getCurrentLevel(category)),
+                            skillCategory.getDisplayIcon(), 1, lore);
                 }
             });
 

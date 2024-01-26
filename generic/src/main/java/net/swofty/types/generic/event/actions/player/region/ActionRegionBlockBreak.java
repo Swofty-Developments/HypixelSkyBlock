@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -56,14 +57,22 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         }
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
+
+        SkyBlockItem item;
+        if (ItemDropChanger.get(material) != null) {
+            item = ItemDropChanger.get(material).getItemSupplier().get();
+        } else {
+            item = new SkyBlockItem(material);
+        }
+
         SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
-                player, block, playerBreakEvent.getBlockPosition()
+                player, item.getMaterial().block(), playerBreakEvent.getBlockPosition()
         ));
 
         /**
          * Handle block dropping
          */
-        DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(new SkyBlockItem(material), player);
+        DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
         Pos pos = Pos.fromPoint(playerBreakEvent.getBlockPosition());
         // Move the dropped item to the center of the block
         pos = pos.add(0.5, 0.5, 0.5);

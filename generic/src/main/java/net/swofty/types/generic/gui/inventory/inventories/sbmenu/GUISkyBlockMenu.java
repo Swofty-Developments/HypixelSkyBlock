@@ -12,6 +12,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkills;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -107,6 +108,22 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, (short) 0, 1,
                         "§7View your active quests, progress",
                         "§7and rewards.",
+                        " ",
+                        "§eClick to view!");
+            }
+        });
+
+        set(new GUIClickableItem(19) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUISkills().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aYour Skills", Material.DIAMOND_SWORD, 1,
+                        "§7View your Skill progression and",
+                        "§7rewards.",
                         " ",
                         "§eClick to view!");
             }

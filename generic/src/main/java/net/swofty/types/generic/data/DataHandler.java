@@ -229,6 +229,7 @@ public class DataHandler {
             }
             return new DatapointInventory("inventory", skyBlockInventory);
         }),
+        SKILLS("skills", false, false, false, DatapointSkills.class, new DatapointSkills("skills")),
         IGN_LOWER("ignLowercase", true, false, false, DatapointString.class, new DatapointString("ignLowercase", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername().toLowerCase());

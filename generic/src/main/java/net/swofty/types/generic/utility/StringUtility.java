@@ -36,6 +36,9 @@ public class StringUtility {
     }
 
     public static String getAsRomanNumeral(int num) {
+        if (num == 0)
+            return "";
+
         StringBuilder sb = new StringBuilder();
         int times;
         String[] romans = new String[]{"I", "IV", "V", "IX", "X", "XL", "L",

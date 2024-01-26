@@ -102,6 +102,11 @@ public enum RegionType {
         return miningHandler;
     }
 
+    @Override
+    public String toString() {
+        return color + name;
+    }
+
     public static RegionType getByID(int id) {
         return RegionType.values()[id];
     }

@@ -20,6 +20,7 @@ import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
+import net.swofty.types.generic.item.items.vanilla.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
 import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
@@ -112,7 +113,7 @@ public enum ItemType {
     CARROT(Material.CARROT, Rarity.COMMON),
     CHARCOAL(Material.CHARCOAL, Rarity.COMMON),
     COAL(Material.COAL, Rarity.COMMON),
-    COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON),
+    COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON, Cobblestone.class),
     COCOA(Material.COCOA_BEANS, Rarity.COMMON),
     DARK_OAK_WOOD(Material.DARK_OAK_WOOD, Rarity.COMMON),
     DIAMOND(Material.DIAMOND, Rarity.COMMON),
