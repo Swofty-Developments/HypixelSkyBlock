@@ -61,7 +61,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
         List<SkyBlockRecipe<?>> recipes = null;
         try {
             recipes = ((Craftable) item.getGenericInstance()).getRecipes();
-        } catch (ClassCastException e2) {
+        } catch (NullPointerException | ClassCastException e2) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;

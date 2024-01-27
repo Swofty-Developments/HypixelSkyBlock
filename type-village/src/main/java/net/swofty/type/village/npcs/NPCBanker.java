@@ -1,4 +1,4 @@
-package net.swofty.type.village.npcs.npcs;
+package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;

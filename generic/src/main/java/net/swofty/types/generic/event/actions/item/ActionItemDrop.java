@@ -26,6 +26,12 @@ public class ActionItemDrop extends SkyBlockEvent {
     public void run(Event tempEvent) {
         ItemDropEvent event = (ItemDropEvent) tempEvent;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+
+        if (new SkyBlockItem(event.getItemStack()).getAttributeHandler().getItemType().toLowerCase().contains("menu")) {
+            event.setCancelled(true);
+            return;
+        }
+
         boolean hideMessage = player.getDataHandler().get(
                 DataHandler.Data.DISABLE_DROP_MESSAGE, DatapointBoolean.class
         ).getValue();

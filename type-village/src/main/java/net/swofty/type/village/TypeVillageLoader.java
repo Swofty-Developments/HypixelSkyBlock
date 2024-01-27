@@ -6,6 +6,7 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.type.village.mobs.MobGraveyardZombie;
+import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -34,6 +35,15 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public void onInitialize(MinecraftServer server) {
         Logger.info("TypeVillageLoader initialized!");
+    }
+
+    @Override
+    public void afterInitialize(MinecraftServer server) {
+        RuneEntityImpl firstStone = new RuneEntityImpl(new Pos(-37.2, 68.40, -129.15, 0, 0f), false);
+        RuneEntityImpl secondStone = new RuneEntityImpl(new Pos( -37.82, 68.40, -129.15, 0, 0f), false);
+        RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.2, 68.40, -129.775, 0, 0f), false);
+        RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.82, 68.40, -129.775, 0, 0f), false);
+        RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.5, 69.20, -129.4, -70, 0f), true);
     }
 
     @Override

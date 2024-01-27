@@ -311,6 +311,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          * Handle ConnectionManager
          */
         MinecraftServer.getConnectionManager().setPlayerProvider(SkyBlockPlayer::new);
+
+        typeLoader.afterInitialize(server);
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {

@@ -23,6 +23,8 @@ public interface SkyBlockTypeLoader {
 
     void onInitialize(MinecraftServer server);
 
+    void afterInitialize(MinecraftServer server);
+
     LoaderValues getLoaderValues();
 
     TablistManager getTablistManager();

@@ -41,6 +41,11 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     }
 
     @Override
+    public void afterInitialize(MinecraftServer server) {
+
+    }
+
+    @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 new Pos(0, 100 ,0), // Spawn position
