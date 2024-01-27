@@ -1,6 +1,7 @@
 package net.swofty.types.generic.skill.skills;
 
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategory;
 
 import java.util.List;
@@ -27,6 +28,41 @@ public class MiningSkill extends SkillCategory {
 
     @Override
     public SkillReward[] getRewards() {
-        return new SkillReward[0];
+        return List.of(
+                new SkillReward(1, 50,
+                        new RegionReward() {
+                            @Override
+                            public RegionType getRegion() {
+                                return RegionType.GOLD_MINE;
+                            }
+                        },
+                        new XPReward() {
+                            @Override
+                            public int getXP() {
+                                return 5;
+                            }
+                        },
+                        new CoinReward() {
+                            @Override
+                            public int getCoins() {
+                                return 100;
+                            }
+                        }
+                ),
+                new SkillReward(2, 100,
+                        new XPReward() {
+                            @Override
+                            public int getXP() {
+                                return 5;
+                            }
+                        },
+                        new CoinReward() {
+                            @Override
+                            public int getCoins() {
+                                return 250;
+                            }
+                        }
+                )
+        ).toArray(SkillReward[]::new);
     }
 }

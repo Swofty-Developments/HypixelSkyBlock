@@ -21,12 +21,12 @@ public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
     public ItemStatistics loadFromString(String string) {
         String[] split = string.split(",");
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, Integer.parseInt(split[0]))
-                .with(ItemStatistic.DEFENSE, Integer.parseInt(split[1]))
-                .with(ItemStatistic.HEALTH, Integer.parseInt(split[2]))
-                .with(ItemStatistic.INTELLIGENCE, Integer.parseInt(split[3]))
-                .with(ItemStatistic.STRENGTH, Integer.parseInt(split[4]))
-                .with(ItemStatistic.MINING_SPEED, MathUtility.arrayDValue(split, 5, 0))
+                .with(ItemStatistic.DAMAGE, Double.parseDouble(split[0]))
+                .with(ItemStatistic.DEFENSE, Double.parseDouble(split[1]))
+                .with(ItemStatistic.HEALTH, Double.parseDouble(split[2]))
+                .with(ItemStatistic.INTELLIGENCE, Double.parseDouble(split[3]))
+                .with(ItemStatistic.STRENGTH, Double.parseDouble(split[4]))
+                .with(ItemStatistic.MINING_SPEED, Double.parseDouble(split[5]))
                 .build();
     }
 
@@ -40,6 +40,8 @@ public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
                 "," +
                 this.value.get(ItemStatistic.INTELLIGENCE) +
                 "," +
-                this.value.get(ItemStatistic.STRENGTH);
+                this.value.get(ItemStatistic.STRENGTH) +
+                "," +
+                this.value.get(ItemStatistic.MINING_SPEED);
     }
 }

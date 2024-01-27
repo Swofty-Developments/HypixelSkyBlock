@@ -14,7 +14,7 @@ public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 1)
+                .with(ItemStatistic.MINING_SPEED, 1D)
                 .build();
     }
 

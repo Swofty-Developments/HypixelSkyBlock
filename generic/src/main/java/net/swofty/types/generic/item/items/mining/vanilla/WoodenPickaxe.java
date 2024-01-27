@@ -19,8 +19,8 @@ public class WoodenPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarit
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 70)
-                .with(ItemStatistic.DAMAGE, 15)
+                .with(ItemStatistic.MINING_SPEED, 70D)
+                .with(ItemStatistic.DAMAGE, 15D)
                 .build();
     }
 

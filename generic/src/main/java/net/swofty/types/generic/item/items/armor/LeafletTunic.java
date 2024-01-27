@@ -18,7 +18,7 @@ import java.util.Map;
 public class LeafletTunic implements CustomSkyBlockItem, Reforgable, ExtraRarityDisplay, LeatherColour, Sellable, Craftable {
     @Override
     public ItemStatistics getStatistics() {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 35).build();
+        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 35D).build();
     }
 
     @Override

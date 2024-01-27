@@ -45,17 +45,16 @@ public enum ReforgeType {
             return Set.copyOf(set.stream().map(ReforgeSet::statistic).toList());
         }
 
-        public Integer getBonusCalculation(ItemStatistic statistic, Integer level) {
+        public Double getBonusCalculation(ItemStatistic statistic, Integer level) {
             try {
-                return Math.toIntExact(Math.round(set
-                        .stream()
+                return set.stream()
                         .filter(reforgeSet -> reforgeSet.statistic() == statistic)
                         .findFirst()
                         .orElseThrow()
                         .bonusCalculation()
-                        .apply(level)));
+                        .apply(level);
             } catch (NoSuchElementException ex) {
-                return 0;
+                return 0D;
             }
         }
 

@@ -10,10 +10,10 @@ public class ItemStatistics {
 
     public static final ItemStatistics EMPTY = new ItemStatistics(new EnumMap<>(ItemStatistic.class));
 
-    private final Map<ItemStatistic, Integer> statistics;
+    private final Map<ItemStatistic, Double> statistics;
 
     // Private constructor used by the builder
-    private ItemStatistics(Map<ItemStatistic, Integer> statistics) {
+    private ItemStatistics(Map<ItemStatistic, Double> statistics) {
         this.statistics = new EnumMap<>(statistics);
     }
 
@@ -24,9 +24,9 @@ public class ItemStatistics {
 
     // Builder class
     public static class ItemStatisticsBuilder {
-        private final Map<ItemStatistic, Integer> statistics = new EnumMap<>(ItemStatistic.class);
+        private final Map<ItemStatistic, Double> statistics = new EnumMap<>(ItemStatistic.class);
 
-        public ItemStatisticsBuilder with(ItemStatistic stat, Integer value) {
+        public ItemStatisticsBuilder with(ItemStatistic stat, Double value) {
             this.statistics.put(stat, value);
             return this;
         }
@@ -36,13 +36,13 @@ public class ItemStatistics {
         }
     }
 
-    public Integer get(ItemStatistic stat) {
-        return this.statistics.getOrDefault(stat, 0);
+    public Double get(ItemStatistic stat) {
+        return this.statistics.getOrDefault(stat, 0D);
     }
 
     public ItemStatistics add(ItemStatistics other) {
         for (ItemStatistic stat : ItemStatistic.values()) {
-            this.statistics.merge(stat, other.get(stat), Integer::sum);
+            this.statistics.merge(stat, other.get(stat), Double::sum);
         }
         return this;
     }

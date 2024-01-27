@@ -34,7 +34,7 @@ public class ActionIslandItemDrop extends SkyBlockEvent {
         if (material == null) return;
 
         SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
-                player, block, playerBreakEvent.getBlockPosition()
+                player, material, playerBreakEvent.getBlockPosition()
         ));
 
         /**

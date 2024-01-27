@@ -19,7 +19,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
 
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        String profileName = UserProfiles.getRandomName();
+        String profileName = PlayerProfiles.getRandomName();
 
         set(new GUIClickableItem(11) {
             @Override
@@ -54,8 +54,8 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                UserProfiles profiles = player.getProfiles();
-                UserProfiles toSet = new UserProfiles();
+                PlayerProfiles profiles = player.getProfiles();
+                PlayerProfiles toSet = new PlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
 
                 UUID profileId = UUID.randomUUID();

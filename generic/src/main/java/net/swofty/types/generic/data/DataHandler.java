@@ -19,14 +19,16 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.PlayerShopData;
 import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -71,8 +73,7 @@ public class DataHandler {
             } catch (Exception e) {
                 // Issue with data, revert back to default
                 dataHandler.datapoints.put(data.getKey(), data.getDefaultDatapoint().setUser(dataHandler).setData(data));
-
-                e.printStackTrace();
+                Logger.info("Issue with datapoint " + data.getKey() + " for user " + dataHandler.uuid.toString() + " - Reverting to default value");
             }
         });
         return dataHandler;
@@ -152,7 +153,7 @@ public class DataHandler {
         PROFILE_NAME("profile_name", false, true, false, DatapointString.class, new DatapointString("profile_name", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals("null")) {
-                datapoint.setValue(UserProfiles.getRandomName());
+                datapoint.setValue(PlayerProfiles.getRandomName());
             }
         }),
         RANK("rank", true, false, false, DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT), (player, datapoint) -> {
@@ -273,6 +274,7 @@ public class DataHandler {
                 datapoint.setValue(System.currentTimeMillis());
             }
         }),
+        LAST_EDITED_SKILL("last_edited_skill", false, false, false, DatapointSkillCategory.class, new DatapointSkillCategory("last_edited_skill", SkillCategories.FORAGING)),
         ISLAND_UUID("island_uuid", false, true, false, DatapointUUID.class, new DatapointUUID("island_uuid", null), (player, datapoint) -> {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getSkyBlockIsland().getIslandID());

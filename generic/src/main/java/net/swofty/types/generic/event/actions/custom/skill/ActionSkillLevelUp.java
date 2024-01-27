@@ -1,4 +1,4 @@
-package net.swofty.types.generic.event.actions.custom;
+package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.Event;
@@ -40,12 +40,14 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
 
         if (oldLevel == newLevel) return;
 
+        String oldLevelDisplay = StringUtility.getAsRomanNumeral(oldLevel);
+
         player.sendMessage("§3§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         player.sendMessage(Component.text("  §b§lSKILL LEVEL UP §3" + skillCategory + " §8" +
-                        StringUtility.getAsRomanNumeral(oldLevel) + ">§e" +
+                        (oldLevelDisplay.isEmpty() ? "0" : oldLevelDisplay) + ">§e" +
                         StringUtility.getAsRomanNumeral(newLevel))
                 .hoverEvent(Component.text("§eClick to view your " + skillCategory + " Skill progress!"))
-                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewskill " + skillCategory.toString().toLowerCase()))
+                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewskill " + skillCategory.toString().toUpperCase()))
         );
 
         SkillCategory.SkillReward reward = skillCategory.asCategory().getReward(newLevel);
@@ -60,6 +62,12 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
                     }
                     case COINS -> {
                         player.sendMessage("    §8+§6" + ((SkillCategory.CoinReward) unlock).getCoins() + " §7Coins");
+                    }
+                    case STATS -> {
+                        player.sendMessage("    §8+§b" + ((SkillCategory.StatisticReward) unlock).getStatistic().getColour() +
+                                ((SkillCategory.StatisticReward) unlock).getStatistic().getSymbol() +
+                                ((SkillCategory.StatisticReward) unlock).amountAdded()
+                                + " " + ((SkillCategory.StatisticReward) unlock).getStatistic().getDisplayName());
                     }
                     case REGION_ACCESS -> {
                         player.sendMessage("    §8+§aAccess to " + ((SkillCategory.RegionReward) unlock).getRegion());

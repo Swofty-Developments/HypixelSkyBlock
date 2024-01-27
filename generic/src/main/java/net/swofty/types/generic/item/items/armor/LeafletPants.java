@@ -18,7 +18,7 @@ import java.util.Map;
 public class LeafletPants implements CustomSkyBlockItem, Reforgable, ExtraRarityDisplay, LeatherColour, Sellable, Craftable {
     @Override
     public ItemStatistics getStatistics() {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20).build();
+        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20D).build();
     }
 
     @Override

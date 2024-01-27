@@ -19,7 +19,7 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 35)
+                .with(ItemStatistic.DAMAGE, 35D)
                 .build();
     }
 

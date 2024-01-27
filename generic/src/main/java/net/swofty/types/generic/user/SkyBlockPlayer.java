@@ -6,7 +6,6 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
@@ -51,32 +50,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Getter
 public class SkyBlockPlayer extends Player {
 
-    @Getter
     private float mana = 100;
     public float health = 100;
     public long joined;
     @Setter
-    @Getter
     public boolean bypassBuild = false;
 
-    @Getter
     private StatisticDisplayReplacement manaDisplayReplacement = null;
-    @Getter
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
-    @Getter
     private StatisticDisplayReplacement coinsDisplayReplacement = null;
-    @Getter
-    private PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
-    @Getter
+    private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     private SkyBlockIsland skyBlockIsland;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
@@ -105,8 +96,8 @@ public class SkyBlockPlayer extends Player {
         return new LogHandler(this);
     }
 
-    public UserProfiles getProfiles() {
-        return UserProfiles.get(this.getUuid());
+    public PlayerProfiles getProfiles() {
+        return PlayerProfiles.get(this.getUuid());
     }
 
     public MissionData getMissionData() {
@@ -269,7 +260,7 @@ public class SkyBlockPlayer extends Player {
         return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
     }
 
-    public int getMiningSpeed() {
+    public Double getMiningSpeed() {
         return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
     }
 
@@ -365,7 +356,7 @@ public class SkyBlockPlayer extends Player {
     @Override
     public float getMaxHealth() {
         PlayerStatistics statistics = this.getStatistics();
-        return statistics.allStatistics().get(ItemStatistic.HEALTH);
+        return statistics.allStatistics().get(ItemStatistic.HEALTH).floatValue();
     }
 
     @Override
@@ -408,7 +399,7 @@ public class SkyBlockPlayer extends Player {
         if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
         } else {
-            UserProfiles profiles = new UserDatabase(uuid).getProfiles();
+            PlayerProfiles profiles = new UserDatabase(uuid).getProfiles();
             if (profiles.getProfiles().isEmpty()) {
                 Document document = ProfilesDatabase.collection.find(Filters.eq("_owner", uuid.toString())).first();
                 if (document == null)

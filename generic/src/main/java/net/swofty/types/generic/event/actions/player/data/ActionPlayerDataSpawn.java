@@ -12,7 +12,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
 
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
-        UserProfiles profiles = player.getProfiles();
+        PlayerProfiles profiles = player.getProfiles();
 
         DataHandler handler = player.getDataHandler();
 

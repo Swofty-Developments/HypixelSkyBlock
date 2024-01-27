@@ -8,7 +8,7 @@ import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 public class EnchantedCocoa implements Enchanted {
     @Override
     public ItemType getCraftingMaterial() {
-        return ItemType.COCOA;
+        return ItemType.COCOA_BEANS;
     }
 
     @Override

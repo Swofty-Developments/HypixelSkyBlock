@@ -5,13 +5,8 @@ import lombok.SneakyThrows;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.minestom.server.event.player.AsyncPlayerPreLoginEvent;
-import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.datapoints.DatapointUUID;
-import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.user.SkyBlockIsland;
@@ -20,7 +15,7 @@ import net.swofty.types.generic.event.EventException;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -49,7 +44,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
         // Registers the users profiles within the profiles cache
         new UserDatabase(player.getUuid()).getProfiles();
 
-        UserProfiles profiles = ((SkyBlockPlayer) playerLoginEvent.getPlayer()).getProfiles();
+        PlayerProfiles profiles = ((SkyBlockPlayer) playerLoginEvent.getPlayer()).getProfiles();
         UUID profileId = profiles.getCurrentlySelected();
         if (profileId == null) {
             profileId = UUID.randomUUID();
@@ -99,7 +94,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
             handler.runOnLoad();
 
-            UserProfiles profiles = ((SkyBlockPlayer) event.getPlayer()).getProfiles();
+            PlayerProfiles profiles = ((SkyBlockPlayer) event.getPlayer()).getProfiles();
 
             if (profiles.getProfiles().size() >= 2) {
                 Document previousProfile = ProfilesDatabase.collection

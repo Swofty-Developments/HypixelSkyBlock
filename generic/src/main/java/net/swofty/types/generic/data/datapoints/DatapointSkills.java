@@ -12,40 +12,57 @@ import net.swofty.types.generic.serializer.Serializer;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.StringUtility;
+import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
-    private static Serializer<PlayerSkills> serializer = new Serializer<>() {
+    private static final Serializer<PlayerSkills> serializer = new Serializer<>() {
 
         @Override
         public String serialize(PlayerSkills value) {
-            String toReturn = "";
+            JSONObject jsonObject = new JSONObject();
 
-            for (Map.Entry<SkillCategories, Double> entry : value.getSkills().entrySet()) {
-                toReturn += entry.getKey().name() + ":" + entry.getValue() + ",";
+            for (SkillCategories category : SkillCategories.values()) {
+                jsonObject.put(category.toString(), value.get(category));
             }
 
-            return toReturn;
+            for (ItemStatistic statistic : ItemStatistic.values()) {
+                jsonObject.put(statistic.toString(), value.getStatistic(statistic));
+            }
+
+            return jsonObject.toString();
         }
 
         @Override
         public PlayerSkills deserialize(String json) {
-            Map<SkillCategories, Double> skills = PlayerSkills.getDefault().getSkills();
+            HashMap<SkillCategories, Double> skills = new HashMap<>(PlayerSkills.getDefault().getSkills());
+            HashMap<ItemStatistic, Double> skillStatistics = new HashMap<>(PlayerSkills.getDefault().getSkillStatistics());
 
-            for (String entry : json.split(",")) {
-                String[] split = entry.split(":");
-                skills.put(SkillCategories.valueOf(split[0]), Double.parseDouble(split[1]));
+            if (json == null || json.isEmpty()) {
+                return new PlayerSkills(skills, skillStatistics);
             }
 
-            return new PlayerSkills(skills);
+            JSONObject jsonObject = new JSONObject(json);
+
+            for (SkillCategories category : SkillCategories.values()) {
+                skills.put(category, jsonObject.getDouble(category.toString()));
+            }
+
+            for (ItemStatistic statistic : ItemStatistic.values()) {
+                skillStatistics.put(statistic, jsonObject.getDouble(statistic.toString()));
+            }
+
+            return new PlayerSkills(skills, skillStatistics);
         }
 
         @Override
         public PlayerSkills clone(PlayerSkills value) {
-            return new PlayerSkills(value.getSkills());
+            return new PlayerSkills(value.getSkills(), value.getSkillStatistics());
         }
     };
 
@@ -61,9 +78,24 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
     @AllArgsConstructor
     public static class PlayerSkills {
         private Map<SkillCategories, Double> skills;
+        private Map<ItemStatistic, Double> skillStatistics;
 
         public Double get(SkillCategories category) {
             return skills.get(category);
+        }
+
+        public void addStatistic(ItemStatistic statistic, double amount) {
+            if (skillStatistics.containsKey(statistic)) {
+                skillStatistics.put(statistic, skillStatistics.get(statistic) + amount);
+            } else {
+                skillStatistics.put(statistic, amount);
+            }
+        }
+
+        public Double getStatistic(ItemStatistic statistic) {
+            if (!skillStatistics.containsKey(statistic))
+                return 0.0;
+            return skillStatistics.get(statistic);
         }
 
         public void set(SkyBlockPlayer player, SkillCategories category, Double value) {
@@ -84,7 +116,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                 SkillCategories.MINING, 0.0,
                 SkillCategories.FORAGING, 0.0,
                 SkillCategories.ENCHANTING, 0.0
-            ));
+            ), new HashMap<>());
         }
 
         public Integer getCurrentLevel(SkillCategories category) {
@@ -103,6 +135,22 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             }
 
             return level + 1;
+        }
+
+        public String getPercentage(SkillCategories category) {
+            SkillCategory skillCategory = category.asCategory();
+
+            int level = skillCategory.getLevel(get(category));
+            int nextLevel = level + 1;
+
+            if (nextLevel > skillCategory.getHighestLevel()) {
+                return "100";
+            }
+
+            double current = get(category);
+            double next = skillCategory.getReward(nextLevel).requirement();
+
+            return String.format("%.2f", (current / next) * 100);
         }
 
         public List<String> getDisplay(List<String> lore, SkillCategories category, double requirement, String prefix) {

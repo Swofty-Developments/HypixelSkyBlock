@@ -19,6 +19,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.utility.MathUtility;
 
 @EventParameters(description = "Handles adding blocks to the users collection",
         node = EventNodes.CUSTOM,
@@ -35,8 +36,7 @@ public class ActionCollectionAdd extends SkyBlockEvent {
 
         CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
-        Material material = Material.fromNamespaceId(event.getBlock().namespace());
-        ItemType type = ItemType.fromMaterial(material);
+        ItemType type = ItemType.fromMaterial(event.getMaterial());
 
         if (type == null) return;
         int oldAmount = player.getCollection().get(type);
@@ -72,31 +72,39 @@ public class ActionCollectionAdd extends SkyBlockEvent {
         if (category == null) return;
         CollectionCategory.ItemCollection collection = category.getCollection(type);
 
-        if (player.getDefenseDisplayReplacement() != null) {
-            String addedAmountString = player.getDefenseDisplayReplacement().getDisplay();
-            int addedAmount = 1;
+        MathUtility.delay(() -> {
+            if (player.getDefenseDisplayReplacement() != null) {
+                // Allow for skill display to override collection displays
+                StatisticDisplayReplacement.Purpose purpose = player.getDefenseDisplayReplacement().getPurpose();
+                if (purpose != null && purpose.equals(StatisticDisplayReplacement.Purpose.SKILL)) return;
 
-            try {
-                addedAmount = Integer.parseInt(addedAmountString.substring(2, addedAmountString.indexOf(" "))) + 1;
-            } catch (NumberFormatException ignored) {}
+                String addedAmountString = player.getDefenseDisplayReplacement().getDisplay();
+                int addedAmount = 1;
 
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .ticksToLast(20)
-                    .display(
-                            "§2+" + addedAmount + " " + category.getName() +
-                                    " §7(" + player.getCollection().get(type) +
-                                    "/" +
-                                    player.getCollection().getReward(collection).requirement() + ")")
-                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
-        } else {
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .ticksToLast(20)
-                    .display(
-                            "§2+1 " + category.getName() +
-                                    " §7(" + player.getCollection().get(type) +
-                                    "/" +
-                                    player.getCollection().getReward(collection).requirement() + ")")
-                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
-        }
+                try {
+                    addedAmount = Integer.parseInt(addedAmountString.substring(2, addedAmountString.indexOf(" "))) + 1;
+                } catch (NumberFormatException ignored) {}
+
+                player.setDisplayReplacement(StatisticDisplayReplacement.builder()
+                        .ticksToLast(20)
+                        .purpose(StatisticDisplayReplacement.Purpose.COLLECTION)
+                        .display(
+                                "§2+" + addedAmount + " " + category.getName() +
+                                        " §7(" + player.getCollection().get(type) +
+                                        "/" +
+                                        player.getCollection().getReward(collection).requirement() + ")")
+                        .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
+            } else {
+                player.setDisplayReplacement(StatisticDisplayReplacement.builder()
+                        .ticksToLast(20)
+                        .purpose(StatisticDisplayReplacement.Purpose.COLLECTION)
+                        .display(
+                                "§2+1 " + category.getName() +
+                                        " §7(" + player.getCollection().get(type) +
+                                        "/" +
+                                        player.getCollection().getReward(collection).requirement() + ")")
+                        .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
+            }
+        }, 5);
     }
 }

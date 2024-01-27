@@ -14,6 +14,7 @@ import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
+import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -77,7 +78,14 @@ public class PlayerStatistics {
         ItemStatistics spare = ItemStatistics.builder().build();
 
         int fairySouls = player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size();
-        spare = spare.add(ItemStatistics.builder().with(ItemStatistic.HEALTH, fairySouls * 2).build());
+        spare = spare.add(ItemStatistics.builder().with(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
+
+        DatapointSkills.PlayerSkills skills = player.getSkills();
+        for (Map.Entry<ItemStatistic, Double> entry : skills.getSkillStatistics().entrySet()) {
+            ItemStatistic statistic = entry.getKey();
+            Double value = entry.getValue();
+            spare = spare.add(ItemStatistics.builder().with(statistic, value).build());
+        }
 
         return spare;
     }
@@ -89,8 +97,8 @@ public class PlayerStatistics {
         total = total.add(spareStatistics());
 
         ItemStatistics baseStats = ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 100)
-                .with(ItemStatistic.SPEED, 100)
+                .with(ItemStatistic.HEALTH, 100D)
+                .with(ItemStatistic.SPEED, 100D)
                 .build();
 
         total = total.add(baseStats);

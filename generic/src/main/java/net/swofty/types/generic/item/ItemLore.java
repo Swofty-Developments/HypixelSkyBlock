@@ -170,9 +170,9 @@ public class ItemLore {
         return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
     }
 
-    private boolean addPossiblePropertyInt(ItemStatistic statistic, int overallValue,
+    private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
                                            ReforgeType.Reforge reforge, Rarity rarity) {
-        int reforgeValue = 0;
+        double reforgeValue = 0;
         if (reforge != null) {
             overallValue += reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
             reforgeValue = reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);

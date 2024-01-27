@@ -20,7 +20,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 
 import java.util.UUID;
 
@@ -41,8 +41,8 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                UserProfiles profiles = player.getProfiles();
-                UserProfiles toSet = new UserProfiles();
+                PlayerProfiles profiles = player.getProfiles();
+                PlayerProfiles toSet = new PlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
                 toSet.setCurrentlySelected(profileUuid);
 
@@ -92,7 +92,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                     return;
                 }
 
-                UserProfiles profiles = player.getProfiles();
+                PlayerProfiles profiles = player.getProfiles();
                 profiles.removeProfile(profileUuid);
 
                 DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(profileUuid.toString()).getDocument());

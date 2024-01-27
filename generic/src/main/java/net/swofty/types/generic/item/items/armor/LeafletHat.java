@@ -17,7 +17,7 @@ import java.util.Map;
 public class LeafletHat implements CustomSkyBlockItem, Reforgable, ExtraRarityDisplay, Sellable, Craftable {
     @Override
     public ItemStatistics getStatistics() {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20).build();
+        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20D).build();
     }
 
     @Override

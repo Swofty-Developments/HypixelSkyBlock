@@ -16,7 +16,7 @@ public class StoneSword implements CustomSkyBlockItem, Enchantable, ExtraRarityD
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 25)
+                .with(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 

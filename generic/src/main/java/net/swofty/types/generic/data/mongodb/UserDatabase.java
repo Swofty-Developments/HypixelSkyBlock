@@ -6,7 +6,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
 
 import java.util.Map;
@@ -36,15 +36,15 @@ public class UserDatabase {
         collection = database.getCollection("profiles");
     }
 
-    public UserProfiles getProfiles() {
+    public PlayerProfiles getProfiles() {
         Document document = collection.find(new Document("_id", id.toString())).first();
         if (document == null) {
-            return new UserProfiles(id);
+            return new PlayerProfiles(id);
         }
-        return UserProfiles.deserialize(document);
+        return PlayerProfiles.deserialize(document);
     }
 
-    public void saveProfiles(UserProfiles profiles) {
+    public void saveProfiles(PlayerProfiles profiles) {
         Map<String, Object> map = profiles.serialize();
 
         Document document = new Document("_id", id.toString());

@@ -13,8 +13,8 @@ public class IronPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarityD
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 160)
-                .with(ItemStatistic.DAMAGE, 24)
+                .with(ItemStatistic.MINING_SPEED, 160D)
+                .with(ItemStatistic.DAMAGE, 24D)
                 .build();
     }
 

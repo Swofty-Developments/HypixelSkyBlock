@@ -66,7 +66,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         }
 
         SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
-                player, item.getMaterial().block(), playerBreakEvent.getBlockPosition()
+                player, item.getMaterial(), playerBreakEvent.getBlockPosition()
         ));
 
         /**

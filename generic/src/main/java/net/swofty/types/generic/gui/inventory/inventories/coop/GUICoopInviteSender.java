@@ -23,7 +23,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +66,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
 
                 if (coop.memberProfiles().isEmpty()) {
                     handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
-                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(UserProfiles.getRandomName());
+                    handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(PlayerProfiles.getRandomName());
                 } else {
                     UUID otherCoopMember = coop.memberProfiles().get(0);
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
@@ -92,7 +92,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
                 coop.save();
 
                 MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    UserProfiles profiles = player.getProfiles();
+                    PlayerProfiles profiles = player.getProfiles();
                     profiles.getProfiles().add(profileId);
                     profiles.setCurrentlySelected(profileId);
                     new UserDatabase(player.getUuid()).saveProfiles(profiles);

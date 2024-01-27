@@ -28,7 +28,7 @@ public class MissionBreakLog extends SkyBlockMission {
     @Override
     public void run(Event tempEvent) {
         CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
-        Material material = Material.fromNamespaceId(event.getBlock().namespace());
+        Material material = event.getMaterial();
         MissionData data = event.getPlayer().getMissionData();
 
         if (!SkyBlockConst.isIslandServer()) return;

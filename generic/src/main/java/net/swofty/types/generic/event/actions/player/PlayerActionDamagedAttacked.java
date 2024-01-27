@@ -31,7 +31,7 @@ public class PlayerActionDamagedAttacked extends SkyBlockEvent {
         if (!event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
 
         if (event.getEntity() instanceof SkyBlockMob mob) {
-            float damageDealt = mob.getStatistics().get(ItemStatistic.DAMAGE);
+            float damageDealt = mob.getStatistics().get(ItemStatistic.DAMAGE).floatValue();
 
             PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
                     (SkyBlockPlayer) event.getTarget(), damageDealt, mob);

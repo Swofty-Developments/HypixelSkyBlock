@@ -5,10 +5,12 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
+import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.Arrays;
@@ -58,6 +60,11 @@ public abstract class SkillCategory {
                     case REGION_ACCESS -> {
                         lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
                     }
+                    case STATS -> {
+                        lore.add("§7  §8+§b" + ((StatisticReward) unlock).getStatistic().getColour() +
+                                ((StatisticReward) unlock).getStatistic().getSymbol() + ((StatisticReward) unlock).amountAdded()
+                                + " " + ((StatisticReward) unlock).getStatistic().getDisplayName());
+                    }
                 }
             });
 
@@ -105,6 +112,22 @@ public abstract class SkillCategory {
         }
 
         public abstract int getXP();
+    }
+
+    public abstract static class StatisticReward extends Reward {
+        @Override
+        public UnlockType type() {
+            return UnlockType.STATS;
+        }
+
+        @Override
+        public void onUnlock(SkyBlockPlayer player) {
+            DatapointSkills.PlayerSkills skills = player.getSkills();
+            skills.addStatistic(getStatistic(), amountAdded());
+        }
+
+        public abstract ItemStatistic getStatistic();
+        public abstract Double amountAdded();
     }
 
     public abstract static class RegionReward extends Reward {

@@ -15,7 +15,7 @@ public class WoodenSword implements CustomSkyBlockItem, Enchantable, ExtraRarity
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 20)
+                .with(ItemStatistic.DAMAGE, 20D)
                 .build();
     }
 

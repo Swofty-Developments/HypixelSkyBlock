@@ -13,8 +13,8 @@ public class StonePickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarity
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 110)
-                .with(ItemStatistic.DAMAGE, 20)
+                .with(ItemStatistic.MINING_SPEED, 110D)
+                .with(ItemStatistic.DAMAGE, 20D)
                 .build();
     }
 

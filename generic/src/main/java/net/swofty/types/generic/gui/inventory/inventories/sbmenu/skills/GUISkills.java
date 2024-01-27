@@ -80,7 +80,7 @@ public class GUISkills extends SkyBlockInventoryGUI {
                     lore.add("§eClick to view!");
 
                     return ItemStackCreator.getStack(
-                            "§a" + skillCategory.getName() +
+                            "§a" + skillCategory.getName() + " " +
                                     StringUtility.getAsRomanNumeral(player.getSkills().getCurrentLevel(category)),
                             skillCategory.getDisplayIcon(), 1, lore);
                 }

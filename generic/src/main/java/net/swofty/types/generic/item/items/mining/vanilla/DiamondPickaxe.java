@@ -13,8 +13,8 @@ public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRari
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 230)
-                .with(ItemStatistic.DAMAGE, 30)
+                .with(ItemStatistic.MINING_SPEED, 230D)
+                .with(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
 

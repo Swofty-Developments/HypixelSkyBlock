@@ -7,7 +7,7 @@ import java.util.*;
 
 @Getter
 @Setter
-public class UserProfiles {
+public class PlayerProfiles {
     private final static String[] PROFILE_NAMES = {
             "Zucchini", "Papaya", "Watermelon", "Pineapple",
             "Lemon", "Apple", "Banana", "Orange", "Pear",
@@ -17,16 +17,16 @@ public class UserProfiles {
             "Potato", "Onion", "Garlic", "Celery",
             "Broccoli", "Cauliflower", "Spinach", "Asparagus"
     };
-    private static final Map<UUID, UserProfiles> profilesCache = new HashMap<>();
+    private static final Map<UUID, PlayerProfiles> profilesCache = new HashMap<>();
 
     UUID currentlySelected = null;
     ArrayList<UUID> profiles = new ArrayList<>();
 
-    public UserProfiles(UUID playerUuid) {
+    public PlayerProfiles(UUID playerUuid) {
         profilesCache.put(playerUuid, this);
     }
 
-    public UserProfiles() {
+    public PlayerProfiles() {
     }
 
     public void addProfile(UUID profile) {
@@ -46,21 +46,21 @@ public class UserProfiles {
         );
     }
 
-    public static UserProfiles deserialize(Map<String, Object> map) {
-        UserProfiles userProfiles = new UserProfiles(UUID.fromString((String) map.get("_id"))); // Player UUID
-        userProfiles.currentlySelected = UUID.fromString((String) map.get("selected")); // Profile UUID
-        userProfiles.profiles = new ArrayList<>();
+    public static PlayerProfiles deserialize(Map<String, Object> map) {
+        PlayerProfiles playerProfiles = new PlayerProfiles(UUID.fromString((String) map.get("_id"))); // Player UUID
+        playerProfiles.currentlySelected = UUID.fromString((String) map.get("selected")); // Profile UUID
+        playerProfiles.profiles = new ArrayList<>();
         for (String profile : (List<String>) map.get("profiles")) {
-            userProfiles.profiles.add(UUID.fromString(profile));
+            playerProfiles.profiles.add(UUID.fromString(profile));
         }
-        return userProfiles;
+        return playerProfiles;
     }
 
     public static String getRandomName() {
         return PROFILE_NAMES[new Random().nextInt(PROFILE_NAMES.length)];
     }
 
-    public static UserProfiles get(UUID uuid) {
+    public static PlayerProfiles get(UUID uuid) {
         return profilesCache.get(uuid);
     }
 }

@@ -15,7 +15,7 @@ public class IronSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDi
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 30)
+                .with(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
 

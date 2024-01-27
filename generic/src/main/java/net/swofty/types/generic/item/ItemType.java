@@ -20,8 +20,10 @@ import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
+import net.swofty.types.generic.item.items.vanilla.Coal;
 import net.swofty.types.generic.item.items.vanilla.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.Stick;
+import net.swofty.types.generic.item.items.vanilla.Wheat;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
 import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.IronSword;
@@ -66,7 +68,7 @@ public enum ItemType {
     IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
     DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
     NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
-    WHEAT(Material.WHEAT, Rarity.COMMON),
+    WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
 
     /**
      * Armor Sets
@@ -112,9 +114,9 @@ public enum ItemType {
     BREAD(Material.BREAD, Rarity.COMMON),
     CARROT(Material.CARROT, Rarity.COMMON),
     CHARCOAL(Material.CHARCOAL, Rarity.COMMON),
-    COAL(Material.COAL, Rarity.COMMON),
+    COAL(Material.COAL, Rarity.COMMON, Coal.class),
     COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON, Cobblestone.class),
-    COCOA(Material.COCOA_BEANS, Rarity.COMMON),
+    COCOA_BEANS(Material.COCOA_BEANS, Rarity.COMMON),
     DARK_OAK_WOOD(Material.DARK_OAK_WOOD, Rarity.COMMON),
     DIAMOND(Material.DIAMOND, Rarity.COMMON),
     DIAMOND_BLOCK(Material.DIAMOND_BLOCK, Rarity.COMMON),

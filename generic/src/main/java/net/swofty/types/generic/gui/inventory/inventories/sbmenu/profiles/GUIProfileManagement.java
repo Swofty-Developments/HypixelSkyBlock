@@ -20,7 +20,7 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.UserProfiles;
+import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         SkyBlockPlayer player = e.player();
-        UserProfiles profiles = player.getProfiles();
+        PlayerProfiles profiles = player.getProfiles();
         List<UUID> profileIds = profiles.getProfiles();
 
         for (int profileCount = 0; profileCount <= 4; profileCount++) {

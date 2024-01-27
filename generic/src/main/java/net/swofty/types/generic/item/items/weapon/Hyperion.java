@@ -19,9 +19,9 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Refo
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100)
-                .with(ItemStatistic.HEALTH, 20)
-                .with(ItemStatistic.DEFENSE, 30)
+                .with(ItemStatistic.DAMAGE, 100D)
+                .with(ItemStatistic.HEALTH, 20D)
+                .with(ItemStatistic.DEFENSE, 30D)
                 .build();
     }
 
