@@ -16,6 +16,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
@@ -69,6 +70,8 @@ public class SkyBlockPlayer extends Player {
     private StatisticDisplayReplacement coinsDisplayReplacement = null;
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
     private SkyBlockIsland skyBlockIsland;
+    @Setter
+    private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);

@@ -2,6 +2,7 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
+import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
@@ -34,10 +35,6 @@ public class ListenerPlayerHandler extends RedisListener {
         }
         Player player = potentialPlayer.get();
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
-        if (potentialServer.isEmpty()) {
-            return "false";
-        }
-        UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
 
         switch (action) {
             case "transfer" -> {
@@ -62,9 +59,17 @@ public class ListenerPlayerHandler extends RedisListener {
                     new TransferHandler(player).transferTo(toSendTo.server());
                 }).start();
             }
+            case "version" -> {
+                return player.getProtocolVersion().name();
+            }
             case "event" -> {
                 String event = json.getString("event");
                 String data = json.getString("data");
+
+                if (potentialServer.isEmpty()) {
+                    return "false";
+                }
+                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
 
                 RedisMessage.sendMessageToServer(playerServer, "run-event",
                         player.getUniqueId().toString() + "," +
@@ -74,6 +79,11 @@ public class ListenerPlayerHandler extends RedisListener {
             }
             case "refresh-coop-data" -> {
                 String datapoint = json.getString("datapoint");
+
+                if (potentialServer.isEmpty()) {
+                    return "false";
+                }
+                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
 
                 RedisMessage.sendMessageToServer(playerServer, "refresh-data",
                         player.getUniqueId().toString() + "," +

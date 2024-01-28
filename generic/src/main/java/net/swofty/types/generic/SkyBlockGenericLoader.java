@@ -18,6 +18,8 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.proxyapi.ProxyPlayer;
+import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
@@ -310,7 +312,15 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Handle ConnectionManager
          */
-        MinecraftServer.getConnectionManager().setPlayerProvider(SkyBlockPlayer::new);
+        MinecraftServer.getConnectionManager().setPlayerProvider((uuid, username, playerConnection) -> {
+            SkyBlockPlayer player = new SkyBlockPlayer(uuid, username, playerConnection);
+
+            Thread thread = Thread.ofVirtual().start(() -> {
+                new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
+            });
+
+            return new SkyBlockPlayer(uuid, username, playerConnection);
+        });
 
         typeLoader.afterInitialize(server);
     }

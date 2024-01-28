@@ -12,6 +12,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.server.play.RespawnPacket;
 import net.minestom.server.network.packet.server.play.data.DeathLocation;
 import net.minestom.server.world.DimensionTypeManager;
+import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
 import net.swofty.proxyapi.redis.RedisMessage;
@@ -80,6 +81,21 @@ public class ProxyPlayer {
         json.put("type", serverType.toString());
 
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+    }
+
+    public CompletableFuture<MinecraftVersion> getVersion() {
+        CompletableFuture<MinecraftVersion> future = new CompletableFuture<>();
+
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("actions", "version");
+
+        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
+            System.out.println("Is on version " + s);
+            future.complete(MinecraftVersion.valueOf(s));
+        });
+
+        return future;
     }
 
     public void refreshCoopData(String datapoint) {
