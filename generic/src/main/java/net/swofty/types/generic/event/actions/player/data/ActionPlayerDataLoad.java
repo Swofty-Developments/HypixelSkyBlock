@@ -17,6 +17,7 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -35,6 +36,8 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
     @Override
     public void run(Event event) {
         AsyncPlayerConfigurationEvent playerLoginEvent = (AsyncPlayerConfigurationEvent) event;
+
+        Logger.info("New player joined: " + playerLoginEvent.getPlayer().getUsername() + "...");
 
         // Ensure we use player here
         final Player player = playerLoginEvent.getPlayer();

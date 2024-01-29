@@ -1,8 +1,6 @@
 package net.swofty.velocity.packet;
 
-import com.viaversion.viaversion.VelocityPlugin;
 import com.viaversion.viaversion.util.ReflectionUtil;
-import com.viaversion.viaversion.velocity.handlers.VelocityChannelInitializer;
 import io.netty.channel.ChannelInitializer;
 import lombok.SneakyThrows;
 import net.swofty.velocity.SkyBlockVelocity;

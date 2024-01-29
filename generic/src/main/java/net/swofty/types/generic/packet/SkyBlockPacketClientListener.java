@@ -52,6 +52,8 @@ public abstract class SkyBlockPacketClientListener {
         });
 
         eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
+            System.out.println("Packet received: " + rawEvent.getPacket().getClass().getSimpleName());
+
             cachedEvents.forEach((packetEvent) -> {
                 if (packetEvent.overrideMinestomProcessing()) return;
 

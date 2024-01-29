@@ -1,19 +1,17 @@
 package net.swofty.velocity;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.velocitypowered.api.event.AwaitingEventExecutor;
 import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.*;
+import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
-import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-import com.velocitypowered.api.proxy.InboundConnection;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -21,26 +19,19 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.velocitypowered.proxy.protocol.VelocityConnectionEvent;
-import com.viaversion.viaversion.VelocityPlugin;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
-import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-import com.viaversion.viaversion.api.protocol.version.VersionProvider;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
-import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
-import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
-import com.viaversion.viaversion.util.ReflectionUtil;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
-import net.kyori.adventure.resource.ResourcePackInfo;
-import net.kyori.adventure.resource.ResourcePackInfoLike;
-import net.kyori.adventure.resource.ResourcePackRequest;
 import net.kyori.adventure.text.Component;
 import net.raphimc.vialoader.ViaLoader;
-import net.raphimc.vialoader.netty.*;
+import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
+import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
+import net.raphimc.vialoader.netty.VLLegacyPipeline;
+import net.raphimc.vialoader.netty.ViaDecoder;
+import net.raphimc.vialoader.netty.ViaEncoder;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
@@ -52,6 +43,7 @@ import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.packet.PacketSetup;
 import net.swofty.velocity.packet.PlayerChannelHandler;
+import net.swofty.velocity.packet.PlayerChannelInitializer;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
@@ -63,7 +55,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Plugin(
@@ -99,7 +90,8 @@ public class SkyBlockVelocity {
         /**
          * Register cross-version support
          */
-        ViaLoader.init(null, new SkyBlockVLoader(), null, null);
+        ViaLoader.init(null, new SkyBlockVLoader(), null, null,
+                ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
         Via.getManager().debugHandler().setEnabled(true);
 
         /**
@@ -174,8 +166,7 @@ public class SkyBlockVelocity {
         // TODO: Force Resource Pack
 
         event.setInitialServer(toSendTo.server());
-
-        event.setInitialServer(limboServer);
+        event.setInitialServer(getLimboServer());
     }
 
     @Subscribe
@@ -215,6 +206,9 @@ public class SkyBlockVelocity {
     private void removePlayer(final Player player) {
         final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
         final Channel channel = connectedPlayer.getConnection().getChannel();
+
+        System.out.println(channel.pipeline().names().stream().map(Object::toString).reduce((s, s2) -> s + ", " + s2).orElse("null"));
+
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove("PACKET");
             channel.pipeline().remove(VLLegacyPipeline.VIA_DECODER_NAME);

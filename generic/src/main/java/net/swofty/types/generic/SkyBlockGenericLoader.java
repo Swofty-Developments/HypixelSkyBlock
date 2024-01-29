@@ -44,6 +44,7 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
+import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.attribute.SkyBlockServerAttributes;
@@ -56,6 +57,7 @@ import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
+import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
@@ -158,9 +160,10 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         loopThroughPackage("net.swofty.types.generic.packet.packets.client", SkyBlockPacketClientListener.class)
                 .forEach(SkyBlockPacketClientListener::cacheListener);
-        loopThroughPackage("net.swofty.types.generic.packet.packets.server", SkyBlockPacketClientListener.class)
-                .forEach(SkyBlockPacketClientListener::cacheListener);
+        loopThroughPackage("net.swofty.types.generic.packet.packets.server", SkyBlockPacketServerListener.class)
+                .forEach(SkyBlockPacketServerListener::cacheListener);
         SkyBlockPacketClientListener.register(SkyBlockConst.getEventHandler());
+        SkyBlockPacketServerListener.register(SkyBlockConst.getEventHandler());
 
         /**
          * Load regions
@@ -318,6 +321,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             Thread thread = Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
             });
+
+            Logger.info("Received new player: " + username + " (" + uuid + ")");
 
             return new SkyBlockPlayer(uuid, username, playerConnection);
         });

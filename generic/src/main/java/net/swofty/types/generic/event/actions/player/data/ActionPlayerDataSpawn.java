@@ -14,6 +14,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -31,6 +32,8 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
     @Override
     public void run(Event tempEvent) {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+
+        Logger.info("Loading player data for " + event.getPlayer().getUsername() + "...");
 
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();

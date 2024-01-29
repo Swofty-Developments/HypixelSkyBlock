@@ -9,6 +9,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import net.raphimc.vialoader.netty.VLLegacyPipeline;
 import net.raphimc.vialoader.netty.ViaDecoder;
 import net.raphimc.vialoader.netty.ViaEncoder;
 
@@ -56,16 +57,17 @@ public class PacketDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
         // Move Via codec handlers back to right position
         ChannelPipeline pipeline = ctx.pipeline();
 
-        // Check if the pipeline is already modified
-        if (pipeline.get(PlayerChannelInitializer.VIA_ENCODER) != null) {
-            super.userEventTriggered(ctx, event);
-            return;
-        }
+        pipeline.remove(VLLegacyPipeline.VIA_ENCODER_NAME);
+        pipeline.remove(VLLegacyPipeline.VIA_DECODER_NAME);
 
-        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_ENCODER, PlayerChannelInitializer.VIA_ENCODER,
+        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_ENCODER, VLLegacyPipeline.VIA_ENCODER_NAME,
                 new ViaEncoder(info));
-        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_DECODER, PlayerChannelInitializer.VIA_DECODER,
+        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_DECODER, VLLegacyPipeline.VIA_DECODER_NAME,
                 new ViaDecoder(info));
+
+        // Print all pipeline handlers
+        System.out.println("2");
+        pipeline.names().forEach(System.out::println);
 
         super.userEventTriggered(ctx, event);
     }

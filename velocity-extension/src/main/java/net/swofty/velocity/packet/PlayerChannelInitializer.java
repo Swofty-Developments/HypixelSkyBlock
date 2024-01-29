@@ -1,6 +1,7 @@
 package net.swofty.velocity.packet;
 
 import com.velocitypowered.proxy.network.Connections;
+import com.velocitypowered.proxy.protocol.VelocityConnectionEvent;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
@@ -44,7 +45,7 @@ public class PlayerChannelInitializer extends ChannelInitializer<io.netty.channe
     protected void initChannel(io.netty.channel.Channel channel) throws Exception {
         INIT_CHANNEL.invoke(original, channel);
 
-        final UserConnection user = new UserConnectionImpl(channel, true);
+        final UserConnection user = new UserConnectionImpl(channel, false);
         new ProtocolPipelineImpl(user);
 
         channel.pipeline().addBefore(Connections.MINECRAFT_DECODER,
