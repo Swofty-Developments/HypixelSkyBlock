@@ -1,23 +1,16 @@
 package net.swofty.velocity.packet;
 
-import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.proxy.protocol.MinecraftPacket;
-import com.velocitypowered.proxy.protocol.StateRegistry;
 import com.velocitypowered.proxy.protocol.packet.BossBar;
 import com.velocitypowered.proxy.protocol.packet.JoinGame;
 import com.velocitypowered.proxy.protocol.packet.Respawn;
 import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdate;
 import com.velocitypowered.proxy.protocol.packet.config.RegistrySync;
 import com.velocitypowered.proxy.protocol.packet.config.StartUpdate;
-import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
-import org.jetbrains.annotations.NotNull;
 
 public final class PlayerChannelHandler extends ChannelDuplexHandler {
     private final Player player;
