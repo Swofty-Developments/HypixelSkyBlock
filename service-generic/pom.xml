@@ -9,20 +9,13 @@
         <version>3.0</version>
     </parent>
 
-    <artifactId>proxy.api</artifactId>
+    <artifactId>service.generic</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -34,17 +27,6 @@
             <groupId>com.github.Swofty-Developments</groupId>
             <artifactId>AtlasRedisAPI</artifactId>
             <version>1.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.hollow-cube</groupId>
-            <artifactId>minestom-ce</artifactId>
-            <version>5347c0b11f</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                    <artifactId>shrinkwrap-resolver-depchain</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
@@ -63,5 +45,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

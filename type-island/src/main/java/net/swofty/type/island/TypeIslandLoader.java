@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
 import net.swofty.type.island.tab.IslandGuestsModule;
 import net.swofty.type.island.tab.IslandMemberModule;
 import net.swofty.type.island.tab.IslandServerModule;
@@ -97,6 +98,11 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockVillagerNPC> getVillagerNPCs() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<ServiceType> getRequiredServices() {
+        return List.of(ServiceType.AUCTION_HOUSE);
     }
 
     @Override

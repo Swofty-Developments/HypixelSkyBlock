@@ -19,19 +19,10 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.viaversion.viaversion.api.Via;
-import com.viaversion.viaversion.api.connection.UserConnection;
-import com.viaversion.viaversion.connection.UserConnectionImpl;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.raphimc.vialoader.ViaLoader;
-import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
-import net.raphimc.vialoader.netty.VLLegacyPipeline;
-import net.raphimc.vialoader.netty.ViaDecoder;
-import net.raphimc.vialoader.netty.ViaEncoder;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
@@ -41,9 +32,7 @@ import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.packet.PacketSetup;
 import net.swofty.velocity.packet.PlayerChannelHandler;
-import net.swofty.velocity.packet.PlayerChannelInitializer;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
@@ -88,13 +77,6 @@ public class SkyBlockVelocity {
         server = proxy;
 
         /**
-         * Register cross-version support
-         */
-        ViaLoader.init(null, new SkyBlockVLoader(), null, null,
-                ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
-        Via.getManager().debugHandler().setEnabled(true);
-
-        /**
          * Register packets
          */
         server.getEventManager().register(this, PostLoginEvent.class,
@@ -108,7 +90,6 @@ public class SkyBlockVelocity {
                                 ? null
                                 : EventTask.async(() -> removePlayer(disconnectEvent.getPlayer()))
         );
-        PacketSetup.inject();
 
         /**
          * Handle database
@@ -164,9 +145,7 @@ public class SkyBlockVelocity {
         }
 
         // TODO: Force Resource Pack
-
         event.setInitialServer(toSendTo.server());
-        event.setInitialServer(getLimboServer());
     }
 
     @Subscribe
@@ -200,19 +179,15 @@ public class SkyBlockVelocity {
         Channel channel = connectedPlayer.getConnection().getChannel();
         ChannelPipeline pipeline = channel.pipeline();
 
-        // pipeline.addBefore(Connections.MINECRAFT_DECODER, "PACKET", new PlayerChannelHandler(player));
+        pipeline.addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
     }
 
     private void removePlayer(final Player player) {
         final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
         final Channel channel = connectedPlayer.getConnection().getChannel();
 
-        System.out.println(channel.pipeline().names().stream().map(Object::toString).reduce((s, s2) -> s + ", " + s2).orElse("null"));
-
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove("PACKET");
-            channel.pipeline().remove(VLLegacyPipeline.VIA_DECODER_NAME);
-            channel.pipeline().remove(VLLegacyPipeline.VIA_ENCODER_NAME);
         });
     }
 }

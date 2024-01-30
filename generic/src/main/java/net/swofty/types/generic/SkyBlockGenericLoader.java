@@ -19,6 +19,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.proxyapi.ProxyPlayer;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.command.SkyBlockCommand;

@@ -13,17 +13,24 @@ public record TransferHandler(Player player) {
     public void transferTo(RegisteredServer server) {
         new Thread(() -> {
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+            player.createConnectionRequest(limboServer).connectWithIndication();
             playersInLimbo.add(player);
-            player.createConnectionRequest(limboServer).connectWithIndication().join();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(800);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
             playersInLimbo.remove(player);
-            player.createConnectionRequest(server).connectWithIndication().join();
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            player.createConnectionRequest(server).fireAndForget();
         }).start();
     }
 }

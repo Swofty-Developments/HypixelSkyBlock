@@ -69,6 +69,7 @@ public class SkyBlockPlayer extends Player {
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     private StatisticDisplayReplacement coinsDisplayReplacement = null;
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
+    @Setter
     private SkyBlockIsland skyBlockIsland;
     @Setter
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
@@ -77,10 +78,6 @@ public class SkyBlockPlayer extends Player {
         super(uuid, username, playerConnection);
 
         joined = System.currentTimeMillis();
-    }
-
-    public void setSkyBlockIsland(SkyBlockIsland island) {
-        this.skyBlockIsland = island;
     }
 
     public DataHandler getDataHandler() {

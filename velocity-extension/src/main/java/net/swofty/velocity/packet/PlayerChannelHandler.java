@@ -3,6 +3,7 @@ package net.swofty.velocity.packet;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.proxy.protocol.packet.BossBar;
 import com.velocitypowered.proxy.protocol.packet.JoinGame;
+import com.velocitypowered.proxy.protocol.packet.KeepAlive;
 import com.velocitypowered.proxy.protocol.packet.Respawn;
 import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdate;
 import com.velocitypowered.proxy.protocol.packet.config.RegistrySync;
@@ -28,6 +29,7 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != JoinGame.class
                     && packet.getClass() != BossBar.class
                     && packet.getClass() != StartUpdate.class
+                    && packet.getClass() != KeepAlive.class
                     && packet.getClass() != RegistrySync.class
                     && packet.getClass() != FinishedUpdate.class
             ) {

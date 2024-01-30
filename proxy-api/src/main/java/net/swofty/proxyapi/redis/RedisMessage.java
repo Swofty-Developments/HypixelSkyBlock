@@ -33,4 +33,14 @@ public class RedisMessage {
                 ChannelRegistry.getFromName(channel),
                 message + "}=-=-={" + uuid + "}=-=-={" + filterID);
     }
+
+    public static void sendMessage(String filterID, String channel, String message, Consumer<String> response) {
+        UUID uuid = UUID.randomUUID();
+        UUID toCallback = UUID.fromString(RedisAPI.getInstance().getFilterId());
+        redisMessageListeners.put(uuid, response);
+
+        RedisAPI.getInstance().publishMessage(filterID,
+                ChannelRegistry.getFromName(channel),
+                message + "}=-=-={" + uuid + "}=-=-={" + toCallback);
+    }
 }

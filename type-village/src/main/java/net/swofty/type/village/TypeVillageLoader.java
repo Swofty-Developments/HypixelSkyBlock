@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
 import net.swofty.type.village.mobs.MobGraveyardZombie;
 import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
@@ -101,6 +102,11 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
         ).toList());
 
         return npcs;
+    }
+
+    @Override
+    public List<ServiceType> getRequiredServices() {
+        return List.of(ServiceType.AUCTION_HOUSE);
     }
 
     @Override

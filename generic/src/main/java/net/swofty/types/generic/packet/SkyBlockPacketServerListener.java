@@ -25,7 +25,6 @@ public abstract class SkyBlockPacketServerListener {
         cachedEvents.forEach((packetEvent) -> {
             eventNode.addListener(PlayerPacketOutEvent.class, rawEvent -> {
                 Class<?> packetType = packetEvent.getPacket();
-                System.out.println("Packet outgoing: " + rawEvent.getPacket().getClass().getSimpleName());
 
                 if (packetType.isInstance(rawEvent.getPacket())) {
                     packetEvent.run(rawEvent.getPacket());

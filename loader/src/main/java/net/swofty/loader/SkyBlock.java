@@ -10,6 +10,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyAPI;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -93,6 +94,17 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("has-island", RedisHasIslandLoaded.class);
         proxyAPI.start();
         VelocityProxy.enable(Configuration.get("velocity-secret"));
+
+        /**
+         * Ensure all services are running
+         */
+        typeLoader.getRequiredServices().forEach(serviceType -> {
+            new ProxyService(serviceType).isOnline().thenAccept(online -> {
+                if (!online) {
+                    Logger.error("Service " + serviceType.name() + " is not online!");
+                }
+            });
+        });
 
         /**
          * Start the server
