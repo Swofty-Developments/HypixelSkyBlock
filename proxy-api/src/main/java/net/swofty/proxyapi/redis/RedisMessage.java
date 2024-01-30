@@ -1,5 +1,6 @@
 package net.swofty.proxyapi.redis;
 
+import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 
@@ -34,13 +35,13 @@ public class RedisMessage {
                 message + "}=-=-={" + uuid + "}=-=-={" + filterID);
     }
 
-    public static void sendMessage(String filterID, String channel, String message, Consumer<String> response) {
+    public static void sendMessageService(String serviceID, String channel, String message, Consumer<String> response) {
         UUID uuid = UUID.randomUUID();
         UUID toCallback = UUID.fromString(RedisAPI.getInstance().getFilterId());
         redisMessageListeners.put(uuid, response);
 
-        RedisAPI.getInstance().publishMessage(filterID,
+        RedisAPI.getInstance().publishMessage(serviceID,
                 ChannelRegistry.getFromName(channel),
-                message + "}=-=-={" + uuid + "}=-=-={" + toCallback);
+                new ServiceProxyRequest(uuid, toCallback.toString(), channel, message).toJSON().toString());
     }
 }

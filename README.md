@@ -20,7 +20,8 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
 4. Follow the 'Proxy Setup Guide' below.
 5. Follow the 'Game Server Setup Guide' below.
-6. Follow the 'Resource Pack Setup Guide' below.
+6. Follow the 'Service Setup Guide' below.
+7. Follow the 'Resource Pack Setup Guide' below.
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
@@ -47,6 +48,11 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
 11. Download `NanoLimbo-1.7-all.jar` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and start it in the background using `java -jar NanoLimbo-1.7-all.jar`.
 12. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+
+### Service Setup Guide
+1. Due to the nature of SkyBlock, there may be a variety of services that need to be ran. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
+2. Move these JAR files into the same directory as your Game Servers, they will share the configuration JSON with the services.
+3. Run them using `java -jar {Insert the JAR file}`.
 
 ### Resource Pack Setup Guide
 1. In preparation for SkyBlock version 1, we already have a resource pack system setup. To start, download the `SkyBlockPacker.jar` from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest).

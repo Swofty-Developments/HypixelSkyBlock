@@ -84,10 +84,13 @@ public class SkyBlock {
          */
         Logger.info("Initializing proxy support...");
         ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID,
+                // Proxy Handlers
                 "proxy-online",
                 "server-initialized",
                 "server-name",
-                "player-handler");
+                "player-handler",
+                // Service Handlers
+                "isOnline");
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);

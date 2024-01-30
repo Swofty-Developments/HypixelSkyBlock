@@ -15,14 +15,14 @@ public record ProxyService(ServiceType type) {
 
         AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
 
-        RedisMessage.sendMessage(type.name(), "isOnline", json.toString(), (s) -> {
+        RedisMessage.sendMessageService(type.name(), "isOnline", json.toString(), (s) -> {
             future.complete(true);
             hasReceivedResponse.set(true);
         });
 
         Thread.startVirtualThread(() -> {
             try {
-                Thread.sleep(100);
+                Thread.sleep(70);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
