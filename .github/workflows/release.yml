@@ -33,3 +33,4 @@ jobs:
           loader/target/*.jar
           commons/target/*.jar
           packer/target/*.jar
+          service-auctionhouse/target/*.jar
