@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -23,5 +24,20 @@ public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
         gen.writeNumberField("amount", value.getAmount());
 
         gen.writeEndObject();
+    }
+
+    public static JSONObject serialize(SkyBlockItem item) {
+        JSONObject json = new JSONObject();
+
+        // Iterate over each attribute and serialize it as a key-value pair.
+        for (ItemAttribute attribute : item.attributes) {
+            String key = attribute.getKey();
+            String valueAsString = attribute.saveIntoString();
+            json.put(key, valueAsString);
+        }
+
+        json.put("amount", item.getAmount());
+
+        return json;
     }
 }

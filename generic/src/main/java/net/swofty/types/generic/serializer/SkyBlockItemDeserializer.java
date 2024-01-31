@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -30,6 +31,25 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
         }
 
         item.setAmount(node.get("amount").asInt());
+
+        return item;
+    }
+
+    public static SkyBlockItem deserialize(JSONObject object) {
+        SkyBlockItem item = new SkyBlockItem(Material.AIR); // Start with a base SkyBlockItem
+
+        Iterator<String> keys = object.keys();
+
+        while (keys.hasNext()) {
+            String key = keys.next();
+            String value = object.getString(key);
+            ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
+            if (attribute != null) {
+                attribute.setValue(attribute.loadFromString(value));
+            }
+        }
+
+        item.setAmount(object.getInt("amount"));
 
         return item;
     }

@@ -14,6 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 public abstract class SkyBlockInventoryGUI {

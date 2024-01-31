@@ -34,4 +34,17 @@ public record ProxyService(ServiceType type) {
 
         return future;
     }
+
+    public CompletableFuture<JSONObject> callEndpoint(String endpoint, JSONObject json) {
+        CompletableFuture<JSONObject> future = new CompletableFuture<>();
+
+        AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
+
+        RedisMessage.sendMessageService(type.name(), endpoint, json.toString(), (s) -> {
+            future.complete(new JSONObject(s));
+            hasReceivedResponse.set(true);
+        });
+
+        return future;
+    }
 }

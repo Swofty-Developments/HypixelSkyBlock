@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionHouse;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.missions.MissionTalkToAuctionMaster;
 
@@ -14,7 +15,7 @@ public class NPCAuctionMaster extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&6Auction Master"};
+                return new String[]{"§6Auction Master", "§e§lCLICK"};
             }
 
             @Override
@@ -45,9 +46,9 @@ public class NPCAuctionMaster extends NPCDialogue {
                 NPCDialogue.DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
                                 "Hey there, I'm the Auction Master.",
-                                "At the auction house you can put your valuable items up for auction!",
+                                "In the §6Auction House§f, you can put your valuable items up for auction!",
                                 "You may also want to check back here to see what items other players are selling to see if you can get a good deal.",
-                                "Talk to me if you would like to start your first auction or if you want to see the items currently being sold."
+                                "Talk to me or one of the §6Auction Agents §fif you would like to start your first auction or if you want to see the items currently being sold."
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }
@@ -64,6 +65,6 @@ public class NPCAuctionMaster extends NPCDialogue {
             return;
         }
 
-
+        new GUIAuctionHouse().open(e.player());
     }
 }

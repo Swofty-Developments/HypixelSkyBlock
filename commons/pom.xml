@@ -25,5 +25,16 @@
             <version>${project.parent.version}</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.github.hollow-cube</groupId>
+            <artifactId>minestom-ce</artifactId>
+            <version>5347c0b11f</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                    <artifactId>shrinkwrap-resolver-depchain</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 </project>

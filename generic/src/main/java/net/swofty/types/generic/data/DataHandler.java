@@ -285,6 +285,7 @@ public class DataHandler {
         STORAGE("storage", false, false, false, DatapointStorage.class, new DatapointStorage("storage")),
         BACKPACKS("backpacks", false, false, false, DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
         VISITED_REGIONS("visited_regions", false, false, false, DatapointStringList.class, new DatapointStringList("visited_regions")),
+        AUCTION_STATISTICS("auction_statistics", false, false, false, DatapointAuctionStatistics.class, new DatapointAuctionStatistics("auction_statistics")),
         ;
 
         @Getter

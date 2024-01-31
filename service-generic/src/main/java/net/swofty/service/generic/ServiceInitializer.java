@@ -30,13 +30,15 @@ public record ServiceInitializer(SkyBlockService service) {
                 String realMessage = message.message.split(";")[1];
                 ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));
 
-                String response = endpoint.onMessage(request);
+                Thread.startVirtualThread(() -> {
+                    String response = endpoint.onMessage(request);
 
-                if (response != null) {
-                    RedisAPI.getInstance().publishMessage(request.getRequestServer(),
-                            ChannelRegistry.getFromName(request.getEndpoint()),
-                            response + "}=-=-={" + request.getRequestId());
-                }
+                    if (response != null) {
+                        RedisAPI.getInstance().publishMessage(request.getRequestServer(),
+                                ChannelRegistry.getFromName(request.getEndpoint()),
+                                response + "}=-=-={" + request.getRequestId());
+                    }
+                });
             });
         });
 
