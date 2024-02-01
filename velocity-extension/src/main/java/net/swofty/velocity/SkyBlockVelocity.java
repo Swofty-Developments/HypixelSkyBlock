@@ -23,6 +23,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.raphimc.vialoader.ViaLoader;
+import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
+import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
@@ -32,6 +35,7 @@ import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
+import net.swofty.velocity.handler.SkyblockViaInjector;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -60,6 +64,7 @@ public class SkyBlockVelocity {
     private static SkyBlockVelocity plugin;
     @Getter
     private static RegisteredServer limboServer;
+
     @Inject
     private ProxyServer proxy;
 
@@ -75,7 +80,11 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
-
+        /**
+         * Cross version support!
+         */
+        ViaLoader.init(null , new SkyBlockVLLoader() , new SkyblockViaInjector() , null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
+        //Via.getManager().debugHandler().setEnabled(true);
         /**
          * Register packets
          */
@@ -178,7 +187,6 @@ public class SkyBlockVelocity {
         final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
         Channel channel = connectedPlayer.getConnection().getChannel();
         ChannelPipeline pipeline = channel.pipeline();
-
         pipeline.addBefore(Connections.HANDLER, "PACKET", new PlayerChannelHandler(player));
     }
 
