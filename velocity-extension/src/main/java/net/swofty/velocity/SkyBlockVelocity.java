@@ -19,6 +19,7 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
+import com.viaversion.viaversion.api.Via;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -35,11 +36,12 @@ import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.handler.SkyblockViaInjector;
+import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.via.loader.SkyBlockVLLoader;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -83,8 +85,8 @@ public class SkyBlockVelocity {
         /**
          * Cross version support!
          */
-        ViaLoader.init(null , new SkyBlockVLLoader() , new SkyblockViaInjector() , null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
-        //Via.getManager().debugHandler().setEnabled(true);
+        ViaLoader.init(null , new SkyBlockVLLoader() , new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
+        Via.getManager().debugHandler().setEnabled(true);
         /**
          * Register packets
          */
