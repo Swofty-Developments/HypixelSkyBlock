@@ -25,6 +25,11 @@
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
+            <artifactId>service.generic</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
             <artifactId>proxy.api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

@@ -1,8 +1,11 @@
 package net.swofty.proxyapi.redis;
 
+import net.swofty.commons.ServiceType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.service.generic.ProtocolSpecification;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +13,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class RedisMessage {
-    private static Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
+    private static final Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
 
     public static void register(String channel) {
         RedisAPI.getInstance().registerChannel(channel, (event) -> {
@@ -35,13 +38,25 @@ public class RedisMessage {
                 message + "}=-=-={" + uuid + "}=-=-={" + filterID);
     }
 
-    public static void sendMessageService(String serviceID, String channel, String message, Consumer<String> response) {
+    public static void sendMessageService(ServiceType service,
+                                          ProtocolSpecification specification,
+                                          JSONObject message,
+                                          Consumer<String> response) {
+        // Check that all required keys in the protocolspecification are filled
+        specification.getRequiredOutboundFields().forEach(key -> {
+            if (!message.has(key)) {
+                throw new RuntimeException("Message does not contain required key " + key);
+            }
+        });
+
         UUID uuid = UUID.randomUUID();
         UUID toCallback = UUID.fromString(RedisAPI.getInstance().getFilterId());
         redisMessageListeners.put(uuid, response);
 
-        RedisAPI.getInstance().publishMessage(serviceID,
-                ChannelRegistry.getFromName(channel),
-                new ServiceProxyRequest(uuid, toCallback.toString(), channel, message).toJSON().toString());
+        RedisAPI.getInstance().publishMessage(service.name(),
+                ChannelRegistry.getFromName(specification.getEndpoint()),
+                new ServiceProxyRequest(uuid, toCallback.toString(),
+                        specification.getRequiredInboundFields(),
+                        specification.getEndpoint(), message.toString()).toJSON().toString());
     }
 }

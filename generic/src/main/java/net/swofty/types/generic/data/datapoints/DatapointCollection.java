@@ -6,7 +6,7 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.serializer.Serializer;
+import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
 

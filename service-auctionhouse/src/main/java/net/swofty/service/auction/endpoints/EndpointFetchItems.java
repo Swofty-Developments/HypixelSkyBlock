@@ -18,7 +18,7 @@ public class EndpointFetchItems implements ServiceEndpoint {
     }
 
     @Override
-    public String onMessage(ServiceProxyRequest message) {
+    public JSONObject onMessage(ServiceProxyRequest message) {
         JSONObject json = new JSONObject(message.getMessage());
 
         AuctionsSorting sorting = AuctionsSorting.valueOf(json.getString("sorting"));
@@ -28,7 +28,7 @@ public class EndpointFetchItems implements ServiceEndpoint {
         List<Document> results = (List<Document>) AuctionService.cacheService.getAuctions(category, filter);
 
         if (results.isEmpty())
-            return new JSONObject().put("items", new Document[0]).toString();
+            return new JSONObject().put("items", new Document[0]);
 
         // Sort according to sorting
         switch (sorting) {
@@ -66,6 +66,6 @@ public class EndpointFetchItems implements ServiceEndpoint {
         // Convert all the documents to JSON and add them to an items array
         toReturn.put("items", results.stream().map(Document::toJson).toList());
 
-        return toReturn.toString();
+        return toReturn;
     }
 }

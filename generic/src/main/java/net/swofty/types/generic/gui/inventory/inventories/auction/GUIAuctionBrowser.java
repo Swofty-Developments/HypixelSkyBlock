@@ -22,6 +22,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.protocol.ProtocolFetchItems;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
@@ -53,7 +54,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
     private int page = 1;
     @Getter
     private List<AuctionItem> itemCache = new ArrayList<>();
-    private Lock itemCacheLock = new ReentrantLock();
 
     public GUIAuctionBrowser() {
         super("Auction Browser", InventoryType.CHEST_6_ROW);
@@ -64,46 +64,37 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
         Thread.startVirtualThread(this::updateItemsCache);
     }
 
-    synchronized void updateItemsCache() {
-        itemCacheLock.lock();
+    private void updateItemsCache() {
+        new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolFetchItems(),
+                new JSONObject()
+                        .put("sorting", sorting)
+                        .put("filter", filter)
+                        .put("category", category)).thenAccept(response -> {
+                            // Get "items" key which is a list of Document JSONs and cast it into a list of Documents
+            JSONArray documents = (JSONArray) response.get("items");
 
-        JSONObject documents = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint("fetch-items", new JSONObject()
-                .put("sorting", sorting.name())
-                .put("filter", filter.name())
-                .put("category", category.name())).join();
+            // Convert JSONArray of JSON strings to List<Document>
+            List<Document> items = new ArrayList<>();
+            for (int i = 0; i < documents.length(); i++) {
+                String itemJson = documents.getString(i);
+                Document itemDocument = Document.parse(itemJson);
+                items.add(itemDocument);
+            }
 
-        // Get the items as a JSONArray
-        JSONArray itemsJson = documents.getJSONArray("items");
+            List<AuctionItem> auctionItems = items.stream().map(AuctionItem::fromDocument).toList();
 
-        // Convert JSONArray of JSON strings to List<Document>
-        List<Document> items = new ArrayList<>();
-        for (int i = 0; i < itemsJson.length(); i++) {
-            String itemJson = itemsJson.getString(i);
-            Document itemDocument = Document.parse(itemJson);
-            items.add(itemDocument);
-        }
+            // Items are already sorted, so just paginate them
+            PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
+            paginationList.addAll(auctionItems);
 
-        List<AuctionItem> auctionItems = items.stream().map(AuctionItem::fromDocument).toList();
-
-        // Items are already sorted, so just paginate them
-        PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
-        paginationList.addAll(auctionItems);
-
-        // Set the items in the GUI
-        List<AuctionItem> paginatedItems = paginationList.getPage(page);
-        setItemCache(paginatedItems);
-
-        itemCacheLock.unlock();
+            // Set the items in the GUI
+            List<AuctionItem> paginatedItems = paginationList.getPage(page);
+            setItemCache(paginatedItems);
+        });
     }
 
     @SneakyThrows
-    synchronized void setItems() {
-        boolean isLockAcquired = itemCacheLock.tryLock(300, TimeUnit.MILLISECONDS);
-
-        if (!isLockAcquired) {
-            return;
-        }
-
+    private void setItems() {
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -185,7 +176,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
         Logger.info("Updated items");
         updateItemStacks(getInventory(), getPlayer());
-        itemCacheLock.unlock();
     }
 
     @Override

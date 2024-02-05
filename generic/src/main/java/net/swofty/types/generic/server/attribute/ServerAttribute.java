@@ -2,7 +2,7 @@ package net.swofty.types.generic.server.attribute;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
-import net.swofty.types.generic.serializer.Serializer;
+import net.swofty.service.generic.Serializer;
 
 public abstract class ServerAttribute<T> {
     private final String key;

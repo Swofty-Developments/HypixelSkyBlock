@@ -10,7 +10,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.serializer.Serializer;
+import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.bson.Document;
 

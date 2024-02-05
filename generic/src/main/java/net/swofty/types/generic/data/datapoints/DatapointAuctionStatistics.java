@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.serializer.Serializer;
+import net.swofty.service.generic.Serializer;
 import org.json.JSONObject;
 
 import java.util.HashMap;

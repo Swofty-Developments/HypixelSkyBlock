@@ -1,17 +1,13 @@
 package net.swofty.types.generic.serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import net.minestom.server.item.Material;
+import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.user.PlayerShopData;
-import org.json.JSONObject;
-
-import java.util.Map;
 
 public class StorageSerializer implements Serializer<DatapointStorage.PlayerStorage> {
     private final ObjectMapper mapper;

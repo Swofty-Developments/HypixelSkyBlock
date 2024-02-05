@@ -1,4 +1,4 @@
-package net.swofty.types.generic.serializer;
+package net.swofty.service.generic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

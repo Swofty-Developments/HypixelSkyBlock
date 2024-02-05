@@ -31,13 +31,26 @@ public record ServiceInitializer(SkyBlockService service) {
                 ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));
 
                 Thread.startVirtualThread(() -> {
-                    String response = endpoint.onMessage(request);
+                    JSONObject response = endpoint.onMessage(request);
 
-                    if (response != null) {
-                        RedisAPI.getInstance().publishMessage(request.getRequestServer(),
-                                ChannelRegistry.getFromName(request.getEndpoint()),
-                                response + "}=-=-={" + request.getRequestId());
-                    }
+                    request.getRequiredKeys().forEach(key -> {
+                        if (!response.has(key)) {
+                            throw new RuntimeException("Channel response " + endpoint.channel() + " does not contain required key " + key);
+                        }
+                    });
+
+                    // Clear keys not in response keys
+                    List<String> keysToRemove = new ArrayList<>();
+                    response.keySet().forEach(key -> {
+                        if (!request.getRequiredKeys().contains(key)) {
+                            keysToRemove.add(key);
+                        }
+                    });
+                    keysToRemove.forEach(response::remove);
+
+                    RedisAPI.getInstance().publishMessage(request.getRequestServer(),
+                            ChannelRegistry.getFromName(request.getEndpoint()),
+                            response + "}=-=-={" + request.getRequestId());
                 });
             });
         });

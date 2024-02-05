@@ -3,6 +3,7 @@ package net.swofty.types.generic.serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import net.swofty.service.generic.Serializer;
 
 public class JacksonSerializer<T> implements Serializer<T> {
     private final ObjectMapper mapper;

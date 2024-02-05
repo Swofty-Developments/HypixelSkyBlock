@@ -1,14 +1,11 @@
 package net.swofty.types.generic.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.serializer.Serializer;
+import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;

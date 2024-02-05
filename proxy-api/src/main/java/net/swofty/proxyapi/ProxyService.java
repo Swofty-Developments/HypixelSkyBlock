@@ -2,6 +2,8 @@ package net.swofty.proxyapi;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.service.generic.PingProtocolSpecification;
+import net.swofty.service.generic.ProtocolSpecification;
 import org.json.JSONObject;
 
 import java.util.concurrent.CompletableFuture;
@@ -10,12 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public record ProxyService(ServiceType type) {
     public CompletableFuture<Boolean> isOnline() {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-
         AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
 
-        RedisMessage.sendMessageService(type.name(), "isOnline", json.toString(), (s) -> {
+        RedisMessage.sendMessageService(type, new PingProtocolSpecification(),
+                new JSONObject(), (s) -> {
             future.complete(true);
             hasReceivedResponse.set(true);
         });
@@ -35,14 +35,14 @@ public record ProxyService(ServiceType type) {
         return future;
     }
 
-    public CompletableFuture<JSONObject> callEndpoint(String endpoint, JSONObject json) {
+    public CompletableFuture<JSONObject> callEndpoint(
+            ProtocolSpecification protocol,
+            JSONObject json) {
         CompletableFuture<JSONObject> future = new CompletableFuture<>();
 
-        AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
-
-        RedisMessage.sendMessageService(type.name(), endpoint, json.toString(), (s) -> {
+        RedisMessage.sendMessageService(type, protocol,
+                json, (s) -> {
             future.complete(new JSONObject(s));
-            hasReceivedResponse.set(true);
         });
 
         return future;
