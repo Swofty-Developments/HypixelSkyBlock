@@ -50,6 +50,7 @@
                         </manifest>
                     </archive>
                     <finalName>SkyBlockProxy</finalName>
+                    <outputDirectory>C:\Users\Hamza\Desktop\Github Projects\HypixelSkyBlock-minestom\HypixelSkyBlock\proxy\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -93,7 +94,6 @@
             <artifactId>commons</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
         <dependency>
             <groupId>net.raphimc</groupId>
             <artifactId>ViaLoader</artifactId>
@@ -119,31 +119,6 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.106.Final</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.swofty</groupId>
-            <artifactId>commons</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.raphimc</groupId>
-            <artifactId>ViaLoader</artifactId>
-            <version>2.2.12</version> <!-- Get latest version from releases -->
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>4.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viabackwards-common</artifactId>
-            <version>4.9.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viarewind-common</artifactId>
-            <version>3.0.5</version>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>

@@ -11,6 +11,8 @@ import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.utility.MathUtility;
 
+import java.util.logging.Logger;
+
 @EventParameters(description = "Handles placing the starting Cobblestone Minion",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)
@@ -23,7 +25,6 @@ public class ActionPlayerSpawnFirstMinion extends SkyBlockEvent {
     @Override
     public void run(Event tempEvent) {
         IslandFirstCreatedEvent event = (IslandFirstCreatedEvent) tempEvent;
-
         MathUtility.delay(() -> {
             IslandMinionData.IslandMinion minion = event.getIsland().getMinionData().initializeMinion(
                     new Pos(-4, 100, 28), // Default Cobble Minion position
@@ -32,6 +33,6 @@ public class ActionPlayerSpawnFirstMinion extends SkyBlockEvent {
             );
 
             event.getIsland().getMinionData().spawn(minion);
-        }, 20);
+        }, 40);  // delay to let island load properly
     }
 }
