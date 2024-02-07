@@ -2,6 +2,7 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -27,7 +28,10 @@ public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
         if (event.getInventory() != null) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
-        player.addAndUpdateItem(new SkyBlockItem(event.getCursorItem()));
+        System.out.println(event.getClickType());
+
+        if (!event.getClickType().equals(ClickType.CHANGE_HELD)) // Fix dupe glitches by numkeying items into crafting grid
+            player.addAndUpdateItem(new SkyBlockItem(event.getCursorItem()));
 
         event.setCancelled(true);
         event.setCursorItem(ItemStack.AIR);
