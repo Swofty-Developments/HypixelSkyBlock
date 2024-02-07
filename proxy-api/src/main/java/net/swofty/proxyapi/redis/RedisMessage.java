@@ -21,8 +21,6 @@ public class RedisMessage {
             UUID uuid = UUID.fromString(split[0]);
             String message = split[1];
 
-            System.out.println("Received message on channel " + channel + " with message " + message + " and UUID " + uuid.toString());
-
             redisMessageListeners.get(uuid).accept(message);
             redisMessageListeners.remove(uuid);
         });

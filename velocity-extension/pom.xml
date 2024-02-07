@@ -121,31 +121,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.swofty</groupId>
-            <artifactId>commons</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.raphimc</groupId>
-            <artifactId>ViaLoader</artifactId>
-            <version>2.2.12</version> <!-- Get latest version from releases -->
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>4.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viabackwards-common</artifactId>
-            <version>4.9.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viarewind-common</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-        <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
             <version>1.14.11</version>
