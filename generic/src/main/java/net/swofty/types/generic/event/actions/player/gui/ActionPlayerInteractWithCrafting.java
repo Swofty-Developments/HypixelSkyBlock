@@ -28,8 +28,6 @@ public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
         if (event.getInventory() != null) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
-        System.out.println(event.getClickType());
-
         if (!event.getClickType().equals(ClickType.CHANGE_HELD)) // Fix dupe glitches by numkeying items into crafting grid
             player.addAndUpdateItem(new SkyBlockItem(event.getCursorItem()));
 
