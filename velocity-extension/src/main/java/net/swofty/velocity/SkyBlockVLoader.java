@@ -5,7 +5,6 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.protocol.version.VersionProvider;
 import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
-import net.raphimc.vialoader.ViaLoader;
 import net.raphimc.vialoader.impl.viaversion.VLLoader;
 
 public class SkyBlockVLoader extends VLLoader {

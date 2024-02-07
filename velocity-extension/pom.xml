@@ -93,7 +93,6 @@
             <artifactId>commons</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
         <dependency>
             <groupId>net.raphimc</groupId>
             <artifactId>ViaLoader</artifactId>

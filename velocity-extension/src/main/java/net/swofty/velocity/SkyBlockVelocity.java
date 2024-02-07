@@ -6,9 +6,7 @@ import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
-import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
-import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
@@ -21,11 +19,9 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.viaversion.viaversion.api.Via;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
-import net.bytebuddy.agent.ByteBuddyAgent;
 import net.kyori.adventure.text.Component;
 import net.raphimc.vialoader.ViaLoader;
 import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
@@ -39,11 +35,11 @@ import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 import net.swofty.velocity.via.loader.SkyBlockVLLoader;
 import org.reflections.Reflections;
 
@@ -89,7 +85,6 @@ public class SkyBlockVelocity {
          * Cross version support!
          */
         ViaLoader.init(null , new SkyBlockVLLoader() , new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
-        Via.getManager().debugHandler().setEnabled(true);
 
         /**
          * Register packets
