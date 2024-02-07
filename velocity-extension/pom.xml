@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viabackwards-common</artifactId>
-            <version>4.10.0-24w04a-SNAPSHOT</version>
+            <version>4.10.0-24w05b-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.viaversion</groupId>
