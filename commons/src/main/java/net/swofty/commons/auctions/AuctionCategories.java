@@ -1,4 +1,4 @@
-package net.swofty.commons;
+package net.swofty.commons.auctions;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;

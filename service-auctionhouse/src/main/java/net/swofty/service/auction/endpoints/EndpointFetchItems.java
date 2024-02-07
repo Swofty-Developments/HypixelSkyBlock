@@ -1,8 +1,7 @@
 package net.swofty.service.auction.endpoints;
 
-import com.mongodb.util.JSON;
-import net.swofty.commons.AuctionsFilter;
-import net.swofty.commons.AuctionsSorting;
+import net.swofty.commons.auctions.AuctionsFilter;
+import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;

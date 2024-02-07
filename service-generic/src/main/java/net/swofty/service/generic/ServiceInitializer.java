@@ -34,7 +34,7 @@ public record ServiceInitializer(SkyBlockService service) {
                     JSONObject response = endpoint.onMessage(request);
 
                     request.getRequiredKeys().forEach(key -> {
-                        if (!response.has(key)) {
+                        if (!response.has(key) && !key.isEmpty()) {
                             throw new RuntimeException("Channel response " + endpoint.channel() + " does not contain required key " + key);
                         }
                     });
@@ -50,7 +50,7 @@ public record ServiceInitializer(SkyBlockService service) {
 
                     RedisAPI.getInstance().publishMessage(request.getRequestServer(),
                             ChannelRegistry.getFromName(request.getEndpoint()),
-                            response + "}=-=-={" + request.getRequestId());
+                            request.getRequestId() + "}=-=-={" + response);
                 });
             });
         });

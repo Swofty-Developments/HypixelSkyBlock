@@ -7,9 +7,7 @@ import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.ProtocolSpecification;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class RedisMessage {
@@ -17,13 +15,15 @@ public class RedisMessage {
 
     public static void register(String channel) {
         RedisAPI.getInstance().registerChannel(channel, (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String message = split[0];
-            UUID uuid = UUID.fromString(split[1]);
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
 
-            String messageWithoutFilter = message.substring(message.indexOf(";") + 1);
+            String[] split = messageWithoutFilter.split("}=-=-=\\{");
+            UUID uuid = UUID.fromString(split[0]);
+            String message = split[1];
 
-            redisMessageListeners.get(uuid).accept(messageWithoutFilter);
+            System.out.println("Received message on channel " + channel + " with message " + message + " and UUID " + uuid.toString());
+
+            redisMessageListeners.get(uuid).accept(message);
             redisMessageListeners.remove(uuid);
         });
     }

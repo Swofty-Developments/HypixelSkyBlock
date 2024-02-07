@@ -6,7 +6,9 @@ import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
@@ -23,6 +25,7 @@ import com.viaversion.viaversion.api.Via;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
+import net.bytebuddy.agent.ByteBuddyAgent;
 import net.kyori.adventure.text.Component;
 import net.raphimc.vialoader.ViaLoader;
 import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
@@ -87,6 +90,7 @@ public class SkyBlockVelocity {
          */
         ViaLoader.init(null , new SkyBlockVLLoader() , new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
         Via.getManager().debugHandler().setEnabled(true);
+
         /**
          * Register packets
          */

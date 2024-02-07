@@ -1,4 +1,4 @@
-package net.swofty.commons;
+package net.swofty.commons.auctions;
 
 public enum AuctionsFilter {
     SHOW_ALL,

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class PingEndpoint implements ServiceEndpoint {
     @Override
     public String channel() {
-        return "isOnline";
+        return "service-ping";
     }
 
     @Override

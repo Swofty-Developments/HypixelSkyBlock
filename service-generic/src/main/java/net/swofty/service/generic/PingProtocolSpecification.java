@@ -17,6 +17,6 @@ public class PingProtocolSpecification extends ProtocolSpecification {
 
     @Override
     public String getEndpoint() {
-        return null;
+        return "service-ping";
     }
 }

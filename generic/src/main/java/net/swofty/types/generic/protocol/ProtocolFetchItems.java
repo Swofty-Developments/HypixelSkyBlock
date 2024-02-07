@@ -1,9 +1,8 @@
 package net.swofty.types.generic.protocol;
 
-import net.swofty.commons.AuctionCategories;
-import net.swofty.commons.AuctionsFilter;
-import net.swofty.commons.AuctionsSorting;
-import net.swofty.commons.ServiceType;
+import net.swofty.commons.auctions.AuctionCategories;
+import net.swofty.commons.auctions.AuctionsFilter;
+import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.service.generic.ProtocolSpecification;
 import net.swofty.types.generic.auction.AuctionItem;
 

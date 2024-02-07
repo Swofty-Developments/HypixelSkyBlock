@@ -29,8 +29,8 @@ public class RedisMessage {
     public static void registerProxyToServer(String channelID) {
         RedisAPI.getInstance().registerChannel(channelID, (event) -> {
             String[] split = event.message.split("}=-=-=\\{");
-            String rawMessage = split[1];
             UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
+            String rawMessage = split[1];
 
             callbacks.get(request).complete(rawMessage);
             callbacks.remove(request);

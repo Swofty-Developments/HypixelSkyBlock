@@ -44,7 +44,7 @@ public class SkyBlockViaInjector implements ViaInjector {
 
     @Override
     public void uninject() throws Exception {
-          // not supported
+        // not supported
     }
 
     @Override

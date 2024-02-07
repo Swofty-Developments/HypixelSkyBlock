@@ -90,7 +90,7 @@ public class SkyBlock {
                 "server-name",
                 "player-handler",
                 // Service Handlers
-                "isOnline");
+                "service-ping");
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);

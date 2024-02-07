@@ -34,7 +34,7 @@ public abstract class RedisListener {
         RedisAPI.getInstance().publishMessage(
                 filterID.toString(),
                 ChannelRegistry.getFromName(channel),
-                response + "}=-=-={" + uuid);
+                uuid + "}=-=-={" + response);
     }
 
     public abstract String receivedMessage(String message, UUID serverUUID);

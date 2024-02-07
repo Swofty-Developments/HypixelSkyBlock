@@ -21,8 +21,8 @@ public class ProxyAPI {
     public void registerProxyToClient(String channelID, Class<? extends ProxyToClient> clazz) {
         RedisAPI.getInstance().registerChannel(channelID, (event) -> {
             String[] split = event.message.split("}=-=-=\\{");
-            String rawMessage = split[1];
             UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
+            String rawMessage = split[1];
 
             String response;
             try {
