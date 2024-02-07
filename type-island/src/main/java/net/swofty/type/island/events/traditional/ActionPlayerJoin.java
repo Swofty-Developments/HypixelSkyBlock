@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.client.play.ClientChunkBatchReceivedPacket;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -34,6 +35,11 @@ public class ActionPlayerJoin extends SkyBlockEvent {
 
         player.setRespawnPoint(new Pos(0, 100, 0));
 
-        Objects.requireNonNull(event.getSpawningInstance()).getChunks().forEach(player::sendChunk);
+        Instance spawnInstance = event.getSpawningInstance();
+
+        if (spawnInstance == null){
+            throw new NullPointerException("Island cannot be null");
+        }
+        spawnInstance.getChunks().forEach(player::sendChunk);
     }
 }

@@ -50,7 +50,6 @@
                         </manifest>
                     </archive>
                     <finalName>SkyBlockProxy</finalName>
-                    <outputDirectory>C:\Users\Hamza\Desktop\Github Projects\HypixelSkyBlock-minestom\HypixelSkyBlock\proxy\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
