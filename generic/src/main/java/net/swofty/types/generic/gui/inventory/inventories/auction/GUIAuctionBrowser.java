@@ -3,17 +3,16 @@ package net.swofty.types.generic.gui.inventory.inventories.auction;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.minestom.server.adventure.provider.MinestomPlainTextComponentSerializerProvider;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.auctions.AuctionsFilter;
 import net.swofty.commons.auctions.AuctionsSorting;
-import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -30,14 +29,10 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Setter
 public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements RefreshingGUI {
@@ -174,9 +169,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                 }
             });
         }
-
-        Logger.info("Updated items");
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
@@ -206,11 +198,11 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
             player.closeInventory();
         }
 
-        Thread.startVirtualThread(this::setItems);
+        setItems();
     }
 
     @Override
     public int refreshRate() {
-        return 20;
+        return 10;
     }
 }

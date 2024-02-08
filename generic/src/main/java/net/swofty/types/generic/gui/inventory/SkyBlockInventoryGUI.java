@@ -288,8 +288,10 @@ public abstract class SkyBlockInventoryGUI {
                 if (!GUI_MAP.containsKey(player.getUuid()) || GUI_MAP.get(player.getUuid()) != this) {
                     return TaskSchedule.stop();
                 }
-                gui.refreshItems(player);
-                updateItemStacks(inventory, player);
+                Thread.startVirtualThread(() -> {
+                    gui.refreshItems(player);
+                    updateItemStacks(inventory, player);
+                });
                 return TaskSchedule.tick(gui.refreshRate());
             });
         }

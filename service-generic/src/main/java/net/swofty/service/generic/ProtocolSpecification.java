@@ -40,7 +40,7 @@ public abstract class ProtocolSpecification {
 
     public List<String> getRequiredInboundFields() {
         List<String> requiredFields = new ArrayList<>();
-        for (ProtocolEntries<?> entry : getServiceProtocolEntries()) {
+        for (ProtocolEntries<?> entry : getReturnedProtocolEntries()) {
             if (entry.required) {
                 requiredFields.add(entry.key);
             }
@@ -50,7 +50,7 @@ public abstract class ProtocolSpecification {
 
     public List<String> getRequiredOutboundFields() {
         List<String> requiredFields = new ArrayList<>();
-        for (ProtocolEntries<?> entry : getReturnedProtocolEntries()) {
+        for (ProtocolEntries<?> entry : getServiceProtocolEntries()) {
             if (entry.required) {
                 requiredFields.add(entry.key);
             }

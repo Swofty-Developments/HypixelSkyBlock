@@ -62,6 +62,20 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
                         "§eClick to browse!");
             }
         });
+
+        set(new GUIClickableItem(15) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIManageAuctions().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
+                        " ",
+                        "§eClick to manage!");
+            }
+        });
     }
 
     @Override
