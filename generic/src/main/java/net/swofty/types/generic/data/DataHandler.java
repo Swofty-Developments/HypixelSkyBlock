@@ -266,7 +266,7 @@ public class DataHandler {
             PlayerShopData data = (PlayerShopData) datapoint.getValue();
             datapoint.setValue(data);
         }),
-        DISABLE_DROP_MESSAGE("disable_drop_message", true, false, false, DatapointBoolean.class, new DatapointBoolean("disable_drop_message", false)),
+        TOGGLES("toggles", true, false, false, DatapointToggles.class, new DatapointToggles("toggles")),
         FAIRY_SOULS("fairy_souls", false, false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
         CREATED("created", false, true, false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {

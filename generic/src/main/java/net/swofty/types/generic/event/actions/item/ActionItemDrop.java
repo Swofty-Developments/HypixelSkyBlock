@@ -6,6 +6,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -32,9 +33,7 @@ public class ActionItemDrop extends SkyBlockEvent {
             return;
         }
 
-        boolean hideMessage = player.getDataHandler().get(
-                DataHandler.Data.DISABLE_DROP_MESSAGE, DatapointBoolean.class
-        ).getValue();
+        boolean hideMessage = player.getToggles().get(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES);
 
         if (!hideMessage) {
             player.sendMessage(Component.text("§e⚠ §aYour drops can't be seen by other players in §bSkyBlock§a!")
