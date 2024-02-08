@@ -84,6 +84,10 @@ public class SkyBlockPlayer extends Player {
         return DataHandler.getUser(this.uuid);
     }
 
+    public DatapointToggles.Toggles getToggles() {
+        return getDataHandler().get(DataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
+    }
+
     public PlayerStatistics getStatistics() {
         return new PlayerStatistics(this);
     }

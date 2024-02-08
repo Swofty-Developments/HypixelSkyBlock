@@ -4,6 +4,7 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -17,11 +18,12 @@ public class ToggleDropAlertCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
-            DatapointBoolean isDisabled = ((SkyBlockPlayer) sender).getDataHandler()
-                    .get(DataHandler.Data.DISABLE_DROP_MESSAGE, DatapointBoolean.class);
+            DatapointToggles.Toggles toggles = ((SkyBlockPlayer) sender).getToggles();
 
-            isDisabled.setValue(!isDisabled.getValue());
-            sender.sendMessage("§aDrop alerts toggled " + (isDisabled.getValue() ? "§cOFF" : "§aON") + "§a!");
+            toggles.inverse(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES);
+
+            sender.sendMessage("§aDrop alerts toggled " + (toggles.get(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES)
+                    ? "§cOFF" : "§aON") + "§a!");
         });
     }
 }
