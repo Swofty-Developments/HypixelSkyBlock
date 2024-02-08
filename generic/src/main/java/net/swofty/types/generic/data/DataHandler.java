@@ -261,11 +261,7 @@ public class DataHandler {
             data.setSkyBlockPlayer(player);
             datapoint.setValue(data);
         }),
-        SHOPPING_DATA("shopping_data", false, false, false, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {
-        }, (player, datapoint) -> {
-            PlayerShopData data = (PlayerShopData) datapoint.getValue();
-            datapoint.setValue(data);
-        }),
+        SHOPPING_DATA("shopping_data", false, false, true, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {}),
         TOGGLES("toggles", true, false, false, DatapointToggles.class, new DatapointToggles("toggles")),
         FAIRY_SOULS("fairy_souls", false, false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
         CREATED("created", false, true, false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
@@ -372,7 +368,7 @@ public class DataHandler {
                     }
                 });
             });
-            return TaskSchedule.tick(20);
+            return TaskSchedule.nextTick();
         });
     }
 }
