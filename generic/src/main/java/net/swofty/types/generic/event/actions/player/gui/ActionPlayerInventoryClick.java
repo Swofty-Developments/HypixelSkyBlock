@@ -85,8 +85,9 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 if (item instanceof GUIClickableItem clickable) {
                     clickable.run(event, player);
                     if (!cursorItem.isNA() && player.getOpenInventory() != event.getInventory()
-                            && player.getOpenInventory() != null)
+                            && player.getOpenInventory() != null && event.getClickType() != ClickType.CHANGE_HELD) {
                         player.addAndUpdateItem(cursorItem);
+                    }
                 }
 
                 if (item instanceof GUIQueryItem query) {
@@ -106,6 +107,7 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
         return inventoryClick.getClickType().equals(ClickType.LEFT_DRAGGING) ||
                 inventoryClick.getClickType().equals(ClickType.SHIFT_CLICK) ||
                 inventoryClick.getClickType().equals(ClickType.START_SHIFT_CLICK) ||
+                inventoryClick.getClickType().equals(ClickType.CHANGE_HELD) ||
                 inventoryClick.getClickType().equals(ClickType.RIGHT_DRAGGING);
     }
 }

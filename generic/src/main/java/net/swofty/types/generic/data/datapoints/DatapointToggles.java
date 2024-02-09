@@ -15,7 +15,6 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
 
     public DatapointToggles(String key, DatapointToggles.Toggles value) {
         super(key, value, new Serializer<>() {
-
             @Override
             public String serialize(Toggles value) throws JsonProcessingException {
                 StringBuilder builder = new StringBuilder();
@@ -31,6 +30,10 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             public Toggles deserialize(String json) throws JsonProcessingException {
                 Toggles toggles = new Toggles(new HashMap<>());
                 String[] split = json.split(",");
+
+                if (split.length == 1 && split[0].isEmpty()) {
+                    return toggles;
+                }
 
                 for (String s : split) {
                     String[] split1 = s.split(":");

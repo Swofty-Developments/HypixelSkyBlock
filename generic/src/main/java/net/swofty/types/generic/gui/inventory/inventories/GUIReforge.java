@@ -60,7 +60,10 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) return;
+                    if (stack.getDisplayName() == null) {
+                        updateFromItem(null);
+                        return;
+                    }
 
                     SkyBlockItem item = new SkyBlockItem(stack);
                     updateFromItem(item);
@@ -96,31 +99,6 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             updateItemStacks(getInventory(), getPlayer());
             return;
         }
-
-        set(new GUIClickableItem(13) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                ItemStack stack = e.getCursorItem();
-
-                if (stack.getDisplayName() == null) {
-                    updateFromItem(null);
-                    return;
-                }
-
-                SkyBlockItem item = new SkyBlockItem(stack);
-                updateFromItem(item);
-            }
-
-            @Override
-            public boolean canPickup() {
-                return true;
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
-            }
-        });
 
         if (item.getAmount() > 1 ||
                 item.getGenericInstance() == null ||

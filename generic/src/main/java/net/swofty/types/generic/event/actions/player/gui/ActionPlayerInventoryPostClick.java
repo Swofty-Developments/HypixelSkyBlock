@@ -31,8 +31,6 @@ public class ActionPlayerInventoryPostClick extends SkyBlockEvent {
     public void run(Event tempEvent) {
         InventoryClickEvent event = (InventoryClickEvent) tempEvent;
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
-        SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
-        SkyBlockItem cursorItem = new SkyBlockItem(event.getCursorItem());
 
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid());
