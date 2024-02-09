@@ -1,6 +1,5 @@
 package net.swofty.velocity.via.injector;
 
-
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
@@ -12,10 +11,20 @@ import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.packet.PlayerChannelInitializer;
 
 import java.lang.reflect.InvocationTargetException;
-
-import static com.viaversion.viaversion.velocity.platform.VelocityViaInjector.GET_PLAYER_INFO_FORWARDING_MODE;
+import java.lang.reflect.Method;
 
 public class SkyBlockViaInjector implements ViaInjector {
+
+    public static final Method GET_PLAYER_INFO_FORWARDING_MODE = getPlayerInfoForwardingModeMethod();
+
+    private static Method getPlayerInfoForwardingModeMethod() {
+        try {
+            return Class.forName("com.velocitypowered.proxy.config.VelocityConfiguration").getMethod("getPlayerInfoForwardingMode");
+        } catch (NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Override
     public void inject() throws Exception{
         Object connectionManager = ReflectionUtil.get(SkyBlockVelocity.getServer(), "cm", Object.class);
@@ -69,14 +78,12 @@ public class SkyBlockViaInjector implements ViaInjector {
     public static int getLowestSupportedProtocolVersion() {
         try {
             if (GET_PLAYER_INFO_FORWARDING_MODE != null && ((Enum<?>)GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration())).name().equals("MODERN")) {
-                return com.viaversion.viaversion.api.protocol.version.ProtocolVersion.v1_13_2.getVersion();
+                return com.viaversion.viaversion.api.protocol.version.ProtocolVersion.v1_13.getVersion();
             }
         } catch (InvocationTargetException | IllegalAccessException ignored) {}
 
         return ProtocolVersion.MINIMUM_VERSION.getProtocol();
     }
-
-
 
     @Override
     public JsonObject getDump() {
