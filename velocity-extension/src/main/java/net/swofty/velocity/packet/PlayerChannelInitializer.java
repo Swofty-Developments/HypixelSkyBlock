@@ -46,10 +46,10 @@ public class PlayerChannelInitializer extends ChannelInitializer<io.netty.channe
         final UserConnection user = new UserConnectionImpl(channel, clientSide);
         new ProtocolPipelineImpl(user);
 
-        channel.pipeline().addBefore(Connections.MINECRAFT_DECODER,
+        channel.pipeline().addBefore(MINECRAFT_DECODER,
                 VIA_DECODER,
                 new PacketDecodeHandler(user));
-        channel.pipeline().addBefore(Connections.MINECRAFT_ENCODER,
+        channel.pipeline().addBefore(MINECRAFT_ENCODER,
                 VIA_ENCODER,
                 new PacketEncodeHandler(user));
     }
