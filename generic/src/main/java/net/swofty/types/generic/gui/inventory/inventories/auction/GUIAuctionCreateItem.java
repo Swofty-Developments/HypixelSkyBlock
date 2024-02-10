@@ -13,6 +13,7 @@ import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
+import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -156,11 +157,13 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     player.closeInventory();
 
                     player.sendMessage("§7Putting item in escrow...");
+
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
                     AuctionItem item = new AuctionItem(escrow.getItem(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
                             escrow.isBin(), escrow.getPrice());
                     String itemName = StringUtility.getTextFromComponent(builtItem.getDisplayName());
                     player.getDataHandler().get(DataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
+                    player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());
 
                     player.sendMessage("§7Setting up the auction...");
                     new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(), new JSONObject()

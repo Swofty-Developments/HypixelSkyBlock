@@ -23,7 +23,7 @@ public class AuctionItem {
     private long endTime;
 
     private boolean isBin;
-    private Long startingPrice;
+    private Integer startingPrice;
 
     private Map<UUID, Long> bids;
 
@@ -37,7 +37,7 @@ public class AuctionItem {
         this.item = item;
         this.endTime = endTime;
         this.isBin = isBin;
-        this.startingPrice = startingPrice;
+        this.startingPrice = Math.toIntExact(startingPrice);
 
         this.bids = new HashMap<>();
     }
@@ -61,12 +61,41 @@ public class AuctionItem {
 
         toReturn.add("§8§m----------------------");
         toReturn.add("§7Seller: " + SkyBlockPlayer.getDisplayName(originator));
-        toReturn.add(" ");
+
+        if (isBin) {
+            toReturn.add("§7Buy it now: §6" + startingPrice + " coins");
+        } else {
+            if (bids.isEmpty()) {
+                toReturn.add("§7Starting bid: §6" + startingPrice + " coins");
+            } else {
+                toReturn.add("§7Bids: §a" + bids.size() + " bid" + (bids.size() == 1 ? "" : "s"));
+                toReturn.add(" ");
+                toReturn.add("§7Top bid: §6" + Collections.max(bids.values()) + " coins");
+                UUID topBidder = null;
+                for (Map.Entry<UUID, Long> entry : bids.entrySet()) {
+                    if (entry.getValue().equals(Collections.max(bids.values()))) {
+                        topBidder = entry.getKey();
+                    }
+                }
+
+                if (topBidder != null) {
+                    toReturn.add("§7Bidder: " + SkyBlockPlayer.getDisplayName(topBidder));
+                }
+            }
+        }
 
         if (player != null && originator.equals(player.getUuid())) {
-            toReturn.add("§aThis is your own auction!");
             toReturn.add(" ");
+            toReturn.add("§aThis is your own auction!");
         }
+
+        toReturn.add(" ");
+        if (endTime > System.currentTimeMillis()) {
+            toReturn.add("§7Ends in: §e" + StringUtility.formatTime(endTime - System.currentTimeMillis()));
+        } else {
+            toReturn.add("§7Status: §aEnded!");
+        }
+        toReturn.add(" ");
 
         toReturn.add("§eClick to inspect!");
         return toReturn;
@@ -87,10 +116,10 @@ public class AuctionItem {
         AuctionItem item = new AuctionItem();
         item.setUuid(UUID.fromString(document.getString("_id")));
         item.setOriginator(UUID.fromString(document.getString("originator")));
-        item.setItem(SkyBlockItemDeserializer.deserialize((JSONObject) document.get("item")));
+        item.setItem(SkyBlockItemDeserializer.deserialize((Map<String, Object>) document.get("item")));
         item.setEndTime(document.getLong("end"));
         item.setBin(document.getBoolean("bin"));
-        item.setStartingPrice(document.getLong("starting-price"));
+        item.setStartingPrice(document.getInteger("starting-price"));
         item.setBids((Map<UUID, Long>) document.get("bids"));
         return item;
     }

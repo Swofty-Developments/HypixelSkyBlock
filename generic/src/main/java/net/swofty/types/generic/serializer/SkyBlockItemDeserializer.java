@@ -35,21 +35,19 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
         return item;
     }
 
-    public static SkyBlockItem deserialize(JSONObject object) {
+    public static SkyBlockItem deserialize(Map<String, Object> object) {
         SkyBlockItem item = new SkyBlockItem(Material.AIR); // Start with a base SkyBlockItem
 
-        Iterator<String> keys = object.keys();
-
-        while (keys.hasNext()) {
-            String key = keys.next();
-            String value = object.getString(key);
+        for (Map.Entry<String, Object> entry : object.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue().toString();
             ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
             if (attribute != null) {
                 attribute.setValue(attribute.loadFromString(value));
             }
         }
 
-        item.setAmount(object.getInt("amount"));
+        item.setAmount((int) object.get("amount"));
 
         return item;
     }

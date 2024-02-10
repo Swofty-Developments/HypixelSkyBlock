@@ -22,7 +22,7 @@ public abstract class SkyBlockInventoryGUI {
 
     protected String title;
     protected InventoryType size;
-    protected List<GUIItem> items;
+    protected final List<GUIItem> items;
     private Inventory inventory;
     private SkyBlockPlayer player;
 
@@ -289,8 +289,10 @@ public abstract class SkyBlockInventoryGUI {
                     return TaskSchedule.stop();
                 }
                 Thread.startVirtualThread(() -> {
-                    gui.refreshItems(player);
-                    updateItemStacks(inventory, player);
+                    synchronized (items) {
+                        gui.refreshItems(player);
+                        updateItemStacks(inventory, player);
+                    }
                 });
                 return TaskSchedule.tick(gui.refreshRate());
             });

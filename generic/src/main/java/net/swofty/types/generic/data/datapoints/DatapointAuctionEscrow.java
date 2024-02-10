@@ -11,6 +11,8 @@ import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;
 import net.swofty.types.generic.serializer.SkyBlockItemSerializer;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class DatapointAuctionEscrow extends Datapoint<DatapointAuctionEscrow.AuctionEscrow> {
 
     public DatapointAuctionEscrow(String key, DatapointAuctionEscrow.AuctionEscrow value) {
@@ -38,7 +40,7 @@ public class DatapointAuctionEscrow extends Datapoint<DatapointAuctionEscrow.Auc
                 }
 
                 return new AuctionEscrow(
-                        SkyBlockItemDeserializer.deserialize(obj.getJSONObject("item")),
+                        SkyBlockItemDeserializer.deserialize((Map<String, Object>) obj.get("item")),
                         obj.getLong("price"),
                         obj.getLong("duration"),
                         obj.getBoolean("bin"));

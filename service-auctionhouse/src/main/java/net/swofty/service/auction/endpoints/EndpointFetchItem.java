@@ -21,7 +21,7 @@ public class EndpointFetchItem implements ServiceEndpoint {
 
         Document item = AuctionActiveDatabase.collection.find(new Document("_id", uuidToFetch.toString())).first();
         if (item != null) {
-            return new JSONObject(item.toJson());
+            return new JSONObject().put("item", item.toJson());
         }
 
         return new JSONObject();

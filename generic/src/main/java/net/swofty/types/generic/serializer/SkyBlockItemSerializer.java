@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.attribute.ItemAttribute;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
     @Override
@@ -26,7 +27,7 @@ public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
         gen.writeEndObject();
     }
 
-    public static JSONObject serialize(SkyBlockItem item) {
+    public static Map<String, Object> serialize(SkyBlockItem item) {
         JSONObject json = new JSONObject();
 
         // Iterate over each attribute and serialize it as a key-value pair.
@@ -38,6 +39,6 @@ public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
 
         json.put("amount", item.getAmount());
 
-        return json;
+        return json.toMap();
     }
 }

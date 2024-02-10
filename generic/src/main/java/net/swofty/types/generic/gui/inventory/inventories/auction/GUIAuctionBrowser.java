@@ -136,6 +136,11 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
         });
 
         int highestCoveredSlot = 0;
+
+        if (getItemCache() == null) {
+            return;
+        }
+
         for (AuctionItem auctionItem : getItemCache()) {
             int slot = PAGINATED_SLOTS[getItemCache().indexOf(auctionItem)];
             highestCoveredSlot++;
