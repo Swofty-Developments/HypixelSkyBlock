@@ -8,6 +8,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -109,7 +110,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                 }
 
                 Thread.startVirtualThread(() -> updateItemsCache());
-                Thread.startVirtualThread(() -> setItems());
             }
 
             @Override
@@ -138,6 +138,42 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                         lore);
             }
         });
+        set(new GUIClickableItem(52) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    AuctionsFilter nextFilter = filter.previous();
+                    setFilter(nextFilter);
+
+                    Thread.startVirtualThread(() -> updateItemsCache());
+                    return;
+                }
+                AuctionsFilter nextFilter = filter.next();
+                setFilter(nextFilter);
+
+                Thread.startVirtualThread(() -> updateItemsCache());
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>(List.of(" "));
+
+                Arrays.stream(AuctionsFilter.values()).forEach(filter -> {
+                    if (filter == GUIAuctionBrowser.this.filter) {
+                        lore.add("§b§l> §b" + StringUtility.toNormalCase(filter.name()));
+                    } else {
+                        lore.add("§7" + StringUtility.toNormalCase(filter.name()));
+                    }
+                });
+
+                lore.add(" ");
+                lore.add("§bRight-Click to go backwards!");
+                lore.add("§eClick to switch filter!");
+
+                return ItemStackCreator.getStack("§aBIN Filter", Material.GOLD_BLOCK, 1,
+                        lore);
+            }
+        });
         for (int i = 0; i < AuctionCategories.values().length; i++) {
             AuctionCategories category = AuctionCategories.values()[i];
             set(new GUIClickableItem(i * 9) {
@@ -163,7 +199,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                         lore.add("§eClick to view items!");
                     }
 
-                    return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getMaterial(), 1, lore);
+                    return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getDisplayMaterial(), 1, lore);
                 }
             });
         }
@@ -182,7 +218,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-
+                    new GUIAuctionViewItem(auctionItem.getUuid()).open(player);
                 }
 
                 @Override

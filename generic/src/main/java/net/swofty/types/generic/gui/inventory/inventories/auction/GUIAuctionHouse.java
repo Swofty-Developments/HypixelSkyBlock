@@ -91,6 +91,8 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
+                            "§7You own §e" + player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
+                            "§7which recently ended.",
                             " ",
                             "§eClick to manage!");
                 }

@@ -31,17 +31,11 @@ public class AuctionsCacheService {
         // If not in cache, fetch from MongoDB and store in cache
         List<Document> documents = getDocuments(categoryFilter);
 
-        switch (filter) {
-            case SHOW_ALL:
-                result = documents;
-                break;
-            case AUCTIONS_ONLY:
-                result = documents.stream().filter(document -> document.getBoolean("bin").equals(false));
-                break;
-            case BIN_ONLY:
-                result = documents.stream().filter(document -> document.getBoolean("bin").equals(true));
-                break;
-        }
+        result = switch (filter) {
+            case SHOW_ALL -> documents;
+            case AUCTIONS_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(false));
+            case BIN_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(true));
+        };
 
         cache.put(categoryFilter + "-" + filter, result);
         return result;
