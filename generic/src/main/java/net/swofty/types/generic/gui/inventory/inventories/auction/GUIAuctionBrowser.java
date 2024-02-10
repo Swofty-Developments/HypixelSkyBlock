@@ -3,6 +3,7 @@ package net.swofty.types.generic.gui.inventory.inventories.auction;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -22,6 +23,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolFetchItems;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -45,6 +47,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
     private AuctionsSorting sorting = AuctionsSorting.HIGHEST_BID;
     private AuctionsFilter filter = AuctionsFilter.SHOW_ALL;
+    @Getter
     private AuctionCategories category = AuctionCategories.WEAPONS;
 
     private int page = 1;
@@ -53,9 +56,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
     public GUIAuctionBrowser() {
         super("Auction Browser", InventoryType.CHEST_6_ROW);
-
-        fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
-        set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
 
         Thread.startVirtualThread(this::updateItemsCache);
     }
@@ -91,6 +91,10 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
     @SneakyThrows
     private void setItems() {
+        fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
+        set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
+        getInventory().setTitle(Component.text("Auction Browser - " + StringUtility.toNormalCase(category.name())));
+
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -134,10 +138,41 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                         lore);
             }
         });
+        for (int i = 0; i < AuctionCategories.values().length; i++) {
+            AuctionCategories category = AuctionCategories.values()[i];
+            set(new GUIClickableItem(i * 9) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    if (category.equals(getCategory())) {
+                        return;
+                    }
+
+                    setCategory(category);
+                    Thread.startVirtualThread(() -> updateItemsCache());
+                    Thread.startVirtualThread(() -> setItems());
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
+                    lore.addAll(category.getExamples());
+                    lore.add(" ");
+
+                    if (category.equals(getCategory())) {
+                        lore.add("§aCurrently Browsing");
+                    } else {
+                        lore.add("§eClick to view items!");
+                    }
+
+                    return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getMaterial(), 1, lore);
+                }
+            });
+        }
 
         int highestCoveredSlot = 0;
 
         if (getItemCache() == null) {
+            fillInAir(highestCoveredSlot);
             return;
         }
 
@@ -154,17 +189,19 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     SkyBlockItem skyBlockItem = (auctionItem.getItem());
-                    ItemLore itemLore = new ItemLore(skyBlockItem.getItemStack());
+                    ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
-                    List<String> lore = new ArrayList<>(itemLore.getStack().getLore().stream().map(StringUtility::getTextFromComponent)
-                            .toList());
-
-                    return ItemStackCreator.getStack("Example", skyBlockItem.getMaterial(), skyBlockItem.getAmount(), lore);
+                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.getDisplayName()),
+                            skyBlockItem.getMaterial(), skyBlockItem.getAmount(), auctionItem.getLore());
                 }
             });
         }
 
         // Fill the rest of the slots with air
+        fillInAir(highestCoveredSlot / 2);
+    }
+
+    private void fillInAir(int highestCoveredSlot) {
         for (int i = highestCoveredSlot; i < PAGINATED_SLOTS.length; i++) {
             int slot = PAGINATED_SLOTS[i];
             set(new GUIItem(slot) {

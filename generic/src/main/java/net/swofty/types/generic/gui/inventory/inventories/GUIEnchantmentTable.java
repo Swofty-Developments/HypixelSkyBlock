@@ -23,7 +23,7 @@ import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.impl.Enchantable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
@@ -185,9 +185,9 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        List<ItemGroups> itemGroups = ((Enchantable) type.clazz.newInstance()).getItemGroups();
+        List<EnchantItemGroups> enchantItemGroups = ((Enchantable) type.clazz.newInstance()).getEnchantItemGroups();
         List<EnchantmentType> enchantments = Arrays.stream(EnchantmentType.values())
-                .filter(enchantmentType -> enchantmentType.getEnch().getGroups().stream().anyMatch(itemGroups::contains))
+                .filter(enchantmentType -> enchantmentType.getEnch().getGroups().stream().anyMatch(enchantItemGroups::contains))
                 .filter(enchantmentType -> enchantmentType.getEnchFromTable() != null)
                 .toList();
 

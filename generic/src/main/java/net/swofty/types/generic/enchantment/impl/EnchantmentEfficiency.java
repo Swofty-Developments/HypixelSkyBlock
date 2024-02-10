@@ -8,7 +8,7 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,8 +33,8 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public List<ItemGroups> getGroups() {
-        return Collections.singletonList(ItemGroups.PICKAXE);
+    public List<EnchantItemGroups> getGroups() {
+        return Collections.singletonList(EnchantItemGroups.PICKAXE);
     }
 
     @Override

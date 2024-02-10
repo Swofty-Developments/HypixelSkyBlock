@@ -4,11 +4,10 @@ import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 
 import java.util.HashMap;
@@ -29,8 +28,8 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
     }
 
     @Override
-    public List<ItemGroups> getItemGroups() {
-        return List.of(ItemGroups.SWORD);
+    public List<EnchantItemGroups> getEnchantItemGroups() {
+        return List.of(EnchantItemGroups.SWORD);
     }
 
     @Override

@@ -24,6 +24,6 @@ public class EndpointFetchItem implements ServiceEndpoint {
             return new JSONObject().put("item", item.toJson());
         }
 
-        return new JSONObject();
+        return new JSONObject().put("item", "null");
     }
 }

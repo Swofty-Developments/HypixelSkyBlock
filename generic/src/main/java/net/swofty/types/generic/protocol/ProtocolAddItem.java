@@ -15,7 +15,8 @@ public class ProtocolAddItem extends ProtocolSpecification {
     @Override
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return new ArrayList<>(List.of(
-                new ProtocolEntries<JSONObject>("item", true)
+                new ProtocolEntries<JSONObject>("item", true),
+                new ProtocolEntries<String>("category", true)
         ));
     }
 

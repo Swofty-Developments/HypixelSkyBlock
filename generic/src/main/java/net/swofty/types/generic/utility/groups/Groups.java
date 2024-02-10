@@ -1,4 +1,4 @@
-package net.swofty.types.generic.utility;
+package net.swofty.types.generic.utility.groups;
 
 import net.swofty.types.generic.region.RegionType;
 

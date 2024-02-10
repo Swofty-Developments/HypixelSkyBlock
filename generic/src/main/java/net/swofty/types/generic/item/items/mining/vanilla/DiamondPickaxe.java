@@ -3,9 +3,8 @@ package net.swofty.types.generic.item.items.mining.vanilla;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.item.ReforgeType;
-import net.swofty.types.generic.item.impl.*;
 
 import java.util.List;
 
@@ -34,8 +33,8 @@ public class DiamondPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRari
     }
 
     @Override
-    public List<ItemGroups> getItemGroups() {
-        return List.of(ItemGroups.PICKAXE, ItemGroups.TOOLS);
+    public List<EnchantItemGroups> getEnchantItemGroups() {
+        return List.of(EnchantItemGroups.PICKAXE, EnchantItemGroups.TOOLS);
     }
 
     @Override

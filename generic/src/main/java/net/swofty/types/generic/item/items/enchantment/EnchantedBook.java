@@ -4,7 +4,7 @@ import com.mongodb.lang.Nullable;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.utility.StringUtility;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -40,7 +40,7 @@ public class EnchantedBook implements CustomSkyBlockItem {
 
         Set<String> sourceTypes = enchantments.stream()
                 .flatMap(enchantment -> enchantment.type().getEnch().getGroups().stream())
-                .map(ItemGroups::getDisplayName)
+                .map(EnchantItemGroups::getDisplayName)
                 .collect(Collectors.toSet());
 
         lore.add("§7Applicable on: §9" + String.join("§7, §9", sourceTypes));

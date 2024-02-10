@@ -1,9 +1,10 @@
-package net.swofty.types.generic.utility;
+package net.swofty.types.generic.utility.groups;
 
 import lombok.Getter;
+import net.swofty.types.generic.utility.StringUtility;
 
 @Getter
-public enum ItemGroups {
+public enum EnchantItemGroups {
     TOOLS("Tools"),
     PICKAXE("Mining Tools"),
     SWORD("Melee Weapon"),
@@ -17,7 +18,7 @@ public enum ItemGroups {
 
     private final String displayName;
 
-    ItemGroups(String displayName) {
+    EnchantItemGroups(String displayName) {
         this.displayName = displayName;
     }
 

@@ -8,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
@@ -20,6 +21,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolAddItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -162,12 +164,17 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     AuctionItem item = new AuctionItem(escrow.getItem(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
                             escrow.isBin(), escrow.getPrice());
                     String itemName = StringUtility.getTextFromComponent(builtItem.getDisplayName());
+
+                    AuctionCategories category = AuctionCategories.TOOLS;
+                    if (escrow.getItem().getGenericInstance() != null && escrow.getItem().getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
+                        category = instanceCategory.getAuctionCategory();
+
                     player.getDataHandler().get(DataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
                     player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());
 
                     player.sendMessage("§7Setting up the auction...");
                     new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(), new JSONObject()
-                            .put("item", item.toDocument())).thenAccept(response -> {
+                            .put("item", item.toDocument()).put("category", category)).thenAccept(response -> {
 
                         player.sendMessage("§eAuction started for " + itemName + "§e!");
                         player.sendMessage("§8ID: " + response.getString("uuid"));

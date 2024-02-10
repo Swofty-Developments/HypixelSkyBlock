@@ -4,12 +4,11 @@ import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.impl.Reforgable;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchantable;
 import net.swofty.types.generic.item.impl.ExtraRarityDisplay;
 
-import java.sql.Ref;
 import java.util.List;
 
 public class StoneSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Reforgable {
@@ -26,8 +25,8 @@ public class StoneSword implements CustomSkyBlockItem, Enchantable, ExtraRarityD
     }
 
     @Override
-    public List<ItemGroups> getItemGroups() {
-        return List.of(ItemGroups.SWORD);
+    public List<EnchantItemGroups> getEnchantItemGroups() {
+        return List.of(EnchantItemGroups.SWORD);
     }
 
     @Override

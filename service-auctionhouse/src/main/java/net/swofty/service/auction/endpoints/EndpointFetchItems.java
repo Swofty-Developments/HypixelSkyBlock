@@ -33,30 +33,30 @@ public class EndpointFetchItems implements ServiceEndpoint {
         switch (sorting) {
             case HIGHEST_BID:
                 results.sort((o1, o2) -> {
-                    int price1 = o1.getInteger("price");
-                    int price2 = o2.getInteger("price");
-                    return Integer.compare(price1, price2);
+                    int price1 = o1.getInteger("starting-price");
+                    int price2 = o2.getInteger("starting-price");
+                    return Integer.compare(price2, price1);
                 });
                 break;
             case LOWEST_BID:
                 results.sort((o1, o2) -> {
-                    int price1 = o1.getInteger("price");
-                    int price2 = o2.getInteger("price");
-                    return Integer.compare(price2, price1);
+                    int price1 = o1.getInteger("starting-price");
+                    int price2 = o2.getInteger("starting-price");
+                    return Integer.compare(price1, price2);
                 });
                 break;
             case ENDING_SOON:
                 results.sort((o1, o2) -> {
                     long time1 = o1.getLong("end");
                     long time2 = o2.getLong("end");
-                    return Long.compare(time1, time2);
+                    return Long.compare(time2, time1);
                 });
                 break;
             case MOST_BIDS:
                 results.sort((o1, o2) -> {
                     int bids1 = o1.getInteger("bids");
                     int bids2 = o2.getInteger("bids");
-                    return Integer.compare(bids2, bids1);
+                    return Integer.compare(bids1, bids2);
                 });
                 break;
         }

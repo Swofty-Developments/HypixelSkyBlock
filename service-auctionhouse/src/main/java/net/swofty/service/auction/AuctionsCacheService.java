@@ -5,7 +5,9 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.mongodb.client.model.Filters;
 import net.swofty.commons.auctions.AuctionsFilter;
 import org.bson.Document;
+import org.checkerframework.checker.units.qual.A;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +16,7 @@ public class AuctionsCacheService {
 
     public AuctionsCacheService() {
         this.cache = Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.SECONDS)
+                .expireAfterWrite(1, TimeUnit.SECONDS)
                 .maximumSize(100)
                 .build();
     }
@@ -34,10 +36,10 @@ public class AuctionsCacheService {
                 result = documents;
                 break;
             case AUCTIONS_ONLY:
-                result = documents.stream().filter(document -> document.getString("type").equals("auction")).findFirst().orElse(null);
+                result = documents.stream().filter(document -> document.getBoolean("bin").equals(false));
                 break;
             case BIN_ONLY:
-                result = documents.stream().filter(document -> document.getString("type").equals("bin")).findFirst().orElse(null);
+                result = documents.stream().filter(document -> document.getBoolean("bin").equals(true));
                 break;
         }
 
@@ -51,7 +53,8 @@ public class AuctionsCacheService {
             return (List<Document>) result;
         }
 
-        List<Document> documents = AuctionActiveDatabase.collection.find(Filters.eq("category", category)).into(List.of());
+        ArrayList<Document> documents = new ArrayList<>(
+                AuctionActiveDatabase.collection.find(Filters.eq("category", category.toUpperCase())).into(new ArrayList<>()));
         cache.put(category, documents);
 
         return documents;

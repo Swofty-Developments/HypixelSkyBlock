@@ -1,9 +1,8 @@
 package net.swofty.types.generic.enchantment.abstr;
 
-import net.minestom.server.entity.Player;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ public interface Ench {
 
     ApplyLevels getLevelsToApply();
 
-    List<ItemGroups> getGroups();
+    List<EnchantItemGroups> getGroups();
 
     default ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

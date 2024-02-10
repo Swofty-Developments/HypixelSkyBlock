@@ -2,7 +2,7 @@ package net.swofty.types.generic.enchantment.impl;
 
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.types.generic.utility.ItemGroups;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +26,8 @@ public class EnchantmentScavenger implements Ench, EnchFromTable {
     }
 
     @Override
-    public List<ItemGroups> getGroups() {
-        return List.of(ItemGroups.SWORD, ItemGroups.FISHING_WEAPON, ItemGroups.LONG_SWORD, ItemGroups.GAUNTLET);
+    public List<EnchantItemGroups> getGroups() {
+        return List.of(EnchantItemGroups.SWORD, EnchantItemGroups.FISHING_WEAPON, EnchantItemGroups.LONG_SWORD, EnchantItemGroups.GAUNTLET);
     }
 
     @Override

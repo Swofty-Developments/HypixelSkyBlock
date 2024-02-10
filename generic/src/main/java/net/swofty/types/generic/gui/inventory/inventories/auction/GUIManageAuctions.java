@@ -79,6 +79,9 @@ public class GUIManageAuctions extends SkyBlockInventoryGUI implements Refreshin
         CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         allDone.join();
 
+        // Sort the items by the time they were added
+        auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
+
         List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);
 
         for (int i = 0; i < 7; i++) {

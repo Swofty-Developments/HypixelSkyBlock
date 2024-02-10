@@ -16,6 +16,7 @@ public class EndpointAddItem implements ServiceEndpoint {
     public JSONObject onMessage(ServiceProxyRequest message) {
         JSONObject json = new JSONObject(message.getMessage());
         Document item = new Document(json.getJSONObject("item").toMap());
+        item.put("category", json.getString("category"));
 
         AuctionActiveDatabase.collection.insertOne(item);
 
