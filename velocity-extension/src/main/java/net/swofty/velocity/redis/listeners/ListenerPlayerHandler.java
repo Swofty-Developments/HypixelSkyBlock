@@ -3,6 +3,7 @@ package net.swofty.velocity.redis.listeners;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
+import com.viaversion.viaversion.api.Via;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
@@ -60,7 +61,7 @@ public class ListenerPlayerHandler extends RedisListener {
                 }).start();
             }
             case "version" -> {
-                return player.getProtocolVersion().name();
+                return String.valueOf(Via.getAPI().getPlayerVersion(player.getUniqueId()));
             }
             case "event" -> {
                 String event = json.getString("event");

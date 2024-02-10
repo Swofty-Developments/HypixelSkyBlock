@@ -1,7 +1,7 @@
 package net.swofty.commons;
 
 import lombok.Getter;
-
+import java.util.Arrays;
 @Getter
 public enum MinecraftVersion {
     MINECRAFT_1_7_2(4, new String[]{"1.7.2", "1.7.3", "1.7.4", "1.7.5"}),
@@ -53,6 +53,12 @@ public enum MinecraftVersion {
         this.versions = versions;
     }
 
+    public static MinecraftVersion byProtocolId(int protocolID) {
+        return Arrays.stream(MinecraftVersion.values())
+                .filter(version -> version.protocol == protocolID)
+                .findFirst()
+                .orElse(null);
+    }
     public boolean isMoreRecentThan(MinecraftVersion version) {
         return this.protocol > version.protocol;
     }

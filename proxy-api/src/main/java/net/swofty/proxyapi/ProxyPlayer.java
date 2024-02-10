@@ -91,7 +91,7 @@ public class ProxyPlayer {
         json.put("actions", "version");
 
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
-            future.complete(MinecraftVersion.valueOf(s));
+            future.complete(MinecraftVersion.byProtocolId(Integer.parseInt(s)));
         });
 
         return future;

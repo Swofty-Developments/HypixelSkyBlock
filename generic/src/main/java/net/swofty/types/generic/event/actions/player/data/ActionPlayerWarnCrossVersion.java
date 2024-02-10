@@ -23,9 +23,16 @@ public class ActionPlayerWarnCrossVersion extends SkyBlockEvent {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!player.getVersion().isMoreRecentThan(MinecraftVersion.MINECRAFT_1_20_2)) {
-            player.sendMessage(" ");
-            player.sendMessage("§cAlthough we do support versions prior to 1.20.4, the experience may be buggy. If you experience a bug, test that it also happens on 1.20.4 before reporting it.");
-            player.sendMessage(" ");
+            StringBuilder message = new StringBuilder();
+
+            message.append(" \n");
+            message.append("§6§l------------------- §cServer Notice §6§l-------------------\n");
+            message.append("§cAlthough we do support versions prior to §61.20.4§c, the experience may be buggy.\n");
+            message.append("§cIf you experience a bug, please test if it also occurs on §61.20.4§c before reporting it.\n");
+            message.append("§6§l---------------------------------------------------\n");
+            message.append(" \n");
+
+            player.sendMessage(message.toString());
         }
     }
 }
