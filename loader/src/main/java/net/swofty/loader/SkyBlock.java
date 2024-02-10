@@ -12,6 +12,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.service.generic.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -24,9 +25,7 @@ import org.reflections.Reflections;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -83,14 +82,25 @@ public class SkyBlock {
          * Initialize Proxy support
          */
         Logger.info("Initializing proxy support...");
-        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID,
-                // Proxy Handlers
+        ArrayList<String> requiredChannels = new ArrayList<>(Arrays.asList(
                 "proxy-online",
                 "server-initialized",
                 "server-name",
                 "player-handler",
-                // Service Handlers
-                "service-ping");
+                "service-ping"
+        ));
+        Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
+        Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
+        subTypesOfProtocol.forEach(protocol -> {
+            try {
+                ProtocolSpecification specification = protocol.getDeclaredConstructor().newInstance();
+                requiredChannels.add(specification.getEndpoint());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        });
+        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID, requiredChannels.toArray(new String[0]));
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);

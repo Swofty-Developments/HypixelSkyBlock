@@ -5,6 +5,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public interface RefreshingGUI {
     /**
      * If the GUI implements this method, this is the method that should be using in setting all the items
+     * This is called async
      */
     void refreshItems(SkyBlockPlayer player);
 

@@ -3,6 +3,7 @@ package net.swofty.types.generic.serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.mission.MissionData;
 
@@ -15,13 +16,15 @@ public class MissionDataSerializer implements Serializer<MissionData> {
         mapper = new ObjectMapper();
     }
 
+    @SneakyThrows
     @Override
-    public String serialize(MissionData value) throws JsonProcessingException {
+    public String serialize(MissionData value) {
         return mapper.writeValueAsString(value.serialize());
     }
 
+    @SneakyThrows
     @Override
-    public MissionData deserialize(String json) throws JsonProcessingException {
+    public MissionData deserialize(String json) {
         JsonNode node = mapper.readTree(json);
         Map<String, Object> map = mapper.convertValue(node, Map.class);
 

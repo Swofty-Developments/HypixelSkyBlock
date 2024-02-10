@@ -282,6 +282,11 @@ public class DataHandler {
         BACKPACKS("backpacks", false, false, false, DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
         VISITED_REGIONS("visited_regions", false, false, false, DatapointStringList.class, new DatapointStringList("visited_regions")),
         AUCTION_STATISTICS("auction_statistics", false, false, false, DatapointAuctionStatistics.class, new DatapointAuctionStatistics("auction_statistics")),
+        AUCTION_ACTIVE_BIDS("auction_bids", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_active_bids")),
+        AUCTION_INACTIVE_BIDS("auction_inactive_bids", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_inactive_bids")),
+        AUCTION_ACTIVE_OWNED("auction_owned", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_active_owned")),
+        AUCTION_INACTIVE_OWNED("auction_inactive_owned", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_inactive_owned")),
+        AUCTION_ESCROW("auction_escrow", false, false, false, DatapointAuctionEscrow.class, new DatapointAuctionEscrow("auction_escrow")),
         ;
 
         @Getter

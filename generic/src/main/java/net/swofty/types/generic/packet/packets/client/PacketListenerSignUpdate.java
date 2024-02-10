@@ -19,9 +19,6 @@ public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
     public void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player) {
         ClientUpdateSignPacket signPacket = (ClientUpdateSignPacket) packet;
 
-        Logger.info(signPacket.lines().get(0));
-        Logger.info("We got it boys");
-
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {
             SkyBlockSignGUI.SignGUI signGUI = SkyBlockSignGUI.signGUIs.get(player);
             signGUI.future().complete(signPacket.lines().get(0));

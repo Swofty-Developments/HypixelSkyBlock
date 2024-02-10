@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ProtocolAddItem extends ProtocolSpecification {
     @Override
@@ -20,7 +21,9 @@ public class ProtocolAddItem extends ProtocolSpecification {
 
     @Override
     public List<ProtocolEntries<?>> getReturnedProtocolEntries() {
-        return new ArrayList<>();
+        return new ArrayList<>(List.of(
+                new ProtocolEntries<UUID>("uuid", true)
+        ));
     }
 
     @Override

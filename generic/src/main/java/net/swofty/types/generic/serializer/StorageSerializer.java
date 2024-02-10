@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.service.generic.Serializer;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
@@ -23,13 +24,15 @@ public class StorageSerializer implements Serializer<DatapointStorage.PlayerStor
         mapper.registerModule(module);
     }
 
+    @SneakyThrows
     @Override
-    public String serialize(DatapointStorage.PlayerStorage value) throws JsonProcessingException {
+    public String serialize(DatapointStorage.PlayerStorage value) {
         return mapper.writeValueAsString(value);
     }
 
+    @SneakyThrows
     @Override
-    public DatapointStorage.PlayerStorage deserialize(String json) throws JsonProcessingException {
+    public DatapointStorage.PlayerStorage deserialize(String json) {
         return mapper.readValue(json, DatapointStorage.PlayerStorage.class);
     }
 

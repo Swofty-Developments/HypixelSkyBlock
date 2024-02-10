@@ -9,6 +9,8 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -63,19 +65,37 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
             }
         });
 
-        set(new GUIClickableItem(15) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIManageAuctions().open(player);
-            }
+        if (getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
+            set(new GUIClickableItem(15) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIAuctionCreateItem(GUIAuctionHouse.this).open(player);
+                }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
-                        " ",
-                        "§eClick to manage!");
-            }
-        });
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
+                            "§7Set your own items on auction for",
+                            "§7other players to purchase.",
+                            " ",
+                            "§eClick to become rich!");
+                }
+            });
+        } else {
+            set(new GUIClickableItem(15) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIManageAuctions().open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
+                            " ",
+                            "§eClick to manage!");
+                }
+            });
+        }
     }
 
     @Override

@@ -12,14 +12,12 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
 public class AuctionItem {
+    private UUID uuid;
     private UUID originator;
     private SkyBlockItem item;
     private long endTime;
@@ -28,6 +26,21 @@ public class AuctionItem {
     private Long startingPrice;
 
     private Map<UUID, Long> bids;
+
+    private AuctionItem() {
+        this.bids = new HashMap<>();
+    }
+
+    public AuctionItem(SkyBlockItem item, UUID originator, long endTime, boolean isBin, Long startingPrice) {
+        this.uuid = UUID.randomUUID();
+        this.originator = originator;
+        this.item = item;
+        this.endTime = endTime;
+        this.isBin = isBin;
+        this.startingPrice = startingPrice;
+
+        this.bids = new HashMap<>();
+    }
 
     public List<String> getLore() {
         return getLore(null);
@@ -61,6 +74,7 @@ public class AuctionItem {
 
     public Document toDocument() {
         return new Document()
+                .append("_id", uuid.toString())
                 .append("originator", originator.toString())
                 .append("item", SkyBlockItemSerializer.serialize(item))
                 .append("end", endTime)
@@ -71,6 +85,7 @@ public class AuctionItem {
 
     public static AuctionItem fromDocument(Document document) {
         AuctionItem item = new AuctionItem();
+        item.setUuid(UUID.fromString(document.getString("_id")));
         item.setOriginator(UUID.fromString(document.getString("originator")));
         item.setItem(SkyBlockItemDeserializer.deserialize((JSONObject) document.get("item")));
         item.setEndTime(document.getLong("end"));

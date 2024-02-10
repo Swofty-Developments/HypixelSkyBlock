@@ -6,19 +6,24 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
 import org.json.JSONObject;
 
-public class EndpointAddItem implements ServiceEndpoint {
+import java.util.UUID;
+
+public class EndpointFetchItem implements ServiceEndpoint {
     @Override
     public String channel() {
-        return "add-item";
+        return "fetch-item";
     }
 
     @Override
     public JSONObject onMessage(ServiceProxyRequest message) {
         JSONObject json = new JSONObject(message.getMessage());
-        Document item = new Document(json.getJSONObject("item").toMap());
+        UUID uuidToFetch = UUID.fromString(json.getString("uuid"));
 
-        AuctionActiveDatabase.collection.insertOne(item);
+        Document item = AuctionActiveDatabase.collection.find(new Document("_id", uuidToFetch.toString())).first();
+        if (item != null) {
+            return new JSONObject(item.toJson());
+        }
 
-        return new JSONObject().put("uuid", item.get("_id"));
+        return new JSONObject();
     }
 }

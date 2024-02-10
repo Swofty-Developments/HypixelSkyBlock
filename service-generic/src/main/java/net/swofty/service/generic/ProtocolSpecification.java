@@ -84,7 +84,7 @@ public abstract class ProtocolSpecification {
                 try {
                     // Deserialize value using the provided serializer
                     value = entry.serializer.deserialize((String) value);
-                } catch (JSONException | JsonProcessingException e) {
+                } catch (JSONException e) {
                     throw new IllegalArgumentException("Error deserializing field: " + entry.key, e);
                 }
             }

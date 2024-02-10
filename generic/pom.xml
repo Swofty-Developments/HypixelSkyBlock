@@ -34,9 +34,9 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.hollow-cube</groupId>
-            <artifactId>minestom-ce</artifactId>
-            <version>5347c0b11f</version>
+            <groupId>com.github.Minestom</groupId>
+            <artifactId>Minestom</artifactId>
+            <version>d03466e5a3</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.shrinkwrap.resolver</groupId>

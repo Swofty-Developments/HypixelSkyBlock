@@ -62,6 +62,24 @@ public class StringUtility {
         return PlainTextComponentSerializer.plainText().serialize(component);
     }
 
+    public static String getAuctionSetupFormattedTime(long millis) {
+        String dur;
+        if (millis >= 8.64E7) {
+            long days = Math.round(millis / 8.64E7);
+            dur = days + " Day";
+            if (days != 1) dur += "s";
+        } else if (millis >= 3600000) {
+            long hours = Math.round(millis / 3600000.0);
+            dur = hours + " Hour";
+            if (hours != 1) dur += "s";
+        } else {
+            long minutes = Math.round(millis / 60000.0);
+            dur = minutes + " Minute";
+            if (minutes != 1) dur += "s";
+        }
+        return dur;
+    }
+
     public static String toNormalCase(String string) {
         if (Acronym.isAcronym(string)) return string.toUpperCase();
         string = string.replaceAll("_", " ");
