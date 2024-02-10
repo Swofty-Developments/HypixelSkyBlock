@@ -325,7 +325,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             Logger.info("Received new player: " + username + " (" + uuid + ")");
 
-            return new SkyBlockPlayer(uuid, username, playerConnection);
+            return player;
         });
 
         typeLoader.afterInitialize(server);
