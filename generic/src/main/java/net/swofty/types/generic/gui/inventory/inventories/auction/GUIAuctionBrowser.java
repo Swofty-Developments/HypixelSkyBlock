@@ -149,7 +149,6 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
                     setCategory(category);
                     Thread.startVirtualThread(() -> updateItemsCache());
-                    Thread.startVirtualThread(() -> setItems());
                 }
 
                 @Override
