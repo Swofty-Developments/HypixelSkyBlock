@@ -8,6 +8,7 @@ import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.RedisMessage;
 import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -21,8 +22,18 @@ public class IslandCheck extends BalanceConfiguration {
         }
         UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));
         Document document = new ProfilesDatabase(activeProfile.toString()).getDocument();
+        if (document == null) {
+            return null;
+        }
         UUID islandUUID = UUID.fromString(document.getString("island_uuid").replace("\"", ""));
 
+        AtomicReference<GameManager.GameServer> toSendTo = getGameServerAtomicReference(islandUUID);
+
+        return toSendTo.get();
+    }
+
+    @NotNull
+    private static AtomicReference<GameManager.GameServer> getGameServerAtomicReference(UUID islandUUID) {
         AtomicReference<GameManager.GameServer> toSendTo = new AtomicReference<>(null);
 
         for (Map.Entry<ServerType, ArrayList<GameManager.GameServer>> entry : GameManager.getServers().entrySet()) {
@@ -41,7 +52,6 @@ public class IslandCheck extends BalanceConfiguration {
                 });
             }
         }
-
-        return toSendTo.get();
+        return toSendTo;
     }
 }

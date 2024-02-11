@@ -57,6 +57,12 @@ public class DataHandler {
 
     public static DataHandler fromDocument(Document document) {
         DataHandler dataHandler = new DataHandler();
+
+        if (document == null) {
+            // Return fresh data
+            return initUserWithDefaultData(dataHandler.uuid);
+        }
+
         dataHandler.uuid = UUID.fromString(document.getString("_owner"));
         Arrays.stream(Data.values()).forEach(data -> {
             if (!document.containsKey(data.getKey())) {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class DatapointUUIDList extends Datapoint<List<UUID>> {
-    protected DatapointUUIDList(String key, List<UUID> value) {
+    public DatapointUUIDList(String key, ArrayList<UUID> value) {
         super(key, value, new Serializer<>() {
             @Override
             public String serialize(List<UUID> value) {

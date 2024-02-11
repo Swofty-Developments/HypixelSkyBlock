@@ -38,8 +38,10 @@ public abstract class SkyBlockInventoryGUI {
      * @param a the item you want to set
      */
     public void set(GUIItem a) {
-        items.removeIf(i -> i.itemSlot == a.itemSlot);
-        items.add(a);
+        synchronized (items) {
+            items.removeIf(i -> i.itemSlot == a.itemSlot);
+            items.add(a);
+        }
     }
 
     /**

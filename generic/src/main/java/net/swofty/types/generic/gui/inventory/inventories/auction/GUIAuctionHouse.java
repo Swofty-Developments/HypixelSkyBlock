@@ -98,6 +98,24 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
                 }
             });
         }
+
+        if (!getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
+            set(new GUIClickableItem(13) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIViewBids().open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§aView Bids", Material.GOLDEN_CARROT, 1,
+                            "§7You've placed bids, check up on",
+                            "§7them here!",
+                            " ",
+                            "§eClick to view!");
+                }
+            });
+        }
     }
 
     @Override
