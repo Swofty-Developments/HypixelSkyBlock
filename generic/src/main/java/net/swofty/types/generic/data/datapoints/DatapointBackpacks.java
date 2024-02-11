@@ -23,5 +23,13 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
         public PlayerBackpacks() {
             this(new HashMap<>(), 1);
         }
+
+        public int getHighestBackpackSlot() {
+            return backpacks.keySet().stream().max(Integer::compareTo).orElse(0);
+        }
+
+        public int getLowestBackpackSlot() {
+            return backpacks.keySet().stream().min(Integer::compareTo).orElse(0);
+        }
     }
 }

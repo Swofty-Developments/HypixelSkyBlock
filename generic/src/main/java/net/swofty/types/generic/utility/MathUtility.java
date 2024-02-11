@@ -3,6 +3,7 @@ package net.swofty.types.generic.utility;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.timer.TaskSchedule;
 
 import java.util.ArrayList;
@@ -12,6 +13,18 @@ import java.util.concurrent.CompletableFuture;
 public class MathUtility {
     public static double normalizeAngle(double angle, double maximum) {
         return (angle % maximum + maximum) % maximum - (maximum / 2);
+    }
+
+    public static InventoryType getFromSize(int size) {
+        return switch (size) {
+            case 9 -> InventoryType.CHEST_1_ROW;
+            case 18 -> InventoryType.CHEST_2_ROW;
+            case 27 -> InventoryType.CHEST_3_ROW;
+            case 36 -> InventoryType.CHEST_4_ROW;
+            case 45 -> InventoryType.CHEST_5_ROW;
+            case 54 -> InventoryType.CHEST_6_ROW;
+            default -> InventoryType.CHEST_6_ROW;
+        };
     }
 
     public static <T> T getRandomElement(List<T> list) {
