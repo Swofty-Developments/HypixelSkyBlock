@@ -93,13 +93,10 @@ public class AuctionItem {
         }
 
         toReturn.add(" ");
-        if (endTime > System.currentTimeMillis()) {
-            if (isBin && !bids.isEmpty()) {
-                toReturn.add("§7Status: §aPurchased");
-            } else {
-                toReturn.add("§7Ends in: §e" + StringUtility.formatTime(endTime - System.currentTimeMillis()));
-            }
-
+        if (isBin && !bids.isEmpty()) {
+            toReturn.add("§7Status: §aPurchased");
+        } else if (endTime > System.currentTimeMillis()) {
+            toReturn.add("§7Ends in: §e" + StringUtility.formatTime(endTime - System.currentTimeMillis()));
         } else {
             toReturn.add("§7Status: §aEnded!");
         }

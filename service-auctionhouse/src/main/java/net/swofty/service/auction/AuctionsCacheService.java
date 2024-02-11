@@ -31,6 +31,13 @@ public class AuctionsCacheService {
         // If not in cache, fetch from MongoDB and store in cache
         List<Document> documents = getDocuments(categoryFilter);
 
+        documents.forEach(document -> {
+            if (document.getLong("end") < System.currentTimeMillis()) {
+                AuctionInactiveDatabase.collection.insertOne(document);
+                AuctionActiveDatabase.collection.deleteOne(Filters.eq("_id", document.getString("_id")));
+            }
+        });
+
         result = switch (filter) {
             case SHOW_ALL -> documents;
             case AUCTIONS_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(false));

@@ -16,6 +16,7 @@ public class AuctionService implements SkyBlockService {
         cacheService = new AuctionsCacheService();
 
         new AuctionActiveDatabase("_placeholder").connect(Configuration.get("mongodb"));
+        new AuctionInactiveDatabase("_placeholder").connect(Configuration.get("mongodb"));
     }
 
     @Override

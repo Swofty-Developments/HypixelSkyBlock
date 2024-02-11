@@ -135,6 +135,7 @@ public class AuctionViewThirdBin implements AuctionView {
                 item.setBids(new ArrayList<>(item.getBids()) {{
                     add(new AuctionItem.Bid(System.currentTimeMillis(), player.getUuid(), item.getStartingPrice().longValue()));
                 }});
+                item.setEndTime(System.currentTimeMillis());
 
                 new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(),
                         new JSONObject().put("item", item.toDocument()).put("category", AuctionCategories.TOOLS.toString())).join();

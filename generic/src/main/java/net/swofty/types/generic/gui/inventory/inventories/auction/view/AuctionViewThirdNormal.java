@@ -164,7 +164,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                                     "§7This auction has ended.",
                                     "§7You won this auction.",
                                     " ",
-                                    "§cYou either have already claimed your item.");
+                                    "§cYou have already claimed your item.");
                         }
                     });
                 }
