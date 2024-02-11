@@ -19,6 +19,13 @@ public class StringUtility {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
 
+    public static String formatTimeAsAgo(long millis) {
+        if (millis < 60000) return "Just now";
+        if (millis < 3600000) return (millis / 60000) + "m ago";
+        if (millis < 86400000) return (millis / 3600000) + "h ago";
+        return (millis / 86400000) + "d ago";
+    }
+
     public static String formatTime(long millis) {
         // Get in format wd xh ym zs
         long days = TimeUnit.MILLISECONDS.toDays(millis);

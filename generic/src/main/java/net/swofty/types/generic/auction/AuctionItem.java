@@ -2,6 +2,7 @@ package net.swofty.types.generic.auction;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -25,10 +26,10 @@ public class AuctionItem {
     private boolean isBin;
     private Integer startingPrice;
 
-    private Map<UUID, Long> bids;
+    private List<Bid> bids;
 
     private AuctionItem() {
-        this.bids = new HashMap<>();
+        this.bids = new ArrayList<>();
     }
 
     public AuctionItem(SkyBlockItem item, UUID originator, long endTime, boolean isBin, Long startingPrice) {
@@ -39,7 +40,7 @@ public class AuctionItem {
         this.isBin = isBin;
         this.startingPrice = Math.toIntExact(startingPrice);
 
-        this.bids = new HashMap<>();
+        this.bids = new ArrayList<>();
     }
 
     public List<String> getLore() {
@@ -70,23 +71,25 @@ public class AuctionItem {
             } else {
                 toReturn.add("§7Bids: §a" + bids.size() + " bid" + (bids.size() == 1 ? "" : "s"));
                 toReturn.add(" ");
-                toReturn.add("§7Top bid: §6" + Collections.max(bids.values()) + " coins");
-                UUID topBidder = null;
-                for (Map.Entry<UUID, Long> entry : bids.entrySet()) {
-                    if (entry.getValue().equals(Collections.max(bids.values()))) {
-                        topBidder = entry.getKey();
-                    }
-                }
 
-                if (topBidder != null) {
-                    toReturn.add("§7Bidder: " + SkyBlockPlayer.getDisplayName(topBidder));
-                }
+                Bid topBid = bids.stream().max(Comparator.comparing(Bid::value)).orElse(null);
+
+                toReturn.add("§7Top bid: §6" + topBid.value + " coins");
+                toReturn.add("§7Bidder: " + SkyBlockPlayer.getDisplayName(topBid.uuid()));
             }
         }
 
-        if (player != null && originator.equals(player.getUuid())) {
-            toReturn.add(" ");
-            toReturn.add("§aThis is your own auction!");
+        if (player != null) {
+            if (originator.equals(player.getUuid())) {
+                toReturn.add(" ");
+                toReturn.add("§aThis is your own auction!");
+            } else {
+                CoopDatabase.Coop viewerCoop = CoopDatabase.getFromMember(player.getUuid());
+                if (viewerCoop != null && viewerCoop.members().contains(originator)) {
+                    toReturn.add(" ");
+                    toReturn.add("§aThis is a coop member's auction!");
+                }
+            }
         }
 
         toReturn.add(" ");
@@ -109,7 +112,7 @@ public class AuctionItem {
                 .append("end", endTime)
                 .append("bin", isBin)
                 .append("starting-price", startingPrice)
-                .append("bids", bids);
+                .append("bids", bids.stream().map(Bid::toString).toList());
     }
 
     public static AuctionItem fromDocument(Document document) {
@@ -120,7 +123,18 @@ public class AuctionItem {
         item.setEndTime(document.getLong("end"));
         item.setBin(document.getBoolean("bin"));
         item.setStartingPrice(document.getInteger("starting-price"));
-        item.setBids((Map<UUID, Long>) document.get("bids"));
+        item.setBids(document.getList("bids", String.class).stream().map(Bid::fromString).toList());
         return item;
+    }
+
+    public record Bid(Long timestamp, UUID uuid, Long value) {
+        public String toString() {
+            return timestamp + "," + uuid + "," + value;
+        }
+
+        public static Bid fromString(String string) {
+            String[] parts = string.split(",");
+            return new Bid(Long.parseLong(parts[0]), UUID.fromString(parts[1]), Long.parseLong(parts[2]));
+        }
     }
 }

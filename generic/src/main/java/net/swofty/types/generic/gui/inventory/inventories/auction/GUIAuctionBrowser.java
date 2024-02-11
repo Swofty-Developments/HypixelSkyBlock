@@ -190,7 +190,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
-                    lore.addAll(category.getExamples());
+                    category.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
                     lore.add(" ");
 
                     if (category.equals(getCategory())) {
@@ -218,7 +218,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIAuctionViewItem(auctionItem.getUuid()).open(player);
+                    new GUIAuctionViewItem(auctionItem.getUuid(), GUIAuctionBrowser.this).open(player);
                 }
 
                 @Override

@@ -14,7 +14,9 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributeStatistic
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeType;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.MiningTool;
+import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,5 +181,9 @@ public class SkyBlockItem {
                 ", amount=" + amount +
                 ", attributes=" + attributes.stream().map(attribute -> attribute.getKey() + "=" + attribute.getValue()).reduce((s, s2) -> s + ", " + s2).orElse("null") +
                 '}';
+    }
+
+    public String getDisplayName() {
+        return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().getDisplayName());
     }
 }

@@ -42,7 +42,9 @@ public record ProxyService(ServiceType type) {
 
         RedisMessage.sendMessageService(type, protocol,
                 json, (s) -> {
-            future.complete(new JSONObject(s));
+            Thread.startVirtualThread(() -> {
+                future.complete(new JSONObject(s));
+            });
         });
 
         return future;

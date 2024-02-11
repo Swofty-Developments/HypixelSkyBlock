@@ -54,8 +54,8 @@ public class EndpointFetchItems implements ServiceEndpoint {
                 break;
             case MOST_BIDS:
                 results.sort((o1, o2) -> {
-                    int bids1 = o1.getInteger("bids");
-                    int bids2 = o2.getInteger("bids");
+                    int bids1 = o1.getList("bids", String.class).size();
+                    int bids2 = o2.getList("bids", String.class).size();
                     return Integer.compare(bids1, bids2);
                 });
                 break;

@@ -101,7 +101,7 @@ public class GUIManageAuctions extends SkyBlockInventoryGUI implements Refreshin
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIAuctionViewItem(item.getUuid()).open(player);
+                    new GUIAuctionViewItem(item.getUuid(), GUIManageAuctions.this).open(player);
                 }
 
                 @Override
