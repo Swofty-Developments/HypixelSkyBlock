@@ -13,6 +13,7 @@
         <module>packer</module>
         <module>commons</module>
         <module>loader</module>
+        <module>dungeons</module>
 
         <module>velocity-extension</module>
         <module>proxy-api</module>
