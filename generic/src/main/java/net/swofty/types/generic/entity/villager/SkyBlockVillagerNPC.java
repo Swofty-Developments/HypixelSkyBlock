@@ -15,6 +15,7 @@ import java.util.Map;
 @Getter
 public abstract class SkyBlockVillagerNPC {
     private static final int LOOK_DISTANCE = 16;
+    @Getter
     private static final Map<SkyBlockVillagerNPC, VillagerEntityImpl> villagers = new HashMap();
 
     private final NPCVillagerParameters parameters;

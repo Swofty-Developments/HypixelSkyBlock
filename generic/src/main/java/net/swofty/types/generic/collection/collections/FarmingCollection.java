@@ -42,12 +42,29 @@ public class FarmingCollection extends CollectionCategory {
                             }
                         }),
                         new ItemCollectionReward(100),
-                        new ItemCollectionReward(250)
+                        new ItemCollectionReward(250),
+                        new ItemCollectionReward(500),
+                        new ItemCollectionReward(1000),
+                        new ItemCollectionReward(2500),
+                        new ItemCollectionReward(10000),
+                        new ItemCollectionReward(15000),
+                        new ItemCollectionReward(25000),
+                        new ItemCollectionReward(50000)
                 ),
                 new ItemCollection(ItemType.CARROT,
                         new ItemCollectionReward(50),
                         new ItemCollectionReward(100),
                         new ItemCollectionReward(250)
+                ),
+                new ItemCollection(ItemType.CACTUS,
+                        new ItemCollectionReward(100),
+                        new ItemCollectionReward(250),
+                        new ItemCollectionReward(500),
+                        new ItemCollectionReward(1000),
+                        new ItemCollectionReward(2500),
+                        new ItemCollectionReward(5000),
+                        new ItemCollectionReward(10000),
+                        new ItemCollectionReward(25000)
                 )
         ).toArray(ItemCollection[]::new);
     }

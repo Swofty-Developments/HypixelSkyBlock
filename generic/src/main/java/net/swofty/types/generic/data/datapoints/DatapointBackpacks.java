@@ -1,5 +1,6 @@
 package net.swofty.types.generic.data.datapoints;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.serializer.InventorySerializer;
@@ -19,6 +20,7 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
         super(key, new PlayerBackpacks(), serializer);
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public record PlayerBackpacks(Map<Integer, SkyBlockItem> backpacks, int unlockedSlots) {
         public PlayerBackpacks() {
             this(new HashMap<>(), 1);

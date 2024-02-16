@@ -80,6 +80,8 @@ public class DataHandler {
                 // Issue with data, revert back to default
                 dataHandler.datapoints.put(data.getKey(), data.getDefaultDatapoint().setUser(dataHandler).setData(data));
                 Logger.info("Issue with datapoint " + data.getKey() + " for user " + dataHandler.uuid.toString() + " - Reverting to default value");
+
+                e.printStackTrace();
             }
         });
         return dataHandler;

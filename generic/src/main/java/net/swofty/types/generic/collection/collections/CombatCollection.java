@@ -24,6 +24,40 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50),
                         new ItemCollectionReward(100),
                         new ItemCollectionReward(250)
+                ),
+                new ItemCollection(ItemType.BLAZE_ROD,
+                        new ItemCollectionReward(50),
+                        new ItemCollectionReward(100),
+                        new ItemCollectionReward(250),
+                        new ItemCollectionReward(500),
+                        new ItemCollectionReward(1000),
+                        new ItemCollectionReward(2500),
+                        new ItemCollectionReward(10000),
+                        new ItemCollectionReward(15000),
+                        new ItemCollectionReward(25000),
+                        new ItemCollectionReward(50000)
+                ),
+                new ItemCollection(ItemType.STRING,
+                        new ItemCollectionReward(50),
+                        new ItemCollectionReward(100),
+                        new ItemCollectionReward(250),
+                        new ItemCollectionReward(500),
+                        new ItemCollectionReward(1000),
+                        new ItemCollectionReward(2500),
+                        new ItemCollectionReward(10000),
+                        new ItemCollectionReward(15000),
+                        new ItemCollectionReward(25000)
+                ),
+                new ItemCollection(ItemType.ENDER_PEARL,
+                        new ItemCollectionReward(50),
+                        new ItemCollectionReward(100),
+                        new ItemCollectionReward(250),
+                        new ItemCollectionReward(500),
+                        new ItemCollectionReward(1000),
+                        new ItemCollectionReward(2500),
+                        new ItemCollectionReward(10000),
+                        new ItemCollectionReward(15000),
+                        new ItemCollectionReward(25000)
                 )
         ).toArray(ItemCollection[]::new);
     }

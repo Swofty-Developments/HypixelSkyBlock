@@ -16,37 +16,45 @@ public class DungeonUtilities {
         });
     }
 
-    public static List<int[]> aStar(int startX, int startY, int endX, int endY, int width, int height) {
+    public static List<int[]> aStar(List<int[]> alreadyVisited,
+                                    int startX, int startY, int endX, int endY, int width, int height) {
         PriorityQueue<int[]> openSet = new PriorityQueue<>(Comparator.comparingInt(cell -> cell[2]));
-        openSet.add(new int[]{startX, startY, 0});
+        openSet.add(new int[]{startX, startY, 0}); // Add start position to open set
         Map<String, int[]> cameFrom = new HashMap<>();
         Map<String, Integer> costSoFar = new HashMap<>();
         costSoFar.put(startX + "," + startY, 0);
+
+        // Ensure start position is not considered already visited
+        alreadyVisited.removeIf(cell -> cell[0] == startX && cell[1] == startY);
 
         while (!openSet.isEmpty()) {
             int[] current = openSet.poll();
 
             if (current[0] == endX && current[1] == endY) {
-                List<int[]> path = new ArrayList<>();
-                while (current != null) {
-                    path.addFirst(new int[]{current[0], current[1]});
-                    current = cameFrom.get(current[0] + "," + current[1]);
-                }
-                return path;
+                return reconstructPath(cameFrom, startX, startY, current); // Ensure start is included in path
             }
 
-            for (int[] next : getNeighbors(current[0], current[1], width, height)) {
-                int newCost = costSoFar.get(current[0] + "," + current[1]) + 1;
-                if (!costSoFar.containsKey(next[0] + "," + next[1]) || newCost < costSoFar.get(next[0] + "," + next[1])) {
-                    costSoFar.put(next[0] + "," + next[1], newCost);
-                    int priority = newCost + Math.abs(endX - next[0]) + Math.abs(endY - next[1]);
-                    openSet.add(new int[]{next[0], next[1], priority});
-                    cameFrom.put(next[0] + "," + next[1], current);
+            for (int[] neighbor : getNeighbors(current[0], current[1], width, height)) {
+                // Convert neighbor to a String key to check if visited
+                String neighborKey = neighbor[0] + "," + neighbor[1];
+                if (alreadyVisited.stream().anyMatch(cell -> cell[0] == neighbor[0] && cell[1] == neighbor[1])) continue; // Skip already visited
+
+                int newCost = costSoFar.getOrDefault(current[0] + "," + current[1], Integer.MAX_VALUE) + 1;
+                if (!costSoFar.containsKey(neighborKey) || newCost < costSoFar.get(neighborKey)) {
+                    costSoFar.put(neighborKey, newCost);
+                    int priority = newCost + heuristic(neighbor[0], neighbor[1], endX, endY);
+                    openSet.add(new int[]{neighbor[0], neighbor[1], priority});
+                    cameFrom.put(neighborKey, current);
                 }
             }
         }
 
-        return new ArrayList<>();
+        return new ArrayList<>(); // Return empty path if goal is not reachable
+    }
+
+    private static int heuristic(int x, int y, int endX, int endY) {
+        // Using Manhattan distance as the heuristic
+        return Math.abs(x - endX) + Math.abs(y - endY);
     }
 
     private static List<int[]> getNeighbors(int x, int y, int width, int height) {
@@ -56,6 +64,16 @@ public class DungeonUtilities {
         if (x < width - 1) neighbors.add(new int[]{x + 1, y});
         if (y < height - 1) neighbors.add(new int[]{x, y + 1});
         return neighbors;
+    }
+
+    private static List<int[]> reconstructPath(Map<String, int[]> cameFrom, int startX, int startY, int[] current) {
+        List<int[]> path = new ArrayList<>();
+        while (cameFrom.containsKey(current[0] + "," + current[1])) {
+            path.addFirst(current); // Add to the beginning of the list
+            current = cameFrom.get(current[0] + "," + current[1]);
+        }
+        path.addFirst(new int[]{startX, startY}); // Ensure start position is included
+        return path;
     }
 
     public static void asyncPrintDungeon(HypixelDungeon dungeon) {

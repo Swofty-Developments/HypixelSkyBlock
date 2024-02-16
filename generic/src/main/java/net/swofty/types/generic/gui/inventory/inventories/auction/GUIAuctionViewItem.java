@@ -1,8 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -11,14 +9,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItem;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
-import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -28,21 +20,13 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionVi
 import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewThirdNormal;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.types.generic.protocol.ProtocolAddItem;
-import net.swofty.types.generic.protocol.ProtocolDeprecateItem;
-import net.swofty.types.generic.protocol.ProtocolFetchItem;
-import net.swofty.types.generic.protocol.ProtocolFetchItems;
+import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     public final UUID auctionID;

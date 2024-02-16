@@ -1,24 +1,26 @@
-package net.swofty.types.generic.entity.villager.villagers;
+package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
 
-public class VillagerVex extends NPCVillagerDialogue {
-    public VillagerVex() {
+public class VillagerLeo extends NPCVillagerDialogue {
+    public VillagerLeo() {
         super(new NPCVillagerParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&fVex", "&e&lCLICK"};
+                return new String[]{"&fLeo", "&e&lCLICK"};
             }
 
             @Override
             public Pos position() {
-                return new Pos(-16.5, 70, -81.5, -60f, 0f);
+                return new Pos(-7.5, 70, -75.5, -30f, 0f);
             }
 
             @Override
@@ -45,7 +47,9 @@ public class VillagerVex extends NPCVillagerDialogue {
                     .anyMatch(value -> value.toString().contains(getID()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
-                    setDialogue(e.player(), "quest-hello");
+                    setDialogue(e.player(), "quest-hello").thenRun(() -> {
+                        new GUIRecipe(ItemType.LEAFLET_TUNIC, null).open(e.player());
+                    });
                     return;
                 }
             }
@@ -59,14 +63,13 @@ public class VillagerVex extends NPCVillagerDialogue {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "&e[NPC] Vex&f: You can shift click any player to trade with them!",
-                                "&e[NPC] Vex&f: Once both players are ready to trade, click on §aAccept trade§f!",
-                                "&e[NPC] Vex&f: Make sure you don't give away all your belongings!"
+                                "&e[NPC] Leo&f: You can unlock §aLeaflet Armor §fby progressing through your §aOak Log Collection§f.",
+                                "&e[NPC] Leo&f: There is a §bForest §fwest of the §bVillage §fwhere you can gather Oak Logs.",
+                                "&e[NPC] Leo&f: To check your Collection progress and rewards, open the §aCollection Menu §fin your §aSkyBlock Menu§f."
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "§e[NPC] Vex§f: You can disable Player Trading in your §bSkyBlock Settings§f!",
-                                "§e[NPC] Vex§f: Your settings can be found in the §aSkyBlock Menu§f.",
+                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new crafting recipes, brewing recipes, trades, enchantments and more!",
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }

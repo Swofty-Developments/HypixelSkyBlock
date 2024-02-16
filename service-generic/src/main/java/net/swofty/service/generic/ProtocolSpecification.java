@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import net.swofty.commons.ServiceType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +16,6 @@ import java.util.Map;
 public abstract class ProtocolSpecification {
     public abstract List<ProtocolEntries<?>> getServiceProtocolEntries();
     public abstract List<ProtocolEntries<?>> getReturnedProtocolEntries();
-
     public abstract String getEndpoint();
 
     @SneakyThrows

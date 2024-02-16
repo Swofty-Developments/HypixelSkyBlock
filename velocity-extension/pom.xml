@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viabackwards-common</artifactId>
-            <version>4.10.0-24w06a-SNAPSHOT</version>
+            <version>4.10.0-24w05b-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.viaversion</groupId>
@@ -111,7 +111,7 @@
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viaversion</artifactId>
-            <version>4.10.0-24w06a-SNAPSHOT</version>
+            <version>4.10.0-24w05b-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>

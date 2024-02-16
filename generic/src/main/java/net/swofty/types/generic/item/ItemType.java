@@ -69,6 +69,7 @@ public enum ItemType {
     DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
     NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
+    CACTUS(Material.CACTUS, Rarity.COMMON),
 
     /**
      * Armor Sets
@@ -135,12 +136,19 @@ public enum ItemType {
     GHAST_TEAR(Material.GHAST_TEAR, Rarity.COMMON),
     ICE(Material.ICE, Rarity.COMMON),
     IRON_INGOT(Material.IRON_INGOT, Rarity.COMMON),
+    GRAVEL(Material.GRAVEL, Rarity.COMMON),
+    LAPIS_LAZULI(Material.LAPIS_LAZULI, Rarity.COMMON),
     IRON_BLOCK(Material.IRON_BLOCK, Rarity.COMMON),
     JUNGLE_WOOD(Material.JUNGLE_WOOD, Rarity.COMMON),
     LEATHER(Material.LEATHER, Rarity.COMMON),
     MAGMA_CREAM(Material.MAGMA_CREAM, Rarity.COMMON),
     OAK_WOOD(Material.OAK_WOOD, Rarity.COMMON),
     OAK_LOG(Material.OAK_LOG, Rarity.COMMON),
+    SPRUCE_LOG(Material.SPRUCE_LOG, Rarity.COMMON),
+    ACAICA_LOG(Material.ACACIA_LOG, Rarity.COMMON),
+    BIRCH_LOG(Material.BIRCH_LOG, Rarity.COMMON),
+    DARK_OAK_LOG(Material.DARK_OAK_LOG, Rarity.COMMON),
+    JUNGLE_LOG(Material.JUNGLE_LOG, Rarity.COMMON),
     OAK_PLANKS(Material.OAK_PLANKS, Rarity.COMMON),
     OBSIDIAN(Material.OBSIDIAN, Rarity.COMMON),
     PACKED_ICE(Material.PACKED_ICE, Rarity.COMMON),

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.entity.villager.villagers;
+package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
@@ -8,17 +8,17 @@ import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
 
-public class VillagerDuke extends NPCVillagerDialogue {
-    public VillagerDuke() {
+public class VillagerJack extends NPCVillagerDialogue {
+    public VillagerJack() {
         super(new NPCVillagerParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&fDuke", "&e&lCLICK"};
+                return new String[]{"&fJack", "&e&lCLICK"};
             }
 
             @Override
             public Pos position() {
-                return new Pos(-11.5, 70, -95.5, -40f, 0f);
+                return new Pos(-0.5, 70, -54.5, 0f, 0f);
             }
 
             @Override
@@ -31,6 +31,23 @@ public class VillagerDuke extends NPCVillagerDialogue {
                 return VillagerMeta.Profession.BUTCHER;
             }
         });
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("initial-hello").lines(new String[]{
+                                "§e[NPC] Jack§f: Increasing your Foraging Skill Level will permanently boost your §cStrength",
+                                "§e[NPC] Jack§f: Increasing your Enchanting and Alchemy Skill Levels will permanently boost your §aIntelligence."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                                "§e[NPC] Jack§f: Your §aSkyBlock Profile §fin your §aSkyBlock Menu §fshows details about your current stats!",
+                                "§e[NPC] Jack§f: There are 7 stats in total, including §cHealth§f,§c Strength§f, and §aDefense§f.",
+                                "§e[NPC] Jack§f: Equipped armor, weapons, and accessories in your inventory all improve your stats."
+                        }).build()
+        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
 
     @Override
@@ -52,22 +69,5 @@ public class VillagerDuke extends NPCVillagerDialogue {
         }
 
         setDialogue(e.player(), "initial-hello");
-    }
-
-    @Override
-    public DialogueSet[] getDialogueSets() {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("initial-hello").lines(new String[]{
-                                "§e[NPC] Duke§f: I found a few Fairly Souls during my travels, they are usually pretty hard to find!",
-                                "§e[NPC] Duke§f: I would not venture South of the §bVillage§f, it seems like this place was abandoned."
-                        }).build(),
-                DialogueSet.builder()
-                        .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Duke§f: Are you new here? As you can see there is alot to explore!",
-                                "§e[NPC] Duke§f: My advice is to start by visiting the §bFarm §for the §bCoal Mine§f, both North of here.",
-                                "§e[NPC] Duke§f: If you do need some wood, the best place to get some is West of the §bVillage§f!"
-                        }).build()
-        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
 }

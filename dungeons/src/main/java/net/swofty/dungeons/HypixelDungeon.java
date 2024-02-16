@@ -49,11 +49,11 @@ public class HypixelDungeon {
         @Setter
         private boolean isCritical;
         @Setter
-        private boolean postFairy;
+        private int stage;
 
         @Override
         public String toString() {
-            return roomType.name() + (isCritical ? " (C)" : "") + (postFairy ? " (PF)" : "");
+            return roomType.name() + (isCritical ? " (C)" : "") + (stage > 0 ? " (S-" + stage + ")" : "");
         }
 
         public static DungeonRoom ofBase() {

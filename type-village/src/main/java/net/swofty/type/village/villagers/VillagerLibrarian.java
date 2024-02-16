@@ -1,4 +1,4 @@
-package net.swofty.types.generic.entity.villager.villagers;
+package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;

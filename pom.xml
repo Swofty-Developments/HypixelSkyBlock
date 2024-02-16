@@ -18,12 +18,14 @@
         <module>velocity-extension</module>
         <module>proxy-api</module>
 
+        <module>service-generic</module>
         <module>generic</module>
+
         <module>type-island</module>
         <module>type-village</module>
 
         <module>service-auctionhouse</module>
-        <module>service-generic</module>
+        <module>service-bazaar</module>
     </modules>
 
     <properties>

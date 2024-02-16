@@ -9,7 +9,7 @@ import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.protocol.ProtocolFetchItem;
+import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 import org.tinylog.Logger;

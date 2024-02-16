@@ -57,12 +57,12 @@ public class SkyBlockViaInjector implements ViaInjector {
     }
 
     @Override
-    public int getServerProtocolVersion() throws Exception {
+    public int getServerProtocolVersion() {
         return getLowestSupportedProtocolVersion();
     }
 
     @Override
-    public IntSortedSet getServerProtocolVersions() throws Exception {
+    public IntSortedSet getServerProtocolVersions() {
         int lowestSupportedProtocolVersion = getLowestSupportedProtocolVersion();
         IntSortedSet set = new IntLinkedOpenHashSet();
 

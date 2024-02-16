@@ -1,26 +1,24 @@
-package net.swofty.types.generic.entity.villager.villagers;
+package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
 
-public class VillagerLeo extends NPCVillagerDialogue {
-    public VillagerLeo() {
+public class VillagerDuke extends NPCVillagerDialogue {
+    public VillagerDuke() {
         super(new NPCVillagerParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&fLeo", "&e&lCLICK"};
+                return new String[]{"&fDuke", "&e&lCLICK"};
             }
 
             @Override
             public Pos position() {
-                return new Pos(-7.5, 70, -75.5, -30f, 0f);
+                return new Pos(-11.5, 70, -95.5, -40f, 0f);
             }
 
             @Override
@@ -47,29 +45,28 @@ public class VillagerLeo extends NPCVillagerDialogue {
                     .anyMatch(value -> value.toString().contains(getID()))) {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
-                    setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemType.LEAFLET_TUNIC, null).open(e.player());
-                    });
+                    setDialogue(e.player(), "quest-hello");
                     return;
                 }
             }
         }
 
-        setDialogue(e.player(), "hello");
+        setDialogue(e.player(), "initial-hello");
     }
 
     @Override
     public DialogueSet[] getDialogueSets() {
         return Stream.of(
                 DialogueSet.builder()
-                        .key("quest-hello").lines(new String[]{
-                                "&e[NPC] Leo&f: You can unlock §aLeaflet Armor §fby progressing through your §aOak Log Collection§f.",
-                                "&e[NPC] Leo&f: There is a §bForest §fwest of the §bVillage §fwhere you can gather Oak Logs.",
-                                "&e[NPC] Leo&f: To check your Collection progress and rewards, open the §aCollection Menu §fin your §aSkyBlock Menu§f."
+                        .key("initial-hello").lines(new String[]{
+                                "§e[NPC] Duke§f: I found a few Fairly Souls during my travels, they are usually pretty hard to find!",
+                                "§e[NPC] Duke§f: I would not venture South of the §bVillage§f, it seems like this place was abandoned."
                         }).build(),
                 DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new crafting recipes, brewing recipes, trades, enchantments and more!",
+                        .key("quest-hello").lines(new String[]{
+                                "§e[NPC] Duke§f: Are you new here? As you can see there is alot to explore!",
+                                "§e[NPC] Duke§f: My advice is to start by visiting the §bFarm §for the §bCoal Mine§f, both North of here.",
+                                "§e[NPC] Duke§f: If you do need some wood, the best place to get some is West of the §bVillage§f!"
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }

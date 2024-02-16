@@ -8,10 +8,6 @@ import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.entity.villager.villagers.VillagerDuke;
-import net.swofty.types.generic.entity.villager.villagers.VillagerFelix;
-import net.swofty.types.generic.entity.villager.villagers.VillagerLeo;
-import net.swofty.types.generic.entity.villager.villagers.VillagerVex;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
@@ -27,11 +23,12 @@ import java.util.*;
         node = EventNodes.CUSTOM,
         requireDataLoaded = false)
 public class MissionTalkToVillagers extends SkyBlockProgressMission implements MissionRepeater {
-    private static final List<Class<? extends SkyBlockVillagerNPC>> villagers = List.of(
-            VillagerDuke.class,
-            VillagerLeo.class,
-            VillagerFelix.class,
-            VillagerVex.class
+    private static final List<String> villagers = List.of(
+            "Duke",
+            "Leo",
+            "Felix",
+            "Vex",
+            "Jack"
     );
 
     @Override
@@ -62,13 +59,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
         // Check if villager is a part of the mission
         if (villagers.stream().noneMatch(villager ->
-                {
-                    try {
-                        return event.getVillager().getID().contains(villager.newInstance().getID());
-                    } catch (InstantiationException | IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                event.getVillager().getID().contains(villager)
         )) return;
 
         customData.put("villager_" + mission.getMissionProgress(), event.getVillager().getID());
@@ -119,40 +110,34 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                 if (player.getInstance() != SkyBlockConst.getInstanceContainer()) return;
 
                 Map<String, Object> customData = player.getMissionData().getMission(MissionTalkToVillagers.class).getKey().getCustomData();
-                List<Class<? extends SkyBlockVillagerNPC>> villagersNotSpokenTo = new ArrayList<>(villagers);
+                List<String> villagersNotSpokenTo = new ArrayList<>(villagers);
                 villagersNotSpokenTo.removeIf(villager ->
                         customData.values()
                                 .stream()
-                                .anyMatch(value ->
-                                {
-                                    try {
-                                        return value.toString().contains(villager.newInstance().getID());
-                                    } catch (InstantiationException | IllegalAccessException e) {
-                                        throw new RuntimeException(e);
-                                    }
+                                .anyMatch(value -> {
+                                    String s = value.toString();
+                                    return s.contains(villager);
                                 }));
 
-                villagersNotSpokenTo.forEach(villager -> {
-                    try {
-                        Pos villagerPosition = villager.newInstance().getParameters().position();
+                SkyBlockVillagerNPC.getVillagers().forEach((npc, entity) -> {
+                    if (entity.getInstance() != SkyBlockConst.getInstanceContainer()) return;
+                    if (villagersNotSpokenTo.stream().noneMatch(villager -> npc.getID().contains(villager))) return;
 
-                        // TODO: make particle maker
-                        player.sendPacket(new ParticlePacket(
-                                38,
-                                false,
-                                villagerPosition.x(),
-                                villagerPosition.y() + 3f,
-                                villagerPosition.z(),
-                                0.1f,
-                                0.1f,
-                                0.1f,
-                                0f,
-                                3,
-                                new byte[]{}
-                        ));
-                    } catch (InstantiationException | IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+                    Pos villagerPosition = npc.getParameters().position();
+
+                    player.sendPacket(new ParticlePacket(
+                            38,
+                            false,
+                            villagerPosition.x(),
+                            villagerPosition.y() + 3f,
+                            villagerPosition.z(),
+                            0.1f,
+                            0.1f,
+                            0.1f,
+                            0f,
+                            3,
+                            new byte[]{}
+                    ));
                 });
             });
         }, TaskSchedule.tick(5), TaskSchedule.tick(5));

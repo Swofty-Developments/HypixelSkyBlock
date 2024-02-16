@@ -1,4 +1,4 @@
-package net.swofty.types.generic.protocol;
+package net.swofty.types.generic.protocol.auctions;
 
 import net.swofty.service.generic.ProtocolSpecification;
 
