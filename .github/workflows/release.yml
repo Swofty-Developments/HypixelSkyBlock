@@ -34,3 +34,4 @@ jobs:
           commons/target/*.jar
           packer/target/*.jar
           service-auctionhouse/target/*.jar
+          service-bazaar/target/*.jar
