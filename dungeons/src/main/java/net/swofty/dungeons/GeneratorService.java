@@ -74,62 +74,95 @@ public class GeneratorService {
                 // Move to critical path generation
                 currentStage = GenerationStage.CRITICAL_PATH;
 
-                // Generate two random points, one before the fairy and one after
+                // Generate a random point, one before the fairy
                 // This is to ensure that the critical path is not a straight line
                 // They cannot be the same as the entrance, exit or the fairy room, or eachother
-                int[] randomPointPreFairy, randomPointPostFairy;
+                // It also can't be along the top Y or bottom Y, or the left and right X
+                int[] randomPointPreFairy;
                 do {
                     randomPointPreFairy = new int[]{(int) (Math.random() * data.getWidth()), (int) (Math.random() * data.getHeight())};
-                } while (Arrays.equals(randomPointPreFairy, entranceAndExit) || Arrays.equals(randomPointPreFairy, fairyPositions));
-                do {
-                    randomPointPostFairy = new int[]{(int) (Math.random() * data.getWidth()), (int) (Math.random() * data.getHeight())};
-                } while (Arrays.equals(randomPointPostFairy, entranceAndExit) || Arrays.equals(randomPointPostFairy, fairyPositions) || Arrays.equals(randomPointPostFairy, randomPointPreFairy));
+                } while (
+                        (randomPointPreFairy[0] == entranceAndExit[0] && randomPointPreFairy[1] == 0) || // Matches entrance
+                                (randomPointPreFairy[0] == entranceAndExit[1] && randomPointPreFairy[1] == data.getHeight() - 1) || // Matches exit
+                                (randomPointPreFairy[0] == fairyPositions[0] && randomPointPreFairy[1] == fairyPositions[1]) || // Matches fairy position
+                                randomPointPreFairy[0] == 0 || randomPointPreFairy[0] == data.getWidth() - 1 || // Left or right edge
+                                randomPointPreFairy[1] == 0 || randomPointPreFairy[1] == data.getHeight() - 1 // Top or bottom edge
+                );
 
                 System.out.println("Random Point at " + Arrays.toString(randomPointPreFairy));
                 System.out.println("Fairy at " + Arrays.toString(fairyPositions));
-                System.out.println("Random Point at " + Arrays.toString(randomPointPostFairy));
 
-                generateCriticalPath(dungeon, Arrays.asList(
-                        new int[]{entranceX, 0, 1},
-                        new int[]{randomPointPreFairy[0], randomPointPreFairy[1], 2},
-                        new int[]{fairyPositions[0], fairyPositions[1], 3},
-                        new int[]{randomPointPostFairy[0], randomPointPostFairy[1], 4},
-                        new int[]{exitX, data.getHeight() - 1, 5}));
+                // Generate the critical path
+                List<int[]> path = new ArrayList<>();
+                path.addAll(DungeonUtilities.aStar(path,
+                        entranceX, 0, randomPointPreFairy[0], randomPointPreFairy[1], data.getWidth(), data.getHeight())
+                        .stream().map(cell -> new int[]{cell[0], cell[1], 1}).toList());
+                path.addAll(DungeonUtilities.aStar(path,
+                                randomPointPreFairy[0], randomPointPreFairy[1], fairyPositions[0], fairyPositions[1], data.getWidth(), data.getHeight())
+                        .stream().map(cell -> new int[]{cell[0], cell[1], 2}).toList());
+                path.addAll(DungeonUtilities.aStar(path,
+                                fairyPositions[0], fairyPositions[1], exitX, data.getHeight() - 1, data.getWidth(), data.getHeight())
+                        .stream().map(cell -> new int[]{cell[0], cell[1], 3}).toList());
+
+                for (int[] cell : path) {
+                    dungeon.getRoom(cell[0], cell[1]).setCritical(true);
+                    dungeon.getRoom(cell[0], cell[1]).setStage(cell[2]);
+
+                    if (path.indexOf(cell) != path.size() - 1) {
+                        int[] nextCell = path.get(path.indexOf(cell) + 1);
+                        if (nextCell != null) {
+                            dungeon.connectRooms(cell[0], cell[1], nextCell[0], nextCell[1]);
+                        }
+                    }
+                }
+
+                DungeonUtilities.asyncPrintPerformance(generationStartTime, "critical path done");
+
+                // Move to side path generation
+                currentStage = GenerationStage.SIDE_PATHS;
+
+                // Thought is that we run sidePath cycles until the dungeon is filled
+                // However, only rooms with a stage less or same as the sidePath cycle index
+                // are considered for expansion
+                // So stage 1 rooms are expanded in the first cycle, stage 1 & 2 rooms in the second, etc
+                int amountOfRooms = data.getWidth() * data.getHeight();
+                int filledRooms = path.size();
+                List<int[]> roomsToConsider = new ArrayList<>();
+                for (int[] cell : path) {
+                    if (cell[0] == entranceX && cell[1] == 0) continue;
+                    if (cell[0] == exitX && cell[1] == data.getHeight() - 1) continue;
+                    roomsToConsider.add(new int[]{cell[0], cell[1], cell[2]});
+                }
+                for (int sidePathCycle = 1; filledRooms < amountOfRooms; sidePathCycle++) {
+                    List<int[]> roomsToConsiderCopy = new ArrayList<>(roomsToConsider);
+
+                    for (int[] cell : roomsToConsider) {
+                        if (cell[2] > sidePathCycle)
+                            continue;
+
+                        List<int[]> freeNeighbours = DungeonUtilities.getFreeNeighbours(cell[0], cell[1], dungeon, data);
+                        for (int[] neighbour : freeNeighbours) {
+                            dungeon.connectRooms(cell[0], cell[1], neighbour[0], neighbour[1]);
+                            dungeon.getRoom(neighbour[0], neighbour[1]).setStage(
+                                    dungeon.getRoom(cell[0], cell[1]).getStage()
+                            );
+                            filledRooms++;
+                            roomsToConsiderCopy.add(new int[]{neighbour[0], neighbour[1], cell[2]});
+                        }
+                    }
+
+                    roomsToConsider = roomsToConsiderCopy;
+                }
+
+                DungeonUtilities.asyncPrintPerformance(generationStartTime, "side path generation done");
+                DungeonUtilities.asyncPrintDungeon(dungeon);
+
+                // Move to side room assignment stage
+                currentStage = GenerationStage.ROOM_ASSIGNMENT;
             });
         });
 
         return future;
-    }
-
-    private void generateCriticalPath(HypixelDungeon dungeon, List<int[]> requiredPoints) {
-        // The thought is that here, we have our entrance and exit, and it is now time to create the link
-        // between the two. This is the critical path, and it is the most important part of the dungeon route.
-        // This uses the A* algorithm with randomization built in to create a path between the two points.
-        // The fairyX and fairyY is the required "midpoint", and has to be part of the path.
-        DungeonUtilities.asyncPrintPerformance(generationStartTime, "aStar start");
-        List<int[]> path = new ArrayList<>();
-        requiredPoints.forEach(point -> {
-            // If the point is the last point, we don't need to do anything
-            if (requiredPoints.indexOf(point) == requiredPoints.size() - 1) return;
-            int[] nextPoints = requiredPoints.get(requiredPoints.indexOf(point) + 1);
-
-            List<int[]> aStarPath = DungeonUtilities.aStar(path,
-                    point[0], point[1], nextPoints[0], nextPoints[1], data.getWidth(), data.getHeight());
-            // Add stage to the path
-            for (int[] cell : aStarPath) {
-                path.add(new int[]{cell[0], cell[1], point[2]});
-            }
-        });
-        DungeonUtilities.asyncPrintPerformance(generationStartTime, "aStar end");
-
-        // Update the dungeon with the path
-        for (int[] cell : path) {
-            dungeon.getRoom(cell[0], cell[1]).setCritical(true);
-            dungeon.getRoom(cell[0], cell[1]).setStage(cell[2]);
-        }
-
-        DungeonUtilities.asyncPrintPerformance(generationStartTime, "randomization end");
-        DungeonUtilities.asyncPrintDungeon(dungeon);
     }
 
     public enum GenerationStage {

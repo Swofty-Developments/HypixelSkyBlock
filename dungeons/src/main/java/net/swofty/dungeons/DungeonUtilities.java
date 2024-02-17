@@ -9,6 +9,17 @@ public class DungeonUtilities {
                 .map(i -> Map.entry(i % data.getWidth(), i / data.getHeight()));
     }
 
+    public static List<int[]> getFreeNeighbours(int x, int y, HypixelDungeon dungeon, DungeonsData data) {
+        List<int[]> freeNeighbours = new ArrayList<>();
+        if (x > 0 && dungeon.getRoom(x - 1, y).getStage() == 0) freeNeighbours.add(new int[]{x - 1, y});
+        if (y > 0 && dungeon.getRoom(x, y - 1).getStage() == 0) freeNeighbours.add(new int[]{x, y - 1});
+        if (x < data.getWidth() - 1 && dungeon.getRoom(x + 1, y).getStage() == 0)
+            freeNeighbours.add(new int[]{x + 1, y});
+        if (y < data.getHeight() - 1 && dungeon.getRoom(x, y + 1).getStage() == 0)
+            freeNeighbours.add(new int[]{x, y + 1});
+        return freeNeighbours;
+    }
+
     public static void asyncPrintPerformance(long startTime, String identifier) {
         Thread.startVirtualThread(() -> {
             long time = System.currentTimeMillis() - startTime;
