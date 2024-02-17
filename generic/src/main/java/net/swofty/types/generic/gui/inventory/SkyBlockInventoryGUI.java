@@ -321,9 +321,9 @@ public abstract class SkyBlockInventoryGUI {
      *
      * @param e the event of the gui closing
      */
-    public abstract void onClose(InventoryCloseEvent e, CloseReason reason);
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
 
-    public abstract void suddenlyQuit(Inventory inventory, SkyBlockPlayer player);
+    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
 
     /**
      * Runs when the player clicks on their own inventory whole this GUI is open

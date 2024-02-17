@@ -13,6 +13,7 @@ import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionViewItem;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -119,6 +120,15 @@ public class AuctionViewThirdBin implements AuctionView {
                 AuctionItem item = AuctionItem.fromDocument(Document.parse(itemResponse.getString("item")));
                 if (!item.getBids().isEmpty()) {
                     player.sendMessage("§cCouldn't purchase the item, it has been sold!");
+                    player.sendMessage("§8Returning escrowed coins...");
+                    player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
+                    return;
+                }
+
+                CoopDatabase.Coop originatorCoop = CoopDatabase.getFromMember(item.getOriginator());
+                CoopDatabase.Coop purchaserCoop = CoopDatabase.getFromMember(player.getUuid());
+                if (originatorCoop != null && purchaserCoop != null && originatorCoop.isSameAs(purchaserCoop)) {
+                    player.sendMessage("§cCannot purchase an item from someone in the same coop!");
                     player.sendMessage("§8Returning escrowed coins...");
                     player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins + item.getStartingPrice());
                     return;

@@ -119,6 +119,10 @@ public class CoopDatabase {
             database.save(this);
         }
 
+        public Boolean isSameAs(Coop coop) {
+            return coop.coopUUID.equals(coopUUID);
+        }
+
         public static Coop deserialize(Document document) {
             UUID coopUUID = UUID.fromString(document.getString("_id"));
             UUID originator = UUID.fromString(document.getString("originator"));

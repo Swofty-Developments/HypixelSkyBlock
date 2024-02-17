@@ -14,6 +14,7 @@ import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionViewItem;
@@ -236,6 +237,15 @@ public class AuctionViewThirdNormal implements AuctionView {
                     category = instanceCategory.getAuctionCategory();
                 else {
                     category = AuctionCategories.TOOLS;
+                }
+
+                CoopDatabase.Coop originatorCoop = CoopDatabase.getFromMember(item.getOriginator());
+                CoopDatabase.Coop purchaserCoop = CoopDatabase.getFromMember(player.getUuid());
+                if (originatorCoop != null && purchaserCoop != null && originatorCoop.isSameAs(purchaserCoop)) {
+                    player.sendMessage("§cCannot purchase an item from someone in the same coop!");
+                    player.sendMessage("§8Returning escrowed coins...");
+                    coins.setValue(coins.getValue() + gui.bidAmount);
+                    return;
                 }
 
                 player.sendMessage("§7Processing bid...");
