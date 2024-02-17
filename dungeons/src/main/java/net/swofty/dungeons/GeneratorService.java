@@ -3,10 +3,7 @@ package net.swofty.dungeons;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -29,6 +26,16 @@ public class GeneratorService {
             CompletableFuture<int[]> entranceAndExits = CompletableFuture.supplyAsync(() -> Stream.generate(() -> {
                 return (int) (Math.random() * data.getWidth());
             }).limit(2).mapToInt(i -> i).toArray());
+
+            CompletableFuture<Map<DungeonRooms, Integer>> roomAmounts = CompletableFuture.supplyAsync(() -> {
+                Map<DungeonRooms, Integer> amounts = new HashMap<>();
+                for (DungeonRooms room : DungeonRooms.values()) {
+                    DungeonsData.RoomData roomData = data.getDataForOrNull(room);
+                    if (roomData == null) continue;
+                    amounts.put(room, (int) (Math.random() * (roomData.maximumAmount() - roomData.minimumAmount())) + roomData.minimumAmount());
+                }
+                return amounts;
+            });
 
             // Generate a fairy position that is not adjacent to entrance or exit
             CompletableFuture<int[]> fairyPosition = entranceAndExits.thenApplyAsync(entranceAndExit -> {
@@ -88,9 +95,6 @@ public class GeneratorService {
                                 randomPointPreFairy[0] == 0 || randomPointPreFairy[0] == data.getWidth() - 1 || // Left or right edge
                                 randomPointPreFairy[1] == 0 || randomPointPreFairy[1] == data.getHeight() - 1 // Top or bottom edge
                 );
-
-                System.out.println("Random Point at " + Arrays.toString(randomPointPreFairy));
-                System.out.println("Fairy at " + Arrays.toString(fairyPositions));
 
                 // Generate the critical path
                 List<int[]> path = new ArrayList<>();
@@ -159,6 +163,7 @@ public class GeneratorService {
 
                 // Move to side room assignment stage
                 currentStage = GenerationStage.ROOM_ASSIGNMENT;
+                Map<DungeonRooms, Integer> roomAmountsFinal = roomAmounts.join();
             });
         });
 
