@@ -79,7 +79,7 @@ public class HypixelDungeon {
     @RequiredArgsConstructor
     @Getter
     public static class DungeonRoom {
-        private final DungeonRooms roomType;
+        private final DungeonRoomType roomType;
         @Setter
         private boolean isCritical;
         @Setter
@@ -91,7 +91,7 @@ public class HypixelDungeon {
         }
 
         public static DungeonRoom ofBase() {
-            return new DungeonRoom(DungeonRooms.BASE);
+            return new DungeonRoom(DungeonRoomType.BASE);
         }
     }
 

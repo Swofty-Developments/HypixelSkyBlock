@@ -3,7 +3,7 @@ package net.swofty.dungeons;
 import lombok.Getter;
 
 @Getter
-public enum DungeonRooms {
+public enum DungeonRoomType {
     ENTRANCE(),
     BASE(),
     FAIRY(true),
@@ -14,9 +14,9 @@ public enum DungeonRooms {
 
     private boolean requiresData = false;
 
-    DungeonRooms() {}
+    DungeonRoomType() {}
 
-    DungeonRooms(boolean requiresData) {
+    DungeonRoomType(boolean requiresData) {
         this.requiresData = requiresData;
     }
 }

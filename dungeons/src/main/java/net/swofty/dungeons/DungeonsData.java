@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DungeonsData {
-    private final Map<DungeonRooms, RoomData> roomData;
+    private final Map<DungeonRoomType, RoomData> roomData;
     @Getter
     private final Integer width;
     @Getter
@@ -18,12 +18,12 @@ public class DungeonsData {
         this.roomData = new HashMap<>();
     }
 
-    public DungeonsData with(DungeonRooms room, RoomData data) {
+    public DungeonsData with(DungeonRoomType room, RoomData data) {
         roomData.put(room, data);
         return this;
     }
 
-    public RoomData getDataForOrNull(DungeonRooms room) {
+    public RoomData getDataForOrNull(DungeonRoomType room) {
         return roomData.get(room);
     }
 

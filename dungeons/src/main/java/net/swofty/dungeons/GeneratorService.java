@@ -27,9 +27,9 @@ public class GeneratorService {
                 return (int) (Math.random() * data.getWidth());
             }).limit(2).mapToInt(i -> i).toArray());
 
-            CompletableFuture<Map<DungeonRooms, Integer>> roomAmounts = CompletableFuture.supplyAsync(() -> {
-                Map<DungeonRooms, Integer> amounts = new HashMap<>();
-                for (DungeonRooms room : DungeonRooms.values()) {
+            CompletableFuture<Map<DungeonRoomType, Integer>> roomAmounts = CompletableFuture.supplyAsync(() -> {
+                Map<DungeonRoomType, Integer> amounts = new HashMap<>();
+                for (DungeonRoomType room : DungeonRoomType.values()) {
                     DungeonsData.RoomData roomData = data.getDataForOrNull(room);
                     if (roomData == null) continue;
                     amounts.put(room, (int) (Math.random() * (roomData.maximumAmount() - roomData.minimumAmount())) + roomData.minimumAmount());
@@ -66,7 +66,7 @@ public class GeneratorService {
             fairyPosition.thenAccept(fairyPos -> {
                 fairyPositions[0] = fairyPos[0];
                 fairyPositions[1] = fairyPos[1];
-                dungeon.setRoom(fairyPositions[0], fairyPositions[1], new HypixelDungeon.DungeonRoom(DungeonRooms.FAIRY));
+                dungeon.setRoom(fairyPositions[0], fairyPositions[1], new HypixelDungeon.DungeonRoom(DungeonRoomType.FAIRY));
             });
 
             // We can use the entranceAndExits future to get the entrance and exit points
@@ -75,8 +75,8 @@ public class GeneratorService {
                 int entranceX = entranceAndExit[0];
                 int exitX = entranceAndExit[1];
 
-                dungeon.setRoom(entranceX, 0, new HypixelDungeon.DungeonRoom(DungeonRooms.ENTRANCE));
-                dungeon.setRoom(exitX, data.getHeight() - 1, new HypixelDungeon.DungeonRoom(DungeonRooms.EXIT));
+                dungeon.setRoom(entranceX, 0, new HypixelDungeon.DungeonRoom(DungeonRoomType.ENTRANCE));
+                dungeon.setRoom(exitX, data.getHeight() - 1, new HypixelDungeon.DungeonRoom(DungeonRoomType.EXIT));
 
                 // Move to critical path generation
                 currentStage = GenerationStage.CRITICAL_PATH;
@@ -163,7 +163,10 @@ public class GeneratorService {
 
                 // Move to side room assignment stage
                 currentStage = GenerationStage.ROOM_ASSIGNMENT;
-                Map<DungeonRooms, Integer> roomAmountsFinal = roomAmounts.join();
+                Map<DungeonRoomType, Integer> roomAmountsFinal = roomAmounts.join();
+
+                // We want to find rooms wtih only one door, and then assign a room to them
+                // until we have the amount needed for each room type
             });
         });
 

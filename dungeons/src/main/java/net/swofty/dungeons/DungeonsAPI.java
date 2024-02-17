@@ -8,7 +8,7 @@ public class DungeonsAPI {
      */
     public static GeneratorService getGeneratorService(DungeonsData data) {
         // Validate DungeonsData has been properly filled
-        for (DungeonRooms room : DungeonRooms.values()) {
+        for (DungeonRoomType room : DungeonRoomType.values()) {
             if (room.isRequiresData() && data.getDataForOrNull(room) == null) {
                 throw new IllegalArgumentException("DungeonsData must contain data for all data-required rooms.");
             }
