@@ -9,7 +9,7 @@ public class DungeonUtilities {
                 .map(i -> Map.entry(i % data.getWidth(), i / data.getHeight()));
     }
 
-    public static List<int[]> getFreeNeighbours(int x, int y, HypixelDungeon dungeon, DungeonsData data) {
+    public static List<int[]> getFreeNeighbours(int x, int y, SkyBlockDungeon dungeon, DungeonsData data) {
         List<int[]> freeNeighbours = new ArrayList<>();
         if (x > 0 && dungeon.getRoom(x - 1, y).getStage() == 0) freeNeighbours.add(new int[]{x - 1, y});
         if (y > 0 && dungeon.getRoom(x, y - 1).getStage() == 0) freeNeighbours.add(new int[]{x, y - 1});
@@ -18,6 +18,19 @@ public class DungeonUtilities {
         if (y < data.getHeight() - 1 && dungeon.getRoom(x, y + 1).getStage() == 0)
             freeNeighbours.add(new int[]{x, y + 1});
         return freeNeighbours;
+    }
+
+    public static List<int[]> getAdjacentBaseRooms(int x, int y, SkyBlockDungeon dungeon, DungeonsData data) {
+        List<int[]> neighbours = new ArrayList<>();
+        if (x > 0 && dungeon.getRoom(x - 1, y).getRoomType() == DungeonRoomType.BASE)
+            neighbours.add(new int[]{x - 1, y});
+        if (y > 0 && dungeon.getRoom(x, y - 1).getRoomType() == DungeonRoomType.BASE)
+            neighbours.add(new int[]{x, y - 1});
+        if (x < data.getWidth() - 1 && dungeon.getRoom(x + 1, y).getRoomType() == DungeonRoomType.BASE)
+            neighbours.add(new int[]{x + 1, y});
+        if (y < data.getHeight() - 1 && dungeon.getRoom(x, y + 1).getRoomType() == DungeonRoomType.BASE)
+            neighbours.add(new int[]{x, y + 1});
+        return neighbours;
     }
 
     public static void asyncPrintPerformance(long startTime, String identifier) {
@@ -87,7 +100,7 @@ public class DungeonUtilities {
         return path;
     }
 
-    public static void asyncPrintDungeon(HypixelDungeon dungeon) {
+    public static void asyncPrintDungeon(SkyBlockDungeon dungeon) {
         Thread.startVirtualThread(() -> {
             System.out.println(dungeon);
         });

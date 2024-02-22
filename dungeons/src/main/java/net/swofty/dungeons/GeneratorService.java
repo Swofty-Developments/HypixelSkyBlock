@@ -15,11 +15,12 @@ public class GeneratorService {
     private final DungeonsData data;
     @Getter
     private GenerationStage currentStage = GenerationStage.INITIALIZATION;
-    private CompletableFuture<HypixelDungeon> generationFuture;
+    private CompletableFuture<SkyBlockDungeon> generationFuture;
+    @Getter
     private long generationStartTime;
 
-    public CompletableFuture<HypixelDungeon> generate() {
-        CompletableFuture<HypixelDungeon> future = new CompletableFuture<>();
+    public CompletableFuture<SkyBlockDungeon> generate() {
+        CompletableFuture<SkyBlockDungeon> future = new CompletableFuture<>();
         generationFuture = future;
         generationStartTime = System.currentTimeMillis();
 
@@ -57,12 +58,12 @@ public class GeneratorService {
                 return new int[]{fairyX, fairyY};
             });
 
-            HypixelDungeon dungeon = new HypixelDungeon();
+            SkyBlockDungeon dungeon = new SkyBlockDungeon();
             DungeonUtilities.loopOverDungeonRooms(data).forEach(values -> {
                 int width = values.getKey();
                 int height = values.getValue();
 
-                dungeon.setRoom(width, height, HypixelDungeon.DungeonRoom.ofBase());
+                dungeon.setRoom(width, height, SkyBlockDungeon.DungeonRoom.ofBase());
             });
 
             final int[] fairyPositions = {0, 0};
@@ -70,17 +71,16 @@ public class GeneratorService {
             fairyPosition.thenAccept(fairyPos -> {
                 fairyPositions[0] = fairyPos[0];
                 fairyPositions[1] = fairyPos[1];
-                dungeon.setRoom(fairyPositions[0], fairyPositions[1], new HypixelDungeon.DungeonRoom(DungeonRoomType.FAIRY));
+                dungeon.setRoom(fairyPositions[0], fairyPositions[1], new SkyBlockDungeon.DungeonRoom(DungeonRoomType.FAIRY));
             });
 
             // We can use the entranceAndExits future to get the entrance and exit points
             entranceAndExits.thenAcceptAsync(entranceAndExit -> {
-                DungeonUtilities.asyncPrintPerformance(generationStartTime, "3");
                 int entranceX = entranceAndExit[0];
                 int exitX = entranceAndExit[1];
 
-                dungeon.setRoom(entranceX, 0, new HypixelDungeon.DungeonRoom(DungeonRoomType.ENTRANCE));
-                dungeon.setRoom(exitX, data.getHeight() - 1, new HypixelDungeon.DungeonRoom(DungeonRoomType.EXIT));
+                dungeon.setRoom(entranceX, 0, new SkyBlockDungeon.DungeonRoom(DungeonRoomType.ENTRANCE));
+                dungeon.setRoom(exitX, data.getHeight() - 1, new SkyBlockDungeon.DungeonRoom(DungeonRoomType.EXIT));
 
                 // Move to critical path generation
                 currentStage = GenerationStage.CRITICAL_PATH;
@@ -124,8 +124,6 @@ public class GeneratorService {
                     }
                 }
 
-                DungeonUtilities.asyncPrintPerformance(generationStartTime, "critical path done");
-
                 // Move to side path generation
                 currentStage = GenerationStage.SIDE_PATHS;
 
@@ -163,23 +161,47 @@ public class GeneratorService {
                     roomsToExpand.forEach(room -> stageToRooms.computeIfAbsent(room[2], k -> new ArrayList<>()).add(room));
                 }
 
-                DungeonUtilities.asyncPrintPerformance(generationStartTime, "side path generation done");
-
                 // Move to side room assignment stage
                 currentStage = GenerationStage.ROOM_ASSIGNMENT;
                 // We want to find rooms with only one door, and then assign a room to them
                 // until we have the amount needed for each room type
                 assignRoomsAsync(roomAmounts.join(), dungeon);
 
-                DungeonUtilities.asyncPrintPerformance(generationStartTime, "room assignment done");
-                DungeonUtilities.asyncPrintDungeon(dungeon);
+                // Move to corridor assignment stage
+                currentStage = GenerationStage.CORRIDOR_ASSIGNMENT;
+                // Randomly find base rooms with the same stage and connect them
+                assignCorridors(dungeon);
+
+                // Move to final touches stage
+                currentStage = GenerationStage.FINAL_TOUCHES;
+                // If there are two base rooms of the same type and stage right next to eachother
+                // add a chance to connect them with a door
+                for (int y = 0; y < data.getHeight(); y++) {
+                    for (int x = 0; x < data.getWidth(); x++) {
+                        SkyBlockDungeon.DungeonRoom room = dungeon.getRoom(x, y);
+                        if (room.getRoomType() != DungeonRoomType.BASE) continue; // Skip if room already has a type
+
+                        List<int[]> adjacentBases = DungeonUtilities.getAdjacentBaseRooms(x, y, dungeon, data);
+                        for (int[] adjacent : adjacentBases) {
+                            SkyBlockDungeon.DungeonRoom adjacentRoom = dungeon.getRoom(adjacent[0], adjacent[1]);
+                            if (adjacentRoom.getRoomType() != DungeonRoomType.BASE) continue; // Skip if adjacent room already has a type
+                            if (adjacentRoom.getStage() != room.getStage()) continue; // Skip if adjacent room is not the same stage
+
+                            if (Math.random() > 0.5) {
+                                dungeon.connectRooms(x, y, adjacent[0], adjacent[1]);
+                            }
+                        }
+                    }
+                }
+
+                future.complete(dungeon);
             });
         });
 
         return future;
     }
 
-    public void assignRoomsAsync(Map<DungeonRoomType, Integer> roomAmounts, HypixelDungeon dungeon) {
+    public void assignRoomsAsync(Map<DungeonRoomType, Integer> roomAmounts, SkyBlockDungeon dungeon) {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         List<CompletableFuture<Void>> futures = new ArrayList<>();
@@ -190,7 +212,7 @@ public class GeneratorService {
                 while (roomsAssigned.get() < amount) {
                     for (int y = 0; y < data.getHeight(); y++) {
                         for (int x = 0; x < data.getWidth(); x++) {
-                            HypixelDungeon.DungeonRoom room = dungeon.getRoom(x, y);
+                            SkyBlockDungeon.DungeonRoom room = dungeon.getRoom(x, y);
                             if (room.getRoomType() != DungeonRoomType.BASE) continue; // Skip if room already has a type
                             if (room.isCritical()) continue; // Skip if room is critical
 
@@ -230,10 +252,62 @@ public class GeneratorService {
         executor.shutdown(); // Don't forget to shut down the executor
     }
 
+    public void assignCorridors(SkyBlockDungeon dungeon) {
+        Random random = new Random();
+        int corridorID = 1;
+        boolean[][] visited = new boolean[data.getWidth()][data.getHeight()]; // Track visited rooms
+
+        for (int y = 0; y < data.getHeight(); y++) {
+            for (int x = 0; x < data.getWidth(); x++) {
+                SkyBlockDungeon.DungeonRoom initialRoom = dungeon.getRoom(x, y);
+                if (!visited[x][y] && initialRoom.getRoomType() == DungeonRoomType.BASE) {
+                    List<int[]> potentialCorridorSet = new ArrayList<>();
+                    Queue<int[]> queue = new LinkedList<>();
+                    queue.offer(new int[]{x, y});
+                    int currentStage = initialRoom.getStage(); // Ensure same stage for corridor consistency
+
+                    while (!queue.isEmpty() && potentialCorridorSet.size() < 3) {
+                        int[] current = queue.poll();
+                        int curX = current[0], curY = current[1];
+
+                        if (visited[curX][curY]) continue;
+                        visited[curX][curY] = true;
+
+                        SkyBlockDungeon.DungeonRoom currentRoom = dungeon.getRoom(curX, curY);
+                        if (currentRoom.getRoomType() == DungeonRoomType.BASE && currentRoom.getStage() == currentStage) {
+                            potentialCorridorSet.add(current);
+
+                            // Check adjacent base rooms of the same stage for potential inclusion
+                            List<int[]> adjacents = DungeonUtilities.getAdjacentBaseRooms(curX, curY, dungeon, data);
+                            for (int[] adj : adjacents) {
+                                SkyBlockDungeon.DungeonRoom adjRoom = dungeon.getRoom(adj[0], adj[1]);
+                                if (!visited[adj[0]][adj[1]] && adjRoom.getStage() == currentStage && random.nextBoolean()) {
+                                    queue.offer(adj);
+                                }
+                            }
+                        }
+                    }
+
+                    // Validate and assign corridor ID only if the set connects two or more rooms
+                    if (potentialCorridorSet.size() > 1) {
+                        for (int[] coords : potentialCorridorSet) {
+                            SkyBlockDungeon.DungeonRoom room = dungeon.getRoom(coords[0], coords[1]);
+                            room.setCorridorNumber(corridorID); // Assign corridor ID
+                            dungeon.setRoom(coords[0], coords[1], room);
+                        }
+                        corridorID++; // Increment corridor ID for the next valid set
+                    }
+                }
+            }
+        }
+    }
+
     public enum GenerationStage {
         INITIALIZATION,
         CRITICAL_PATH,
         SIDE_PATHS,
         ROOM_ASSIGNMENT,
+        CORRIDOR_ASSIGNMENT,
+        FINAL_TOUCHES
     }
 }

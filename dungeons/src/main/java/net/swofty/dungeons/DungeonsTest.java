@@ -8,6 +8,9 @@ public class DungeonsTest {
                 .with(DungeonRoomType.MINI_BOSS, new DungeonsData.RoomData(1, 2));
 
         GeneratorService generatorService = DungeonsAPI.getGeneratorService(data);
-        generatorService.generate().join();
+        SkyBlockDungeon dungeon = generatorService.generate().join();
+
+        System.out.println("Generated dungeon: \n" + dungeon);
+        System.out.println(System.currentTimeMillis() - generatorService.getGenerationStartTime());
     }
 }

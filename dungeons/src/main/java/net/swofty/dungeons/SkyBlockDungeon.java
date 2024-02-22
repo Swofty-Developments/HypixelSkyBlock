@@ -1,7 +1,6 @@
 package net.swofty.dungeons;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class HypixelDungeon {
+public class SkyBlockDungeon {
     private Map<Map.Entry<Integer, Integer>, DungeonRoom> rooms = new HashMap<>();
     private List<DungeonDoor> doors = new ArrayList<>();
 
-    public HypixelDungeon setRoom(int x, int y, DungeonRoom room) {
+    public SkyBlockDungeon setRoom(int x, int y, DungeonRoom room) {
         rooms.put(Map.entry(x, y), room);
         return this;
     }
@@ -110,12 +109,12 @@ public class HypixelDungeon {
             for (int x = 0; x <= width; x++) {
                 DungeonRoom room = rooms.get(Map.entry(x, y));
                 if (room == null) {
-                    builder.append(DungeonUtilities.center(" ", 20, ' '));
+                    builder.append(DungeonUtilities.center(" ", 30, ' '));
                 } else {
                     builder.append(DungeonUtilities.center(
                             (isConnected(x, y, x - 1, y) ? "║" : " ") +
                             room.toString() + (isConnected(x, y, x + 1, y) ? "║" : " "),
-                            20, ' '));
+                            30, ' '));
                 }
             }
             builder.append("\n");
@@ -124,11 +123,11 @@ public class HypixelDungeon {
                 for (int x = 0; x <= width; x++) {
                     DungeonRoom room = rooms.get(Map.entry(x, y));
                     if (room == null) {
-                        builder.append(DungeonUtilities.center(" ", 20, ' '));
+                        builder.append(DungeonUtilities.center(" ", 30, ' '));
                     } else {
                         builder.append(DungeonUtilities.center(
                                 (isConnected(x, y, x, y + 1) ? "══" : "   "),
-                                20, ' '));
+                                30, ' '));
                     }
                 }
                 builder.append("\n");
@@ -144,6 +143,7 @@ public class HypixelDungeon {
         private DungeonRoomType roomType;
         private boolean isCritical;
         private int stage = 0;
+        private int corridorNumber = 0;
 
         public DungeonRoom(DungeonRoomType roomType) {
             this.roomType = roomType;
@@ -151,7 +151,8 @@ public class HypixelDungeon {
 
         @Override
         public String toString() {
-            return roomType.name() + (isCritical ? " (C)" : "") + (stage > 0 ? " (S-" + stage + ")" : "");
+            return roomType.name() + (isCritical ? " (C)" : "") + (stage > 0 ? " (S-" + stage + ")" : "")
+                    + (corridorNumber > 0 ? " (C-" + corridorNumber + ")" : "");
         }
 
         public static DungeonRoom ofBase() {
