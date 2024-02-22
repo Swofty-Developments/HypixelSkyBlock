@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class HypixelDungeon {
     private Map<Map.Entry<Integer, Integer>, DungeonRoom> rooms = new HashMap<>();
@@ -24,6 +25,67 @@ public class HypixelDungeon {
 
     public boolean isConnected(int x1, int y1, int x2, int y2) {
         return doors.stream().anyMatch(door -> (door.x1() == x1 && door.y1() == y1 && door.x2() == x2 && door.y2() == y2) || (door.x1() == x2 && door.y1() == y2 && door.x2() == x1 && door.y2() == y1));
+    }
+
+    public List<int[]> getDoors(int x, int y) {
+        final List<int[]> doors = new ArrayList<>();
+        final CountDownLatch latch = new CountDownLatch(4); // To wait for 4 threads
+
+        List<Thread> threads = new ArrayList<>();
+        threads.add(Thread.startVirtualThread(() -> {
+            try {
+                if (isConnected(x, y, x - 1, y)) {
+                    synchronized (doors) {
+                        doors.add(new int[]{x - 1, y});
+                    }
+                }
+            } finally {
+                latch.countDown();
+            }
+        }));
+        threads.add(Thread.startVirtualThread(() -> {
+            try {
+                if (isConnected(x, y, x + 1, y)) {
+                    synchronized (doors) {
+                        doors.add(new int[]{x + 1, y});
+                    }
+                }
+            } finally {
+                latch.countDown();
+            }
+        }));
+        threads.add(Thread.startVirtualThread(() -> {
+            try {
+                if (isConnected(x, y, x, y - 1)) {
+                    synchronized (doors) {
+                        doors.add(new int[]{x, y - 1});
+                    }
+                }
+            } finally {
+                latch.countDown();
+            }
+        }));
+        threads.add(Thread.startVirtualThread(() -> {
+            try {
+                if (isConnected(x, y, x, y + 1)) {
+                    synchronized (doors) {
+                        doors.add(new int[]{x, y + 1});
+                    }
+                }
+            } finally {
+                latch.countDown();
+            }
+        }));
+
+        // Wait for all threads to finish
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            // Handle interruption, perhaps logging it or throwing an exception
+        }
+
+        return doors;
     }
 
     public void connectRooms(int x1, int y1, int x2, int y2) {
@@ -76,14 +138,16 @@ public class HypixelDungeon {
         return builder.toString();
     }
 
-    @RequiredArgsConstructor
     @Getter
+    @Setter
     public static class DungeonRoom {
-        private final DungeonRoomType roomType;
-        @Setter
+        private DungeonRoomType roomType;
         private boolean isCritical;
-        @Setter
         private int stage = 0;
+
+        public DungeonRoom(DungeonRoomType roomType) {
+            this.roomType = roomType;
+        }
 
         @Override
         public String toString() {
