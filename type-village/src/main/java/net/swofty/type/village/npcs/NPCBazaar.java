@@ -11,7 +11,7 @@ public class NPCBazaar extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&6Bazaar"};
+                return new String[]{"§6Bazaar", "§e§lCLICK"};
             }
 
             @Override

@@ -33,6 +33,13 @@ public class StringUtility {
         }
     }
 
+    public static String shortenNumber(double number) {
+        if (number < 1000) return String.valueOf(Math.round(number));
+        if (number < 1000000) return String.format("%.1fK", number / 1000);
+        if (number < 1000000000) return String.format("%.1fM", number / 1000000);
+        return String.format("%.1fb", number / 1000000000);
+    }
+
     public static String formatTime(long millis) {
         // Get in format wd xh ym zs
         long days = TimeUnit.MILLISECONDS.toDays(millis);

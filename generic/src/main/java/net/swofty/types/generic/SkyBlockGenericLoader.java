@@ -18,9 +18,13 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServiceType;
+import net.swofty.commons.bazaar.BazaarInitializationRequest;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.types.generic.bazaar.BazaarCategories;
+import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
@@ -46,6 +50,7 @@ import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
+import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.attribute.SkyBlockServerAttributes;
@@ -57,6 +62,7 @@ import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.MathUtility;
+import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -327,8 +333,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             return player;
         });
-
-        typeLoader.afterInitialize(server);
     }
 
     public static List<SkyBlockPlayer> getLoadedPlayers() {

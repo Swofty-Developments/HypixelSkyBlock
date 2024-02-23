@@ -43,6 +43,7 @@ public class RedisMessage {
         // Check that all required keys in the protocolspecification are filled
         specification.getRequiredOutboundFields().forEach(key -> {
             if (!message.has(key)) {
+                System.out.println("Message: " + message);
                 throw new RuntimeException("Message does not contain required key " + key);
             }
         });

@@ -6,22 +6,26 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.village.mobs.MobGraveyardZombie;
 import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
+import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.modules.AccountInformationModule;
 import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -46,6 +50,14 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
         RuneEntityImpl thirdStone = new RuneEntityImpl(new Pos(-37.2, 68.40, -129.775, 0, 0f), false);
         RuneEntityImpl fourthStone = new RuneEntityImpl(new Pos(-37.82, 68.40, -129.775, 0, 0f), false);
         RuneEntityImpl head = new RuneEntityImpl(new Pos(-37.5, 69.20, -129.4, -70, 0f), true);
+
+        /**
+         * Register bazaar cache
+         */
+        Logger.info("Registering bazaar cache");
+        ProxyService bazaarService = new ProxyService(ServiceType.BAZAAR);
+        bazaarService.callEndpoint(new ProtocolInitializeBazaarCheck(),
+                new JSONObject().put("init-request", BazaarCategories.getInitializationRequest().serialize()));
     }
 
     @Override

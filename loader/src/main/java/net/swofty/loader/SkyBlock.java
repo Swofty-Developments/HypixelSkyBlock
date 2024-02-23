@@ -118,6 +118,7 @@ public class SkyBlock {
                 }
             });
         });
+        typeLoader.afterInitialize(minecraftServer);
 
         /**
          * Start the server
