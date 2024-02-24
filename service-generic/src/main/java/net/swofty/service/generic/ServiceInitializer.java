@@ -1,6 +1,5 @@
 package net.swofty.service.generic;
 
-import com.viaversion.viaversion.libs.gson.ToNumberPolicy;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.impl.ServiceProxyRequest;

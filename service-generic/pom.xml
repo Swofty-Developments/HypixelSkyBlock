@@ -49,11 +49,5 @@
             <version>4.15.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>4.10.0-24w06a-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
