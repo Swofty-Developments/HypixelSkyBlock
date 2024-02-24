@@ -117,9 +117,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                 // Save a list of futures for every item in the set
                 List<CompletableFuture<Void>> futures = new ArrayList<>();
 
-                for (Map.Entry<ItemType, Map.Entry<Double, Double>> item : itemSet.items) {
-                    ItemType type = item.getKey();
-
+                for (ItemType type : itemSet.items) {
                     // Create a new future for each item
                     CompletableFuture<Void> future = new CompletableFuture<>();
                     futures.add(future);
@@ -129,20 +127,20 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                     ProxyService baseService = new ProxyService(ServiceType.BAZAAR);
                     baseService.callEndpoint(new ProtocolBazaarGetItem(), values).thenAccept(response -> {
-                        BazaarItem bazaarItem = BazaarItem.fromDocument((Document) response.get("item"));
+                        BazaarItem bazaarItem = (BazaarItem) response.get("item");
 
                         lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
-                                + " §c" + StringUtility.shortenNumber(bazaarItem.getBuyPrice()) +
-                                " §8| §a" + StringUtility.shortenNumber(bazaarItem.getSellPrice()));
+                                + " §c" + StringUtility.shortenNumber(bazaarItem.getSellStatistics().getMeanOrder()) +
+                                " §8| §a" + StringUtility.shortenNumber(bazaarItem.getBuyStatistics().getMeanOrder()));
                         future.complete(null);
                     });
                 }
 
-                lore.add(" ");
-                lore.add("§eClick to view products!");
-
                 // Wait for all futures to complete by joining them
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+                lore.add(" ");
+                lore.add("§eClick to view products!");
 
                 set(new GUIClickableItem(j) {
                     @Override

@@ -1,6 +1,5 @@
 package net.swofty.commons.bazaar;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public record BazaarInitializationRequest(Map<String, Map.Entry<Double, Double>> itemsToInitialize) { }
+public record BazaarInitializationRequest(List<String> itemsToInitialize) { }

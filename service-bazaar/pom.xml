@@ -9,7 +9,7 @@
         <version>3.0</version>
     </parent>
 
-    <artifactId>service-bazaar</artifactId>
+    <artifactId>service.bazaar</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

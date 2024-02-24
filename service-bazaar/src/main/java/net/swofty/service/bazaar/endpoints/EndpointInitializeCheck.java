@@ -24,11 +24,10 @@ public class EndpointInitializeCheck implements ServiceEndpoint {
 
         if (!BazaarService.getCacheService().isEmpty()) return new HashMap<>();
 
-        request.itemsToInitialize().entrySet().stream().parallel().forEach(entry -> {
-            if (BazaarDatabase.collection.find(new Document("_id", entry.getKey())).first() == null) {
-                BazaarItem item = new BazaarItem(entry.getKey());
-                item.setBuyPrice(entry.getValue().getKey());
-                item.setSellPrice(entry.getValue().getValue());
+        request.itemsToInitialize().stream().parallel().forEach(entry -> {
+            if (BazaarDatabase.collection.find(new Document("_id", entry)).first() == null) {
+                BazaarItem item = new BazaarItem(entry,
+                        new HashMap<>(), new HashMap<>());
 
                 BazaarDatabase.collection.insertOne(item.toDocument());
             }

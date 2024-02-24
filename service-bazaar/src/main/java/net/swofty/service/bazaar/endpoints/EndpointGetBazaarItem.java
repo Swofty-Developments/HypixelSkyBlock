@@ -1,5 +1,6 @@
 package net.swofty.service.bazaar.endpoints;
 
+import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.bazaar.BazaarService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -22,7 +23,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint {
         Document document = BazaarService.getCacheService().getItem(itemName);
 
         HashMap<String, Object> response = new HashMap<>();
-        response.put("item", document);
+        response.put("item", BazaarItem.fromDocument(document));
         return response;
     }
 }

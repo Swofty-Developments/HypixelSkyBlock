@@ -1,5 +1,6 @@
 package net.swofty.service.protocol;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
@@ -9,7 +10,9 @@ public class JacksonSerializer<T> implements Serializer<T> {
     private final Class<T> clazz;
 
     public JacksonSerializer(Class<T> clazz) {
-        this.mapper = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        this.mapper = new ObjectMapper()
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.clazz = clazz;
     }
 
