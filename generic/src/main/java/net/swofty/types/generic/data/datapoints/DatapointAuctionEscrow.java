@@ -1,10 +1,9 @@
 package net.swofty.types.generic.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;

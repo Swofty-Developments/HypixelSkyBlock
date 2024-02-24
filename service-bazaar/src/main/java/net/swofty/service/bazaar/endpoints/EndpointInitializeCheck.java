@@ -9,6 +9,9 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EndpointInitializeCheck implements ServiceEndpoint {
     @Override
     public String channel() {
@@ -16,12 +19,10 @@ public class EndpointInitializeCheck implements ServiceEndpoint {
     }
 
     @Override
-    public JSONObject onMessage(ServiceProxyRequest message) {
-        if (!BazaarService.getCacheService().isEmpty()) return new JSONObject();
+    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
+        BazaarInitializationRequest request = (BazaarInitializationRequest) messageData.get("init-request");
 
-        BazaarInitializationRequest request = BazaarInitializationRequest.deserialize(
-                new JSONObject(message.getMessage()).getString("init-request")
-        );
+        if (!BazaarService.getCacheService().isEmpty()) return new HashMap<>();
 
         request.itemsToInitialize().entrySet().stream().parallel().forEach(entry -> {
             if (BazaarDatabase.collection.find(new Document("_id", entry.getKey())).first() == null) {
@@ -34,6 +35,6 @@ public class EndpointInitializeCheck implements ServiceEndpoint {
         });
 
 
-        return new JSONObject();
+        return new HashMap<>();
     }
 }

@@ -1,6 +1,4 @@
-package net.swofty.service.generic;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+package net.swofty.service.protocol;
 
 public interface Serializer<T> {
     String serialize(T value);

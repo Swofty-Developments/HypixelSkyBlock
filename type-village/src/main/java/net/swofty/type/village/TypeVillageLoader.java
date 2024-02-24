@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TypeVillageLoader implements SkyBlockTypeLoader {
@@ -56,8 +55,9 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
          */
         Logger.info("Registering bazaar cache");
         ProxyService bazaarService = new ProxyService(ServiceType.BAZAAR);
-        bazaarService.callEndpoint(new ProtocolInitializeBazaarCheck(),
-                new JSONObject().put("init-request", BazaarCategories.getInitializationRequest().serialize()));
+        Map<String, Object> request = new HashMap<>();
+        request.put("init-request", BazaarCategories.getInitializationRequest());
+        bazaarService.callEndpoint(new ProtocolInitializeBazaarCheck(), request);
     }
 
     @Override

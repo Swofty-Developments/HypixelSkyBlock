@@ -29,10 +29,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class AuctionViewThirdNormal implements AuctionView {
     @Override
@@ -250,8 +247,9 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                 player.sendMessage("§7Processing bid...");
                 Thread.startVirtualThread(() -> {
-                    JSONObject itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolFetchItem(), new JSONObject().put("uuid", item.getUuid().toString())).join();
-                    AuctionItem item = AuctionItem.fromDocument(Document.parse(itemResponse.getString("item")));
+                    Map<String, Object> itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
+                            new ProtocolFetchItem(), new JSONObject().put("uuid", item.getUuid()).toMap()).join();
+                    AuctionItem item = (AuctionItem) itemResponse.get("item");
                     AuctionItem.Bid highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).orElse(null);
 
                     if (highestBid != null && highestBid.value() >= gui.bidAmount) {
@@ -274,8 +272,11 @@ public class AuctionViewThirdNormal implements AuctionView {
                     // Add two minutes on
                     item.setEndTime(item.getEndTime() + 120000);
 
+                    Map<String, Object> request = new HashMap<>();
+                    request.put("item", item);
+                    request.put("category", category);
                     new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(),
-                            new JSONObject().put("item", item.toDocument()).put("category", category.toString())).join();
+                            request).join();
 
                     player.sendMessage("§eBid of §6" + gui.bidAmount + " coins §eplaced!");
                     new GUIAuctionViewItem(gui.auctionID, gui.previousGUI).open(player);

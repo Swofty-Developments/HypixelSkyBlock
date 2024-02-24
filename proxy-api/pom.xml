@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
-            <artifactId>service.generic</artifactId>
+            <artifactId>service.protocol</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

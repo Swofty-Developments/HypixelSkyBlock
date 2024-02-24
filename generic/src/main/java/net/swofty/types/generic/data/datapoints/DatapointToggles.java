@@ -1,14 +1,10 @@
 package net.swofty.types.generic.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {

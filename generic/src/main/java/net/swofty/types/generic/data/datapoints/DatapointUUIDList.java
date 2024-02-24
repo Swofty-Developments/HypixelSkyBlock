@@ -1,7 +1,6 @@
 package net.swofty.types.generic.data.datapoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 
 import java.util.ArrayList;

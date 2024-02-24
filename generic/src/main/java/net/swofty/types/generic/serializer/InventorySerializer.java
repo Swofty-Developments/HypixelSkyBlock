@@ -1,11 +1,10 @@
 package net.swofty.types.generic.serializer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.SneakyThrows;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.item.SkyBlockItem;
 
 public class InventorySerializer<T> implements Serializer<T> {

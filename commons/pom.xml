@@ -26,6 +26,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>service.protocol</artifactId>
+            <version>${project.parent.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>com.github.Minestom</groupId>
             <artifactId>Minestom</artifactId>
             <version>d03466e5a3</version>

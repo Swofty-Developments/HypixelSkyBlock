@@ -18,6 +18,7 @@
         <module>velocity-extension</module>
         <module>proxy-api</module>
 
+        <module>service-protocol</module>
         <module>service-generic</module>
         <module>generic</module>
 

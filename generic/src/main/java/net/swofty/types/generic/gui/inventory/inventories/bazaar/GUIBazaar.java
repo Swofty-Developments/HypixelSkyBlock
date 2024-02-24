@@ -17,6 +17,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
@@ -123,12 +124,12 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                     CompletableFuture<Void> future = new CompletableFuture<>();
                     futures.add(future);
 
+                    // Call the bazaar-get-item endpoint
+                    Map<String, Object> values = new JSONObject().put("item-name", type.name()).toMap();
+
                     ProxyService baseService = new ProxyService(ServiceType.BAZAAR);
-                    baseService.callEndpoint(new ProtocolBazaarGetItem(),
-                            new JSONObject().put("item-name", type.name())).thenAccept(response -> {
-                        BazaarItem bazaarItem = BazaarItem.fromDocument(Document.parse(response.getString(
-                                "item"
-                        )));
+                    baseService.callEndpoint(new ProtocolBazaarGetItem(), values).thenAccept(response -> {
+                        BazaarItem bazaarItem = BazaarItem.fromDocument((Document) response.get("item"));
 
                         lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
                                 + " §c" + StringUtility.shortenNumber(bazaarItem.getBuyPrice()) +
@@ -193,7 +194,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline(new ProtocolPingSpecification()).join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }

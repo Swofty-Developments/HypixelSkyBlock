@@ -3,7 +3,9 @@ package net.swofty.service.generic.redis;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public interface ServiceEndpoint {
     String channel();
-    JSONObject onMessage(ServiceProxyRequest message);
+    Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData);
 }

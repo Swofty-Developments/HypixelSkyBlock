@@ -1,7 +1,7 @@
 package net.swofty.types.generic.data.datapoints;
 
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,8 @@
 package net.swofty.types.generic.data.datapoints;
 
+import net.swofty.service.protocol.JacksonSerializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.serializer.JacksonSerializer;
+import net.swofty.service.protocol.Serializer;
 
 public class DatapointBoolean extends Datapoint<Boolean> {
     private static final JacksonSerializer<Boolean> serializer = new JacksonSerializer<>(Boolean.class);

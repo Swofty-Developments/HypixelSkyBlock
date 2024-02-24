@@ -25,6 +25,8 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuctionViewThirdBin implements AuctionView {
     @Override
@@ -112,12 +114,12 @@ public class AuctionViewThirdBin implements AuctionView {
                 player.sendMessage("§7Processing purchase...");
 
                 // Check that it is still available, by checking it has 0 bids
-                JSONObject itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
+                Map<String, Object> itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
                         new ProtocolFetchItem(),
-                        new JSONObject().put("uuid", item.getUuid().toString())
+                        new JSONObject().put("uuid", item.getUuid().toString()).toMap()
                 ).join();
 
-                AuctionItem item = AuctionItem.fromDocument(Document.parse(itemResponse.getString("item")));
+                AuctionItem item = (AuctionItem) itemResponse.get("item");
                 if (!item.getBids().isEmpty()) {
                     player.sendMessage("§cCouldn't purchase the item, it has been sold!");
                     player.sendMessage("§8Returning escrowed coins...");
@@ -146,8 +148,11 @@ public class AuctionViewThirdBin implements AuctionView {
                 }});
                 item.setEndTime(System.currentTimeMillis());
 
-                new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(),
-                        new JSONObject().put("item", item.toDocument()).put("category", AuctionCategories.TOOLS.toString())).join();
+                Map<String, Object> requestMessage = new HashMap<>();
+                requestMessage.put("item", item);
+                requestMessage.put("category", AuctionCategories.TOOLS);
+
+                new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(), requestMessage).join();
 
                 player.sendMessage("§eYou purchased " + item.getItem().getDisplayName() + "§e for §6" + item.getStartingPrice() + " coins§e!");
 

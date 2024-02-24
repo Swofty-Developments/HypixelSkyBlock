@@ -6,6 +6,9 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EndpointGetBazaarItem implements ServiceEndpoint {
     @Override
     public String channel() {
@@ -13,11 +16,13 @@ public class EndpointGetBazaarItem implements ServiceEndpoint {
     }
 
     @Override
-    public JSONObject onMessage(ServiceProxyRequest message) {
-        String itemName = new JSONObject(message.getMessage()).getString("item-name");
+    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
+        String itemName = (String) messageData.get("item-name");
 
         Document document = BazaarService.getCacheService().getItem(itemName);
 
-        return new JSONObject().put("item", document.toJson());
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("item", document);
+        return response;
     }
 }

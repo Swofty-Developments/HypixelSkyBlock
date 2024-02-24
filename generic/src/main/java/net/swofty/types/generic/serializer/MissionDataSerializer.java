@@ -1,10 +1,9 @@
 package net.swofty.types.generic.serializer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import net.swofty.service.generic.Serializer;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.Map;

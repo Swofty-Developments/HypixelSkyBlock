@@ -1,6 +1,7 @@
 package net.swofty.types.generic.protocol.auctions;
 
-import net.swofty.service.generic.ProtocolSpecification;
+import net.swofty.service.protocol.JacksonSerializer;
+import net.swofty.service.protocol.ProtocolSpecification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ public class ProtocolDeprecateItem extends ProtocolSpecification {
     @Override
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return new ArrayList<>(List.of(
-                new ProtocolEntries<UUID>("uuid", true)
+                new ProtocolEntries<UUID>("uuid", true,
+                        new JacksonSerializer<>(UUID.class))
         ));
     }
 

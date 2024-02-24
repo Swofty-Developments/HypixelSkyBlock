@@ -4,6 +4,9 @@ import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PingEndpoint implements ServiceEndpoint {
     @Override
     public String channel() {
@@ -11,7 +14,10 @@ public class PingEndpoint implements ServiceEndpoint {
     }
 
     @Override
-    public JSONObject onMessage(ServiceProxyRequest message) {
-        return new JSONObject().put("online", true);
+    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("online", true);
+        return response;
     }
+
 }

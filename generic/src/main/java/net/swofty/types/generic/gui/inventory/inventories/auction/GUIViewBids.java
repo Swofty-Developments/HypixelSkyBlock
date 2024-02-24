@@ -17,6 +17,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -48,9 +49,10 @@ public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
         PaginationList<AuctionItem> auctionItems = new PaginationList<>(7);
 
         auctions.forEach(uuid -> {
-            CompletableFuture<Void> future = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolFetchItem(), new JSONObject().put("uuid", uuid))
+            CompletableFuture<Void> future = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
+                    new ProtocolFetchItem(), new JSONObject().put("uuid", uuid).toMap())
                     .thenAccept(response -> {
-                        AuctionItem item = AuctionItem.fromDocument(Document.parse(response.getString("item")));
+                        AuctionItem item = (AuctionItem) response.get("item");
                         synchronized (auctionItems) {
                             auctionItems.add(item);
                         }
@@ -121,7 +123,7 @@ public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
             return;

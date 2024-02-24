@@ -4,7 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import net.swofty.service.generic.ProtocolSpecification;
+import net.swofty.service.protocol.ProtocolSpecification;
 import org.json.JSONObject;
 
 import java.util.*;

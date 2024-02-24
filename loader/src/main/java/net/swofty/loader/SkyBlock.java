@@ -12,10 +12,11 @@ import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
-import net.swofty.service.generic.ProtocolSpecification;
+import net.swofty.service.protocol.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.redis.RedisHasIslandLoaded;
 import net.swofty.types.generic.redis.RedisPing;
 import net.swofty.types.generic.redis.RedisRefreshCoopData;
@@ -86,8 +87,7 @@ public class SkyBlock {
                 "proxy-online",
                 "server-initialized",
                 "server-name",
-                "player-handler",
-                "service-ping"
+                "player-handler"
         ));
         Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
         Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
@@ -112,7 +112,7 @@ public class SkyBlock {
          * Ensure all services are running
          */
         typeLoader.getRequiredServices().forEach(serviceType -> {
-            new ProxyService(serviceType).isOnline().thenAccept(online -> {
+            new ProxyService(serviceType).isOnline(new ProtocolPingSpecification()).thenAccept(online -> {
                 if (!online) {
                     Logger.error("Service " + serviceType.name() + " is not online!");
                 }

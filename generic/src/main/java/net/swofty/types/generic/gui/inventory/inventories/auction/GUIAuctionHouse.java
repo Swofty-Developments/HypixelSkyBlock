@@ -15,13 +15,14 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
         super("Auction House", InventoryType.CHEST_4_ROW);
 
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join())
             fill(Material.BLACK_STAINED_GLASS_PANE, "§cAuction House is currently offline!");
     }
 
@@ -140,7 +141,7 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

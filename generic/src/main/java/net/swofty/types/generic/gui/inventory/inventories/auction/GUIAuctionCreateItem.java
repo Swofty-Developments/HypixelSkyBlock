@@ -23,13 +23,13 @@ import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private SkyBlockInventoryGUI previousGUI;
@@ -144,7 +144,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ProxyService auctionService = new ProxyService(ServiceType.AUCTION_HOUSE);
 
-                auctionService.isOnline().thenAccept((response) -> {
+                auctionService.isOnline(new ProtocolPingSpecification()).thenAccept((response) -> {
                     if (escrow.getItem() == null || !response)
                         return;
 
@@ -174,11 +174,13 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
 
                     player.sendMessage("§7Setting up the auction...");
 
-                    auctionService.callEndpoint(new ProtocolAddItem(), new JSONObject()
-                            .put("item", item.toDocument()).put("category", category)).thenAccept(response2 -> {
+                    Map<String, Object> requestMessage = new HashMap<>();
+                    requestMessage.put("category", category);
+                    requestMessage.put("item", item);
 
+                    auctionService.callEndpoint(new ProtocolAddItem(), requestMessage).thenAccept(response2 -> {
                         player.sendMessage("§eAuction started for " + itemName + "§e!");
-                        player.sendMessage("§8ID: " + response2.getString("uuid"));
+                        player.sendMessage("§8ID: " + response2.get("uuid"));
                     });
                 });
             }
@@ -301,7 +303,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

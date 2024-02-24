@@ -8,6 +8,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.network.packet.server.common.PingPacket;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItem;
@@ -21,6 +22,7 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionVi
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.bson.Document;
@@ -49,9 +51,10 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
     }
 
     public void updateItems() {
-        JSONObject response = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolFetchItem(),
-                new JSONObject().put("uuid", auctionID.toString())).join();
-        AuctionItem item = AuctionItem.fromDocument(Document.parse(response.getString("item")));
+        Map<String, Object> response = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
+                new ProtocolFetchItem(),
+                new JSONObject().put("uuid", auctionID.toString()).toMap()).join();
+        AuctionItem item = (AuctionItem) response.get("item");
         set(GUIClickableItem.getGoBackItem(49, previousGUI));
 
         set(new GUIItem(13) {
@@ -82,7 +85,7 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

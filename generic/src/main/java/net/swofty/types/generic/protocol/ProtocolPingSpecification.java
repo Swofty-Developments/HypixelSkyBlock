@@ -1,10 +1,10 @@
-package net.swofty.service.generic;
+package net.swofty.types.generic.protocol;
 
-import net.swofty.commons.ServiceType;
+import net.swofty.service.protocol.ProtocolSpecification;
 
 import java.util.List;
 
-public class PingProtocolSpecification extends ProtocolSpecification {
+public class ProtocolPingSpecification extends ProtocolSpecification {
     @Override
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return List.of();

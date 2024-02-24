@@ -1,7 +1,9 @@
 package net.swofty.types.generic.auction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -13,7 +15,9 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.json.JSONObject;
 
+import java.beans.Transient;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -28,7 +32,7 @@ public class AuctionItem {
 
     private List<Bid> bids;
 
-    private AuctionItem() {
+    public AuctionItem() {
         this.bids = new ArrayList<>();
     }
 
@@ -42,11 +46,14 @@ public class AuctionItem {
 
         this.bids = new ArrayList<>();
     }
-
+    @JsonIgnore
+    @Transient
     public List<String> getLore() {
         return getLore(null);
     }
 
+    @JsonIgnore
+    @Transient
     public List<String> getLore(SkyBlockPlayer player) {
         List<String> toReturn = new ArrayList<>();
 

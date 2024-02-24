@@ -1,10 +1,9 @@
-package net.swofty.service.generic;
+package net.swofty.service.protocol;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonParseException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import net.swofty.commons.ServiceType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,23 +18,56 @@ public abstract class ProtocolSpecification {
     public abstract String getEndpoint();
 
     @SneakyThrows
-    public JSONObject toJson(Map<String, ?> values) {
+    public JSONObject toJSON(Map<String, ?> values, boolean serviceProtocol) {
         JSONObject json = new JSONObject();
-        for (ProtocolEntries<?> entry : getServiceProtocolEntries()) {
+        for (ProtocolEntries<?> entry : serviceProtocol ? getServiceProtocolEntries() : getReturnedProtocolEntries()) {
             if (values.containsKey(entry.key)) {
                 Object value = values.get(entry.key);
                 if (entry.serializer != null) {
                     @SuppressWarnings("unchecked") // Suppress unchecked warning
                     Serializer<Object> serializer = (Serializer<Object>) entry.serializer;
                     value = serializer.serialize(value);
+                } else {
+                    // Serialize the value to a string
+                    value = new JacksonSerializer<>(Object.class).serialize(value);
                 }
                 // Put the value directly; JSONObject supports various types
                 json.put(entry.key, value);
             } else if (entry.required) {
+                System.out.println("Message: " + json.toString());
                 throw new IllegalArgumentException("Missing required field: " + entry.key);
             }
         }
         return json;
+    }
+
+    @SneakyThrows
+    public Map<String, Object> fromJSON(JSONObject json, boolean serviceProtocol) {
+        Map<String, Object> values = new HashMap<>();
+
+        for (ProtocolEntries<?> entry : serviceProtocol ? getServiceProtocolEntries() : getReturnedProtocolEntries()) {
+            if (!json.has(entry.key)) {
+                if (entry.required) {
+                    System.out.println("Message: " + json.toString());
+                    throw new IllegalArgumentException("Missing required field: " + entry.key);
+                }
+                // Optional fields are skipped if not present
+                continue;
+            }
+
+            Object value = json.get(entry.key);
+            if (entry.serializer != null) {
+                // Deserialize value using the provided serializer
+                value = entry.serializer.deserialize((String) value);
+            } else {
+                // Deserialize value using Jackson
+                value = new JacksonSerializer<>(Object.class).deserialize((String) value);
+            }
+
+            values.put(entry.key, value);
+        }
+
+        return values;
     }
 
     public List<String> getRequiredInboundFields() {
@@ -64,34 +96,5 @@ public abstract class ProtocolSpecification {
         public final String key;
         public final boolean required;
         public Serializer<T> serializer = null;
-    }
-
-    @SneakyThrows
-    public Map<String, Object> fromJson(JSONObject json) {
-        Map<String, Object> values = new HashMap<>();
-
-        for (ProtocolEntries<?> entry : getServiceProtocolEntries()) {
-            if (!json.has(entry.key)) {
-                if (entry.required) {
-                    throw new IllegalArgumentException("Missing required field: " + entry.key);
-                }
-                // Optional fields are skipped if not present
-                continue;
-            }
-
-            Object value = json.get(entry.key);
-            if (entry.serializer != null) {
-                try {
-                    // Deserialize value using the provided serializer
-                    value = entry.serializer.deserialize((String) value);
-                } catch (JSONException e) {
-                    throw new IllegalArgumentException("Error deserializing field: " + entry.key, e);
-                }
-            }
-
-            values.put(entry.key, value);
-        }
-
-        return values;
     }
 }

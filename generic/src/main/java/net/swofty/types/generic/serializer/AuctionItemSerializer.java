@@ -1,42 +1,46 @@
 package net.swofty.types.generic.serializer;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.SneakyThrows;
-import net.minestom.server.item.Material;
 import net.swofty.service.protocol.Serializer;
-import net.swofty.types.generic.data.datapoints.DatapointStorage;
+import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 
-public class StorageSerializer implements Serializer<DatapointStorage.PlayerStorage> {
-    private final ObjectMapper mapper;
+import java.io.IOException;
 
-    public StorageSerializer() {
+public class AuctionItemSerializer<T> implements Serializer<T> {
+    private final ObjectMapper mapper;
+    private final Class<T> clazz;
+
+    public AuctionItemSerializer(Class<T> clazz) {
         this.mapper = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        this.clazz = clazz;
 
         SimpleModule module = new SimpleModule();
         module.addSerializer(SkyBlockItem.class, new SkyBlockItemSerializer());
         module.addDeserializer(SkyBlockItem.class, new SkyBlockItemDeserializer());
-        module.addSerializer(Material.class, new MaterialSerializer());
-        module.addDeserializer(Material.class, new MaterialDeserializer());
         mapper.registerModule(module);
     }
 
     @SneakyThrows
     @Override
-    public String serialize(DatapointStorage.PlayerStorage value) {
+    public String serialize(T value) {
         return mapper.writeValueAsString(value);
     }
 
     @SneakyThrows
     @Override
-    public DatapointStorage.PlayerStorage deserialize(String json) {
-        return mapper.readValue(json, DatapointStorage.PlayerStorage.class);
+    public T deserialize(String json) {
+        return mapper.readValue(json, clazz);
     }
 
     @Override
-    public DatapointStorage.PlayerStorage clone(DatapointStorage.PlayerStorage value) {
+    public T clone(T value) {
         return value;
     }
 }
