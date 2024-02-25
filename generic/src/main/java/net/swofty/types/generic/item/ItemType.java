@@ -10,6 +10,7 @@ import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
+import net.swofty.types.generic.item.items.farming.FarmingOrb;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
@@ -70,6 +71,7 @@ public enum ItemType {
     NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
     CACTUS(Material.CACTUS, Rarity.COMMON),
+    FARMING_ORB(Material.PLAYER_HEAD, Rarity.SPECIAL, FarmingOrb.class),
 
     /**
      * Armor Sets

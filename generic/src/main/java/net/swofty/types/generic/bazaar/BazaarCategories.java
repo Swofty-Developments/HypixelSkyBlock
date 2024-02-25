@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.bazaar.BazaarInitializationRequest;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.*;
 
@@ -34,6 +35,11 @@ public enum BazaarCategories {
         this.glassItem = glassItem;
         this.color = color;
         this.items = Set.of();
+    }
+
+    @Override
+    public String toString() {
+        return StringUtility.toNormalCase(name());
     }
 
     public static BazaarInitializationRequest getInitializationRequest() {

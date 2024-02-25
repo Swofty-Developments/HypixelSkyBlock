@@ -259,6 +259,7 @@ public class DataHandler {
         }, (player, datapoint) -> {
             player.setExp((Float) datapoint.getValue());
         }, (player) -> new DatapointFloat("experience", player.getExp())),
+        BAZAAR_ORDERS("bazaar_orders", false, false, false, DatapointStringList.class, new DatapointStringList("bazaar_orders")),
         LEVELS("levels", false, false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setLevel((Integer) datapoint.getValue());

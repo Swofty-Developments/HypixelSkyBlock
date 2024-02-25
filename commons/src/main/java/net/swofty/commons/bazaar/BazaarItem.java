@@ -17,13 +17,13 @@ import java.util.UUID;
 @Setter
 public class BazaarItem {
     private final String name;
-    private Map<UUID, Double> buyOrders;
-    private Map<UUID, Double> sellOrders;
+    private Map<UUID, Map.Entry<Double, Double>> buyOrders;
+    private Map<UUID, Map.Entry<Double, Double>> sellOrders;
 
     @JsonCreator
     public BazaarItem(@JsonProperty("name") String name,
-                      @JsonProperty("buyOrders") Map<UUID, Double> buyOrders,
-                      @JsonProperty("sellOrders") Map<UUID, Double> sellOrders) {
+                      @JsonProperty("buyOrders") Map<UUID, Map.Entry<Double, Double>> buyOrders,
+                      @JsonProperty("sellOrders") Map<UUID, Map.Entry<Double, Double>> sellOrders) {
         this.name = name;
         this.buyOrders = buyOrders;
         this.sellOrders = sellOrders;
@@ -56,26 +56,26 @@ public class BazaarItem {
 
     public static BazaarItem fromDocument(Document document) {
         String name = document.getString("_id");
-        Map<UUID, Double> buyOrders = (Map<UUID, Double>) document.get("buyOrders");
-        Map<UUID, Double> sellOrders = (Map<UUID, Double>) document.get("sellOrders");
+        Map<UUID, Map.Entry<Double, Double>> buyOrders = (Map<UUID, Map.Entry<Double, Double>>) document.get("buyOrders");
+        Map<UUID, Map.Entry<Double, Double>> sellOrders = (Map<UUID, Map.Entry<Double, Double>>) document.get("sellOrders");
         return new BazaarItem(name, buyOrders, sellOrders);
     }
 
-    public record BazaarStatistics(Map<UUID, Double> orders) {
+    public record BazaarStatistics(Map<UUID, Map.Entry<Double, Double>> orders) {
         public double getTotalAmount() {
-            return orders.values().stream().mapToDouble(Double::doubleValue).sum();
+            return orders.values().stream().mapToDouble(Map.Entry::getKey).sum();
         }
 
         public double getMeanOrder() {
-            return orders.values().stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+            return orders.values().stream().mapToDouble(Map.Entry::getValue).average().orElse(0.0);
         }
 
         public double getLowestOrder() {
-            return orders.values().stream().min(Double::compareTo).orElse(0.0);
+            return orders.values().stream().mapToDouble(Map.Entry::getValue).min().orElse(0.0);
         }
 
         public double getHighestOrder() {
-            return orders.values().stream().max(Double::compareTo).orElse(0.0);
+            return orders.values().stream().mapToDouble(Map.Entry::getValue).max().orElse(0.0);
         }
     }
 }

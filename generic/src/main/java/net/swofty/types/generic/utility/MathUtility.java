@@ -3,6 +3,8 @@ package net.swofty.types.generic.utility;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.instance.Instance;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.timer.TaskSchedule;
 
@@ -33,6 +35,23 @@ public class MathUtility {
 
     public static void delay(Runnable runnable, int ticks) {
         MinecraftServer.getSchedulerManager().scheduleTask(runnable, TaskSchedule.tick(ticks), TaskSchedule.stop());
+    }
+
+    public static List<Pos> getNearbyBlocks(Instance instance, Pos pos, int range, Block block) {
+        List<Pos> blocks = new ArrayList<>();
+        for (int x = pos.blockX() - range; x <= pos.blockX() + range; x++) {
+            for (int y = pos.blockY() - range; y <= pos.blockY() + range; y++) {
+                for (int z = pos.blockZ() - range; z <= pos.blockZ() + range; z++) {
+                    if (pos.distance(new Pos(x, y, z)) <= range) {
+                        Block blockAt = instance.getBlock(x, y, z);
+                        if (blockAt == block) {
+                            blocks.add(new Pos(x, y, z));
+                        }
+                    }
+                }
+            }
+        }
+        return blocks;
     }
 
     public static List<Pos> getCircleAroundPos(Pos pos, double radius, int steps) {

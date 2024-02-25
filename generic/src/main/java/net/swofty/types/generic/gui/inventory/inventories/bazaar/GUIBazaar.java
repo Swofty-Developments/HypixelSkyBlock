@@ -150,7 +150,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§e" + itemSet.displayName,
+                        return ItemStackCreator.getStack(category.getColor() + itemSet.displayName,
                                 itemSet.displayMaterial.material, 1, lore);
                     }
                 });

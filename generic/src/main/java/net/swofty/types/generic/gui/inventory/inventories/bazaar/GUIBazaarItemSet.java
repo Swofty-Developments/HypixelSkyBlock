@@ -108,6 +108,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                         lore.add("§8" + StringUtility.shortenNumber(item.getSellStatistics().getHighestOrder())
                                 + " in " + item.getSellOrders().size() + " offers");
 
+                        lore.add(" ");
                         lore.add("§7Sell price: §6" +
                                 new DecimalFormat("#,###").format(item.getBuyStatistics().getHighestOrder())
                                 + " coins");

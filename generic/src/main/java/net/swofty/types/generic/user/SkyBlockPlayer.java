@@ -50,7 +50,9 @@ import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -145,6 +147,22 @@ public class SkyBlockPlayer extends Player {
                 .map(SkyBlockItem::new)
                 .filter(item -> item.getGenericInstance() instanceof CustomSkyBlockItem)
                 .toArray(SkyBlockItem[]::new);
+    }
+
+    public Map<Integer, Integer> getAllOfTypeInInventory(ItemType type) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.getAttributeHandler().getItemTypeAsType() == null) continue;
+
+            if (item.getAttributeHandler().getItemTypeAsType() == type) {
+                map.put(i, stack.amount());
+            }
+        }
+
+        return map;
     }
 
     public boolean isCoop() {
