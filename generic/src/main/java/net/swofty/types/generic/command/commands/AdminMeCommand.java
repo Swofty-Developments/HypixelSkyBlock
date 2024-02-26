@@ -7,7 +7,11 @@ import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "forceadmin", description = "Literally just gives me admin", usage = "/adminme", permission = Rank.DEFAULT, allowsConsole = false)
+@CommandParameters(aliases = "forceadmin",
+        description = "Literally just gives me admin",
+        usage = "/adminme",
+        permission = Rank.DEFAULT,
+        allowsConsole = false)
 public class AdminMeCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {

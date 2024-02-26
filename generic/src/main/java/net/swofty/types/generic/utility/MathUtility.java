@@ -43,9 +43,25 @@ public class MathUtility {
             for (int y = pos.blockY() - range; y <= pos.blockY() + range; y++) {
                 for (int z = pos.blockZ() - range; z <= pos.blockZ() + range; z++) {
                     if (pos.distance(new Pos(x, y, z)) <= range) {
-                        Block blockAt = instance.getBlock(x, y, z);
-                        if (blockAt == block) {
-                            blocks.add(new Pos(x, y, z));
+                        int[] relativePositions = {-1, 0, 1};
+                        for (int dx : relativePositions) {
+                            for (int dz : relativePositions) {
+                                int chunkX = (x / 16) + dx;
+                                int chunkZ = (z / 16) + dz;
+                                if (!instance.isChunkLoaded(chunkX, chunkZ)) {
+                                    instance.loadChunk(chunkX, chunkZ).join();
+                                }
+                            }
+                        }
+
+                        try {
+                            Block blockAt = instance.getBlock(x, y, z);
+                            if (blockAt == block) {
+                                blocks.add(new Pos(x, y, z));
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Threw an error for " + x + " " + y + " " + z);
+                            continue;
                         }
                     }
                 }

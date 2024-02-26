@@ -119,7 +119,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<ServiceType> getRequiredServices() {
-        return List.of(ServiceType.AUCTION_HOUSE);
+        return List.of(ServiceType.AUCTION_HOUSE, ServiceType.BAZAAR);
     }
 
     @Override

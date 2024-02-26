@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
@@ -30,6 +31,7 @@ import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.*;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.entity.ServerOrbImpl;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.entity.mob.MobRegistry;
@@ -40,8 +42,10 @@ import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -106,6 +110,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         AttributeDatabase.connect(Configuration.get("mongodb"));
         UserDatabase.connect(Configuration.get("mongodb"));
         CoopDatabase.connect(Configuration.get("mongodb"));
+        OrbDatabase.connect(Configuration.get("mongodb"));
 
         /**
          * Register commands
@@ -247,6 +252,25 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         if (mainInstance != null) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
+        }
+
+        /**
+         * Spawn server orbs
+         */
+        if (SkyBlockConst.getInstanceContainer() != null) {
+            Thread.startVirtualThread(() -> {
+                OrbDatabase.getAllOrbs().forEach(orb -> {
+                    ItemType type = orb.itemType;
+                    try {
+                        ServerOrb asOrb = (ServerOrb) type.clazz.newInstance();
+                        ServerOrbImpl orbImpl = new ServerOrbImpl(asOrb.getOrbSpawnMaterial(), orb.url);
+                        orbImpl.setInstance(SkyBlockConst.getInstanceContainer(),
+                                new Pos(orb.position.x(), orb.position.y(), orb.position.z()));
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
         }
 
         /**

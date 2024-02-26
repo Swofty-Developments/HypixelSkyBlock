@@ -1,5 +1,6 @@
 package net.swofty.types.generic.entity;
 
+import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -27,8 +28,10 @@ public class ServerOrbImpl extends LivingEntity {
     private Task upAndDownTask;
     private Task particleTask;
     private Task cropsTask;
+    @Getter
+    private float yLevel = 0f;
 
-    public ServerOrbImpl(Material toPlace, @NotNull String url) {
+    public ServerOrbImpl(@NotNull Material toPlace, @NotNull String url) {
         super(EntityType.ARMOR_STAND);
 
         this.toPlace = toPlace;
@@ -41,7 +44,7 @@ public class ServerOrbImpl extends LivingEntity {
 
         List<Pos> farmland = MathUtility.getNearbyBlocks(getInstance(),
                 getPosition(),
-                11,
+                18,
                 Material.FARMLAND.block());
 
         ArmorStandMeta meta = (ArmorStandMeta) getEntityMeta();
@@ -58,9 +61,9 @@ public class ServerOrbImpl extends LivingEntity {
                 upAndDownTask.cancel();
                 return;
             }
-            Vec velClone = getVelocity();
-            setVelocity(new Vec(0, velClone.y() < 0D ? 0.1 : -0.1, 0));
-        }, TaskSchedule.tick(15), TaskSchedule.tick(15));
+            yLevel = (getYLevel() < 0D) ? 0.1f : -0.1f;
+            teleport(getPosition().add(0, yLevel, 0));
+        }, TaskSchedule.tick(15), TaskSchedule.tick(8));
         particleTask = MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (isDead()) {
                 particleTask.cancel();
@@ -87,9 +90,10 @@ public class ServerOrbImpl extends LivingEntity {
             Block block = MathUtility.getRandomElement(new ArrayList<>(possible.keySet()));
             if (block == null) return;
 
-            instance.setBlock(possible.get(block), toPlace.block());
+            instance.setBlock(possible.get(block).add(0, 1, 0),
+                    toPlace.block().withProperty("age", "7"));
 
-            Pos blockLocation = possible.get(block);
+            Pos blockLocation = possible.get(block).add(0, 1, 0);
             Pos crystalLocation = getPosition().add(0, 1, 0);
             Vec direction = blockLocation.asVec().sub(crystalLocation.asVec());
 
