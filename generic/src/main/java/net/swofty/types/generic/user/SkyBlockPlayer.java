@@ -75,11 +75,14 @@ public class SkyBlockPlayer extends Player {
     private SkyBlockIsland skyBlockIsland;
     @Setter
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
+    @Getter
+    private PlayerHookManager hookManager;
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
 
         joined = System.currentTimeMillis();
+        hookManager = new PlayerHookManager(this, new HashMap<>());
     }
 
     public DataHandler getDataHandler() {

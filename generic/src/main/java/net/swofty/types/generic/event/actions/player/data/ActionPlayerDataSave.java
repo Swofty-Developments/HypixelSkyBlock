@@ -9,6 +9,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
+import net.swofty.types.generic.user.PlayerHookManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -35,6 +36,8 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
 
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
         UUID uuid = player.getUuid();
+
+        player.getHookManager().callAndClearHooks(PlayerHookManager.Hooks.BEFORE_DATA_SAVE);
 
         player.getDataHandler().runOnSave(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
@@ -73,6 +76,7 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
             });
         });
 
+        player.getHookManager().callAndClearHooks(PlayerHookManager.Hooks.AFTER_DATA_SAVE);
         DataHandler.userCache.remove(uuid);
     }
 }

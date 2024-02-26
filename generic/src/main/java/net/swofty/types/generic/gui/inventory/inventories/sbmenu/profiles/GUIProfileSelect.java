@@ -19,6 +19,7 @@ import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.user.PlayerHookManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
 
@@ -46,12 +47,12 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                 toSet.setProfiles(profiles.getProfiles());
                 toSet.setCurrentlySelected(profileUuid);
 
-                player.sendTo(ServerType.ISLAND, true);
-
-                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+                player.getHookManager().registerHook(PlayerHookManager.Hooks.AFTER_DATA_SAVE, (nil) -> {
                     UserDatabase database = new UserDatabase(player.getUuid());
                     database.saveProfiles(toSet);
-                }, TaskSchedule.tick(2), TaskSchedule.stop());
+                });
+
+                player.sendTo(ServerType.ISLAND, true);
             }
 
             @SneakyThrows
