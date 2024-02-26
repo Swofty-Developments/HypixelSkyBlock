@@ -64,7 +64,7 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-json</artifactId>
-            <version>4.15.0</version>
+            <version>4.16.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
