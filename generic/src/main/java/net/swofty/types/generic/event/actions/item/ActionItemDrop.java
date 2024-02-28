@@ -8,6 +8,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
@@ -29,6 +30,11 @@ public class ActionItemDrop extends SkyBlockEvent {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (new SkyBlockItem(event.getItemStack()).getAttributeHandler().getItemType().toLowerCase().contains("menu")) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             event.setCancelled(true);
             return;
         }

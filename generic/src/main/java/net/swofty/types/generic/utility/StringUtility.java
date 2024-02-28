@@ -15,51 +15,53 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtility {
-    public static char[] ALPHABET = {
+    public static final char[] ALPHABET = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###");
 
     public static String formatTimeAsAgo(long millis) {
         long timeDifference = System.currentTimeMillis() - millis;
-
-        if (timeDifference < 60000) {
-            return "Just now";
-        } else if (timeDifference < 3600000) {
-            return timeDifference / 60000 + "m ago";
-        } else if (timeDifference < 86400000) {
-            return timeDifference / 3600000 + "h ago";
-        } else {
-            return timeDifference / 86400000 + "d ago";
+        // Simplified the calculation logic by abstracting repetitive calculations
+        long[] timeUnits = {TimeUnit.DAYS.toMillis(1), TimeUnit.HOURS.toMillis(1), TimeUnit.MINUTES.toMillis(1)};
+        String[] timeLabels = {"d ago", "h ago", "m ago"};
+        for (int i = 0; i < timeUnits.length; i++) {
+            if (timeDifference >= timeUnits[i]) {
+                return (timeDifference / timeUnits[i]) + timeLabels[i];
+            }
         }
+        return "Just now";
     }
 
     public static String shortenNumber(double number) {
-        if (number < 1000) return String.valueOf(Math.round(number));
-        if (number < 1000000) return String.format("%.1fK", number / 1000);
-        if (number < 1000000000) return String.format("%.1fM", number / 1000000);
-        return String.format("%.1fb", number / 1000000000);
+        if (number < 1000) return String.valueOf((int) number);
+        String[] units = new String[]{"K", "M", "B"};
+        for (int i = units.length - 1; i >= 0; i--) {
+            double unitValue = Math.pow(1000, i + 1);
+            if (number >= unitValue) {
+                return String.format("%.1f%s", number / unitValue, units[i]);
+            }
+        }
+        return String.valueOf(number); // Fallback, should not be reached
     }
 
     public static String formatTime(long millis) {
-        // Get in format wd xh ym zs
-        long days = TimeUnit.MILLISECONDS.toDays(millis);
-        millis -= TimeUnit.DAYS.toMillis(days);
-        long hours = TimeUnit.MILLISECONDS.toHours(millis);
-        millis -= TimeUnit.HOURS.toMillis(hours);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
-        millis -= TimeUnit.MINUTES.toMillis(minutes);
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
-
         StringBuilder sb = new StringBuilder();
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis % TimeUnit.DAYS.toMillis(1));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis % TimeUnit.HOURS.toMillis(1));
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis % TimeUnit.MINUTES.toMillis(1));
+
+        // Eliminated redundant checks by concatenating non-zero values directly
         if (days > 0) sb.append(days).append("d ");
         if (hours > 0) sb.append(hours).append("h ");
         if (minutes > 0) sb.append(minutes).append("m ");
-        if (seconds > 0) sb.append(seconds).append("s");
-        return sb.toString();
+        if (seconds > 0 || sb.isEmpty()) sb.append(seconds).append("s");
+        return sb.toString().trim();
     }
 
     public static String commaify(int i) {
-        return NumberFormat.getInstance().format(i);
+        return DECIMAL_FORMAT.format(i);
     }
 
     public static Material getMaterialFromBlock(Block block) {
@@ -67,33 +69,22 @@ public class StringUtility {
     }
 
     public static String profileAge(long tbf) {
-        if (tbf > 86400000) return commaify(tbf / 86400000) + "d ";
-        if (tbf > 3600000) return commaify(tbf / 3600000) + "h ";
-        if (tbf > 60000) return commaify(tbf / 60000) + "m ";
-        if (tbf > 1000) return commaify(tbf / 1000) + "s";
-        if (tbf < 1000) return commaify(tbf) + "ms";
-        return "";
+        return formatTimeAsAgo(System.currentTimeMillis() - tbf);
     }
 
-    public static String getAsRomanNumeral(int num) {
-        if (num == 0)
-            return "";
 
-        StringBuilder sb = new StringBuilder();
-        int times;
-        String[] romans = new String[]{"I", "IV", "V", "IX", "X", "XL", "L",
-                "XC", "C", "CD", "D", "CM", "M"};
-        int[] ints = new int[]{1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500,
-                900, 1000};
-        for (int i = ints.length - 1; i >= 0; i--) {
-            times = num / ints[i];
-            num %= ints[i];
-            while (times > 0) {
-                sb.append(romans[i]);
-                times--;
+    public static String getAsRomanNumeral(int num) {
+        if (num == 0) return "";
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] symbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder roman = new StringBuilder();
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                num -= values[i];
+                roman.append(symbols[i]);
             }
         }
-        return sb.toString();
+        return roman.toString();
     }
 
     public static String getTextFromComponent(Component component) {
@@ -103,62 +94,33 @@ public class StringUtility {
     }
 
     public static String getAuctionSetupFormattedTime(long millis) {
-        String dur;
-        if (millis >= 8.64E7) {
-            long days = Math.round(millis / 8.64E7);
-            dur = days + " Day";
-            if (days != 1) dur += "s";
-        } else if (millis >= 3600000) {
-            long hours = Math.round(millis / 3600000.0);
-            dur = hours + " Hour";
-            if (hours != 1) dur += "s";
-        } else {
-            long minutes = Math.round(millis / 60000.0);
-            dur = minutes + " Minute";
-            if (minutes != 1) dur += "s";
-        }
-        return dur;
+        return formatTime(millis).replaceAll(" ", "")
+                .replaceAll("s$", "");
     }
 
     public static String toNormalCase(String string) {
-        if (Acronym.isAcronym(string)) return string.toUpperCase();
-        string = string.replaceAll("_", " ");
-        String[] spl = string.split(" ");
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < spl.length; i++) {
-            String s = spl[i];
-            if (s.isEmpty()) {
-                continue;
-            }
-            if (s.length() == 1) {
-                s = s.toUpperCase();
-            } else {
-                s = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-            }
-            // Append the processed string to the StringBuilder
-            // Only add a space if it's not the first word
-            if (!sb.isEmpty()) {
-                sb.append(" ");
-            }
-            sb.append(s);
-        }
-        return sb.toString();
+        return Pattern.compile("(_+)|\\b(.)", Pattern.DOTALL)
+                .matcher(string)
+                .replaceAll(match -> match.group(1) != null ? " " : match.group(2).toUpperCase());
     }
 
     public static String commaify(double d) {
-        if (d < 1) {
-            return "0";
-        }
-        return new DecimalFormat("#,###.0").format(d);
+        return d < 1 ? "0" : DECIMAL_FORMAT.format(d);
     }
 
     public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
         List<String> result = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\G" + separator + "*(.+," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(string);
-        while (matcher.find())
-            result.add(matcher.group(1));
+        String[] words = string.split("\\s+");
+        StringBuilder currentLine = new StringBuilder();
+        for (String word : words) {
+            if (currentLine.length() + word.length() > splitLength) {
+                result.add(currentLine.toString());
+                currentLine.setLength(0);
+            }
+            if (!currentLine.isEmpty()) currentLine.append(separator);
+            currentLine.append(word);
+        }
+        if (!currentLine.isEmpty()) result.add(currentLine.toString());
         return result;
     }
 
@@ -167,28 +129,26 @@ public class StringUtility {
     }
 
     public static String zeroed(long l) {
-        return l > 9 ? "" + l : "0" + l;
+        return String.format("%02d", l);
     }
 
     public static String commaify(long l) {
-        return NumberFormat.getInstance().format(l);
+        return DECIMAL_FORMAT.format(l);
     }
 
     public static String limitStringLength(String s, int charLimit) {
-        if (s.length() <= charLimit) return s;
-        return s.substring(0, charLimit - 1);
+        return s.length() <= charLimit ? s : s.substring(0, charLimit);
     }
 
     public static String ntify(int i) {
-        if (i == 11 || i == 12 || i == 13)
-            return i + "th";
-        String s = String.valueOf(i);
-        char last = s.charAt(s.length() - 1);
-        return switch (last) {
-            case '1' -> i + "st";
-            case '2' -> i + "nd";
-            case '3' -> i + "rd";
-            default -> i + "th";
+        return switch (i % 100) {
+            case 11, 12, 13 -> i + "th";
+            default -> switch (i % 10) {
+                case 1 -> i + "st";
+                case 2 -> i + "nd";
+                case 3 -> i + "rd";
+                default -> i + "th";
+            };
         };
     }
 }

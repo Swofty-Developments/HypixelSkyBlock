@@ -18,6 +18,7 @@ import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.user.PlayerHookManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
@@ -65,17 +66,18 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
                 handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
                 Document document = handler.toDocument(profileId);
 
+                profiles.addProfile(profileId);
+                toSet.addProfile(profileId);
                 ProfilesDatabase.collection.insertOne(document);
 
-                player.sendTo(ServerType.ISLAND, true);
-
-                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    toSet.addProfile(profileId);
+                player.getHookManager().registerHook(PlayerHookManager.Hooks.AFTER_DATA_SAVE, (nil) -> {
                     toSet.setCurrentlySelected(profileId);
 
                     UserDatabase database = new UserDatabase(player.getUuid());
                     database.saveProfiles(toSet);
-                }, TaskSchedule.tick(2), TaskSchedule.stop());
+                });
+
+                player.sendTo(ServerType.ISLAND, true);
             }
         });
 

@@ -9,8 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.bson.Document;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
@@ -62,8 +63,22 @@ public class BazaarItem {
     }
 
     public record BazaarStatistics(Map<UUID, Map.Entry<Double, Double>> orders) {
+        public record OrderDetail(double totalCoins, double totalItems, int numberOfOrders) {}
+
         public double getTotalAmount() {
             return orders.values().stream().mapToDouble(Map.Entry::getKey).sum();
+        }
+
+        public List<OrderDetail> getTop(int amount, boolean lowest) {
+            // Aggregates orders to provide a detailed view of top 'amount' orders by total price
+            return orders.values().stream()
+                    .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summarizingDouble(Map.Entry::getValue)))
+                    .entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(lowest ? Comparator.comparingDouble(DoubleSummaryStatistics::getMin)
+                            : Comparator.comparingDouble(DoubleSummaryStatistics::getMax)))
+                    .limit(amount)
+                    .map(entry -> new OrderDetail(entry.getKey(), entry.getValue().getSum(), (int) entry.getValue().getCount()))
+                    .collect(Collectors.toList());
         }
 
         public double getMeanOrder() {

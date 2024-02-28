@@ -12,6 +12,7 @@ import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarPriceSelection;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
@@ -109,7 +110,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     lore.add(" ");
                     lore.add("§eClick to pick amount!");
                 } else {
-                    lore.add("§cNo buy orders available.");
+                    lore.add("§cNo sell orders available.");
                     lore.add(" ");
                     lore.add("§8Cannot buy instantly");
                 }
@@ -149,7 +150,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                         lore.add(" ");
                         lore.add("§eClick to sell!");
                     } else {
-                        lore.add("§cNo sell orders available.");
+                        lore.add("§cNo buy orders available.");
                         lore.add(" ");
                         lore.add("§8Cannot sell instantly");
                     }
@@ -157,6 +158,49 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                 return ItemStackCreator.getStack("§6Sell Instantly", Material.HOPPER,
                         1, lore);
+            }
+        });
+
+        set(new GUIClickableItem(16) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                if (itemInInventory.isEmpty()) {
+                    player.sendMessage("§cYou don't have any §e" + itemType.getDisplayName() + "§c in your inventory!");
+                    return;
+                }
+
+                new GUIBazaarPriceSelection(GUIBazaarItem.this, itemType).open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>();
+                lore.add("§8" + itemType.getDisplayName());
+                lore.add(" ");
+                lore.add("§6Top Offers:");
+
+                if (item.getSellOrders().isEmpty()) {
+                    lore.add("§cNo sell orders available.");
+                    lore.add(" ");
+                    lore.add("§8Cannot buy instantly");
+                } else {
+                    item.getSellStatistics().getTop(7, true).forEach((order) -> {
+                        lore.add("§7- §6" + order.totalCoins() + " coins §7each | §a" + order.totalItems() + "§7x in §f" + order.numberOfOrders() + "§7 orders");
+                    });
+                    lore.add(" ");
+
+                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                    if (!itemInInventory.isEmpty()) {
+                        lore.add("§7You have §e" + itemInInventory.size() + "§7x in your inventory.");
+                        lore.add("§eClick to setup Sell Order");
+                    } else {
+                        lore.add("§8None in inventory!");
+                    }
+                }
+
+                return ItemStackCreator.getStack("§6Create Sell Offer",
+                        Material.PAPER, 1, lore);
             }
         });
 
