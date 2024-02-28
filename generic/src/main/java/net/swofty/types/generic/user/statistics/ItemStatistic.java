@@ -14,6 +14,10 @@ public enum ItemStatistic {
     STRENGTH("Strength", true, "§c", "+", "", "❁"),
     INTELLIGENCE("Intelligence", false, "§b", "+", "", "✎"),
     MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
+    CRIT_CHANCE("Crit Chance", true, null, "+", "%", "☠"),
+    CRIT_DAMAGE("Crit Damage", true, null, "+", "%", "☣"),
+    FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔")
     ;
 
     private final String displayName;
@@ -31,4 +35,5 @@ public enum ItemStatistic {
         this.suffix = suffix;
         this.symbol = symbol;
     }
+
 }
