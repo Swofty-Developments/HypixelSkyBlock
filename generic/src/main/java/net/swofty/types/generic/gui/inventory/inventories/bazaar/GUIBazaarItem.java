@@ -170,7 +170,10 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     return;
                 }
 
-                new GUIBazaarPriceSelection(GUIBazaarItem.this, itemType).open(player);
+                new GUIBazaarPriceSelection(GUIBazaarItem.this,
+                        item.getSellStatistics().getLowestOrder(),
+                        item.getSellStatistics().getHighestOrder(),
+                        itemType, true, true).open(player);
             }
 
             @Override
