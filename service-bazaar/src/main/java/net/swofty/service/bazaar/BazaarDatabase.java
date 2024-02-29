@@ -41,6 +41,10 @@ public record BazaarDatabase(String bazaarItemKey) implements MongoDB {
         return doc.get(key);
     }
 
+    public void setDocument(Document document) {
+        collection.insertOne(document);
+    }
+
     public List<Document> getAll() {
         FindIterable<Document> results = collection.find();
         List<Document> list = new ArrayList<>();

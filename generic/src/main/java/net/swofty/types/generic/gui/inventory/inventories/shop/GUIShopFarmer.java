@@ -13,11 +13,6 @@ public class GUIShopFarmer extends SkyBlockShopGUI {
     }
 
     @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
     public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
 
     }

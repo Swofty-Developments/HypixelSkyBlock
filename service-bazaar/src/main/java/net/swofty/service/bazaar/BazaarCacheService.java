@@ -26,6 +26,12 @@ public class BazaarCacheService {
         return document;
     }
 
+    public void setItem(String itemKey, Document document) {
+        cache.put(itemKey, document);
+
+        new BazaarDatabase(itemKey).setDocument(document);
+    }
+
     public void invalidateCache(String itemKey) {
         cache.invalidate(itemKey);
     }

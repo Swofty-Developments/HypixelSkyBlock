@@ -44,6 +44,11 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
     }
 
     @Override
+    public boolean allowHotkeying() {
+        return false;
+    }
+
+    @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
 
