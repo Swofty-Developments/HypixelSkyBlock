@@ -62,6 +62,6 @@ public class MinionCoal extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.Coal);
+        return new MinionMineAction(Block.COAL_ORE);
     }
 }
