@@ -17,7 +17,7 @@ public enum ItemStatistic {
     CRIT_CHANCE("Crit Chance", true, null, "+", "%", "☠"),
     CRIT_DAMAGE("Crit Damage", true, null, "+", "%", "☣"),
     FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
-    BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
+    //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
     ;
 
     private final String displayName;
