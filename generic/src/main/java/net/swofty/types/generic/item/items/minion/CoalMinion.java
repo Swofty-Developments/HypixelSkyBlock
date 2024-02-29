@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class COALMinion implements CustomSkyBlockItem, Minion {
+public class CoalMinion implements CustomSkyBlockItem, Minion {
     @Override
     public MinionRegistry getMinionRegistry() {
         return MinionRegistry.COAL;
