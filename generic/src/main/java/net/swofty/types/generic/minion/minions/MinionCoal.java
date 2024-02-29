@@ -56,7 +56,7 @@ public class MinionCoal extends SkyBlockMinion {
     @Override
     public List<MinionExpectations> getExpectations() {
         return List.of(
-                new MinionExpectations(-1, Block.Coal, Block.AIR)
+                new MinionExpectations(-1, Block.COAL_ORE, Block.AIR)
         );
     }
 
