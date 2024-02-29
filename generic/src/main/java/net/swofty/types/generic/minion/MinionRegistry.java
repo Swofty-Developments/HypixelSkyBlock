@@ -2,7 +2,7 @@ package net.swofty.types.generic.minion;
 
 import lombok.Getter;
 import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.minion.minions.MinionCobblestone;
+import net.swofty.types.generic.minion.minions.*;
 import net.swofty.types.generic.utility.StringUtility;
 
 public enum MinionRegistry {
