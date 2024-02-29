@@ -30,8 +30,7 @@ public class SkyBlockDungeon {
         final List<int[]> doors = new ArrayList<>();
         final CountDownLatch latch = new CountDownLatch(4); // To wait for 4 threads
 
-        List<Thread> threads = new ArrayList<>();
-        threads.add(Thread.startVirtualThread(() -> {
+        Thread.startVirtualThread(() -> {
             try {
                 if (isConnected(x, y, x - 1, y)) {
                     synchronized (doors) {
@@ -41,8 +40,8 @@ public class SkyBlockDungeon {
             } finally {
                 latch.countDown();
             }
-        }));
-        threads.add(Thread.startVirtualThread(() -> {
+        });
+        Thread.startVirtualThread(() -> {
             try {
                 if (isConnected(x, y, x + 1, y)) {
                     synchronized (doors) {
@@ -52,8 +51,8 @@ public class SkyBlockDungeon {
             } finally {
                 latch.countDown();
             }
-        }));
-        threads.add(Thread.startVirtualThread(() -> {
+        });
+        Thread.startVirtualThread(() -> {
             try {
                 if (isConnected(x, y, x, y - 1)) {
                     synchronized (doors) {
@@ -63,8 +62,8 @@ public class SkyBlockDungeon {
             } finally {
                 latch.countDown();
             }
-        }));
-        threads.add(Thread.startVirtualThread(() -> {
+        });
+        Thread.startVirtualThread(() -> {
             try {
                 if (isConnected(x, y, x, y + 1)) {
                     synchronized (doors) {
@@ -74,7 +73,7 @@ public class SkyBlockDungeon {
             } finally {
                 latch.countDown();
             }
-        }));
+        });
 
         // Wait for all threads to finish
         try {

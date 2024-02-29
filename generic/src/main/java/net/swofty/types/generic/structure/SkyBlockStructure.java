@@ -105,7 +105,7 @@ public abstract class SkyBlockStructure {
         }
     }
 
-    enum CoordinateType {
+    public enum CoordinateType {
         X, Z
     }
 }

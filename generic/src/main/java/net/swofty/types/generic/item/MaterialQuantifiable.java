@@ -36,8 +36,8 @@ public class MaterialQuantifiable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof MaterialQuantifiable material)) return false;
-        return material.material == this.material && material.amount == this.amount;
+        if (!(o instanceof MaterialQuantifiable potentialMaterial)) return false;
+        return potentialMaterial.material == this.material && potentialMaterial.amount == this.amount;
     }
 
     public boolean matches(ItemType material) {

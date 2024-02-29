@@ -134,13 +134,12 @@ public class CoopCommand extends SkyBlockCommand {
                 player.sendMessage(Component.text("§eYou already have an outgoing co-op invite! §a§lCLICK TO VIEW!")
                         .hoverEvent(Component.text("§eClick here to view the invite"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
-                return true;
             } else {
                 player.sendMessage(Component.text("§cYou already have an incoming co-op invite! §a§lCLICK TO VIEW!")
                         .hoverEvent(Component.text("§eClick here to view the invite"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/coopcheck")));
-                return true;
             }
+            return true;
         }
         return false;
     }

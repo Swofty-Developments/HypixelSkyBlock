@@ -8,7 +8,7 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 
 @Getter
 public class HologramEntity extends Entity {
-    private String text = "";
+    private String text;
 
     public HologramEntity(String text) {
         super(EntityType.ARMOR_STAND);

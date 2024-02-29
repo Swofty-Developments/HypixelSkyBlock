@@ -4,39 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Start to fixing up ViaLoader implementation">
-      <change afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/ServiceType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proxy-api/src/main/java/net/swofty/proxyapi/ProxyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-auctionhouse/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-auctionhouse/src/main/java/net/swofty/service/auction/AuctionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-generic/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-generic/src/main/java/net/swofty/service/generic/ServiceInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-generic/src/main/java/net/swofty/service/generic/SkyBlockService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-generic/src/main/java/net/swofty/service/generic/redis/ServiceRedisManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Just adding util while in class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/SkyBlockGenericLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/SkyBlockGenericLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/SkyBlockTypeLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/SkyBlockTypeLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/data/ActionPlayerDataLoaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/data/ActionPlayerDataLoaded.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/packet/SkyBlockPacketClientListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/packet/SkyBlockPacketClientListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/packet/SkyBlockPacketServerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/packet/SkyBlockPacketServerListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/user/SkyBlockPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/user/SkyBlockPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proxy-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/proxy-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proxy-api/src/main/java/net/swofty/proxyapi/ProxyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/proxy-api/src/main/java/net/swofty/proxyapi/ProxyPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proxy-api/src/main/java/net/swofty/proxyapi/redis/RedisMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/proxy-api/src/main/java/net/swofty/proxyapi/redis/RedisMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type-island/src/main/java/net/swofty/type/island/TypeIslandLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/type-island/src/main/java/net/swofty/type/island/TypeIslandLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type-village/src/main/java/net/swofty/type/village/TypeVillageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/type-village/src/main/java/net/swofty/type/village/TypeVillageLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/velocity-extension/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/SkyBlockVLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/SkyBlockVelocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/SkyBlockVelocity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/gamemanager/TransferHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/gamemanager/TransferHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PacketDecodeHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PacketEncodeHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PacketSetup.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PlayerChannelHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PlayerChannelHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/velocity-extension/src/main/java/net/swofty/velocity/packet/PlayerChannelInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/command/commands/CoopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/command/commands/CoopCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +74,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -115,43 +85,60 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AuctionService.executor": "Run",
-    "Application.SkyBlock (Island).executor": "Run",
-    "Application.SkyBlock (Village).executor": "Run",
-    "Batch.Move Proxy.executor": "Run",
-    "JAR Application.Run Passthrough.executor": "Run",
-    "JAR Application.Run Proxy.executor": "Run",
-    "Maven.Build Proxy.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk": "corretto-1.8",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Swofty/IdeaProjects/HypixelSkyBlockFixed/configuration/NanoLimbo-1.7-all.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.updates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AuctionService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SkyBlock (Island).executor&quot;: &quot;Run&quot;,
+    &quot;Application.SkyBlock (Village).executor&quot;: &quot;Run&quot;,
+    &quot;Batch.Move Proxy.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Run Passthrough.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Run Proxy.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Build Proxy.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: &quot;corretto-1.8&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockFixed/configuration/NanoLimbo-1.7-all.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockMinestom/src/main/java/net/swofty/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk": [
-      "17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8"
+  &quot;keyToStringList&quot;: {
+    &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
+      &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
     ]
   }
-}]]></component>
+}</component>
+  <component name="QodanaHighlightedReportService">
+    <option name="localRunNotPublishedPersistedInfo">
+      <LocalReportPersistedInfo>
+        <option name="path" value="C:\Users\admin\AppData\Local\Temp\qodana_output\qodana.sarif.json" />
+        <option name="reportGuid" value="f93e0930-cadf-4a6d-aa64-81094da7b2a9" />
+        <option name="reportName" value="HypixelSkyBlock/qodana/2024-03-01" />
+      </LocalReportPersistedInfo>
+    </option>
+  </component>
+  <component name="QodanaIsSelectedPersistenceService">
+    <option name="selectedOrLoading" value="true" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\admin\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="f93e0930-cadf-4a6d-aa64-81094da7b2a9" reportId="HypixelSkyBlock/qodana/2024-03-01" />
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\bungee" />
@@ -164,13 +151,26 @@
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\proxy\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SkyBlock (Village)">
+  <component name="RunManager" selected="Application.DungeonsTest">
     <configuration name="AuctionService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="net.swofty.service.auction.AuctionService" />
       <module name="service.auction" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="net.swofty.service.auction.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DungeonsTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.dungeons.DungeonsTest" />
+      <module name="dungeons" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.swofty.dungeons.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -247,7 +247,6 @@
                 <option value="net.swofty:velocity" />
               </list>
             </option>
-            <option name="multimoduleDir" />
             <option name="pomFileName" />
             <option name="profilesMap">
               <map />
@@ -265,15 +264,16 @@
     <list>
       <item itemvalue="Application.SkyBlock (Island)" />
       <item itemvalue="Application.SkyBlock (Village)" />
+      <item itemvalue="Application.DungeonsTest" />
       <item itemvalue="Application.AuctionService" />
       <item itemvalue="Application.SkyBlockPacker" />
-      <item itemvalue="Batch.Move Proxy" />
       <item itemvalue="JAR Application.Run Passthrough" />
       <item itemvalue="JAR Application.Run Proxy" />
       <item itemvalue="Maven.Build Proxy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DungeonsTest" />
         <item itemvalue="Application.AuctionService" />
         <item itemvalue="Application.SkyBlockPacker" />
       </list>
@@ -356,46 +356,18 @@
       <workItem from="1706490231759" duration="19260000" />
       <workItem from="1706573149213" duration="2038000" />
       <workItem from="1706577523973" duration="9670000" />
-    </task>
-    <task id="LOCAL-00046" summary="Added island support for coops">
-      <option name="closed" value="true" />
-      <created>1704080591085</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1704080591085</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Implemented /coopleave aswell as extra safety checks around profile selection">
-      <option name="closed" value="true" />
-      <created>1704081455951</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1704081455951</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Added GUIRecipeBook aswell as fixing cursor bugs">
-      <option name="closed" value="true" />
-      <created>1704115133225</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1704115133225</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Fixed cross-transfer fall damage">
-      <option name="closed" value="true" />
-      <created>1704115439576</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1704115439576</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Finished recipes and cleaned up bugs">
-      <option name="closed" value="true" />
-      <created>1704366973986</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1704366973987</updated>
+      <workItem from="1706826484226" duration="1592000" />
+      <workItem from="1706828102525" duration="1063000" />
+      <workItem from="1706837043235" duration="5833000" />
+      <workItem from="1707029064327" duration="4273000" />
+      <workItem from="1707355630376" duration="1921000" />
+      <workItem from="1707361313843" duration="9000" />
+      <workItem from="1707446872829" duration="3272000" />
+      <workItem from="1707706373396" duration="1814000" />
+      <workItem from="1708389444830" duration="847000" />
+      <workItem from="1709004888979" duration="745000" />
+      <workItem from="1709074171118" duration="7000" />
+      <workItem from="1709244841567" duration="1987000" />
     </task>
     <task id="LOCAL-00051" summary="Added Jerry and finished all island quests">
       <option name="closed" value="true" />
@@ -749,7 +721,47 @@
       <option name="project" value="LOCAL" />
       <updated>1706521618100</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Added protocol specifications">
+      <option name="closed" value="true" />
+      <created>1707115540339</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1707115540339</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Implemented toggle system, will be used for the API later and other miscellaneous settings">
+      <option name="closed" value="true" />
+      <created>1707356259463</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1707356259464</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Added a warning for cross-version connections">
+      <option name="closed" value="true" />
+      <created>1707356619206</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1707356619206</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Cleaned up DataHandler.java">
+      <option name="closed" value="true" />
+      <created>1707357310940</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1707357310940</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Just adding util while in class">
+      <option name="closed" value="true" />
+      <created>1709246278623</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1709246278623</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,11 +781,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Work on minion recipes" />
-    <MESSAGE value="Minion-tiered crafting now works, and cleaned up PlayerItemUpdater's queue system for Item updates" />
-    <MESSAGE value="Implemented Minion 'next-tier'" />
-    <MESSAGE value="Added generic tablist" />
-    <MESSAGE value="Implemented Talismans" />
     <MESSAGE value="Removed some debugging I accidentally left" />
     <MESSAGE value="Overhauled GUI items and implemented Storage" />
     <MESSAGE value="Fixed crafting issue" />
@@ -794,7 +801,12 @@
     <MESSAGE value="Start to Runes" />
     <MESSAGE value="Added more support to cross-version" />
     <MESSAGE value="Start to fixing up ViaLoader implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start to fixing up ViaLoader implementation" />
+    <MESSAGE value="Added protocol specifications" />
+    <MESSAGE value="Implemented toggle system, will be used for the API later and other miscellaneous settings" />
+    <MESSAGE value="Added a warning for cross-version connections" />
+    <MESSAGE value="Cleaned up DataHandler.java" />
+    <MESSAGE value="Just adding util while in class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Just adding util while in class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

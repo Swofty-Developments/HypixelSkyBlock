@@ -23,7 +23,7 @@ public class PacketListenerAirJump extends SkyBlockPacketClientListener {
     @Override
     public void run(PlayerPacketEvent event, ClientPacket packet, SkyBlockPlayer player) {
         ClientPlayerPositionPacket positionPacket = (ClientPlayerPositionPacket) packet;
-        Double newY = positionPacket.position().y();
+        double newY = positionPacket.position().y();
         AntiCheatHandler handler = player.getAntiCheatHandler();
         Double distance = handler.getDistanceFromClosestBlockBelow();
 

@@ -6,7 +6,7 @@ import net.minestom.server.event.Event;
 @Getter
 public class CalenderHourlyUpdateEvent implements Event {
 
-    private int hour = 0;
+    private final int hour;
 
     public CalenderHourlyUpdateEvent(int hour) {
         this.hour = hour;

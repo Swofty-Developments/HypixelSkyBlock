@@ -62,7 +62,7 @@ public class DatapointAuctionStatistics extends Datapoint<DatapointAuctionStatis
     @Setter
     @AllArgsConstructor
     public static class AuctionStatistics {
-        private Map<AuctionStat, Integer> statistics = new HashMap<>();
+        private Map<AuctionStat, Integer> statistics;
 
         public Integer get(AuctionStat stat) {
             if (!statistics.containsKey(stat))

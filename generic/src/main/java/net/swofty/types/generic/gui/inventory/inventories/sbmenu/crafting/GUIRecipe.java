@@ -58,7 +58,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        List<SkyBlockRecipe<?>> recipes = null;
+        List<SkyBlockRecipe<?>> recipes;
         try {
             recipes = ((Craftable) item.getGenericInstance()).getRecipes();
         } catch (NullPointerException | ClassCastException e2) {

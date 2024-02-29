@@ -58,7 +58,7 @@ public class DamageIndicator {
         int i = 0;
         for (String c : string.split("")) {
             if (i > DEFAULT_COLOUR_PALLET.length - 1) i = 0;
-            builder.append("§" + DEFAULT_COLOUR_PALLET[i]).append(c);
+            builder.append("§").append(DEFAULT_COLOUR_PALLET[i]).append(c);
             i++;
         }
         return builder.toString();

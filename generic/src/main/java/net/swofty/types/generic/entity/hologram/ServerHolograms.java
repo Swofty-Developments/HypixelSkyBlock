@@ -12,7 +12,6 @@ public enum ServerHolograms {
     TO_ISLAND(new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),
     ;
 
-    @Setter
     private static final Map<ExternalHologram, List<HologramEntity>> externalHolograms = new HashMap<>();
 
     private final Pos pos;
