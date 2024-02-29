@@ -49,6 +49,7 @@ public enum ItemType {
      * Minions
      */
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
+    COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
 
     /**
      * Backpacks
