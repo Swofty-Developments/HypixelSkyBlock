@@ -17,7 +17,7 @@ import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
-import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
+import net.swofty.types.generic.item.items.minion.*;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
@@ -49,6 +49,7 @@ public enum ItemType {
      * Minions
      */
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
+    COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
 
     /**
      * Backpacks
