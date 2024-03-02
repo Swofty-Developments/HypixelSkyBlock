@@ -34,12 +34,5 @@ public class ActionPlayerJoin extends SkyBlockEvent {
         event.setSpawningInstance(player.getSkyBlockIsland().getSharedInstance().join());
 
         player.setRespawnPoint(new Pos(0, 100, 0));
-
-        Instance spawnInstance = event.getSpawningInstance();
-
-        if (spawnInstance == null){
-            throw new NullPointerException("Island cannot be null");
-        }
-        spawnInstance.getChunks().forEach(player::sendChunk);
     }
 }
