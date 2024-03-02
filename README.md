@@ -15,7 +15,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 
 ## Setup Guide
 
-1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/docs/manual/installation/).
+1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
 2. Ensure you have the `Java 21` SDK installed.
 3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
 4. Follow the 'Proxy Setup Guide' below.
