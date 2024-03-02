@@ -19,12 +19,12 @@ public class MinionSnow extends SkyBlockMinion {
                 new MinionTier(4, 12, 384),
                 new MinionTier(5, 11, 384),
                 new MinionTier(6, 11, 576),
-                new MinionTier(7, 9.5D, 576),
-                new MinionTier(8, 9.5D, 768),
+                new MinionTier(7, 9, 576),
+                new MinionTier(8, 9, 768),
                 new MinionTier(9, 8, 768),
                 new MinionTier(10, 8, 960),
-                new MinionTier(11, 6.5D, 960),
-                new MinionTier(12, 5.8D, 960)
+                new MinionTier(11, 6, 960),
+                new MinionTier(12, 5, 960)
         );
     }
 
