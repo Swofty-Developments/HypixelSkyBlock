@@ -20,6 +20,7 @@ import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
 import net.swofty.types.generic.item.items.minion.*;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
+import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.Coal;
 import net.swofty.types.generic.item.items.vanilla.Cobblestone;
@@ -44,6 +45,7 @@ public enum ItemType {
      * Talismans
      */
     ZOMBIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, ZombieTalisman.class),
+    TALISMAN(Material.PLAYER_HEAD,Rarity,COMMON, SpeedTalisman.class),
 
     /**
      * Minions
