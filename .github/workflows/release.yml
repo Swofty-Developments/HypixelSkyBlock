@@ -26,7 +26,7 @@ jobs:
         repo_token: "${{ secrets.TOKEN_GITHUB }}"
         automatic_release_tag: "latest"
         prerelease: false
-        title: "Automatic Build from Pull Request"
+        title: "Automatic build"
         files: |
           velocity-extension/target/*.jar
           proxy-api/target/*.jar
