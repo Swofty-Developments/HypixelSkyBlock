@@ -169,7 +169,7 @@ public enum ItemType {
     SUGAR_CANE(Material.SUGAR_CANE, Rarity.COMMON),
     SUGAR(Material.SUGAR, Rarity.COMMON),
     SNOW(Material.SNOW, Rarity.COMMON),
-    SNOW_BLOCK(Material.SNOW_BLOCK),
+    SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.COMMON),
 
     /**
      * Enchanted Items
