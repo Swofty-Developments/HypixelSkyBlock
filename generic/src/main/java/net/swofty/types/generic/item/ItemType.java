@@ -51,6 +51,7 @@ public enum ItemType {
      */
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
+    SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
 
     /**
      * Backpacks
@@ -168,6 +169,8 @@ public enum ItemType {
     STRING(Material.STRING, Rarity.COMMON),
     SUGAR_CANE(Material.SUGAR_CANE, Rarity.COMMON),
     SUGAR(Material.SUGAR, Rarity.COMMON),
+    SNOW(Material.SNOW, Rarity.COMMON),
+    SNOW_BLOCK(Material.SNOW_BLOCK),
 
     /**
      * Enchanted Items
@@ -208,6 +211,7 @@ public enum ItemType {
     ENCHANTED_SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.UNCOMMON, EnchantedSpruceWood.class),
     ENCHANTED_STRING(Material.STRING, Rarity.UNCOMMON, EnchantedString.class),
     ENCHANTED_SUGAR(Material.SUGAR, Rarity.UNCOMMON, EnchantedSugar.class),
+    ENCHANTED_SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.UNCOMMON, EnchantedSnowBlock.class)
     ;
 
     public final Material material;
