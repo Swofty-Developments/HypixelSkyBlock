@@ -1,9 +1,10 @@
 package net.swofty.velocity.via.injector;
 
-import com.velocitypowered.api.network.ProtocolVersion;
 import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.libs.fastutil.ints.IntSortedSet;
+import com.viaversion.viaversion.libs.fastutil.objects.ObjectLinkedOpenHashSet;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.ReflectionUtil;
 import io.netty.channel.ChannelInitializer;
@@ -12,6 +13,7 @@ import net.swofty.velocity.packet.PlayerChannelInitializer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.SortedSet;
 
 public class SkyBlockViaInjector implements ViaInjector {
 
@@ -57,18 +59,20 @@ public class SkyBlockViaInjector implements ViaInjector {
     }
 
     @Override
-    public int getServerProtocolVersion() {
-        return getLowestSupportedProtocolVersion();
+    public ProtocolVersion getServerProtocolVersion() {
+        return ProtocolVersion.getProtocol(getLowestSupportedProtocolVersion());
     }
 
-    @Override
-    public IntSortedSet getServerProtocolVersions() {
-        int lowestSupportedProtocolVersion = getLowestSupportedProtocolVersion();
-        IntSortedSet set = new IntLinkedOpenHashSet();
 
-        for (ProtocolVersion version : ProtocolVersion.SUPPORTED_VERSIONS) {
+
+    @Override
+    public SortedSet<ProtocolVersion> getServerProtocolVersions() {
+        int lowestSupportedProtocolVersion = getLowestSupportedProtocolVersion();
+
+        SortedSet<ProtocolVersion> set = new ObjectLinkedOpenHashSet<>();
+        for (com.velocitypowered.api.network.ProtocolVersion version : com.velocitypowered.api.network.ProtocolVersion.SUPPORTED_VERSIONS) {
             if (version.getProtocol() >= lowestSupportedProtocolVersion) {
-                set.add(version.getProtocol());
+                set.add(ProtocolVersion.getProtocol(version.getProtocol()));
             }
         }
 
@@ -82,7 +86,7 @@ public class SkyBlockViaInjector implements ViaInjector {
             }
         } catch (InvocationTargetException | IllegalAccessException ignored) {}
 
-        return ProtocolVersion.MINIMUM_VERSION.getProtocol();
+        return com.velocitypowered.api.network.ProtocolVersion.MINIMUM_VERSION.getProtocol();
     }
 
     @Override
