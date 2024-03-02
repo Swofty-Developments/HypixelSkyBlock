@@ -45,7 +45,6 @@ public enum ItemType {
      * Talismans
      */
     ZOMBIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, ZombieTalisman.class),
-    TALISMAN(Material.PLAYER_HEAD,Rarity,COMMON, SpeedTalisman.class),
 
     /**
      * Minions
