@@ -170,6 +170,14 @@ public enum ItemType {
     SUGAR(Material.SUGAR, Rarity.COMMON),
     SNOW(Material.SNOW, Rarity.COMMON),
     SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.COMMON),
+    MELON_SLICE(Material.MELON_SLICE, Rarity.COMMON),
+    RED_MUSHROOM(Material.RED_MUSHROOM, Rarity.COMMON),
+    MUTTON(Material.MUTTON, Rarity.COMMON),
+    NETHER_WART(Material.NETHER_WART, Rarity.COMMON),
+    CHICKEN(Material.CHICKEN, Rarity.COMMON),
+    PORKCHOP(Material.PORKCHOP, Rarity.COMMON),
+    RABBIT(Material.RABBIT, Rarity.COMMON),
+    WHEAT_SEEDS(Material.WHEAT_SEEDS, Rarity.COMMON),
 
     /**
      * Enchanted Items
