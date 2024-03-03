@@ -76,6 +76,11 @@ public enum ItemType {
     FARMING_ORB(Material.PLAYER_HEAD, Rarity.SPECIAL, FarmingOrb.class),
 
     /**
+     * Fishing Props
+     */
+    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE),
+
+    /**
      * Armor Sets
      */
     LEAFLET_HAT(Material.OAK_LEAVES, Rarity.COMMON, LeafletHat.class),
@@ -231,6 +236,15 @@ public enum ItemType {
     QUARTZ(Material.QUARTZ, Rarity.COMMON),
     NETHERRACK(Material.NETHERRACK, Rarity.COMMON),
     SAND(Material.SAND, Rarity.COMMON),
+    CLAY_BALL(Material.CLAY_BALL, Rarity.COMMON),
+    TROPICAL_FISH(Material.TROPICAL_FISH, Rarity.COMMON),
+    INK_SAC(Material.INK_SAC, Rarity.COMMON),
+    LILY_PAD(Material.LILY_PAD, Rarity.COMMON),
+    PRISMARINE_CRYSTALS(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
+    PRISMARINE_SHARD(Material.PRISMARINE_SHARD, Rarity.COMMON),
+    PUFFERFISH(Material.PUFFERFISH, Rarity.COMMON),
+    COD(Material.COD, Rarity.COMMON),
+    SALMON(Material.SALMON, Rarity.COMMON),
 
     /**
      * Enchanted Items
