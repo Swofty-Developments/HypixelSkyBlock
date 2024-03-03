@@ -190,7 +190,10 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                         return;
                     }
 
-                    if (!unlocked) return;
+                    if (!unlocked) {
+                        e.setCancelled(true);
+                        return;
+                    }
                     if (minion.getItemsInMinion().size() < finalI) return;
 
                     MaterialQuantifiable item = minion.getItemsInMinion().get(finalI - 1);

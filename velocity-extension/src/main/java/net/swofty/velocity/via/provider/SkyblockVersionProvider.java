@@ -13,12 +13,12 @@ import java.util.stream.IntStream;
 public class SkyblockVersionProvider extends BaseVersionProvider {
 
     @Override
-    public int getClosestServerProtocol(UserConnection user) throws Exception {
-        return user.isClientSide() ? ProtocolVersion.v1_20_3.getVersion() : getFrontProtocol(user);
+    public ProtocolVersion getClosestServerProtocol(UserConnection user) throws Exception {
+        return user.isClientSide() ? ProtocolVersion.v1_20_3 : getFrontProtocol(user);
     }
 
-    private int getFrontProtocol(UserConnection user) throws Exception {
-        int playerVersion = user.getProtocolInfo().getProtocolVersion();
+    private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {
+        ProtocolVersion playerVersion = user.getProtocolInfo().protocolVersion();
 
         IntStream versions = com.velocitypowered.api.network.ProtocolVersion.SUPPORTED_VERSIONS.stream()
                 .mapToInt(com.velocitypowered.api.network.ProtocolVersion::getProtocol);
@@ -26,18 +26,18 @@ public class SkyblockVersionProvider extends BaseVersionProvider {
         if (SkyBlockViaInjector.GET_PLAYER_INFO_FORWARDING_MODE != null
                 && ((Enum<?>) SkyBlockViaInjector.GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration()))
                 .name().equals("MODERN")) {
-            versions = versions.filter(ver -> ver >= ProtocolVersion.v1_13.getVersion());
+            versions = versions.filter(ver -> ver >= ProtocolVersion.v1_19_4.getVersion());
         }
         int[] compatibleProtocols = versions.toArray();
 
-        if (Arrays.binarySearch(compatibleProtocols, playerVersion) >= 0) {
+        if (Arrays.binarySearch(compatibleProtocols, playerVersion.getVersion()) >= 0) {
             // Velocity supports it
             return playerVersion;
         }
 
-        if (playerVersion < compatibleProtocols[0]) {
+        if (playerVersion.getVersion() < compatibleProtocols[0]) {
             // Older than Velocity supports, get the lowest version
-            return compatibleProtocols[0];
+            return ProtocolVersion.getProtocol(compatibleProtocols[0]);
         }
 
         // Loop through all protocols to get the closest protocol id that Velocity supports (and that Via does too)
@@ -46,8 +46,8 @@ public class SkyblockVersionProvider extends BaseVersionProvider {
         // This is more of a workaround for snapshot support
         for (int i = compatibleProtocols.length - 1; i >= 0; i--) {
             int protocol = compatibleProtocols[i];
-            if (playerVersion > protocol && ProtocolVersion.isRegistered(protocol)) {
-                return protocol;
+            if (playerVersion.getVersion() > protocol && ProtocolVersion.isRegistered(protocol)) {
+                return ProtocolVersion.getProtocol(protocol);
             }
         }
 

@@ -50,6 +50,7 @@ public enum ItemType {
      */
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
+    SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
 
     /**
      * Backpacks
@@ -73,6 +74,16 @@ public enum ItemType {
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
     CACTUS(Material.CACTUS, Rarity.COMMON),
     FARMING_ORB(Material.PLAYER_HEAD, Rarity.SPECIAL, FarmingOrb.class),
+
+    /**
+     * Fishing Props
+     */
+    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE),
+
+    /**
+     * Combat Props
+     */
+    CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
     /**
      * Armor Sets
@@ -99,6 +110,53 @@ public enum ItemType {
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
     WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
+
+    /**
+     * Mining Materials
+     */
+    ROUGH_AMBER_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_AMETHYST_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_JASPER_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_RUBY_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_JADE_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    ROUGH_OPAL_GEM(Material.PLAYER_HEAD, Rarity.COMMON),
+    FLAWED_AMBER_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_AMETHYST_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_JASPER_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_RUBY_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_JADE_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FLAWED_OPAL_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    FINE_AMBER_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_AMETHYST_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_JASPER_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_RUBY_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_JADE_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FINE_OPAL_GEM(Material.PLAYER_HEAD, Rarity.RARE),
+    FLAWLESS_AMBER_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_AMETHYST_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_JASPER_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_RUBY_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_JADE_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    FLAWLESS_OPAL_GEM(Material.PLAYER_HEAD, Rarity.EPIC),
+    PERFECT_AMBER_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_AMETHYST_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_JASPER_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_RUBY_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_JADE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    PERFECT_OPAL_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+    HARD_STONE(Material.STONE, Rarity.COMMON),
+    MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
+    SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
 
     /**
      * Vanilla Items
@@ -167,6 +225,31 @@ public enum ItemType {
     STRING(Material.STRING, Rarity.COMMON),
     SUGAR_CANE(Material.SUGAR_CANE, Rarity.COMMON),
     SUGAR(Material.SUGAR, Rarity.COMMON),
+    SNOW(Material.SNOW, Rarity.COMMON),
+    SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.COMMON),
+    MELON_SLICE(Material.MELON_SLICE, Rarity.COMMON),
+    RED_MUSHROOM(Material.RED_MUSHROOM, Rarity.COMMON),
+    MUTTON(Material.MUTTON, Rarity.COMMON),
+    NETHER_WART(Material.NETHER_WART, Rarity.COMMON),
+    CHICKEN(Material.CHICKEN, Rarity.COMMON),
+    PORKCHOP(Material.PORKCHOP, Rarity.COMMON),
+    RABBIT(Material.RABBIT, Rarity.COMMON),
+    WHEAT_SEEDS(Material.WHEAT_SEEDS, Rarity.COMMON),
+    MYCELIUM(Material.MYCELIUM, Rarity.COMMON),
+    RED_SAND(Material.RED_SAND, Rarity.COMMON),
+    QUARTZ(Material.QUARTZ, Rarity.COMMON),
+    NETHERRACK(Material.NETHERRACK, Rarity.COMMON),
+    SAND(Material.SAND, Rarity.COMMON),
+    CLAY_BALL(Material.CLAY_BALL, Rarity.COMMON),
+    TROPICAL_FISH(Material.TROPICAL_FISH, Rarity.COMMON),
+    INK_SAC(Material.INK_SAC, Rarity.COMMON),
+    LILY_PAD(Material.LILY_PAD, Rarity.COMMON),
+    PRISMARINE_CRYSTALS(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
+    PRISMARINE_SHARD(Material.PRISMARINE_SHARD, Rarity.COMMON),
+    PUFFERFISH(Material.PUFFERFISH, Rarity.COMMON),
+    COD(Material.COD, Rarity.COMMON),
+    SALMON(Material.SALMON, Rarity.COMMON),
+    SPIDER_EYE(Material.SPIDER_EYE, Rarity.COMMON),
 
     /**
      * Enchanted Items
@@ -207,6 +290,7 @@ public enum ItemType {
     ENCHANTED_SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.UNCOMMON, EnchantedSpruceWood.class),
     ENCHANTED_STRING(Material.STRING, Rarity.UNCOMMON, EnchantedString.class),
     ENCHANTED_SUGAR(Material.SUGAR, Rarity.UNCOMMON, EnchantedSugar.class),
+    ENCHANTED_SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.UNCOMMON, EnchantedSnowBlock.class)
     ;
 
     public final Material material;

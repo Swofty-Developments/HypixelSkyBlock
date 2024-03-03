@@ -8,6 +8,7 @@ import net.swofty.types.generic.utility.StringUtility;
 public enum MinionRegistry {
     COBBLESTONE(MinionCobblestone.class, ItemType.COBBLESTONE_MINION),
     COAL(MinionCoal.class, ItemType.COAL_MINION),
+    SNOW(MinionSnow.class, ItemType.SNOW_MINION),
     ;
 
     private final Class<? extends SkyBlockMinion> minionClass;

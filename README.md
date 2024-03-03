@@ -14,7 +14,7 @@ Releases are auto deployed on push onto the GitHub releases page which can be fo
 Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/).
 
 ## Setup Guide
-
+A video of me going through the guide [can be found here](https://www.youtube.com/watch?v=pxzJbjjQL-M)
 1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
 2. Ensure you have the `Java 21` SDK installed.
 3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
