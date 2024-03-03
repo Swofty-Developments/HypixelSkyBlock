@@ -124,6 +124,7 @@ public class SkyBlockRegion {
             if (region.getType() == type)
                 regions.add(region);
         }
+        if (regions.isEmpty()) return null;
         double random = Math.random();
         int index = (int) (random * regions.size());
         return regions.get(index);

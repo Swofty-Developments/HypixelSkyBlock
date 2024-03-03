@@ -19,17 +19,23 @@ public record PlayerHookManager(SkyBlockPlayer player, Map<SkyBlockEvent, Map<Co
         }
     }
 
-    public void registerHook(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer) {
+    public void hookBefore(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer) {
         registerHook(hook, consumer, false);
     }
 
+    public void hookAfter(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer) {
+        registerHook(hook, consumer, true);
+    }
+
     public void callAndClearHooks(SkyBlockEvent hook, boolean before) {
-        if (hooks.containsKey(hook)) {
-            hooks.get(hook).forEach((consumer, isBefore) -> {
-                if (isBefore == before) {
-                    consumer.accept(player);
-                }
-            });
-        }
+        hooks.forEach((skyBlockEvent, consumerMap) -> {
+            if (hook.getClass() == skyBlockEvent.getClass()) {
+                consumerMap.forEach((consumer, isBefore) -> {
+                    if (isBefore == before) {
+                        consumer.accept(player);
+                    }
+                });
+            }
+        });
     }
 }

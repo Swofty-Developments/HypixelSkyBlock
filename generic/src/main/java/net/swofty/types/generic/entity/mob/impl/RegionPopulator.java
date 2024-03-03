@@ -15,6 +15,9 @@ public interface RegionPopulator {
 
     static void populateRegion(MobRegistry registry, Populator populator) {
         SkyBlockRegion region = SkyBlockRegion.getRandomRegionOfType(populator.regionType());
+
+        if (region == null) return;
+
         Pos randomPosition = region.getRandomPositionForEntity(SkyBlockConst.getInstanceContainer());
 
         if (randomPosition == null) return;

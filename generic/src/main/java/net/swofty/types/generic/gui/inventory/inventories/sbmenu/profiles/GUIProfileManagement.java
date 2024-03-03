@@ -116,7 +116,6 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                         updateLore(player.getUuid(), finalDataHandler, lore);
 
-
                         lore.add(" ");
                         lore.add("§aYou are playing on this profile!");
 
