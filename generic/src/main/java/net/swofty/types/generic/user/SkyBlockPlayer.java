@@ -168,6 +168,10 @@ public class SkyBlockPlayer extends Player {
         return map;
     }
 
+    public int getAmountInInventory(ItemType type) {
+        return getAllOfTypeInInventory(type).values().stream().mapToInt(Integer::intValue).sum();
+    }
+
     public boolean isCoop() {
         return getDataHandler().get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }

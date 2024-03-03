@@ -128,12 +128,30 @@ public class StringUtility {
         return d < 1 ? "0" : DECIMAL_FORMAT.format(d);
     }
 
-    public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
+    public static List<String> splitByWordAndLength(String string, int splitLength) {
         List<String> result = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\G" + separator + "*(.+," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
-        Matcher matcher = pattern.matcher(string);
-        while (matcher.find())
-            result.add(matcher.group(1));
+        String[] words = string.split(" ");
+        StringBuilder currentString = new StringBuilder();
+
+        for (String word : words) {
+            // Check if adding the next word exceeds the split length (considering the space)
+            if (currentString.length() + word.length() + (!currentString.isEmpty() ? 1 : 0) > splitLength) {
+                // Add the currentString to the result and reset it
+                result.add(currentString.toString());
+                currentString = new StringBuilder();
+            }
+            // Add a space before the word if it's not the first word in the currentString
+            if (!currentString.isEmpty()) {
+                currentString.append(" ");
+            }
+            currentString.append(word);
+        }
+
+        // Add any remaining text to the result
+        if (!currentString.isEmpty()) {
+            result.add(currentString.toString());
+        }
+
         return result;
     }
 

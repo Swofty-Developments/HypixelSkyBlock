@@ -19,16 +19,14 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
+import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarAttemptSellOrder;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private final ItemType itemType;
@@ -175,9 +173,37 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                         item.getSellStatistics().getLowestOrder(),
                         item.getSellStatistics().getHighestOrder(),
                         itemType, true).openPriceSelection(player).thenAccept(price -> {
-                            if (price == 0) return;
+                            if (price <= 0) {
+                                if (player.isOnline())
+                                    player.sendMessage("§cYou can only sell for a positive amount of coins!");
+                                return;
+                            }
 
+                            player.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
 
+                            int amountInInventory = player.getAmountInInventory(itemType);
+                            Map<Integer, Integer> inInventory = player.getAllOfTypeInInventory(itemType);
+                            inInventory.forEach((slot, amount) -> {
+                                player.getInventory().setItemStack(slot, ItemStack.AIR);
+                            });
+
+                            ProxyService bazaar = new ProxyService(ServiceType.BAZAAR);
+                            Map<String, Object> requestParam = new HashMap<>();
+                            requestParam.put("item-name", itemType.name());
+                            requestParam.put("amount", amountInInventory);
+                            requestParam.put("price", price);
+                            requestParam.put("player-uuid", player.getUuid());
+
+                            player.sendMessage("§6[Bazaar] §7Submitting sell order...");
+
+                            bazaar.callEndpoint(new ProtocolBazaarAttemptSellOrder(), requestParam).thenAccept(response -> {
+                                if (response.get("success").equals(true)) {
+                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemType.getDisplayName() + "§a for §e" + price + " coins each!");
+                                } else {
+                                    player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
+                                    player.sendMessage("§c[Bazaar] §cYou cannot place orders on items you already have orders on!");
+                                }
+                            });
                 });
             }
 
@@ -193,7 +219,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     lore.add(" ");
                     Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
                     if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + itemInInventory.size() + "§7x in your inventory.");
+                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
                         lore.add("§eClick to setup Sell Order");
                     } else {
                         lore.add("§8None in inventory!");
@@ -206,7 +232,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                     Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
                     if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + itemInInventory.size() + "§7x in your inventory.");
+                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
                         lore.add("§eClick to setup Sell Order");
                     } else {
                         lore.add("§8None in inventory!");

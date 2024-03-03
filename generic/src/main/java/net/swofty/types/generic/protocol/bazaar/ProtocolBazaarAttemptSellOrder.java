@@ -12,7 +12,7 @@ public class ProtocolBazaarAttemptSellOrder extends ProtocolSpecification {
         return new ArrayList<>(List.of(
                 new ProtocolEntries<String>("item-name", true),
                 new ProtocolEntries<UUID>("player-uuid", true),
-                new ProtocolEntries<Integer>("price", true),
+                new ProtocolEntries<Double>("price", true),
                 new ProtocolEntries<Integer>("amount", true)
         ));
     }

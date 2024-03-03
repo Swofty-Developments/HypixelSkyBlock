@@ -32,7 +32,7 @@ public class ItemStackCreator {
 
     public static ItemStack.Builder getSingleLoreStack(String name, String color, Material material, short data, int amount, String lore) {
         List<String> l = new ArrayList<>();
-        for (String line : StringUtility.splitByWordAndLength(lore, 30, "\\s"))
+        for (String line : StringUtility.splitByWordAndLength(lore, 30))
             l.add(color + line);
         return getStack(name, material, data, amount, l.toArray(new String[]{}));
     }

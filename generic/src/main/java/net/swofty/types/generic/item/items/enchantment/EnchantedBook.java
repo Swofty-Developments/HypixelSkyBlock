@@ -28,7 +28,7 @@ public class EnchantedBook implements CustomSkyBlockItem {
         enchantments.forEach(enchantment -> {
             lore.add("§9" + StringUtility.toNormalCase(enchantment.type().name()) + " " +
                     StringUtility.getAsRomanNumeral(enchantment.level()));
-            StringUtility.splitByWordAndLength(enchantment.type().getDescription(enchantment.level()), 30, " ")
+            StringUtility.splitByWordAndLength(enchantment.type().getDescription(enchantment.level()), 30)
                     .forEach(line -> lore.add("§7" + line));
         });
 

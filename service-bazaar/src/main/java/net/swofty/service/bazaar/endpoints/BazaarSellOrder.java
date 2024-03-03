@@ -20,7 +20,7 @@ public class BazaarSellOrder implements ServiceEndpoint {
     public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
         String itemName = (String) messageData.get("item-name");
         UUID playerUUID = (UUID) messageData.get("player-uuid");
-        int price = (int) messageData.get("price");
+        Double price = (Double) messageData.get("price");
         int amount = (int) messageData.get("amount");
 
         Map<String, Object> toReturn = new HashMap<>();
@@ -34,7 +34,7 @@ public class BazaarSellOrder implements ServiceEndpoint {
         }
 
         BazaarService.getCacheService().invalidateCache(itemName);
-        item.getSellOrders().put(playerUUID, Map.entry((double) price, (double) amount));
+        item.getSellOrders().put(playerUUID, Map.entry(price, (double) amount));
         BazaarService.getCacheService().setItem(itemName, item.toDocument());
 
         return toReturn;

@@ -89,7 +89,7 @@ public class ItemLore {
                                     " " + StringUtility.getAsRomanNumeral(enchantment.level()));
                             StringUtility.splitByWordAndLength(
                                     "§7" + enchantment.type().getDescription(enchantment.level()),
-                                    34, " ").forEach(this::addLoreLine);
+                                    34).forEach(this::addLoreLine);
                         });
 
                     } else {
@@ -97,7 +97,7 @@ public class ItemLore {
                                         "§9" + enchantment1.type().getName() + " " + StringUtility
                                                 .getAsRomanNumeral(enchantment1.level()))
                                 .collect(Collectors.joining(", "));
-                        StringUtility.splitByWordAndLength(enchantmentNames, 34, ",").forEach(this::addLoreLine);
+                        StringUtility.splitByWordAndLength(enchantmentNames, 34).forEach(this::addLoreLine);
                     }
 
                     if (enchantmentCount != 0) addLoreLine(null);
@@ -114,7 +114,7 @@ public class ItemLore {
             if (item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
                 addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
                         ability.getAbilityActivation().getDisplay());
-                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34, "\\s"))
+                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34))
                     addLoreLine("§7" + line);
                 if (ability.getManaCost() > 0)
                     addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
@@ -141,7 +141,7 @@ public class ItemLore {
                 }
 
                 addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/4)");
-                for (String line : StringUtility.splitByWordAndLength(armorSet.getDescription(), 36, "\\s"))
+                for (String line : StringUtility.splitByWordAndLength(armorSet.getDescription(), 36))
                     addLoreLine("§7" + line);
                 addLoreLine(null);
             }

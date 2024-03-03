@@ -228,7 +228,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         AttributeHandler attributeHandler = item.getAttributeHandler();
 
                         List<String> lore = new ArrayList<>();
-                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1), 30, " ")
+                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1), 30)
                                 .forEach(line -> lore.add("§7" + line));
                         lore.add("§a ");
 
@@ -282,7 +282,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel);
                     List<String> lore = new ArrayList<>();
-                    StringUtility.splitByWordAndLength(selected.getDescription(finalLevel), 30, " ")
+                    StringUtility.splitByWordAndLength(selected.getDescription(finalLevel), 30)
                             .forEach(line -> lore.add("§7" + line));
 
                     lore.add("§a ");
