@@ -85,7 +85,7 @@ public abstract class SkyBlockEvent {
                             Player player = ((PlayerEvent) concreteEvent).getPlayer();
                             if (!player.isOnline()) return TaskSchedule.stop();
                             if (DataHandler.getUser(player) != null) {
-                                skyBlockEvent.run(concreteEvent);
+                                runEvent(skyBlockEvent, concreteEvent);
                                 return TaskSchedule.stop();
                             }
                             return TaskSchedule.millis(2);
@@ -93,7 +93,7 @@ public abstract class SkyBlockEvent {
                     } else {
                         // Now run the event with the properly casted type
                         try {
-                            skyBlockEvent.run(concreteEvent);
+                            runEvent(skyBlockEvent, concreteEvent);
                         } catch (Exception ex) {
                             Logger.info("Exception occurred while running event " + skyBlockEvent.getClass().getSimpleName() + " with event type " + concreteEvent.getClass().getSimpleName());
                             if (skyBlockEvent instanceof EventException exceptionEvent) {
@@ -108,6 +108,18 @@ public abstract class SkyBlockEvent {
 
             eventHandler.addChild(typeErasedNode);
         });
+    }
+
+    private static void runEvent(SkyBlockEvent event, Event concreteEvent) {
+        if (concreteEvent instanceof PlayerEvent) {
+            ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager().callAndClearHooks(
+                    event, true);
+        }
+        event.run(concreteEvent);
+        if (concreteEvent instanceof PlayerEvent) {
+            ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager().callAndClearHooks(
+                    event, false);
+        }
     }
 
     public static void callSkyBlockEvent(Event event) {

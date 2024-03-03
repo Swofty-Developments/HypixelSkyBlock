@@ -51,7 +51,11 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             }
 
             for (ItemStatistic statistic : ItemStatistic.values()) {
-                skillStatistics.put(statistic, jsonObject.getDouble(statistic.toString()));
+                try {
+                    skillStatistics.put(statistic, jsonObject.getDouble(statistic.toString()));
+                } catch (Exception ignored) {
+                    skillStatistics.put(statistic, 0.0);
+                }
             }
 
             return new PlayerSkills(skills, skillStatistics);

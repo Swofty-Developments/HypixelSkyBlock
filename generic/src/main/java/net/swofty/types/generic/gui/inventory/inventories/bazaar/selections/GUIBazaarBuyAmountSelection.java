@@ -13,12 +13,23 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.concurrent.CompletableFuture;
+
 public class GUIBazaarBuyAmountSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
+    private CompletableFuture<Double> future = new CompletableFuture<>();
+
     public GUIBazaarBuyAmountSelection(SkyBlockInventoryGUI previousGUI, ItemType itemType) {
         super("How many do you want?", InventoryType.CHEST_4_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, previousGUI));
+    }
+
+    public CompletableFuture<Double> openAmountSelection(SkyBlockPlayer player) {
+        future = new CompletableFuture<>();
+        open(player);
+
+        return future;
     }
 
     @Override

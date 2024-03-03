@@ -52,33 +52,59 @@ public class AuctionViewSelfNormal implements AuctionView {
             List<UUID> ownedInactive = player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).getValue();
 
             if (ownedActive.contains(item.getUuid())) {
-                gui.set(new GUIClickableItem(29) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        double coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
-                        long highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L);
-                        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
+                if (item.getBids().isEmpty()) {
+                    gui.set(new GUIClickableItem(29) {
+                        @Override
+                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                            ownedActive.remove(item.getUuid());
+                            player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
+                            ownedInactive.add(item.getUuid());
+                            player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
+                            player.closeInventory();
 
-                        ownedActive.remove(item.getUuid());
-                        player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
-                        ownedInactive.add(item.getUuid());
-                        player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
+                            player.addAndUpdateItem(item.getItem());
+                        }
 
-                        player.sendMessage("§eYou collected §6" + highestBid + " coins §efrom the auction!");
-                        player.closeInventory();
-                    }
+                        @Override
+                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                            return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
+                                    " ",
+                                    "§7This auction has ended!",
+                                    " ",
+                                    "§7Noone bid on this auction!",
+                                    " ",
+                                    "§eClick to collect your item!");
+                        }
+                    });
+                } else {
+                    gui.set(new GUIClickableItem(29) {
+                        @Override
+                        public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                            double coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
+                            long highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L);
+                            player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins + highestBid);
 
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
-                                " ",
-                                "§7This auction has ended!",
-                                " ",
-                                "§7The highest bid was §6" + item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L) + " coins",
-                                " ",
-                                "§eClick to collect coins!");
-                    }
-                });
+                            ownedActive.remove(item.getUuid());
+                            player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedActive);
+                            ownedInactive.add(item.getUuid());
+                            player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_OWNED, DatapointUUIDList.class).setValue(ownedInactive);
+
+                            player.sendMessage("§eYou collected §6" + highestBid + " coins §efrom the auction!");
+                            player.closeInventory();
+                        }
+
+                        @Override
+                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                            return ItemStackCreator.getStack("§6Collect Auction", Material.GOLD_BLOCK, 1,
+                                    " ",
+                                    "§7This auction has ended!",
+                                    " ",
+                                    "§7The highest bid was §6" + item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).map(AuctionItem.Bid::value).orElse(0L) + " coins",
+                                    " ",
+                                    "§eClick to collect coins!");
+                        }
+                    });
+                }
             } else {
                 // Player has already claimed their coins
                 gui.set(new GUIItem(29) {

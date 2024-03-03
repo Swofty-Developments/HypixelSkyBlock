@@ -171,9 +171,14 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                 }
 
                 new GUIBazaarPriceSelection(GUIBazaarItem.this,
+                        itemInInventory.size(),
                         item.getSellStatistics().getLowestOrder(),
                         item.getSellStatistics().getHighestOrder(),
-                        itemType, true, true).open(player);
+                        itemType, true).openPriceSelection(player).thenAccept(price -> {
+                            if (price == 0) return;
+
+
+                });
             }
 
             @Override
@@ -186,7 +191,13 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                 if (item.getSellOrders().isEmpty()) {
                     lore.add("§cNo sell orders available.");
                     lore.add(" ");
-                    lore.add("§8Cannot buy instantly");
+                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                    if (!itemInInventory.isEmpty()) {
+                        lore.add("§7You have §e" + itemInInventory.size() + "§7x in your inventory.");
+                        lore.add("§eClick to setup Sell Order");
+                    } else {
+                        lore.add("§8None in inventory!");
+                    }
                 } else {
                     item.getSellStatistics().getTop(7, true).forEach((order) -> {
                         lore.add("§7- §6" + order.totalCoins() + " coins §7each | §a" + order.totalItems() + "§7x in §f" + order.numberOfOrders() + "§7 orders");

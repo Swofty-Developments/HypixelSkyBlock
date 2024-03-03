@@ -99,9 +99,29 @@ public class StringUtility {
     }
 
     public static String toNormalCase(String string) {
-        return Pattern.compile("(_+)|\\b(.)", Pattern.DOTALL)
-                .matcher(string)
-                .replaceAll(match -> match.group(1) != null ? " " : match.group(2).toUpperCase());
+        if (Acronym.isAcronym(string)) return string.toUpperCase();
+        string = string.replaceAll("_", " ");
+        String[] spl = string.split(" ");
+        StringBuilder sb = new StringBuilder();
+
+        for (String value : spl) {
+            String s = value;
+            if (s.isEmpty()) {
+                continue;
+            }
+            if (s.length() == 1) {
+                s = s.toUpperCase();
+            } else {
+                s = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+            }
+            // Append the processed string to the StringBuilder
+            // Only add a space if it's not the first word
+            if (!sb.isEmpty()) {
+                sb.append(" ");
+            }
+            sb.append(s);
+        }
+        return sb.toString();
     }
 
     public static String commaify(double d) {
@@ -110,17 +130,10 @@ public class StringUtility {
 
     public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
         List<String> result = new ArrayList<>();
-        String[] words = string.split("\\s+");
-        StringBuilder currentLine = new StringBuilder();
-        for (String word : words) {
-            if (currentLine.length() + word.length() > splitLength) {
-                result.add(currentLine.toString());
-                currentLine.setLength(0);
-            }
-            if (!currentLine.isEmpty()) currentLine.append(separator);
-            currentLine.append(word);
-        }
-        if (!currentLine.isEmpty()) result.add(currentLine.toString());
+        Pattern pattern = Pattern.compile("\\G" + separator + "*(.+," + splitLength + "})(?=\\s|$)", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(string);
+        while (matcher.find())
+            result.add(matcher.group(1));
         return result;
     }
 

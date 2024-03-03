@@ -21,22 +21,22 @@ import java.util.concurrent.CompletableFuture;
 public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
     private CompletableFuture<Double> future = new CompletableFuture<>();
     private final boolean isSellOrder;
-    private final boolean useHighestPrice;
     private final ItemType itemType;
     private final Double lowestPrice;
     private final Double highestPrice;
+    private final Integer amount;
 
-    public GUIBazaarPriceSelection(SkyBlockInventoryGUI previousGUI,
+
+    public GUIBazaarPriceSelection(SkyBlockInventoryGUI previousGUI, Integer amount,
                                    Double lowestPrice, Double highestPrice,
-                                   ItemType itemType, boolean isSellOrder,
-                                   boolean useHighestPrice) {
-        super("At what price?", InventoryType.CHEST_4_ROW);
+                                   ItemType itemType, boolean isSellOrder) {
+        super("At what price" + (isSellOrder ? " are you selling?" : "are you buying?") + "?", InventoryType.CHEST_4_ROW);
 
         this.lowestPrice = lowestPrice;
         this.highestPrice = highestPrice;
         this.itemType = itemType;
         this.isSellOrder = isSellOrder;
-        this.useHighestPrice = useHighestPrice;
+        this.amount = amount;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, previousGUI));
@@ -46,7 +46,87 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
         future = new CompletableFuture<>();
         open(player);
 
+        Thread.startVirtualThread(() -> {
+            double spread = highestPrice - lowestPrice;
+            double spreadPrice = isSellOrder ? highestPrice - (spread / 10) : lowestPrice + (spread / 10);
+            set(new GUIClickableItem(14) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    future.complete(spreadPrice);
+                }
 
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§610% of Spread",
+                            Material.GOLDEN_HORSE_ARMOR, 1,
+                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                            " ",
+                            "§7Lowest price: §6" + lowestPrice + " coins",
+                            "§7Highest price: §6" + highestPrice + " coins",
+                            "§7Spread: §6" + highestPrice + " §7- §6" + lowestPrice + " §7= §6" + spread + " coins",
+                            " ",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7Unit price: §6" + spreadPrice + " coins",
+                            " ",
+                            "§7Total: §6" + (spreadPrice * amount) + " coins",
+                            " ",
+                            "§eClick to use this price!");
+                }
+            });
+
+
+            double incrementedOffer = isSellOrder ? lowestPrice - 0.1 : highestPrice + 0.1;
+            set(new GUIClickableItem(12) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    future.complete(incrementedOffer);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
+                            Material.GOLD_NUGGET, 1,
+                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                            " ",
+                            "§7Beat the price of the best offer so",
+                            "§7yours is filled first.",
+                            " ",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7Unit price: §6" + incrementedOffer + " coins",
+                            " ",
+                            "§7Total: §6" + (incrementedOffer * amount) + " coins",
+                            " ",
+                            "§eClick to use this price!");
+                }
+            });
+
+            double bestOffer = isSellOrder ? lowestPrice : highestPrice;
+            set(new GUIClickableItem(10) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    future.complete(bestOffer);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§6Same as Best Offer",
+                            itemType.material, 1,
+                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                            " ",
+                            "§7Use the same price as the lowest",
+                            "§7Sell Offer for this item.",
+                            " ",
+                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                            "§7Unit price: §6" + bestOffer + " coins",
+                            " ",
+                            "§7Total: §6" + (bestOffer * amount) + " coins",
+                            " ",
+                            "§eClick to use this price!");
+                }
+            });
+
+            refreshItems(player);
+        });
 
         return future;
     }

@@ -37,8 +37,6 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
         UUID uuid = player.getUuid();
 
-        player.getHookManager().callAndClearHooks(PlayerHookManager.Hooks.BEFORE_DATA_SAVE);
-
         player.getDataHandler().runOnSave(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             player.getSkyBlockIsland().runVacantCheck();
@@ -76,7 +74,6 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
             });
         });
 
-        player.getHookManager().callAndClearHooks(PlayerHookManager.Hooks.AFTER_DATA_SAVE);
         DataHandler.userCache.remove(uuid);
     }
 }

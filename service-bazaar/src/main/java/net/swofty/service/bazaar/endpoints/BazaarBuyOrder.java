@@ -33,6 +33,7 @@ public class BazaarBuyOrder implements ServiceEndpoint {
             return toReturn;
         }
 
+        BazaarService.getCacheService().invalidateCache(itemName);
         item.getBuyOrders().put(playerUUID, Map.entry((double) price, (double) amount));
         BazaarService.getCacheService().setItem(itemName, item.toDocument());
 
