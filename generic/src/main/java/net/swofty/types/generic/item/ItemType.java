@@ -81,6 +81,11 @@ public enum ItemType {
     MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE),
 
     /**
+     * Combat Props
+     */
+    CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+    /**
      * Armor Sets
      */
     LEAFLET_HAT(Material.OAK_LEAVES, Rarity.COMMON, LeafletHat.class),
@@ -152,7 +157,6 @@ public enum ItemType {
     HARD_STONE(Material.STONE, Rarity.COMMON),
     MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
     SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
-
 
     /**
      * Vanilla Items
@@ -245,6 +249,7 @@ public enum ItemType {
     PUFFERFISH(Material.PUFFERFISH, Rarity.COMMON),
     COD(Material.COD, Rarity.COMMON),
     SALMON(Material.SALMON, Rarity.COMMON),
+    SPIDER_EYE(Material.SPIDER_EYE, Rarity.COMMON),
 
     /**
      * Enchanted Items
