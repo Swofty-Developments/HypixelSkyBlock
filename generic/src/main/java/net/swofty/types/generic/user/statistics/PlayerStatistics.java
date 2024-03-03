@@ -59,6 +59,10 @@ public class PlayerStatistics {
 
         ItemStatistics total = ItemStatistics.builder().build();
         for (SkyBlockItem item : armorPieces) {
+            if (item.getGenericInstance() != null)
+                if (item.getGenericInstance() instanceof ConstantStatistics)
+                    continue;
+
             total = total.add(item.getAttributeHandler().getStatistics());
             total = getReforgeStatistics(item, total);
         }
