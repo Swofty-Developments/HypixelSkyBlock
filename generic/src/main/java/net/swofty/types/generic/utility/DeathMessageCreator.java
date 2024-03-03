@@ -7,8 +7,6 @@ import net.swofty.types.generic.entity.mob.SkyBlockMob;
 
 public record DeathMessageCreator(Damage type) {
     public String createPersonal() {
-        System.out.println(type.getType().name());
-
         return switch (type.getType().name()) {
             case "entity_source":
                 yield "were slain by " + ((SkyBlockMob) ((EntityDamage) type).getSource()).getDisplayName();

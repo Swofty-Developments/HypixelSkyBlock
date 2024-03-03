@@ -77,6 +77,8 @@ public class SkyBlockPlayer extends Player {
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
     @Getter
     private PlayerHookManager hookManager;
+    @Getter
+    private final PlayerStatistics statistics = new PlayerStatistics(this);
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -91,10 +93,6 @@ public class SkyBlockPlayer extends Player {
 
     public DatapointToggles.Toggles getToggles() {
         return getDataHandler().get(DataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
-    }
-
-    public PlayerStatistics getStatistics() {
-        return new PlayerStatistics(this);
     }
 
     public AntiCheatHandler getAntiCheatHandler() {

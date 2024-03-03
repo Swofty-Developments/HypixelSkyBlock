@@ -18,6 +18,7 @@ import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
@@ -38,6 +39,7 @@ public class PlayerStatistics {
     @Setter
     @Getter
     private double manaRegenerationPercentBonus;
+    private ItemStatistics fullInventoryStatisticsCache = ItemStatistics.builder().build();
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -65,9 +67,14 @@ public class PlayerStatistics {
 
     public ItemStatistics mainHandStatistics() {
         ItemStack mainhand = player.getInventory().getItemInMainHand();
-        if (!SkyBlockItem.isSkyBlockItem(mainhand)) return ItemStatistics.builder().build();
+        if (!SkyBlockItem.isSkyBlockItem(mainhand)) return ItemStatistics.EMPTY;
 
         SkyBlockItem item = new SkyBlockItem(mainhand);
+
+        if (item.getGenericInstance() != null)
+            if (item.getGenericInstance() instanceof ConstantStatistics)
+                return ItemStatistics.EMPTY;
+
         ItemStatistics statistics = item.getAttributeHandler().getStatistics();
         statistics = getReforgeStatistics(item, statistics);
 
@@ -95,6 +102,7 @@ public class PlayerStatistics {
         total = total.add(allArmorStatistics());
         total = total.add(mainHandStatistics());
         total = total.add(spareStatistics());
+        total = total.add(fullInventoryStatisticsCache);
 
         ItemStatistics baseStats = ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
@@ -104,6 +112,21 @@ public class PlayerStatistics {
         total = total.add(baseStats);
 
         return total;
+    }
+
+    public void updateFullInventoryStatistics() {
+        ItemStatistics total = ItemStatistics.builder().build();
+        for (ItemStack itemStack : player.getInventory().getItemStacks()) {
+            if (SkyBlockItem.isSkyBlockItem(itemStack)) {
+                SkyBlockItem item = new SkyBlockItem(itemStack);
+                if (item.getGenericInstance() == null) continue;
+                if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
+
+                ItemStatistics itemStatistics = getReforgeStatistics(item, item.getAttributeHandler().getStatistics());
+                total = total.add(itemStatistics);
+            }
+        }
+        fullInventoryStatisticsCache = total;
     }
 
     private ItemStatistics getReforgeStatistics(SkyBlockItem item, ItemStatistics statistics) {
@@ -140,6 +163,7 @@ public class PlayerStatistics {
         healthLoop();
         manaLoop();
         missionLoop();
+        statisticsLoop();
     }
 
     public static void barLoop() {
@@ -167,6 +191,18 @@ public class PlayerStatistics {
                 player.sendActionBar(Component.text(toSend));
             });
             return TaskSchedule.tick(4);
+        });
+    }
+
+    public static void statisticsLoop() {
+        Scheduler scheduler = MinecraftServer.getSchedulerManager();
+        scheduler.submitTask(() -> {
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                Thread.startVirtualThread(() -> {
+                    player.getStatistics().updateFullInventoryStatistics();
+                });
+            });
+            return TaskSchedule.seconds(2);
         });
     }
 
