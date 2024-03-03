@@ -12,6 +12,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -122,6 +123,26 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
                             "§7Total: §6" + (bestOffer * amount) + " coins",
                             " ",
                             "§eClick to use this price!");
+                }
+            });
+            set(new GUIQueryItem(16) {
+                @Override
+                public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
+                    return null;
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§6Custom Price",
+                            Material.OAK_SIGN, 1,
+                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                            " ",
+                            "§7Set the price per unit you're willing",
+                            "§7to pay. Minimum 50% of the best order.",
+                            " ",
+                            "§7Ordering: §a" +  amount + "§7x",
+                            " ",
+                            "§eClick to specify!");
                 }
             });
 
