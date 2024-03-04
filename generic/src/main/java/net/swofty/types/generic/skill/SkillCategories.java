@@ -12,6 +12,12 @@ public enum SkillCategories {
     MINING(MiningSkill.class),
     FORAGING(ForagingSkill.class),
     ENCHANTING(EnchantingSkill.class),
+    ALCHEMY(AlchemySkill.class),
+    CARPENTRY(),
+    RUNECRAFTING(),
+    SOCIAL(),
+    TAMING(),
+    DUNGEONERRING(),
     ;
 
     private final Class<? extends SkillCategory> clazz;
