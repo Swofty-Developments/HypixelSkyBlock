@@ -21,71 +21,346 @@ public class ForagingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.OAK_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(500),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(30000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(500, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(30000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 ),
                 new ItemCollection(ItemType.SPRUCE_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(25000),
-                        new ItemCollectionReward(50000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(25000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(50000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 ),
                 new ItemCollection(ItemType.BIRCH_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(500),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(25000),
-                        new ItemCollectionReward(50000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(500, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(25000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(50000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 ),
                 new ItemCollection(ItemType.JUNGLE_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(500),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(25000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(500, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(25000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 ),
                 new ItemCollection(ItemType.ACAICA_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(500),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(25000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(500, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(25000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 ),
                 new ItemCollection(ItemType.DARK_OAK_LOG,
-                        new ItemCollectionReward(50),
-                        new ItemCollectionReward(100),
-                        new ItemCollectionReward(250),
-                        new ItemCollectionReward(1000),
-                        new ItemCollectionReward(2000),
-                        new ItemCollectionReward(5000),
-                        new ItemCollectionReward(10000),
-                        new ItemCollectionReward(15000),
-                        new ItemCollectionReward(25000)
+                        new ItemCollectionReward(50, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(100, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(250, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(10000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(15000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(25000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        })
                 )
         ).toArray(ItemCollection[]::new);
     }
