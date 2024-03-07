@@ -3,6 +3,7 @@ package net.swofty.types.generic.skill.skills;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategory;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
 
 import java.util.List;
 
@@ -40,6 +41,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 100;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(2, 125,
@@ -53,6 +65,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 250;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -68,6 +91,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 500;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(4, 300,
@@ -81,6 +115,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 750;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -96,6 +141,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 1000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(6, 750,
@@ -109,6 +165,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 2000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -124,6 +191,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 3000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(8, 1500,
@@ -137,6 +215,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 4000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -152,6 +241,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 5000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(10, 3500,
@@ -165,6 +265,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 7500;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -180,6 +291,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 10000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(12, 7500,
@@ -193,6 +315,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 15000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -208,6 +341,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 20000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
                         }
                 ),
                 new SkillReward(14, 15000,
@@ -221,6 +365,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 25000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
                             }
                         }
                 ),
@@ -236,6 +391,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 30000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 3D;
+                            }
                         }
                 ),
                 new SkillReward(16, 30000,
@@ -249,6 +415,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 40000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 3D;
                             }
                         }
                 ),
@@ -264,6 +441,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 50000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 3D;
+                            }
                         }
                 ),
                 new SkillReward(18, 75000,
@@ -277,6 +465,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 65000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 3D;
                             }
                         }
                 ),
@@ -292,6 +491,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 80000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 3D;
+                            }
                         }
                 ),
                 new SkillReward(20, 200000,
@@ -305,6 +515,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 100000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -320,6 +541,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 125000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(22, 400000,
@@ -333,6 +565,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 150000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -348,6 +591,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 175000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(24, 600000,
@@ -361,6 +615,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 200000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -376,6 +641,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 225000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(26, 800000,
@@ -389,6 +665,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 250000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -404,6 +691,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 275000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(28, 1000000,
@@ -417,6 +715,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 300000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -432,6 +741,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 325000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(30, 1200000,
@@ -445,6 +765,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 350000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -460,6 +791,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 375000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(32, 1400000,
@@ -473,6 +815,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 400000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -488,6 +841,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 425000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(34, 1600000,
@@ -501,6 +865,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 450000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -516,6 +891,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 475000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(36, 1800000,
@@ -529,6 +915,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 500000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -544,6 +941,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 550000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(38, 2000000,
@@ -557,6 +965,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 600000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -572,6 +991,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 650000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(40, 2200000,
@@ -585,6 +1015,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 700000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -600,6 +1041,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 750000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(42, 2400000,
@@ -613,6 +1065,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 800000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -628,6 +1091,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 850000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(44, 2600000,
@@ -641,6 +1115,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 900000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -656,6 +1141,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 1000000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(46, 2900000,
@@ -669,6 +1165,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 1000000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -684,6 +1191,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 1000000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(48, 3400000,
@@ -697,6 +1215,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 1000000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 ),
@@ -712,6 +1241,17 @@ public class FishingSkill extends SkillCategory {
                             public int getCoins() {
                                 return 1000000;
                             }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
+                            }
                         }
                 ),
                 new SkillReward(50, 4000000,
@@ -725,6 +1265,17 @@ public class FishingSkill extends SkillCategory {
                             @Override
                             public int getCoins() {
                                 return 1000000;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 5D;
                             }
                         }
                 )
