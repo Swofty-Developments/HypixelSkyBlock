@@ -20,7 +20,7 @@ public class MinionMineAction extends MinionAction {
     private final Block toMine;
 
     @Override
-    public void onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
+    public SkyBlockItem onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
         List<Pos> minePositions = MathUtility.getRangeExcludingSelf(
                 minion.getPosition().sub(0, 1, 0), 2
         );
@@ -43,9 +43,10 @@ public class MinionMineAction extends MinionAction {
 
                 minion.getMinionEntity().swingAnimation();
                 island.setBlock(event.getToLook(), Block.AIR);
-                minion.addItem(new SkyBlockItem(Material.fromNamespaceId(toMine.namespace())));
             }
         });
+
+        return hasAir ? null : new SkyBlockItem(Material.fromNamespaceId(toMine.namespace()));
     }
 
     @Override

@@ -52,6 +52,8 @@ public class SkyBlockIsland {
     private JerryInformation jerryInformation = null;
     @Setter
     private IslandMinionData minionData = null;
+    @Setter
+    private long lastSaved = 0;
 
     public SkyBlockIsland(UUID islandID, UUID profileID) {
         this.islandID = islandID;
@@ -101,6 +103,12 @@ public class SkyBlockIsland {
                 ));
             } else {
                 world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
+
+                // Since addition of this is new, old islands may not have of had migrated
+                if (database.has("lastSaved"))
+                    lastSaved = (long) database.get("lastSaved", Long.class);
+                else
+                    lastSaved = 0;
             }
 
             islandInstance = manager.createSharedInstance(temporaryInstance);
@@ -139,6 +147,7 @@ public class SkyBlockIsland {
     private void save() {
         new PolarLoader(world).saveInstance(islandInstance);
         database.insertOrUpdate("data", new Binary(PolarWriter.write(world)));
+        database.insertOrUpdate("lastSaved", System.currentTimeMillis());
     }
 
     public static boolean hasIsland(UUID islandID) {

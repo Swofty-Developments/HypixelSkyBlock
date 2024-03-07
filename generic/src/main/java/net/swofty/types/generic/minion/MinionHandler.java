@@ -15,6 +15,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 import org.tinylog.Logger;
@@ -130,8 +131,6 @@ public record MinionHandler(Scheduler scheduler) {
 
             // Start working
             MinionAction.MinionActionEvent event = new MinionAction.MinionActionEvent();
-
-            action.onAction(event, islandMinion, instance);
             tags.setState(InternalMinionTags.State.ROTATING);
 
             Pos toLook = event.getToLook();
@@ -140,6 +139,10 @@ public record MinionHandler(Scheduler scheduler) {
             tags.setPoints(points);
             tags.setCurrentStep(0);
             tags.setAction(event.getAction());
+
+            SkyBlockItem item = action.onAction(event, islandMinion, instance);
+            if (item != null)
+                MinionAction.onMinionIteration(islandMinion, minion, item);
         });
     }
 

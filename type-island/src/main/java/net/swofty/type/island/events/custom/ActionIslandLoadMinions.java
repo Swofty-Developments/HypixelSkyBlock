@@ -9,7 +9,10 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.IslandMinionData;
+import net.swofty.types.generic.minion.MinionAction;
+import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
 
@@ -41,6 +44,33 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
         );
 
         event.getIsland().setMinionData(minionData);
-        minionData.getMinions().forEach(minionData::spawn);
+
+        long lastSaved = event.getIsland().getLastSaved();
+        long currentTime = System.currentTimeMillis();
+
+        minionData.getMinions().forEach((data) -> {
+            int tierIndex = data.getTier();
+            SkyBlockMinion.MinionTier tier = data.getMinion().asSkyBlockMinion().getTiers().get(tierIndex - 1);
+
+            long timeBetweenActions = tier.timeBetweenActions();
+            int amountOfActions = (int) ((currentTime - lastSaved) / timeBetweenActions);
+
+            if (lastSaved != 0)
+                Thread.startVirtualThread(() -> {
+                    data.spawnMinion(event.getIsland().getIslandInstance());
+                    for (int i = 0; i < amountOfActions; i++) {
+                        MinionAction action = data.getMinion().asSkyBlockMinion().getAction();
+                        SkyBlockItem item = action.onAction(
+                                new MinionAction.MinionActionEvent(),
+                                data,
+                                event.getIsland().getIslandInstance());
+
+                        if (item != null)
+                            MinionAction.onMinionIteration(data, data.getMinionEntity().getMinion(), item);
+                    }
+                });
+
+            minionData.spawn(data);
+        });
     }
 }

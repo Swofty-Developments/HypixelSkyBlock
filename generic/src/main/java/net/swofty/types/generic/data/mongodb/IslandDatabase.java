@@ -40,6 +40,11 @@ public record IslandDatabase(String profileUuid) implements MongoDB {
         return doc.get(key);
     }
 
+    public boolean has(String key) {
+        Document doc = collection.find(Filters.eq("_id", profileUuid)).first();
+        return doc != null && doc.containsKey(key);
+    }
+
     public List<Document> getAll() {
         FindIterable<Document> results = collection.find();
         List<Document> list = new ArrayList<>();

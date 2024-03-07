@@ -66,6 +66,11 @@ public class IslandMinionData {
         public void addItem(SkyBlockItem item) {
             setGeneratedItems(getGeneratedItems() + item.getAmount());
 
+            int slots = minion.asSkyBlockMinion().getTiers().get(getTier() - 1).getSlots();
+            if (itemsInMinion.size() >= slots) {
+                return;
+            }
+
             if (itemsInMinion.stream().anyMatch(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())) {
                 itemsInMinion.stream()
                         .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
