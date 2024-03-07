@@ -12,12 +12,11 @@ public abstract class SkyBlockMinion {
     public abstract Color getBootColour();
     public abstract Color getLeggingsColour();
     public abstract Color getChestplateColour();
-    public abstract String getTexture();
     public abstract Material getHeldItem();
     public abstract List<MinionExpectations> getExpectations();
     public abstract MinionAction getAction();
 
-    public record MinionTier(int tier, int timeBetweenActions, int storage) {
+    public record MinionTier(int tier, int timeBetweenActions, int storage, String texture) {
         public int getSlots() {
             return storage / 64;
         }

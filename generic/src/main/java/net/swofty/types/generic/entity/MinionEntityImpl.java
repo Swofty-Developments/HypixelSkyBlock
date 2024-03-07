@@ -54,7 +54,9 @@ public class MinionEntityImpl extends LivingEntity {
             leatherMeta.color(minion.getChestplateColour());
         }).build());
 
-        setHelmet(ItemStackCreator.getStackHead(minion.getTexture()).build());
+        int tier = islandMinion.getTier();
+
+        setHelmet(ItemStackCreator.getStackHead(minion.getTiers().get(tier - 1).texture()).build());
 
         setItemInMainHand(ItemStack.builder(minion.getHeldItem()).build());
     }

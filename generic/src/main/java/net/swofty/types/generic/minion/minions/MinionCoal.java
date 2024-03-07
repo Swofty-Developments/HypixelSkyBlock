@@ -13,18 +13,18 @@ public class MinionCoal extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
         return List.of(
-                new MinionTier(1, 15, 64),
-                new MinionTier(2, 15, 192),
-                new MinionTier(3, 13, 192),
-                new MinionTier(4, 13, 384),
-                new MinionTier(5, 12, 384),
-                new MinionTier(6, 12, 576),
-                new MinionTier(7, 10, 576),
-                new MinionTier(8, 10, 768),
-                new MinionTier(9, 9, 768),
-                new MinionTier(10, 9, 960),
-                new MinionTier(11, 7, 960),
-                new MinionTier(12, 6, 960)
+                new MinionTier(1, 15, 64, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(2, 15, 192, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(3, 13, 192, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(4, 13, 384, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(5, 12, 384, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(6, 12, 576, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(7, 10, 576, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(8, 10, 768, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(9, 9, 768, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(10, 9, 960, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(11, 7, 960, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935"),
+                new MinionTier(12, 6, 960, "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935")
         );
     }
 
@@ -41,11 +41,6 @@ public class MinionCoal extends SkyBlockMinion {
     @Override
     public Color getChestplateColour() {
         return new Color(0,0,0);
-    }
-
-    @Override
-    public String getTexture() {
-        return "425b8d2ea965c780652d29c26b1572686fd74f6fe6403b5a3800959feb2ad935";
     }
 
     @Override

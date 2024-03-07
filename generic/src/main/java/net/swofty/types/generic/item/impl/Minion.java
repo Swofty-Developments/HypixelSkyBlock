@@ -112,7 +112,9 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, Placeable, Unstac
 
     @Override
     default String getSkullTexture(SkyBlockPlayer player, SkyBlockItem item) {
-        return getMinionRegistry().asSkyBlockMinion().getTexture();
+        int tier = item.getAttributeHandler().getMinionData().tier();
+
+        return getMinionRegistry().asSkyBlockMinion().getTiers().get(tier - 1).texture();
     }
 
 

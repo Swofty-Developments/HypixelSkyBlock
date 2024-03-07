@@ -10,7 +10,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import java.util.Arrays;
 import java.util.List;
 
-public interface Enchanted extends CustomSkyBlockItem, Craftable , Placeable {
+public interface Enchanted extends CustomSkyBlockItem, Craftable, Placeable {
     @Override
     default ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -35,7 +35,7 @@ public interface Enchanted extends CustomSkyBlockItem, Craftable , Placeable {
         if (matchTypes.isEmpty()) {
             throw new RuntimeException("No matching ItemType found");
         } else {
-            return new ShapelessRecipe(getRecipeType(), new SkyBlockItem(matchTypes.get(0)))
+            return new ShapelessRecipe(getRecipeType(), new SkyBlockItem(matchTypes.getFirst()))
                     .add(this.getCraftingMaterial(), 64)
                     .add(this.getCraftingMaterial(), 64)
                     .add(this.getCraftingMaterial(), 64)
