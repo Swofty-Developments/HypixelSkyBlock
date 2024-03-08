@@ -55,10 +55,11 @@ public class MinionEntityImpl extends LivingEntity {
         }).build());
 
         int tier = islandMinion.getTier();
+        SkyBlockMinion.MinionTier minionTier = minion.getTiers().get(tier - 1);
 
-        setHelmet(ItemStackCreator.getStackHead(minion.getTiers().get(tier - 1).texture()).build());
+        setHelmet(ItemStackCreator.getStackHead(minionTier.texture()).build());
 
-        setItemInMainHand(ItemStack.builder(minion.getHeldItem()).build());
+        setItemInMainHand(ItemStack.builder(minionTier.heldItem()).build());
     }
 
     @Override

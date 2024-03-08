@@ -13,18 +13,42 @@ public class MinionCobblestone extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
         return List.of(
-                new MinionTier(1, 14, 64, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(2, 14, 192, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(3, 12, 192, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(4, 12, 384, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(5, 10, 384, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(6, 10, 576, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(7, 9, 576, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(8, 9, 768, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(9, 8, 768, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(10, 8, 960, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(11, 7, 960, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071"),
-                new MinionTier(12, 6, 960, "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071")
+                new MinionTier(1, 14, 64,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(2, 14, 192,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(3, 12, 192,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(4, 12, 384,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(5, 10, 384,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(6, 10, 576,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(7, 9, 576,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(8, 9, 768,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(9, 8, 768,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(10, 8, 960,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(11, 7, 960,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE),
+                new MinionTier(12, 6, 960,
+                        "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
+                        Material.IRON_PICKAXE)
         );
     }
 
@@ -41,11 +65,6 @@ public class MinionCobblestone extends SkyBlockMinion {
     @Override
     public Color getChestplateColour() {
         return new Color(64, 64, 64);
-    }
-
-    @Override
-    public Material getHeldItem() {
-        return Material.IRON_PICKAXE;
     }
 
     @Override
