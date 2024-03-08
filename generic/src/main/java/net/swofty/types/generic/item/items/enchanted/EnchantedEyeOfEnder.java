@@ -3,16 +3,22 @@ package net.swofty.types.generic.item.items.enchanted;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedEyeOfEnder implements Enchanted {
+public class EnchantedEyeOfEnder implements Enchanted, Sellable {
     @Override
     public ItemType getCraftingMaterial() {
-        return ItemType.ACACIA_WOOD;
-    }
+        return ItemType.ENCHANTED_ENDER_PEARL;
+    } //placeholder until new system
 
     @Override
     public SkyBlockRecipe.RecipeType getRecipeType() {
         return SkyBlockRecipe.RecipeType.COMBAT;
+    }
+
+    @Override
+    public double getSellValue() {
+        return 3520;
     }
 }

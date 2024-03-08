@@ -14,7 +14,7 @@ public class EnchantedBone implements Enchanted, Sellable {
 
     @Override
     public double getSellValue() {
-        return 500;
+        return 320;
     }
 
     @Override
