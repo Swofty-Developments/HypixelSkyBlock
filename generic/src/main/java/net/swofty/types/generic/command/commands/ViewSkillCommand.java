@@ -24,7 +24,7 @@ public class ViewSkillCommand extends SkyBlockCommand {
 
         command.addSyntax((sender, context) -> {
             final SkillCategories skillCategory = context.get(skillArgument);
-            new GUISkillCategory(skillCategory).open((SkyBlockPlayer) sender);
+            new GUISkillCategory(skillCategory, 0).open((SkyBlockPlayer) sender);
         }, skillArgument);
     }
 }

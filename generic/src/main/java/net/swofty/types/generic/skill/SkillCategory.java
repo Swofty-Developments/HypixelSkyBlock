@@ -11,6 +11,7 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.Arrays;
@@ -61,9 +62,10 @@ public abstract class SkillCategory {
                         lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
                     }
                     case STATS -> {
-                        lore.add("§7  §8+§b" + ((StatisticReward) unlock).getStatistic().getColour() +
-                                ((StatisticReward) unlock).getStatistic().getSymbol() + ((StatisticReward) unlock).amountAdded()
-                                + " " + ((StatisticReward) unlock).getStatistic().getDisplayName());
+                        ItemStatistic statistic = ((StatisticReward) unlock).getStatistic();
+                        lore.add("§7  §8+§b" + statistic.getColour() +
+                                statistic.getSymbol() + ((StatisticReward) unlock).amountAdded()
+                                + " " + statistic.getDisplayName());
                     }
                 }
             });

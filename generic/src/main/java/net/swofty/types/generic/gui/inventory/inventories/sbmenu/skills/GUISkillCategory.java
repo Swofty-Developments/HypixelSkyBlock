@@ -23,21 +23,23 @@ import java.util.List;
 
 public class GUISkillCategory extends SkyBlockInventoryGUI {
     private static final int[] displaySlots = {
-            9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 22, 13, 6, 7, 8, 17, 26, 35, 44, 53
+            9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 22, 13, 24, 15, 6, 7, 8, 17, 26, 35, 44, 53
     };
 
-    private SkillCategories category;
-    public GUISkillCategory(SkillCategories category) {
+    private final SkillCategories category;
+    private final int page;
+    public GUISkillCategory(SkillCategories category, int page) {
         super(category.toString() + " Skill", InventoryType.CHEST_6_ROW);
 
         this.category = category;
+        this.page = page;
     }
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkills()));
+        set(GUIClickableItem.getGoBackItem(40, new GUISkills()));
 
         DatapointSkills.PlayerSkills skills = e.player().getSkills();
         int level = skills.getCurrentLevel(category);
@@ -67,8 +69,42 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
             }
         });
 
+        List<SkillCategory.SkillReward> rewards = List.of(category.asCategory().getRewards());
+
+        // Check if there is a future page, if there is, add a next page button
+        if (rewards.size() > (page + 1) * displaySlots.length) {
+            set(new GUIClickableItem(50) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUISkillCategory(category, page + 1).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§aNext Page", Material.EMERALD_BLOCK, 1, "§7Click to view the next page of rewards.");
+                }
+            });
+        }
+        // Check if there is a previous page, if there is, add a previous page button
+        if (page > 0) {
+            set(new GUIClickableItem(48) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUISkillCategory(category, page - 1).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§aPrevious Page", Material.RED_CONCRETE, 1, "§7Click to view the previous page of rewards.");
+                }
+            });
+        }
+
+
         int index = 0;
-        for (SkillCategory.SkillReward reward : category.asCategory().getRewards()) {
+        // Split into pages depending on side of displaySlots
+        for (SkillCategory.SkillReward reward : rewards.subList(page * displaySlots.length, Math.min(rewards.size(), (page + 1) * displaySlots.length))) {
+            if (index >= displaySlots.length) break;
             int slot = displaySlots[index];
 
             set(new GUIItem(slot) {

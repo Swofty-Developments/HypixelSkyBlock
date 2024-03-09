@@ -14,8 +14,8 @@ public enum ItemStatistic {
     STRENGTH("Strength", true, "§c", "+", "", "❁"),
     INTELLIGENCE("Intelligence", false, "§b", "+", "", "✎"),
     MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
-    CRIT_CHANCE("Crit Chance", true, null, "+", "%", "☠"),
-    CRIT_DAMAGE("Crit Damage", true, null, "+", "%", "☣"),
+    CRIT_CHANCE("Crit Chance", true, "§b", "+", "%", "☠"),
+    CRIT_DAMAGE("Crit Damage", true, "§b", "+", "%", "☣"),
     FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
     //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
     ;

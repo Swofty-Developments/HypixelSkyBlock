@@ -53,7 +53,7 @@ public class GUISkills extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUISkillCategory(category).open(player);
+                    new GUISkillCategory(category, 0).open(player);
                 }
 
                 @Override
