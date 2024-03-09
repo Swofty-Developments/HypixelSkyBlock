@@ -27,16 +27,22 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
 
     SkyBlockItem item;
     SkyBlockInventoryGUI previousGUI;
+    int recipeIndex;
 
     public GUIRecipe(ItemType type, SkyBlockInventoryGUI previousGUI) {
-        this(new SkyBlockItem(type), previousGUI);
+        this(new SkyBlockItem(type), previousGUI, 0);
     }
 
     public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI) {
+        this(item, previousGUI, 0);
+    }
+
+    public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI, int recipeIndex) {
         super(item.getAttributeHandler().getItemTypeAsType().getDisplayName() + " Recipe", InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.previousGUI = previousGUI;
+        this.recipeIndex = recipeIndex;
     }
 
     @SneakyThrows
@@ -66,29 +72,59 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
-        SkyBlockRecipe recipe = null;
-        if (recipes.size() == 1) {
-            recipe = recipes.get(0);
-        } else {
-            for (SkyBlockRecipe<?> r : recipes) {
-                if (r.getResult().toString().equals(item.toString())) {
-                    recipe = r;
-                    break;
-                }
-            }
-        }
-
-        if (recipe == null) {
+        if (recipeIndex >= recipes.size()) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
+        SkyBlockRecipe recipe = recipes.get(recipeIndex);
 
-        SkyBlockRecipe finalRecipe = recipe;
+        if (recipes.size() > recipeIndex + 1) {
+            set(new GUIClickableItem(32) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIRecipe(
+                            item,
+                            GUIRecipe.this,
+                            recipeIndex + 1
+                    ).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack(
+                            "§aNext Recipe", Material.ARROW, 1,
+                            "§7Click to view the next recipe!"
+                    );
+                }
+            });
+        }
+        if (recipeIndex > 0) {
+            set(new GUIClickableItem(14) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIRecipe(
+                            item,
+                            GUIRecipe.this,
+                            recipeIndex - 1
+                    ).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack(
+                            "§aPrevious Recipe", Material.ARROW, 1,
+                            "§7Click to view the previous recipe!"
+                    );
+                }
+            });
+        }
+
         set(new GUIItem(25) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack());
+                return PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack())
+                        .amount(recipe.getAmount());
             }
         });
 
@@ -106,8 +142,10 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                                 return;
 
                             new GUIRecipe(
-                                    ((Craftable) ingredient.getGenericInstance()).getRecipes().get(0).getResult().getAttributeHandler().getItemTypeAsType(),
-                                    GUIRecipe.this).open(player);
+                                    ingredient,
+                                    GUIRecipe.this,
+                                    ((Craftable) ingredient.getGenericInstance()).getRecipes().indexOf(recipe)
+                            ).open(player);
                         }
 
                         @Override

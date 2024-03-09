@@ -6,6 +6,8 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
+import java.util.List;
+
 public class EnchantedSugarCane implements Enchanted, Sellable {
     @Override
     public ItemType getCraftingMaterial() {

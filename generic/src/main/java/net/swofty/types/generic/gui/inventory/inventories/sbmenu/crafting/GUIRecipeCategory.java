@@ -11,6 +11,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -21,6 +22,7 @@ import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
@@ -67,6 +69,18 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
         paged.addAll(ShapelessRecipe.CACHED_RECIPES);
 
         paged.removeIf(recipe -> recipe.getRecipeType() != type);
+
+        List<ItemType> shownItems = new ArrayList<>();
+        paged.removeIf(recipe -> {
+            ItemType type = recipe.getResult().getAttributeHandler().getItemTypeAsType();
+
+            if (shownItems.contains(type)) {
+                return true;
+            } else {
+                shownItems.add(type);
+                return false;
+            }
+        });
 
         return paged;
     }
