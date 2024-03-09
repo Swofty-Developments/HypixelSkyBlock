@@ -53,11 +53,11 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
             SkyBlockMinion.MinionTier tier = data.getMinion().asSkyBlockMinion().getTiers().get(tierIndex - 1);
 
             long timeBetweenActions = tier.timeBetweenActions();
-            int amountOfActions = (int) ((currentTime - lastSaved) / timeBetweenActions);
+            int amountOfActions = Math.round((float) (currentTime - lastSaved) / (timeBetweenActions * 1000L));
 
-            if (lastSaved != 0)
+            data.spawnMinion(event.getIsland().getIslandInstance());
+            if (lastSaved != 0) {
                 Thread.startVirtualThread(() -> {
-                    data.spawnMinion(event.getIsland().getIslandInstance());
                     for (int i = 0; i < amountOfActions; i++) {
                         MinionAction action = data.getMinion().asSkyBlockMinion().getAction();
                         SkyBlockItem item = action.onAction(
@@ -69,8 +69,7 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
                             MinionAction.onMinionIteration(data, data.getMinionEntity().getMinion(), item);
                     }
                 });
-
-            minionData.spawn(data);
+            }
         });
     }
 }

@@ -64,26 +64,30 @@ public class IslandMinionData {
         }
 
         public void addItem(SkyBlockItem item) {
+            int slots = minion.asSkyBlockMinion().getTiers().get(getTier() - 1).getSlots();
+            // Calculate the total number of items in minion as if they were in stacks of 64.
+            int totalItemsInStacks = itemsInMinion.stream().mapToInt(materialQuantifiable -> materialQuantifiable.getAmount()).sum();
+
+            // Check if adding the new item would exceed the total slot capacity (slots * 64).
+            if ((totalItemsInStacks + item.getAmount()) > (slots * 64)) {
+                return; // Do not add the item if it exceeds capacity.
+            }
+
+            // Increment the generatedItems counter by the amount of the new item.
             setGeneratedItems(getGeneratedItems() + item.getAmount());
 
-            int slots = minion.asSkyBlockMinion().getTiers().get(getTier() - 1).getSlots();
-            if (itemsInMinion.size() >= slots) {
-                return;
-            }
+            // Check if the item already exists in the inventory.
+            Optional<MaterialQuantifiable> existingItem = itemsInMinion.stream()
+                    .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
+                    .findFirst();
 
-            if (itemsInMinion.stream().anyMatch(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())) {
-                itemsInMinion.stream()
-                        .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
-                        .findFirst()
-                        .get()
-                        .setAmount(itemsInMinion.stream()
-                                .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
-                                .findFirst()
-                                .get().getAmount() + item.getAmount());
-                return;
+            if (existingItem.isPresent()) {
+                // If the item exists, increase its amount.
+                existingItem.get().setAmount(existingItem.get().getAmount() + item.getAmount());
+            } else {
+                // If the item does not exist, add it as a new entry.
+                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
             }
-
-            itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
         }
 
         public SkyBlockItem asSkyBlockItem() {

@@ -45,6 +45,14 @@ public record MinionHandler(Scheduler scheduler) {
             long timeBetweenActions = tier.timeBetweenActions() * 1000L;
             long lastAction = islandMinion.getLastAction();
 
+            /** seems like I need this debug every other week, so keep it here for now
+            System.out.println("Minion loop");
+            System.out.println("Time between actions: " + timeBetweenActions);
+            System.out.println("Current time diff: " + (System.currentTimeMillis() - lastAction));
+            System.out.println("Tier: " + islandMinion.getTier());
+            System.out.println("State: " + tags.getState());
+            System.out.println("Step: " + tags.getCurrentStep());*/
+
             // Check if the minion is in a perfect location
             boolean allBlocksMeetExpectations = true;
             for (SkyBlockMinion.MinionExpectations expectation : minion.getExpectations()) {
@@ -133,6 +141,8 @@ public record MinionHandler(Scheduler scheduler) {
             MinionAction.MinionActionEvent event = new MinionAction.MinionActionEvent();
             tags.setState(InternalMinionTags.State.ROTATING);
 
+            SkyBlockItem item = action.onAction(event, islandMinion, instance);
+
             Pos toLook = event.getToLook();
             List<Pos> points = MathUtility.lookSteps(minionEntity.getPosition(), toLook, STEPS);
 
@@ -140,7 +150,6 @@ public record MinionHandler(Scheduler scheduler) {
             tags.setCurrentStep(0);
             tags.setAction(event.getAction());
 
-            SkyBlockItem item = action.onAction(event, islandMinion, instance);
             if (item != null)
                 MinionAction.onMinionIteration(islandMinion, minion, item);
         });
