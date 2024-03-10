@@ -8,6 +8,10 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.Craftable;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EnchantedHardstone implements Enchanted, Sellable, Craftable {
     @Override
@@ -28,5 +32,12 @@ public class EnchantedHardstone implements Enchanted, Sellable, Craftable {
                 .add(ItemType.HARD_STONE, 64)
                 .add(ItemType.HARD_STONE, 64)
                 .add(ItemType.HARD_STONE, 64);
+    }
+
+    @Override
+    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(Arrays.asList(
+                "§7§7A refined form of heavy rock",
+                "§7from the darkest depths."));
     }
 }

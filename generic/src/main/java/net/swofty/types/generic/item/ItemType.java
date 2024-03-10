@@ -13,7 +13,10 @@ import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
 import net.swofty.types.generic.item.items.farming.WheatCrystal;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
-import net.swofty.types.generic.item.items.mining.gemstones.*;
+import net.swofty.types.generic.item.items.mining.crystalHallows.HardStone;
+import net.swofty.types.generic.item.items.mining.crystalHallows.gemstones.*;
+import net.swofty.types.generic.item.items.mining.dwarvenMines.Mithril;
+import net.swofty.types.generic.item.items.mining.dwarvenMines.Titanium;
 import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
@@ -158,9 +161,9 @@ public enum ItemType {
     PERFECT_RUBY_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectRuby.class),
     PERFECT_JADE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectJade.class),
     PERFECT_OPAL_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectOpal.class),
-    HARD_STONE(Material.STONE, Rarity.COMMON),
-    MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
-    TITANIUM(Material.PLAYER_HEAD, Rarity.RARE),
+    HARD_STONE(Material.STONE, Rarity.COMMON, HardStone.class),
+    MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON, Mithril.class),
+    TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
     SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
 
     /**
