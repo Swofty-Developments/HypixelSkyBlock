@@ -10,11 +10,12 @@ import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.item.ItemType;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrbDatabase {
+public class CrystalDatabase {
     public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
@@ -25,14 +26,14 @@ public class OrbDatabase {
         client = MongoClients.create(settings);
 
         database = client.getDatabase("Minestom");
-        collection = database.getCollection("orbs");
+        collection = database.getCollection("crystals");
     }
 
     public static Document getDocument(String key) {
         return collection.find(Filters.eq("_id", key)).first();
     }
 
-    public void addOrb(String url, Pos position, ItemType itemType) {
+    public void addCrystal(String url, Pos position, ItemType itemType) {
         Document doc = new Document();
         doc.append("_id", collection.countDocuments() + 1);
         doc.append("url", url);
@@ -43,7 +44,7 @@ public class OrbDatabase {
         collection.insertOne(doc);
     }
 
-    public void removeOrbs(Pos position, double distance) {
+    public void removeCrystals(Pos position, double distance) {
         for (Document doc : collection.find()) {
             int x = doc.getInteger("x");
             int y = doc.getInteger("y");
@@ -54,27 +55,35 @@ public class OrbDatabase {
         }
     }
 
-    public static List<OrbData> getAllOrbs() {
-        List<OrbData> orbs = new ArrayList<>();
+    public static List<CrystalData> getAllCrystals() {
+        List<CrystalData> crystals = new ArrayList<>();
         for (Document doc : collection.find()) {
-            long id = doc.getLong("_id");
+            Integer id = doc.getInteger("_id");
             String url = doc.getString("url");
             Double x = doc.getDouble("x");
             Double y = doc.getDouble("y");
             Double z = doc.getDouble("z");
-            ItemType itemType = ItemType.valueOf(doc.getString("itemType"));
-            OrbData orb = new OrbData();
+            // Manually handle DB migrations
+            ItemType itemType;
+            try {
+                itemType = ItemType.valueOf(doc.getString("itemType"));
+            } catch (Exception e) {
+                Logger.error("Error parsing crystal data for crystal with ID " + id + " - skipping.");
+                continue;
+            }
 
-            orb.url = url;
-            orb.position = new Pos(x + 0.5, y, z + 0.5);
-            orb.itemType = itemType;
+            CrystalData crystal = new CrystalData();
 
-            orbs.add(orb);
+            crystal.url = url;
+            crystal.position = new Pos(x + 0.5, y, z + 0.5);
+            crystal.itemType = itemType;
+
+            crystals.add(crystal);
         }
-        return orbs;
+        return crystals;
     }
 
-    public static class OrbData {
+    public static class CrystalData {
         public String url;
         public Pos position;
         public ItemType itemType;
