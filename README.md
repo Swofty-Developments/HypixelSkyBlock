@@ -50,6 +50,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 12. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
 13. (OPTIONAL) If you wish to have fairy souls, download the CSV of the fairy souls from this Git repo and upload them to the `fairy_souls` collection made in your Mongo after starting the server. Once you have done this restart your server.
 14. (OPTIONAL) If you wish to have the Hub orbs (you can also just `/addorb`), download the CSV of the collections from this Git repo and upload them to the `collections` collection made in your Mongo after starting the server. Once you have done this restart your server.
+15. (OPTIONAL) If you wish to have Songs on your server, copy the `songs` folder from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration), and put it inside of your configuration folder.
 
 ### Service Setup Guide
 1. Due to the nature of SkyBlock, there may be a variety of services that need to be ran. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
