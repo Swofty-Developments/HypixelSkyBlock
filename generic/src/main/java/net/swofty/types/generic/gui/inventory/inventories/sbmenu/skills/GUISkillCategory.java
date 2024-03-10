@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -18,7 +17,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GUISkillCategory extends SkyBlockInventoryGUI {

@@ -1,7 +1,5 @@
 package net.swofty.commons;
 
-import lombok.Getter;
-
 public enum CustomWorlds {
     ISLANDS_TEMPLATE("hypixel_island_template"),
     HUB("hypixel_hub"),

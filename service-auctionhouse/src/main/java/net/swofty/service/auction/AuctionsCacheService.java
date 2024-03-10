@@ -5,7 +5,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.mongodb.client.model.Filters;
 import net.swofty.commons.auctions.AuctionsFilter;
 import org.bson.Document;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;

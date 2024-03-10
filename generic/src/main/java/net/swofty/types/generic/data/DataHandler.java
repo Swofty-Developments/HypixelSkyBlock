@@ -20,17 +20,20 @@ import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.PlayerShopData;
 import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 

@@ -10,7 +10,10 @@ import net.swofty.velocity.redis.RedisMessage;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class IslandCheck extends BalanceConfiguration {

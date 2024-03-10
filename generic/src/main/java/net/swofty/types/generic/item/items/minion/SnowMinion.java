@@ -4,7 +4,6 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 public class SnowMinion implements CustomSkyBlockItem, Minion {
     @Override

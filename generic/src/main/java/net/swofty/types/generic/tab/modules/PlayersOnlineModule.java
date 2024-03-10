@@ -1,6 +1,5 @@
 package net.swofty.types.generic.tab.modules;
 
-import net.minestom.server.MinecraftServer;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;

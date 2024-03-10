@@ -1,6 +1,7 @@
 package net.swofty.commons;
 
 import lombok.Getter;
+
 import java.util.Arrays;
 @Getter
 public enum MinecraftVersion {

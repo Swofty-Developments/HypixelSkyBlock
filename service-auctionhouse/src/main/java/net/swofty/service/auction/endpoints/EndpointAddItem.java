@@ -3,7 +3,6 @@ package net.swofty.service.auction.endpoints;
 import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.auction.AuctionActiveDatabase;
-import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.types.generic.auction.AuctionItem;
 import org.bson.Document;

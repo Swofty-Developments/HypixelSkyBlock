@@ -29,9 +29,6 @@ import net.swofty.types.generic.protocol.auctions.ProtocolFetchItems;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
-import org.bson.Document;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.*;
 

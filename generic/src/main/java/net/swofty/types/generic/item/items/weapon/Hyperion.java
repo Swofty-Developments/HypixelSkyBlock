@@ -1,14 +1,14 @@
 package net.swofty.types.generic.item.items.weapon;
 
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ReforgeType;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
+import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.ReforgeType;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;

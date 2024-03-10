@@ -1,10 +1,8 @@
 package net.swofty.service.protocol;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

@@ -22,7 +22,6 @@ import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.List;
 import java.util.Map;
 
 public class GUIStorage extends SkyBlockInventoryGUI {

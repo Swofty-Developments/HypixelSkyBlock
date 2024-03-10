@@ -1,9 +1,7 @@
 package net.swofty.velocity.via.injector;
 
 import com.viaversion.viaversion.api.platform.ViaInjector;
-import com.viaversion.viaversion.libs.fastutil.ints.IntLinkedOpenHashSet;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-import com.viaversion.viaversion.libs.fastutil.ints.IntSortedSet;
 import com.viaversion.viaversion.libs.fastutil.objects.ObjectLinkedOpenHashSet;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.ReflectionUtil;

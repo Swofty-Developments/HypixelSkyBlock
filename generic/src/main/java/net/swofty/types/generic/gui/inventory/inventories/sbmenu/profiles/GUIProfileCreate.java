@@ -1,14 +1,12 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointString;
@@ -19,9 +17,8 @@ import net.swofty.types.generic.event.actions.player.data.ActionPlayerDataSave;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.user.PlayerHookManager;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.bson.Document;
 
 import java.util.UUID;

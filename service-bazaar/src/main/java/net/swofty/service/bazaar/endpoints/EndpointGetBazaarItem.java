@@ -5,7 +5,6 @@ import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.bazaar.BazaarService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -6,7 +6,6 @@ import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 

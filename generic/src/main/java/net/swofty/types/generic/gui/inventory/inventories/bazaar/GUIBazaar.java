@@ -21,7 +21,6 @@ import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
-import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

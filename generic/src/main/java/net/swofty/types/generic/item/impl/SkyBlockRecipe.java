@@ -5,10 +5,10 @@ import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

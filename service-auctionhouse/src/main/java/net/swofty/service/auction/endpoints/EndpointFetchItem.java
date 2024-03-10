@@ -6,7 +6,6 @@ import net.swofty.service.auction.AuctionInactiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.types.generic.auction.AuctionItem;
 import org.bson.Document;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

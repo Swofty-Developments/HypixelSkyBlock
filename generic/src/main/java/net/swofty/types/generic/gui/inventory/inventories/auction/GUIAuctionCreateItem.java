@@ -27,9 +27,11 @@ import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
-import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private SkyBlockInventoryGUI previousGUI;

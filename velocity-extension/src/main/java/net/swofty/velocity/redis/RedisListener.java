@@ -2,7 +2,6 @@ package net.swofty.velocity.redis;
 
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import net.swofty.redisapi.events.RedisMessagingReceiveInterface;
 
 import java.util.UUID;
 

@@ -7,7 +7,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;

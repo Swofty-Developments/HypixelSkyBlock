@@ -8,7 +8,6 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.network.packet.server.common.PingPacket;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItem;
@@ -25,10 +24,10 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.bson.Document;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 
 public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     public final UUID auctionID;

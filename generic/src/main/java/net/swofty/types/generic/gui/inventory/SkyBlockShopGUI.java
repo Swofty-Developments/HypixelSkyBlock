@@ -16,7 +16,6 @@ import net.swofty.types.generic.gui.inventory.inventories.shop.GUIGenericTrading
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;

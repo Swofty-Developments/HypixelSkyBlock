@@ -7,7 +7,6 @@ import net.swofty.types.generic.data.datapoints.DatapointString;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.TablistSkinRegistry;
-import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;

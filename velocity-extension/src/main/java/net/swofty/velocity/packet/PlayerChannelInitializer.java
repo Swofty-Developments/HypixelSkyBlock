@@ -1,6 +1,5 @@
 package net.swofty.velocity.packet;
 
-import com.velocitypowered.proxy.network.Connections;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;

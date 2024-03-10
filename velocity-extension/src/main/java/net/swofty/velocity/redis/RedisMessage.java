@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class RedisMessage {
     private static final Map<UUID, CompletableFuture<String>> callbacks = new HashMap<>();

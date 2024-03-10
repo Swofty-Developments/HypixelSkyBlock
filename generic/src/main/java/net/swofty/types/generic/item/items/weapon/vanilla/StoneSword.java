@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.weapon.vanilla;
 
 import net.swofty.types.generic.item.ReforgeType;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Enchantable;
+import net.swofty.types.generic.item.impl.ExtraRarityDisplay;
 import net.swofty.types.generic.item.impl.Reforgable;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Enchantable;
-import net.swofty.types.generic.item.impl.ExtraRarityDisplay;
 
 import java.util.List;
 

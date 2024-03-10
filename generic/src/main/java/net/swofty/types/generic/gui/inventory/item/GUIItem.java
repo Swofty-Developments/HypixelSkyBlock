@@ -1,6 +1,5 @@
 package net.swofty.types.generic.gui.inventory.item;
 
-import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

@@ -1,10 +1,10 @@
 package net.swofty.types.generic.item.items.mining.vanilla;
 
+import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
-import net.swofty.types.generic.item.ReforgeType;
 
 import java.util.List;
 

@@ -2,9 +2,7 @@ package net.swofty.velocity.gamemanager;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.packet.PlayerChannelHandler;
 
 import java.util.ArrayList;
 

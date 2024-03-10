@@ -8,7 +8,6 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
-import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -22,11 +21,12 @@ import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarAttemptSellOrder;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private final ItemType itemType;

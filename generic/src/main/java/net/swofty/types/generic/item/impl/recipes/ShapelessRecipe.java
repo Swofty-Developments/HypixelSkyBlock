@@ -3,11 +3,11 @@ package net.swofty.types.generic.item.impl.recipes;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

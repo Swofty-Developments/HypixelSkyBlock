@@ -9,8 +9,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.user.fairysouls.FairySoul;
-import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import org.bson.Document;
 
 import java.util.ArrayList;

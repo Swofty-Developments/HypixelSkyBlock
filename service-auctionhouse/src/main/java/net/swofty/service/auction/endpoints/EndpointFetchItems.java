@@ -8,9 +8,11 @@ import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.types.generic.auction.AuctionItem;
 import org.bson.Document;
-import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EndpointFetchItems implements ServiceEndpoint {
     @Override

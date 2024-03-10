@@ -23,8 +23,8 @@ import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.impl.Enchantable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
 import java.util.Arrays;

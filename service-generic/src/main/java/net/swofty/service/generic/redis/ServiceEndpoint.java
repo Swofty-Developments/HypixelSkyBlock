@@ -1,7 +1,6 @@
 package net.swofty.service.generic.redis;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
-import org.json.JSONObject;
 
 import java.util.Map;
 
