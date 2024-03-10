@@ -5,20 +5,16 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.Craftable;
 
-public class EnchantedRottenFlesh implements Enchanted, Sellable {
-    @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.ROTTEN_FLESH;
-    }
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.COMBAT;
-    }
-
+public class EnchantedRottenFlesh implements Enchanted, Sellable, Craftable {
     @Override
     public double getSellValue() {
         return 320;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemType.ROTTEN_FLESH);
     }
 }

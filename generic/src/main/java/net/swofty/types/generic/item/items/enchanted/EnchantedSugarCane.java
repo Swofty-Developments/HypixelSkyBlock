@@ -7,20 +7,16 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
 import java.util.List;
+import net.swofty.types.generic.item.impl.Craftable;
 
-public class EnchantedSugarCane implements Enchanted, Sellable {
-    @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.ENCHANTED_SUGAR;
-    }
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.FARMING;
-    }
-
+public class EnchantedSugarCane implements Enchanted, Sellable, Craftable {
     @Override
     public double getSellValue() {
         return 102400;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_SUGAR);
     }
 }

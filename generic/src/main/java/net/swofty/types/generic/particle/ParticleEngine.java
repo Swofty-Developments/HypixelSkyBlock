@@ -84,7 +84,7 @@ public class ParticleEngine
                           (float) offsets.z(),
                           0f,
                           this.particleCount,
-                          new byte[]{}
+                          null
                   ));
                   return;
             }

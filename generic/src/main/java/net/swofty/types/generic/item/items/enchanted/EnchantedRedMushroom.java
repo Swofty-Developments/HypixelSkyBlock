@@ -5,20 +5,15 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedRedMushroom implements Enchanted, Sellable {
-    @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.RED_MUSHROOM;
-    }
-    //also 160 Red Mushroom Blocks into 9 Enchanted Red Mushrooms
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.FARMING;
-    }
-
+import net.swofty.types.generic.item.impl.Craftable;
+public class EnchantedRedMushroom implements Enchanted, Sellable, Craftable {
     @Override
     public double getSellValue() {
         return 1600;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.RED_MUSHROOM);
     }
 }

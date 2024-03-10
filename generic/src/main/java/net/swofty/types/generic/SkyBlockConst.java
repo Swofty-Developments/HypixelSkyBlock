@@ -19,6 +19,8 @@ public class SkyBlockConst {
     @Getter
     @Setter
     private static SkyBlockTypeLoader typeLoader;
+    @Getter
+    private static Integer currentIslandVersion = 1;
 
     public static boolean isIslandServer() {
         return typeLoader.getType() == ServerType.ISLAND;

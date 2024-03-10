@@ -112,7 +112,7 @@ public class ServerOrbImpl extends LivingEntity {
                             0.1f,
                             0f,
                             3,
-                            new byte[]{}
+                            null
                     ));
                 });
             }

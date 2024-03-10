@@ -5,15 +5,11 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.Craftable;
 
-public class EnchantedSharkFin implements Enchanted {
+public class EnchantedSharkFin implements Enchanted, Craftable {
     @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.SHARK_FIN;
-    }
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.FISHING;
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemType.SHARK_FIN);
     }
 }

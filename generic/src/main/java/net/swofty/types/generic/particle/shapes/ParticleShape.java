@@ -69,7 +69,7 @@ public abstract class ParticleShape
                     (float) offsets.z(),
                     data,
                     count,
-                    new byte[]{}
+                    null
             );
       }
 }

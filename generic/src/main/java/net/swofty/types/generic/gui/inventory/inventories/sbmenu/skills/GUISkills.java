@@ -44,51 +44,54 @@ public class GUISkills extends SkyBlockInventoryGUI {
                         "§7rewards.");
             }
         });
+        updateItemStacks(getInventory(), getPlayer());
 
-        int index = 0;
-        for (int slot : displaySlots) {
-            SkillCategories category = allCategories[index];
-            SkillCategory skillCategory = category.asCategory();
+        Thread.startVirtualThread(() -> {
+            int index = 0;
+            for (int slot : displaySlots) {
+                SkillCategories category = allCategories[index];
+                SkillCategory skillCategory = category.asCategory();
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUISkillCategory(category, 0).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ArrayList<String> lore = new ArrayList<>(skillCategory.getDescription());
-                    lore.add(" ");
-
-                    Integer nextLevel = player.getSkills().getNextLevel(category);
-
-                    if (nextLevel != null) {
-                        player.getSkills().getDisplay(lore, category, skillCategory.getRewards()[nextLevel - 1].requirement(),
-                                "§7Progress to Level " + StringUtility.getAsRomanNumeral(nextLevel) + ": ");
-                        lore.add(" ");
-
-                        SkillCategory.SkillReward[] rewards = skillCategory.getRewards();
-                        SkillCategory.SkillReward reward = rewards[nextLevel - 1];
-
-                        reward.getDisplay(lore);
-                    } else {
-                        lore.add("§cMax Level Reached!");
+                set(new GUIClickableItem(slot) {
+                    @Override
+                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        new GUISkillCategory(category, 0).open(player);
                     }
 
-                    lore.add(" ");
-                    lore.add("§eClick to view!");
+                    @Override
+                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                        ArrayList<String> lore = new ArrayList<>(skillCategory.getDescription());
+                        lore.add(" ");
 
-                    return ItemStackCreator.getStack(
-                            "§a" + skillCategory.getName() + " " +
-                                    StringUtility.getAsRomanNumeral(player.getSkills().getCurrentLevel(category)),
-                            skillCategory.getDisplayIcon(), 1, lore);
-                }
-            });
+                        Integer nextLevel = player.getSkills().getNextLevel(category);
 
-            index++;
-        }
-        updateItemStacks(getInventory(), getPlayer());
+                        if (nextLevel != null) {
+                            player.getSkills().getDisplay(lore, category, skillCategory.getRewards()[nextLevel - 1].requirement(),
+                                    "§7Progress to Level " + StringUtility.getAsRomanNumeral(nextLevel) + ": ");
+                            lore.add(" ");
+
+                            SkillCategory.SkillReward[] rewards = skillCategory.getRewards();
+                            SkillCategory.SkillReward reward = rewards[nextLevel - 1];
+
+                            reward.getDisplay(lore);
+                        } else {
+                            lore.add("§cMax Level Reached!");
+                        }
+
+                        lore.add(" ");
+                        lore.add("§eClick to view!");
+
+                        return ItemStackCreator.getStack(
+                                "§a" + skillCategory.getName() + " " +
+                                        StringUtility.getAsRomanNumeral(player.getSkills().getCurrentLevel(category)),
+                                skillCategory.getDisplayIcon(), 1, lore);
+                    }
+                });
+
+                updateItemStacks(getInventory(), getPlayer());
+                index++;
+            }
+        });
     }
 
     @Override

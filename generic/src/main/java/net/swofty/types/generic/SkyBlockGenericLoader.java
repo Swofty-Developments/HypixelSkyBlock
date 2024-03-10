@@ -220,12 +220,18 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             long ramUsage = benchmarkManager.getUsedMemory();
             ramUsage /= (long) 1e6; // bytes to MB
             TickMonitor tickMonitor = LAST_TICK.get();
+            double TPS = 1000 / tickMonitor.getTickTime();
+
+            if (TPS < 20)
+                SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                    player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
+                });
 
             final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
                     .append(Component.newline())
                     .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
                     .append(Component.newline())
-                    .append(Component.text("§7TPS: §8" + (1000 / tickMonitor.getTickTime())))
+                    .append(Component.text("§7TPS: §8" + TPS))
                     .append(Component.newline());
             final Component footer = Component.newline()
                     .append(Component.text("§a§lActive Effects"))

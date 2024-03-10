@@ -14,6 +14,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.IslandDatabase;
@@ -23,11 +24,17 @@ import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.utility.JerryInformation;
+import net.swofty.types.generic.utility.MathUtility;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
+import sun.misc.Unsafe;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.nio.file.Path;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +61,8 @@ public class SkyBlockIsland {
     private IslandMinionData minionData = null;
     @Setter
     private long lastSaved = 0;
+    @Setter
+    private Integer islandVersion;
 
     public SkyBlockIsland(UUID islandID, UUID profileID) {
         this.islandID = islandID;
@@ -91,6 +100,7 @@ public class SkyBlockIsland {
             }
 
             if (!database.exists()) {
+                islandVersion = SkyBlockConst.getCurrentIslandVersion();
                 try {
                     world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
                 } catch (IOException e) {
@@ -102,13 +112,34 @@ public class SkyBlockIsland {
                         this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
                 ));
             } else {
-                world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
+                if (database.has("version"))
+                    islandVersion = (int) database.get("version", Integer.class);
+                else islandVersion = 0;
 
-                // Since addition of this is new, old islands may not have of had migrated
-                if (database.has("lastSaved"))
-                    lastSaved = (long) database.get("lastSaved", Long.class);
-                else
-                    lastSaved = 0;
+                switch (islandVersion) {
+                    case 0:
+                        lastSaved = System.currentTimeMillis();
+                        try {
+                            world = AnvilPolar.anvilToPolar(Path.of(ISLAND_TEMPLATE_NAME), ChunkSelector.radius(3));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                    case 1:
+                        world = PolarReader.read(((Binary) database.get("data", Binary.class)).getData());
+                        lastSaved = (long) database.get("lastSaved", Long.class);
+                        break;
+                }
+
+                int oldVersion = islandVersion;
+                if (islandVersion < SkyBlockConst.getCurrentIslandVersion()) {
+                    MathUtility.delay(() -> {
+                        SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getSkyBlockIsland().getIslandID() == islandID).forEach(player -> {
+                            player.getLogHandler().debug("Your island was migrated from version §c" + oldVersion + " §fto §a" + SkyBlockConst.getCurrentIslandVersion() + "§f!");
+                        });
+                    }, 20);
+                    islandVersion = SkyBlockConst.getCurrentIslandVersion();
+                }
             }
 
             islandInstance = manager.createSharedInstance(temporaryInstance);
@@ -148,6 +179,7 @@ public class SkyBlockIsland {
         new PolarLoader(world).saveInstance(islandInstance);
         database.insertOrUpdate("data", new Binary(PolarWriter.write(world)));
         database.insertOrUpdate("lastSaved", System.currentTimeMillis());
+        database.insertOrUpdate("version", islandVersion);
     }
 
     public static boolean hasIsland(UUID islandID) {

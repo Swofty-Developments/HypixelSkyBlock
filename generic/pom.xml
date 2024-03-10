@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.github.Minestom</groupId>
             <artifactId>Minestom</artifactId>
-            <version>d03466e5a3</version>
+            <version>2ff143a61d</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>dev.hollowcube</groupId>
             <artifactId>polar</artifactId>
-            <version>1.3.2</version>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
     <build>

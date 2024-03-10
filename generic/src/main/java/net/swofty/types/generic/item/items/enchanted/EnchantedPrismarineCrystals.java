@@ -5,20 +5,16 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.Craftable;
 
-public class EnchantedPrismarineCrystals implements Enchanted, Sellable {
-    @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.PRISMARINE_CRYSTALS;
-    }
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.FISHING;
-    }
-
+public class EnchantedPrismarineCrystals implements Enchanted, Sellable, Craftable {
     @Override
     public double getSellValue() {
         return 400;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemType.PRISMARINE_CRYSTALS);
     }
 }

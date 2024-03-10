@@ -34,12 +34,16 @@ public class SkyBlockMenu implements CustomSkyBlockItem, Interactable {
 
     @Override
     public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUISkyBlockMenu().open(player);
+        Thread.startVirtualThread(() -> {
+            new GUISkyBlockMenu().open(player);
+        });
     }
 
     @Override
     public void onLeftInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUISkyBlockMenu().open(player);
+        Thread.startVirtualThread(() -> {
+            new GUISkyBlockMenu().open(player);
+        });
     }
 
     @Override
@@ -48,7 +52,9 @@ public class SkyBlockMenu implements CustomSkyBlockItem, Interactable {
         if (player.getOpenInventory() != null && !player.getOpenInventory().getCursorItem(player).isAir())
             return true;
 
-        new GUISkyBlockMenu().open(player);
+        Thread.startVirtualThread(() -> {
+            new GUISkyBlockMenu().open(player);
+        });
         return true;
     }
 }

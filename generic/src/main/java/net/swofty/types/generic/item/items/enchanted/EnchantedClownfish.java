@@ -5,20 +5,17 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.Craftable;
 
-public class EnchantedClownfish implements Enchanted, Sellable {
-    @Override
-    public ItemType getCraftingMaterial() {
-        return ItemType.TROPICAL_FISH;
-    }
-
-    @Override
-    public SkyBlockRecipe.RecipeType getRecipeType() {
-        return SkyBlockRecipe.RecipeType.FISHING;
-    }
+public class EnchantedClownfish implements Enchanted, Sellable, Craftable {
 
     @Override
     public double getSellValue() {
         return 3200;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemType.TROPICAL_FISH);
     }
 }
