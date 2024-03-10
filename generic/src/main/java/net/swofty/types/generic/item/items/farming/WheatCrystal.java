@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class FarmingOrb implements CustomSkyBlockItem, SkullHead, Placeable, ServerOrb {
+public class WheatCrystal implements CustomSkyBlockItem, SkullHead, Placeable, ServerOrb {
     @Override
     public ItemStatistics getStatistics() {
             return ItemStatistics.EMPTY;
@@ -20,12 +20,12 @@ public class FarmingOrb implements CustomSkyBlockItem, SkullHead, Placeable, Ser
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "557b354ce9bf8db0a7ed2afc79e27f28c3ccaaaf2c460a51993cac2b0564ef60";
+        return "9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135";
     }
 
     @Override
     public void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
-        new ServerOrbImpl(Material.WHEAT_SEEDS, "557b354ce9bf8db0a7ed2afc79e27f28c3ccaaaf2c460a51993cac2b0564ef60").setInstance(
+        new ServerOrbImpl(Material.WHEAT_SEEDS, "9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135").setInstance(
                 player.getInstance(), event.getBlockPosition().add(0, 1, 0)
         );
     }
