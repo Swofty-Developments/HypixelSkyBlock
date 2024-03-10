@@ -10,7 +10,6 @@ import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
-import net.swofty.types.generic.item.items.farming.FarmingOrb;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
 import net.swofty.types.generic.item.items.farming.WheatCrystal;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
