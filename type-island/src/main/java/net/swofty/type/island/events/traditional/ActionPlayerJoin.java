@@ -6,6 +6,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.client.play.ClientChunkBatchReceivedPacket;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;

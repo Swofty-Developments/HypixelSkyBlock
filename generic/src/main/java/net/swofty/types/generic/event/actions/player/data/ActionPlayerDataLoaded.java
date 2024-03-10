@@ -45,38 +45,41 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
         PlayerSpawnEvent playerLoginEvent = (PlayerSpawnEvent) event;
         SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
-        player.showTitle(Title.title(
-                Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
-                Component.empty(),
-                Title.Times.times(Duration.ZERO, Duration.ofMillis(300), Duration.ofSeconds(1))
-        ));
+        if (!playerLoginEvent.isFirstSpawn()) return;
 
-        Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
-        if (rank.isStaff()) {
-            CustomGroups.staffMembers.add(player);
-        }
-        player.sendMessage("§7Sending to server mini" + SkyBlockConst.getServerName() + "...");
-        player.sendMessage("§7 ");
-        player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
-                DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
-        player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
+        Thread.startVirtualThread(() -> {
+            player.showTitle(Title.title(
+                    Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
+                    Component.empty(),
+                    Title.Times.times(Duration.ZERO, Duration.ofMillis(300), Duration.ofSeconds(1))
+            ));
 
-        UUID islandUuid = player.getDataHandler().get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
-        if (islandUuid != player.getProfiles().getCurrentlySelected())
-            player.sendMessage("§8Island ID: " + islandUuid);
-        player.sendMessage(" ");
+            Rank rank = player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+            if (rank.isStaff()) {
+                CustomGroups.staffMembers.add(player);
+            }
+            player.sendMessage("§7Sending to server mini" + SkyBlockConst.getServerName() + "...");
+            player.sendMessage("§7 ");
+            player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
+                    DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
+            player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
 
+            UUID islandUuid = player.getDataHandler().get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue();
+            if (islandUuid != player.getProfiles().getCurrentlySelected())
+                player.sendMessage("§8Island ID: " + islandUuid);
+            player.sendMessage(" ");
 
-        player.health = player.getMaxHealth();
-        player.sendPacket(new UpdateHealthPacket(
-                (player.health / player.getMaxHealth()) * 20,
-                20,
-                20));
+            player.health = player.getMaxHealth();
+            player.sendPacket(new UpdateHealthPacket(
+                    (player.health / player.getMaxHealth()) * 20,
+                    20,
+                    20));
 
-        MinecraftServer.getBossBarManager().removeAllBossBars(player);
+            MinecraftServer.getBossBarManager().removeAllBossBars(player);
 
-        if (SkyBlockConst.isIslandServer()) return;
-        PlayerHolograms.spawnAll(player);
-        SkyBlockNPC.updateForPlayer(player);
+            if (SkyBlockConst.isIslandServer()) return;
+            PlayerHolograms.spawnAll(player);
+            SkyBlockNPC.updateForPlayer(player);
+        });
     }
 }

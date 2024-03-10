@@ -11,6 +11,7 @@ import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.MathUtils;
@@ -98,6 +99,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             SkyBlockConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
         }
+        SkyBlockConst.setEmptyInstance(instanceManager.createSharedInstance(instanceManager.createInstanceContainer()));
+        SkyBlockConst.getEmptyInstance().setBlock(0, 99, 0, Block.BEDROCK);
         SkyBlockConst.setEventHandler(MinecraftServer.getGlobalEventHandler());
 
         /**

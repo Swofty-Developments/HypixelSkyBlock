@@ -127,11 +127,10 @@ public class DataHandler {
         return type.cast(this.datapoints.get(datapoint.key));
     }
 
-    public void runOnLoad() {
+    public void runOnLoad(SkyBlockPlayer player) {
         Arrays.stream(Data.values()).forEach(data -> {
             if (data.onLoad != null) {
-                data.onLoad.accept((SkyBlockPlayer) MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid),
-                        get(data, data.getType()));
+                data.onLoad.accept(player, get(data, data.getType()));
             }
         });
     }

@@ -76,10 +76,11 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
         if (profilesDatabase.exists()) {
             Document document = profilesDatabase.getDocument();
             handler = DataHandler.fromDocument(document);
+            DataHandler.userCache.put(playerUuid, handler);
         } else {
             handler = DataHandler.initUserWithDefaultData(playerUuid);
+            DataHandler.userCache.put(playerUuid, handler);
         }
-        DataHandler.userCache.put(playerUuid, handler);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
             DataHandler handler = DataHandler.initUserWithDefaultData(playerUuid);
             DataHandler.userCache.put(playerUuid, handler);
 
-            handler.runOnLoad();
+            handler.runOnLoad((SkyBlockPlayer) event.getPlayer());
 
             PlayerProfiles profiles = ((SkyBlockPlayer) event.getPlayer()).getProfiles();
 

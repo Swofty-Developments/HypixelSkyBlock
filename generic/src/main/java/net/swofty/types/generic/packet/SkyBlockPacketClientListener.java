@@ -7,6 +7,7 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -54,12 +55,14 @@ public abstract class SkyBlockPacketClientListener {
         eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
             cachedEvents.forEach((packetEvent) -> {
                 if (packetEvent.overrideMinestomProcessing()) return;
-
                 Class<?> packetType = packetEvent.getPacket();
 
                 if (packetType.isInstance(rawEvent.getPacket())) {
-                    if (SkyBlockGenericLoader.getFromUUID(rawEvent.getPlayer().getUuid()) != null)
-                        packetEvent.run(rawEvent, rawEvent.getPacket(), (SkyBlockPlayer) rawEvent.getPlayer());
+                    if (SkyBlockGenericLoader.getFromUUID(rawEvent.getPlayer().getUuid()) == null) return;
+                    if (SkyBlockConst.isIslandServer() &&
+                            !((SkyBlockPlayer) rawEvent.getPlayer()).getSkyBlockIsland().getCreated()) return;
+
+                    packetEvent.run(rawEvent, rawEvent.getPacket(), (SkyBlockPlayer) rawEvent.getPlayer());
                 }
             });
         });

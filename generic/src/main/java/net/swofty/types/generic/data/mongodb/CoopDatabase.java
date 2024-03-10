@@ -111,7 +111,10 @@ public class CoopDatabase {
         }
 
         public List<SkyBlockPlayer> getOnlineMembers() {
-            return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> members.contains(player.getUuid())).toList();
+            return SkyBlockGenericLoader.getLoadedPlayers().stream()
+                    .filter(player -> members.contains(player.getUuid()))
+                    .filter(player -> memberProfiles.contains(player.getProfiles().getCurrentlySelected()))
+                    .toList();
         }
 
         public void save() {

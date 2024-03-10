@@ -78,6 +78,6 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
 
         player.sendMessage("");
 
-        handler.runOnLoad();
+        handler.runOnLoad(player);
     }
 }

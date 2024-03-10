@@ -8,6 +8,7 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.trait.PlayerEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.tinylog.Logger;
@@ -76,19 +77,22 @@ public abstract class SkyBlockEvent {
                     @SuppressWarnings("unchecked")
                     Event concreteEvent = eventType.cast(rawEvent);
 
-                    if (concreteEvent instanceof PlayerEvent
+                    if (concreteEvent instanceof PlayerEvent event
                             && skyBlockEvent.params.requireDataLoaded()
-                            && DataHandler.getUser(((PlayerEvent) concreteEvent).getPlayer()) == null) {
+                            && (DataHandler.getUser(event.getPlayer()) == null
+                                || (SkyBlockConst.isIslandServer() &&
+                                    !((SkyBlockPlayer) event.getPlayer()).getSkyBlockIsland().getCreated()))) {
                         Scheduler scheduler = MinecraftServer.getSchedulerManager();
 
                         scheduler.submitTask(() -> {
                             Player player = ((PlayerEvent) concreteEvent).getPlayer();
                             if (!player.isOnline()) return TaskSchedule.stop();
-                            if (DataHandler.getUser(player) != null) {
-                                runEvent(skyBlockEvent, concreteEvent);
-                                return TaskSchedule.stop();
-                            }
-                            return TaskSchedule.millis(2);
+                            if (DataHandler.getUser(player) == null) return TaskSchedule.millis(2);
+                            if (SkyBlockConst.isIslandServer() &&
+                                    !((SkyBlockPlayer) player).getSkyBlockIsland().getCreated()) return TaskSchedule.millis(2);
+
+                            runEvent(skyBlockEvent, concreteEvent);
+                            return TaskSchedule.stop();
                         });
                     } else {
                         // Now run the event with the properly casted type

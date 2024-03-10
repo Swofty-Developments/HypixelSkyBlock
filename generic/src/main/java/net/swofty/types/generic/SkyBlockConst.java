@@ -12,6 +12,9 @@ public class SkyBlockConst {
     private static SharedInstance instanceContainer;
     @Getter
     @Setter
+    private static SharedInstance emptyInstance;
+    @Getter
+    @Setter
     private static GlobalEventHandler eventHandler;
     @Getter
     @Setter
