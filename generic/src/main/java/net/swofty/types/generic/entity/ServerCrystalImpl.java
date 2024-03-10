@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ServerOrbImpl extends LivingEntity {
+public class ServerCrystalImpl extends LivingEntity {
     private final String url;
     private final Material toPlace;
     private Task upAndDownTask;
@@ -31,7 +31,7 @@ public class ServerOrbImpl extends LivingEntity {
     @Getter
     private float yLevel = 0f;
 
-    public ServerOrbImpl(@NotNull Material toPlace, @NotNull String url) {
+    public ServerCrystalImpl(@NotNull Material toPlace, @NotNull String url) {
         super(EntityType.ARMOR_STAND);
 
         this.toPlace = toPlace;

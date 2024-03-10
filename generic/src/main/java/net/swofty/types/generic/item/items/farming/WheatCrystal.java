@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.farming;
 
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.entity.ServerOrbImpl;
+import net.swofty.types.generic.entity.ServerCrystalImpl;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Placeable;
@@ -25,7 +25,7 @@ public class WheatCrystal implements CustomSkyBlockItem, SkullHead, Placeable, S
 
     @Override
     public void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
-        new ServerOrbImpl(Material.WHEAT_SEEDS, "9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135").setInstance(
+        new ServerCrystalImpl(Material.WHEAT_SEEDS, "9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135").setInstance(
                 player.getInstance(), event.getBlockPosition().add(0, 1, 0)
         );
     }

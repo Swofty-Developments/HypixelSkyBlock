@@ -6,7 +6,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
@@ -14,26 +13,18 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
-import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.Songs;
-import net.swofty.commons.bazaar.BazaarInitializationRequest;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.ProxyService;
-import net.swofty.redisapi.api.RedisAPI;
-import net.swofty.types.generic.bazaar.BazaarCategories;
-import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.*;
-import net.swofty.types.generic.entity.DroppedItemEntityImpl;
-import net.swofty.types.generic.entity.ServerOrbImpl;
+import net.swofty.types.generic.entity.ServerCrystalImpl;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.entity.mob.MobRegistry;
@@ -57,7 +48,6 @@ import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
-import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.attribute.SkyBlockServerAttributes;
@@ -69,7 +59,6 @@ import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.MathUtility;
-import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -115,7 +104,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         AttributeDatabase.connect(Configuration.get("mongodb"));
         UserDatabase.connect(Configuration.get("mongodb"));
         CoopDatabase.connect(Configuration.get("mongodb"));
-        OrbDatabase.connect(Configuration.get("mongodb"));
+        CrystalDatabase.connect(Configuration.get("mongodb"));
 
         /**
          * Register commands
@@ -282,13 +271,13 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         if (SkyBlockConst.getInstanceContainer() != null) {
             Thread.startVirtualThread(() -> {
-                OrbDatabase.getAllOrbs().forEach(orb -> {
-                    ItemType type = orb.itemType;
+                CrystalDatabase.getAllCrystals().forEach(crystal -> {
+                    ItemType type = crystal.itemType;
                     try {
-                        ServerOrb asOrb = (ServerOrb) type.clazz.newInstance();
-                        ServerOrbImpl orbImpl = new ServerOrbImpl(asOrb.getOrbSpawnMaterial(), orb.url);
-                        orbImpl.setInstance(SkyBlockConst.getInstanceContainer(),
-                                new Pos(orb.position.x(), orb.position.y(), orb.position.z()));
+                        ServerOrb asCrystal = (ServerOrb) type.clazz.newInstance();
+                        ServerCrystalImpl crystalImpl = new ServerCrystalImpl(asCrystal.getOrbSpawnMaterial(), crystal.url);
+                        crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
+                                new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
                     } catch (InstantiationException | IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
