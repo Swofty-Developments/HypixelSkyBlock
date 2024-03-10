@@ -25,6 +25,7 @@ import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -93,6 +94,10 @@ public class SkyBlockPlayer extends Player {
 
     public DatapointToggles.Toggles getToggles() {
         return getDataHandler().get(DataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
+    }
+
+    public SkyBlockSongsHandler getSongHandler() {
+        return new SkyBlockSongsHandler(this);
     }
 
     public AntiCheatHandler getAntiCheatHandler() {

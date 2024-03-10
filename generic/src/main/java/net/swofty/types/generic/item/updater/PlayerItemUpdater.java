@@ -124,9 +124,7 @@ public class PlayerItemUpdater {
     }
 
     public static void updateLoop(Scheduler scheduler) {
-        AtomicInteger tick = new AtomicInteger(0);
         scheduler.submitTask(() -> {
-            tick.getAndIncrement();
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Arrays.stream(PlayerItemOrigin.values()).forEach(origin -> {
                     if (!origin.shouldBeLooped()) return;

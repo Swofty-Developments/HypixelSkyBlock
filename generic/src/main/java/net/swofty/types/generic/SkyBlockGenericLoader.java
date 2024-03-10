@@ -21,6 +21,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.Songs;
 import net.swofty.commons.bazaar.BazaarInitializationRequest;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
@@ -53,6 +54,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
+import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
 import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
@@ -164,6 +166,18 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          * Start data loop
          */
         DataHandler.startRepeatSetValueLoop();
+
+        /**
+         * Attempt to start the song service
+         */
+        boolean hasAllSongs = Arrays.stream(Songs.values()).allMatch(song -> song.getPath().toFile().exists());
+        if (hasAllSongs) {
+            Logger.info("All songs have been found, starting song service for this instance.");
+            SkyBlockSongsHandler.isEnabled = true;
+        } else {
+            Logger.error("Not all songs have been found, song service will not start for this instance.");
+            SkyBlockSongsHandler.isEnabled = false;
+        }
 
         /**
          * Start Tablist loop
