@@ -267,6 +267,13 @@ public enum ItemType {
     RABBIT_HIDE(Material.RABBIT_HIDE, Rarity.COMMON),
     BEEF(Material.BEEF, Rarity.COMMON),
     WOOL(Material.WHITE_WOOL, Rarity.COMMON),
+    COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON),
+    LAPIS_LAZULI_BLOCK(Material.LAPIS_BLOCK, Rarity.COMMON),
+    QUARTZ_BLOCK(Material.QUARTZ_BLOCK, Rarity.COMMON),
+    BROWN_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
+    RED_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
+    BLAZE_POWDER(Material.BLAZE_POWDER, Rarity.COMMON),
+    GOLDEN_CARROT(Material.GOLDEN_CARROT, Rarity.COMMON),
 
     /**
      * Enchanted Items

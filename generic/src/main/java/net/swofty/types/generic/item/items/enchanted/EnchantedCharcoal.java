@@ -18,11 +18,12 @@ public class EnchantedCharcoal implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        // Adjusting the recipe as per the comment that 128 coal and 32 oak wood should be used
-        // Assuming a custom method for recipes that don't follow the standard pattern
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.ENCHANTED_CHARCOAL))
-                .add(ItemType.COAL, 64)
-                .add(ItemType.COAL, 64)
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FORAGING,
+                new SkyBlockItem(ItemType.ENCHANTED_CHARCOAL), 1)
+                .add(ItemType.COAL, 32)
+                .add(ItemType.COAL, 32)
+                .add(ItemType.COAL, 32)
+                .add(ItemType.COAL, 32)
                 .add(ItemType.OAK_WOOD, 32);
     }
 }
