@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.mining.dwarvenMines;
+package net.swofty.types.generic.item.items.combat;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Titanium implements CustomSkyBlockItem, Sellable, SkullHead {
+public class ChiliPepper implements CustomSkyBlockItem, Sellable, SkullHead {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -19,18 +19,17 @@ public class Titanium implements CustomSkyBlockItem, Sellable, SkullHead {
 
     @Override
     public double getSellValue() {
-        return 20;
+        return 5000;
     }
 
+    @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "a14c6e41a762d37863a9fff6888c738905b92cc6c3898892a38dfdfe2ac4bf";
+        return "f859c8df1109c08a756275f1d2887c2748049fe33877769a7b415d56eda469d8";
     }
 
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7§7§oIts strength and resistance",
-                "§7§oto corrosion are the highest of",
-                "§7§oany metallic element."));
+                "§7It\u0027s red hot, but green!"));
     }
 }

@@ -21,7 +21,7 @@ public class FlawedRuby implements GemstoneImpl, Sellable, Craftable {
 
     @Override
     public Gemstone getAssociatedGemstone() {
-        return Gemstone.SAPPHIRE;
+        return Gemstone.RUBY;
     }
 
     @Override
