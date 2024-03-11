@@ -13,15 +13,21 @@ import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
 import net.swofty.types.generic.item.items.farming.WheatCrystal;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
-import net.swofty.types.generic.item.items.mining.crystalHallows.HardStone;
-import net.swofty.types.generic.item.items.mining.crystalHallows.gemstones.*;
+import net.swofty.types.generic.item.items.mining.crystal.HardStone;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.types.generic.item.items.mining.dwarvenMines.Mithril;
 import net.swofty.types.generic.item.items.mining.dwarvenMines.Titanium;
 import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
-import net.swofty.types.generic.item.items.minion.*;
+import net.swofty.types.generic.item.items.minion.CoalMinion;
+import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
+import net.swofty.types.generic.item.items.minion.SnowMinion;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
@@ -128,7 +134,6 @@ public enum ItemType {
     ROUGH_JASPER_GEM(Material.PLAYER_HEAD, Rarity.COMMON, RoughJasper.class),
     ROUGH_RUBY_GEM(Material.PLAYER_HEAD, Rarity.COMMON, RoughRuby.class),
     ROUGH_JADE_GEM(Material.PLAYER_HEAD, Rarity.COMMON, RoughJade.class),
-    ROUGH_OPAL_GEM(Material.PLAYER_HEAD, Rarity.COMMON, RoughOpal.class),
     FLAWED_AMBER_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedAmber.class),
     FLAWED_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedTopaz.class),
     FLAWED_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedSapphire.class),
@@ -136,7 +141,6 @@ public enum ItemType {
     FLAWED_JASPER_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedJasper.class),
     FLAWED_RUBY_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedRuby.class),
     FLAWED_JADE_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedJade.class),
-    FLAWED_OPAL_GEM(Material.PLAYER_HEAD, Rarity.UNCOMMON, FlawedOpal.class),
     FINE_AMBER_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineAmber.class),
     FINE_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineTopaz.class),
     FINE_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineSapphire.class),
@@ -144,7 +148,6 @@ public enum ItemType {
     FINE_JASPER_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineJasper.class),
     FINE_RUBY_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineRuby.class),
     FINE_JADE_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineJade.class),
-    FINE_OPAL_GEM(Material.PLAYER_HEAD, Rarity.RARE, FineOpal.class),
     FLAWLESS_AMBER_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessAmber.class),
     FLAWLESS_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessTopaz.class),
     FLAWLESS_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessSapphire.class),
@@ -152,7 +155,6 @@ public enum ItemType {
     FLAWLESS_JASPER_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessJasper.class),
     FLAWLESS_RUBY_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessRuby.class),
     FLAWLESS_JADE_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessJade.class),
-    FLAWLESS_OPAL_GEM(Material.PLAYER_HEAD, Rarity.EPIC, FlawlessOpal.class),
     PERFECT_AMBER_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectAmber.class),
     PERFECT_TOPAZ_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectTopaz.class),
     PERFECT_SAPPHIRE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectSapphire.class),
@@ -160,7 +162,7 @@ public enum ItemType {
     PERFECT_JASPER_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectJasper.class),
     PERFECT_RUBY_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectRuby.class),
     PERFECT_JADE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectJade.class),
-    PERFECT_OPAL_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectOpal.class),
+
     HARD_STONE(Material.STONE, Rarity.COMMON, HardStone.class),
     MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON, Mithril.class),
     TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
@@ -366,7 +368,7 @@ public enum ItemType {
     ENCHANTED_MELON_BLOCK(Material.MELON, Rarity.RARE, EnchantedMelonBlock.class),
     ENCHANTED_MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.RARE, EnchantedMithril.class),
     ENCHANTED_MYCELIUM(Material.MYCELIUM, Rarity.UNCOMMON, EnchantedMycelium.class),
-    ENCHANTED_MYCELIUM_CUBE(Material.PLAYER_HEAD, Rarity.RARE, EnchantedMycelium.class),
+    ENCHANTED_MYCELIUM_CUBE(Material.PLAYER_HEAD, Rarity.RARE, EnchantedMyceliumCube.class),
     ENCHANTED_NETHER_WART(Material.NETHER_WART, Rarity.UNCOMMON, EnchantedNetherWart.class),
     ENCHANTED_NETHERRACK(Material.NETHERRACK, Rarity.UNCOMMON, EnchantedNetherrack.class),
     ENCHANTED_PAPER(Material.PAPER, Rarity.UNCOMMON, EnchantedPaper.class),

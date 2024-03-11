@@ -6,7 +6,6 @@ import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.impl.Reforgable;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.MathUtility;

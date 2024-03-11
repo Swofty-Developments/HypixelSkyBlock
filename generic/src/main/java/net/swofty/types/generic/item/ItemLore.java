@@ -5,7 +5,10 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.gems.GemRarity;
+import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
@@ -17,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ItemLore {
@@ -76,6 +80,41 @@ public class ItemLore {
                     handler.getReforge(), rarity);
             boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.get(ItemStatistic.SPEED),
                     handler.getReforge(), rarity);
+
+            // Handle Gemstone lore
+            if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
+                ItemAttributeGemData.GemData gemData = handler.getGemData();
+                StringBuilder gemstoneLore = new StringBuilder(" ");
+
+                int index = -1;
+                for (Map.Entry<Gemstone.Slots, Integer> entry : gemstoneItem.getGemstoneSlots().entrySet()) {
+                    index++;
+                    Gemstone.Slots gemstone = entry.getKey();
+
+                    if (!gemData.hasGem(index)) {
+                        gemstoneLore.append("§8[" + gemstone.symbol + "] ");
+                        continue;
+                    }
+
+                    ItemAttributeGemData.GemData.GemSlots gemSlot = gemData.getGem(index);
+                    ItemType filledWith = gemSlot.filledWith;
+
+                    if (filledWith == null) {
+                        gemstoneLore.append("§7[" + gemstone.symbol + "] ");
+                        continue;
+                    }
+
+                    GemstoneImpl gemstoneImpl = (GemstoneImpl) filledWith.clazz.getDeclaredConstructor().newInstance();
+                    GemRarity gemRarity = gemstoneImpl.getAssociatedGemRarity();
+                    Gemstone gemstoneEnum = gemstoneImpl.getAssociatedGemstone();
+                    Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
+
+                    gemstoneLore.append(gemRarity.bracketColor + "[" + gemstoneSlot.symbol + gemRarity.bracketColor + "] ");
+                }
+
+                if (!gemstoneLore.toString().trim().isEmpty())
+                    addLoreLine(gemstoneLore.toString());
+            }
 
             if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
 
@@ -173,19 +212,23 @@ public class ItemLore {
     private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
                                            ReforgeType.Reforge reforge, Rarity rarity) {
         double reforgeValue = 0;
+        double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, new SkyBlockItem(stack));
         if (reforge != null) {
             overallValue += reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
             reforgeValue = reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
         }
+        overallValue += gemstoneValue;
 
         if (overallValue == 0) return false;
 
         String color = statistic.isRed() ? "&c" : "&a";
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-                color + statistic.getPrefix() + overallValue + statistic.getSuffix() + " ";
+                color + statistic.getPrefix() + overallValue + statistic.getSuffix();
 
         if (reforgeValue != 0)
-            line += "§9(" + (reforgeValue > 0 ? "+" : "") + reforgeValue + ")";
+            line += " §9(" + (reforgeValue > 0 ? "+" : "") + reforgeValue + ")";
+        if (gemstoneValue != 0)
+            line += " §d(" + (gemstoneValue >= 1 ? "+" : "") + gemstoneValue + ")";
 
         addLoreLine(line);
         return true;

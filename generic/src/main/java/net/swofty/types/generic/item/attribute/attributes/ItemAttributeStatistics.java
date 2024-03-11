@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.attribute.attributes;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.MathUtility;
 
 public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
 

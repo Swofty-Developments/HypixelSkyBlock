@@ -8,15 +8,11 @@ import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.*;
-import net.swofty.types.generic.item.impl.Backpack;
-import net.swofty.types.generic.item.impl.Enchanted;
-import net.swofty.types.generic.item.impl.LeatherColour;
-import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
 import java.util.stream.Stream;
 
 public class AttributeHandler {
@@ -42,6 +38,15 @@ public class AttributeHandler {
         if (item.getGenericInstance() instanceof LeatherColour colour)
             return colour.getLeatherColour();
         return null;
+    }
+
+    public ItemAttributeGemData.GemData getGemData() {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a gemstone");
+        if (item.getGenericInstance() instanceof GemstoneItem) {
+            return ((ItemAttributeGemData) item.getAttribute("gems")).getValue();
+        } else {
+            throw new RuntimeException("Item is not a gemstone");
+        }
     }
 
     public ItemAttributeBackpackData.BackpackData getBackpackData() {
