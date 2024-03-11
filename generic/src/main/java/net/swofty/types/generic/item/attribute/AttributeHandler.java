@@ -40,12 +40,12 @@ public class AttributeHandler {
         return null;
     }
 
-    public ItemAttributeGemData.GemData getGemData() {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a gemstone");
+    public @Nullable ItemAttributeGemData.GemData getGemData() {
+        if (item.getGenericInstance() == null) return null;
         if (item.getGenericInstance() instanceof GemstoneItem) {
             return ((ItemAttributeGemData) item.getAttribute("gems")).getValue();
         } else {
-            throw new RuntimeException("Item is not a gemstone");
+            return null;
         }
     }
 

@@ -17,8 +17,12 @@ import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
+import net.swofty.types.generic.gems.GemStats;
+import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
+import net.swofty.types.generic.item.impl.GemstoneImpl;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
@@ -63,8 +67,7 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(item.getAttributeHandler().getStatistics());
-            total = getReforgeStatistics(item, total);
+            total = total.add(runExtraStatistics(item, item.getAttributeHandler().getStatistics()));
         }
         return total;
     }
@@ -80,7 +83,7 @@ public class PlayerStatistics {
                 return ItemStatistics.EMPTY;
 
         ItemStatistics statistics = item.getAttributeHandler().getStatistics();
-        statistics = getReforgeStatistics(item, statistics);
+        statistics = runExtraStatistics(item, statistics);
 
         return statistics;
     }
@@ -126,11 +129,17 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                ItemStatistics itemStatistics = getReforgeStatistics(item, item.getAttributeHandler().getStatistics());
-                total = total.add(itemStatistics);
+                total = total.add(runExtraStatistics(item, item.getAttributeHandler().getStatistics()));
             }
         }
         fullInventoryStatisticsCache = total;
+    }
+
+    private ItemStatistics runExtraStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        statistics = getReforgeStatistics(item, statistics);
+        statistics = getGemstoneStatistics(item, statistics);
+
+        return statistics;
     }
 
     private ItemStatistics getReforgeStatistics(SkyBlockItem item, ItemStatistics statistics) {
@@ -141,6 +150,28 @@ public class PlayerStatistics {
                         statistic,
                         item.getAttributeHandler().getRarity().ordinal()));
             }
+            statistics = statistics.add(builder.build());
+        }
+        return statistics;
+    }
+
+    private ItemStatistics getGemstoneStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        if (item.getAttributeHandler().getGemData() != null) {
+            ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();
+            ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
+
+            gemData.slots.forEach(slot -> {
+                if (slot.filledWith == null) return;
+                SkyBlockItem gem = new SkyBlockItem(slot.filledWith);
+                if (gem.getGenericInstance() == null) return;
+                if (!(gem.getGenericInstance() instanceof GemstoneImpl)) return;
+
+                GemstoneImpl gemstone = (GemstoneImpl) gem.getGenericInstance();
+                builder.with(gemstone.getAssociatedGemstone().getCorrespondingStatistic(),
+                        GemStats.getFromGemstoneAndRarity(gemstone.getAssociatedGemstone(), gemstone.getAssociatedGemRarity())
+                                .getFromRarity(item.getAttributeHandler().getRarity()));
+            });
+
             statistics = statistics.add(builder.build());
         }
         return statistics;

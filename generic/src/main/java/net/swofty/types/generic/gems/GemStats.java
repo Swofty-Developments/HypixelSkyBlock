@@ -48,41 +48,44 @@ public enum GemStats {
     ;
 
     @Getter
-    public final Integer common;
+    public final Double common;
     @Getter
-    public final Integer uncommon;
+    public final Double uncommon;
     @Getter
-    public final Integer rare;
+    public final Double rare;
     @Getter
-    public final Integer epic;
+    public final Double epic;
     @Getter
-    public final Integer legendary;
+    public final Double legendary;
     @Getter
-    public final Integer mythic;
+    public final Double mythic;
 
     GemStats(Integer common, Integer uncommon, Integer rare, Integer epic, Integer legendary, Integer mythic) {
-        this.common = common;
-        this.uncommon = uncommon;
-        this.rare = rare;
-        this.epic = epic;
-        this.legendary = legendary;
-        this.mythic = mythic;
+        this.common = Double.valueOf(common);
+        this.uncommon = Double.valueOf(uncommon);
+        this.rare = Double.valueOf(rare);
+        this.epic = Double.valueOf(epic);
+        this.legendary = Double.valueOf(legendary);
+        this.mythic = Double.valueOf(mythic);
     }
 
-    public Integer getFromRarity(GemRarity rarity) {
+    public Double getFromRarity(Rarity rarity) {
         return switch (rarity) {
-            case ROUGH -> getCommon();
-            case FLAWED -> getUncommon();
-            case FINE -> getRare();
-            case FLAWLESS -> getEpic();
-            case PERFECT -> getLegendary();
-            default -> 0;
+            case COMMON -> getCommon();
+            case UNCOMMON -> getUncommon();
+            case RARE -> getRare();
+            case EPIC -> getEpic();
+            case LEGENDARY -> getLegendary();
+            default -> getMythic();
         };
     }
 
     public static GemStats getFromGemstoneAndRarity(Gemstone gemstone, GemRarity gemRarity) {
         for (GemStats gemStatsInternal : GemStats.values()) {
-            if (gemStatsInternal.name().startsWith(gemRarity.name.toUpperCase()) && gemStatsInternal.name().endsWith(gemstone.name().toUpperCase())) {
+            String rarity = gemRarity.name().toUpperCase();
+            String type = gemstone.name().toUpperCase();
+
+            if (gemStatsInternal.name().startsWith(rarity) && gemStatsInternal.name().endsWith(type)) {
                 return gemStatsInternal;
             }
         }
