@@ -8,6 +8,10 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EnchantedCharcoal implements Enchanted, Sellable, Craftable {
 
@@ -25,5 +29,13 @@ public class EnchantedCharcoal implements Enchanted, Sellable, Craftable {
                 .add(ItemType.COAL, 32)
                 .add(ItemType.COAL, 32)
                 .add(ItemType.OAK_WOOD, 32);
+    }
+
+    @Override
+    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(Arrays.asList(
+                "§7Increases the speed of",
+                "§7your minion by §a20%§7 for 36",
+                "§7hours§7!"));
     }
 }
