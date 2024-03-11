@@ -56,7 +56,8 @@ public enum Gemstone {
             ItemStatistic correspondingStatistic = gemstone.getCorrespondingStatistic();
 
             if (correspondingStatistic != statistic) continue;
-            toReturn += GemStats.getFromGemstoneAndRarity(gemstone, gemRarity).getFromRarity(gemRarity);
+            toReturn += GemStats.getFromGemstoneAndRarity(gemstone, gemRarity)
+                    .getFromRarity(item.getAttributeHandler().getRarity());
         }
 
         return toReturn;

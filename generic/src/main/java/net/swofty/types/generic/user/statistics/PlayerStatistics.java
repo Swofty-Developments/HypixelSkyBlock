@@ -28,10 +28,7 @@ import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerStatistics {
     private static final Map<Player, BossBar> barCache = new HashMap<>();
@@ -67,7 +64,7 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(runExtraStatistics(item, item.getAttributeHandler().getStatistics()));
+            total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
         }
         return total;
     }
@@ -83,7 +80,7 @@ public class PlayerStatistics {
                 return ItemStatistics.EMPTY;
 
         ItemStatistics statistics = item.getAttributeHandler().getStatistics();
-        statistics = runExtraStatistics(item, statistics);
+        statistics = calculateExtraItemStatistics(item, statistics);
 
         return statistics;
     }
@@ -129,13 +126,13 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                total = total.add(runExtraStatistics(item, item.getAttributeHandler().getStatistics()));
+                total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
             }
         }
         fullInventoryStatisticsCache = total;
     }
 
-    private ItemStatistics runExtraStatistics(SkyBlockItem item, ItemStatistics statistics) {
+    private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics) {
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
 
@@ -156,23 +153,11 @@ public class PlayerStatistics {
     }
 
     private ItemStatistics getGemstoneStatistics(SkyBlockItem item, ItemStatistics statistics) {
-        if (item.getAttributeHandler().getGemData() != null) {
-            ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();
-            ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
-
-            gemData.slots.forEach(slot -> {
-                if (slot.filledWith == null) return;
-                SkyBlockItem gem = new SkyBlockItem(slot.filledWith);
-                if (gem.getGenericInstance() == null) return;
-                if (!(gem.getGenericInstance() instanceof GemstoneImpl)) return;
-
-                GemstoneImpl gemstone = (GemstoneImpl) gem.getGenericInstance();
-                builder.with(gemstone.getAssociatedGemstone().getCorrespondingStatistic(),
-                        GemStats.getFromGemstoneAndRarity(gemstone.getAssociatedGemstone(), gemstone.getAssociatedGemRarity())
-                                .getFromRarity(item.getAttributeHandler().getRarity()));
-            });
-
-            statistics = statistics.add(builder.build());
+        for (ItemStatistic statistic : ItemStatistic.values()) {
+            int extra = Gemstone.getExtraStatisticFromGemstone(statistic, item);
+            if (extra != 0) {
+                statistics = statistics.add(ItemStatistics.builder().with(statistic, (double) extra).build());
+            }
         }
         return statistics;
     }
