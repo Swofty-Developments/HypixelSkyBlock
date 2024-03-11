@@ -56,6 +56,8 @@ public enum ItemType {
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     ANCIENT_CLAW(Material.FLINT, Rarity.RARE),
+    WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON),
+
     /**
      * Talismans
      */
@@ -93,8 +95,18 @@ public enum ItemType {
     WHEAT_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, WheatCrystal.class),
 
     /**
+     * Foraging Props
+     */
+    WOODEN_AXE(Material.WOODEN_AXE, Rarity.COMMON),
+    ROOKIE_AXE(Material.STONE_AXE, Rarity.COMMON),
+    PROMISING_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
+    SWEET_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
+    EFFICIENT_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
+
+    /**
      * Fishing Props
      */
+    FISHING_ROD(Material.FISHING_ROD, Rarity.COMMON),
     MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE, Magmafish.class),
     SILVER_MAGMAFISH(Material.PLAYER_HEAD, Rarity.EPIC, SilverMagmafish.class),
     GOLD_MAGMAFISH(Material.PLAYER_HEAD, Rarity.LEGENDARY, GoldMagmafish.class),
@@ -122,6 +134,8 @@ public enum ItemType {
     IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
     STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
     WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
+    ROOKIE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON),
+    PROMISING_PICKAXE(Material.IRON_PICKAXE, Rarity.UNCOMMON),
 
     /**
      * Swords
@@ -131,6 +145,15 @@ public enum ItemType {
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
     WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
+    UNDEAD_SWORD(Material.IRON_SWORD, Rarity.COMMON),
+    END_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON),
+    SPIDER_SWORD(Material.IRON_SWORD, Rarity.COMMON),
+
+    /**
+     * Bows
+     */
+    WITHER_BOW(Material.BOW, Rarity.UNCOMMON),
+    ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE),
 
     /**
      * Mining Materials
@@ -288,6 +311,7 @@ public enum ItemType {
     RED_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
     BLAZE_POWDER(Material.BLAZE_POWDER, Rarity.COMMON),
     GOLDEN_CARROT(Material.GOLDEN_CARROT, Rarity.COMMON),
+    WATER_BOTTLE(Material.POTION, Rarity.COMMON),
 
     /**
      * Enchanted Items
