@@ -8,10 +8,15 @@ import net.swofty.types.generic.item.items.armor.LeafletPants;
 import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
+import net.swofty.types.generic.item.items.combat.ChiliPepper;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
 import net.swofty.types.generic.item.items.farming.WheatCrystal;
+import net.swofty.types.generic.item.items.fishing.crimson.DiamondMagmafish;
+import net.swofty.types.generic.item.items.fishing.crimson.GoldMagmafish;
+import net.swofty.types.generic.item.items.fishing.crimson.Magmafish;
+import net.swofty.types.generic.item.items.fishing.crimson.SilverMagmafish;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
 import net.swofty.types.generic.item.items.mining.crystal.HardStone;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
@@ -90,13 +95,16 @@ public enum ItemType {
     /**
      * Fishing Props
      */
-    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE),
+    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE, Magmafish.class),
+    SILVER_MAGMAFISH(Material.PLAYER_HEAD, Rarity.EPIC, SilverMagmafish.class),
+    GOLD_MAGMAFISH(Material.PLAYER_HEAD, Rarity.LEGENDARY, GoldMagmafish.class),
+    DIAMOND_MAGMAFISH(Material.PLAYER_HEAD, Rarity.MYTHIC, DiamondMagmafish.class),
     SHARK_FIN(Material.PRISMARINE_SHARD, Rarity.RARE),
 
     /**
      * Combat Props
      */
-    CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.UNCOMMON, ChiliPepper.class),
 
     /**
      * Armor Sets
