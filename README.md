@@ -22,6 +22,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 5. Follow the 'Game Server Setup Guide' below.
 6. Follow the 'Service Setup Guide' below.
 7. Follow the 'Resource Pack Setup Guide' below.
+8. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> data, find your profile and set your rank to "ADMIN". Log back in and you'll have it.
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
