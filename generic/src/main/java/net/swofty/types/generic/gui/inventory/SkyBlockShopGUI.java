@@ -226,7 +226,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         player.sendMessage("§cYou don't have enough coins!");
                         return;
                     }
-                    sbItem.setAmount(item.amount);
                     player.addAndUpdateItem(sbItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
                     player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - price);
@@ -259,7 +258,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                     return itemStack.lore(lore.stream().map(
                             line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
-                    ).toList());
+                    ).toList()).amount(sbItem.getAmount());
                 }
             });
         }
