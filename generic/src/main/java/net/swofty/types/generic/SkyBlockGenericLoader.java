@@ -1,5 +1,9 @@
 package net.swofty.types.generic;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -97,14 +101,18 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register database
          */
-        new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));
-        new RegionDatabase("_placeHolder").connect(Configuration.get("mongodb"));
-        new IslandDatabase("_placeHolder").connect(Configuration.get("mongodb"));
-        FairySoulDatabase.connect(Configuration.get("mongodb"));
-        AttributeDatabase.connect(Configuration.get("mongodb"));
-        UserDatabase.connect(Configuration.get("mongodb"));
-        CoopDatabase.connect(Configuration.get("mongodb"));
-        CrystalDatabase.connect(Configuration.get("mongodb"));
+        ConnectionString cs = new ConnectionString(Configuration.get("mongodb"));
+        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
+        MongoClient mongoClient = MongoClients.create(settings);
+
+        ProfilesDatabase.connect(mongoClient);
+        RegionDatabase.connect(mongoClient);
+        IslandDatabase.connect(mongoClient);
+        FairySoulDatabase.connect(mongoClient);
+        AttributeDatabase.connect(mongoClient);
+        UserDatabase.connect(mongoClient);
+        CoopDatabase.connect(mongoClient);
+        CrystalDatabase.connect(mongoClient);
 
         /**
          * Register commands
@@ -228,10 +236,12 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             TickMonitor tickMonitor = LAST_TICK.get();
             double TPS = 1000 / tickMonitor.getTickTime();
 
-            if (TPS < 20)
+            if (TPS < 20) {
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
                 });
+                Logger.error("Server TPS is below 20! TPS: " + TPS);
+            }
 
             final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
                     .append(Component.newline())

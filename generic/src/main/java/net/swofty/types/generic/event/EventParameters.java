@@ -10,10 +10,4 @@ public @interface EventParameters {
     EventNodes node();
 
     boolean requireDataLoaded();
-
-    enum Location {
-        ISLAND,
-        HUB,
-        EITHER
-    }
 }

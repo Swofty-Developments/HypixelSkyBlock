@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.hollowcube.polar.*;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
@@ -27,14 +25,9 @@ import net.swofty.types.generic.utility.JerryInformation;
 import net.swofty.types.generic.utility.MathUtility;
 import org.bson.types.Binary;
 import org.jetbrains.annotations.Nullable;
-import sun.misc.Unsafe;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.file.Path;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +78,7 @@ public class SkyBlockIsland {
             InstanceContainer temporaryInstance = manager.createInstanceContainer(MinecraftServer.getDimensionTypeManager().getDimension(
                     NamespaceID.from("skyblock:island")
             ));
+            islandInstance = manager.createSharedInstance(temporaryInstance);
 
             List<SkyBlockPlayer> onlinePlayers;
             if (coop != null) {
@@ -141,8 +135,6 @@ public class SkyBlockIsland {
                     islandVersion = SkyBlockConst.getCurrentIslandVersion();
                 }
             }
-
-            islandInstance = manager.createSharedInstance(temporaryInstance);
             temporaryInstance.setChunkLoader(new PolarLoader(world));
 
             this.created = true;
@@ -194,7 +186,8 @@ public class SkyBlockIsland {
     public static void runVacantLoop(Scheduler scheduler) {
         scheduler.submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                player.getSkyBlockIsland().runVacantCheck();
+                if (player.isOnIsland())
+                    player.getSkyBlockIsland().runVacantCheck();
             });
             return TaskSchedule.tick(4);
         }, ExecutionType.ASYNC);

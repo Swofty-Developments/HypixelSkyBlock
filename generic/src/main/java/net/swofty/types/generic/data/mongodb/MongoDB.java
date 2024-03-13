@@ -1,8 +1,6 @@
 package net.swofty.types.generic.data.mongodb;
 
 public interface MongoDB {
-    MongoDB connect(String connectionString);
-
     void set(String key, Object value);
 
     Object get(String key, Object def);

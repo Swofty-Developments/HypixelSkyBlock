@@ -14,11 +14,7 @@ public class AttributeDatabase {
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
 
-    public static void connect(String connectionString) {
-        ConnectionString cs = new ConnectionString(connectionString);
-        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
-        client = MongoClients.create(settings);
-
+    public static void connect(MongoClient client) {
         database = client.getDatabase("Minestom");
         collection = database.getCollection("attribute");
     }

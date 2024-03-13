@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UserDatabase {
-    public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
 
@@ -27,11 +26,7 @@ public class UserDatabase {
         this.id = UUID.fromString(id);
     }
 
-    public static void connect(String connectionString) {
-        ConnectionString cs = new ConnectionString(connectionString);
-        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
-        client = MongoClients.create(settings);
-
+    public static void connect(MongoClient client) {
         database = client.getDatabase("Minestom");
         collection = database.getCollection("profiles");
     }

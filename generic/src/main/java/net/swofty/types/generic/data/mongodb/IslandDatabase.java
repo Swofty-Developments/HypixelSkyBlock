@@ -11,19 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record IslandDatabase(String profileUuid) implements MongoDB {
-    public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
 
-    @Override
-    public MongoDB connect(String connectionString) {
-        ConnectionString cs = new ConnectionString(connectionString);
-        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
-        client = MongoClients.create(settings);
-
+    public static void connect(MongoClient client) {
         database = client.getDatabase("Minestom");
         collection = database.getCollection("island");
-        return this;
     }
 
     @Override

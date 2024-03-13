@@ -11,8 +11,12 @@ import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.types.generic.region.SkyBlockRegion;
+import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
+import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -79,5 +83,16 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
         player.sendMessage("");
 
         handler.runOnLoad(player);
+
+        // Manually call region event with a delay
+        MathUtility.delay(() -> {
+            SkyBlockRegion playerRegion = player.getRegion();
+            if (playerRegion != null)
+                SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChangeEvent(
+                        player,
+                        null,
+                        playerRegion.getType()
+                ));
+        }, 50);
     }
 }

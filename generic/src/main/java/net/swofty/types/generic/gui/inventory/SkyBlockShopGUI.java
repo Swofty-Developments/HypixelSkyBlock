@@ -259,7 +259,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                     return itemStack.lore(lore.stream().map(
                             line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
-                    ).toList());
+                    ).toList()).amount(item.amount);
                 }
             });
         }

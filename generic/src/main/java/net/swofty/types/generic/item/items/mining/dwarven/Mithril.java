@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.mining.dwarvenMines;
+package net.swofty.types.generic.item.items.mining.dwarven;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;

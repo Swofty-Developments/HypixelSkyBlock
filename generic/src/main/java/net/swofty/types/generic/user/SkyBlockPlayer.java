@@ -135,7 +135,9 @@ public class SkyBlockPlayer extends Player {
     }
 
     public boolean isOnIsland() {
-        return getInstance() != null && getInstance() != SkyBlockConst.getInstanceContainer();
+        return getInstance() != null
+                && getInstance() != SkyBlockConst.getInstanceContainer()
+                && getInstance() != SkyBlockConst.getEmptyInstance();
     }
 
     public boolean hasTalisman(Talisman talisman) {

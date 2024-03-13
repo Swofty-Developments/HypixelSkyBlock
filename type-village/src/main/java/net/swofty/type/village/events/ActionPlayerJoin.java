@@ -29,5 +29,7 @@ public class ActionPlayerJoin extends SkyBlockEvent {
         playerLoginEvent.setSpawningInstance(SkyBlockConst.getInstanceContainer());
 
         player.setRespawnPoint(SkyBlockConst.getTypeLoader().getLoaderValues().spawnPosition());
+
+
     }
 }

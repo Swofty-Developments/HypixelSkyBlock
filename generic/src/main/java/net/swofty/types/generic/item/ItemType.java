@@ -8,6 +8,10 @@ import net.swofty.types.generic.item.items.armor.LeafletPants;
 import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
+import net.swofty.types.generic.item.items.crimson.DiamondMagmafish;
+import net.swofty.types.generic.item.items.crimson.GoldMagmafish;
+import net.swofty.types.generic.item.items.crimson.Magmafish;
+import net.swofty.types.generic.item.items.crimson.SilverMagmafish;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.RookieHoe;
@@ -19,8 +23,8 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
-import net.swofty.types.generic.item.items.mining.dwarvenMines.Mithril;
-import net.swofty.types.generic.item.items.mining.dwarvenMines.Titanium;
+import net.swofty.types.generic.item.items.mining.dwarven.Mithril;
+import net.swofty.types.generic.item.items.mining.dwarven.Titanium;
 import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
@@ -51,6 +55,7 @@ public enum ItemType {
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     ANCIENT_CLAW(Material.FLINT, Rarity.RARE),
+
     /**
      * Talismans
      */
@@ -90,8 +95,11 @@ public enum ItemType {
     /**
      * Fishing Props
      */
-    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE),
     SHARK_FIN(Material.PRISMARINE_SHARD, Rarity.RARE),
+    MAGMAFISH(Material.PLAYER_HEAD, Rarity.RARE, Magmafish.class),
+    SILVER_MAGMAFISH(Material.PLAYER_HEAD, Rarity.EPIC, SilverMagmafish.class),
+    GOLD_MAGMAFISH(Material.PLAYER_HEAD, Rarity.LEGENDARY, GoldMagmafish.class),
+    DIAMOND_MAGMAFISH(Material.PLAYER_HEAD, Rarity.MYTHIC, DiamondMagmafish.class),
 
     /**
      * Combat Props

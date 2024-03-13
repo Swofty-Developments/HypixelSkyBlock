@@ -138,7 +138,7 @@ public class SkyBlockRegion {
         }
         possible.sort(Comparator.comparingInt(r -> r.getType().ordinal()));
         Collections.reverse(possible);
-        return !possible.isEmpty() ? possible.get(0) : null;
+        return !possible.isEmpty() ? possible.getFirst() : null;
     }
 
     public boolean insideRegion(Entity entity) {
