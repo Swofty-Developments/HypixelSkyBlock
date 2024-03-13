@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GUISkillCategory extends SkyBlockInventoryGUI {
     private static final int[] displaySlots = {
-            9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 22, 13, 24, 15, 6, 7, 8, 17, 26, 35, 44, 53
+            9, 18, 27, 28, 29, 20, 11, 2, 3, 4, 13, 22, 31, 32, 33, 24, 15, 6, 7, 8, 17, 26, 35, 44, 53
     };
 
     private final SkillCategories category;

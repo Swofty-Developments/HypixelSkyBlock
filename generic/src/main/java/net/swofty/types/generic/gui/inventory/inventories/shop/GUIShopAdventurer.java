@@ -21,10 +21,10 @@ public class GUIShopAdventurer extends SkyBlockShopGUI {
     public void initializeShopItems() {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ROTTEN_FLESH), 1, 8, 1));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BONE), 1, 8, 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.STRING), 10, 8, 1));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.STRING), 1, 10, 1));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.SLIME_BALL), 1, 14, 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GUNPOWDER), 10, 8, 1));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GUNPOWDER), 1, 10, 1));
 
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ZOMBIE_TALISMAN), 500, 8, 1));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ZOMBIE_TALISMAN), 1, 500, 1));
     }
 }

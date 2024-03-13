@@ -175,8 +175,8 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                     maxBarLength
             ));
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + StringUtility.commaify(currentHas) +
-                    "§6/§e" + StringUtility.commaify(requirement));
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" +
+                    StringUtility.commaify(currentHas) + "§6/§e" + StringUtility.shortenNumber(requirement));
 
             return lore;
         }

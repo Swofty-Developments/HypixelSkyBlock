@@ -24,10 +24,10 @@ public interface Enchanted extends CustomSkyBlockItem {
             throw new RuntimeException("No matching ItemType found");
         } else {
             return new ShapelessRecipe(type, new SkyBlockItem(matchTypes.getFirst()))
-                    .add(craftingMaterial, 64)
-                    .add(craftingMaterial, 64)
-                    .add(craftingMaterial, 64)
-                    .add(craftingMaterial, 64)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32);
         }
     }
