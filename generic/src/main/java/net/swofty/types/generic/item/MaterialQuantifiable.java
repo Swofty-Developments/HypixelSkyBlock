@@ -48,6 +48,10 @@ public class MaterialQuantifiable {
         return new MaterialQuantifiable(material, amount);
     }
 
+    public SkyBlockItem toSkyBlockItem() {
+        return new SkyBlockItem(material, amount);
+    }
+
     public String toString() {
         return "MQ{material=" + (material != null ? material.name() : "?")
                 + ", amount=" + amount + "}";

@@ -64,25 +64,27 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         // Try all possible starting positions (top-left corners) for the pattern in the grid
         for (int startRow = 0; startRow <= 3 - patternRows; startRow++) {
             for (int startCol = 0; startCol <= 3 - patternCols; startCol++) {
+                Map<Character, MaterialQuantifiable> tempMaterialsToConsume = new HashMap<>(materialsToConsume);
+                SkyBlockItem[] tempModifiedStacks = Arrays.copyOf(modifiedStacks, modifiedStacks.length);
+                boolean patternMatched = true;
 
                 // Iterate through stacks within the potentially shifted pattern
-                for (int i = 0; i < modifiedStacks.length; i++) {
-                    int gridRow = i / 3;
-                    int gridCol = i % 3;
+                for (int row = 0; row < patternRows; row++) {
+                    for (int col = 0; col < patternCols; col++) {
+                        int gridRow = startRow + row;
+                        int gridCol = startCol + col;
+                        int index = gridRow * 3 + gridCol;
 
-                    // If this stack is within our shifted pattern on the grid
-                    if (gridRow >= startRow && gridRow < startRow + patternRows &&
-                            gridCol >= startCol && gridCol < startCol + patternCols) {
-
-                        char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
+                        char patternChar = pattern.get(row).charAt(col);
                         MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
 
                         if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR)) {
-                            MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
+                            MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(tempModifiedStacks[index].getItemStack());
 
                             // skip the iteration if stackMaterial is AIR
                             if (stackMaterial.getMaterial() == null || stackMaterial.getMaterial().equals(ItemType.AIR)) {
-                                continue;
+                                patternMatched = false;
+                                break;
                             }
 
                             if (stackMaterial.matches(patternMaterial.getMaterial())
@@ -92,32 +94,34 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
                                 if (stackAmount >= consumeAmount) {
                                     stackMaterial.setAmount(stackAmount - consumeAmount);
-                                    materialsToConsume.remove(patternChar);
+                                    tempMaterialsToConsume.remove(patternChar);
 
-                                    SkyBlockItem item = new SkyBlockItem(stackMaterial.getMaterial());
-                                    item.setAmount(stackAmount - consumeAmount);
-
-                                    modifiedStacks[i] = stackMaterial.getAmount() > 0 ? item : null;
+                                    tempModifiedStacks[index] = stackMaterial.getAmount() > 0 ? stackMaterial.toSkyBlockItem() : null;
                                 } else {
-                                    throw new IllegalStateException("Not enough materials to consume!");  // We need exact amount for shaped recipes
+                                    patternMatched = false;
+                                    break;
                                 }
+                            } else {
+                                patternMatched = false;
+                                break;
                             }
                         }
                     }
+
+                    if (!patternMatched) {
+                        break;
+                    }
                 }
 
-                // If all of the materials were consumed, return the modified stacks
-                if (materialsToConsume.isEmpty()) {
+                // If all of the materials were consumed and the pattern matched, update the original stacks and return
+                if (tempMaterialsToConsume.isEmpty() && patternMatched) {
+                    modifiedStacks = tempModifiedStacks;
                     return modifiedStacks;
                 }
-
-                // Reset before trying the next position
-                materialsToConsume = new HashMap<>(ingredientMap);
-                modifiedStacks = Arrays.copyOf(stacks, stacks.length);
             }
         }
 
-        // If there are still materials left to consume, there were not enough materials in the stacks
+        // If there are still materials left to consume or the pattern didn't match, there were not enough materials in the stacks
         throw new IllegalStateException("Not enough materials to consume!");
     }
 

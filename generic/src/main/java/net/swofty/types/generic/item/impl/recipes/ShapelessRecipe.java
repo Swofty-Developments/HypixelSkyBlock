@@ -87,10 +87,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                     currentStackMaterial.setAmount(stackAmount - consumeAmount);
                     materialsToConsume.remove(toConsume); // Remove the consumed material from the recipe
                     // Update the SkyBlockItem with the new amount or set to null if all consumed
-                    SkyBlockItem item = new SkyBlockItem(currentStackMaterial.getMaterial());
-                    item.setAmount(currentStackMaterial.getAmount());
                     modifiedStacks[i] = (currentStackMaterial.getAmount() > 0) ?
-                            item : // Ensure toItemStack correctly represents the quantity
+                            new SkyBlockItem(currentStackMaterial.getMaterial(), currentStackMaterial.getAmount()) : // Ensure toSkyBlockItem correctly represents the quantity
                             null;
                 } else {
                     // Not enough materials in the current stack, consume all and reduce needed amount
