@@ -39,6 +39,10 @@ public class UserDatabase {
         return PlayerProfiles.deserialize(document);
     }
 
+    public void deleteProfiles() {
+        collection.deleteOne(new Document("_id", id.toString()));
+    }
+
     public void saveProfiles(PlayerProfiles profiles) {
         Map<String, Object> map = profiles.serialize();
 

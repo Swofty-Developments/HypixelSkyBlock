@@ -91,4 +91,8 @@ public record ProfilesDatabase(String id) implements MongoDB {
     public static Document fetchDocument(String uniqueId) {
         return collection.find(Filters.eq("_id", uniqueId)).first();
     }
+
+    public static void deleteDocument(String uniqueId) {
+        collection.deleteOne(Filters.eq("_id", uniqueId));
+    }
 }
