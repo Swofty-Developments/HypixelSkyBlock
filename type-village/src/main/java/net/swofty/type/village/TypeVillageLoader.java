@@ -32,6 +32,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TypeVillageLoader implements SkyBlockTypeLoader {
+
     @Override
     public ServerType getType() {
         return ServerType.VILLAGE;
@@ -105,13 +106,10 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockNPC> getNPCs() {
         List<SkyBlockNPC> npcs = new ArrayList<>();
+
         npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.village.npcs",
                 SkyBlockNPC.class
-        ).toList());
-        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.village.npcs",
-                NPCDialogue.class
         ).toList());
 
         return npcs;
@@ -125,10 +123,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockVillagerNPC> getVillagerNPCs() {
         List<SkyBlockVillagerNPC> npcs = new ArrayList<>();
-        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.village.villagers",
-                SkyBlockVillagerNPC.class
-        ).toList());
+
         npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.village.villagers",
                 NPCVillagerDialogue.class
@@ -141,4 +136,5 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     public @Nullable CustomWorlds getMainInstance() {
         return CustomWorlds.HUB;
     }
+
 }

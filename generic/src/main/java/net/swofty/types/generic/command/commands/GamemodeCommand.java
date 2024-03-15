@@ -14,9 +14,11 @@ import net.swofty.types.generic.user.categories.Rank;
         permission = Rank.ADMIN,
         allowsConsole = false)
 public class GamemodeCommand extends SkyBlockCommand {
+
     @Override
     public void run(MinestomCommand command) {
         ArgumentEnum<GameMode> gamemode = ArgumentType.Enum("gamemode", GameMode.class);
+        gamemode.setFormat(ArgumentEnum.Format.LOWER_CASED);
 
         command.addSyntax((sender, context) -> {
             final GameMode gamemodeType = context.get(gamemode);
@@ -26,4 +28,5 @@ public class GamemodeCommand extends SkyBlockCommand {
             sender.sendMessage("§aSet your gamemode to §e" + gamemodeType.name() + "§a.");
         }, gamemode);
     }
+
 }

@@ -17,6 +17,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.shop.ShopPrice;
+import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
@@ -153,6 +155,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
+
                 player.addAndUpdateItem(new SkyBlockItem(itemStack.build()));
                 player.playSuccessSound();
                 player.getShoppingData().popBuyback();
@@ -201,12 +204,14 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             int slot = INTERIOR[i];
             ShopItem item = p.get(i);
             SkyBlockItem sbItem = item.item;
-            double price = item.price * item.amount;
-            double stackPrice = item.price / item.modifier;
-            if (stackPrice < 1) {
-                stackPrice = 1;
-            }
-            double finalStackPrice = stackPrice;
+
+            List<ShopPrice> price = item.price.stream()
+                    .map(p1 -> p1.multiply(item.amount))
+                    .toList();
+
+            List<ShopPrice> finalStackPrice = item.price.stream()
+                    .map(p1 -> p1.divide(item.modifier))
+                    .toList();
 
             set(new GUIClickableItem(slot) {
                 @Override
@@ -221,16 +226,23 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         return;
                     }
 
-                    double purse = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
-                    if (price > purse) {
-                        player.sendMessage("§cYou don't have enough coins!");
-                        return;
+                    for (ShopPrice price1 : price) {
+                        boolean canAfford = price1.canAfford(player);
+                        if (!canAfford) {
+                            player.sendMessage("§cYou don't have enough " + price1.getNamePlural() + "!");
+                            return;
+                        }
                     }
+
+                    for (ShopPrice price1 : price) {
+                        price1.processPurchase(player);
+                    }
+
                     sbItem.setAmount(item.amount);
                     player.addAndUpdateItem(sbItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                    player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - price);
                     player.getShoppingData().documentPurchase(item.item(), item.amount);
+
                     updateThis(player);
                 }
 
@@ -247,7 +259,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                     lore.add("");
                     lore.add("§7Cost");
-                    lore.add("§6" + StringUtility.commaify(price) + " Coin" + (price != 1 ? "s" : ""));
+                    price.forEach(p1 -> lore.add("§7" + p1.getDisplayName()));
                     lore.add("");
                     lore.add("§7Stock");
                     lore.add("§6" + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
@@ -306,13 +318,24 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         SkyBlockShopGUI.this.open(player);
     }
 
-    public record ShopItem(SkyBlockItem item, int amount, double price, double modifier, boolean stackable) {
-        public static ShopItem Stackable(SkyBlockItem item, int amount, double price, double modifier) {
+    public record ShopItem(SkyBlockItem item, int amount, List<ShopPrice> price, double modifier, boolean stackable) {
+
+        public static ShopItem Stackable(SkyBlockItem item, int amount, List<ShopPrice> price, double modifier) {
             return new ShopItem(item, amount, price, modifier, true);
         }
 
-        public static ShopItem Single(SkyBlockItem item, int amount, double price, double modifier) {
+        public static ShopItem Single(SkyBlockItem item, int amount, List<ShopPrice> price, double modifier) {
             return new ShopItem(item, amount, price, modifier, false);
         }
+
+        public static ShopItem Stackable(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
+            return Stackable(item, amount, List.of(price), modifier);
+        }
+
+        public static ShopItem Single(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
+            return Single(item, amount, List.of(price), modifier);
+        }
+
     }
+
 }
