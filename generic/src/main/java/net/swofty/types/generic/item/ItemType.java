@@ -50,7 +50,7 @@ import javax.swing.*;
 
 public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
-    DIRT(Material.DIRT, Rarity.EPIC),
+    DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),

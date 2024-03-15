@@ -1,0 +1,43 @@
+package net.swofty.types.generic.shop;
+
+import net.swofty.types.generic.user.SkyBlockPlayer;
+
+/**
+ * @author <a href="https://github.com/Neruxov">Neruxov</a>
+ */
+public interface ShopPrice {
+
+    /**
+     * @return the display name of the item, used for the GUI (with the amount)
+     */
+    String getDisplayName();
+
+    /**
+     * @return the plural name of the item type, used for displaying "Not enough [plural name]!" type messages
+     */
+    String getNamePlural();
+
+    /**
+     * @param player the player who is purchasing the item
+     * @return whether the player can afford the item
+     */
+    boolean canAfford(SkyBlockPlayer player);
+
+    /**
+     * @param player the player who is purchasing the item
+     */
+    void processPurchase(SkyBlockPlayer player);
+
+    /**
+     * @param amount the amount to multiply the price by
+     * @return new ShopPrice with the multiplied amount
+     */
+    ShopPrice multiply(int amount);
+
+    /**
+     * @param amount the amount to divide the price by
+     * @return new ShopPrice with the divided amount
+     */
+    ShopPrice divide(double amount);
+
+}

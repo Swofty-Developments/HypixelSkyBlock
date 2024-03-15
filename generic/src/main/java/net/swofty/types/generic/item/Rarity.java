@@ -1,8 +1,10 @@
 package net.swofty.types.generic.item;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Rarity {
     COMMON("§f"),
     UNCOMMON("§a"),
@@ -18,11 +20,6 @@ public enum Rarity {
 
     private final String color;
     private final boolean reforgable;
-
-    Rarity(String color, boolean reforgable) {
-        this.color = color;
-        this.reforgable = reforgable;
-    }
 
     Rarity(String color) {
         this(color, true);
@@ -46,7 +43,7 @@ public enum Rarity {
         return color + "§l" + name().replaceAll("_", " ");
     }
 
-    public String getDisplayCaplitalized() {
+    public String getDisplayCapitalized() {
         return name().charAt(0) + name().toLowerCase().replaceAll("_", " ").substring(1);
     }
 
@@ -61,4 +58,5 @@ public enum Rarity {
             return null;
         }
     }
+
 }

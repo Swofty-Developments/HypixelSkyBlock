@@ -17,6 +17,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -26,9 +27,9 @@ import java.util.List;
 public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
     private final SkyBlockShopGUI.ShopItem item;
     private final SkyBlockShopGUI retPointer;
-    private final double stackPrice;
+    private final List<ShopPrice> stackPrice;
 
-    public GUIGenericTradingOptions(SkyBlockShopGUI.ShopItem item, SkyBlockShopGUI retPoint, double stackPrice) {
+    public GUIGenericTradingOptions(SkyBlockShopGUI.ShopItem item, SkyBlockShopGUI retPoint, List<ShopPrice> stackPrice) {
         super("Shop Trading Options", InventoryType.CHEST_6_ROW);
         this.item = item;
         this.retPointer = retPoint;
@@ -49,21 +50,26 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         updateItemStacks(e.inventory(), getPlayer());
     }
 
-    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, double stackprice) {
-        stackprice = stackprice * amount;
+    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, List<ShopPrice> stackprice) {
+        stackprice = stackprice.stream()
+                .map(price -> price.multiply(amount))
+                .toList();
+
         SkyBlockItem sbItem = item.item();
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
+
         List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+
         lore.add("");
         lore.add("§7Cost");
-        lore.add("§6 " + StringUtility.commaify(stackprice) + " Coin" + (stackprice != 1 ? "s" : ""));
+        stackprice.forEach(price -> lore.add("§7" + price.getDisplayName()));
         lore.add("");
         lore.add("§7Stock");
         lore.add("§6 " + player.getShoppingData().getStock(item.item()) + " §7remaining");
         lore.add("");
         lore.add("§eClick to purchase!");
 
-        double finalStackprice = stackprice;
+        List<ShopPrice> finalStackprice = stackprice;
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -72,16 +78,22 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
                     return;
                 }
 
-                double purse = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
-                if (finalStackprice > purse) {
-                    player.sendMessage("§cYou don't have enough coins!");
-                    return;
+                for (ShopPrice price1 : finalStackprice) {
+                    boolean canAfford = price1.canAfford(player);
+                    if (!canAfford) {
+                        player.sendMessage("§cYou don't have enough " + price1.getNamePlural() + "!");
+                        return;
+                    }
                 }
+
+                for (ShopPrice price1 : finalStackprice) {
+                    price1.processPurchase(player);
+                }
+
                 ItemStack.Builder cleanStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
                 cleanStack.amount(amount);
                 player.addAndUpdateItem(cleanStack.build());
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(purse - finalStackprice);
                 player.getShoppingData().documentPurchase(item.item(), amount);
                 updateThis(player);
             }

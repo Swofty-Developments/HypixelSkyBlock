@@ -62,22 +62,31 @@ import java.util.stream.Stream;
 @Getter
 public class SkyBlockPlayer extends Player {
 
+    @Setter
     private float mana = 100;
+
     public float health = 100;
+
     public long joined;
+
     @Setter
     public boolean bypassBuild = false;
 
     private StatisticDisplayReplacement manaDisplayReplacement = null;
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     private StatisticDisplayReplacement coinsDisplayReplacement = null;
+
     private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
+
     @Setter
     private SkyBlockIsland skyBlockIsland;
+
     @Setter
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
+
     @Getter
     private PlayerHookManager hookManager;
+
     @Getter
     private final PlayerStatistics statistics = new PlayerStatistics(this);
 
@@ -272,10 +281,6 @@ public class SkyBlockPlayer extends Player {
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
-    public void setMana(float mana) {
-        this.mana = mana;
-    }
-
     public void addAndUpdateItem(SkyBlockItem item) {
         if (item.isNA()) return;
         ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build();
@@ -288,6 +293,22 @@ public class SkyBlockPlayer extends Player {
 
     public void addAndUpdateItem(ItemStack item) {
         addAndUpdateItem(new SkyBlockItem(item));
+    }
+
+    public void takeItem(ItemType type, int amount) {
+        Map<Integer, Integer> map = getAllOfTypeInInventory(type);
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (amount <= 0) return;
+
+            int slot = entry.getKey();
+            int currentAmount = entry.getValue();
+
+            ItemStack item = getInventory().getItemStack(slot)
+                            .consume(amount);
+
+            getInventory().setItemStack(slot, item);
+            amount -= Math.min(amount, currentAmount);
+        }
     }
 
     public float getMaxMana() {
@@ -359,6 +380,22 @@ public class SkyBlockPlayer extends Player {
 
     public void playSuccessSound() {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
+    }
+
+    public double getCoins() {
+        return getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
+    }
+
+    public void setCoins(double coins) {
+        getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
+    }
+
+    public void addCoins(double coins) {
+        setCoins(getCoins() + coins);
+    }
+
+    public void takeCoins(double coins) {
+        setCoins(getCoins() - coins);
     }
 
     @Override
@@ -443,11 +480,12 @@ public class SkyBlockPlayer extends Player {
                         handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
             }
 
-            UUID selected = profiles.getProfiles().get(0);
+            UUID selected = profiles.getProfiles().getFirst();
 
             DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
             return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                     handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
+
 }
