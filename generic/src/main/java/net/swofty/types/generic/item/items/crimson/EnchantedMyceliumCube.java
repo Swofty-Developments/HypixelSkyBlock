@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.enchanted;
+package net.swofty.types.generic.item.items.crimson;
 
 
 import net.swofty.types.generic.item.ItemType;
@@ -7,19 +7,19 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class EnchantedSulphurCube implements Enchanted, Sellable, Craftable, SkullHead {
+public class EnchantedMyceliumCube implements Enchanted, Sellable, Craftable, SkullHead {
     @Override
     public double getSellValue() {
-        return 256000;
+        return 128000;
     }
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_SULPHUR);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_MYCELIUM);
     }
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "4f0c28dfcf42d4dbd27c3378f67176c84800bc69b4cd531702c95ca6fb990458";
+        return "9a351d5316e5b508fbbf595e0773aec9639a0891807fef09bc59a56d46490cb0";
     }
 }
