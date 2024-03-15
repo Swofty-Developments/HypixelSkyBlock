@@ -3,6 +3,7 @@ package net.swofty.types.generic.collection.collections;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.List;
 
@@ -27,7 +28,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_CLAY);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -127,7 +134,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_INK_SAC);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -189,7 +202,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(200, new UnlockXP() {
+                        new ItemCollectionReward(200, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_LILY_PAD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -239,7 +258,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(500, new UnlockXP() {
+                        new ItemCollectionReward(500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.SILVER_MAGMAFISH);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -263,7 +288,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(30000, new UnlockXP() {
+                        new ItemCollectionReward(30000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.GOLD_MAGMAFISH);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -281,7 +312,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(100000, new UnlockXP() {
+                        new ItemCollectionReward(100000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.DIAMOND_MAGMAFISH);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
@@ -311,7 +348,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PRISMARINE_CRYSTALS);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -355,7 +398,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PRISMARINE_SHARD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -393,7 +442,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PUFFERFISH);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -479,7 +534,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -491,7 +552,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(15000, new UnlockXP() {
+                        new ItemCollectionReward(15000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COOKED_COD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -535,7 +602,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RAW_SALMON);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -559,7 +632,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COOKED_SALMON);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -585,7 +664,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SPONGE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -609,7 +694,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1500, new UnlockXP() {
+                        new ItemCollectionReward(1500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_WET_SPONGE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

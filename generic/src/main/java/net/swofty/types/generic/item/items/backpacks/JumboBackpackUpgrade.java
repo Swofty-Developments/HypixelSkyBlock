@@ -28,7 +28,7 @@ public class JumboBackpackUpgrade implements CustomSkyBlockItem, SkullHead, Inte
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "8ae187145ee732e7c00905a9c16ed1e43ba88d5624a6f4af829f10453fcc9165";
+        return "b6acfc643f608e16de19335ddca71a828dfb8daca5793eb5bbcb0c7d1559249";
     }
 
     @Override

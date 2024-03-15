@@ -54,17 +54,17 @@ public class MinionCobblestone extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(64, 64, 64);
+        return new Color(122, 121, 100);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(64, 64, 64);
+        return new Color(122, 121, 100);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(64, 64, 64);
+        return new Color(122, 121, 100);
     }
 
     @Override

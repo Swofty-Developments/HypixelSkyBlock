@@ -15,6 +15,6 @@ public class EnchantedJungleWood implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_WOOD);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
     }
 }

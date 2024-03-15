@@ -3,6 +3,7 @@ package net.swofty.types.generic.collection.collections;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.List;
 
@@ -51,7 +52,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_OAK_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -101,7 +108,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SPRUCE_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -163,7 +176,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BIRCH_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -225,7 +244,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_JUNGLE_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -250,7 +275,7 @@ public class ForagingCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemType.ACAICA_LOG,
+                new ItemCollection(ItemType.ACACIA_LOG,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -281,7 +306,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_ACACIA_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -331,7 +362,13 @@ public class ForagingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_DARK_OAK_WOOD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

@@ -7,14 +7,14 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedSpruceWood implements Enchanted, Sellable, Craftable {
+public class EnchantedRedSand implements Enchanted, Sellable, Craftable {
     @Override
     public double getSellValue() {
-        return 320;
+        return 800;
     }
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.RED_SAND);
     }
 }

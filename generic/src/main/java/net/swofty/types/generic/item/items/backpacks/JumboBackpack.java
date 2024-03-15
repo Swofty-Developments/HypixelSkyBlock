@@ -16,7 +16,7 @@ public class JumboBackpack implements Backpack, Craftable {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146";
+        return "1f8405116c1daa7ce2f012591458d50246d0a467bcb95a5a2c033aefd6008b63";
     }
 
     @Override

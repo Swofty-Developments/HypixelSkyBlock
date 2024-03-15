@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.enchanted;
+package net.swofty.types.generic.item.items.crimson;
 
 
 import net.swofty.types.generic.item.ItemType;

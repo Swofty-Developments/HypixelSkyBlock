@@ -2,7 +2,10 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.enchantment.EnchantmentType;
+import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.List;
 
@@ -21,7 +24,13 @@ public class MiningCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.COBBLESTONE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.COBBLESTONE_MINION);
+                                return item;
+                            }
+                        },new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -39,7 +48,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COBBLESTONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -83,7 +98,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.COAL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.COAL_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -101,7 +122,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COAL);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -119,7 +146,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(10000, new UnlockXP() {
+                        new ItemCollectionReward(10000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COAL_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -169,7 +202,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GOLD_INGOT);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -187,7 +226,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(10000, new UnlockXP() {
+                        new ItemCollectionReward(10000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GOLD_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -219,7 +264,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2000, new UnlockXP() {
+                        new ItemCollectionReward(2000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_LAPIS_LAZULI);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -237,7 +288,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50000, new UnlockXP() {
+                        new ItemCollectionReward(50000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_LAPIS_LAZULI_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -285,7 +342,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2500, new UnlockXP() {
+                        new ItemCollectionReward(2500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_FLINT);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -335,7 +398,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_DIAMOND);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -359,7 +428,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(25000, new UnlockXP() {
+                        new ItemCollectionReward(25000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_DIAMOND_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -391,7 +466,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_EMERALD);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -409,7 +490,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(30000, new UnlockXP() {
+                        new ItemCollectionReward(30000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_EMERALD_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -459,7 +546,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_ENDSTONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -497,7 +590,49 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_RUBY_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_JADE_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_SAPPHIRE_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_AMETHYST_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_AMBER_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_TOPAZ_GEM);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.FLAWED_JASPER_GEM);
+                                return item;
+                            }
+                        },new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -566,7 +701,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GLOWSTONE_DUST);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -578,7 +719,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GLOWSTONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -610,7 +757,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_HARD_STONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -627,7 +780,13 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {return 4;
                             }
                         }),
-                        new ItemCollectionReward(300000, new UnlockXP() {
+                        new ItemCollectionReward(300000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.CONCENTRATED_STONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
@@ -651,13 +810,25 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.PACKED_ICE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(500, new UnlockXP() {
+                        new ItemCollectionReward(500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_ICE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -675,7 +846,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(10000, new UnlockXP() {
+                        new ItemCollectionReward(10000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PACKED_ICE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -723,7 +900,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.IRON_INGOT);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -741,7 +924,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(10000, new UnlockXP() {
+                        new ItemCollectionReward(10000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_IRON_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -789,7 +978,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MITHRIL);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -842,7 +1037,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(750, new UnlockXP() {
+                        new ItemCollectionReward(750, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MYCELIUM);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -866,7 +1067,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(15000, new UnlockXP() {
+                        new ItemCollectionReward(15000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MYCELIUM_CUBE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -910,7 +1117,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_QUARTZ);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -922,7 +1135,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_QUARTZ_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -966,7 +1185,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_NETHERRACK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -998,7 +1223,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_OBSIDIAN);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1048,7 +1279,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(500, new UnlockXP() {
+                        new ItemCollectionReward(500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RED_SAND);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1060,7 +1297,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(10000, new UnlockXP() {
+                        new ItemCollectionReward(10000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RED_SAND_CUBE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1110,7 +1353,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1500, new UnlockXP() {
+                        new ItemCollectionReward(1500, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_REDSTONE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1134,7 +1383,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(25000, new UnlockXP() {
+                        new ItemCollectionReward(25000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_REDSTONE_BLOCK);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1207,7 +1462,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SAND);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1233,7 +1494,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
+                        new ItemCollectionReward(1000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SULPHUR);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1257,7 +1524,13 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(15000, new UnlockXP() {
+                        new ItemCollectionReward(15000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SULPHUR_CUBE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

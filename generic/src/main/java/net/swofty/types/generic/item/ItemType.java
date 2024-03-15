@@ -8,15 +8,12 @@ import net.swofty.types.generic.item.items.armor.LeafletPants;
 import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
-import net.swofty.types.generic.item.items.combat.ChiliPepper;
-import net.swofty.types.generic.item.items.crimson.DiamondMagmafish;
-import net.swofty.types.generic.item.items.crimson.GoldMagmafish;
-import net.swofty.types.generic.item.items.crimson.Magmafish;
-import net.swofty.types.generic.item.items.crimson.SilverMagmafish;
+import net.swofty.types.generic.item.items.combat.*;
+import net.swofty.types.generic.item.items.crimson.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
-import net.swofty.types.generic.item.items.farming.RookieHoe;
-import net.swofty.types.generic.item.items.farming.WheatCrystal;
+import net.swofty.types.generic.item.items.farming.*;
+import net.swofty.types.generic.item.items.mining.crystal.ConcentratedStone;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
 import net.swofty.types.generic.item.items.mining.crystal.HardStone;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
@@ -48,6 +45,8 @@ import net.swofty.types.generic.item.items.weapon.vanilla.StoneSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.WoodenSword;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
@@ -93,6 +92,11 @@ public enum ItemType {
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
     CACTUS(Material.CACTUS, Rarity.COMMON),
     WHEAT_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, WheatCrystal.class),
+    MUTANT_NETHER_WART(Material.PLAYER_HEAD, Rarity.RARE, MutantNetherWart.class),
+    POLISHED_PUMPKIN(Material.PLAYER_HEAD, Rarity.RARE, PolishedPumpkin.class),
+    BOX_OF_SEEDS(Material.PLAYER_HEAD, Rarity.RARE, BoxOfSeeds.class),
+    ENCHANTED_BOOKSHELF(Material.BOOKSHELF, Rarity.UNCOMMON, EnchantedBookshelf.class),
+    TIGHTLY_TIED_HAY_BALE(Material.PLAYER_HEAD, Rarity.RARE, TightlyTiedHayBale.class),
 
     /**
      * Foraging Props
@@ -117,6 +121,10 @@ public enum ItemType {
      * Combat Props
      */
     CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.UNCOMMON, ChiliPepper.class),
+    STUFFED_CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.RARE, StuffedChiliPepper.class),
+    ABSOLUTE_ENDER_PEARL(Material.PLAYER_HEAD, Rarity.RARE, AbsoluteEnderPearl.class),
+    WHIPPED_MAGMA_CREAM(Material.PLAYER_HEAD, Rarity.RARE, WhippedMagmaCream.class),
+    ZOMBIE_HEART(Material.PLAYER_HEAD, Rarity.RARE, ZombieHeart.class),
 
     /**
      * Armor Sets
@@ -198,6 +206,7 @@ public enum ItemType {
     MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON, Mithril.class),
     TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
     SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
+    CONCENTRATED_STONE(Material.PLAYER_HEAD, Rarity.RARE, ConcentratedStone.class),
 
     /**
      * Vanilla Items
@@ -247,7 +256,7 @@ public enum ItemType {
     OAK_WOOD(Material.OAK_WOOD, Rarity.COMMON),
     OAK_LOG(Material.OAK_LOG, Rarity.COMMON),
     SPRUCE_LOG(Material.SPRUCE_LOG, Rarity.COMMON),
-    ACAICA_LOG(Material.ACACIA_LOG, Rarity.COMMON),
+    ACACIA_LOG(Material.ACACIA_LOG, Rarity.COMMON),
     BIRCH_LOG(Material.BIRCH_LOG, Rarity.COMMON),
     DARK_OAK_LOG(Material.DARK_OAK_LOG, Rarity.COMMON),
     JUNGLE_LOG(Material.JUNGLE_LOG, Rarity.COMMON),
@@ -316,9 +325,9 @@ public enum ItemType {
     /**
      * Enchanted Items
      */
-    ENCHANTED_ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.UNCOMMON, EnchantedAcaciaWood.class),
+    ENCHANTED_ACACIA_WOOD(Material.ACACIA_LOG, Rarity.UNCOMMON, EnchantedAcaciaWood.class),
     ENCHANTED_BAKED_POTATO(Material.BAKED_POTATO, Rarity.UNCOMMON, EnchantedBakedPotato.class),
-    ENCHANTED_BIRCH_WOOD(Material.BIRCH_WOOD, Rarity.UNCOMMON, EnchantedBirchWood.class),
+    ENCHANTED_BIRCH_WOOD(Material.BIRCH_LOG, Rarity.UNCOMMON, EnchantedBirchWood.class),
     ENCHANTED_BLAZE_ROD(Material.BLAZE_ROD, Rarity.UNCOMMON, EnchantedBlazeRod.class),
     ENCHANTED_BLAZE_POWDER(Material.BLAZE_POWDER, Rarity.UNCOMMON, EnchantedBlazePowder.class),
     ENCHANTED_BONE(Material.BONE, Rarity.UNCOMMON, EnchantedBone.class),
@@ -327,21 +336,23 @@ public enum ItemType {
     ENCHANTED_COAL(Material.COAL, Rarity.UNCOMMON, EnchantedCoal.class),
     ENCHANTED_COBBLESTONE(Material.COBBLESTONE, Rarity.UNCOMMON, EnchantedCobblestone.class),
     ENCHANTED_COCOA_BEANS(Material.COCOA_BEANS, Rarity.UNCOMMON, EnchantedCocoaBeans.class),
-    ENCHANTED_DARK_OAK_WOOD(Material.DARK_OAK_WOOD, Rarity.UNCOMMON, EnchantedDarkOakWood.class),
+    ENCHANTED_DARK_OAK_WOOD(Material.DARK_OAK_LOG, Rarity.UNCOMMON, EnchantedDarkOakWood.class),
     ENCHANTED_DIAMOND(Material.DIAMOND, Rarity.UNCOMMON, EnchantedDiamond.class),
     ENCHANTED_EGG(Material.EGG, Rarity.UNCOMMON, EnchantedEgg.class),
+    SUPER_ENCHANTED_EGG(Material.POLAR_BEAR_SPAWN_EGG, Rarity.RARE, SuperEnchantedEgg.class),
+    OMEGA_ENCHANTED_EGG(Material.ENDERMITE_SPAWN_EGG, Rarity.EPIC, OmegaEnchantedEgg.class),
     ENCHANTED_EMERALD(Material.EMERALD, Rarity.UNCOMMON, EnchantedEmerald.class),
     ENCHANTED_ENDER_PEARL(Material.ENDER_PEARL, Rarity.UNCOMMON, EnchantedEnderPearl.class),
     ENCHANTED_DIAMOND_BLOCK(Material.DIAMOND_BLOCK, Rarity.UNCOMMON, EnchantedDiamondBlock.class),
     ENCHANTED_EMERALD_BLOCK(Material.EMERALD_BLOCK, Rarity.UNCOMMON, EnchantedEmeraldBlock.class),
     ENCHANTED_GOLD_INGOT(Material.GOLD_INGOT, Rarity.UNCOMMON, EnchantedGold.class),
     ENCHANTED_GOLD_BLOCK(Material.GOLD_BLOCK, Rarity.UNCOMMON, EnchantedGoldBlock.class),
-    ENCHANTED_JUNGLE_WOOD(Material.JUNGLE_WOOD, Rarity.UNCOMMON, EnchantedJungleWood.class),
+    ENCHANTED_JUNGLE_WOOD(Material.JUNGLE_LOG, Rarity.UNCOMMON, EnchantedJungleWood.class),
     ENCHANTED_GUNPOWDER(Material.GUNPOWDER, Rarity.UNCOMMON, EnchantedGunpowder.class),
     ENCHANTED_IRON_INGOT(Material.IRON_INGOT, Rarity.UNCOMMON, EnchantedIron.class),
     ENCHANTED_IRON_BLOCK(Material.IRON_BLOCK, Rarity.UNCOMMON, EnchantedIronBlock.class),
     ENCHANTED_LEATHER(Material.LEATHER, Rarity.UNCOMMON, EnchantedLeather.class),
-    ENCHANTED_OAK_WOOD(Material.OAK_WOOD, Rarity.UNCOMMON, EnchantedOakWood.class),
+    ENCHANTED_OAK_WOOD(Material.OAK_LOG, Rarity.UNCOMMON, EnchantedOakWood.class),
     ENCHANTED_OBSIDIAN(Material.OBSIDIAN, Rarity.UNCOMMON, EnchantedObsidian.class),
     ENCHANTED_PACKED_ICE(Material.PACKED_ICE, Rarity.UNCOMMON, EnchantedPackedIce.class),
     ENCHANTED_POTATO(Material.POTATO, Rarity.UNCOMMON, EnchantedPotato.class),
@@ -350,7 +361,7 @@ public enum ItemType {
     ENCHANTED_REDSTONE_BLOCK(Material.REDSTONE_BLOCK, Rarity.UNCOMMON, EnchantedRedstoneBlock.class),
     ENCHANTED_ROTTEN_FLESH(Material.ROTTEN_FLESH, Rarity.UNCOMMON, EnchantedRottenFlesh.class),
     ENCHANTED_SPONGE(Material.SPONGE, Rarity.UNCOMMON, EnchantedSponge.class),
-    ENCHANTED_SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.UNCOMMON, EnchantedSpruceWood.class),
+    ENCHANTED_SPRUCE_WOOD(Material.SPRUCE_LOG, Rarity.UNCOMMON, EnchantedSpruceWood.class),
     ENCHANTED_STRING(Material.STRING, Rarity.UNCOMMON, EnchantedString.class),
     ENCHANTED_SUGAR(Material.SUGAR, Rarity.UNCOMMON, EnchantedSugar.class),
     ENCHANTED_SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.UNCOMMON, EnchantedSnowBlock.class),
@@ -427,6 +438,9 @@ public enum ItemType {
     ENCHANTED_WET_SPONGE(Material.WET_SPONGE, Rarity.RARE, EnchantedWetSponge.class),
     ENCHANTED_WOOL(Material.WHITE_WOOL, Rarity.UNCOMMON, EnchantedWool.class),
     ENCHANTED_SHARK_FIN(Material.PRISMARINE_SHARD, Rarity.EPIC, EnchantedSharkFin.class),
+    ENCHANTED_RED_SAND(Material.RED_SAND, Rarity.UNCOMMON, EnchantedRedSand.class),
+    ENCHANTED_RED_SAND_CUBE(Material.PLAYER_HEAD, Rarity.RARE, EnchantedRedSandCube.class),
+    ENCHANTED_BONE_MEAL(Material.BONE_MEAL, Rarity.COMMON, EnchantedBoneMeal.class),
     ;
 
     public final Material material;
