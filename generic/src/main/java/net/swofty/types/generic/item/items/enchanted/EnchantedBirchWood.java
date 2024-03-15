@@ -15,6 +15,6 @@ public class EnchantedBirchWood implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_WOOD);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
     }
 }

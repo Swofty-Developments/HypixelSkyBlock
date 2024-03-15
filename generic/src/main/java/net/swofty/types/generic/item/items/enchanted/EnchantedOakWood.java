@@ -15,6 +15,6 @@ public class EnchantedOakWood implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_WOOD);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
     }
 }

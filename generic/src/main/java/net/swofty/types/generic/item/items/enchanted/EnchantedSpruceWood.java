@@ -15,6 +15,6 @@ public class EnchantedSpruceWood implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_WOOD);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
     }
 }

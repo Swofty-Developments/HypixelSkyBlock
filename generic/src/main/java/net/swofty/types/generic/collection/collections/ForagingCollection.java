@@ -275,7 +275,7 @@ public class ForagingCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemType.ACAICA_LOG,
+                new ItemCollection(ItemType.ACACIA_LOG,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
