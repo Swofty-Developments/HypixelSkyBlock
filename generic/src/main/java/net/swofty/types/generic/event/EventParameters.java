@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventParameters {
     String description() default "";
-
     EventNodes node();
-
     boolean requireDataLoaded();
+    boolean isAsync() default false;
 }

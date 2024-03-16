@@ -13,16 +13,23 @@ Releases are auto deployed on push onto the GitHub releases page which can be fo
 
 Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlock/).
 
+## Recommended Device Specifications
+This project is not meant to be a small server, and as such, it requires a decent amount of resources to run. The following are the minimum specifications for running this server:
+- 16GB of RAM (4GB for Mongo, 12GB across servers and services)
+- 6 Cores (For sufficient multi-threading)
+- 15GB of Storage
+
 ## Setup Guide
 A video of me going through the guide [can be found here](https://www.youtube.com/watch?v=pxzJbjjQL-M)
-1. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
-2. Ensure you have the `Java 21` SDK installed.
-3. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
-4. Follow the 'Proxy Setup Guide' below.
-5. Follow the 'Game Server Setup Guide' below.
-6. Follow the 'Service Setup Guide' below.
-7. Follow the 'Resource Pack Setup Guide' below.
-8. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> data, find your profile and set your rank to "ADMIN". Log back in and you'll have it.
+1. Ensure that you meet the recommended device specifications above.
+2. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
+3. Ensure you have the `Java 21` SDK installed.
+4. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
+5. Follow the 'Proxy Setup Guide' below.
+6. Follow the 'Game Server Setup Guide' below.
+7. Follow the 'Service Setup Guide' below.
+8. Follow the 'Resource Pack Setup Guide' below.
+9. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> data, find your profile and set your rank to "ADMIN". Log back in and you'll have it.
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)

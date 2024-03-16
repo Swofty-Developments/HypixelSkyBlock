@@ -2,8 +2,12 @@ package net.swofty.types.generic.region;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.swofty.commons.Songs;
 import net.swofty.types.generic.region.mining.configurations.MineCoalConfiguration;
 import net.swofty.types.generic.region.mining.configurations.MineWheatConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public enum RegionType {
@@ -17,7 +21,7 @@ public enum RegionType {
     GRAVEYARD("Graveyard", "§c"),
     COAL_MINE("Coal Mine", MineCoalConfiguration.class),
     COAL_MINE_CAVES("Coal Mine"),
-    WILDERNESS("Wilderness", "§2"),
+    WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
     HIGH_LEVEL("High Level", "§4"),
     BAZAAR_ALLEY("Bazaar Alley", "§e"),
     AUCTION_HOUSE("Auction House", "§6"),
@@ -73,9 +77,10 @@ public enum RegionType {
     private final String name;
     private final String color;
     private final SkyBlockMiningConfiguration miningHandler;
+    private final List<Songs> songs;
 
     @SneakyThrows
-    RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
+    RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler, Songs... songs) {
         this.name = name;
         this.color = color;
 
@@ -83,6 +88,12 @@ public enum RegionType {
             this.miningHandler = miningHandler.newInstance();
         else
             this.miningHandler = null;
+        this.songs = new ArrayList<>();
+    }
+
+    @SneakyThrows
+    RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
+        this(name, color, miningHandler, new Songs[0]);
     }
 
     RegionType(String name, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
@@ -90,11 +101,18 @@ public enum RegionType {
     }
 
     RegionType(String name, String color) {
-        this(name, color, null);
+        this(name, color, new Songs[0]);
+    }
+
+    RegionType(String name, String color, Songs... songs) {
+        this.name = name;
+        this.color = color;
+        this.miningHandler = null;
+        this.songs = new ArrayList<>(List.of(songs));
     }
 
     RegionType(String name) {
-        this(name, "§b", null);
+        this(name, "§b", new Songs[0]);
     }
 
     @SneakyThrows

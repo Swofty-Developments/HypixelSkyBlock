@@ -10,6 +10,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.user.PlayerHookManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
@@ -115,15 +116,24 @@ public abstract class SkyBlockEvent {
     }
 
     private static void runEvent(SkyBlockEvent event, Event concreteEvent) {
-        if (concreteEvent instanceof PlayerEvent) {
-            ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager().callAndClearHooks(
+        PlayerHookManager hookManager = null;
+
+        if (concreteEvent instanceof PlayerEvent)
+            hookManager = ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager();
+
+        if (hookManager != null)
+            hookManager.callAndClearHooks(
                     event, true);
+
+        if (event.params.isAsync()) {
+            Thread.startVirtualThread(() -> event.run(concreteEvent));
+        } else {
+            event.run(concreteEvent);
         }
-        event.run(concreteEvent);
-        if (concreteEvent instanceof PlayerEvent) {
-            ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager().callAndClearHooks(
+
+        if (hookManager != null)
+            hookManager.callAndClearHooks(
                     event, false);
-        }
     }
 
     public static void callSkyBlockEvent(Event event) {
