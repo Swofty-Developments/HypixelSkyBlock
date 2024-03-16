@@ -45,7 +45,7 @@ public class MoveJerry implements CustomSkyBlockItem, Interactable {
 
         jerryInformation.setJerryPosition(new Pos(position).withLookAt(player.getPosition()));
         jerryInformation.getJerry().teleport(jerryInformation.getJerryPosition());
-        jerryInformation.getJerry().lookAt(player.getPosition());
+        jerryInformation.getJerry().lookAt(player.getPosition().add(0, 1.4, 0));
 
         hologram = ServerHolograms.ExternalHologram.builder()
                 .text(hologram.getText())

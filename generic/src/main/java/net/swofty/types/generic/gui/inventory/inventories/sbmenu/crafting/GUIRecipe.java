@@ -144,7 +144,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                             new GUIRecipe(
                                     ingredient,
                                     GUIRecipe.this,
-                                    ((Craftable) ingredient.getGenericInstance()).getRecipes().indexOf(recipe)
+                                    0
                             ).open(player);
                         }
 
