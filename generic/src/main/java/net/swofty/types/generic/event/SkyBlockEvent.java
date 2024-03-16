@@ -10,6 +10,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.user.PlayerHookManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.tinylog.Logger;
@@ -37,6 +38,9 @@ public abstract class SkyBlockEvent {
         try {
             paramNode = params.node();
         } catch (NullPointerException ex) {
+            if (this instanceof SkyBlockMission mission) {
+                if (mission.hasNoEvent()) return;
+            }
             System.out.println("Event " + this.getClass().getSimpleName() + " has no node specified!");
             return;
         }

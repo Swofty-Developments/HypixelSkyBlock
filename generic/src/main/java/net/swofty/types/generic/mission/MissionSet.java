@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 public enum MissionSet {
     GETTING_STARTED(MissionBreakLog.class, MissionCraftWorkbench.class, MissionCraftWoodenPickaxe.class, MissionTalkJerry.class, MissionUseTeleporter.class),
-    SAVING_UP(MissionTalkToVillagers.class, MissionTalkToBanker.class),
+    SAVING_UP(MissionTalkToBanker.class, MissionDepositCoinsInBank.class),
     LIBRARY_CARD(MissionTalkToLibrarian.class),
     AUCTIONEER(MissionTalkToAuctionMaster.class),
     ;

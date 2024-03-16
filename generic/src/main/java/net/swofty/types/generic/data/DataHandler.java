@@ -12,6 +12,7 @@ import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -298,6 +299,7 @@ public class DataHandler {
         AUCTION_ACTIVE_OWNED("auction_owned", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_active_owned")),
         AUCTION_INACTIVE_OWNED("auction_inactive_owned", false, false, false, DatapointUUIDList.class, new DatapointUUIDList("auction_inactive_owned")),
         AUCTION_ESCROW("auction_escrow", false, false, false, DatapointAuctionEscrow.class, new DatapointAuctionEscrow("auction_escrow")),
+        BANK_DATA("bank_data", false, true, false, DatapointBankData.class, new DatapointBankData("bank_data")),
         ;
 
         @Getter

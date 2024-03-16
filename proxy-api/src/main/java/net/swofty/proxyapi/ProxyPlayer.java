@@ -83,6 +83,24 @@ public class ProxyPlayer {
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
     }
 
+    public CompletableFuture<UUID> getBankHash() {
+        CompletableFuture<UUID> future = new CompletableFuture<>();
+
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("actions", "bank-hash");
+
+        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
+            if (s.equals("false")) {
+                future.complete(null);
+                return;
+            }
+            future.complete(UUID.fromString(s));
+        });
+
+        return future;
+    }
+
     public CompletableFuture<MinecraftVersion> getVersion() {
         CompletableFuture<MinecraftVersion> future = new CompletableFuture<>();
 

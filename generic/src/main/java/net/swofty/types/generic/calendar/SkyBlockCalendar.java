@@ -32,6 +32,19 @@ public final class SkyBlockCalendar {
         });
     }
 
+    public static Integer getHoursUntilNextInterest() {
+        // Interest happens every 31 hours
+        return (int) (31 - (getElapsed() % DAY) / 1000);
+    }
+
+    public static Long getDifferenceRaw(long time) {
+        return getElapsed() - time;
+    }
+
+    public static Long getDifferenceInHours(long time) {
+        return getDifferenceRaw(time) / 1000;
+    }
+
     public static int getYear() {
         return (int) (getElapsed() / YEAR) + 1;
     }

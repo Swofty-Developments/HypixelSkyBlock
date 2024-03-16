@@ -1,12 +1,14 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.GUIBanker;
+import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBanker;
 import net.swofty.types.generic.mission.MissionData;
 
-public class NPCBanker extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBanker extends NPCDialogue {
     public NPCBanker() {
         super(new NPCParameters() {
             @Override
@@ -38,13 +40,28 @@ public class NPCBanker extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        sendMessage(e.player(), "Test! GG ur very good at this");
-        new GUIBanker().open(e.player());
+        if (isInDialogue(e.player())) return;
 
         MissionData missionData = e.player().getMissionData();
 
         if (missionData.isCurrentlyActive("talk_to_banker")) {
-            missionData.endMission("talk_to_banker");
+            setDialogue(e.player(), "quest-hello").thenRun(() -> {
+                missionData.endMission("talk_to_banker");
+            });
+        } else {
+            new GUIBanker().open(e.player());
         }
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                                "Hello there!",
+                                "You may want to store your §6Coins §fin a safe place while you are off adventuring.",
+                                "Storing them in your §6Bank §fkeeps them safe and allows you to earn interest at the start of every season!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 }

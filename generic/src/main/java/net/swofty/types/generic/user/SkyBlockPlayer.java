@@ -72,6 +72,9 @@ public class SkyBlockPlayer extends Player {
     @Setter
     public boolean bypassBuild = false;
 
+    @Setter
+    public boolean isBankDelayed = false;
+
     private StatisticDisplayReplacement manaDisplayReplacement = null;
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     private StatisticDisplayReplacement coinsDisplayReplacement = null;

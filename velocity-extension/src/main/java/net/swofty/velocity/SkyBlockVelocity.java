@@ -126,6 +126,7 @@ public class SkyBlockVelocity {
         RedisMessage.registerProxyToServer("run-event");
         RedisMessage.registerProxyToServer("refresh-data");
         RedisMessage.registerProxyToServer("has-island");
+        RedisMessage.registerProxyToServer("bank-hash");
         RedisAPI.getInstance().startListeners();
 
         /**

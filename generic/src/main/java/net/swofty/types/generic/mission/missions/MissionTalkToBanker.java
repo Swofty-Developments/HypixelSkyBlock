@@ -51,13 +51,12 @@ public class MissionTalkToBanker extends SkyBlockMission {
 
     @Override
     public HashMap<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
-        player.sendMessage("On start thrown");
         return new HashMap<>();
     }
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.sendMessage("You did it my g");
+        player.getMissionData().startMission(MissionDepositCoinsInBank.class);
     }
 
     @Override

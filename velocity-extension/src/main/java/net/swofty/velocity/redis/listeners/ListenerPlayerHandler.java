@@ -57,6 +57,16 @@ public class ListenerPlayerHandler extends RedisListener {
                     new TransferHandler(player).transferTo(toSendTo.server());
                 }).start();
             }
+            case "bank-hash" -> {
+                if (potentialServer.isEmpty()) {
+                    return "false";
+                }
+                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+
+                return RedisMessage.sendMessageToServer(playerServer,
+                        "bank-hash",
+                        player.getUniqueId().toString()).join();
+            }
             case "version" -> {
                 return String.valueOf(Via.getAPI().getPlayerVersion(player.getUniqueId()));
             }

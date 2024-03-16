@@ -18,6 +18,10 @@ public abstract class SkyBlockMission extends SkyBlockEvent {
 
     public abstract Set<RegionType> getValidRegions();
 
+    public boolean hasNoEvent() {
+        return false;
+    }
+
     public boolean hasStartedOrCompleted(SkyBlockPlayer player) {
         return player.getMissionData().getActiveMissions().stream().anyMatch(mission -> mission.getMissionID().equals(getID())) ||
                 player.getMissionData().getCompletedMissions().stream().anyMatch(mission -> mission.getMissionID().equals(getID()));
