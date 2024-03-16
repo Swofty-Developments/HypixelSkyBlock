@@ -9,44 +9,45 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/Neruxov">Neruxov</a>
- */
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ItemShopPrice implements ShopPrice {
-
-    ItemType type;
-    int amount;
+public class CoinAndItemShopPrice implements ShopPrice {
+    ItemType item;
+    int itemAmount;
+    int coinAmount;
 
     @Override
     public List<String> getGUIDisplay() {
-        return List.of("§6" + type.rarity.getColor() + type.getDisplayName() + " §8x" + amount);
+        return List.of(
+                "§6" + item.rarity.getColor() + item.getDisplayName() + " §8x" + itemAmount,
+                "§6" + coinAmount + " Coin" + (coinAmount != 1 ? "s" : "")
+        );
     }
 
     @Override
     public String getNamePlural() {
-        return "items";
+        return "items and coins";
     }
 
     @Override
     public boolean canAfford(SkyBlockPlayer player) {
-        return player.getAmountInInventory(type) >= amount;
+        return player.getAmountInInventory(item) >= itemAmount && player.getCoins() >= coinAmount;
     }
 
     @Override
     public void processPurchase(SkyBlockPlayer player) {
-        player.takeItem(type, amount);
+        player.takeItem(item, itemAmount);
+        player.takeCoins(coinAmount);
     }
 
     @Override
     public ShopPrice multiply(int amount) {
-        return new ItemShopPrice(type, this.amount * amount);
+        return new CoinAndItemShopPrice(item, itemAmount * amount, coinAmount * amount);
     }
 
     @Override
     public ShopPrice divide(double amount) {
-        return new ItemShopPrice(type, Math.max((int) (this.amount / amount), 1));
+        return new CoinAndItemShopPrice(item,
+                Math.max((int) (itemAmount / amount), 1), Math.max((int) (coinAmount / amount), 1));
     }
-
 }

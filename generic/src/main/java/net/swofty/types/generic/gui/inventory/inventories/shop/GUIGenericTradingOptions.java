@@ -27,9 +27,9 @@ import java.util.List;
 public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
     private final SkyBlockShopGUI.ShopItem item;
     private final SkyBlockShopGUI retPointer;
-    private final List<ShopPrice> stackPrice;
+    private final ShopPrice stackPrice;
 
-    public GUIGenericTradingOptions(SkyBlockShopGUI.ShopItem item, SkyBlockShopGUI retPoint, List<ShopPrice> stackPrice) {
+    public GUIGenericTradingOptions(SkyBlockShopGUI.ShopItem item, SkyBlockShopGUI retPoint, ShopPrice stackPrice) {
         super("Shop Trading Options", InventoryType.CHEST_6_ROW);
         this.item = item;
         this.retPointer = retPoint;
@@ -50,10 +50,8 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         updateItemStacks(e.inventory(), getPlayer());
     }
 
-    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, List<ShopPrice> stackprice) {
-        stackprice = stackprice.stream()
-                .map(price -> price.multiply(amount))
-                .toList();
+    private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, ShopPrice stackprice) {
+        stackprice = stackprice.multiply(amount);
 
         SkyBlockItem sbItem = item.item();
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
@@ -62,14 +60,14 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
 
         lore.add("");
         lore.add("§7Cost");
-        stackprice.forEach(price -> lore.add("§7" + price.getDisplayName()));
+        lore.addAll(stackprice.getGUIDisplay());
         lore.add("");
         lore.add("§7Stock");
         lore.add("§6 " + player.getShoppingData().getStock(item.item()) + " §7remaining");
         lore.add("");
         lore.add("§eClick to purchase!");
 
-        List<ShopPrice> finalStackprice = stackprice;
+        ShopPrice finalStackprice = stackprice;
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -78,17 +76,12 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
                     return;
                 }
 
-                for (ShopPrice price1 : finalStackprice) {
-                    boolean canAfford = price1.canAfford(player);
-                    if (!canAfford) {
-                        player.sendMessage("§cYou don't have enough " + price1.getNamePlural() + "!");
-                        return;
-                    }
+                if (!finalStackprice.canAfford(player)) {
+                    player.sendMessage("§cYou don't have enough " + stackPrice.getNamePlural() + "!");
+                    return;
                 }
 
-                for (ShopPrice price1 : finalStackprice) {
-                    price1.processPurchase(player);
-                }
+                finalStackprice.processPurchase(player);
 
                 ItemStack.Builder cleanStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
                 cleanStack.amount(amount);

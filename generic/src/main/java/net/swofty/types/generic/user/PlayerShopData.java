@@ -21,10 +21,6 @@ public class PlayerShopData {
         this.buybackData = new ArrayList<>();
     }
 
-    public List<Tuple<SkyBlockItem, Integer>> getBuybackData() {
-        return buybackData;
-    }
-
     public boolean canPurchase(SkyBlockItem item, int amount) {
         updateStock(item);
         return getStock(item) >= amount;

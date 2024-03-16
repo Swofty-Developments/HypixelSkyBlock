@@ -2,6 +2,8 @@ package net.swofty.types.generic.shop;
 
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.List;
+
 /**
  * @author <a href="https://github.com/Neruxov">Neruxov</a>
  */
@@ -10,7 +12,7 @@ public interface ShopPrice {
     /**
      * @return the display name of the item, used for the GUI (with the amount)
      */
-    String getDisplayName();
+    List<String> getGUIDisplay();
 
     /**
      * @return the plural name of the item type, used for displaying "Not enough [plural name]!" type messages

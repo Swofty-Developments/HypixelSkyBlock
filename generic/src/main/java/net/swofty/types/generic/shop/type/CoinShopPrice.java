@@ -7,6 +7,8 @@ import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
+import java.util.List;
+
 /**
  * @author <a href="https://github.com/Neruxov">Neruxov</a>
  */
@@ -17,8 +19,8 @@ public class CoinShopPrice implements ShopPrice {
     int amount;
 
     @Override
-    public String getDisplayName() {
-        return "§6" + StringUtility.commaify(amount) + " Coin" + (amount != 1 ? "s" : "");
+    public List<String> getGUIDisplay() {
+        return List.of("§6" + StringUtility.commaify(amount) + " Coin" + (amount != 1 ? "s" : ""));
     }
 
     @Override
