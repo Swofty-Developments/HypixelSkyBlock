@@ -275,29 +275,31 @@ public abstract class SkyBlockInventoryGUI {
         InventoryGUIOpenEvent openEvent = new InventoryGUIOpenEvent(player, this, inventory);
 
         // Initializing GUI
-        setItems(openEvent);
-        updateItemStacks(inventory, player);
+        Thread.startVirtualThread(() -> {
+            setItems(openEvent);
+            updateItemStacks(inventory, player);
+            onOpen(openEvent);
 
+            if (this instanceof RefreshingGUI gui) {
+                MinecraftServer.getSchedulerManager().submitTask(() -> {
+                    // Player is removed from Map on disconnect, so we just need to check that
+                    if (!GUI_MAP.containsKey(player.getUuid()) || GUI_MAP.get(player.getUuid()) != this) {
+                        return TaskSchedule.stop();
+                    }
+                    Thread.startVirtualThread(() -> {
+                        synchronized (items) {
+                            gui.refreshItems(player);
+                            updateItemStacks(inventory, player);
+                        }
+                    });
+                    return TaskSchedule.tick(gui.refreshRate());
+                });
+            }
+        });
         player.openInventory(inventory);
-        onOpen(openEvent);
 
         GUI_MAP.put(player.getUuid(), this);
         afterOpen(openEvent);
-        if (this instanceof RefreshingGUI gui) {
-            MinecraftServer.getSchedulerManager().submitTask(() -> {
-                // Player is removed from Map on disconnect, so we just need to check that
-                if (!GUI_MAP.containsKey(player.getUuid()) || GUI_MAP.get(player.getUuid()) != this) {
-                    return TaskSchedule.stop();
-                }
-                Thread.startVirtualThread(() -> {
-                    synchronized (items) {
-                        gui.refreshItems(player);
-                        updateItemStacks(inventory, player);
-                    }
-                });
-                return TaskSchedule.tick(gui.refreshRate());
-            });
-        }
     }
 
     /**

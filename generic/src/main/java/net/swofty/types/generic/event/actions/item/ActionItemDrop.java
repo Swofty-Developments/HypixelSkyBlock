@@ -66,6 +66,5 @@ public class ActionItemDrop extends SkyBlockEvent {
         );
 
         droppedItem.setInstance(player.getInstance(), pos);
-        droppedItem.spawn();
     }
 }

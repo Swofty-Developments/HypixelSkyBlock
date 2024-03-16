@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemMeta;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.time.Duration;
@@ -32,7 +33,7 @@ public class DroppedItemEntityImpl extends Entity {
         this.endPickupDelay = System.currentTimeMillis() + 500;
 
         ItemEntityMeta meta = (ItemEntityMeta) this.entityMeta;
-        meta.setItem(item.getItemStack());
+        meta.setItem(new NonPlayerItemUpdater(item.getItemStack()).getUpdatedItem().build());
 
         setAutoViewable(false);
 
