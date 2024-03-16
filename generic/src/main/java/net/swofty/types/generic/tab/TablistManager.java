@@ -20,12 +20,24 @@ public abstract class TablistManager {
 
     public abstract List<TablistModule> getModules();
 
+    public void deleteTablistEntries(SkyBlockPlayer player) {
+        tablistEntries.remove(player);
+    }
+
+    public void nullifyCache(SkyBlockPlayer player) {
+        if (tablistEntries.containsKey(player)) {
+            player.sendPacket(new PlayerInfoRemovePacket(tablistEntries.get(player)));
+            tablistEntries.put(player, null);
+        }
+    }
+
     public void runScheduler(Scheduler scheduler) {
         scheduler.scheduleTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 if (!tablistEntries.containsKey(player)) {
                     tablistEntries.put(player, new ArrayList<>());
                 } else {
+                    if (tablistEntries.get(player) == null) return;
                     player.sendPacket(new PlayerInfoRemovePacket(tablistEntries.get(player)));
                 }
                 tablistEntries.get(player).clear();

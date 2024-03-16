@@ -331,6 +331,8 @@ public class SkyBlockPlayer extends Player {
             return;
         }
 
+        SkyBlockConst.getTypeLoader().getTablistManager().nullifyCache(this);
+
         showTitle(Title.title(
                 Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
                 Component.empty(),

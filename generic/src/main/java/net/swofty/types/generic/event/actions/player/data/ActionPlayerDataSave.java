@@ -6,6 +6,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
@@ -14,6 +16,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -33,7 +36,6 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
     @Override
     public void run(Event event) {
         PlayerDisconnectEvent playerDisconnectEvent = (PlayerDisconnectEvent) event;
-
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
         UUID uuid = player.getUuid();
 
@@ -75,5 +77,8 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         });
 
         DataHandler.userCache.remove(uuid);
+        MathUtility.delay(() -> {
+            SkyBlockConst.getTypeLoader().getTablistManager().deleteTablistEntries(player);
+        }, 10);
     }
 }

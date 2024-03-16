@@ -26,10 +26,10 @@ public class ActionPlayerWarnCrossVersion extends SkyBlockEvent {
             StringBuilder message = new StringBuilder();
 
             message.append(" \n");
-            message.append("§6§l------------------- §cServer Notice §6§l-------------------\n");
+            message.append("§6§l----------- §cServer Notice §6§l-----------\n");
             message.append("§cAlthough we do support versions prior to §61.20.4§c, the experience may be buggy.\n");
             message.append("§cIf you experience a bug, please test if it also occurs on §61.20.4§c before reporting it.\n");
-            message.append("§6§l---------------------------------------------------\n");
+            message.append("§6§l---------------------------------\n");
             message.append(" \n");
 
             player.sendMessage(message.toString());
