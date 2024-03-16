@@ -45,7 +45,7 @@ public class ActionRegionPlaySong extends SkyBlockEvent {
                     .ticksToLast(20)
                     .purpose(StatisticDisplayReplacement.Purpose.MUSIC)
                     .display("§2" + StringUtility.toNormalCase(randomSong.name()))
-                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
+                    .build(), StatisticDisplayReplacement.DisplayType.MANA);
         }
     }
 }
