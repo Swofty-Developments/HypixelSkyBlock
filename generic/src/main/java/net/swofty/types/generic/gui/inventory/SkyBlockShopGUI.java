@@ -205,7 +205,8 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             ShopItem item = p.get(i);
             SkyBlockItem sbItem = item.item;
 
-            ShopPrice price = item.price.multiply(item.amount).divide(item.modifier);
+            ShopPrice price = item.price.multiply(item.amount);
+            ShopPrice stackPrice = item.price.divide(item.modifier);
 
             set(new GUIClickableItem(slot) {
                 @Override
@@ -216,7 +217,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     }
 
                     if (item.stackable() && e.getClickType().equals(ClickType.RIGHT_CLICK)) {
-                        new GUIGenericTradingOptions(item, SkyBlockShopGUI.this, price).open(player);
+                        new GUIGenericTradingOptions(item, SkyBlockShopGUI.this, stackPrice).open(player);
                         return;
                     }
 
@@ -248,7 +249,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                     lore.add("");
                     lore.add("§7Cost");
-                    price.getGUIDisplay().forEach(p1 -> lore.add("§7" + p1));
+                    lore.addAll(price.getGUIDisplay());
                     lore.add("");
                     lore.add("§7Stock");
                     lore.add("§6" + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
@@ -316,5 +317,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         public static ShopItem Single(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
             return new ShopItem(item, amount, price, modifier, false);
         }
+
     }
 }
