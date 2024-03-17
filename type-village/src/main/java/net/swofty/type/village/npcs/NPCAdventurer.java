@@ -3,7 +3,7 @@ package net.swofty.type.village.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.shop.GUIShopAdventurer;
+import net.swofty.type.village.gui.GUIShopAdventurer;
 
 public class NPCAdventurer extends SkyBlockNPC {
     public NPCAdventurer() {

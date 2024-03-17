@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.shop;
+package net.swofty.type.village.gui;
 
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.Material;

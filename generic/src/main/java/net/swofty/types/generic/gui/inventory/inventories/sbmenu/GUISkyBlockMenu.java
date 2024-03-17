@@ -12,6 +12,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog.GUIMissionLog;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkills;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
