@@ -403,6 +403,8 @@ public class SkyBlockPlayer extends Player {
         setCoins(getCoins() - coins);
     }
 
+    public int getTotalFoundFairySouls() { return getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size(); }
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());
