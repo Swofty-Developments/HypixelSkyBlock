@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -8,8 +8,11 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.mission.MissionData;
@@ -26,7 +29,7 @@ import java.util.Map;
 
 public class GUIMissionLog extends SkyBlockInventoryGUI {
     private static final int[] MISSION_SLOTS = {
-            10, 11, 12, 13, 14, 15, 16,
+                11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
             28, 29, 30, 31, 32, 33, 34,
             37, 38, 39, 40, 41, 42, 43
@@ -49,7 +52,23 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, (short) 0, 1, "§7View your active quests, progress,", "§7and rewards.");
+                return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, (short) 0, 1, "§7View your active quests,", "§7progress, and rewards.");
+            }
+        });
+        set(new GUIClickableItem(10) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIFairySoulsGuide().open(player);
+            }
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStackHead("§eFind all Fairy Souls", "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
+                        "",
+                        "  §c✖ §eFound: " + player.getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
+                        "",
+                        "§7Forever ongoing quest...",
+                        "",
+                        "§eClick to view details!");
             }
         });
         if (completed) {
