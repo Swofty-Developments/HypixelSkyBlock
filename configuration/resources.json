@@ -3,5 +3,6 @@
   "redis-uri": "redis://localhost:6379",
   "velocity-secret": "1LAGCe86cZvG",
   "limbo-port": "65535",
-  "host-name": "0.0.0.0"
+  "host-name": "0.0.0.0",
+  "transfer-timeout": "800"
 }

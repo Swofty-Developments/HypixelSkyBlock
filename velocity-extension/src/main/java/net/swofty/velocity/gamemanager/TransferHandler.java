@@ -2,6 +2,7 @@ package net.swofty.velocity.gamemanager;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import net.swofty.commons.Configuration;
 import net.swofty.velocity.SkyBlockVelocity;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public record TransferHandler(Player player) {
             playersInLimbo.add(player);
 
             try {
-                Thread.sleep(800);
+                Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
