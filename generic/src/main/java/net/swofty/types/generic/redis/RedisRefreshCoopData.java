@@ -15,6 +15,8 @@ public class RedisRefreshCoopData implements ProxyToClient {
         UUID uuid = UUID.fromString(message.split(",")[0]);
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
 
+        if (player == null) return "ok";
+
         String datapoint = message.split(",")[1];
 
         DataHandler dataHandler = DataHandler.fromDocument(

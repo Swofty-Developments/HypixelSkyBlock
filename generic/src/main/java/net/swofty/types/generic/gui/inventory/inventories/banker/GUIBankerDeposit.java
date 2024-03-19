@@ -158,11 +158,12 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
 
         player.setBankDelayed(true);
         bankData.setSessionHash(UUID.randomUUID());
-        player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
         Thread.startVirtualThread(() -> {
             List<CompletableFuture<Void>> futures = new ArrayList<>();
             AtomicBoolean allow = new AtomicBoolean(true);
+
+            player.getLogHandler().debug("Your bank hash is " + bankHash);
 
             for (UUID memberId : coop.members()) {
                 if (memberId.equals(player.getUuid())) continue;
@@ -171,13 +172,15 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                     ProxyPlayer proxyPlayer = new ProxyPlayer(memberId);
                     if (!proxyPlayer.isOnline().join()) return;
 
-                    UUID bankHash = proxyPlayer.getBankHash().join();
-                    if (bankHash != null && !bankHash.equals(this.bankHash)) {
+                    UUID newBankHash = proxyPlayer.getBankHash().join();
+                    player.getLogHandler().debug("Bank hash for " + memberId + " is " + newBankHash);
+                    if (newBankHash != null && !newBankHash.equals(bankHash)) {
                         allow.set(false);
                     }
                 }));
             }
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
             if (!allow.get()) {
                 player.sendMessage("§cYou cannot deposit coins as your coop members have invalidated your bank session.");

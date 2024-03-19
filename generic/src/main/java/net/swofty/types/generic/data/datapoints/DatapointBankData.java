@@ -30,6 +30,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
             json.put("lastClaimed", value.lastClaimed);
             json.put("amount", value.amount);
             json.put("balanceLimit", value.balanceLimit);
+            json.put("sessionHash", value.sessionHash.toString());
 
             return json.toString();
         }
@@ -45,8 +46,9 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
             }
             double amount = jsonObject.getDouble("amount");
             double balanceLimit = jsonObject.getDouble("balanceLimit");
+            UUID sessionHash = jsonObject.has("sessionHash") ? UUID.fromString(jsonObject.getString("sessionHash")) : UUID.randomUUID();
             return new BankData(lastClaimed, transactions,
-                    UUID.randomUUID(), amount, balanceLimit);
+                    sessionHash, amount, balanceLimit);
         }
 
         @Override

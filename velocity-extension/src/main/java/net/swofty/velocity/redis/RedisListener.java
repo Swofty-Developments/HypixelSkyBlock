@@ -21,19 +21,22 @@ public abstract class RedisListener {
         UUID filterID = UUID.fromString(split[2]);
 
         String messageWithoutFilter = rawMessage.substring(rawMessage.indexOf(";") + 1);
-        String response;
-        try {
-            response = receivedMessage(messageWithoutFilter, filterID);
-        } catch (Exception e) {
-            System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
-            e.printStackTrace();
-            response = "error";
-        }
 
-        RedisAPI.getInstance().publishMessage(
-                filterID.toString(),
-                ChannelRegistry.getFromName(channel),
-                uuid + "}=-=-={" + response);
+        Thread.startVirtualThread(() -> {
+            String response;
+            try {
+                response = receivedMessage(messageWithoutFilter, filterID);
+            } catch (Exception e) {
+                System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
+                e.printStackTrace();
+                response = "error";
+            }
+
+            RedisAPI.getInstance().publishMessage(
+                    filterID.toString(),
+                    ChannelRegistry.getFromName(channel),
+                    uuid + "}=-=-={" + response);
+        });
     }
 
     public abstract String receivedMessage(String message, UUID serverUUID);
