@@ -15,6 +15,10 @@ public final class SkyBlockCalendar {
     private static final int YEAR = 8928000;
     private static final int MONTH = 744000;
     private static final int DAY = 24000;
+    private static final int HOUR = 1000;
+
+    public static final int INTEREST_INTERVAL = 31;
+    public static final double INTEREST_RATE = 0.02;
 
     private static final List<String> MONTH_NAMES = Arrays.asList("Early Spring", "Spring",
             "Late Spring", "Early Summer", "Summer", "Late Summer", "Early Autumn",
@@ -34,15 +38,11 @@ public final class SkyBlockCalendar {
 
     public static Integer getHoursUntilNextInterest() {
         // Interest happens every 31 hours
-        return (int) (31 - (getElapsed() % DAY) / 1000);
-    }
-
-    public static Long getDifferenceRaw(long time) {
-        return getElapsed() - time;
+        return (int) (INTEREST_INTERVAL - (getElapsed() % DAY) / 1000);
     }
 
     public static Long getDifferenceInHours(long time) {
-        return getDifferenceRaw(time) / 1000;
+        return (getElapsed() - time) / HOUR;
     }
 
     public static int getYear() {

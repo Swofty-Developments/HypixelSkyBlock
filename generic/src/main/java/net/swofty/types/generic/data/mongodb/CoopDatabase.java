@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.bson.Document;
@@ -71,6 +72,12 @@ public class CoopDatabase {
 
     public record Coop(UUID coopUUID, UUID originator, List<UUID> members, List<UUID> memberInvites,
                        List<UUID> memberProfiles) {
+        public ProxyPlayerSet getMembersAsProxyPlayerSet(UUID... toExclude) {
+            List<UUID> members = new ArrayList<>(this.members);
+            members.removeAll(List.of(toExclude));
+            return new ProxyPlayerSet(members);
+        }
+
         public boolean isOriginator(UUID uuid) {
             return uuid.equals(originator);
         }

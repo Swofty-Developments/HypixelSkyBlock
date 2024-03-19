@@ -122,7 +122,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                 if (transactions.isEmpty())
                     lore.add("§cNo transactions yet!");
                 else {
-                    for (int i = transactions.size() - 1; i >= 0; i--) {
+                    for (int i = Math.min(transactions.size() - 1, 10); i >= 0; i--) {
                         DatapointBankData.Transaction transaction = transactions.get(i);
 
                         boolean isNegative = transaction.amount < 0;
@@ -130,7 +130,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                         lore.add("§7" + (isNegative ? "§c-" : "§a+")
                                 + " §6" + amount + "§7, §e" + StringUtility.formatTimeAsAgo(transaction.timestamp)
-                                + "§7 by " + transaction.originator);
+                                + "§7 by §b" + transaction.originator);
                     }
                 }
 

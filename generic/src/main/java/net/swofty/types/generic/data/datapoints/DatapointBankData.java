@@ -27,7 +27,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
                 transactions.add(transactionJson);
             }
             json.put("transactions", transactions);
-            json.put("lastClaimed", value.lastClaimed);
+            json.put("lastClaimedInterest", value.lastClaimedInterest);
             json.put("amount", value.amount);
             json.put("balanceLimit", value.balanceLimit);
             json.put("sessionHash", value.sessionHash.toString());
@@ -38,7 +38,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
         @Override
         public BankData deserialize(String json) {
             JSONObject jsonObject = new JSONObject(json);
-            long lastClaimed = jsonObject.getLong("lastClaimed");
+            long lastClaimed = jsonObject.getLong("lastClaimedInterest");
             List<Transaction> transactions = new ArrayList<>();
             for (Object transaction : jsonObject.getJSONArray("transactions")) {
                 JSONObject transactionJson = (JSONObject) transaction;
@@ -53,7 +53,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
 
         @Override
         public BankData clone(BankData value) {
-            return new BankData(value.lastClaimed, new ArrayList<>(value.transactions),
+            return new BankData(value.lastClaimedInterest, new ArrayList<>(value.transactions),
                     UUID.randomUUID(), value.amount, value.balanceLimit);
         }
     };
@@ -75,7 +75,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
     @Getter
     @Setter
     public static class BankData {
-        private long lastClaimed;
+        private long lastClaimedInterest;
         private List<Transaction> transactions;
         private UUID sessionHash;
         private double amount;
