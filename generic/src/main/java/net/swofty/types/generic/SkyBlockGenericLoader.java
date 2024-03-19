@@ -61,6 +61,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.SkyBlockScoreboard;
 import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
+import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
@@ -273,11 +274,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         if (mainInstance != null) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
-            FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer());
+            FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer(), FairySoulZone.HUB);
         }
 
         /**
-         * Spawn server orbs
+         * Spawn server crystals
          */
         if (SkyBlockConst.getInstanceContainer() != null) {
             Thread.startVirtualThread(() -> {
