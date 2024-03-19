@@ -12,7 +12,7 @@ public class NPCFarmMerchant extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§7Do the thing", "Farm Merchant", "§e§lCLICK"};
+                return new String[]{"§9Farm Merchant", "§e§lCLICK"};
             }
 
             @Override
@@ -39,11 +39,7 @@ public class NPCFarmMerchant extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        SkyBlockPlayer player = e.player();
-        SkyBlockNPC npc = e.npc();
-        String signatureTexture = npc.getParameters().signature();
-
-        new GUIShopFarmMerchant().open(player);
+        new GUIShopFarmMerchant().open(e.player());
     }
 
 }

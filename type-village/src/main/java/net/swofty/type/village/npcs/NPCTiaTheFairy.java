@@ -4,14 +4,13 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUITiaTheFairy;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionHouse;
 
 public class NPCTiaTheFairy extends SkyBlockNPC {
     public NPCTiaTheFairy() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Tia The Fairy"};
+                return new String[]{"§9Tia The Fairy", "§e§lCLICK"};
             }
 
             @Override
@@ -26,7 +25,7 @@ public class NPCTiaTheFairy extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(129.5, 66, 137.5, 135f, 0f);
+                return new Pos(129.5, 66, 137.5, 135, 0);
             }
 
             @Override

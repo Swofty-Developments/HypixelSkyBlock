@@ -5,17 +5,17 @@ import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 
-public class VillagerAndrew extends SkyBlockVillagerNPC {
-    public VillagerAndrew() {
+public class VillagerMathsEnjoyer extends SkyBlockVillagerNPC {
+    public VillagerMathsEnjoyer() {
         super(new NPCVillagerParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"&fAndrew", "&e&lCLICK"};
+                return new String[]{"§fMaths Enjoyer", "&e&lCLICK"};
             }
 
             @Override
             public Pos position() {
-                return new Pos(38.5, 68, -46.5, 135f, 0f);
+                return new Pos(56, 69, -40, 180, 0);
             }
 
             @Override
@@ -32,6 +32,6 @@ public class VillagerAndrew extends SkyBlockVillagerNPC {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        e.player().sendMessage("§e[NPC] Andrew§f: This game is still under heavy development, don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!");
+        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it done quickly!");
     }
 }
