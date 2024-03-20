@@ -14,8 +14,9 @@ public class ListenerServerInitialized extends RedisListener {
     public String receivedMessage(String message, UUID serverUUID) {
         JSONObject json = new JSONObject(message);
         ServerType type = ServerType.valueOf(json.getString("type"));
+        int port = json.getInt("port");
 
-        GameManager.GameServer server = GameManager.addServer(type, serverUUID);
+        GameManager.GameServer server = GameManager.addServer(type, serverUUID , port);
 
         return String.valueOf(server.server().getServerInfo().getAddress().getPort());
     }
