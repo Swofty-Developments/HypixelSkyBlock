@@ -46,8 +46,18 @@ public class SkyBlock {
             System.exit(0);
             return;
         }
+
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
         long startTime = System.currentTimeMillis();
+
+        boolean isPterodactyl = Configuration.getOrDefault("pterodactyl-mode" , false);
+
+        if (isPterodactyl && args.length < 2) {
+            Logger.error("Please specify server port.");
+            System.exit(0);
+        }
+
+        int pterodactylPort = isPterodactyl ? Integer.parseInt(args[1]) : -1;
 
         /**
          * Initialize TypeLoader
@@ -154,8 +164,10 @@ public class SkyBlock {
 
         RedisMessage.sendMessageToProxy(
                 "server-initialized",
-                new JSONObject().put("type", serverType.name()).toString(),
-                (response) -> startServer.complete(Integer.parseInt(response)));
+                new JSONObject().put("type", serverType.name())
+                        .put("port" , pterodactylPort)
+                        .toString(),
+                (response) -> startServer.complete(isPterodactyl ? pterodactylPort : Integer.parseInt(response)) );
     }
 
     private static void checkProxyConnected(Scheduler scheduler) {
