@@ -19,7 +19,7 @@ public class GameManager {
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
     public static GameServer addServer(ServerType type, UUID serverID , int port) {
-        port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get random port
+        port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
                 new ServerInfo(serverID.toString(), new InetSocketAddress(Configuration.get("host-name"), port))
         );
