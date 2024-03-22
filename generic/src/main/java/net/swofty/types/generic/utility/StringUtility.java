@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,6 +32,42 @@ public class StringUtility {
             }
         }
         return "Just now";
+    }
+
+    public static String createLineProgressBar(int length, ChatColor progressColor, double current, double max) {
+        double percent = Math.min(current, max) / max;
+        long completed = Math.round((double) length * percent);
+        StringBuilder builder = new StringBuilder().append(progressColor);
+        for (int i = 0; i < completed; i++)
+            builder.append("-");
+        builder.append(ChatColor.WHITE);
+        for (int i = 0; i < length - completed; i++)
+            builder.append("-");
+        builder.append(" ").append(ChatColor.YELLOW).append(commaify(current)).append(ChatColor.GOLD).append("/")
+                .append(ChatColor.YELLOW).append(commaify(max));
+        return builder.toString();
+    }
+
+    public static String createProgressText(String text, double current, double max) {
+        double percent;
+        if (max != 0)
+            percent = (current / max) * 100.0;
+        else
+            percent = 0.0;
+        percent = roundTo(percent, 1);
+        return ChatColor.GRAY + text + ": " + (percent < 100.0 ? ChatColor.YELLOW + commaify(percent)
+                + ChatColor.GOLD + "%" : ChatColor.GREEN + "100.0%");
+    }
+
+    public static double roundTo(double d, int decimalPlaces) {
+        if (decimalPlaces < 1)
+            throw new IllegalArgumentException();
+        StringBuilder builder = new StringBuilder()
+                .append("#.");
+        builder.append("#".repeat(decimalPlaces));
+        DecimalFormat df = new DecimalFormat(builder.toString());
+        df.setRoundingMode(RoundingMode.CEILING);
+        return Double.parseDouble(df.format(d));
     }
 
     public static String shortenNumber(double number) {

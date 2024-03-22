@@ -329,23 +329,9 @@ public class SwoftySidebar implements Scoreboard {
          * Creates a new {@link SidebarTeam}
          */
         private void createTeam() {
-            String text = StringUtility.getTextFromComponent(content);
-            TextComponent prefix = (TextComponent) content;
-            TextComponent suffix = Component.empty();
-
-            if (text.length() > 16) {
-                ChatColor lastColor = ChatColor.getLastColor(prefix.content());
-                prefix = Component.text(text.substring(0 , 16));
-                suffix = Component.text(text.substring(16));
-
-                if (lastColor != null){
-                    suffix = Component.text(lastColor + suffix.content());
-                }
-
-            }
-
             this.entityName = '§' + Integer.toHexString(colorName);
-            this.sidebarTeam = new SidebarTeam(teamName, prefix, suffix, entityName);
+
+            this.sidebarTeam = new SidebarTeam(teamName, content, Component.empty(), entityName);
         }
 
         private void returnName(IntLinkedOpenHashSet colors) {

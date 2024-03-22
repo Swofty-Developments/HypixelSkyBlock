@@ -32,6 +32,19 @@ public class AttributeHandler {
         return item.getGenericInstance() instanceof Enchanted;
     }
 
+    public boolean isPet() {
+        return item.getGenericInstance() instanceof Pet;
+    }
+
+    public ItemAttributePetData.PetData getPetData() {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a pet");
+        if (item.getGenericInstance() instanceof Pet) {
+            return ((ItemAttributePetData) item.getAttribute("pet_data")).getValue();
+        } else {
+            throw new RuntimeException("Item is not a pet");
+        }
+    }
+
     public Color getLeatherColour() {
         if (item.getGenericInstance() == null)
             return null;

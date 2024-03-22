@@ -38,6 +38,8 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(31, new GUIBanker()));
 
+        double bankBalance = e.player().getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount();
+
         set(new GUIClickableItem(10) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -45,10 +47,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                bankBalance
                         ),
                         "§7Amount to withdraw: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                bankBalance
                         ),
                         " ",
                         "§eClick to withdraw coins!");
@@ -57,7 +59,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.closeInventory();
-                attemptWithdrawal(player, player.getCoins());
+                attemptWithdrawal(player, bankBalance);
             }
         });
 
@@ -68,10 +70,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                bankBalance
                         ),
                         "§7Amount to withdraw: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount() / 2
+                                bankBalance / 2
                         ),
                         " ",
                         "§eClick to withdraw coins!");
@@ -80,7 +82,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.closeInventory();
-                attemptWithdrawal(player, player.getCoins() / 2);
+                attemptWithdrawal(player, bankBalance / 2);
             }
         });
 
@@ -88,7 +90,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.closeInventory();
-                attemptWithdrawal(player, player.getCoins() / 5);
+                attemptWithdrawal(player, bankBalance / 5);
             }
 
             @Override
@@ -97,10 +99,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                bankBalance
                         ),
                         "§7Amount to withdraw: §6" + StringUtility.commaify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount() / 5
+                                bankBalance / 5
                         ),
                         " ",
                         "§eClick to withdraw coins!");
@@ -112,7 +114,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
                 try {
                     double amount = Double.parseDouble(query);
-                    if (amount > player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()) {
+                    if (amount > bankBalance) {
                         player.sendMessage("§cYou do not have that many coins to withdraw!");
                         return null;
                     }

@@ -32,6 +32,7 @@ import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
 import net.swofty.types.generic.item.items.minion.SnowMinion;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
+import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.Coal;
@@ -70,6 +71,11 @@ public enum ItemType {
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
     SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
+
+    /**
+     * Pets
+     */
+    BEE_PET(Material.PLAYER_HEAD, Rarity.COMMON, BeePet.class),
 
     /**
      * Backpacks

@@ -17,6 +17,7 @@ public enum ItemStatistic {
     CRIT_CHANCE("Crit Chance", true, "§b", "+", "%", "☠"),
     CRIT_DAMAGE("Crit Damage", true, "§b", "+", "%", "☣"),
     FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
+    MAGIC_FIND("Magic Find", false, "§d", "+", "%", "✯"),
     //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
     ;
 
