@@ -25,7 +25,7 @@ public class NPCKat extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(31, 70, -102, 90, 0);
+                return new Pos(31.5, 71, -100.5, 90, 0);
             }
 
             @Override
@@ -37,7 +37,7 @@ public class NPCKat extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it done quickly!");
+        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
     }
 
 }

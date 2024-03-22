@@ -1,6 +1,8 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopPat;
+import net.swofty.type.village.gui.GUITiaTheFairy;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
@@ -25,7 +27,7 @@ public class NPCPat extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-134, 73, 70, -97, 0);
+                return new Pos(-134, 73, -97, -90, 0);
             }
 
             @Override
@@ -37,7 +39,7 @@ public class NPCPat extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it done quickly!");
+        new GUIShopPat().open(e.player());
     }
 
 }

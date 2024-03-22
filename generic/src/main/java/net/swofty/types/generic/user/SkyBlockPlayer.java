@@ -116,6 +116,8 @@ public class SkyBlockPlayer extends Player {
         return new AntiCheatHandler(this);
     }
 
+    public FairySoulHandler getFairySoulHandler() { return new FairySoulHandler(this); }
+
     public LogHandler getLogHandler() {
         return new LogHandler(this);
     }
@@ -402,8 +404,6 @@ public class SkyBlockPlayer extends Player {
     public void takeCoins(double coins) {
         setCoins(getCoins() - coins);
     }
-
-    public int getTotalFoundFairySouls() { return getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size(); }
 
     @Override
     public void kill() {

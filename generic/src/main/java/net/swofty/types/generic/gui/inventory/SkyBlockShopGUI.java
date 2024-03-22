@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
@@ -27,20 +28,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
-    private static final int[] INTERIOR = new int[]{
+
+    public static final int[] DEFAULT = new int[]{
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
             28, 29, 30, 31, 32, 33, 34,
             37, 38, 39, 40, 41, 42, 43
     };
+    public static final int[] WOOLWEAVER1 = new int[]{
+            1,  2,  3,  4,  5,  6,  7,  8,
+            10, 11, 12, 13, 14, 15, 16, 17,
+            19, 20, 21, 22, 23, 24, 25, 26,
+            28, 29, 30, 31, 32, 33, 34, 35,
+            37, 38, 39, 40, 41, 42, 43, 44
+    };
 
     private final List<ShopItem> shopItemList;
     private int page;
+    private int[] INTERIOR;
 
-    public SkyBlockShopGUI(String title, int page) {
+    public SkyBlockShopGUI(String title, int page, int[]guiFormat) {
         super(title, InventoryType.CHEST_6_ROW);
         this.shopItemList = new ArrayList<>();
         this.page = page;
+        this.INTERIOR = guiFormat;
         initializeShopItems();
     }
 
@@ -304,7 +315,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         shopItemList.add(i);
     }
 
-    private void updateThis(SkyBlockPlayer player) {
+    public void updateThis(SkyBlockPlayer player) {
         SkyBlockShopGUI.this.open(player);
     }
 

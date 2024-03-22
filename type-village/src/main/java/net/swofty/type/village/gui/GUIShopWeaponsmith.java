@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public class GUIShopWeaponsmith extends SkyBlockShopGUI{
 
     public GUIShopWeaponsmith() {
-        super("Weaponsmith", 1);
+        super("Weaponsmith", 1, DEFAULT);
     }
 
     @Override

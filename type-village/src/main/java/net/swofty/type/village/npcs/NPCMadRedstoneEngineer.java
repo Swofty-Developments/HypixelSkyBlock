@@ -1,6 +1,8 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopMadRedstoneEngineer;
+import net.swofty.type.village.gui.GUIShopPat;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
@@ -37,7 +39,7 @@ public class NPCMadRedstoneEngineer extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it done quickly!");
+        new GUIShopMadRedstoneEngineer().open(e.player());
     }
 
 }

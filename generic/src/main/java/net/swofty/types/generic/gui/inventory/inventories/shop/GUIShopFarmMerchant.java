@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIShopFarmMerchant extends SkyBlockShopGUI {
     public GUIShopFarmMerchant() {
-        super("Farm Merchant", 1);
+        super("Farm Merchant", 1, DEFAULT);
     }
 
     @Override

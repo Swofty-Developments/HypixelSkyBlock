@@ -64,7 +64,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStackHead("§eFind all Fairy Souls", "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
                         "",
-                        "  §c✖ §eFound: " + player.getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
+                        "  §c✖ §eFound: " + player.getFairySoulHandler().getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
                         "",
                         "§7Forever ongoing quest...",
                         "",

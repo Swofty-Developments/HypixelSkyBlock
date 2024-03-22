@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIShopLibrarian extends SkyBlockShopGUI {
     public GUIShopLibrarian() {
-        super("Librarian", 1);
+        super("Librarian", 1, DEFAULT);
     }
 
     @Override
