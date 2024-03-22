@@ -39,6 +39,7 @@ import net.swofty.types.generic.item.items.vanilla.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.vanilla.Wheat;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
+import net.swofty.types.generic.item.items.weapon.Rogue;
 import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.IronSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.StoneSword;
@@ -149,6 +150,8 @@ public enum ItemType {
      * Swords
      */
     HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
+
+    ROGUE(Material.GOLDEN_SWORD, Rarity.COMMON, Rogue.class),
     DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
