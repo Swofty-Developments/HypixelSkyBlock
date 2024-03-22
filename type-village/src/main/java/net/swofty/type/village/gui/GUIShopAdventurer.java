@@ -9,7 +9,7 @@ import net.swofty.types.generic.shop.type.CoinShopPrice;
 public class GUIShopAdventurer extends SkyBlockShopGUI {
 
     public GUIShopAdventurer() {
-        super("Adventurer", 1);
+        super("Adventurer", 1, DEFAULT);
     }
 
     @Override

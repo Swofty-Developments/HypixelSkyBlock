@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIShopFishMerchant extends SkyBlockShopGUI{
     public GUIShopFishMerchant() {
-        super("Fish Merchant", 1);
+        super("Fish Merchant", 1, DEFAULT);
     }
 
     @Override

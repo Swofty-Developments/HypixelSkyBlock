@@ -66,26 +66,6 @@ public class FairySoul {
         }
     }
 
-    public static int getMaxFairySoulZoneAmount(FairySoulZone zone) {
-        int amount = 0;
-        for (FairySoul soul : FairySoulDatabase.getAllSouls()) {
-            if (soul.getZone() == zone) {
-                amount++;
-            }
-        }
-        return amount;
-    }
-
-    public static int getFoundFairySoulZoneAmount(SkyBlockPlayer player, FairySoulZone zone) {
-        int amount = 0;
-        for (Integer id : player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue()) {
-            if (FairySoulDatabase.getAllSouls().get(id).getZone() == zone) {
-                amount++;
-            }
-        }
-        return amount;
-    }
-
     public static void spawnEntities(Instance instance) {
         getFairySouls().forEach(soul -> soul.spawnEntity(instance));
     }

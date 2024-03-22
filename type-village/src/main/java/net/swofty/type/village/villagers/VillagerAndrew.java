@@ -15,7 +15,7 @@ public class VillagerAndrew extends SkyBlockVillagerNPC {
 
             @Override
             public Pos position() {
-                return new Pos(38.5, 48, -46.5, 135f, 0f);
+                return new Pos(38.5, 68, -46.5, 135f, 0f);
             }
 
             @Override

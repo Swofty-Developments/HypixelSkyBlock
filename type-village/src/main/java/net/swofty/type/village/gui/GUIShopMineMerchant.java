@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIShopMineMerchant extends SkyBlockShopGUI{
     public GUIShopMineMerchant() {
-        super("Mine Merchant", 1);
+        super("Mine Merchant", 1, DEFAULT);
     }
 
     @Override

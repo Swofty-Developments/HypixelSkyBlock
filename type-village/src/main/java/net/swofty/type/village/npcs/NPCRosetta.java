@@ -1,0 +1,43 @@
+package net.swofty.type.village.npcs;
+
+import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCParameters;
+import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+
+public class NPCRosetta extends SkyBlockNPC {
+
+    public NPCRosetta() {
+        super(new NPCParameters() {
+            @Override
+            public String[] holograms() {
+                return new String[]{"§9Rosetta", "§e§lCLICK"};
+            }
+
+            @Override
+            public String signature() {
+                return "kSFsbn+nM9SpCrWQCBLIetm++NUHmeGM+ZwAqggEo2rRUHLIMUr1FLSb/Q9iz80F+uwq4g3D37+HprftaVD7RXsHZ5q3ABubkNMLw3x2QHoryc/XXYHA6pMPc0fnzQMYdeavQHB55VBicPhNTwJloMp7j/ujyUvSq0trgxJyJLuJt2ZN8iAVA5zg3W0s4PaQcSPo63OKGf8op50fKnzOcJFpplNbory1qTBSq5LRVV6Mu4MzkyRqtAYbMaecmUa/tA+To3zyOHcuJfnIGXCCDi1ud7dm5FOKrz73y8HIOcho2gOtfqtD/PoXtYr6wQI+xK0lpbWySXxVeNf23tahOSdn79PaAmYKXx+SjDK+0MvVg5DMKOCPn8g7CQICpaMSNdUpir7HCJtxIl/Acs6yTQ0yv6TJ9kvX9B3E6MKmTKkaJ3cLLSjO0kXhzlB9apKf/kvGTuoWXh5/qYZnSXRIb1xeTxwClOU8T9CTkcqr+wTIJ+HaxJUpZyKQ7M+Ki+8QLGKsXqSnjhBheAqkroqc+KuBSFZjBJqXmiV3kHGDsJZDK/xd0hwf/zAUmjq/2VNHlOU2ViqeVGk2/J6psAPmkCGKesXTQoB9xgyL2IzYGiy3HLFE2ahno6aUAaEB7Y5mKalm3qhI5UOCNu1d1mANAEpLk9lm3Ojs/CII170//6Y=";
+            }
+
+            @Override
+            public String texture() {
+                return "ewogICJ0aW1lc3RhbXAiIDogMTU5NjE4NzA0NTAxNCwKICAicHJvZmlsZUlkIiA6ICJkZTU3MWExMDJjYjg0ODgwOGZlN2M5ZjQ0OTZlY2RhZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJNSEZfTWluZXNraW4iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDEwMzA3M2Y3MTZmZmQzNzE4ODJkOTRiYTVhZjBlNWU1YzBkMzc2MTljNGExZGJhNTk5NmFmZDczMjI1ODczYiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9";
+            }
+
+            @Override
+            public Pos position() {
+                return new Pos(-12, 68, -141, 90, 0);
+            }
+
+            @Override
+            public boolean looking() {
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onClick(PlayerClickNPCEvent e) {
+        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+    }
+
+}

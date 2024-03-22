@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
@@ -27,20 +28,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
-    private static final int[] INTERIOR = new int[]{
+
+    public static final int[] DEFAULT = new int[]{
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
             28, 29, 30, 31, 32, 33, 34,
             37, 38, 39, 40, 41, 42, 43
     };
+    public static final int[] WOOLWEAVER = new int[]{
+            1,  2,  3,  4,  5,  6,  7,  8,
+            10, 11, 12, 13, 14, 15, 16, 17,
+            19, 20, 21, 22, 23, 24, 25, 26,
+            28, 29, 30, 31, 32, 33, 34, 35,
+            37, 38, 39, 40, 41, 42, 43, 44
+    };
+    public static final int[] UPPER5ROWS = new int[]{
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+            36, 37, 38, 39, 40, 41, 42, 43, 44
+    };
+    public static final int[] GREENTHUMB = new int[]{
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+                    38, 39, 40, 41, 42
+    };
+    public static final int[] VARIETY = new int[]{
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+            36, 37, 38, 39, 40, 41, 42
+    };
 
     private final List<ShopItem> shopItemList;
     private int page;
+    private int[] INTERIOR;
 
-    public SkyBlockShopGUI(String title, int page) {
+    public SkyBlockShopGUI(String title, int page, int[]guiFormat) {
         super(title, InventoryType.CHEST_6_ROW);
         this.shopItemList = new ArrayList<>();
         this.page = page;
+        this.INTERIOR = guiFormat;
         initializeShopItems();
     }
 
@@ -60,11 +91,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
+        for (int slot : INTERIOR) {
+            set(slot, ItemStackCreator.createNamedItemStack(Material.AIR));
+        }
         PaginationList<ShopItem> paginatedItems = new PaginationList<>(INTERIOR.length);
         paginatedItems.addAll(shopItemList);
-
-        updateItemStacks(e.inventory(), getPlayer());
 
         for (int slot = 0; slot < 36; slot++) {
             ItemStack stack = getPlayer().getInventory().getItemStack(slot);
@@ -100,7 +132,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 getPlayer().getInventory().setItemStack(slot, toReplace.build());
             }
         }
-        getPlayer().getInventory().update();
 
         if (paginatedItems.isEmpty()) page = 0;
         if (page > 1)
@@ -195,8 +226,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 ).toList());
             }
         });
-
-        updateItemStacks(e.inventory(), getPlayer());
 
         List<ShopItem> p = paginatedItems.getPage(page);
         if (p == null) return;
@@ -304,7 +333,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         shopItemList.add(i);
     }
 
-    private void updateThis(SkyBlockPlayer player) {
+    public void updateThis(SkyBlockPlayer player) {
         SkyBlockShopGUI.this.open(player);
     }
 
