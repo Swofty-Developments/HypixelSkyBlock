@@ -7,7 +7,7 @@ import net.swofty.types.generic.shop.type.CoinShopPrice;
 
 public class GUIShopWoolWeaverVibrant extends SkyBlockShopGUI {
     public GUIShopWoolWeaverVibrant() {
-        super("Wool Weaver (Vibrant)", 1, WOOLWEAVER1);
+        super("Wool Weaver (Vibrant)", 1, WOOLWEAVER);
     }
 
     @Override

@@ -35,12 +35,32 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             28, 29, 30, 31, 32, 33, 34,
             37, 38, 39, 40, 41, 42, 43
     };
-    public static final int[] WOOLWEAVER1 = new int[]{
+    public static final int[] WOOLWEAVER = new int[]{
             1,  2,  3,  4,  5,  6,  7,  8,
             10, 11, 12, 13, 14, 15, 16, 17,
             19, 20, 21, 22, 23, 24, 25, 26,
             28, 29, 30, 31, 32, 33, 34, 35,
             37, 38, 39, 40, 41, 42, 43, 44
+    };
+    public static final int[] UPPER5ROWS = new int[]{
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+            36, 37, 38, 39, 40, 41, 42, 43, 44
+    };
+    public static final int[] GREENTHUMB = new int[]{
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+                    38, 39, 40, 41, 42
+    };
+    public static final int[] VARIETY = new int[]{
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9,  10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
+            36, 37, 38, 39, 40, 41, 42
     };
 
     private final List<ShopItem> shopItemList;
@@ -71,11 +91,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " "));
+        for (int slot : INTERIOR) {
+            set(slot, ItemStackCreator.createNamedItemStack(Material.AIR));
+        }
         PaginationList<ShopItem> paginatedItems = new PaginationList<>(INTERIOR.length);
         paginatedItems.addAll(shopItemList);
-
-        updateItemStacks(e.inventory(), getPlayer());
 
         for (int slot = 0; slot < 36; slot++) {
             ItemStack stack = getPlayer().getInventory().getItemStack(slot);
@@ -111,7 +132,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 getPlayer().getInventory().setItemStack(slot, toReplace.build());
             }
         }
-        getPlayer().getInventory().update();
 
         if (paginatedItems.isEmpty()) page = 0;
         if (page > 1)
@@ -206,8 +226,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 ).toList());
             }
         });
-
-        updateItemStacks(e.inventory(), getPlayer());
 
         List<ShopItem> p = paginatedItems.getPage(page);
         if (p == null) return;

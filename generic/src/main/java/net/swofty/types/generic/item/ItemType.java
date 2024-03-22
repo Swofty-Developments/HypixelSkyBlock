@@ -32,6 +32,7 @@ import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
 import net.swofty.types.generic.item.items.minion.SnowMinion;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
+import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
 import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
 import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
@@ -86,6 +87,31 @@ public enum ItemType {
     GREATER_BACKPACK(Material.PLAYER_HEAD, Rarity.EPIC, GreaterBackpack.class),
     JUMBO_BACKPACK(Material.PLAYER_HEAD, Rarity.LEGENDARY, JumboBackpack.class),
     JUMBO_BACKPACK_UPGRADE(Material.PLAYER_HEAD, Rarity.SPECIAL, JumboBackpackUpgrade.class),
+
+    /**
+     * Decoration items
+     */
+    DECORATION_ANCIENT_FRUIT(Material.PLAYER_HEAD, Rarity.COMMON, AncientFruit.class),
+    DECORATION_APPALLED_PUMPKIN(Material.PLAYER_HEAD, Rarity.COMMON, AppalledPumpkin.class),
+    DECORATION_APPLE(Material.PLAYER_HEAD, Rarity.COMMON, Apple.class),
+    DECORATION_BANANA_BUNCH(Material.PLAYER_HEAD, Rarity.COMMON, BananaBunch.class),
+    DECORATION_BEETROOT(Material.PLAYER_HEAD, Rarity.COMMON, Beetroot.class),
+    DECORATION_BERRY(Material.PLAYER_HEAD, Rarity.COMMON, Berry.class),
+    DECORATION_BERRY_BUSH(Material.PLAYER_HEAD, Rarity.COMMON, BerryBush.class),
+    DECORATION_BLUE_CORN(Material.PLAYER_HEAD, Rarity.COMMON, BlueCorn.class),
+    DECORATION_BROWN_MUSHROOM(Material.PLAYER_HEAD, Rarity.COMMON, BrownMushroom.class),
+    DECORATION_BUSH(Material.PLAYER_HEAD, Rarity.COMMON, Bush.class),
+    DECORATION_CACTUS(Material.PLAYER_HEAD, Rarity.COMMON, Cactus.class),
+    DECORATION_CHESTO_BERRY(Material.PLAYER_HEAD, Rarity.COMMON, ChestoBerry.class),
+    DECORATION_CORN(Material.PLAYER_HEAD, Rarity.COMMON, Corn.class),
+    DECORATION_KIWI(Material.PLAYER_HEAD, Rarity.COMMON, Kiwi.class),
+    DECORATION_LEMON(Material.PLAYER_HEAD, Rarity.COMMON, Lemon.class),
+    DECORATION_LETTUCE(Material.PLAYER_HEAD, Rarity.COMMON, Lettuce.class),
+    DECORATION_LILAC_FRUIT(Material.PLAYER_HEAD, Rarity.COMMON, LilacFruit.class),
+    DECORATION_MELON(Material.PLAYER_HEAD, Rarity.COMMON, Melon.class),
+    DECORATION_ONION(Material.PLAYER_HEAD, Rarity.COMMON, Onion.class),
+    DECORATION_ORANGE(Material.PLAYER_HEAD, Rarity.COMMON, Orange.class),
+    DECORATION_PINK_BERRY(Material.PLAYER_HEAD, Rarity.COMMON, PinkBerry.class),
 
     /**
      * Farming Props
