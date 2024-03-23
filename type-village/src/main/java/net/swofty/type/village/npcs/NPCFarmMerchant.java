@@ -12,7 +12,7 @@ public class NPCFarmMerchant extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Farm Merchant", "§e§lCLICK"};
+                return new String[]{"Farm Merchant", "§e§lCLICK"};
             }
 
             @Override

@@ -36,6 +36,7 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
     @Override
     public void run(Event tempEvent) {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+        if (!event.isFirstSpawn()) return;
 
         Logger.info("Loading player data for " + event.getPlayer().getUsername() + "...");
 

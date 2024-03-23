@@ -57,6 +57,27 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         lore);
             }
         });
+        set(new GUIClickableItem(30) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIPets().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aPets", Material.BONE, 1,
+                        "§7View and manage all of your",
+                        "§7Pets.",
+                        " ",
+                        "§7Level up your pets faster by",
+                        "§7gaining XP in their favourite",
+                        "§7skill!",
+                        " ",
+                        "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
+                        " ",
+                        "§eClick to view!");
+            }
+        });
 
         set(new GUIClickableItem(21) {
             @Override

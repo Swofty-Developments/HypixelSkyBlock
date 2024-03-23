@@ -175,7 +175,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cInvalid Stack Size!", Material.RED_DYE, (short) 0, 1,
+                            "§cInvalid Item!", Material.RED_DYE, (short) 0, 1,
                             "§7You cannot enchant stacked items!"
                     );
                 }

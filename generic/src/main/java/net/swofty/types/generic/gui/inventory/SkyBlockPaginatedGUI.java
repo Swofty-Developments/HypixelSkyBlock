@@ -51,10 +51,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
         try {
             updatePagedItems(paged, page, player);
-        } catch (IllegalStateException ex) {
-            player.sendMessage("§cOops! It seems like there are no results for your query! ('" + query + "')");
-            return;
-        }
+        } catch (IllegalStateException ex) {}
         performSearch(player, query, page, paged.getPageCount());
         super.open(player);
     }

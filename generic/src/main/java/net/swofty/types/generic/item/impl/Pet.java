@@ -1,11 +1,15 @@
 package net.swofty.types.generic.item.impl;
 
 import com.mongodb.lang.Nullable;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
+import net.swofty.types.generic.data.datapoints.DatapointPetData;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.items.pet.PetAbility;
-import net.swofty.types.generic.skill.SkillCategory;
+import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -15,15 +19,43 @@ import net.swofty.types.generic.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable {
+public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
     ItemStatistics getPerLevelStatistics();
     int particleId();
-    SkillCategory getSkillCategory();
+    SkillCategories getSkillCategory();
     default ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
     }
+    default void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        interact(player, item);
+    }
+
+    default void onLeftInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        interact(player, item);
+    }
+
+    private void interact(SkyBlockPlayer player, SkyBlockItem item) {
+        DatapointPetData.UserPetData petData = player.getPetData();
+        ItemType type = item.getAttributeHandler().getItemTypeAsType();
+        Rarity rarity = item.getAttributeHandler().getRarity();
+
+        if (petData.getPet(type) != null) {
+            player.sendMessage("§cYou already have a pet of this type.");
+            return;
+        }
+
+        petData.addPet(item);
+        player.setItemInHand(null);
+        player.sendMessage("§aSuccessfully added " + rarity.getColor() + item.getDisplayName() + " §ato your pet menu!");
+        player.playSound(Sound.sound()
+                .type(Key.key("minecraft", "entity.experience_orb.pickup"))
+                .volume(1f)
+                .pitch(1f)
+                .build());
+    }
+
     default List<String> getAbsoluteLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         List<String> lore = new ArrayList<>();
         Pet pet = (Pet) item.getGenericInstance();
@@ -32,7 +64,7 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable {
         int level = petData.getAsLevel(rarity);
         List<PetAbility> abilities = getPetAbilities(item);
 
-        lore.add("§8" + pet.getSkillCategory().getName() + " Pet");
+        lore.add("§8" + pet.getSkillCategory().asCategory().getName() + " Pet");
         lore.add(" ");
 
         addPropertyInt("Magic Find", (getPerLevelStatistics().get(ItemStatistic.MAGIC_FIND) * 100.0), lore, level);
@@ -79,21 +111,17 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable {
         return "§7[Lvl " + petData.getAsLevel(rarity) + "] " + rarity.getColor() + getPetName() + " Pet";
     }
 
-    static Boolean addPropertyInt(String name, double value, List<String> lore, int level) {
+    static void addPropertyInt(String name, double value, List<String> lore, int level) {
         long fin = Math.round(value * level);
         if (value != 0.0) {
             lore.add("§7" + name + ": §a" + (fin >= 0 ? "+" : "") + fin);
-            return true;
         }
-        return false;
     }
 
-    public static Boolean addPropertyPercent(String name, double value, List<String> lore, int level) {
+    static void addPropertyPercent(String name, double value, List<String> lore, int level) {
         long fin = Math.round((value * 100.0) * level);
         if (value != 0.0) {
             lore.add("§7" + name + ": §a" + (fin >= 0 ? "+" : "") + fin + "%");
-            return true;
         }
-        return false;
     }
 }

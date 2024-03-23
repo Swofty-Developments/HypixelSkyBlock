@@ -60,6 +60,11 @@ public class ItemLore {
                 return;
             }
 
+            if (item.getGenericInstance() instanceof ExtraUnderNameDisplay underNameDisplay) {
+                addLoreLine("§8" + underNameDisplay.getExtraUnderNameDisplay());
+                addLoreLine(null);
+            }
+
             // Handle Item Statistics
             if (handler.isMiningTool()) {
                 addLoreLine("§8Breaking Power " + handler.getBreakingPower());

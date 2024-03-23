@@ -114,7 +114,7 @@ public class BeePet implements Pet {
     }
 
     @Override
-    public SkillCategory getSkillCategory() {
-        return SkillCategories.FARMING.asCategory();
+    public SkillCategories getSkillCategory() {
+        return SkillCategories.FARMING;
     }
 }

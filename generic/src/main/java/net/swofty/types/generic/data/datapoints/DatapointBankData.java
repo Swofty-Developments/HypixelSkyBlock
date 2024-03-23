@@ -38,17 +38,17 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
         @Override
         public BankData deserialize(String json) {
             JSONObject jsonObject = new JSONObject(json);
-            long lastClaimed = jsonObject.getLong("lastClaimedInterest");
+
             List<Transaction> transactions = new ArrayList<>();
             for (Object transaction : jsonObject.getJSONArray("transactions")) {
                 JSONObject transactionJson = (JSONObject) transaction;
-                transactions.add(new Transaction(transactionJson.getLong("timestamp"), transactionJson.getDouble("amount"), transactionJson.getString("originator")));
+                transactions.add(new Transaction(transactionJson.getLong("timestamp"),
+                        transactionJson.getDouble("amount"), transactionJson.getString("originator")));
             }
-            double amount = jsonObject.getDouble("amount");
-            double balanceLimit = jsonObject.getDouble("balanceLimit");
-            UUID sessionHash = jsonObject.has("sessionHash") ? UUID.fromString(jsonObject.getString("sessionHash")) : UUID.randomUUID();
-            return new BankData(lastClaimed, transactions,
-                    sessionHash, amount, balanceLimit);
+
+            return new BankData(jsonObject.getLong("lastClaimedInterest"), transactions,
+                    UUID.fromString(jsonObject.getString("sessionHash")), jsonObject.getDouble("amount"),
+                    jsonObject.getDouble("balanceLimit"));
         }
 
         @Override

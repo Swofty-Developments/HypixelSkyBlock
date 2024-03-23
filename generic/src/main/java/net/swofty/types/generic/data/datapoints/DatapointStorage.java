@@ -1,10 +1,7 @@
 package net.swofty.types.generic.data.datapoints;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -25,8 +22,13 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true) // Due to serializer serializing "highestPage"
+    @NoArgsConstructor
     public static class PlayerStorage {
         public final List<StorageSlot> slots = new ArrayList<>();
+
+        public PlayerStorage(List<StorageSlot> slots) {
+            this.slots.addAll(slots);
+        }
 
         public boolean hasPage(int page) {
             return slots.stream().anyMatch(slot -> slot.page == page);

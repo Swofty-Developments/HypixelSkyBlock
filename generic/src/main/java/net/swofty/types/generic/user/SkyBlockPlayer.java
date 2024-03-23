@@ -13,6 +13,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
@@ -23,6 +24,7 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
@@ -49,6 +51,7 @@ import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -126,6 +129,10 @@ public class SkyBlockPlayer extends Player {
         return PlayerProfiles.get(this.getUuid());
     }
 
+    public DatapointPetData.UserPetData getPetData() {
+        return getDataHandler().get(DataHandler.Data.PET_DATA, DatapointPetData.class).getValue();
+    }
+
     public MissionData getMissionData() {
         MissionData data = getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);
@@ -185,6 +192,16 @@ public class SkyBlockPlayer extends Player {
         }
 
         return map;
+    }
+
+    public void setItemInHand(@Nullable SkyBlockItem item) {
+        if (item == null) {
+            getInventory().setItemInHand(Hand.MAIN, ItemStack.of(Material.AIR));
+            return;
+        }
+
+        getInventory().setItemInHand(Hand.MAIN,
+                PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
     }
 
     public int getAmountInInventory(ItemType type) {
