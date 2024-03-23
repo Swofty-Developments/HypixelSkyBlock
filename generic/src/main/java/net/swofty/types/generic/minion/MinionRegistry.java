@@ -9,6 +9,12 @@ public enum MinionRegistry {
     COBBLESTONE(MinionCobblestone.class, ItemType.COBBLESTONE_MINION),
     COAL(MinionCoal.class, ItemType.COAL_MINION),
     SNOW(MinionSnow.class, ItemType.SNOW_MINION),
+    ACACIA(MinionAcacia.class, ItemType.ACACIA_MINION),
+    BIRCH(MinionBirch.class, ItemType.BIRCH_MINION),
+    DARK_OAK(MinionDarkOak.class, ItemType.DARK_OAK_MINION),
+    JUNGLE(MinionJungle.class, ItemType.JUNGLE_MINION),
+    OAK(MinionOak.class, ItemType.OAK_MINION),
+    SPRUCE(MinionSpruce.class, ItemType.SPRUCE_MINION),
     ;
 
     private final Class<? extends SkyBlockMinion> minionClass;

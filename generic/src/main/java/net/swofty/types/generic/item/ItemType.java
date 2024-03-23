@@ -13,23 +13,21 @@ import net.swofty.types.generic.item.items.crimson.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.*;
-import net.swofty.types.generic.item.items.mining.crystal.ConcentratedStone;
+import net.swofty.types.generic.item.items.mining.crystal.*;
 import net.swofty.types.generic.item.items.mining.PioneersPickaxe;
-import net.swofty.types.generic.item.items.mining.crystal.HardStone;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
+import net.swofty.types.generic.item.items.mining.dwarven.GoblinEgg;
 import net.swofty.types.generic.item.items.mining.dwarven.Mithril;
 import net.swofty.types.generic.item.items.mining.dwarven.Titanium;
 import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
-import net.swofty.types.generic.item.items.minion.CoalMinion;
-import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
-import net.swofty.types.generic.item.items.minion.SnowMinion;
+import net.swofty.types.generic.item.items.minion.*;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
@@ -72,6 +70,12 @@ public enum ItemType {
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
     SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
+    ACACIA_MINION(Material.PLAYER_HEAD, Rarity.RARE, AcaciaMinion.class),
+    BIRCH_MINION(Material.PLAYER_HEAD, Rarity.RARE, BirchMinion.class),
+    DARK_OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, DarkOakMinion.class),
+    JUNGLE_MINION(Material.PLAYER_HEAD, Rarity.RARE, JungleMinion.class),
+    OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, OakMinion.class),
+    SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
 
     /**
      * Pets
@@ -176,6 +180,7 @@ public enum ItemType {
     WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
     ROOKIE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON),
     PROMISING_PICKAXE(Material.IRON_PICKAXE, Rarity.UNCOMMON),
+    PICKONIMBUS_2000(Material.DIAMOND_PICKAXE, Rarity.EPIC, Pickonimbus2000.class),
 
     /**
      * Swords
@@ -241,6 +246,37 @@ public enum ItemType {
     TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
     SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
     CONCENTRATED_STONE(Material.PLAYER_HEAD, Rarity.RARE, ConcentratedStone.class),
+
+    /**
+     * Other Mining Stuff
+     */
+    GOBLIN_EGG(Material.EGG, Rarity.RARE, GoblinEgg.class),
+    YELLOW_GOBLIN_EGG(Material.EGG, Rarity.RARE, YellowGoblinEgg.class),
+    RED_GOBLIN_EGG(Material.EGG, Rarity.RARE, RedGoblinEgg.class),
+    GREEN_GOBLIN_EGG(Material.EGG, Rarity.UNCOMMON, GreenGoblinEgg.class),
+    BLUE_GOBLIN_EGG(Material.EGG, Rarity.RARE, BlueGoblinEgg.class),
+    CONTROL_SWITCH(Material.PLAYER_HEAD, Rarity.RARE, ControlSwitch.class),
+    ELECTRON_TRANSMITTER(Material.PLAYER_HEAD, Rarity.RARE, ElectronTransmitter.class),
+    FTX_3070(Material.PLAYER_HEAD, Rarity.RARE, FTX3070.class),
+    ROBOTRON_REFLECTOR(Material.PLAYER_HEAD, Rarity.RARE, RobotronReflector.class),
+    SUPERLITE_MOTOR(Material.PLAYER_HEAD, Rarity.RARE, SuperliteMotor.class),
+    SYNTHETIC_HEART(Material.PLAYER_HEAD, Rarity.RARE, SyntheticHeart.class),
+    SLUDGE_JUICE(Material.PLAYER_HEAD, Rarity.UNCOMMON, SludgeJuice.class),
+    OIL_BARREL(Material.PLAYER_HEAD, Rarity.UNCOMMON, OilBarrel.class),
+    TREASURITE(Material.PLAYER_HEAD, Rarity.EPIC, Treasurite.class),
+    JUNGLE_KEY(Material.TRIPWIRE_HOOK, Rarity.EPIC, JungleKey.class),
+    WISHING_COMPASS(Material.PLAYER_HEAD, Rarity.UNCOMMON, WishingCompass.class),
+    WORM_MEMBRANE(Material.ROTTEN_FLESH, Rarity.UNCOMMON, WormMembrane.class),
+    MAGMA_CORE(Material.MAGMA_CREAM, Rarity.RARE, MagmaCore.class),
+    ETERNAL_FLAME_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON, EternalFlameRing.class),
+    HELIX(Material.PLAYER_HEAD, Rarity.LEGENDARY, Helix.class),
+    BOB_OMB(Material.PLAYER_HEAD, Rarity.RARE, Bobomb.class),
+    PREHISTORIC_EGG(Material.PLAYER_HEAD, Rarity.COMMON, PrehistoricEgg.class),
+    RECALL_POTION(Material.PLAYER_HEAD, Rarity.EPIC, RecallPotion.class),
+    GEMSTONE_MIXTURE(Material.PLAYER_HEAD, Rarity.RARE, GemstoneMixture.class),
+    DIVAN_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, DivanFragment.class),
+    DIVAN_ALLOY(Material.PLAYER_HEAD, Rarity.LEGENDARY, DivanAlloy.class),
+
 
     /**
      * Vanilla Items
