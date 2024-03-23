@@ -1,29 +1,24 @@
-package net.swofty.types.generic.item.items.mining.crystal;
+package net.swofty.types.generic.item.items.combat.slayer.wolf;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Treasurite implements CustomSkyBlockItem, SkullHead {
+public class RedClawEgg implements CustomSkyBlockItem {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
     }
 
     @Override
-    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "be261c6b852dd38e0d51349b1b8132887cd1b69da04d8daf0121af79ad8dd92";
-    }
-
-    @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7§oOrigin unknown."));
+                "§7Drops very rarely from Sven",
+                "§7Packmaster. No one knows what's",
+                "§7in the egg."));
     }
 }

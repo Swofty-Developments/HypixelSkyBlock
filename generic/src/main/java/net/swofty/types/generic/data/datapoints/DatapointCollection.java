@@ -163,7 +163,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
                     maxBarLength
             ));
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + collected + "§6/§e" + reward.requirement());
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + StringUtility.commaify(collected) + "§6/§e" + StringUtility.shortenNumber(reward.requirement()));
 
             if (reward.unlocks().length > 0) {
                 lore.add(" ");
