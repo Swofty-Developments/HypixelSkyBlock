@@ -27,9 +27,7 @@ import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
-import net.swofty.types.generic.item.items.minion.CoalMinion;
-import net.swofty.types.generic.item.items.minion.CobblestoneMinion;
-import net.swofty.types.generic.item.items.minion.SnowMinion;
+import net.swofty.types.generic.item.items.minion.*;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
@@ -72,6 +70,12 @@ public enum ItemType {
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
     SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
+    ACACIA_MINION(Material.PLAYER_HEAD, Rarity.RARE, AcaciaMinion.class),
+    BIRCH_MINION(Material.PLAYER_HEAD, Rarity.RARE, BirchMinion.class),
+    DARK_OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, DarkOakMinion.class),
+    JUNGLE_MINION(Material.PLAYER_HEAD, Rarity.RARE, JungleMinion.class),
+    OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, OakMinion.class),
+    SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
 
     /**
      * Pets
