@@ -1,10 +1,11 @@
-package net.swofty.types.generic.item.items.mining;
+package net.swofty.types.generic.item.items.mining.crystal;
 
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.MiningTool;
 import net.swofty.types.generic.item.impl.Reforgable;
+import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -12,26 +13,30 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PioneersPickaxe implements CustomSkyBlockItem, MiningTool, Reforgable {
+public class Pickonimbus2000 implements CustomSkyBlockItem, MiningTool, Sellable, Reforgable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 1D)
+                .with(ItemStatistic.DAMAGE, 30D)
+                .with(ItemStatistic.MINING_SPEED, 1500D)
                 .build();
+    }
+
+    @Override
+    public int getBreakingPower() {
+        return 7;
+    }
+
+    @Override
+    public double getSellValue() {
+        return 12;
     }
 
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7§oThe very first pickaxe",
-                "§7§omodel! Invented by the famous",
-                "§7§oThomas Pickson."
-        ));
-    }
-
-    @Override
-    public int getBreakingPower() {
-        return 1;
+                "§7A powerful tool that breaks",
+                "§7after §a5000§7 uses."));
     }
 
     @Override

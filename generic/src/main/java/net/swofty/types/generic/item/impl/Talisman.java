@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public interface Talisman extends CustomSkyBlockItem, SkullHead, ExtraRarityDisplay {
+public interface Talisman extends CustomSkyBlockItem, SkullHead, ExtraRarityDisplay, Unstackable {
     List<String> getTalismanDisplay();
 
     @Override
