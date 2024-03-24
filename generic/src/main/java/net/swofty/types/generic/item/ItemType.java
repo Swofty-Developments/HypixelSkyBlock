@@ -9,11 +9,16 @@ import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
-import net.swofty.types.generic.item.items.combat.slayer.blaze.*;
-import net.swofty.types.generic.item.items.combat.slayer.enderman.*;
-import net.swofty.types.generic.item.items.combat.slayer.spider.*;
-import net.swofty.types.generic.item.items.combat.slayer.wolf.*;
-import net.swofty.types.generic.item.items.combat.slayer.zombie.*;
+import net.swofty.types.generic.item.items.combat.mythological.GriffinFeather;
+import net.swofty.types.generic.item.items.combat.slayer.blaze.drops.*;
+import net.swofty.types.generic.item.items.combat.slayer.enderman.craftable.*;
+import net.swofty.types.generic.item.items.combat.slayer.enderman.drops.*;
+import net.swofty.types.generic.item.items.combat.slayer.spider.craftable.*;
+import net.swofty.types.generic.item.items.combat.slayer.spider.drops.*;
+import net.swofty.types.generic.item.items.combat.slayer.wolf.craftable.*;
+import net.swofty.types.generic.item.items.combat.slayer.wolf.drops.*;
+import net.swofty.types.generic.item.items.combat.slayer.zombie.craftable.*;
+import net.swofty.types.generic.item.items.combat.slayer.zombie.drops.*;
 import net.swofty.types.generic.item.items.crimson.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
@@ -43,7 +48,9 @@ import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
 import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.talismans.SkeletonTalisman;
 import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
-import net.swofty.types.generic.item.items.talismans.ZombieTalisman;
+import net.swofty.types.generic.item.items.talismans.zombie.ZombieArtifact;
+import net.swofty.types.generic.item.items.talismans.zombie.ZombieRing;
+import net.swofty.types.generic.item.items.talismans.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.Coal;
 import net.swofty.types.generic.item.items.vanilla.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.Stick;
@@ -70,6 +77,8 @@ public enum ItemType {
      * Talismans
      */
     ZOMBIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, ZombieTalisman.class),
+    ZOMBIE_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON, ZombieRing.class),
+    ZOMBIE_ARTIFACT(Material.PLAYER_HEAD, Rarity.RARE, ZombieArtifact.class),
     SPEED_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SpeedTalisman.class),
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
 
@@ -179,6 +188,7 @@ public enum ItemType {
     ABSOLUTE_ENDER_PEARL(Material.PLAYER_HEAD, Rarity.RARE, AbsoluteEnderPearl.class),
     WHIPPED_MAGMA_CREAM(Material.PLAYER_HEAD, Rarity.RARE, WhippedMagmaCream.class),
     ZOMBIE_HEART(Material.PLAYER_HEAD, Rarity.RARE, ZombieHeart.class),
+    SOUL_STRING(Material.STRING, Rarity.RARE, SoulString.class),
 
     /**
      * Zombie Slayer
@@ -192,6 +202,14 @@ public enum ItemType {
     SHARD_OF_THE_SHREDDED(Material.PLAYER_HEAD, Rarity.LEGENDARY, ShardOfTheShredded.class),
     WARDEN_HEART(Material.PLAYER_HEAD, Rarity.LEGENDARY, WardenHeart.class),
     REVENANT_VISCERA(Material.COOKED_PORKCHOP, Rarity.RARE, RevenantViscera.class),
+    CRYSTALLIZED_HEART(Material.PLAYER_HEAD, Rarity.RARE, CrystallizedHeart.class),
+    REVIVED_HEART(Material.PLAYER_HEAD, Rarity.EPIC, RevivedHeart.class),
+    REAPER_MASK(Material.PLAYER_HEAD, Rarity.LEGENDARY, ReaperMask.class),
+    WARDEN_HELMET(Material.PLAYER_HEAD, Rarity.LEGENDARY, WardenHelmet.class),
+    REVENANT_FALCHION(Material.DIAMOND_SWORD, Rarity.RARE, RevenantFalchion.class),
+    REAPER_FALCHION(Material.DIAMOND_SWORD, Rarity.EPIC, ReaperFalchion.class),
+    AXE_OF_THE_SHREDDED(Material.DIAMOND_AXE, Rarity.LEGENDARY, AxeOfTheShreeded.class),
+    REAPER_SCYTHE(Material.DIAMOND_HOE, Rarity.LEGENDARY, ReaperScythe.class),
 
     /**
      * Spider Slayer
@@ -201,6 +219,11 @@ public enum ItemType {
     SPIDER_CATALYST(Material.PLAYER_HEAD, Rarity.RARE, SpiderCatalyst.class),
     FLY_SWATTER(Material.GOLDEN_SHOVEL, Rarity.EPIC, FlySwatter.class),
     DIGESTED_MOSQUITO(Material.ROTTEN_FLESH, Rarity.LEGENDARY, DigestedMosquito.class),
+    TARANTULA_SILK(Material.COBWEB, Rarity.RARE, TarantulaSilk.class),
+    RECLUSE_FANG(Material.IRON_SWORD, Rarity.RARE, RecluseFang.class),
+    MOSQUITO_BOW(Material.BOW, Rarity.LEGENDARY, MosquitoBow.class),
+    SCORPION_BOW(Material.BOW, Rarity.EPIC, ScorpionBow.class),
+    SCORPION_FOIL(Material.WOODEN_SWORD, Rarity.EPIC, ScorpionFoil.class),
 
     /**
      * Wolf Slayer
@@ -210,6 +233,11 @@ public enum ItemType {
     RED_CLAW_EGG(Material.MOOSHROOM_SPAWN_EGG, Rarity.EPIC, RedClawEgg.class),
     OVERFLUX_CAPACITOR(Material.QUARTZ, Rarity.EPIC, OverfluxCapacitor.class),
     GRIZZLY_SALMON(Material.COOKED_SALMON, Rarity.RARE, GrizzlySalmon.class),
+    GOLDEN_TOOTH(Material.GOLD_NUGGET, Rarity.RARE, GoldenTooth.class),
+    SHAMAN_SWORD(Material.IRON_SWORD, Rarity.EPIC, ShamanSword.class),
+    POOCH_SWORD(Material.GOLDEN_SWORD, Rarity.LEGENDARY, PoochSword.class),
+    EDIBLE_MACE(Material.MUTTON, Rarity.RARE, EdibleMace.class),
+    WEIRD_TUBA(Material.HOPPER, Rarity.RARE, WeirdTuba.class),
 
     /**
      * Enderman Slayer
@@ -223,6 +251,18 @@ public enum ItemType {
     EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER(Material.PLAYER_HEAD, Rarity.LEGENDARY, ExceedinglyRareEnderArtifactUpgrader.class),
     ETHERWARP_MERGER(Material.PLAYER_HEAD, Rarity.EPIC, EtherwarpMerger.class),
     JUDGEMENT_CORE(Material.PLAYER_HEAD, Rarity.LEGENDARY, JudgementCore.class),
+    NULL_OVOID(Material.ENDERMAN_SPAWN_EGG, Rarity.RARE, NullOvoid.class),
+    NULL_EDGE(Material.STICK, Rarity.EPIC, NullEdge.class),
+    NULL_BLADE(Material.SHEARS, Rarity.LEGENDARY, NullBlade.class),
+    TESSELLATED_ENDER_PEARL(Material.PLAYER_HEAD, Rarity.LEGENDARY, TessellatedEnderPearl.class),
+    VOIDWALKER_KATANA(Material.IRON_SWORD, Rarity.UNCOMMON, VoidwalkerKatana.class),
+    VOIDEDGE_KATANA(Material.DIAMOND_SWORD, Rarity.RARE, VoidedgeKatana.class),
+    VORPAL_KATANA(Material.DIAMOND_SWORD, Rarity.EPIC, VorpalKatana.class),
+    ATOMSPLIT_KATANA(Material.DIAMOND_SWORD, Rarity.LEGENDARY, AtomsplitKatana.class),
+    SINSEEKER_SCYTHE(Material.GOLDEN_HOE, Rarity.EPIC, SinseekerScythe.class),
+    JUJU_SHORTBOW(Material.BOW, Rarity.EPIC, JujuShortbow.class),
+    TERMINATOR(Material.BOW, Rarity.LEGENDARY, Terminator.class),
+    BRAIDED_GRIFFIN_FEATHER(Material.STRING, Rarity.EPIC, BraidedGriffinFeather.class),
 
     /**
      * Blaze Slayer
@@ -241,6 +281,11 @@ public enum ItemType {
     HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.LEGENDARY, HighClassArchfiendDice.class),
     WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY, WilsonEngineeringPlans.class),
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
+
+    /**
+     * Mythological Ritual
+     */
+    GRIFFIN_FEATHER(Material.FEATHER, Rarity.RARE, GriffinFeather.class),
 
     /**
      * Spooky Festival
@@ -348,6 +393,11 @@ public enum ItemType {
     TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
     SULPHUR(Material.GLOWSTONE_DUST, Rarity.UNCOMMON),
     CONCENTRATED_STONE(Material.PLAYER_HEAD, Rarity.RARE, ConcentratedStone.class),
+
+    /**
+     * Forge Items
+     */
+    REFINED_MITHRIL(Material.PLAYER_HEAD, Rarity.EPIC, RefinedMithril.class),
 
     /**
      * Other Mining Stuff
