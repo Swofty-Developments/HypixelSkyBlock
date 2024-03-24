@@ -1,13 +1,11 @@
-package net.swofty.types.generic.item.items.combat;
+package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -15,23 +13,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Craftable, ExtraRarityDisplay, Unstackable, Reforgable {
-
+public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Reforgable, Craftable, ExtraRarityDisplay {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 50D)
+                .with(ItemStatistic.DEFENSE, 10D)
+                .with(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 
     @Override
-    public double getSellValue() {
-        return 123000;
-    }
-
-    @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "71d7c816fc8c636d7f50a93a0ba7aaeff06c96a561645e9eb1bef391655c531";
+        return "87dfb7c1ee4de31f54931eac5c657c145e4fa7fa09e3f52b1788a682b65ac75";
     }
 
     @Override
@@ -45,25 +39,25 @@ public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Cra
     }
 
     @Override
+    public ReforgeType getReforgeType() {
+        return ReforgeType.ARMOR;
+    }
+
+    @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 32));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ZOMBIE_HEART, 1));
         List<String> pattern = List.of(
                 "AAA",
-                "A A",
+                "ABA",
                 "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ZOMBIE_HEART), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.CRYSTALLIZED_HEART), ingredientMap, pattern);
     }
 
     @Override
     public String getExtraRarityDisplay() {
         return " HELMET";
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
     }
 }
