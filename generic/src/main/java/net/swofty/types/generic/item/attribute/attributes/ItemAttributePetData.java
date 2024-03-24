@@ -26,7 +26,7 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
             return new PetData(0);
         }
 
-        return new PetData(Long.parseLong(string));
+        return new PetData(Double.parseDouble(string));
     }
 
     @Override
@@ -37,7 +37,23 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
     @AllArgsConstructor
     @Getter
     public static class PetData {
-        public long experience;
+        private double experience;
+
+        // Returns true if the level was increased
+        public boolean addExperience(double experience, Rarity rarity) {
+            Integer currentLevel = getAsLevel(rarity);
+            this.experience += experience;
+            return getAsLevel(rarity) > currentLevel;
+        }
+
+        public double getExperienceInCurrentLevel(Rarity rarity) {
+            // Get the experience required to level up
+            // Minus the last reached goal from the current experience
+            // Return the difference
+            double currentLevelGoal = getExperienceForLevel(getAsLevel(rarity), rarity);
+            double nextLevelGoal = getExperienceForLevel(getAsLevel(rarity) + 1, rarity);
+            return nextLevelGoal - (currentLevelGoal - getAsExperience(rarity));
+        }
 
         public Integer getAsLevel(Rarity rarity) {
             return switch (rarity) {
@@ -50,7 +66,7 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
             };
         }
 
-        public long getAsExperience(Rarity rarity) {
+        public double getAsExperience(Rarity rarity) {
             return switch (rarity) {
                 case COMMON -> experience - COMMON_XP_GOALS.get(getAsLevel(Rarity.COMMON));
                 case UNCOMMON -> experience - UNCOMMON_XP_GOALS.get(getAsLevel(Rarity.UNCOMMON));
@@ -63,16 +79,16 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
 
         public long getExperienceForLevel(int level, Rarity rarity) {
             return switch (rarity) {
-                case COMMON -> COMMON_XP_GOALS.get(level);
-                case UNCOMMON -> UNCOMMON_XP_GOALS.get(level);
-                case RARE -> RARE_XP_GOALS.get(level);
-                case EPIC -> EPIC_XP_GOALS.get(level);
-                case LEGENDARY -> LEGENDARY_XP_GOALS.get(level);
+                case COMMON -> COMMON_XP_GOALS.get(level - 1);
+                case UNCOMMON -> UNCOMMON_XP_GOALS.get(level - 1);
+                case RARE -> RARE_XP_GOALS.get(level - 1);
+                case EPIC -> EPIC_XP_GOALS.get(level - 1);
+                case LEGENDARY -> LEGENDARY_XP_GOALS.get(level - 1);
                 default -> 0;
             };
         }
 
-        private Integer getLevel(long xp, List<Integer> goals) {
+        private Integer getLevel(double xp, List<Integer> goals) {
             for (int i = 0; i < goals.size(); i++) {
                 if (xp < goals.get(i)) {
                     return i;

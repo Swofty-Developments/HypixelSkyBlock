@@ -158,4 +158,10 @@ public class MathUtility {
     public static int random(int min, int max) {
         return (int) Math.round(Math.random() * (max - min) + min);
     }
+
+    public static float getYawNeededToLookAt(Pos from, Pos to) {
+        double xDiff = to.x() - from.x();
+        double zDiff = to.z() - from.z();
+        return (float) Math.toDegrees(Math.atan2(zDiff, xDiff)) - 90;
+    }
 }

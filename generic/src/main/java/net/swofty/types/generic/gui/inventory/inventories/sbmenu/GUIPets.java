@@ -270,6 +270,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 }
 
                 player.getPetData().setEnabled(item.getAttributeHandler().getItemTypeAsType(), true);
+                player.getPetData().updatePetEntityImpl(player);
                 player.sendMessage("§aSelected pet " + item.getDisplayName() + "§a!");
                 GUIPets guiPets = new GUIPets();
                 guiPets.setSortType(sortType);

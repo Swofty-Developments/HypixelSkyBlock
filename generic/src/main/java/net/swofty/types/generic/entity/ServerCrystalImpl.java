@@ -26,7 +26,7 @@ public class ServerCrystalImpl extends LivingEntity {
     private final String url;
     private final Material toPlace;
     private Task upAndDownTask;
-    private Task particleTask;
+    private Task rotationTask;
     private Task cropsTask;
     @Getter
     private float yLevel = 0f;
@@ -64,9 +64,9 @@ public class ServerCrystalImpl extends LivingEntity {
             yLevel = (getYLevel() < 0D) ? 0.1f : -0.1f;
             teleport(getPosition().add(0, yLevel, 0));
         }, TaskSchedule.tick(15), TaskSchedule.tick(8));
-        particleTask = MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+        rotationTask = MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (isDead()) {
-                particleTask.cancel();
+                rotationTask.cancel();
                 return;
             }
             Pos location = getPosition().withYaw(getPosition().yaw() + 15.0f);

@@ -76,6 +76,7 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
                     20));
 
             MinecraftServer.getBossBarManager().removeAllBossBars(player);
+            player.getPetData().updatePetEntityImpl(player);
 
             if (SkyBlockConst.isIslandServer()) return;
             PlayerHolograms.spawnAll(player);

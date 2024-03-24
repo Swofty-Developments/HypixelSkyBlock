@@ -333,6 +333,11 @@ public class SkyBlockPlayer extends Player {
         }
     }
 
+    public String getShortenedDisplayName() {
+        return "§" + getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor().asHexString()
+                + this.getUsername();
+    }
+
     public float getMaxMana() {
         return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
     }

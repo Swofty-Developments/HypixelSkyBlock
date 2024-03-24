@@ -85,18 +85,15 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interac
         }
 
         if (level < 100) {
-            long experience = petData.experience;
+            double experience = petData.getExperienceInCurrentLevel(rarity);
             int nextLevel = level + 1;
             long nextLevelExperience = petData.getExperienceForLevel(nextLevel, rarity);
 
-            double progress = ((double) experience / (double) nextLevelExperience) * 100.0;
-            long amountLeft = nextLevelExperience - experience;
-
             lore.add(" ");
             lore.add(StringUtility.createProgressText("Progress to Level " + nextLevel,
-                    progress, amountLeft));
-            lore.add(StringUtility.createLineProgressBar(20, ChatColor.DARK_GREEN, progress,
-                    amountLeft));
+                    experience, nextLevelExperience));
+            lore.add(StringUtility.createLineProgressBar(20, ChatColor.DARK_GREEN, experience,
+                    nextLevelExperience));
         }
 
         lore.add(" ");

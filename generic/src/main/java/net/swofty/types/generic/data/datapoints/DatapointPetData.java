@@ -3,11 +3,15 @@ package net.swofty.types.generic.data.datapoints;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import net.swofty.types.generic.data.Datapoint;
+import net.swofty.types.generic.entity.PetEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.serializer.MissionDataSerializer;
 import net.swofty.types.generic.serializer.UserPetDataSerializer;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -26,16 +30,17 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
         super(key, new UserPetData(new HashMap<>()), serializer);
     }
 
+    @Getter
     @JsonIgnoreProperties(ignoreUnknown = true) // Due to serializer serializing "enabledPet"
     public static class UserPetData {
-        @Getter
-        private final Map<SkyBlockItem, Boolean> petsMap;
+        private HashMap<SkyBlockItem, Boolean> petsMap;
+        private PetEntityImpl enabledPetEntityImpl = null;
 
         public UserPetData() {
             this.petsMap = new HashMap<>();
         }
 
-        public UserPetData(Map<SkyBlockItem, Boolean> pets) {
+        public UserPetData(HashMap<SkyBlockItem, Boolean> pets) {
             this.petsMap = pets;
         }
 
@@ -49,6 +54,22 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
 
             // Set the new pet to the new state
             petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getItemTypeAsType() == type).findFirst().ifPresent(pet -> petsMap.put(pet, enabled));
+
+            if (enabledPetEntityImpl != null)
+                enabledPetEntityImpl.remove();
+        }
+
+        public void updatePetEntityImpl(SkyBlockPlayer player) {
+            if (enabledPetEntityImpl != null)
+                enabledPetEntityImpl.remove();
+
+            SkyBlockItem enabledPet = getEnabledPet();
+            if (enabledPet != null) {
+                enabledPetEntityImpl = new PetEntityImpl(player, ((SkullHead) enabledPet.getGenericInstance()).getSkullTexture(
+                        player, enabledPet
+                ), enabledPet);
+                enabledPetEntityImpl.setInstance(player.getInstance(), player.getPosition());
+            }
         }
 
         public void isEnabled(ItemType type) {
