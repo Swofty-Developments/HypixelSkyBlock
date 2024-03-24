@@ -9,9 +9,8 @@ import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
-import net.swofty.types.generic.item.items.combat.slayer.enderman.NullSphere;
-import net.swofty.types.generic.item.items.combat.slayer.enderman.SummoningEye;
-import net.swofty.types.generic.item.items.combat.slayer.enderman.TwilightArrowPoison;
+import net.swofty.types.generic.item.items.combat.slayer.blaze.*;
+import net.swofty.types.generic.item.items.combat.slayer.enderman.*;
 import net.swofty.types.generic.item.items.combat.slayer.spider.*;
 import net.swofty.types.generic.item.items.combat.slayer.wolf.*;
 import net.swofty.types.generic.item.items.combat.slayer.zombie.*;
@@ -191,6 +190,7 @@ public enum ItemType {
     REVENANT_CATALYST(Material.PLAYER_HEAD, Rarity.EPIC, RevenantCatalyst.class),
     SCYTHE_BLADE(Material.DIAMOND, Rarity.LEGENDARY, ScytheBlade.class),
     SHARD_OF_THE_SHREDDED(Material.PLAYER_HEAD, Rarity.LEGENDARY, ShardOfTheShredded.class),
+    WARDEN_HEART(Material.PLAYER_HEAD, Rarity.LEGENDARY, WardenHeart.class),
     REVENANT_VISCERA(Material.COOKED_PORKCHOP, Rarity.RARE, RevenantViscera.class),
 
     /**
@@ -217,6 +217,30 @@ public enum ItemType {
     NULL_SPHERE(Material.FIREWORK_STAR, Rarity.UNCOMMON, NullSphere.class),
     TWILIGHT_ARROW_POISON(Material.PURPLE_DYE, Rarity.UNCOMMON, TwilightArrowPoison.class),
     SUMMONING_EYE(Material.PLAYER_HEAD, Rarity.EPIC, SummoningEye.class),
+    TRANSMISSION_TUNER(Material.PLAYER_HEAD, Rarity.EPIC, TransmissionTuner.class),
+    NULL_ATOM(Material.OAK_BUTTON, Rarity.RARE, NullAtom.class),
+    SINFUL_DICE(Material.PLAYER_HEAD, Rarity.EPIC, SinfulDice.class),
+    EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER(Material.PLAYER_HEAD, Rarity.LEGENDARY, ExceedinglyRareEnderArtifactUpgrader.class),
+    ETHERWARP_MERGER(Material.PLAYER_HEAD, Rarity.EPIC, EtherwarpMerger.class),
+    JUDGEMENT_CORE(Material.PLAYER_HEAD, Rarity.LEGENDARY, JudgementCore.class),
+
+    /**
+     * Blaze Slayer
+     */
+    DERELICT_ASHE(Material.GUNPOWDER, Rarity.UNCOMMON, DerelictAshe.class),
+    BUNDLE_OF_MAGMA_ARROWS(Material.PLAYER_HEAD, Rarity.EPIC, BundleOfMagmaArrows.class),
+    MANA_DISINTEGRATOR(Material.PLAYER_HEAD, Rarity.RARE, ManaDisintegrator.class),
+    KELVIN_INVERTER(Material.PLAYER_HEAD, Rarity.RARE, KelvinInverter.class),
+    BLAZE_ROD_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE, BlazeRodDistillate.class),
+    MAGMA_CREAM_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE, MagmaCreamDistillate.class),
+    GLOWSTONE_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE, GlowstoneDistillate.class),
+    NETHER_WART_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE, NetherWartDistillate.class),
+    GABAGOOL_DISTILLATE(Material.PLAYER_HEAD, Rarity.RARE, GabagoolDistillate.class),
+    SCORCHED_POWER_CRYSTAL(Material.PLAYER_HEAD, Rarity.LEGENDARY, ScorchedPowerCrystal.class),
+    ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.EPIC, ArchfiendDice.class),
+    HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.LEGENDARY, HighClassArchfiendDice.class),
+    WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY, WilsonEngineeringPlans.class),
+    SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
 
     /**
      * Spooky Festival

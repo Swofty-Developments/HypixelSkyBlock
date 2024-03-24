@@ -1,11 +1,10 @@
-package net.swofty.types.generic.item.items.combat.slayer.wolf;
+package net.swofty.types.generic.item.items.combat.slayer.blaze;
 
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
-import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class OverfluxCapacitor implements CustomSkyBlockItem, Enchanted, Unstackable {
+public class DerelictAshe implements CustomSkyBlockItem, Enchanted {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
