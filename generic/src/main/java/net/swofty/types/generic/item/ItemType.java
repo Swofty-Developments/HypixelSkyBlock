@@ -9,7 +9,9 @@ import net.swofty.types.generic.item.items.armor.LeafletSandals;
 import net.swofty.types.generic.item.items.armor.LeafletTunic;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
-import net.swofty.types.generic.item.items.combat.mythological.GriffinFeather;
+import net.swofty.types.generic.item.items.combat.mythological.craftable.DaedalusAxe;
+import net.swofty.types.generic.item.items.combat.mythological.craftable.SwordOfRevelations;
+import net.swofty.types.generic.item.items.combat.mythological.drops.*;
 import net.swofty.types.generic.item.items.combat.slayer.blaze.drops.*;
 import net.swofty.types.generic.item.items.combat.slayer.enderman.craftable.*;
 import net.swofty.types.generic.item.items.combat.slayer.enderman.drops.*;
@@ -71,7 +73,6 @@ public enum ItemType {
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
-    ANCIENT_CLAW(Material.FLINT, Rarity.RARE),
     WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON),
 
     /**
@@ -264,6 +265,10 @@ public enum ItemType {
     JUJU_SHORTBOW(Material.BOW, Rarity.EPIC, JujuShortbow.class),
     TERMINATOR(Material.BOW, Rarity.LEGENDARY, Terminator.class),
     BRAIDED_GRIFFIN_FEATHER(Material.STRING, Rarity.EPIC, BraidedGriffinFeather.class),
+    GYROKINETIC_WAND(Material.BLAZE_ROD, Rarity.EPIC, GyrokineticWand.class),
+    SOUL_ESOWARD(Material.BIRCH_SAPLING, Rarity.RARE, SoulEsoward.class),
+    GLOOMLOCK_GRIMOIRE(Material.WRITTEN_BOOK, Rarity.EPIC, GloomlockGrimoire.class),
+    ETHERWARP_CONDUIT(Material.PLAYER_HEAD, Rarity.EPIC, EtherwarpConduit.class),
 
     /**
      * Blaze Slayer
@@ -287,6 +292,16 @@ public enum ItemType {
      * Mythological Ritual
      */
     GRIFFIN_FEATHER(Material.FEATHER, Rarity.RARE, GriffinFeather.class),
+    ANCIENT_CLAW(Material.FLINT, Rarity.RARE, AncientClaw.class),
+    ANTIQUE_REMEDIES(Material.AZURE_BLUET, Rarity.EPIC, AntiqueRemedies.class),
+    CROCHET_TIGER_PLUSHIE(Material.PLAYER_HEAD, Rarity.EPIC, CrochetTigerPlushie.class),
+    DWARF_TURTLE_SHELMET(Material.PLAYER_HEAD, Rarity.RARE, DwarfTurtleShelmet.class),
+    DAEDALUS_STICK(Material.STICK, Rarity.LEGENDARY, DaedalusStick.class),
+    MINOS_RELIC(Material.PLAYER_HEAD, Rarity.EPIC, MinosRelic.class),
+    CROWN_OF_GREED(Material.GOLDEN_HELMET, Rarity.LEGENDARY, CrownOfGreed.class),
+    WASHED_UP_SOUVENIR(Material.PLAYER_HEAD, Rarity.LEGENDARY, WashedUpSouvenir.class),
+    DAEDALUS_AXE(Material.GOLDEN_AXE, Rarity.LEGENDARY, DaedalusAxe.class),
+    SWORD_OF_REVELATIONS(Material.WOODEN_SWORD, Rarity.EPIC, SwordOfRevelations.class),
 
     /**
      * Spooky Festival
@@ -400,6 +415,7 @@ public enum ItemType {
      * Forge Items
      */
     REFINED_MITHRIL(Material.PLAYER_HEAD, Rarity.EPIC, RefinedMithril.class),
+    REFINED_TITANIUM(Material.PLAYER_HEAD, Rarity.EPIC, RefinedTitanium.class),
 
     /**
      * Other Mining Stuff

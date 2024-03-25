@@ -13,13 +13,13 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class SinseekerScythe implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class SinseekerScythe implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.NULL_ATOM, 4));
         ingredientMap.put('B', new MaterialQuantifiable(ItemType.NULL_OVOID, 8));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SINFUL_DICE, 1));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemType.SINFUL_DICE, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "BCB",
@@ -49,15 +49,5 @@ public class SinseekerScythe implements CustomSkyBlockItem, Craftable, Reforgabl
                 "§7receive a §cmelee hit §7from",
                 "§7what you\u0027re holding.",
                 "§8Mana Cost: §3260"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

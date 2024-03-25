@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ScorpionBow implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class ScorpionBow implements CustomSkyBlockItem, Craftable, BowImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -45,15 +45,5 @@ public class ScorpionBow implements CustomSkyBlockItem, Craftable, Reforgable, E
                 "§c§7your §cStrength ❁ §7as damage",
                 "§7per second for §a6s§7.",
                 "§8Mana Cost: §3150"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.BOWS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " BOW";
     }
 }

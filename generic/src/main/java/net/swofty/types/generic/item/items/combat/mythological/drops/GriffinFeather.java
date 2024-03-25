@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.combat.mythological;
+package net.swofty.types.generic.item.items.combat.mythological.drops;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;

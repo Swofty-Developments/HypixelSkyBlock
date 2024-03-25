@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class JujuShortbow implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -47,15 +47,5 @@ public class JujuShortbow implements CustomSkyBlockItem, Craftable, Reforgable, 
                 "§7Can damage endermen.",
                 "",
                 "§5Shortbow: Instantly shoots!"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.BOWS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " BOW";
     }
 }

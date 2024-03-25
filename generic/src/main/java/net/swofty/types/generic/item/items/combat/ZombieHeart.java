@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Craftable, ExtraRarityDisplay, Unstackable, Reforgable {
+public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Craftable, Unstackable, HelmetImpl {
 
     @Override
     public ItemStatistics getStatistics() {
@@ -55,15 +55,5 @@ public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Cra
                 "AAA");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ZOMBIE_HEART), ingredientMap, pattern);
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
     }
 }

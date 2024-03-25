@@ -1,10 +1,9 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.drops;
 
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Sellable;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable {
+public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, Interactable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -34,6 +33,12 @@ public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable,
                 "",
                 "§7§8Crafted by the Etherchemist",
                 "§8and dropped by the Voidgloom",
-                "§8Seraph."));
+                "§8Seraph.",
+                "§eRight-click to view recipes!"));
+    }
+
+    @Override
+    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        new GUIRecipe(ItemType.ETHERWARP_CONDUIT, null).open(player);
     }
 }

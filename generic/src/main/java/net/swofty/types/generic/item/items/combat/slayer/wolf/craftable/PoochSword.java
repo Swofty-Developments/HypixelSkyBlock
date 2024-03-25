@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class PoochSword implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay, GemstoneItem {
+public class PoochSword implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -43,16 +43,6 @@ public class PoochSword implements CustomSkyBlockItem, Craftable, Reforgable, Ex
                 "§7Deal §c+1 Damage §7per §c50 max ❤§7.",
                 "§7Receive §a-20% §7damage from wolves.",
                 "§7Gain §c+150❁ Strength §7against wolves."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 
     @Override

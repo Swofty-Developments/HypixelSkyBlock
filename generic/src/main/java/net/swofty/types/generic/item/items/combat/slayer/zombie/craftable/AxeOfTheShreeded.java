@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay, GemstoneItem {
+public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -52,16 +52,6 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, Reforgab
                 "§c§7damage but cost §92x §7mana up",
                 "§7to 16x",
                 "§8Mana Cost: §320"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 
     @Override

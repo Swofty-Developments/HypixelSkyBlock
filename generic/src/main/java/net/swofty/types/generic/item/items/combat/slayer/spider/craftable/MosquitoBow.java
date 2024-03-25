@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class MosquitoBow implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class MosquitoBow implements CustomSkyBlockItem, Craftable, BowImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -46,15 +46,5 @@ public class MosquitoBow implements CustomSkyBlockItem, Craftable, Reforgable, E
                 "§7Costs §b11% §7of max mana.",
                 "§7Deal §c+19% §7damage.",
                 "§7Heal for §a2x §7the mana cost."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.BOWS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " BOW";
     }
 }

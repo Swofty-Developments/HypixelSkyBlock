@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Reforgable, Craftable, ExtraRarityDisplay, GemstoneItem {
+public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Craftable, HelmetImpl, GemstoneItem {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -40,11 +40,6 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable,
     }
 
     @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
-    }
-
-    @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.ZOMBIE_HEART, 1));
@@ -55,11 +50,6 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable,
                 "AAA");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REVIVED_HEART), ingredientMap, pattern);
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
     }
 
     @Override

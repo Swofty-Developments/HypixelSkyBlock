@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, ExtraRarityDisplay, GemstoneItem, Unstackable, Reforgable {
+public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, GemstoneItem, Unstackable, HelmetImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -55,21 +55,11 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, Ext
     }
 
     @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
-    }
-
-    @Override
     public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
         return Map.of(
                 Gemstone.Slots.RUBY, 0, //by default unlocked slot
                 Gemstone.Slots.SAPPHIRE, 50000 //+20 Fine Sapphire
         );
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
     }
 
     @Override

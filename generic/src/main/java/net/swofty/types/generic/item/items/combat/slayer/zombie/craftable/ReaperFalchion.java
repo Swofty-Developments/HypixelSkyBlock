@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ReaperFalchion implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay, GemstoneItem {
+public class ReaperFalchion implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -45,16 +45,6 @@ public class ReaperFalchion implements CustomSkyBlockItem, Craftable, Reforgable
                 "§7Deal §a+200% §7damage to Zombies§7.",
                 "§7§7Receive §a20% §7less damage",
                 "§7from Zombies§7 when held."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 
     @Override

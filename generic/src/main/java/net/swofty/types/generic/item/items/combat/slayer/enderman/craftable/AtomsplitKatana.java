@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay, GemstoneItem {
+public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -51,16 +51,6 @@ public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, Reforgabl
                 "§7§8Soulflow Cost: §32",
                 "§8Mana Cost: §3200",
                 "§8Cooldown: §a4s"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 
     @Override

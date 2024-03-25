@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ReaperScythe implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class ReaperScythe implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -56,15 +56,5 @@ public class ReaperScythe implements CustomSkyBlockItem, Craftable, Reforgable, 
                 "§8Cooldown: §a1s",
                 "",
                 "§7Max Souls: §d3"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

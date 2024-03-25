@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class RevenantFalchion implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class RevenantFalchion implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,15 +42,5 @@ public class RevenantFalchion implements CustomSkyBlockItem, Craftable, Reforgab
         return new ArrayList<>(Arrays.asList(
                 "§7Deals §a+150% §7damage to",
                 "§7§7Zombies§7."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

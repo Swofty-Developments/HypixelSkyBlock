@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ShamanSword implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class ShamanSword implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,15 +42,5 @@ public class ShamanSword implements CustomSkyBlockItem, Craftable, Reforgable, E
         return new ArrayList<>(Arrays.asList(
                 "§7Deal §c+1 Damage §7per §c50 max ❤§7.",
                 "§7Receive §a-20% §7damage from wolves."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

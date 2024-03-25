@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class EdibleMace implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class EdibleMace implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -46,15 +46,5 @@ public class EdibleMace implements CustomSkyBlockItem, Craftable, Reforgable, Ex
                 "§7for §a30 §7seconds.",
                 "§7§8Debuff doesn\u0027t stack.",
                 "§8Mana Cost: §3100"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

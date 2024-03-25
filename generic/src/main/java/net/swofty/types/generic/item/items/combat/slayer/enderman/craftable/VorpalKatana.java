@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class VorpalKatana implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay, GemstoneItem {
+public class VorpalKatana implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -53,16 +53,6 @@ public class VorpalKatana implements CustomSkyBlockItem, Craftable, Reforgable, 
                 "§7§8Soulflow Cost: §31",
                 "§8Mana Cost: §3200",
                 "§8Cooldown: §a4s"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, ExtraRarityDisplay, Unstackable, Reforgable {
+public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, Unstackable, HelmetImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -44,16 +44,6 @@ public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, E
                 "§7grants §c+20% §7base weapon",
                 "§7damage for every §a25 §f✦",
                 "§fSpeed§7."));
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
     }
 
     @Override

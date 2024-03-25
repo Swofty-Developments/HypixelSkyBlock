@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Reforgable, Craftable, ExtraRarityDisplay {
+public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, HelmetImpl, Craftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -39,11 +39,6 @@ public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstack
     }
 
     @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
-    }
-
-    @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 32));
@@ -54,10 +49,5 @@ public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstack
                 "AAA");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.CRYSTALLIZED_HEART), ingredientMap, pattern);
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
     }
 }

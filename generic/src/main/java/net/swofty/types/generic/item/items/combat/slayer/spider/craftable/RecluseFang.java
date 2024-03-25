@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class RecluseFang implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class RecluseFang implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -44,15 +44,5 @@ public class RecluseFang implements CustomSkyBlockItem, Craftable, Reforgable, E
                 "§7strength against them.",
                 "§7Bonus: §c+0❁",
                 "§8+1 strength per 40 squashed"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

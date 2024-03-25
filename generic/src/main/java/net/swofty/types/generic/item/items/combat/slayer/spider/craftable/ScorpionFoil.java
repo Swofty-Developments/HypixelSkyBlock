@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ScorpionFoil implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class ScorpionFoil implements CustomSkyBlockItem, Craftable, SwordImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -47,15 +47,5 @@ public class ScorpionFoil implements CustomSkyBlockItem, Craftable, Reforgable, 
                 "§7your next attack is empowered",
                 "§7for §c+250% damage§7.",
                 "§8Tickers refill after 5 seconds."));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
     }
 }

@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class Terminator implements CustomSkyBlockItem, Craftable, Reforgable, ExtraRarityDisplay {
+public class Terminator implements CustomSkyBlockItem, Craftable, BowImpl {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -56,15 +56,5 @@ public class Terminator implements CustomSkyBlockItem, Craftable, Reforgable, Ex
                 "§8Soulflow Cost: §3§31⸎",
                 "",
                 "§6Shortbow: Instantly shoots!"));
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.BOWS;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " BOW";
     }
 }
