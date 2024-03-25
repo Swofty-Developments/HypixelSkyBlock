@@ -23,4 +23,5 @@ public class RefinedTitanium implements CustomSkyBlockItem, SkullHead, Sellable 
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "704baabf7ef854825aae1992e4a75ff7286ed1654d8f1a08952e7b8669cf692d";
     }
+
 }
