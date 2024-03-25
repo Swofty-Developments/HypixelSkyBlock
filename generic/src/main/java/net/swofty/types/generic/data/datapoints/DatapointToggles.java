@@ -68,6 +68,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
 
         public enum ToggleType {
             DISABLE_DROP_MESSAGES(false),
+            HAS_SPOKEN_TO_BEA(false)
             ;
 
             private final boolean defaultValue;

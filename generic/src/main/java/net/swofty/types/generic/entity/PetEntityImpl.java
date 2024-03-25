@@ -16,6 +16,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
+import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
 public class PetEntityImpl extends LivingEntity {
@@ -35,8 +36,8 @@ public class PetEntityImpl extends LivingEntity {
         this.particle = ((Pet) pet.getGenericInstance()).particleId();
 
         getEntityMeta().setCustomName(Component.text("§8[§7Lvl" +
-                pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity()) + "§8] " +
-                player.getShortenedDisplayName() + "'s " + pet.getAttributeHandler().getRarity().getColor() +
+                pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity()) + "§8] "
+                + pet.getAttributeHandler().getRarity().getColor() + player.getUsername() + "'s " +
                 ((Pet) pet.getGenericInstance()).getPetName()));
     }
 

@@ -2,8 +2,7 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.enchantment.EnchantmentType;
-import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 

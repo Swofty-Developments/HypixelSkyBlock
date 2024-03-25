@@ -5,8 +5,8 @@ import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
-public class GuiShopBuilderGreenThumb extends SkyBlockShopGUI {
-    public GuiShopBuilderGreenThumb() {
+public class GUIShopBuilderGreenThumb extends SkyBlockShopGUI {
+    public GUIShopBuilderGreenThumb() {
         super("Green Thumb", 1, GREENTHUMB);
     }
 

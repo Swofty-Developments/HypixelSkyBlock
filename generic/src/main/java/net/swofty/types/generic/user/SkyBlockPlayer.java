@@ -22,6 +22,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
@@ -167,6 +168,7 @@ public class SkyBlockPlayer extends Player {
 
     public List<Talisman> getTalismans() {
         return Stream.of(getAllPlayerItems())
+                .filter(item -> item.getGenericInstance() != null)
                 .filter(item -> item.getGenericInstance() instanceof Talisman)
                 .map(item -> (Talisman) item.getGenericInstance()).collect(Collectors.toList());
     }
@@ -174,7 +176,6 @@ public class SkyBlockPlayer extends Player {
     public SkyBlockItem[] getAllPlayerItems() {
         return Stream.of(getInventory().getItemStacks())
                 .map(SkyBlockItem::new)
-                .filter(item -> item.getGenericInstance() instanceof CustomSkyBlockItem)
                 .toArray(SkyBlockItem[]::new);
     }
 
@@ -333,6 +334,10 @@ public class SkyBlockPlayer extends Player {
         }
     }
 
+    public DatapointQuiver.PlayerQuiver getQuiver() {
+        return getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
+    }
+
     public String getShortenedDisplayName() {
         return "§" + getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor().asHexString()
                 + this.getUsername();
@@ -340,6 +345,13 @@ public class SkyBlockPlayer extends Player {
 
     public float getMaxMana() {
         return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
+    }
+
+    public boolean hasCustomCollectionAward(CustomCollectionAward award) {
+        Map.Entry<ItemType, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
+        if (entry == null) return false;
+
+        return getCollection().get(entry.getKey()) > entry.getValue();
     }
 
     public Double getMiningSpeed() {

@@ -15,7 +15,11 @@ public enum ReforgeType {
                     new Reforge.ReforgeSet(ItemStatistic.STRENGTH, level -> (double) (10 + (level * 5)))
             ))
     )),
-    BOWS(List.of()),
+    BOWS(List.of(
+            new Reforge("Grand", List.of(
+                    new Reforge.ReforgeSet(ItemStatistic.STRENGTH, level -> (double) (25 + (level * 7)))
+            ))
+    )),
     ARMOR(List.of()),
     EQUIPMENT(List.of()),
     FISHING_RODS(List.of()),

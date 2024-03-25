@@ -2,6 +2,7 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 
@@ -101,6 +102,11 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.QUIVER;
+                            }
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
@@ -131,6 +137,11 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.QUIVER_UPGRADE_1;
+                            }
                         }),
                         new ItemCollectionReward(25000, new UnlockXP() {
                             @Override
@@ -142,6 +153,11 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.QUIVER_UPGRADE_2;
                             }
                         })
                 ),

@@ -41,4 +41,19 @@ public class SkyBlockItemSerializer extends JsonSerializer<SkyBlockItem> {
 
         return json.toMap();
     }
+
+    public static JSONObject serializeJSON(SkyBlockItem item) {
+        JSONObject json = new JSONObject();
+
+        // Iterate over each attribute and serialize it as a key-value pair.
+        for (ItemAttribute attribute : item.attributes) {
+            String key = attribute.getKey();
+            String valueAsString = attribute.saveIntoString();
+            json.put(key, valueAsString);
+        }
+
+        json.put("amount", item.getAmount());
+
+        return json;
+    }
 }

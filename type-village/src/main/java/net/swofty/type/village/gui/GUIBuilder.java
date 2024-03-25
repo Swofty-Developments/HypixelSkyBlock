@@ -1,26 +1,15 @@
 package net.swofty.type.village.gui;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Sellable;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GUIBuilder extends SkyBlockInventoryGUI {
     public GUIBuilder() {
@@ -32,7 +21,7 @@ public class GUIBuilder extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GuiShopBuilderWoodworking().open(player);
+                new GUIShopBuilderWoodworking().open(player);
             }
 
             @Override
@@ -43,7 +32,7 @@ public class GUIBuilder extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(12) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GuiShopBuilderRocksBricks().open(player);
+                new GUIShopBuilderRocksBricks().open(player);
             }
 
             @Override
@@ -56,7 +45,7 @@ public class GUIBuilder extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GuiShopBuilderGreenThumb().open(player);
+                new GUIShopBuilderGreenThumb().open(player);
             }
 
             @Override
@@ -69,7 +58,7 @@ public class GUIBuilder extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GuiShopBuilderVariety().open(player);
+                new GUIShopBuilderVariety().open(player);
             }
 
             @Override
