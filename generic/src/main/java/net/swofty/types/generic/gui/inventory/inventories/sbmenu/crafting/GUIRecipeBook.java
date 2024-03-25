@@ -24,7 +24,7 @@ import java.util.List;
 public class GUIRecipeBook extends SkyBlockInventoryGUI {
     private final int[] borderSlots = {
             20, 21, 22, 23, 24,
-            30, 31, 32
+            29, 30, 31, 32, 33
     };
 
     public GUIRecipeBook() {
@@ -84,8 +84,8 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                            "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes that",
-                            "§7you have unlocked!", " "));
+                            "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
+                            "§7that you have unlocked!", " "));
 
                     typeRecipes.forEach(recipe -> {
                         SkyBlockRecipe.CraftingResult result =
