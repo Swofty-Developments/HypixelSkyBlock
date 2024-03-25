@@ -5,8 +5,8 @@ import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
-public class GuiShopBuilderWoodworking extends SkyBlockShopGUI {
-    public GuiShopBuilderWoodworking() {
+public class GUIShopBuilderWoodworking extends SkyBlockShopGUI {
+    public GUIShopBuilderWoodworking() {
         super("Woodworking", 1, UPPER5ROWS);
     }
 

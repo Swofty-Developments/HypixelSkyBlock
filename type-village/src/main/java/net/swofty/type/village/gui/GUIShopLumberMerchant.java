@@ -8,7 +8,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIShopLumberMerchant extends SkyBlockShopGUI{
+public class GUIShopLumberMerchant extends SkyBlockShopGUI {
     public GUIShopLumberMerchant() {
         super("Lumber Merchant", 1, DEFAULT);
     }

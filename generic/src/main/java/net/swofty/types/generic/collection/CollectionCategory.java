@@ -55,6 +55,9 @@ public abstract class CollectionCategory {
                     case XP -> {
                         lore.add("§7  §8+§b" + ((UnlockXP) unlock).xp() + " SkyBlock XP");
                     }
+                    case CUSTOM_AWARD -> {
+                        lore.add("§7  " + ((UnlockCustomAward) unlock).getAward().getDisplay());
+                    }
                 }
             });
 
@@ -68,7 +71,8 @@ public abstract class CollectionCategory {
 
         public enum UnlockType {
             RECIPE,
-            XP
+            XP,
+            CUSTOM_AWARD
         }
     }
 
@@ -105,5 +109,19 @@ public abstract class CollectionCategory {
         }
 
         public abstract int xp();
+    }
+
+    public abstract static class UnlockCustomAward extends Unlock {
+        @Override
+        public UnlockType type() {
+            return UnlockType.CUSTOM_AWARD;
+        }
+
+        @Override
+        public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
+            return ItemStackCreator.getStack(getAward().getDisplay(), Material.PURPLE_STAINED_GLASS_PANE, 1);
+        }
+
+        public abstract CustomCollectionAward getAward();
     }
 }

@@ -11,6 +11,9 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 @EventParameters(description = "Checks to see if a player clicks on an NPC",
         node = EventNodes.PLAYER,
         requireDataLoaded = true)

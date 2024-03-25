@@ -20,9 +20,10 @@ public enum PlayerItemOrigin {
     CHESTPLATE((entry) -> entry.getKey().getChestplate(), (player, entry) -> player.setChestplate(entry.getKey()), true),
     LEGGINGS((entry) -> entry.getKey().getLeggings(), (player, entry) -> player.setLeggings(entry.getKey()), true),
     BOOTS((entry) -> entry.getKey().getBoots(), (player, entry) -> player.setBoots(entry.getKey()), true),
-    INVENTORY_SLOT((entry) -> entry.getKey().getInventory().getItemStack((Integer) entry.getValue()),
-            (player, entry) -> player.getInventory().setItemStack((Integer) entry.getValue(), entry.getKey()),
-            false);
+    INVENTORY_SLOT((entry) -> entry.getKey().getInventory().getItemStack((Integer) entry.getValue()), (player, entry) -> {
+        if ((Integer) entry.getValue() == 8) return; // Do not override skyblock menu
+        player.getInventory().setItemStack((Integer) entry.getValue(), entry.getKey());
+    }, false);
 
     private final Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever;
     private final BiConsumer<SkyBlockPlayer, Map.Entry<ItemStack, Object>> setter;

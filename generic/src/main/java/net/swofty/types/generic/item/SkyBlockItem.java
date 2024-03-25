@@ -186,4 +186,10 @@ public class SkyBlockItem {
     public String getDisplayName() {
         return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().getDisplayName());
     }
+
+    public List<String> getLore() {
+        return new NonPlayerItemUpdater(this).getUpdatedItem().build().getLore().stream().map(
+                StringUtility::getTextFromComponent
+        ).toList();
+    }
 }

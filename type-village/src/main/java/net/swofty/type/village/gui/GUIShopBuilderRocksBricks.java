@@ -5,8 +5,8 @@ import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
-public class GuiShopBuilderRocksBricks extends SkyBlockShopGUI {
-    public GuiShopBuilderRocksBricks() {
+public class GUIShopBuilderRocksBricks extends SkyBlockShopGUI {
+    public GUIShopBuilderRocksBricks() {
         super("Rocks & Bricks", 1, UPPER5ROWS);
     }
 

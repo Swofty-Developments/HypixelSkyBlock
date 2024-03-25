@@ -57,6 +57,7 @@ import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.vanilla.Wheat;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
 import net.swofty.types.generic.item.items.weapon.Rogue;
+import net.swofty.types.generic.item.items.weapon.bow.Bow;
 import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.IronSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.StoneSword;
@@ -340,6 +341,7 @@ public enum ItemType {
      */
     WITHER_BOW(Material.BOW, Rarity.UNCOMMON),
     ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE),
+    BOW(Material.BOW, Rarity.COMMON, Bow.class),
 
     /**
      * Jerry's Workshop

@@ -78,6 +78,10 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             items.put(type, get(type) + 1);
         }
 
+        public void set(ItemType type, int amount) {
+            items.put(type, amount);
+        }
+
         public Integer get(ItemType type) {
             return items.getOrDefault(type, 0);
         }

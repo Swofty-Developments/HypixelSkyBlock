@@ -53,7 +53,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
     private GUIClickableItem createTradeItem(SkyBlockShopGUI.ShopItem item, int slot, int amount, SkyBlockPlayer player, ShopPrice stackprice) {
         stackprice = stackprice.multiply(amount);
 
-        SkyBlockItem sbItem = item.item();
+        SkyBlockItem sbItem = item.getItem();
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
 
         List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
@@ -63,7 +63,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         lore.addAll(stackprice.getGUIDisplay());
         lore.add("");
         lore.add("§7Stock");
-        lore.add("§6 " + player.getShoppingData().getStock(item.item()) + " §7remaining");
+        lore.add("§6 " + player.getShoppingData().getStock(item.getItem()) + " §7remaining");
         lore.add("");
         lore.add("§eClick to purchase!");
 
@@ -71,7 +71,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (!player.getShoppingData().canPurchase(item.item(), amount)) {
+                if (!player.getShoppingData().canPurchase(item.getItem(), amount)) {
                     player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                     return;
                 }
@@ -87,7 +87,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
                 cleanStack.amount(amount);
                 player.addAndUpdateItem(cleanStack.build());
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                player.getShoppingData().documentPurchase(item.item(), amount);
+                player.getShoppingData().documentPurchase(item.getItem(), amount);
                 updateThis(player);
             }
 

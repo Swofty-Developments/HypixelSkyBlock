@@ -6,8 +6,8 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
-public class GuiShopBuilderVariety extends SkyBlockShopGUI {
-    public GuiShopBuilderVariety() {
+public class GUIShopBuilderVariety extends SkyBlockShopGUI {
+    public GUIShopBuilderVariety() {
         super("Variety", 1, VARIETY);
     }
 

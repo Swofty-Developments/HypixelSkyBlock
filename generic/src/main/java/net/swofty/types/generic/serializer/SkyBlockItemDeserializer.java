@@ -52,4 +52,20 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
 
         return item;
     }
+
+    public static SkyBlockItem deserializeJSON(JSONObject object) {
+        SkyBlockItem item = new SkyBlockItem(Material.AIR); // Start with a base SkyBlockItem
+
+        for (String key : object.keySet()) {
+            String value = object.getString(key);
+            ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
+            if (attribute != null) {
+                attribute.setValue(attribute.loadFromString(value));
+            }
+        }
+
+        item.setAmount(object.getInt("amount"));
+
+        return item;
+    }
 }

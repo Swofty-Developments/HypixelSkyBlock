@@ -20,6 +20,7 @@ public class StringUtility {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###");
+    private static final Pattern COLOR_PATTERN = Pattern.compile("§[0-9a-fk-or]");
 
     public static String formatTimeAsAgo(long millis) {
         long timeDifference = System.currentTimeMillis() - millis;
@@ -68,6 +69,12 @@ public class StringUtility {
         DecimalFormat df = new DecimalFormat(builder.toString());
         df.setRoundingMode(RoundingMode.CEILING);
         return Double.parseDouble(df.format(d));
+    }
+
+    public static String stripColor(String s) {
+        // Find any '§' character followed by a color code
+        Matcher matcher = COLOR_PATTERN.matcher(s);
+        return matcher.replaceAll("");
     }
 
     public static String shortenNumber(double number) {

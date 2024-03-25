@@ -1,5 +1,8 @@
 package net.swofty.types.generic.gui.inventory;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -245,7 +248,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         return;
                     }
 
-                    if (item.stackable() && e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    if (item.isStackable() && e.getClickType().equals(ClickType.RIGHT_CLICK)) {
                         new GUIGenericTradingOptions(item, SkyBlockShopGUI.this, stackPrice).open(player);
                         return;
                     }
@@ -260,7 +263,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     sbItem.setAmount(item.amount);
                     player.addAndUpdateItem(sbItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                    player.getShoppingData().documentPurchase(item.item(), item.amount);
+                    player.getShoppingData().documentPurchase(item.getItem(), item.amount);
 
                     updateThis(player);
                 }
@@ -271,17 +274,23 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                             player, sbItem.getItemStackBuilder().build()
                     );
 
-                    List<String> lore = new ArrayList<>(itemStack.build().getLore()
-                            .stream()
-                            .map(StringUtility::getTextFromComponent)
-                            .toList());
+                    List<String> lore;
+
+                    if (item.getLore() != null) {
+                        lore = item.lore;
+                    } else {
+                        lore = new ArrayList<>(itemStack.build().getLore()
+                                .stream()
+                                .map(StringUtility::getTextFromComponent)
+                                .toList());
+                    }
 
                     lore.add("");
                     lore.add("§7Cost");
                     lore.addAll(price.getGUIDisplay());
                     lore.add("");
                     lore.add("§7Stock");
-                    lore.add("§6" + getPlayer().getShoppingData().getStock(item.item()) + " §7remaining");
+                    lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem()) + " §7remaining");
                     lore.add("");
                     lore.add("§eClick to trade!");
 
@@ -337,7 +346,20 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         SkyBlockShopGUI.this.open(player);
     }
 
-    public record ShopItem(SkyBlockItem item, int amount, ShopPrice price, double modifier, boolean stackable) {
+    @RequiredArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class ShopItem {
+        private final SkyBlockItem item;
+        private final int amount;
+        private final ShopPrice price;
+        private final double modifier;
+        private final boolean stackable;
+        private List<String> lore = null;
+        
+        public void setDisplayLore(List<String> lores) {
+            this.lore = lores;
+        }
 
         public static ShopItem Stackable(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
             return new ShopItem(item, amount, price, modifier, true);

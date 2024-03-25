@@ -46,6 +46,10 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
             return getAsLevel(rarity) > currentLevel;
         }
 
+        public void setLevel(int level, Rarity rarity) {
+            this.experience = getExperienceForLevel(level, rarity);
+        }
+
         public double getExperienceInCurrentLevel(Rarity rarity) {
             // Get the experience required to level up
             // Minus the last reached goal from the current experience

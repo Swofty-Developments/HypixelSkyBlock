@@ -306,6 +306,7 @@ public class DataHandler {
             });
         }),
         PET_DATA("pet_data", false, false, false, DatapointPetData.class, new DatapointPetData("pet_data")),
+        QUIVER("quiver", false, false, false, DatapointQuiver.class, new DatapointQuiver("quiver")),
         ;
 
         @Getter

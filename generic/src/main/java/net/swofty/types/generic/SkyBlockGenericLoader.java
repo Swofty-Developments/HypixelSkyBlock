@@ -25,6 +25,9 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.Songs;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.collection.CollectionCategories;
+import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.*;
@@ -355,6 +358,23 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     } catch (Exception e) {}
                 });
         SkyBlockValueEvent.register();
+
+        /**
+         * Cache custom unlock collections
+         */
+        CollectionCategories.getCategories().forEach(category -> {
+            Arrays.stream(category.getCollections()).parallel().forEach(collection -> {
+                List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
+                rewards.parallelStream().forEach(reward -> {
+                    Arrays.stream(reward.unlocks()).parallel().forEach(unlock -> {
+                        if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
+                            CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
+                                    Map.entry(collection.type(), reward.requirement()));
+                        }
+                    });
+                });
+            });
+        });
 
         /**
          * Load item recipes

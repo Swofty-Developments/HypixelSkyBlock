@@ -1,16 +1,22 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopBea;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 
-public class NPCBea extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBea extends NPCDialogue {
 
     public NPCBea() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Bea", "§e§lCLICK"};
+                return new String[]{"Bea", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +43,27 @@ public class NPCBea extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        DatapointToggles.Toggles toggle = e.player().getToggles();
+
+        if (!toggle.get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BEA)) {
+            setDialogue(e.player(), "hello");
+            toggle.set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_BEA, true);
+            return;
+        }
+
+        new GUIShopBea().open(e.player());
     }
 
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Hello! Do you have a pet?",
+                                "Pets are little companions for your adventures in SkyBlock!",
+                                "Personally, I prefer the §ebee §fpet!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }
