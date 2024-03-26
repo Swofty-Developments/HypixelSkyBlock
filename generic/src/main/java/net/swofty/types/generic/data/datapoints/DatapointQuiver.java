@@ -28,7 +28,7 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
                         SkyBlockItemSerializer.serializeJSON(entry.getValue()).toString());
             }
 
-            return serialized.toString();
+            return new JSONObject(serialized).toString();
         }
 
         @Override

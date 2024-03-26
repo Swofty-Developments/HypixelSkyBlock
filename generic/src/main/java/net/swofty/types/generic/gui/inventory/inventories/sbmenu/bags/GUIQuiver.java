@@ -42,7 +42,6 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
         for (Map.Entry<CustomCollectionAward, Integer> entry : SLOTS_PER_UPGRADE.entrySet()) {
             if (e.player().hasCustomCollectionAward(entry.getKey())) {
                 amountOfSlots += entry.getValue();
-                rawAmountOfSlots += entry.getValue();
             } else {
                 for (int i = 0; i < entry.getValue(); i++) {
                     set(new GUIItem(i + rawAmountOfSlots) {
@@ -55,8 +54,8 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
                         }
                     });
                 }
-                rawAmountOfSlots += entry.getValue();
             }
+            rawAmountOfSlots += entry.getValue();
         }
 
         slotToSaveUpTo = amountOfSlots;
@@ -110,6 +109,11 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
         }
 
         if (item.getMaterial() == Material.ARROW && clickedItem.isNA()) {
+            save(getPlayer(), slotToSaveUpTo);
+            return;
+        }
+
+        if (clickedItem.getMaterial() == Material.ARROW && item.isNA()) {
             save(getPlayer(), slotToSaveUpTo);
             return;
         }

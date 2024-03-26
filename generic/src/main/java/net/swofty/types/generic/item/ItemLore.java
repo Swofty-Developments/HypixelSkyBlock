@@ -198,6 +198,10 @@ public class ItemLore {
                 if (handler.getReforge() != null)
                     displayName = handler.getReforge().prefix() + " " + displayName;
             }
+
+            if (item.getGenericInstance() instanceof ArrowImpl) {
+                addLoreLine("§8Stats added when shot!");
+            }
         }
 
         if (recombobulated)

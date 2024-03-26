@@ -297,10 +297,8 @@ public class SkyBlockPlayer extends Player {
     }
 
     public SkyBlockRegion getRegion() {
-        if (isOnIsland()) {
+        if (isOnIsland())
             return SkyBlockRegion.getIslandRegion();
-        }
-
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 

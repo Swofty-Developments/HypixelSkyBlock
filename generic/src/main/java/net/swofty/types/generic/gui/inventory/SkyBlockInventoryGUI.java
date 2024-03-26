@@ -10,6 +10,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -278,6 +279,7 @@ public abstract class SkyBlockInventoryGUI {
         Thread.startVirtualThread(() -> {
             setItems(openEvent);
             updateItemStacks(inventory, player);
+            ActionPlayerChangeSkyBlockMenuDisplay.setMainMenu(player);
             onOpen(openEvent);
 
             if (this instanceof RefreshingGUI gui) {

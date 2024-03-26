@@ -59,6 +59,7 @@ import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.vanilla.Wheat;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
 import net.swofty.types.generic.item.items.weapon.Rogue;
+import net.swofty.types.generic.item.items.weapon.bow.Arrow;
 import net.swofty.types.generic.item.items.weapon.bow.Bow;
 import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
 import net.swofty.types.generic.item.items.weapon.vanilla.IronSword;
@@ -354,6 +355,7 @@ public enum ItemType {
     /**
      * Bows
      */
+    FLINT_ARROW(Material.ARROW, Rarity.COMMON, Arrow.class),
     WITHER_BOW(Material.BOW, Rarity.UNCOMMON),
     ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE),
     BOW(Material.BOW, Rarity.COMMON, Bow.class),

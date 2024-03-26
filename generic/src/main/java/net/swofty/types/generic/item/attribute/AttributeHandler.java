@@ -62,6 +62,15 @@ public class AttributeHandler {
         }
     }
 
+    public void setGemData(ItemAttributeGemData.GemData data) {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a gemstone item");
+        if (item.getGenericInstance() instanceof GemstoneItem) {
+            ((ItemAttributeGemData) item.getAttribute("gems")).setValue(data);
+        } else {
+            throw new RuntimeException("Item is not a gemstone item");
+        }
+    }
+
     public ItemAttributeBackpackData.BackpackData getBackpackData() {
         if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
         if (item.getGenericInstance() instanceof Backpack) {

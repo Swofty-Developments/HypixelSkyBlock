@@ -362,15 +362,17 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Cache custom unlock collections
          */
-        CollectionCategories.getCategories().forEach(category -> {
-            Arrays.stream(category.getCollections()).parallel().forEach(collection -> {
-                List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
-                rewards.parallelStream().forEach(reward -> {
-                    Arrays.stream(reward.unlocks()).parallel().forEach(unlock -> {
-                        if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
-                            CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
-                                    Map.entry(collection.type(), reward.requirement()));
-                        }
+        Thread.startVirtualThread(() -> {
+            CollectionCategories.getCategories().forEach(category -> {
+                Arrays.stream(category.getCollections()).forEach(collection -> {
+                    List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
+                    rewards.parallelStream().forEach(reward -> {
+                        Arrays.stream(reward.unlocks()).forEach(unlock -> {
+                            if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
+                                CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
+                                        Map.entry(collection.type(), reward.requirement()));
+                            }
+                        });
                     });
                 });
             });

@@ -87,6 +87,7 @@ public class NonPlayerItemUpdater {
                     }
                     index++;
                 }
+                item.getAttributeHandler().setGemData(gemData);
             }
         }
 

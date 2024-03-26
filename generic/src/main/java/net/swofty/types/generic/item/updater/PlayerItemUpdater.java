@@ -141,6 +141,7 @@ public class PlayerItemUpdater {
                 }
                 index++;
             }
+            item.getAttributeHandler().setGemData(gemData);
         }
 
         return toReturn.amount(stack.amount()).lore(stack.getLore()).displayName(stack.getDisplayName());

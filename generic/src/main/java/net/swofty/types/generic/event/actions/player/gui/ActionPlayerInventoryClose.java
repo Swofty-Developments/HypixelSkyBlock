@@ -2,6 +2,7 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
+import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
@@ -22,6 +23,7 @@ public class ActionPlayerInventoryClose extends SkyBlockEvent {
     public void run(Event event) {
         InventoryCloseEvent inventoryClose = (InventoryCloseEvent) event;
         final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClose.getPlayer();
+        ActionPlayerChangeSkyBlockMenuDisplay.runCheck(player);
 
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid());
