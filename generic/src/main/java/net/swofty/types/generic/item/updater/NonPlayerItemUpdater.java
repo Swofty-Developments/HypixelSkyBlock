@@ -71,9 +71,12 @@ public class NonPlayerItemUpdater {
 
             if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
                 int index = 0;
+                ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
                 for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
                     if (slot.unlockPrice == 0) {
                         // Slot should be unlocked by default
+
+                        if (gemData.hasGem(index)) continue;
 
                         item.getAttributeHandler().getGemData().putGem(
                                 new ItemAttributeGemData.GemData.GemSlots(
