@@ -90,10 +90,10 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Refo
     }
 
     @Override
-    public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
-        return Map.of(
-                Gemstone.Slots.SAPPHIRE, 250000,
-                Gemstone.Slots.COMBAT, 250000
+    public List<GemstoneItemSlot> getGemstoneSlots() {
+        return List.of(
+                new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 250000),
+                new GemstoneItemSlot(Gemstone.Slots.COMBAT, 250000)
         );
     }
 }

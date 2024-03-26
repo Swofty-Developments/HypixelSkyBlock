@@ -48,10 +48,10 @@ public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem,
     }
 
     @Override
-    public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
-        return Map.of(
-                Gemstone.Slots.COMBAT, 50000 //+20 Fine Jasper, Sapphire, Ruby and Amethyst
-                //Gemstone.Slots.COMBAT, 100000 //+40 Fine Jasper, Sapphire, Ruby and Amethyst; commented out cause throws an error, Issue #142
+    public List<GemstoneItemSlot> getGemstoneSlots() {
+        return List.of(
+                new GemstoneItemSlot(Gemstone.Slots.COMBAT, 50000),
+                new GemstoneItemSlot(Gemstone.Slots.COMBAT, 100000)
         );
     }
 }

@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -53,9 +52,9 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable,
     }
 
     @Override
-    public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
-        return Map.of(
-                Gemstone.Slots.RUBY, 0 //by default unlocked slot
+    public List<GemstoneItemSlot> getGemstoneSlots() {
+        return List.of(
+                new GemstoneItemSlot(Gemstone.Slots.RUBY, 0)
         );
     }
 }

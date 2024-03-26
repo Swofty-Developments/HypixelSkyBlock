@@ -92,9 +92,9 @@ public class ItemLore {
                 StringBuilder gemstoneLore = new StringBuilder(" ");
 
                 int index = -1;
-                for (Map.Entry<Gemstone.Slots, Integer> entry : gemstoneItem.getGemstoneSlots().entrySet()) {
+                for (GemstoneItem.GemstoneItemSlot entry : gemstoneItem.getGemstoneSlots()) {
                     index++;
-                    Gemstone.Slots gemstone = entry.getKey();
+                    Gemstone.Slots gemstone = entry.slot;
 
                     if (!gemData.hasGem(index)) {
                         gemstoneLore.append("§8[" + gemstone.symbol + "] ");

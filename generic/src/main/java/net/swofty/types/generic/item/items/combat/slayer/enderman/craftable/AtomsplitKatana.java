@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -54,11 +53,11 @@ public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, SwordImpl
     }
 
     @Override
-    public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
-        return Map.of(
-                Gemstone.Slots.JASPER, 50000, //+20 Fine Jasper
-                Gemstone.Slots.SAPPHIRE, 100000 //+40 Fine Sapphire
-                //Gemstone.Slots.SAPPHIRE, 250000 //+2 Flawless Sapphire
+    public List<GemstoneItemSlot> getGemstoneSlots() {
+        return Arrays.asList(
+                new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000),
+                new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 100000),
+                new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 250000)
         );
     }
 }

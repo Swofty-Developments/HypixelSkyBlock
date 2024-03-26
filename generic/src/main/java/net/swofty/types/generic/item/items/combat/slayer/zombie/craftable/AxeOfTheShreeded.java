@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -55,10 +54,10 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, SwordImp
     }
 
     @Override
-    public Map<Gemstone.Slots, Integer> getGemstoneSlots() {
-        return Map.of(
-                Gemstone.Slots.JASPER, 50000, //+20 Fine Jasper
-                Gemstone.Slots.COMBAT, 100000 //+40 Fine Jasper, Sapphire, Ruby and Amethyst
+    public List<GemstoneItemSlot> getGemstoneSlots() {
+        return List.of(
+                new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000),
+                new GemstoneItemSlot(Gemstone.Slots.COMBAT, 100000)
         );
     }
 }

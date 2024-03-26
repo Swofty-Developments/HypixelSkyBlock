@@ -17,6 +17,8 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -118,6 +120,24 @@ public class PlayerItemUpdater {
                 meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
                         "25", new PlayerSkin(texturesEncoded, null)));
             });
+        }
+
+        if (item.getGenericInstance() != null &&
+                item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
+            int index = 0;
+            for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
+                if (slot.unlockPrice == 0) {
+                    // Slot should be unlocked by default
+
+                    item.getAttributeHandler().getGemData().putGem(
+                            new ItemAttributeGemData.GemData.GemSlots(
+                                    index,
+                                    null
+                            )
+                    );
+                }
+                index++;
+            }
         }
 
         return toReturn.amount(stack.amount()).lore(stack.getLore()).displayName(stack.getDisplayName());

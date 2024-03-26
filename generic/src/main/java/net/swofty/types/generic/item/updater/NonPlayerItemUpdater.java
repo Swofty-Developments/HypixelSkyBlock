@@ -10,7 +10,9 @@ import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.utility.ExtraItemTags;
@@ -39,36 +41,50 @@ public class NonPlayerItemUpdater {
         ItemStack.Builder builder = item.getItemStackBuilder();
         ItemStack.Builder stack = updateItemLore(builder);
 
-        if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof Enchanted) {
-            stack.meta(meta -> {
-                meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
-                meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
-            });
-        }
+        if (item.getGenericInstance() != null) {
+            if (item.getGenericInstance() instanceof Enchanted)
+                stack.meta(meta -> {
+                    meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
+                    meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
+                });
 
-        if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof Unstackable) {
-            stack.meta(meta -> {
-                meta.set(Tag.UUID("stackable"), UUID.randomUUID());
-            });
-        }
+            if (item.getGenericInstance() instanceof Unstackable)
+                stack.meta(meta -> {
+                    meta.set(Tag.UUID("stackable"), UUID.randomUUID());
+                });
 
-        if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof SkullHead skullHead) {
-            JSONObject json = new JSONObject();
-            json.put("isPublic", true);
-            json.put("signatureRequired", false);
-            json.put("textures", new JSONObject().put("SKIN", new JSONObject()
-                    .put("url", "http://textures.minecraft.net/texture/" + skullHead.getSkullTexture(null, item))
-                    .put("metadata", new JSONObject().put("model", "slim"))));
+            if (item.getGenericInstance() instanceof SkullHead skullHead) {
+                JSONObject json = new JSONObject();
+                json.put("isPublic", true);
+                json.put("signatureRequired", false);
+                json.put("textures", new JSONObject().put("SKIN", new JSONObject()
+                        .put("url", "http://textures.minecraft.net/texture/" + skullHead.getSkullTexture(null, item))
+                        .put("metadata", new JSONObject().put("model", "slim"))));
 
-            String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+                String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            stack.meta(meta -> {
-                meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
-                        "25", new PlayerSkin(texturesEncoded, null)));
-            });
+                stack.meta(meta -> {
+                    meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
+                            "25", new PlayerSkin(texturesEncoded, null)));
+                });
+            }
+
+            if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
+                int index = 0;
+                for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
+                    if (slot.unlockPrice == 0) {
+                        // Slot should be unlocked by default
+
+                        item.getAttributeHandler().getGemData().putGem(
+                                new ItemAttributeGemData.GemData.GemSlots(
+                                        index,
+                                        null
+                                )
+                        );
+                    }
+                    index++;
+                }
+            }
         }
 
         Color leatherColour = item.getAttributeHandler().getLeatherColour();
