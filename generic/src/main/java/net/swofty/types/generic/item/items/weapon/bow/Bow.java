@@ -13,4 +13,9 @@ public class Bow implements CustomSkyBlockItem, BowImpl, QuiverDisplayOnHold {
                 .with(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
+
+    @Override
+    public boolean shouldBeArrow() {
+        return true;
+    }
 }

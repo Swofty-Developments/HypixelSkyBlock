@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.impl.recipes;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.ItemType;
@@ -20,6 +21,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     public static final List<ShapelessRecipe> CACHED_RECIPES = new ArrayList<>();
 
     private final List<MaterialQuantifiable> ingredientList;
+    @Setter
+    private SkyBlockItem[] customRecipeDisplay = null;
 
     public ShapelessRecipe(RecipeType type, SkyBlockItem result,
                            int amount, Function<SkyBlockPlayer, CraftingResult> canCraft) {
@@ -107,6 +110,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
 
     @Override
     public SkyBlockItem[] getRecipeDisplay() {
+        if (customRecipeDisplay != null)
+            return customRecipeDisplay;
         SkyBlockItem[] display = new SkyBlockItem[9];
         int i = 0;
 

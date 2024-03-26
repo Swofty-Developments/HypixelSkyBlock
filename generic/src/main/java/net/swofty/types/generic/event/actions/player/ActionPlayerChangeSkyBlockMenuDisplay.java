@@ -2,10 +2,7 @@ package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.inventory.PlayerInventoryItemChangeEvent;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
-import net.minestom.server.event.player.PlayerItemAnimationEvent;
-import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CustomCollectionAward;
@@ -16,8 +13,10 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Arrow;
 import net.swofty.types.generic.item.impl.QuiverDisplayOnHold;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -46,10 +45,27 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
         }
 
         // Check if item shows quiver
-        if (switchedTo.getGenericInstance() instanceof QuiverDisplayOnHold) {
-            ItemStack.Builder builder = ItemStack.builder(Material.ARROW);
+        if (switchedTo.getGenericInstance() instanceof QuiverDisplayOnHold quiverDisplay) {
+            ItemStack.Builder builder = ItemStack.builder(quiverDisplay.shouldBeArrow()
+                    ? Material.ARROW : Material.FEATHER);
             builder = ItemStackCreator.enchant(builder);
             DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
+
+            // If the bow should not be drawn back then also replace all arrows in inventory with a feather
+            if (!quiverDisplay.shouldBeArrow()) {
+                int index = 0;
+                for (SkyBlockItem item : player.getAllPlayerItems()) {
+                    index++;
+                    if (item.getGenericInstance() != null &&
+                            item.getGenericInstance() instanceof Arrow) {
+                        player.getInventory().setItemStack(index, builder.amount(1).meta(
+                                item.getItemStack().meta()
+                        ).build());
+                    }
+                }
+            } else {
+                setMainMenu(player);
+            }
 
             if (!player.hasCustomCollectionAward(CustomCollectionAward.QUIVER)) return;
 
@@ -91,6 +107,17 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
     }
 
     public void setMainMenu(SkyBlockPlayer player) {
+        int index = 0;
+        for (SkyBlockItem item : player.getAllPlayerItems()) {
+            index++;
+            if (item.getGenericInstance() != null &&
+                    item.getGenericInstance() instanceof Arrow) {
+                player.getInventory().setItemStack(index,
+                        PlayerItemUpdater.playerUpdate(player, item.getItemStack())
+                                .build());
+            }
+        }
+
         player.getInventory().setItemStack(8,
                 new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
                         .getUpdatedItem().build());

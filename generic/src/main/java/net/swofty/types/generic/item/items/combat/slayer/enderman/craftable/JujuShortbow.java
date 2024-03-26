@@ -48,4 +48,9 @@ public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl {
                 "",
                 "§5Shortbow: Instantly shoots!"));
     }
+
+    @Override
+    public boolean shouldBeArrow() {
+        return false;
+    }
 }

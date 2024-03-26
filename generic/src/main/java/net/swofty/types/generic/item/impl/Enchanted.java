@@ -23,12 +23,25 @@ public interface Enchanted extends CustomSkyBlockItem {
         if (matchTypes.isEmpty()) {
             throw new RuntimeException("No matching ItemType found");
         } else {
-            return new ShapelessRecipe(type, new SkyBlockItem(matchTypes.getFirst()))
+            ShapelessRecipe recipe = new ShapelessRecipe(type, new SkyBlockItem(matchTypes.getFirst()))
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32);
+            recipe.setCustomRecipeDisplay(new SkyBlockItem[] {
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+            });
+
+            return recipe;
         }
     }
 }

@@ -47,4 +47,9 @@ public class MosquitoBow implements CustomSkyBlockItem, Craftable, BowImpl {
                 "§7Deal §c+19% §7damage.",
                 "§7Heal for §a2x §7the mana cost."));
     }
+
+    @Override
+    public boolean shouldBeArrow() {
+        return false;
+    }
 }

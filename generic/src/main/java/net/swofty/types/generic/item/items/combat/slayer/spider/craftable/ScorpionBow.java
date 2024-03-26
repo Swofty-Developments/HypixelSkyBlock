@@ -46,4 +46,9 @@ public class ScorpionBow implements CustomSkyBlockItem, Craftable, BowImpl {
                 "§7per second for §a6s§7.",
                 "§8Mana Cost: §3150"));
     }
+
+    @Override
+    public boolean shouldBeArrow() {
+        return false;
+    }
 }

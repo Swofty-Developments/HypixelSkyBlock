@@ -57,4 +57,9 @@ public class Terminator implements CustomSkyBlockItem, Craftable, BowImpl {
                 "",
                 "§6Shortbow: Instantly shoots!"));
     }
+
+    @Override
+    public boolean shouldBeArrow() {
+        return false;
+    }
 }
