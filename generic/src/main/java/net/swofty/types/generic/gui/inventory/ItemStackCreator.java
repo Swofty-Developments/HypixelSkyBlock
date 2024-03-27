@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.*;
+import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.utility.ExtraItemTags;
 import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
@@ -59,6 +60,12 @@ public class ItemStackCreator {
         });
     }
 
+    public static ItemStack.Builder setNotEditable(ItemStack.Builder builder) {
+        return builder.meta(meta -> {
+            meta.setTag(Tag.Boolean("Uneditable"), true);
+        });
+    }
+
     public static ItemStack.Builder getStack(String name, Material material, int amount, String... lore) {
         return getStack(name, material, (short) 0, amount, Arrays.asList(lore));
     }
@@ -70,6 +77,11 @@ public class ItemStackCreator {
         }).build().getMeta();
 
         return builder.meta(metaToSet);
+    }
+
+    public static ItemStack.Builder getFromStack(ItemStack stack) {
+        return ItemStack.builder(stack.material()).meta(stack.meta()).amount(stack.amount())
+                .displayName(stack.getDisplayName()).lore(stack.getLore());
     }
 
     public static ItemStack.Builder getStack(String name, Material material, int amount, List<String> lore) {

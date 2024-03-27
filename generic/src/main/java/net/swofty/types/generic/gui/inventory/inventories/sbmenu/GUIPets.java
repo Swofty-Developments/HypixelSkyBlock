@@ -11,7 +11,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.Rarity;
@@ -20,7 +19,6 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
@@ -250,6 +248,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 boolean selected = player.getPetData().getEnabledPet() == item;
                 if (selected) {
                     player.getPetData().deselectCurrent();
+                    player.getPetData().updatePetEntityImpl(player);
                     GUIPets guiPets = new GUIPets();
                     guiPets.setSortType(sortType);
                     guiPets.setConvertToItem(convertToItem);

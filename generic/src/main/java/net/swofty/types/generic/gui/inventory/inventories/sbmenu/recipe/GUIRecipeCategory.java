@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;

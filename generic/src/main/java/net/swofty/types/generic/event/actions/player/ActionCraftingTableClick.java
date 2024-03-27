@@ -9,7 +9,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles clicking on the crafting table",
+@EventParameters(description = "Handles clicking on the recipe table",
         node = EventNodes.PLAYER,
         requireDataLoaded = true)
 public class ActionCraftingTableClick extends SkyBlockEvent {

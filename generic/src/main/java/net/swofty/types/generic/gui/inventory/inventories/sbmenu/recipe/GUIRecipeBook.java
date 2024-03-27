@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -22,9 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GUIRecipeBook extends SkyBlockInventoryGUI {
-    private final int[] borderSlots = {
+    private final int[] categorySlots = {
             20, 21, 22, 23, 24,
-            29, 30, 31, 32, 33
+                30, 31, 32
     };
 
     public GUIRecipeBook() {
@@ -58,14 +58,9 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
             }
         });
 
-        Arrays.stream(borderSlots).forEach(slot -> {
-            SkyBlockRecipe.RecipeType tempType;
-            try {
-                tempType = SkyBlockRecipe.RecipeType.values()[slot - 20];
-            } catch (ArrayIndexOutOfBoundsException exception) {
-                tempType = SkyBlockRecipe.RecipeType.values()[slot - 25];
-            }
-            SkyBlockRecipe.RecipeType type = tempType;
+        int index = 0;
+        for (int slot : categorySlots) {
+            SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.values()[index++];
 
             ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
             ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
@@ -118,7 +113,7 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                             type.getMaterial(), (short) 0, 1, lore);
                 }
             });
-        });
+        }
         updateItemStacks(getInventory(), getPlayer());
     }
 

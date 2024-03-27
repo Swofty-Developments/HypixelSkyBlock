@@ -12,6 +12,7 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
@@ -32,6 +33,10 @@ import java.util.function.BiFunction;
 
 public class PlayerItemUpdater {
     public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack) {
+        if (stack.hasTag(Tag.Boolean("Uneditable")) && stack.getTag(Tag.Boolean("Uneditable"))) {
+            return ItemStackCreator.getFromStack(stack);
+        }
+
         if (!SkyBlockItem.isSkyBlockItem(stack) || stack.getMaterial().equals(Material.AIR)) {
             /**
              * Item is not SkyBlock item, so we just instance it here

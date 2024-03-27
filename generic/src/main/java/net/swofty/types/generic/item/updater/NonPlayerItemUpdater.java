@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.minestom.server.tag.Tag;
+import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
@@ -24,13 +25,16 @@ import java.util.UUID;
 @Getter
 public class NonPlayerItemUpdater {
     private final SkyBlockItem item;
+    private final ItemStack.Builder stack;
 
     public NonPlayerItemUpdater(SkyBlockItem item) {
         this.item = item;
+        this.stack = item.getItemStackBuilder();
     }
 
     public NonPlayerItemUpdater(ItemStack item) {
         this.item = new SkyBlockItem(item);
+        this.stack = ItemStackCreator.getFromStack(item);
     }
 
     public NonPlayerItemUpdater(ItemStack.Builder item) {
@@ -38,6 +42,10 @@ public class NonPlayerItemUpdater {
     }
 
     public ItemStack.Builder getUpdatedItem() {
+        if (stack.build().hasTag(Tag.Boolean("Uneditable")) && stack.build().getTag(Tag.Boolean("Uneditable"))) {
+            return stack;
+        }
+
         ItemStack.Builder builder = item.getItemStackBuilder();
         ItemStack.Builder stack = updateItemLore(builder);
 

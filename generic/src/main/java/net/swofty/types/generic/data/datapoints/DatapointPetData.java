@@ -60,8 +60,10 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
         }
 
         public void updatePetEntityImpl(SkyBlockPlayer player) {
-            if (enabledPetEntityImpl != null)
+            if (enabledPetEntityImpl != null) {
+                enabledPetEntityImpl.kill();
                 enabledPetEntityImpl.remove();
+            }
 
             SkyBlockItem enabledPet = getEnabledPet();
             if (enabledPet != null) {

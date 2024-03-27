@@ -11,7 +11,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles opening the crafting menu when interacting with the vanilla one",
+@EventParameters(description = "Handles opening the recipe menu when interacting with the vanilla one",
         node = EventNodes.PLAYER,
         requireDataLoaded = true)
 public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
@@ -28,7 +28,7 @@ public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
         if (event.getInventory() != null) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
-        if (!event.getClickType().equals(ClickType.CHANGE_HELD)) // Fix dupe glitches by numkeying items into crafting grid
+        if (!event.getClickType().equals(ClickType.CHANGE_HELD)) // Fix dupe glitches by numkeying items into recipe grid
             player.addAndUpdateItem(new SkyBlockItem(event.getCursorItem()));
 
         event.setCancelled(true);

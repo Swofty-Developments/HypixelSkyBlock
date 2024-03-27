@@ -100,20 +100,20 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
+        SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
-        if (item.isNA() && clickedItem.isNA()) {
+        if (cursorItem.isNA() && clickedItem.isNA()) {
             save(getPlayer(), slotToSaveUpTo);
             return;
         }
 
-        if (item.getMaterial() == Material.ARROW && clickedItem.isNA()) {
+        if (cursorItem.getMaterial() == Material.ARROW && (clickedItem.isNA() || clickedItem.getMaterial() == Material.AIR)) {
             save(getPlayer(), slotToSaveUpTo);
             return;
         }
 
-        if (clickedItem.getMaterial() == Material.ARROW && item.isNA()) {
+        if (clickedItem.getMaterial() == Material.ARROW && (cursorItem.isNA() || cursorItem.getMaterial() == Material.AIR)) {
             save(getPlayer(), slotToSaveUpTo);
             return;
         }
@@ -123,7 +123,7 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
         }
 
         e.setCancelled(true);
-        getPlayer().sendMessage("§cYou cannot put this item in the Quiver!");
+        getPlayer().sendMessage("§cYou cannot put this cursorItem in the Quiver!");
     }
 
     public void save(SkyBlockPlayer player, int slotToSaveUpTo) {

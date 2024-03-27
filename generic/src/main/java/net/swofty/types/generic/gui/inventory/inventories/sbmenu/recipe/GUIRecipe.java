@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
 
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -58,7 +58,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
                         "§aCrafting Table", Material.CRAFTING_TABLE, 1,
-                        "§7Craft this recipe by using a crafting",
+                        "§7Craft this recipe by using a recipe",
                         "§7table."
                 );
             }
@@ -69,12 +69,12 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             recipes = ((Craftable) item.getGenericInstance()).getRecipes();
         } catch (NullPointerException | ClassCastException e2) {
             getPlayer().closeInventory();
-            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
+            getPlayer().sendMessage("§cThis item has no associated recipe recipes!");
             return;
         }
         if (recipeIndex >= recipes.size()) {
             getPlayer().closeInventory();
-            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
+            getPlayer().sendMessage("§cThis item has no associated recipe recipes!");
             return;
         }
         SkyBlockRecipe recipe = recipes.get(recipeIndex);

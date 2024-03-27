@@ -24,6 +24,7 @@ import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.utility.MathUtility;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -76,7 +77,9 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
                     20));
 
             MinecraftServer.getBossBarManager().removeAllBossBars(player);
-            player.getPetData().updatePetEntityImpl(player);
+            MathUtility.delay(() -> {
+                player.getPetData().updatePetEntityImpl(player);
+            }, 20);
 
             if (SkyBlockConst.isIslandServer()) return;
             PlayerHolograms.spawnAll(player);

@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipe;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
 
@@ -69,7 +69,7 @@ public class VillagerLeo extends NPCVillagerDialogue {
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new crafting recipes, brewing recipes, trades, enchantments and more!",
+                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new recipe recipes, brewing recipes, trades, enchantments and more!",
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }

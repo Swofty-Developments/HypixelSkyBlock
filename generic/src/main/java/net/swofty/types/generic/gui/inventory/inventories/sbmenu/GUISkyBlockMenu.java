@@ -11,7 +11,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.crafting.GUIRecipeBook;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog.GUIMissionLog;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkills;
@@ -200,7 +200,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, (short) 0, 1,
-                        "§7Opens the crafting grid.",
+                        "§7Opens the recipe grid.",
                         " ",
                         "§eClick to open!");
             }

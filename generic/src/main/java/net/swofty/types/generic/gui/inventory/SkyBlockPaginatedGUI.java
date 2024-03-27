@@ -7,10 +7,12 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,6 +61,13 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     private void updatePagedItems(PaginationList<?> paged, int page, SkyBlockPlayer player) {
         List<?> thisPage = paged.getPage(page);
         if (thisPage == null) throw new IllegalStateException();
+        Arrays.stream(getPaginatedSlots()).forEach(slot -> set(new GUIItem(slot) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStack.builder(Material.AIR);
+            }
+        }));
+
         for (int i = 0; i < thisPage.size(); i++) {
             set(createItemFor((T) thisPage.get(i), getPaginatedSlots()[i], player));
         }

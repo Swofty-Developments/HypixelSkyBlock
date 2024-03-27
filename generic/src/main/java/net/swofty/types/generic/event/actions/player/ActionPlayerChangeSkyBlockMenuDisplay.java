@@ -49,7 +49,6 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
 
         // Check if item shows quiver
         if (switchedTo.getGenericInstance() instanceof QuiverDisplayOnHold quiverDisplay) {
-            ItemStack.Builder builder;
             DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
 
             // If the bow should not be drawn back then also replace all arrows in inventory with a feather
@@ -70,6 +69,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
 
             if (!player.hasCustomCollectionAward(CustomCollectionAward.QUIVER)) return;
 
+            ItemStack.Builder builder;
             if (player.getQuiver().isEmpty()) {
                 builder = ItemStackCreator.getStack("§8Empty Quiver", quiverDisplay.shouldBeArrow()
                         ? Material.ARROW : Material.FEATHER, 1, List.of(
@@ -86,12 +86,11 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
                 SkyBlockItem item = quiver.getFirstItemInQuiver();
                 builder = ItemStackCreator.getStack("§8Quiver " + StringUtility.stripColor(item.getDisplayName()),
                         quiverDisplay.shouldBeArrow() ? Material.ARROW : Material.FEATHER,
-                        Math.max(64, quiver.getAmountOfArrows(item.getAttributeHandler().getItemTypeAsType())),
+                        Math.min(64, quiver.getAmountOfArrows(item.getAttributeHandler().getItemTypeAsType())),
                         "§7This item is in your inventory",
                         "§7because you are currently holding a",
                         "§7Bow",
                         " ",
-                        "§7Quiver contains:",
                         "§7Active Arrow: " + item.getDisplayName()
                                 + " §7(§e" + quiver.getAmountOfArrows(item.getAttributeHandler().getItemTypeAsType()) + "§7)",
                         " ",
@@ -99,7 +98,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
                         "§7the item that was here before.");
             }
 
-            player.getInventory().setItemStack(8, builder.build());
+            player.getInventory().setItemStack(8, ItemStackCreator.setNotEditable(builder).build());
             return;
         }
 
