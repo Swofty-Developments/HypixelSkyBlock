@@ -25,7 +25,7 @@ public abstract class TablistManager {
     }
 
     public void nullifyCache(SkyBlockPlayer player) {
-        if (tablistEntries.containsKey(player)) {
+        if (tablistEntries.containsKey(player) && tablistEntries.get(player) != null) {
             player.sendPacket(new PlayerInfoRemovePacket(tablistEntries.get(player)));
             tablistEntries.put(player, null);
         }
