@@ -3,6 +3,7 @@ package net.swofty.types.generic.gui.inventory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -274,6 +275,10 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                             player, sbItem.getItemStackBuilder().build()
                     );
 
+                    if (item.getDisplayName() != null)
+                        itemStack.displayName(Component.text(item.getDisplayName())
+                                .decoration(TextDecoration.ITALIC, false));
+
                     List<String> lore;
 
                     if (item.getLore() != null) {
@@ -356,6 +361,8 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         private final double modifier;
         private final boolean stackable;
         private List<String> lore = null;
+        @Setter
+        private String displayName = null;
         
         public void setDisplayLore(List<String> lores) {
             this.lore = lores;

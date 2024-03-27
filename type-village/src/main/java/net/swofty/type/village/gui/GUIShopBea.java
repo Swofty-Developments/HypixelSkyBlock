@@ -5,6 +5,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.shop.type.CombinedShopPrice;
 import net.swofty.types.generic.shop.type.ItemShopPrice;
@@ -47,7 +48,9 @@ public class GUIShopBea extends SkyBlockShopGUI {
                 price,
                 1);
         SkyBlockItem beeItem = new SkyBlockItem(ItemType.BEE_PET);
-        beeItem.getAttributeHandler().getPetData().setLevel(100, rarity);
+        ItemAttributePetData.PetData petData = beeItem.getAttributeHandler().getPetData();
+        petData.setLevel(100, rarity);
+        beeItem.getAttributeHandler().setPetData(petData);
 
         ArrayList<String> lore = new ArrayList<>(beeItem.getLore());
         lore.add(" ");
@@ -55,6 +58,7 @@ public class GUIShopBea extends SkyBlockShopGUI {
         lore.add("§cNew pets are lowest level!");
 
         bee.setDisplayLore(lore);
+        bee.setDisplayName(beeItem.getDisplayName());
         attachItem(bee);
     }
 }

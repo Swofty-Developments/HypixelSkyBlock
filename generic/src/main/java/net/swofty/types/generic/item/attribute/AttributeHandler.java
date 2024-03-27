@@ -71,6 +71,15 @@ public class AttributeHandler {
         }
     }
 
+    public void setPetData(ItemAttributePetData.PetData data) {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a pet");
+        if (item.getGenericInstance() instanceof Pet) {
+            ((ItemAttributePetData) item.getAttribute("pet_data")).setValue(data);
+        } else {
+            throw new RuntimeException("Item is not a pet");
+        }
+    }
+
     public ItemAttributeBackpackData.BackpackData getBackpackData() {
         if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
         if (item.getGenericInstance() instanceof Backpack) {
