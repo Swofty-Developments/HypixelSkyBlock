@@ -5,6 +5,7 @@ import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
@@ -41,5 +42,15 @@ public class MobSheep extends SkyBlockMob {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .build();
+    }
+
+    @Override
+    public List<MobDrop> getDrops() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public SkillCategories getSkillCategory() {
+        return SkillCategories.FARMING;
     }
 }

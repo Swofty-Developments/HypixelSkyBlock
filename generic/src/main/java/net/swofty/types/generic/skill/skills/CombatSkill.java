@@ -58,7 +58,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -83,7 +94,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -108,7 +130,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -133,7 +166,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -158,7 +202,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -183,7 +238,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -208,7 +274,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -233,7 +310,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -258,7 +346,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -283,7 +382,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -308,7 +418,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -339,7 +460,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -364,7 +496,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -389,7 +532,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -414,7 +568,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -439,7 +604,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -464,7 +640,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -489,7 +676,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -514,7 +712,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -539,7 +748,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -564,7 +784,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -589,7 +820,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -614,7 +856,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -639,7 +892,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -664,7 +928,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -689,7 +964,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -714,7 +1000,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -739,7 +1036,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -764,7 +1072,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -789,7 +1108,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -814,7 +1144,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -839,7 +1180,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -864,7 +1216,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -889,7 +1252,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -914,7 +1288,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -939,7 +1324,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -964,7 +1360,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -989,7 +1396,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1014,7 +1432,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1039,7 +1468,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1064,7 +1504,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1089,7 +1540,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1114,7 +1576,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1139,7 +1612,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1164,7 +1648,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1189,7 +1684,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1214,7 +1720,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1239,7 +1756,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1264,7 +1792,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1289,7 +1828,18 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
+                            }
+                        },
+                        new StatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.DAMAGE_ADDITIVE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1314,7 +1864,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1339,7 +1889,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1364,7 +1914,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1389,7 +1939,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1414,7 +1964,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1439,7 +1989,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1464,7 +2014,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1489,7 +2039,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1514,7 +2064,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 ),
@@ -1539,7 +2089,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 0.5D;
+                                return 5D;
                             }
                         }
                 )

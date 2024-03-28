@@ -46,4 +46,11 @@ public class ItemStatistics {
         }
         return this;
     }
+
+    public ItemStatistics minus(ItemStatistics other) {
+        for (ItemStatistic stat : ItemStatistic.values()) {
+            this.statistics.merge(stat, other.get(stat), (a, b) -> Math.max(a - b, 0));
+        }
+        return this;
+    }
 }

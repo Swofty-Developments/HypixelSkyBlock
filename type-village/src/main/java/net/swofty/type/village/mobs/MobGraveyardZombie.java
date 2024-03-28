@@ -15,7 +15,9 @@ import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -69,6 +71,18 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.DAMAGE, 5D)
                 .build();
+    }
+
+    @Override
+    public List<MobDrop> getDrops() {
+        return new ArrayList<>(List.of(
+                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
+        ));
+    }
+
+    @Override
+    public SkillCategories getSkillCategory() {
+        return SkillCategories.COMBAT;
     }
 
     @Override

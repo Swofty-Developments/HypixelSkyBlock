@@ -13,9 +13,15 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
+import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.skill.SkillCategory;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
@@ -55,6 +61,41 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract List<GoalSelector> getGoalSelectors();
     public abstract List<TargetSelector> getTargetSelectors();
     public abstract ItemStatistics getStatistics();
+    public abstract List<MobDrop> getDrops();
+    public abstract SkillCategories getSkillCategory();
+
+    public record MobDrop(float chance, int min, int max, ItemType item) { }
+
+    @Override
+    public void kill() {
+        super.kill();
+        mobs.add(this);
+
+        if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer)) return;
+        SkyBlockPlayer player = (SkyBlockPlayer) getLastDamageSource().getAttacker();
+
+        player.getSkills().set(player, getSkillCategory(), player.getSkills().get(getSkillCategory()) + 7);
+
+        if (getDrops().isEmpty()) return;
+        if (getLastDamageSource() == null) return;
+        if (getLastDamageSource().getAttacker() == null) return;
+
+        float random = (float) Math.random();
+
+        for (MobDrop drop : getDrops()) {
+            if (random <= drop.chance / 100) {
+                int amount = (int) (Math.random() * (drop.max - drop.min) + drop.min);
+                ItemType item = drop.item;
+
+                DroppedItemEntityImpl droppedItemEntity = new DroppedItemEntityImpl(
+                        new SkyBlockItem(item, amount), player
+                );
+                droppedItemEntity.setInstance(getInstance(), getPosition().add(
+                        Math.random() * 0.5, 0.3, Math.random() * 0.5
+                ));
+            }
+        }
+    }
 
     public static void runRegionPopulators(Scheduler scheduler) {
         if (SkyBlockConst.isIslandServer()) return;

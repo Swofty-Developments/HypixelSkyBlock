@@ -14,7 +14,11 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.DamageIndicator;
+
+import java.util.Map;
 
 @EventParameters(description = "For damage indicators",
         node = EventNodes.ENTITY,
@@ -31,13 +35,23 @@ public class PlayerActionDamagedAttacked extends SkyBlockEvent {
         if (!event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
 
         if (event.getEntity() instanceof SkyBlockMob mob) {
-            float damageDealt = mob.getStatistics().get(ItemStatistic.DAMAGE).floatValue();
+            ItemStatistics mobStatistics = mob.getStatistics();
+            ItemStatistics playerStatistics = ((SkyBlockPlayer) event.getTarget()).getStatistics().allStatistics();
+
+            Map.Entry<Double, Boolean> damageDealt =
+                    PlayerStatistics.runPrimaryDamageFormula(mobStatistics, playerStatistics);
 
             PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
-                    (SkyBlockPlayer) event.getTarget(), damageDealt, mob);
+                    (SkyBlockPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
             ((SkyBlockPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+
+            new DamageIndicator()
+                    .damage((float) valueEvent.getValue())
+                    .pos(event.getTarget().getPosition())
+                    .critical(damageDealt.getValue())
+                    .display(event.getTarget().getInstance());
         }
     }
 

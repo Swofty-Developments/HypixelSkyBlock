@@ -5,7 +5,9 @@ import lombok.Getter;
 @Getter
 public enum ItemStatistic {
     // Non-Player Statistics
-    DAMAGE("Damage", true, null, "+", "", "❁"),
+    DAMAGE("Damage", true, "§c", "+", "", "❁"),
+    DAMAGE_ADDITIVE("Damage", true, "§c", "+", "%", "❁"), // EXPECTS PERCENTAGES
+    DAMAGE_MULTIPLICATIVE("Damage", true, "§c", "+", "x", "❁"),
 
     // Player Statistics
     HEALTH("Health", true, "§c", "+", "", "❤"),

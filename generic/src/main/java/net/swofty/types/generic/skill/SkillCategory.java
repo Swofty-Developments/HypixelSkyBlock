@@ -64,7 +64,7 @@ public abstract class SkillCategory {
                     case STATS -> {
                         ItemStatistic statistic = ((StatisticReward) unlock).getStatistic();
                         lore.add("§7  §8+§b" + statistic.getColour() +
-                                statistic.getSymbol() + ((StatisticReward) unlock).amountAdded()
+                                statistic.getSymbol() + ((StatisticReward) unlock).amountAdded() + statistic.getSuffix()
                                 + " " + statistic.getDisplayName());
                     }
                 }

@@ -18,6 +18,7 @@ import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
+import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
@@ -35,7 +36,7 @@ public class PlayerStatistics {
     @Setter
     @Getter
     private double manaRegenerationPercentBonus;
-    private ItemStatistics fullInventoryStatisticsCache = ItemStatistics.builder().build();
+    private ItemStatistics talismanStatistics = ItemStatistics.builder().build();
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -80,6 +81,23 @@ public class PlayerStatistics {
         return statistics;
     }
 
+    public ItemStatistics petStatistics() {
+        SkyBlockItem pet = player.getPetData().getEnabledPet();
+        if (pet == null) return ItemStatistics.EMPTY;
+
+        ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics();
+        int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
+
+        ItemStatistics statistics = ItemStatistics.builder().build();
+        for (ItemStatistic statistic : ItemStatistic.values()) {
+            statistics = statistics.add(ItemStatistics.builder()
+                    .with(statistic, perLevelStatistics.get(statistic) * level)
+                    .build());
+        }
+
+        return statistics;
+    }
+
     public ItemStatistics spareStatistics() {
         ItemStatistics spare = ItemStatistics.builder().build();
 
@@ -101,7 +119,8 @@ public class PlayerStatistics {
         total = total.add(allArmorStatistics());
         total = total.add(mainHandStatistics());
         total = total.add(spareStatistics());
-        total = total.add(fullInventoryStatisticsCache);
+        total = total.add(petStatistics());
+        total = total.add(talismanStatistics);
 
         ItemStatistics baseStats = ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
@@ -113,7 +132,7 @@ public class PlayerStatistics {
         return total;
     }
 
-    public void updateFullInventoryStatistics() {
+    public void updateTalismanStatistics() {
         ItemStatistics total = ItemStatistics.builder().build();
         for (ItemStack itemStack : player.getInventory().getItemStacks()) {
             if (SkyBlockItem.isSkyBlockItem(itemStack)) {
@@ -124,7 +143,7 @@ public class PlayerStatistics {
                 total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
             }
         }
-        fullInventoryStatisticsCache = total;
+        talismanStatistics = total;
     }
 
     private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics) {
@@ -155,6 +174,34 @@ public class PlayerStatistics {
             }
         }
         return statistics;
+    }
+
+    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics) {
+        ItemStatistics all = allStatistics();
+        return runPrimaryDamageFormula(all, enemyStatistics);
+    }
+
+    public static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics) {
+        boolean isCrit = false;
+        double critChance = originStatistics.get(ItemStatistic.CRIT_CHANCE);
+        if (Math.random() <= critChance)
+            isCrit = true;
+
+        double baseDamage = originStatistics.get(ItemStatistic.DAMAGE);
+        double strength = originStatistics.get(ItemStatistic.STRENGTH);
+        double critDamage = originStatistics.get(ItemStatistic.CRIT_DAMAGE);
+
+        double initialDamage = (5 + baseDamage);
+        double strengthDamage = (1 + (strength / 100));
+        double criticalDamage = isCrit ? (1 + (critDamage / 100)) : 1;
+
+        double baseDamageAdditiveMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_ADDITIVE) / 100);
+        double baseDamageMultiplicativeMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_MULTIPLICATIVE));
+
+        double damage = initialDamage * strengthDamage * criticalDamage * baseDamageAdditiveMultiplier * baseDamageMultiplicativeMultiplier;
+        if (enemyStatistics.get(ItemStatistic.DEFENSE) > 0)
+            damage = damage * (1 - (enemyStatistics.get(ItemStatistic.DEFENSE) / (enemyStatistics.get(ItemStatistic.DEFENSE) + 100)));
+        return new AbstractMap.SimpleEntry<>(damage, isCrit);
     }
 
     public void boostManaRegeneration(double percent, int ticks) {
@@ -214,7 +261,7 @@ public class PlayerStatistics {
         scheduler.submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
-                    player.getStatistics().updateFullInventoryStatistics();
+                    player.getStatistics().updateTalismanStatistics();
                 });
             });
             return TaskSchedule.seconds(2);
