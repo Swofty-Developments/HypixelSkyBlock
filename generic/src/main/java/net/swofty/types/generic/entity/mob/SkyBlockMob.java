@@ -44,7 +44,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         this.setCustomNameVisible(true);
         this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getStatistics().get(ItemStatistic.HEALTH).floatValue());
-        this.setHealth(getHealth());
+        this.setHealth(getStatistics().get(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
