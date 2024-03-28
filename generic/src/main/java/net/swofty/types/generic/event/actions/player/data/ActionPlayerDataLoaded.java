@@ -8,6 +8,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.minestom.server.scoreboard.Team;
 import net.swofty.commons.ServerType;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;

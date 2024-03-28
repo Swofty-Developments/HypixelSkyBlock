@@ -30,10 +30,10 @@ public class ActionChangeMiningRegion extends SkyBlockEvent {
         if (SkyBlockConst.isIslandServer()) return;
 
         if (newRegion != null && Groups.MINING_REGIONS.contains(newRegion)) {
-            if (!player.getActiveEffects().stream().map(f -> f.getPotion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
+            if (!player.getActiveEffects().stream().map(f -> f.potion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
                 player.addEffect(new Potion(PotionEffect.MINING_FATIGUE, (byte) 255, 9999999));
         } else {
-            if (player.getActiveEffects().stream().map(f -> f.getPotion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
+            if (player.getActiveEffects().stream().map(f -> f.potion().effect()).toList().contains(PotionEffect.MINING_FATIGUE))
                 player.removeEffect(PotionEffect.MINING_FATIGUE);
         }
     }

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.weapon.bow;
+package net.swofty.types.generic.item.items.vanilla.bow;
 
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;

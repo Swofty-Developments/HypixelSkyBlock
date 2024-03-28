@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.weapon.vanilla;
+package net.swofty.types.generic.item.items.vanilla.weapon;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;

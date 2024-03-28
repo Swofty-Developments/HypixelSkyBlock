@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.weapon.vanilla;
+package net.swofty.types.generic.item.items.vanilla.weapon;
 
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -11,11 +11,11 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public class IronSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Reforgable {
+public class StoneSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Reforgable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 30D)
+                .with(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 
@@ -39,4 +39,3 @@ public class IronSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDi
         return ReforgeType.SWORDS;
     }
 }
-

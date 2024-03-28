@@ -42,20 +42,22 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
     }
 
     public void open(SkyBlockPlayer player, String query, int page) {
-        PaginationList<T> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
+        Thread.startVirtualThread(() -> {
+            PaginationList<T> paged = fillPaged(player, new PaginationList<>(getPaginatedSlots().length));
 
-        if (!query.isEmpty()) {
-            paged.removeIf(type -> shouldFilterFromSearch(query, type));
-        }
+            if (!query.isEmpty()) {
+                paged.removeIf(type -> shouldFilterFromSearch(query, type));
+            }
 
-        this.title = getTitle(player, query, page, paged);
-        latestPaged = paged;
+            this.title = getTitle(player, query, page, paged);
+            latestPaged = paged;
 
-        try {
-            updatePagedItems(paged, page, player);
-        } catch (IllegalStateException ex) {}
-        performSearch(player, query, page, paged.getPageCount());
-        super.open(player);
+            try {
+                updatePagedItems(paged, page, player);
+            } catch (IllegalStateException ex) {}
+            performSearch(player, query, page, paged.getPageCount());
+            super.open(player);
+        });
     }
 
     private void updatePagedItems(PaginationList<?> paged, int page, SkyBlockPlayer player) {

@@ -91,7 +91,6 @@ public enum RegionType {
         this.songs = new ArrayList<>();
     }
 
-    @SneakyThrows
     RegionType(String name, String color, Class<? extends SkyBlockMiningConfiguration> miningHandler) {
         this(name, color, miningHandler, new Songs[0]);
     }

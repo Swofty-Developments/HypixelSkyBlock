@@ -47,7 +47,6 @@ public abstract class SkyBlockNPC {
                 getParameters().texture(),
                 getParameters().signature());
         entity.setInstance(SkyBlockConst.getInstanceContainer(), getParameters().position());
-        entity.spawn();
 
         npcs.put(this, entity);
     }

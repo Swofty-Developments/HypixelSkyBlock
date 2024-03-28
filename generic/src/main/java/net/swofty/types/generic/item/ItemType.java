@@ -59,12 +59,12 @@ import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.vanilla.Wheat;
 import net.swofty.types.generic.item.items.weapon.Hyperion;
 import net.swofty.types.generic.item.items.weapon.Rogue;
-import net.swofty.types.generic.item.items.weapon.bow.Arrow;
-import net.swofty.types.generic.item.items.weapon.bow.Bow;
-import net.swofty.types.generic.item.items.weapon.vanilla.DiamondSword;
-import net.swofty.types.generic.item.items.weapon.vanilla.IronSword;
-import net.swofty.types.generic.item.items.weapon.vanilla.StoneSword;
-import net.swofty.types.generic.item.items.weapon.vanilla.WoodenSword;
+import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
+import net.swofty.types.generic.item.items.vanilla.bow.Bow;
+import net.swofty.types.generic.item.items.vanilla.weapon.DiamondSword;
+import net.swofty.types.generic.item.items.vanilla.weapon.IronSword;
+import net.swofty.types.generic.item.items.vanilla.weapon.StoneSword;
+import net.swofty.types.generic.item.items.vanilla.weapon.WoodenSword;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 

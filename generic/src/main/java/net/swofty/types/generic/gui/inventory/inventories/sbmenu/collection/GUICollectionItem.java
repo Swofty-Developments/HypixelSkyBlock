@@ -14,6 +14,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -72,9 +73,17 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
                     lore.add(" ");
                     lore.add("§eClick to view rewards!");
 
+                    if (playerCollection.getReward(collection) == null) {
+                        return ItemStackCreator.getStack(
+                                "§7" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
+                                Material.GREEN_STAINED_GLASS_PANE,
+                                1,
+                                lore
+                        );
+                    }
+
                     Material material;
                     String colour;
-
                     if (playerCollection.getReward(collection) == reward) {
                         material = Material.YELLOW_STAINED_GLASS_PANE;
                         colour = "§e";

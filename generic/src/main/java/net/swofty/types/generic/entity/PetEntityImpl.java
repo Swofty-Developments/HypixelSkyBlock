@@ -8,6 +8,8 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.scoreboard.Team;
+import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -19,6 +21,8 @@ import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+
 public class PetEntityImpl extends LivingEntity {
     private final String url;
     private final SkyBlockPlayer player;
@@ -27,9 +31,14 @@ public class PetEntityImpl extends LivingEntity {
     private Task moveTowardsPlayer;
     @Getter
     private float yLevel = 0f;
+    @Getter
+    private boolean goingDown = false;
 
     public PetEntityImpl(@NotNull SkyBlockPlayer player, @NotNull String url, @NotNull SkyBlockItem pet) {
         super(EntityType.ARMOR_STAND);
+
+        this.hasCollision = false;
+        this.hasPhysics = false;
 
         this.player = player;
         this.url = url;
@@ -63,7 +72,12 @@ public class PetEntityImpl extends LivingEntity {
                 }
                 return;
             }
-            yLevel = (getYLevel() < 0D) ? 0.2f : -0.2f;
+            yLevel = goingDown ? yLevel - 0.02f : yLevel + 0.02f;
+            if (yLevel >= 0.12f) {
+                goingDown = true;
+            } else if (yLevel <= -0.12f) {
+                goingDown = false;
+            }
             teleport(getPosition().add(0, yLevel, 0));
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 player.sendPacket(new ParticlePacket(
@@ -80,7 +94,7 @@ public class PetEntityImpl extends LivingEntity {
                         null
                 ));
             });
-        }, TaskSchedule.tick(15), TaskSchedule.tick(8));
+        }, TaskSchedule.tick(5), TaskSchedule.tick(3));
         moveTowardsPlayer = MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (isDead() || !player.isOnline()) {
                 moveTowardsPlayer.cancel();
@@ -93,11 +107,11 @@ public class PetEntityImpl extends LivingEntity {
             double distance = getPosition().distance(player.getPosition());
 
             if (distance > 10) {
-                teleport(player.getPosition());
+                teleport(player.getPosition().add(0, 1.5, 0));
                 return;
             }
             if (distance > 3) {
-                teleport(location.add(player.getPosition().sub(getPosition()).asVec().normalize().mul(0.7)));
+                teleport(location.add(player.getPosition().add(0, 1.5, 0).sub(getPosition()).asVec().normalize().mul(0.7)));
             }
         }, TaskSchedule.tick(5), TaskSchedule.tick(3));
     }

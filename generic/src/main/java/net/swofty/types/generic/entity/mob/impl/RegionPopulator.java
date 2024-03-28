@@ -24,7 +24,6 @@ public interface RegionPopulator {
 
         SkyBlockMob mob = registry.asMob();
         mob.setInstance(SkyBlockConst.getInstanceContainer(), randomPosition);
-        mob.spawn();
     }
 
     @Builder

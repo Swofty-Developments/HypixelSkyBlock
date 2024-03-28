@@ -86,7 +86,6 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         pos = pos.add(x * multiplier, y * multiplier * 3, z * multiplier);
 
         droppedItem.setInstance(player.getInstance(), pos);
-        droppedItem.spawn();
     }
 }
 

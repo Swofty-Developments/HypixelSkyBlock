@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public interface Backpack extends CustomSkyBlockItem, SkullHead, Interactable {
+public interface Backpack extends CustomSkyBlockItem, SkullHead, Interactable, Unstackable {
     int getRows();
 
     default ItemStatistics getStatistics() {

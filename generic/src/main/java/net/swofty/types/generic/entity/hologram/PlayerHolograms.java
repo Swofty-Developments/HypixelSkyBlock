@@ -28,7 +28,6 @@ public enum PlayerHolograms {
         HologramEntity entity = new HologramEntity(line);
         entity.setInstance(SkyBlockConst.getInstanceContainer(), hologramType.pos.add(0, -heightOffset, 0));
         entity.addViewer(skyBlockPlayer);
-        entity.spawn();
 
         entities.computeIfAbsent(skyBlockPlayer, k -> new ArrayList<>())
                 .add(new AbstractMap.SimpleEntry<>(hologramType, entity));
@@ -82,7 +81,6 @@ public enum PlayerHolograms {
                             // Set hologram entity at the correct position considering new spacing and bottom alignment
                             entity.setInstance(SkyBlockConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
                             entity.addViewer(skyBlockPlayer);
-                            entity.spawn();
                             currentEntities.add(Map.entry(hologram, entity));
                         }
                     }

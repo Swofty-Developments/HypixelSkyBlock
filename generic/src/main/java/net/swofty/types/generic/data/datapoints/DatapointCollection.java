@@ -118,6 +118,11 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             int collected = get(collection.type());
             int required = reward == null ? 0 : reward.requirement();
 
+            if (reward == null) {
+                lore.add("§cMaxxed out!");
+                return lore;
+            }
+
             String collectedPercentage = String.format("%.2f", (collected / (double) required) * 100);
             lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
                     StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +

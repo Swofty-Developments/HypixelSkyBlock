@@ -27,6 +27,9 @@ public class MinionEntityImpl extends LivingEntity {
     public MinionEntityImpl(IslandMinionData.IslandMinion islandMinion, SkyBlockMinion minion) {
         super(EntityType.ARMOR_STAND);
 
+        this.hasCollision = false;
+        this.hasPhysics = false;
+
         this.islandMinion = islandMinion;
         this.minion = minion;
 

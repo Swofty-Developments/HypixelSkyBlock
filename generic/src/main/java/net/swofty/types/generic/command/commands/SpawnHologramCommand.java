@@ -26,9 +26,8 @@ public class SpawnHologramCommand extends SkyBlockCommand {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             Entity entity = new HologramEntity(name);
-            entity.setInstance(SkyBlockConst.getInstanceContainer(), player.getPosition());
             entity.setAutoViewable(true);
-            entity.spawn();
+            entity.setInstance(SkyBlockConst.getInstanceContainer(), player.getPosition());
         }, nameArgument);
     }
 }

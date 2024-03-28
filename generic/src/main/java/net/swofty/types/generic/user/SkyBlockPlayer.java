@@ -24,9 +24,9 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
+import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -162,18 +162,71 @@ public class SkyBlockPlayer extends Player {
                 && getInstance() != SkyBlockConst.getEmptyInstance();
     }
 
+    public @Nullable SkyBlockItem getArrow() {
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.getGenericInstance() != null && item.getGenericInstance() instanceof ArrowImpl) {
+                return item;
+            }
+        }
+
+        if (!hasCustomCollectionAward(CustomCollectionAward.QUIVER)) return null;
+
+        DatapointQuiver.PlayerQuiver quiver = getQuiver();
+        return quiver.getFirstItemInQuiver();
+    }
+
+    public @Nullable SkyBlockItem getAndConsumeArrow() {
+        // Check Inventory first
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.getGenericInstance() != null && item.getGenericInstance() instanceof ArrowImpl) {
+                if (item.getAmount() > 1) {
+                    item.setAmount(item.getAmount() - 1);
+                    getInventory().setItemStack(i, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+                    ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
+                    return item;
+                } else {
+                    getInventory().setItemStack(i, ItemStack.of(Material.AIR));
+                    return item;
+                }
+            }
+        }
+
+        if (!hasCustomCollectionAward(CustomCollectionAward.QUIVER)) return null;
+
+        DatapointQuiver.PlayerQuiver quiver = getQuiver();
+        SkyBlockItem item = quiver.getFirstItemInQuiver();
+        if (item == null) return null;
+
+        if (item.getAmount() > 1) {
+            item.setAmount(item.getAmount() - 1);
+            quiver.setFirstItemInQuiver(item);
+            getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
+            ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
+            return item;
+        } else {
+            quiver.setFirstItemInQuiver(null);
+            getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
+            ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
+            return item;
+        }
+    }
+
     public boolean hasTalisman(Talisman talisman) {
         return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
     }
 
     public List<Talisman> getTalismans() {
-        return Stream.of(getAllPlayerItems())
+        return Stream.of(getAllInventoryItems())
                 .filter(item -> item.getGenericInstance() != null)
                 .filter(item -> item.getGenericInstance() instanceof Talisman)
                 .map(item -> (Talisman) item.getGenericInstance()).collect(Collectors.toList());
     }
 
-    public SkyBlockItem[] getAllPlayerItems() {
+    public SkyBlockItem[] getAllInventoryItems() {
         return Stream.of(getInventory().getItemStacks())
                 .map(SkyBlockItem::new)
                 .toArray(SkyBlockItem[]::new);
@@ -427,14 +480,6 @@ public class SkyBlockPlayer extends Player {
 
     public void setCoins(double coins) {
         getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
-    }
-
-    public void addCoins(double coins) {
-        setCoins(getCoins() + coins);
-    }
-
-    public void takeCoins(double coins) {
-        setCoins(getCoins() - coins);
     }
 
     @Override

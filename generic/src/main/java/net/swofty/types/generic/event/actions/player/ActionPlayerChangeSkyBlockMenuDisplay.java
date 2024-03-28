@@ -71,8 +71,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
 
             ItemStack.Builder builder;
             if (player.getQuiver().isEmpty()) {
-                builder = ItemStackCreator.getStack("§8Empty Quiver", quiverDisplay.shouldBeArrow()
-                        ? Material.ARROW : Material.FEATHER, 1, List.of(
+                builder = ItemStackCreator.getStack("§8Empty Quiver", Material.FEATHER, 1, List.of(
                         "§7This item is in your inventory",
                         "§7because you are currently holding a",
                         "§7Bow",

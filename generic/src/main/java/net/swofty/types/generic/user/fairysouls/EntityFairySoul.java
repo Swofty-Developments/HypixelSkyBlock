@@ -37,7 +37,5 @@ public class EntityFairySoul extends EntityCreature {
      */
     public void spawn(Instance instance) {
         setInstance(instance, parent.getLocation().sub(0, 1.46875, 0).withYaw(118.125f));
-        spawn();
     }
-
 }

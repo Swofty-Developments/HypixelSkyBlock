@@ -1,5 +1,6 @@
 package net.swofty.types.generic.command.commands;
 
+import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.gui.inventory.inventories.GUICreative;
@@ -17,5 +18,11 @@ public class ItemListCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             new GUICreative().open((SkyBlockPlayer) sender);
         });
+
+        ArgumentString lookup = new ArgumentString("lookup");
+        command.addSyntax((sender, context) -> {
+            String lookupValue = context.get(lookup);
+            new GUICreative().open((SkyBlockPlayer) sender, lookupValue, 1);
+        }, lookup);
     }
 }

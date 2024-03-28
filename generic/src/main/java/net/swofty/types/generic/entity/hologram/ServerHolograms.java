@@ -28,9 +28,8 @@ public enum ServerHolograms {
             double startY = hologram.text.length * 0.3 - 0.3;
             for (int i = 0; i < hologram.text.length; i++) {
                 HologramEntity entity = new HologramEntity(hologram.text[i]);
-                entity.setInstance(instance, hologram.pos.add(0, startY - (i * 0.3), 0));
                 entity.setAutoViewable(true);
-                entity.spawn();
+                entity.setInstance(instance, hologram.pos.add(0, startY - (i * 0.3), 0));
             }
         }
     }
@@ -53,7 +52,6 @@ public enum ServerHolograms {
             HologramEntity entity = new HologramEntity(hologram.text[i]);
             entity.setInstance(hologram.instance, hologram.pos.add(0, startY - (i * 0.3), 0));
             entity.setAutoViewable(true);
-            entity.spawn();
             entities.add(entity);
         }
 

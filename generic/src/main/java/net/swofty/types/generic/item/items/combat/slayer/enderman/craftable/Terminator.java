@@ -62,4 +62,9 @@ public class Terminator implements CustomSkyBlockItem, Craftable, BowImpl {
     public boolean shouldBeArrow() {
         return false;
     }
+
+    @Override
+    public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {
+
+    }
 }

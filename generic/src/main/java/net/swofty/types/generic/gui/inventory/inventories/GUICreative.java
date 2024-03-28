@@ -2,10 +2,14 @@ package net.swofty.types.generic.gui.inventory.inventories;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -13,6 +17,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Unstackable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -77,17 +82,37 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 player, skyBlockItem.getItemStack()
         );
 
+        boolean stackable = skyBlockItem.getGenericInstance() == null
+                || !(skyBlockItem.getGenericInstance() instanceof Unstackable);
+
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                player.sendMessage("§aGave you a §e" + skyBlockItem.getAttributeHandler().getItemType() + "§a.");
-                player.addAndUpdateItem(skyBlockItem);
+
+                if (e.getClickType().equals(ClickType.RIGHT_CLICK) && stackable) {
+                    skyBlockItem.setAmount(64);
+                    player.addAndUpdateItem(skyBlockItem);
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
+                    player.sendMessage(Component.text("§aYou have been given §7x64 " + skyBlockItem.getDisplayName() + "§a."));
+                } else {
+                    skyBlockItem.setAmount(1);
+                    player.addAndUpdateItem(skyBlockItem);
+                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
+                    player.sendMessage(Component.text("§aYou have been given §7x1 " + skyBlockItem.getDisplayName() + "§a."));
+                }
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return itemStack;
+                ArrayList<String> lore = new ArrayList<>(skyBlockItem.getLore());
+                lore.add(" ");
+                if (stackable)
+                    lore.add("§bRight Click for §7x64 §eof this item.");
+                lore.add("§eLeft Click for §7x1 §eof this item.");
+                return itemStack.lore(lore.stream().map(line -> {
+                    return Component.text(line).decoration(TextDecoration.ITALIC, false);
+                }).toList());
             }
         };
     }

@@ -1,5 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
+import net.minestom.server.coordinate.Vec;
+import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.ReforgeType;
@@ -52,5 +54,18 @@ public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl {
     @Override
     public boolean shouldBeArrow() {
         return false;
+    }
+
+    @Override
+    public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {
+        SkyBlockItem arrow = player.getAndConsumeArrow();
+        if (arrow == null) return;
+
+        ArrowEntityImpl arrowEntity = new ArrowEntityImpl(player);
+        Vec arrowVelocity = calculateArrowVelocity(
+                player.getPosition().pitch(),
+                player.getPosition().yaw());
+        arrowEntity.setVelocity(arrowVelocity);
+        arrowEntity.setInstance(player.getInstance(), player.getPosition().add(0, 1, 0));
     }
 }

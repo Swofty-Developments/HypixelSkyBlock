@@ -81,6 +81,23 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
             return quiverMap.get(slot);
         }
 
+        public void setFirstItemInQuiver(SkyBlockItem item) {
+            int firstFilledSlot = -1;
+            for (int i = 0; i < 9; i++) {
+                if (quiverMap.get(i) != null) {
+                    firstFilledSlot = i;
+                    break;
+                }
+            }
+
+            if (firstFilledSlot == -1) {
+                quiverMap.put(0, item);
+                return;
+            }
+
+            quiverMap.put(firstFilledSlot, item);
+        }
+
         public boolean isEmpty() {
             return getFirstItemInQuiver() == null;
         }

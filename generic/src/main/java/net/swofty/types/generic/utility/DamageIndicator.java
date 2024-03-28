@@ -30,7 +30,6 @@ public class DamageIndicator {
         Entity entity = new HologramEntity(name);
         entity.setInstance(instance, utilRandomizeLoc(pos));
         entity.setAutoViewable(true);
-        entity.spawn();
         MinecraftServer.getSchedulerManager().scheduleTask(entity::remove, TaskSchedule.seconds(1), TaskSchedule.stop());
     }
 
