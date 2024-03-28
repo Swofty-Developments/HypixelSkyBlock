@@ -86,6 +86,11 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
+    public long damageCooldown() {
+        return 500;
+    }
+
+    @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
                 new Populator(RegionType.GRAVEYARD, 50)

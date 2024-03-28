@@ -53,4 +53,9 @@ public class MobSheep extends SkyBlockMob {
     public SkillCategories getSkillCategory() {
         return SkillCategories.FARMING;
     }
+
+    @Override
+    public long damageCooldown() {
+        return 200;
+    }
 }

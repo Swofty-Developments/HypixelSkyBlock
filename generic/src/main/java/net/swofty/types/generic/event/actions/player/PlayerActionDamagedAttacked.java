@@ -35,6 +35,9 @@ public class PlayerActionDamagedAttacked extends SkyBlockEvent {
         if (!event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
 
         if (event.getEntity() instanceof SkyBlockMob mob) {
+            if (mob.getLastAttack() + mob.damageCooldown() > System.currentTimeMillis()) return;
+            mob.setLastAttack(System.currentTimeMillis());
+
             ItemStatistics mobStatistics = mob.getStatistics();
             ItemStatistics playerStatistics = ((SkyBlockPlayer) event.getTarget()).getStatistics().allStatistics();
 

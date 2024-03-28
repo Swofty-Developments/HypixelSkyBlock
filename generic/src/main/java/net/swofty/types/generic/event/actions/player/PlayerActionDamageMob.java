@@ -6,7 +6,9 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.Event;
+import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
+import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -18,19 +20,20 @@ import net.swofty.types.generic.utility.DamageIndicator;
 import java.util.Map;
 
 @EventParameters(description = "For damage indicators",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
+        node = EventNodes.ALL,
+        requireDataLoaded = false)
 public class PlayerActionDamageMob extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerEntityInteractEvent.class;
+        return EntityAttackEvent.class;
     }
 
     @Override
     public void run(Event tempEvent) {
-        PlayerEntityInteractEvent event = (PlayerEntityInteractEvent) tempEvent;
+        EntityAttackEvent event = (EntityAttackEvent) tempEvent;
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getEntity();
 
         Entity targetEntity = event.getTarget();
         SkyBlockMob mob;
@@ -43,15 +46,15 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats);
 
         double damage = hit.getKey();
-        boolean crit = hit.getValue();
+        boolean critical = hit.getValue();
 
         new DamageIndicator()
                 .damage((float) damage)
                 .pos(targetEntity.getPosition())
-                .critical(crit)
+                .critical(critical)
                 .display(targetEntity.getInstance());
 
-        livingEntity.setVelocity(player.getPosition().asVec().sub(targetEntity.getPosition()).normalize().mul(0.5f));
+        livingEntity.setVelocity(player.getPosition().asVec().sub(livingEntity.getPosition()).normalize().mul(0.5));
         livingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
     }
 }

@@ -184,7 +184,7 @@ public class PlayerStatistics {
     public static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics) {
         boolean isCrit = false;
         double critChance = originStatistics.get(ItemStatistic.CRIT_CHANCE);
-        if (Math.random() <= critChance)
+        if (Math.random() <= (critChance / 100))
             isCrit = true;
 
         double baseDamage = originStatistics.get(ItemStatistic.DAMAGE);

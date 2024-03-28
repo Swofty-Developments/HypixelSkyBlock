@@ -66,7 +66,7 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
                     case STATS -> {
                         player.sendMessage("    §8+§b" + ((SkillCategory.StatisticReward) unlock).getStatistic().getColour() +
                                 ((SkillCategory.StatisticReward) unlock).getStatistic().getSymbol() +
-                                ((SkillCategory.StatisticReward) unlock).amountAdded()
+                                ((SkillCategory.StatisticReward) unlock).amountAdded() + ((SkillCategory.StatisticReward) unlock).getStatistic().getSuffix()
                                 + " " + ((SkillCategory.StatisticReward) unlock).getStatistic().getDisplayName());
                     }
                     case REGION_ACCESS -> {

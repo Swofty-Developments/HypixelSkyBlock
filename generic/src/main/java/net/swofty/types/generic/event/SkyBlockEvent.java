@@ -6,6 +6,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.trait.PlayerEvent;
+import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -124,6 +125,8 @@ public abstract class SkyBlockEvent {
 
         if (concreteEvent instanceof PlayerEvent)
             hookManager = ((SkyBlockPlayer) (((PlayerEvent) concreteEvent).getPlayer())).getHookManager();
+        if (concreteEvent instanceof PlayerInstanceEvent)
+            hookManager = ((SkyBlockPlayer) (((PlayerInstanceEvent) concreteEvent).getPlayer())).getHookManager();
 
         if (hookManager != null)
             hookManager.callAndClearHooks(
