@@ -14,7 +14,7 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
 @EventParameters(description = "Handles Entity collision",
-        node = EventNodes.ENTITY,
+        node = EventNodes.ALL,
         requireDataLoaded = false)
 public class ActionEntityCollide extends SkyBlockEvent {
     @Override
@@ -31,5 +31,6 @@ public class ActionEntityCollide extends SkyBlockEvent {
 
         PhysicsResult physResults = CollisionUtils.checkEntityCollisions(event.getEntity(), event.getEntity().getVelocity());
         event.getEntity().setVelocity(physResults.newVelocity());
+        event.getEntity().teleport(physResults.newPosition());
     }
 }

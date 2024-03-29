@@ -1,0 +1,67 @@
+package net.swofty.types.generic.event.actions.player;
+
+import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
+import net.swofty.types.generic.entity.ArrowEntityImpl;
+import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.user.statistics.PlayerStatistics;
+import net.swofty.types.generic.utility.DamageIndicator;
+
+import java.util.Map;
+
+@EventParameters(description = "For damage indicators",
+        node = EventNodes.ALL,
+        requireDataLoaded = false)
+public class PlayerActionArrowDamageMob extends SkyBlockEvent {
+    @Override
+    public Class<? extends Event> getEvent() {
+        return ProjectileCollideWithEntityEvent.class;
+    }
+
+    @Override
+    public void run(Event tempEvent) {
+        ProjectileCollideWithEntityEvent event = (ProjectileCollideWithEntityEvent) tempEvent;
+        ArrowEntityImpl arrow;
+        if (event.getEntity() instanceof ArrowEntityImpl arrowEntity)
+            arrow = arrowEntity;
+        else return;
+
+        SkyBlockMob collidedWith;
+        if (event.getTarget() instanceof SkyBlockMob mob)
+            collidedWith = mob;
+        else return;
+
+        SkyBlockPlayer shooter;
+        if (arrow.getShooter() instanceof SkyBlockPlayer player)
+            shooter = player;
+        else return;
+
+        SkyBlockItem arrowItem = arrow.getArrowItem();
+
+        ItemStatistics entityStats = mob.getStatistics();
+        ItemStatistics playerStats = shooter.getStatistics().allStatistics();
+        // Add the arrow's statistics to the player's statistics
+        playerStats.add(arrowItem.getAttributeHandler().getStatistics());
+
+        Map.Entry<Double, Boolean> hit = PlayerStatistics.runPrimaryDamageFormula(playerStats, entityStats);
+
+        double damage = hit.getKey();
+        boolean critical = hit.getValue();
+
+        new DamageIndicator()
+                .damage((float) damage)
+                .pos(collidedWith.getPosition())
+                .critical(critical)
+                .display(collidedWith.getInstance());
+
+        collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
+    }
+}

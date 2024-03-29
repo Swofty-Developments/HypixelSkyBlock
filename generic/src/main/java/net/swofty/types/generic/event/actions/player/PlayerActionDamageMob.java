@@ -54,7 +54,6 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
                 .critical(critical)
                 .display(targetEntity.getInstance());
 
-        livingEntity.setVelocity(player.getPosition().asVec().sub(livingEntity.getPosition()).normalize().mul(0.5));
         livingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
     }
 }

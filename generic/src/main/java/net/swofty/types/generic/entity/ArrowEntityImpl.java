@@ -1,5 +1,6 @@
 package net.swofty.types.generic.entity;
 
+import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.collision.PhysicsResult;
@@ -21,6 +22,7 @@ import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.scoreboard.TeamManager;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
@@ -29,15 +31,19 @@ import java.util.Collections;
 
 public class ArrowEntityImpl extends LivingEntity {
     private long cooldown = 0;
+    @Getter
     private final Entity shooter;
+    @Getter
+    private final SkyBlockItem arrowItem;
 
-    public ArrowEntityImpl(Entity player) {
+    public ArrowEntityImpl(Entity player, SkyBlockItem arrowItem) {
         super(EntityType.ARROW);
 
         this.hasCollision = false;
         this.hasPhysics = false;
 
         this.shooter = player;
+        this.arrowItem = arrowItem;
 
         ArrowMeta arrowMeta = (ArrowMeta) getEntityMeta();
         arrowMeta.setShooter(player);

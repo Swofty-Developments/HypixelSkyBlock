@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.attribute.Attribute;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
@@ -79,6 +81,15 @@ public abstract class SkyBlockMob extends EntityCreature {
     @Override
     public boolean damage(@NotNull Damage damage) {
         boolean toReturn = super.damage(damage);
+
+        Point sourcePoint = damage.getSourcePosition();
+        if (sourcePoint != null) {
+            double x = sourcePoint.x() - getPosition().x();
+            double z = sourcePoint.z() - getPosition().z();
+            double distance = Math.sqrt(x * x + z * z);
+            double knockback = 2;
+            setVelocity(new Vec(x / distance * knockback, 0.5, z / distance * knockback));
+        }
 
         this.setCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()

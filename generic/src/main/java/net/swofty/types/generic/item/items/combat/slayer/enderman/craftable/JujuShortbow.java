@@ -61,7 +61,7 @@ public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl {
         SkyBlockItem arrow = player.getAndConsumeArrow();
         if (arrow == null) return;
 
-        ArrowEntityImpl arrowEntity = new ArrowEntityImpl(player);
+        ArrowEntityImpl arrowEntity = new ArrowEntityImpl(player, item);
         Vec arrowVelocity = calculateArrowVelocity(
                 player.getPosition().pitch(),
                 player.getPosition().yaw());
