@@ -3,10 +3,7 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Interactable;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WardenHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
+public class WardenHeart implements CustomSkyBlockItem, SkullHead, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -30,13 +27,11 @@ public class WardenHeart implements CustomSkyBlockItem, SkullHead, Unstackable, 
         return new ArrayList<>(Arrays.asList(
                 "§7The heart of a powerful",
                 "§7creature, dropped by the Atoned",
-                "§7Horror.",
-                "",
-                "§eRight-click to view recipes!"));
+                "§7Horror."));
     }
 
     @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.WARDEN_HELMET, null).open(player);
+    public ItemType getRecipeItem() {
+        return ItemType.WARDEN_HELMET;
     }
 }

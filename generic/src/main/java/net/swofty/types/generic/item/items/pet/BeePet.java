@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.items.pet;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BeePet implements Pet {
+public class BeePet implements Pet, NotFinishedYet {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47";

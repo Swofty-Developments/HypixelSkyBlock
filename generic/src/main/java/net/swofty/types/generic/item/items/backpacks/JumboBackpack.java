@@ -21,7 +21,7 @@ public class JumboBackpack implements Backpack, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        ShapelessRecipe recipe = new ShapelessRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.JUMBO_BACKPACK));
+        ShapelessRecipe recipe = new ShapelessRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemType.JUMBO_BACKPACK));
         recipe.add(ItemType.GREATER_BACKPACK, 1);
         recipe.add(ItemType.JUMBO_BACKPACK_UPGRADE, 1);
 

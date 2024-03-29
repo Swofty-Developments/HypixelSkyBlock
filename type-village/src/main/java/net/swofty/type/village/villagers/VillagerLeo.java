@@ -69,7 +69,7 @@ public class VillagerLeo extends NPCVillagerDialogue {
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new recipe recipes, brewing recipes, trades, enchantments and more!",
+                                "§e[NPC] Leo§f: Progressing through your Collections unlocks new crafting recipes, brewing recipes, trades, enchantments and more!",
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }

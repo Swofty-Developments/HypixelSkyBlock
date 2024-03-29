@@ -3,10 +3,7 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Interactable;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ShardOfTheShredded implements CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
+public class ShardOfTheShredded implements CustomSkyBlockItem, SkullHead, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -29,13 +26,11 @@ public class ShardOfTheShredded implements CustomSkyBlockItem, SkullHead, Unstac
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7The core of a powerful weapon,",
-                "§7dropped by the Atoned Horror.",
-                "",
-                "§eRight-click to view recipes!"));
+                "§7dropped by the Atoned Horror."));
     }
 
     @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.SHARD_OF_THE_SHREDDED, null).open(player);
+    public ItemType getRecipeItem() {
+        return ItemType.AXE_OF_THE_SHREDDED;
     }
 }

@@ -1,7 +1,9 @@
 package net.swofty.types.generic.item.items.mining.crystal;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -10,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Bobomb implements CustomSkyBlockItem, SkullHead {
+public class Bobomb implements CustomSkyBlockItem, SkullHead, CustomDisplayName, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -28,5 +30,10 @@ public class Bobomb implements CustomSkyBlockItem, SkullHead {
                 "§7§5Crystal Hollows§7, breaking",
                 "§7nearby blocks and dropping §a50%",
                 "§a§7of the items."));
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Bob-omb";
     }
 }

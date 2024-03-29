@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class EtherwarpConduit implements CustomSkyBlockItem, Craftable, SkullHead {
+public class EtherwarpConduit implements CustomSkyBlockItem, Craftable, SkullHead, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

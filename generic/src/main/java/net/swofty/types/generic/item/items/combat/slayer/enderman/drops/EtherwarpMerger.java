@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, Interactable {
+public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -33,12 +33,11 @@ public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable,
                 "",
                 "§7§8Crafted by the Etherchemist",
                 "§8and dropped by the Voidgloom",
-                "§8Seraph.",
-                "§eRight-click to view recipes!"));
+                "§8Seraph."));
     }
 
     @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.ETHERWARP_CONDUIT, null).open(player);
+    public ItemType getRecipeItem() {
+        return ItemType.ETHERWARP_CONDUIT;
     }
 }

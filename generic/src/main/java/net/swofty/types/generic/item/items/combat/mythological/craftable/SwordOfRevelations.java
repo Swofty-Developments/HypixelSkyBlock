@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class SwordOfRevelations implements CustomSkyBlockItem, Craftable, SwordImpl {
+public class SwordOfRevelations implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -25,7 +25,7 @@ public class SwordOfRevelations implements CustomSkyBlockItem, Craftable, SwordI
                 "ACA",
                 "ADA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemType.SWORD_OF_REVELATIONS), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.SWORD_OF_REVELATIONS), ingredientMap, pattern);
     }
 
     @Override

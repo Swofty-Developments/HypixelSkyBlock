@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class Rogue implements CustomSkyBlockItem, CustomSkyBlockAbility, Reforgable, Enchantable{
+public class Rogue implements CustomSkyBlockItem, CustomSkyBlockAbility, Reforgable, Enchantable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

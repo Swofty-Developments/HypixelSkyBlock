@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Reforgable, Enchantable, Craftable,
-                                 GemstoneItem {
+                                 GemstoneItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

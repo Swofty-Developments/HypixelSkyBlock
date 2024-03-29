@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, Unstackable, HelmetImpl {
+public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, Unstackable, HelmetImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

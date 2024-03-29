@@ -200,7 +200,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, (short) 0, 1,
-                        "§7Opens the recipe grid.",
+                        "§7Opens the crafting grid.",
                         " ",
                         "§eClick to open!");
             }

@@ -15,6 +15,6 @@ public class EnchantedSugar implements Enchanted, Sellable, Craftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.ENCHANTING, ItemType.SUGAR);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.SUGAR);
     }
 }

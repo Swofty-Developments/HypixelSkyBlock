@@ -2,13 +2,14 @@ package net.swofty.types.generic.item.items.spooky;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BatFirework implements CustomSkyBlockItem {
+public class BatFirework implements CustomSkyBlockItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

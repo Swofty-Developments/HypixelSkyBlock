@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Craftable, HelmetImpl, GemstoneItem {
+public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Craftable, HelmetImpl, GemstoneItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Sellable, Interactable {
+public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Sellable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -20,9 +20,7 @@ public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Se
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Drops rare off of Minotaurs from",
-                "§7Diana's Mythological Ritual.",
-                "",
-                "§eRight-click to view recipes!"));
+                "§7Diana's Mythological Ritual."));
     }
 
     @Override
@@ -31,7 +29,7 @@ public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Se
     }
 
     @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.DAEDALUS_AXE, null).open(player);
+    public ItemType getRecipeItem() {
+        return ItemType.DAEDALUS_AXE;
     }
 }

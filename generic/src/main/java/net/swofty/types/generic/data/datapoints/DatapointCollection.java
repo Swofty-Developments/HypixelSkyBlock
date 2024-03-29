@@ -119,7 +119,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             int required = reward == null ? 0 : reward.requirement();
 
             if (reward == null) {
-                lore.add("§cMaxxed out!");
+                lore.add("§cMaxed out!");
                 return lore;
             }
 
