@@ -220,10 +220,17 @@ public class SkyBlockPlayer extends Player {
     }
 
     public List<Talisman> getTalismans() {
-        return Stream.of(getAllInventoryItems())
+        List<Talisman> inInventory = Stream.of(getAllInventoryItems())
                 .filter(item -> item.getGenericInstance() != null)
                 .filter(item -> item.getGenericInstance() instanceof Talisman)
-                .map(item -> (Talisman) item.getGenericInstance()).collect(Collectors.toList());
+                .map(item -> (Talisman) item.getGenericInstance()).toList();
+
+        List<Talisman> inAccessoryBag = getAccessoryBag().getAllAccessories().stream()
+                .filter(item -> item.getGenericInstance() != null)
+                .filter(item -> item.getGenericInstance() instanceof Talisman)
+                .map(item -> (Talisman) item.getGenericInstance()).toList();
+
+        return Stream.concat(inInventory.stream(), inAccessoryBag.stream()).collect(Collectors.toList());
     }
 
     public SkyBlockItem[] getAllInventoryItems() {
@@ -387,6 +394,10 @@ public class SkyBlockPlayer extends Player {
 
     public DatapointQuiver.PlayerQuiver getQuiver() {
         return getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
+    }
+
+    public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {
+        return getDataHandler().get(DataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
     }
 
     public String getShortenedDisplayName() {

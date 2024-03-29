@@ -372,7 +372,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     rewards.parallelStream().forEach(reward -> {
                         Arrays.stream(reward.unlocks()).forEach(unlock -> {
                             if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
-                                Logger.info("Caching custom collection award: " + award.getAward());
                                 CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
                                         Map.entry(collection.type(), reward.requirement()));
                             }

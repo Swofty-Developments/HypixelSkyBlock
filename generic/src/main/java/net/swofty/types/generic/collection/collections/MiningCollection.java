@@ -1345,6 +1345,11 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG;
+                            }
                         }),
                         new ItemCollectionReward(750, new UnlockXP() {
                             @Override
@@ -1375,6 +1380,11 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_1;
+                            }
                         }),
                         new ItemCollectionReward(10000, new UnlockXP() {
                             @Override
@@ -1399,40 +1409,80 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_2;
+                            }
                         }),
                         new ItemCollectionReward(200000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_3;
                             }
                         }),
                         new ItemCollectionReward(400000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_4;
+                            }
                         }),
                         new ItemCollectionReward(600000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_5;
                             }
                         }),
                         new ItemCollectionReward(800000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_6;
+                            }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_7;
                             }
                         }),
                         new ItemCollectionReward(1200000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_8;
+                            }
                         }),
                         new ItemCollectionReward(1400000, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ACCESSORY_BAG_UPGRADE_9;
                             }
                         })
                 ),

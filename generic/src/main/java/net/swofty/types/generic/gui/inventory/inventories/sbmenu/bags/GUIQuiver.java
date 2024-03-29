@@ -123,7 +123,7 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
         }
 
         e.setCancelled(true);
-        getPlayer().sendMessage("§cYou cannot put this cursorItem in the Quiver!");
+        getPlayer().sendMessage("§cYou cannot put this item in the Quiver!");
     }
 
     public void save(SkyBlockPlayer player, int slotToSaveUpTo) {

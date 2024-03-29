@@ -36,7 +36,7 @@ public class PlayerStatistics {
     @Setter
     @Getter
     private double manaRegenerationPercentBonus;
-    private ItemStatistics talismanStatistics = ItemStatistics.builder().build();
+    private ItemStatistics accessoryStatistics = ItemStatistics.builder().build();
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -120,7 +120,7 @@ public class PlayerStatistics {
         total = total.add(mainHandStatistics());
         total = total.add(spareStatistics());
         total = total.add(petStatistics());
-        total = total.add(talismanStatistics);
+        total = total.add(accessoryStatistics);
 
         ItemStatistics baseStats = ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
@@ -132,7 +132,7 @@ public class PlayerStatistics {
         return total;
     }
 
-    public void updateTalismanStatistics() {
+    public void updateAccessoryStatistics() {
         ItemStatistics total = ItemStatistics.builder().build();
         for (ItemStack itemStack : player.getInventory().getItemStacks()) {
             if (SkyBlockItem.isSkyBlockItem(itemStack)) {
@@ -143,7 +143,14 @@ public class PlayerStatistics {
                 total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
             }
         }
-        talismanStatistics = total;
+        for (SkyBlockItem item : player.getAccessoryBag().getAllAccessories()) {
+            if (item == null) continue;
+            if (item.getGenericInstance() == null) continue;
+            if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
+
+            total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
+        }
+        accessoryStatistics = total;
     }
 
     private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics) {
@@ -261,7 +268,7 @@ public class PlayerStatistics {
         scheduler.submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
-                    player.getStatistics().updateTalismanStatistics();
+                    player.getStatistics().updateAccessoryStatistics();
                 });
             });
             return TaskSchedule.seconds(2);

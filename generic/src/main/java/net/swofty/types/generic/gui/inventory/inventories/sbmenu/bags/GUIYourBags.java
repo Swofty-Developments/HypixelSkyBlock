@@ -56,6 +56,39 @@ public class GUIYourBags extends SkyBlockInventoryGUI {
                 }
             });
         }
+        if (player.hasCustomCollectionAward(CustomCollectionAward.ACCESSORY_BAG)) {
+            set(new GUIClickableItem(24) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIAccessoryBag().open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStackHead("§aAccessory Bag",
+                            "396ce13ff6155fdf3235d8d22174c5de4bf5512f1adeda1afa3fc28180f3f7", 1,
+                            "§7A special bag which can hold",
+                            "§7Talismans, Rings, Artifacts, and Orbs",
+                            "§7within it. All will still work while in this",
+                            "§7bag!",
+                            " ",
+                            "§eClick to open!");
+                }
+            });
+        } else {
+            set(new GUIItem(24) {
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§cAccessory Bag", Material.GRAY_DYE, 1,
+                            "§7A special bag which can hold",
+                            "§7Talismans, Rings, Artifacts, and Orbs",
+                            "§7within it. All will still work while in this",
+                            "§7bag!",
+                            " ",
+                            "§cRequires §aRedstone Collection II§c.");
+                }
+            });
+        }
 
         updateItemStacks(e.inventory(), e.player());
     }
