@@ -8,6 +8,11 @@ import java.util.Map;
 
 @Getter
 public enum CustomCollectionAward {
+    // ENCHANTMENTS
+    SCAVENGER_DISCOUNT("§9Scavenger §7Exp Discount §a(-25%)"),
+    PROTECTION_DISCOUNT("§9Protection §7Exp Discount §a(-25%)"),
+
+    // BAGS
     QUIVER("§aQuiver"),
     QUIVER_UPGRADE_1("§aLarge Quiver Update §7(+9 slots)"),
     QUIVER_UPGRADE_2("§aGiant Quiver Update §7(+9 slots)"),

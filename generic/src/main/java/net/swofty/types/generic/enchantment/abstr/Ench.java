@@ -1,6 +1,7 @@
 package net.swofty.types.generic.enchantment.abstr;
 
 import net.swofty.types.generic.enchantment.EnchantmentSource;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
@@ -12,21 +13,21 @@ public interface Ench {
 
     String getDescription(int level);
 
-    ApplyLevels getLevelsToApply();
+    ApplyLevels getLevelsToApply(SkyBlockPlayer player);
 
     List<EnchantItemGroups> getGroups();
 
-    default ItemStatistics getStatistics() {
+    default ItemStatistics getStatistics(int level) {
         return ItemStatistics.EMPTY;
     }
 
-    default List<EnchantmentSource> getSources() {
+    default List<EnchantmentSource> getSources(SkyBlockPlayer player) {
         List<EnchantmentSource> sources = new ArrayList<>(List.of());
 
         if (this instanceof EnchFromTable tableEnchant)
             sources.add(new EnchantmentSource(EnchantmentSource.SourceType.ENCHANTMENT_TABLE,
-                    tableEnchant.getLevelsFromTableToApply().minimumLevel(),
-                    tableEnchant.getLevelsFromTableToApply().maximumLevel()));
+                    tableEnchant.getLevelsFromTableToApply(player).minimumLevel(),
+                    tableEnchant.getLevelsFromTableToApply(player).maximumLevel()));
 
         return sources;
     }

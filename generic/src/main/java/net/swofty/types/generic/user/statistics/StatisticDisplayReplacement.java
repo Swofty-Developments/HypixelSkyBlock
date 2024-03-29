@@ -20,6 +20,7 @@ public class StatisticDisplayReplacement {
     public enum Purpose {
         SKILL,
         COLLECTION,
-        MUSIC
+        MUSIC,
+        ENCHANTMENT
     }
 }

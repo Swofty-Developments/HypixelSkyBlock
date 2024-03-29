@@ -53,10 +53,16 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
                     .stream().filter(document -> !document.get("_id").equals(finalProfileId1.toString()))
                     .findFirst().get();
 
-            DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
-            previousHandler.getPersistentValues().forEach((key, value) -> {
-                handler.getDatapoint(key).setValue(value);
-            });
+            try {
+                DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
+                previousHandler.getPersistentValues().forEach((key, value) -> {
+                    handler.getDatapoint(key).setValue(value);
+                });
+            } catch (Exception e) {
+                Logger.info("Failed to load previous profile data for " + player.getUsername());
+                Logger.info("Probably needs to be updated to the latest version");
+                e.printStackTrace();
+            }
         }
 
         if (handler.get(DataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {

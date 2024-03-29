@@ -311,6 +311,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register events
          */
+        loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
         loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
         loopThroughPackage("net.swofty.types.generic.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
         typeLoader.getTraditionalEvents().forEach(SkyBlockEvent::cacheEvent);

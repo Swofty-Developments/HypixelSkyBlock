@@ -8,11 +8,8 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -20,12 +17,13 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -108,6 +106,8 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) getLastDamageSource().getAttacker();
+
+        SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
         player.getSkills().set(player, getSkillCategory(), player.getSkills().get(getSkillCategory()) + 7);
 

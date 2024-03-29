@@ -18,6 +18,10 @@ public class MathUtility {
         return (angle % maximum + maximum) % maximum - (maximum / 2);
     }
 
+    public static String formatDecimals(double value) {
+        return String.format("%.2f", value);
+    }
+
     public static InventoryType getFromSize(int size) {
         return switch (size) {
             case 9 -> InventoryType.CHEST_1_ROW;

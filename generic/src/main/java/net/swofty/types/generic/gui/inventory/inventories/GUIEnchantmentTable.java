@@ -228,7 +228,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         AttributeHandler attributeHandler = item.getAttributeHandler();
 
                         List<String> lore = new ArrayList<>();
-                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1), 30)
+                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1, player), 30)
                                 .forEach(line -> lore.add("§7" + line));
                         lore.add("§a ");
 
@@ -261,10 +261,10 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        int minLevel = selected.getEnch().getSources().stream().filter(source ->
+        int minLevel = selected.getEnch().getSources(getPlayer()).stream().filter(source ->
                         source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.minLevel).findAny().orElse(0);
-        int maxLevel = selected.getEnch().getSources().stream().filter(source ->
+        int maxLevel = selected.getEnch().getSources(getPlayer()).stream().filter(source ->
                         source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.maxLevel).findAny().orElse(0);
 
@@ -280,9 +280,9 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel);
+                    int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel);
                     List<String> lore = new ArrayList<>();
-                    StringUtility.splitByWordAndLength(selected.getDescription(finalLevel), 30)
+                    StringUtility.splitByWordAndLength(selected.getDescription(finalLevel, player), 30)
                             .forEach(line -> lore.add("§7" + line));
 
                     lore.add("§a ");
@@ -339,7 +339,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                     // Because it should be, let's say, "§6Heroic Hyperion", and not "Hyperion"
                     String itemName = StringUtility.toNormalCase(type.name());
 
-                    if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel)) {
+                    if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel)) {
                         player.sendMessage("§cYou have insufficient levels!");
                         return;
                     }
@@ -350,7 +350,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                                 new SkyBlockEnchantment(selected, finalLevel)
                         );
 
-                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel));
+                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
                         player.sendMessage("§aYou enchanted your " + itemName + " §awith " +
                                 StringUtility.toNormalCase(selected.name()) + " " + StringUtility.getAsRomanNumeral(finalLevel) + "!");
                     } else {
@@ -362,7 +362,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                             );
                         }
 
-                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply().get(finalLevel));
+                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
                         player.sendMessage("§cYou removed " + StringUtility.toNormalCase(selected.name()) + " from your " + itemName + "§c!");
                     }
 

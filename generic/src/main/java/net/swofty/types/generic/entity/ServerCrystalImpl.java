@@ -10,6 +10,7 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.particle.Particle;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
@@ -31,6 +32,8 @@ public class ServerCrystalImpl extends LivingEntity {
     private Task cropsTask;
     @Getter
     private float yLevel = 0f;
+    @Getter
+    private boolean goingDown = false;
 
     public ServerCrystalImpl(@NotNull Material toPlace, @NotNull String url) {
         super(EntityType.ARMOR_STAND);
@@ -62,9 +65,29 @@ public class ServerCrystalImpl extends LivingEntity {
                 upAndDownTask.cancel();
                 return;
             }
-            yLevel = (getYLevel() < 0D) ? 0.1f : -0.1f;
+            yLevel = goingDown ? yLevel - 0.02f : yLevel + 0.02f;
+            if (yLevel >= 0.12f) {
+                goingDown = true;
+            } else if (yLevel <= -0.12f) {
+                goingDown = false;
+            }
             teleport(getPosition().add(0, yLevel, 0));
-        }, TaskSchedule.tick(15), TaskSchedule.tick(8));
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                player.sendPacket(new ParticlePacket(
+                        Particle.HAPPY_VILLAGER.id(),
+                        false,
+                        getPosition().x(),
+                        getPosition().y(),
+                        getPosition().z(),
+                        0.1f,
+                        0.1f,
+                        0.1f,
+                        0f,
+                        3,
+                        null
+                ));
+            });
+        }, TaskSchedule.tick(15), TaskSchedule.tick(3));
         rotationTask = MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (isDead()) {
                 rotationTask.cancel();

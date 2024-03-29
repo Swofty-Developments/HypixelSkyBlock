@@ -1,10 +1,12 @@
 package net.swofty.types.generic.enchantment.abstr;
 
+import net.swofty.types.generic.user.SkyBlockPlayer;
+
 import java.util.Map;
 
 public interface EnchFromTable {
 
-    TableLevels getLevelsFromTableToApply();
+    TableLevels getLevelsFromTableToApply(SkyBlockPlayer player);
 
     int getRequiredBookshelfPower();
 

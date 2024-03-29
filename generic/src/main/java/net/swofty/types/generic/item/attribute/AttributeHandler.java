@@ -172,7 +172,7 @@ public class AttributeHandler {
         ((ItemAttributeReforge) item.getAttribute("reforge")).setValue(reforge);
     }
 
-    public SkyBlockEnchantment getEnchantment(EnchantmentType type) {
+    public @Nullable SkyBlockEnchantment getEnchantment(EnchantmentType type) {
         return ((ItemAttributeEnchantments) item.getAttribute("enchantments")).getValue()
                 .enchantments()
                 .stream()

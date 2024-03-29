@@ -1,7 +1,11 @@
 package net.swofty.types.generic.enchantment.impl;
 
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
@@ -16,8 +20,8 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
     }
 
     @Override
-    public ApplyLevels getLevelsToApply() {
-        return new ApplyLevels(new HashMap<>(Map.of(
+    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
+        HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 9,
                 2, 13,
                 3, 18,
@@ -25,7 +29,14 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
                 5, 27,
                 6, 91,
                 7, 179
-        )));
+        ));
+
+        if (player.hasCustomCollectionAward(CustomCollectionAward.PROTECTION_DISCOUNT)) {
+            // Discount 25%
+            levels.replaceAll((k, v) -> (int) (v * 0.75));
+        }
+
+        return new ApplyLevels(levels);
     }
 
     @Override
@@ -34,14 +45,27 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply() {
-        return new TableLevels(new HashMap<>(Map.of(
+    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
+        HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 15,
                 3, 20,
                 4, 25,
                 5, 30
-        )));
+        ));
+
+        if (player.hasCustomCollectionAward(CustomCollectionAward.PROTECTION_DISCOUNT)) {
+            // Discount 25%
+            levels.replaceAll((k, v) -> (int) (v * 0.75));
+        }
+
+        return new TableLevels(levels);
+    }
+
+    @Override
+    public ItemStatistics getStatistics(int level) {
+        int increase = level * 4;
+        return ItemStatistics.builder().with(ItemStatistic.DEFENSE, (double) increase).build();
     }
 
     @Override

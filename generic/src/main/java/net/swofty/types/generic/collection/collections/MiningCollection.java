@@ -224,7 +224,13 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        },
+                                new UnlockCustomAward() {
+                                    @Override
+                                    public CustomCollectionAward getAward() {
+                                        return CustomCollectionAward.SCAVENGER_DISCOUNT;
+                                    }
+                                }),
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockItem getItem() {
@@ -898,7 +904,13 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        },
+                                new UnlockCustomAward() {
+                                    @Override
+                                    public CustomCollectionAward getAward() {
+                                        return CustomCollectionAward.PROTECTION_DISCOUNT;
+                                    }
+                                }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockItem getItem() {

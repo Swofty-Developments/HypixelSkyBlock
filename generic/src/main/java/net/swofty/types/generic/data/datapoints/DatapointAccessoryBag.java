@@ -20,10 +20,10 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
     public static Serializer<DatapointAccessoryBag.PlayerAccessoryBag> serializer = new Serializer<>() {
         @Override
         public String serialize(DatapointAccessoryBag.PlayerAccessoryBag value) {
-            Map<Integer, String> serialized = new HashMap<>();
+            Map<String, String> serialized = new HashMap<>();
 
             for (Map.Entry<Integer, SkyBlockItem> entry : value.getAccessoryMap().entrySet()) {
-                serialized.put(entry.getKey(),
+                serialized.put(String.valueOf(entry.getKey()),
                         SkyBlockItemSerializer.serializeJSON(entry.getValue()).toString());
             }
 
@@ -37,7 +37,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
 
             for (String key : obj.keySet()) {
                 map.put(Integer.parseInt(key),
-                        SkyBlockItemDeserializer.deserializeJSON(obj.getJSONObject(key)));
+                        SkyBlockItemDeserializer.deserializeJSON(new JSONObject(obj.getString(key))));
             }
 
             return new DatapointAccessoryBag.PlayerAccessoryBag(map);

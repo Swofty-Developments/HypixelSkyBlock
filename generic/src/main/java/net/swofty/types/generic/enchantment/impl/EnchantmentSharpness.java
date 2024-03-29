@@ -2,6 +2,9 @@ package net.swofty.types.generic.enchantment.impl;
 
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
@@ -18,7 +21,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
     }
 
     @Override
-    public ApplyLevels getLevelsToApply() {
+    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
         return new ApplyLevels(new HashMap<>(Map.of(
                 1, 9,
                 2, 14,
@@ -34,7 +37,13 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply() {
+    public  ItemStatistics getStatistics(int level) {
+        int increase = increases[level - 1];
+        return ItemStatistics.builder().with(ItemStatistic.DAMAGE_ADDITIVE, (double) increase).build();
+    }
+
+    @Override
+    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
         return new TableLevels(new HashMap<>(Map.of(
                 1, 10,
                 2, 15,

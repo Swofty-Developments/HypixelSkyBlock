@@ -132,8 +132,8 @@ public class ItemLore {
                             addLoreLine("§9" + enchantment.type().getName() +
                                     " " + StringUtility.getAsRomanNumeral(enchantment.level()));
                             StringUtility.splitByWordAndLength(
-                                    "§7" + enchantment.type().getDescription(enchantment.level()),
-                                    34).forEach(this::addLoreLine);
+                                    enchantment.type().getDescription(enchantment.level(), player),
+                                    34).forEach(string -> addLoreLine("§7" + string));
                         });
 
                     } else {

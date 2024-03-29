@@ -13,6 +13,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
+import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
@@ -156,6 +157,7 @@ public class PlayerStatistics {
     private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics) {
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
+        statistics = getEnchantStatistics(item, statistics);
 
         return statistics;
     }
@@ -169,6 +171,14 @@ public class PlayerStatistics {
                         item.getAttributeHandler().getRarity().ordinal()));
             }
             statistics = statistics.add(builder.build());
+        }
+        return statistics;
+    }
+
+    private ItemStatistics getEnchantStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
+            ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level());
+            statistics = statistics.add(enchantmentStatistics);
         }
         return statistics;
     }

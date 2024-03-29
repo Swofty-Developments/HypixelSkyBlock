@@ -416,6 +416,10 @@ public class SkyBlockPlayer extends Player {
         return getCollection().get(entry.getKey()) > entry.getValue();
     }
 
+    public PlayerEnchantmentHandler getEnchantmentHandler() {
+        return new PlayerEnchantmentHandler(this);
+    }
+
     public Double getMiningSpeed() {
         return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
     }

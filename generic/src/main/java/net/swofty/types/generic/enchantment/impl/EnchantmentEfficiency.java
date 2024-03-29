@@ -8,6 +8,8 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.user.PlayerEnchantmentHandler;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.Collections;
@@ -22,7 +24,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public ApplyLevels getLevelsToApply() {
+    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
         return new ApplyLevels(new HashMap<>(Map.of(
                 1, 9,
                 2, 13,
@@ -38,7 +40,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply() {
+    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
         return new TableLevels(new HashMap<>(Map.of(
                 1, 10,
                 2, 15,
@@ -60,17 +62,19 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
 
     @Override
     public void run(ValueUpdateEvent event) {
-        MiningValueUpdateEvent miningValueEvent = (MiningValueUpdateEvent) event;
-        SkyBlockItem item = miningValueEvent.getItem();
-        if (item == null) return;
+        PlayerEnchantmentHandler enchantmentHandler = event.getPlayer().getEnchantmentHandler();
 
-        AttributeHandler handler = item.getAttributeHandler();
-        if (handler.hasEnchantment(EnchantmentType.EFFICIENCY)) {
-            int enchantLevel = handler.getEnchantment(EnchantmentType.EFFICIENCY).level();
-            double initialValue = (double) event.getValue();
+        PlayerEnchantmentHandler.EnchantmentHandlerResponse response = enchantmentHandler.getItemWithHighestLevelOf(
+                EnchantmentType.EFFICIENCY,
+                PlayerEnchantmentHandler.EnchantedItemSource.HAND
+        );
 
-            double newValue = initialValue - (initialValue * (0.3 + ((enchantLevel - 1) * 0.2)));
-            event.setValue(newValue);
-        }
+        if (response == null) return;
+
+        int enchantLevel = response.level();
+        double initialValue = (double) event.getValue();
+
+        double newValue = initialValue - (initialValue * (0.3 + ((enchantLevel - 1) * 0.2)));
+        event.setValue(newValue);
     }
 }

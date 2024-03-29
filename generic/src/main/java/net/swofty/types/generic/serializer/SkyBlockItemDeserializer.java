@@ -57,6 +57,11 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
         SkyBlockItem item = new SkyBlockItem(Material.AIR); // Start with a base SkyBlockItem
 
         for (String key : object.keySet()) {
+            // Skip the amount key
+            if (key.equals("amount")) {
+                continue;
+            }
+
             String value = object.getString(key);
             ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
             if (attribute != null) {
