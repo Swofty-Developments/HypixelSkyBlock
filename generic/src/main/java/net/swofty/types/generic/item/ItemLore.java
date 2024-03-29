@@ -51,6 +51,7 @@ public class ItemLore {
 
         if (clazz != null) {
             CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
+            displayName = handler.getItemTypeAsType().getDisplayName();
 
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));

@@ -1,7 +1,9 @@
 package net.swofty.types.generic.item;
 
+import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.armor.LeafletHat;
 import net.swofty.types.generic.item.items.armor.LeafletPants;
@@ -717,7 +719,12 @@ public enum ItemType {
         this.bookType = bookType;
     }
 
+    @SneakyThrows
     public String getDisplayName() {
+        if (clazz == null)
+            return StringUtility.toNormalCase(this.name());
+        if (clazz.newInstance() instanceof CustomDisplayName name)
+            return name.getDisplayName();
         return StringUtility.toNormalCase(this.name());
     }
 
