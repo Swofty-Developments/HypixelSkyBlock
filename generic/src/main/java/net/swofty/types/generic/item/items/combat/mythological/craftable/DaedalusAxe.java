@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem, SwordImpl {
+public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem, SwordImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -23,7 +23,7 @@ public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem,
                 "AB ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemType.DAEDALUS_AXE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DAEDALUS_AXE), ingredientMap, pattern);
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, Interactable {
+public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -28,13 +28,7 @@ public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, 
     }
 
     @Override
-    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return new ArrayList<>(Arrays.asList(
-                "§eRight-click to view recipes!"));
-    }
-
-    @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.REAPER_MASK, null).open(player);
+    public ItemType getRecipeItem() {
+        return ItemType.REAPER_MASK;
     }
 }

@@ -1,12 +1,8 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.drops;
 
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Interactable;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class JudgementCore implements CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
+public class JudgementCore implements CustomSkyBlockItem, SkullHead, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -26,13 +22,7 @@ public class JudgementCore implements CustomSkyBlockItem, SkullHead, Unstackable
     }
 
     @Override
-    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUIRecipe(ItemType.TERMINATOR, null).open(player);
-    }
-
-    @Override
-    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return new ArrayList<>(Arrays.asList(
-                "§eRight-click to view recipes!"));
+    public ItemType getRecipeItem() {
+        return ItemType.TERMINATOR;
     }
 }

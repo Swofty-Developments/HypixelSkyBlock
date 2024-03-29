@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class SoulEsoward implements CustomSkyBlockItem, Craftable, Enchanted {
+public class SoulEsoward implements CustomSkyBlockItem, Craftable, Enchanted, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

@@ -191,6 +191,11 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
+            if (item.getGenericInstance() instanceof RightClickRecipe) {
+                addLoreLine("§eRight-click to view recipes!");
+                addLoreLine(null);
+            }
+
             if (item.getGenericInstance() instanceof ExtraRarityDisplay)
                 displayRarity = displayRarity + ((ExtraRarityDisplay) item.getGenericInstance()).getExtraRarityDisplay();
 
@@ -202,6 +207,11 @@ public class ItemLore {
 
             if (item.getGenericInstance() instanceof ArrowImpl) {
                 addLoreLine("§8Stats added when shot!");
+            }
+
+            if (item.getGenericInstance() instanceof NotFinishedYet) {
+                addLoreLine("§c§lITEM IS NOT FINISHED!");
+                addLoreLine(null);
             }
         }
 

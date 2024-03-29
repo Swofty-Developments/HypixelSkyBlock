@@ -1,7 +1,9 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.RightClickRecipe;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -11,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class UndeadCatalyst implements CustomSkyBlockItem, SkullHead, Sellable {
+public class UndeadCatalyst implements CustomSkyBlockItem, SkullHead, Sellable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -34,7 +36,11 @@ public class UndeadCatalyst implements CustomSkyBlockItem, SkullHead, Sellable {
                 "§7Horror when you are at least",
                 "§7Zombie Slayer LVL 3.",
                 "",
-                "§5Catalysts upgrade other items!",
-                "§eRight-click to view upgrades!"));
+                "§5Catalysts upgrade other items!"));
+    }
+
+    @Override
+    public ItemType getRecipeItem() {
+        return ItemType.REVENANT_FALCHION;
     }
 }

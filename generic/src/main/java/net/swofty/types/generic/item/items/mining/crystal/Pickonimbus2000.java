@@ -2,10 +2,7 @@ package net.swofty.types.generic.item.items.mining.crystal;
 
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.MiningTool;
-import net.swofty.types.generic.item.impl.Reforgable;
-import net.swofty.types.generic.item.impl.Sellable;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -13,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Pickonimbus2000 implements CustomSkyBlockItem, MiningTool, Sellable, Reforgable {
+public class Pickonimbus2000 implements CustomSkyBlockItem, MiningTool, Sellable, Reforgable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

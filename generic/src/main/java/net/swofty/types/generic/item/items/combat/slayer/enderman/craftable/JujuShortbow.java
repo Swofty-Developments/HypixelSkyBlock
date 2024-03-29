@@ -14,7 +14,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl {
+public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

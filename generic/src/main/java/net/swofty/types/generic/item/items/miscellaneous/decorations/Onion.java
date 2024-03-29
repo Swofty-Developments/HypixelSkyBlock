@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.items.miscellaneous.decorations;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ExtraUnderNameDisplay;
 import net.swofty.types.generic.item.impl.SkullHead;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Onion implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay {
+public class Onion implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -24,5 +25,10 @@ public class Onion implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDispl
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "b134ab145bd17676ac10a6f5b6554dd41256ce3b8239f87c0591b105aa9e086";
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Onion";
     }
 }

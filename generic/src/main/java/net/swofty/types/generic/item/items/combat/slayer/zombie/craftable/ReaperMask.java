@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, GemstoneItem, Unstackable, HelmetImpl {
+public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, GemstoneItem, Unstackable, HelmetImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

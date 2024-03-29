@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.items.combat.mythological.drops;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.PetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -10,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AntiqueRemedies implements CustomSkyBlockItem, Enchanted, PetItem {
+public class AntiqueRemedies implements CustomSkyBlockItem, Enchanted, PetItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

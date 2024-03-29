@@ -24,7 +24,7 @@ import java.util.List;
 public class GUIRecipeBook extends SkyBlockInventoryGUI {
     private final int[] categorySlots = {
             20, 21, 22, 23, 24,
-                30, 31, 32
+            29, 30, 31, 32, 33
     };
 
     public GUIRecipeBook() {

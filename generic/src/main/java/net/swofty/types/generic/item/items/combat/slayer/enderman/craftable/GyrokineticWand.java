@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class GyrokineticWand implements CustomSkyBlockItem, Craftable, Enchanted {
+public class GyrokineticWand implements CustomSkyBlockItem, Craftable, Enchanted, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

@@ -3,17 +3,14 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Craftable;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Enchanted;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class GloomlockGrimoire implements CustomSkyBlockItem, Craftable, Enchanted {
+public class GloomlockGrimoire implements CustomSkyBlockItem, Craftable, Enchanted, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

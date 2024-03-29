@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.items.miscellaneous.decorations;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ExtraUnderNameDisplay;
 import net.swofty.types.generic.item.impl.SkullHead;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Lettuce implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay {
+public class Lettuce implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -24,5 +25,10 @@ public class Lettuce implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDis
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "9979fe7b32fb7fc9746e157471f975f31afcb58fd8b5acb8bf53ec350f4d5c2";
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Lettuce";
     }
 }

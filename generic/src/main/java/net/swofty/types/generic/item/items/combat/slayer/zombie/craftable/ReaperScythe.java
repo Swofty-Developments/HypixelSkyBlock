@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ReaperScythe implements CustomSkyBlockItem, Craftable, SwordImpl {
+public class ReaperScythe implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

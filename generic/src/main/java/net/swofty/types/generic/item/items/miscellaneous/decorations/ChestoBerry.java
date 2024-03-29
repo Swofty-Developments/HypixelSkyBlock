@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.items.miscellaneous.decorations;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ExtraUnderNameDisplay;
 import net.swofty.types.generic.item.impl.SkullHead;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ChestoBerry implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay {
+public class ChestoBerry implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -31,4 +32,8 @@ public class ChestoBerry implements CustomSkyBlockItem, SkullHead, ExtraUnderNam
         return "§fChesto Berry";
     }
 
+    @Override
+    public String getDisplayName() {
+        return "Chesto Berry";
+    }
 }
