@@ -40,7 +40,7 @@ public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFro
                 5, 45
         ));
 
-        if (player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
+        if (player != null && player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
             // Discount 25%
             costs.replaceAll((k, v) -> (int) (v * 0.75));
         }

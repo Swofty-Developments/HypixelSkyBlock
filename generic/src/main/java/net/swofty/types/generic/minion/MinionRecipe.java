@@ -90,7 +90,7 @@ public enum MinionRecipe {
         try {
             return values()[number];
         } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
+            return ONE;
         }
     }
 

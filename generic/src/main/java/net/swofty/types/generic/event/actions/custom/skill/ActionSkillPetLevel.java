@@ -22,8 +22,8 @@ public class ActionSkillPetLevel extends SkyBlockEvent {
     @Override
     public void run(Event tempEvent) {
         SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
-        if (event.getNewValue() <= event.getOldValue()) return;
-        double xp = event.getNewValue() - event.getOldValue();
+        if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
+        double xp = event.getNewValueRaw() - event.getOldValueRaw();
         if (xp <= 0) return;
 
         SkyBlockPlayer player = event.getPlayer();

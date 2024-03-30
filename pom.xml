@@ -27,6 +27,7 @@
 
         <module>service-auctionhouse</module>
         <module>service-bazaar</module>
+        <module>profiler</module>
     </modules>
 
     <properties>

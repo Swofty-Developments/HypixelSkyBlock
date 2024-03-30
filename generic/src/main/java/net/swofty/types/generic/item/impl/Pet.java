@@ -22,7 +22,7 @@ import java.util.List;
 public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
-    ItemStatistics getPerLevelStatistics();
+    ItemStatistics getPerLevelStatistics(Rarity rarity);
     int particleId();
     SkillCategories getSkillCategory();
     default ItemStatistics getStatistics() {
@@ -67,16 +67,16 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interac
         lore.add("§8" + pet.getSkillCategory().asCategory().getName() + " Pet");
         lore.add(" ");
 
-        addPropertyInt("Magic Find", (getPerLevelStatistics().get(ItemStatistic.MAGIC_FIND) * 100.0), lore, level);
-        addPropertyPercent("Crit Damage", (getPerLevelStatistics().get(ItemStatistic.CRIT_DAMAGE)), lore, level);
-        addPropertyPercent("Crit Chance", (getPerLevelStatistics().get(ItemStatistic.CRIT_CHANCE)), lore, level);
-        double health = getPerLevelStatistics().get(ItemStatistic.HEALTH);
+        addPropertyInt("Magic Find", (getPerLevelStatistics(rarity).get(ItemStatistic.MAGIC_FIND) * 100.0), lore, level);
+        addPropertyPercent("Crit Damage", (getPerLevelStatistics(rarity).get(ItemStatistic.CRIT_DAMAGE)), lore, level);
+        addPropertyPercent("Crit Chance", (getPerLevelStatistics(rarity).get(ItemStatistic.CRIT_CHANCE)), lore, level);
+        double health = getPerLevelStatistics(rarity).get(ItemStatistic.HEALTH);
         if (health > 0.0)
             lore.add("§7Health: §a+" + Math.round(health * level) + " HP");
-        addPropertyInt("Strength", getPerLevelStatistics().get(ItemStatistic.STRENGTH), lore, level);
-        addPropertyInt("Defense", getPerLevelStatistics().get(ItemStatistic.DEFENSE), lore, level);
-        addPropertyPercent("Speed", getPerLevelStatistics().get(ItemStatistic.SPEED), lore, level);
-        addPropertyInt("Intelligence", getPerLevelStatistics().get(ItemStatistic.INTELLIGENCE), lore, level);
+        addPropertyInt("Strength", getPerLevelStatistics(rarity).get(ItemStatistic.STRENGTH), lore, level);
+        addPropertyInt("Defense", getPerLevelStatistics(rarity).get(ItemStatistic.DEFENSE), lore, level);
+        addPropertyPercent("Speed", getPerLevelStatistics(rarity).get(ItemStatistic.SPEED), lore, level);
+        addPropertyInt("Intelligence", getPerLevelStatistics(rarity).get(ItemStatistic.INTELLIGENCE), lore, level);
 
         for (PetAbility ability : abilities) {
             lore.add(" ");

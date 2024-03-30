@@ -34,12 +34,16 @@ public abstract class SkillCategory {
         return getRewards()[level - 1];
     }
 
-    public int getLevel(double requirement) {
+    public int getLevel(double rawExperience) {
         int level = 0;
+        double cumulative = 0;
 
         for (SkillReward reward : getRewards()) {
-            if (reward.requirement() <= requirement) {
-                level = reward.level();
+            cumulative += reward.requirement;
+            if (rawExperience >= cumulative) {
+                level++;
+            } else {
+                break;
             }
         }
 

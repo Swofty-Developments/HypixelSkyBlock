@@ -102,14 +102,14 @@ public abstract class SkyBlockMob extends EntityCreature {
     @Override
     public void kill() {
         super.kill();
-        mobs.add(this);
+        mobs.remove(this);
 
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) getLastDamageSource().getAttacker();
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().set(player, getSkillCategory(), player.getSkills().get(getSkillCategory()) + 7);
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + 7);
 
         if (getDrops().isEmpty()) return;
         if (getLastDamageSource() == null) return;

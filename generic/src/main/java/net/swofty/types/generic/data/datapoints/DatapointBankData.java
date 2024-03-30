@@ -46,7 +46,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
                         transactionJson.getDouble("amount"), transactionJson.getString("originator")));
             }
 
-            return new BankData(jsonObject.getLong("lastClaimedInterest"), transactions,
+            return new BankData(jsonObject.optLong("lastClaimedInterest", System.currentTimeMillis()), transactions,
                     UUID.fromString(jsonObject.getString("sessionHash")), jsonObject.getDouble("amount"),
                     jsonObject.getDouble("balanceLimit"));
         }

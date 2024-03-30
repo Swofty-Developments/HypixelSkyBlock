@@ -101,7 +101,7 @@ public class BeePet implements Pet, NotFinishedYet {
     }
 
     @Override
-    public ItemStatistics getPerLevelStatistics() {
+    public ItemStatistics getPerLevelStatistics(Rarity rarity) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.INTELLIGENCE, 0.5D)
                 .with(ItemStatistic.SPEED, 0.01D)

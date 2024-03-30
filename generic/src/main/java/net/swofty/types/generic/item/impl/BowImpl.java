@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.impl;
 
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -33,6 +34,12 @@ public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforg
         double velocityZ = Math.cos(yawRadians) * Math.cos(pitchRadians) * arrowSpeed;
 
         // Create and return the velocity vector
-        return new Vec(velocityX, velocityY, velocityZ).mul(14, 10, 14);
+        return new Vec(velocityX, velocityY, velocityZ).mul(20, 20, 20);
+    }
+
+    default Pos calculateArrowSpawnPosition(SkyBlockPlayer player) {
+        // Get the player's eye position
+        Pos eyePosition = player.getPosition().add(0, player.getEyeHeight(), 0);
+        return eyePosition.add(0, 0, 0);
     }
 }

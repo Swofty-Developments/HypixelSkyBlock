@@ -6,6 +6,7 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.shop.type.CombinedShopPrice;
 import net.swofty.types.generic.shop.type.ItemShopPrice;
@@ -43,22 +44,26 @@ public class GUIShopBea extends SkyBlockShopGUI {
     }
 
     public void attachBeePet(Rarity rarity, CombinedShopPrice price) {
-        ShopItem bee = ShopItem.Single(new SkyBlockItem(ItemType.BEE_PET),
+        SkyBlockItem beeItem = new SkyBlockItem(ItemType.BEE_PET);
+        beeItem.getAttributeHandler().setRarity(rarity);
+        ShopItem bee = ShopItem.Single(beeItem,
                 1,
                 price,
                 1);
-        SkyBlockItem beeItem = new SkyBlockItem(ItemType.BEE_PET);
-        ItemAttributePetData.PetData petData = beeItem.getAttributeHandler().getPetData();
-        petData.setLevel(100, rarity);
-        beeItem.getAttributeHandler().setPetData(petData);
 
-        ArrayList<String> lore = new ArrayList<>(beeItem.getLore());
+        SkyBlockItem beeDisplayItem = new SkyBlockItem(ItemType.BEE_PET);
+        beeDisplayItem.getAttributeHandler().setRarity(rarity);
+        ItemAttributePetData.PetData petData = beeDisplayItem.getAttributeHandler().getPetData();
+        petData.setLevel(100, rarity);
+        beeDisplayItem.getAttributeHandler().setPetData(petData);
+
+        ArrayList<String> lore = new ArrayList<>(beeDisplayItem.getLore());
         lore.add(" ");
         lore.add("§cThis is a preview of Lvl 100");
         lore.add("§cNew pets are lowest level!");
 
         bee.setDisplayLore(lore);
-        bee.setDisplayName(beeItem.getDisplayName());
+        bee.setDisplayName(beeDisplayItem.getDisplayName());
         attachItem(bee);
     }
 }
