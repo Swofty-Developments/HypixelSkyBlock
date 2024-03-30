@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.swofty</groupId>
+        <artifactId>skyblock</artifactId>
+        <version>3.0</version>
+    </parent>
+
+    <artifactId>spark</artifactId>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.Minestom</groupId>
+            <artifactId>Minestom</artifactId>
+            <version>f95d73eca8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                    <artifactId>shrinkwrap-resolver-depchain</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>de.lucko</groupId>
+            <artifactId>spark-minestom</artifactId>
+            <version>1.10.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/dependencies/spark-1.10.1.10-minestom.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>generic</artifactId>
+            <version>3.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -27,6 +27,7 @@
 
         <module>service-auctionhouse</module>
         <module>service-bazaar</module>
+        <module>spark</module>
     </modules>
 
     <properties>
@@ -92,6 +93,7 @@
             <version>20240303</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>

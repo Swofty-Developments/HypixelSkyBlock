@@ -71,6 +71,11 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.swofty</groupId>
+            <artifactId>spark</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.Minestom</groupId>
             <artifactId>Minestom</artifactId>
             <version>f95d73eca8</version>

@@ -13,6 +13,7 @@ import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.spark.Spark;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -23,6 +24,7 @@ import org.reflections.Reflections;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -37,6 +39,8 @@ public class SkyBlock {
     @Getter
     @Setter
     private static SkyBlockTypeLoader typeLoader;
+
+    private static final boolean ENABLE_SPARK = false;
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -135,6 +139,14 @@ public class SkyBlock {
          * Start the server
          */
         MinecraftServer.setBrandName("SkyBlock");
+
+
+        /**
+         * Start spark if enabled
+         */
+        if (ENABLE_SPARK)
+          Spark.enable(Files.createTempDirectory("spark"));
+
 
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
