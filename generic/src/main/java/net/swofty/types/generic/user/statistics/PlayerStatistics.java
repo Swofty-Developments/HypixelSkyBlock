@@ -86,7 +86,9 @@ public class PlayerStatistics {
         SkyBlockItem pet = player.getPetData().getEnabledPet();
         if (pet == null) return ItemStatistics.EMPTY;
 
-        ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics();
+        ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics(
+                pet.getAttributeHandler().getRarity()
+        );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
 
         ItemStatistics statistics = ItemStatistics.builder().build();

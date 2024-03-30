@@ -308,6 +308,7 @@ public class DataHandler {
         PET_DATA("pet_data", false, false, false, DatapointPetData.class, new DatapointPetData("pet_data")),
         QUIVER("quiver", false, false, false, DatapointQuiver.class, new DatapointQuiver("quiver")),
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
+        SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         ;
 
         @Getter

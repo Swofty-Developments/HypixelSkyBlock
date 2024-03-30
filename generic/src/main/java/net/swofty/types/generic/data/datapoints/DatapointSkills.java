@@ -25,7 +25,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             JSONObject jsonObject = new JSONObject();
 
             for (SkillCategories category : SkillCategories.values()) {
-                jsonObject.put(category.toString(), value.get(category));
+                jsonObject.put(category.toString(), value.getRaw(category));
             }
 
             for (ItemStatistic statistic : ItemStatistic.values()) {
@@ -85,8 +85,21 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         private Map<SkillCategories, Double> skills;
         private Map<ItemStatistic, Double> skillStatistics;
 
-        public Double get(SkillCategories category) {
+        public Double getRaw(SkillCategories category) {
             return skills.get(category);
+        }
+
+        public Double getCumulative(SkillCategories category) {
+            // Minus the requirements of all previous levels
+            SkillCategory skillCategory = category.asCategory();
+            int level = skillCategory.getLevel(getRaw(category));
+            double cumulative = 0.0;
+
+            for (int i = 1; i <= level; i++) {
+                cumulative += skillCategory.getReward(i).requirement();
+            }
+
+            return getRaw(category) - cumulative;
         }
 
         public void addStatistic(ItemStatistic statistic, double amount) {
@@ -103,12 +116,14 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             return skillStatistics.get(statistic);
         }
 
-        public void set(SkyBlockPlayer player, SkillCategories category, Double value) {
+        public void setRaw(SkyBlockPlayer player, SkillCategories category, Double value) {
             SkyBlockEvent.callSkyBlockEvent(new SkillUpdateEvent(
                     player,
                     category,
-                    get(category),
-                    value
+                    getRaw(category),
+                    getCumulative(category),
+                    value,
+                    getCumulative(category) + (getRaw(category) - value)
             ));
             skills.put(category, value);
         }
@@ -127,13 +142,13 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         public Integer getCurrentLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
-            return skillCategory.getLevel(get(category));
+            return skillCategory.getLevel(getRaw(category));
         }
 
         public Integer getNextLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
-            int level = skillCategory.getLevel(get(category));
+            int level = skillCategory.getLevel(getRaw(category));
 
             if (level == skillCategory.getHighestLevel()) {
                 return null;
@@ -145,21 +160,21 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         public String getPercentage(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
-            int level = skillCategory.getLevel(get(category));
+            int level = skillCategory.getLevel(getRaw(category));
             int nextLevel = level + 1;
 
             if (nextLevel > skillCategory.getHighestLevel()) {
                 return "100";
             }
 
-            double current = get(category);
+            double current = getCumulative(category);
             double next = skillCategory.getReward(nextLevel).requirement();
 
             return String.format("%.2f", (current / next) * 100);
         }
 
         public List<String> getDisplay(List<String> lore, SkillCategories category, double requirement, String prefix) {
-            double currentHas = get(category);
+            double currentHas = getCumulative(category);
 
             String unlockedPercentage = String.format("%.2f", (currentHas / requirement) * 100);
             lore.add("§7" + prefix + "§e" + unlockedPercentage + "§6%");

@@ -15,6 +15,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -37,9 +38,6 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
             CustomCollectionAward.ACCESSORY_BAG_UPGRADE_8, 51,
             CustomCollectionAward.ACCESSORY_BAG_UPGRADE_9, 57
     ));
-    public static final List<Class> ALLOWED_IN_BAG = List.of(
-            Talisman.class
-    );
 
     @Setter
     private int page = 1;
@@ -157,11 +155,6 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
-        if (cursorItem.isNA() && clickedItem.isNA()) {
-            save(getPlayer());
-            return;
-        }
-
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {
             save(getPlayer());
             return;
@@ -211,6 +204,6 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
         if (item.getGenericInstance() == null) return false;
-        return ALLOWED_IN_BAG.stream().anyMatch(clazz -> clazz.isInstance(item.getGenericInstance()));
+        return Accessory.class.isInstance(item.getGenericInstance());
     }
 }

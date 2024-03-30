@@ -56,7 +56,7 @@ public class GUIMinionRecipes extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIRecipe(item, GUIMinionRecipes.this).open(player);
+                    new GUIRecipe(item, GUIMinionRecipes.this, i.get() - 1).open(player);
                 }
 
                 @Override

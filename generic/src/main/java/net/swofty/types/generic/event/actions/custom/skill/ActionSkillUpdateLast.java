@@ -22,8 +22,8 @@ public class ActionSkillUpdateLast extends SkyBlockEvent {
     public void run(Event tempEvent) {
         SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
 
-        double oldValue = event.getOldValue();
-        double newValue = event.getNewValue();
+        double oldValue = event.getOldValueRaw();
+        double newValue = event.getNewValueRaw();
         double difference = newValue - oldValue;
 
         if (difference <= 0) return;

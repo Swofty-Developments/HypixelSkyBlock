@@ -31,7 +31,7 @@ public class ActionSkillMiningHandler extends SkyBlockEvent {
             SkillCategories skillCategory = skillableMine.getSkillCategory();
             DatapointSkills.PlayerSkills skills = event.getPlayer().getSkills();
 
-            skills.set(event.getPlayer(), skillCategory, skills.get(skillCategory) + skillableMine.getMiningValueForSkill());
+            skills.setRaw(event.getPlayer(), skillCategory, skills.getRaw(skillCategory) + skillableMine.getMiningValueForSkill());
         }
     }
 }

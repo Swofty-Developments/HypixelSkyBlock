@@ -52,6 +52,7 @@ import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -307,6 +308,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+
+        /**
+         * Register SkyBlock levels
+         */
+        SkyBlockLevelCause.initializeCauses();
 
         /**
          * Register events

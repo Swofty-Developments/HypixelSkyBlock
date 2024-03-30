@@ -416,6 +416,10 @@ public class SkyBlockPlayer extends Player {
         return getCollection().get(entry.getKey()) > entry.getValue();
     }
 
+    public DatapointSkyBlockExperience.PlayerSkyBlockExperience getSkyBlockExperience() {
+        return getDataHandler().get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue();
+    }
+
     public PlayerEnchantmentHandler getEnchantmentHandler() {
         return new PlayerEnchantmentHandler(this);
     }

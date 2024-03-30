@@ -66,6 +66,6 @@ public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl, Not
                 player.getPosition().pitch(),
                 player.getPosition().yaw());
         arrowEntity.setVelocity(arrowVelocity);
-        arrowEntity.setInstance(player.getInstance(), player.getPosition().add(0, 1, 0));
+        arrowEntity.setInstance(player.getInstance(), calculateArrowSpawnPosition(player));
     }
 }

@@ -72,11 +72,8 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
-        if (recipeIndex >= recipes.size()) {
-            getPlayer().closeInventory();
-            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
-            return;
-        }
+        if (recipeIndex >= recipes.size())
+            recipeIndex = 0;
         SkyBlockRecipe recipe = recipes.get(recipeIndex);
 
         if (recipes.size() > recipeIndex + 1) {

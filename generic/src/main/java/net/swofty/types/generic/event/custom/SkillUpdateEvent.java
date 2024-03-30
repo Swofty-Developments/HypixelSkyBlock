@@ -11,13 +11,17 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public class SkillUpdateEvent implements PlayerInstanceEvent {
     private final SkyBlockPlayer player;
     private final SkillCategories skillCategory;
-    private final double oldValue;
-    private final double newValue;
+    private final double oldValueRaw;
+    private final double oldValueCumulative;
+    private final double newValueRaw;
+    private final double newValueCumulative;
 
-    public SkillUpdateEvent(SkyBlockPlayer player, SkillCategories skillCategory, double oldValue, double newValue) {
+    public SkillUpdateEvent(SkyBlockPlayer player, SkillCategories skillCategory, double oldValueRaw, double oldValueCumulative, double newValueRaw, double newValueCumulative) {
         this.player = player;
         this.skillCategory = skillCategory;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
+        this.oldValueRaw = oldValueRaw;
+        this.oldValueCumulative = oldValueCumulative;
+        this.newValueRaw = newValueRaw;
+        this.newValueCumulative = newValueCumulative;
     }
 }

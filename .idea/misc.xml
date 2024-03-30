@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <list size="2">
@@ -23,6 +24,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/bungee/pom.xml" />
+        <option value="$PROJECT_DIR$/profiler/pom.xml" />
         <option value="$PROJECT_DIR$/proxy/module/pom.xml" />
         <option value="$PROJECT_DIR$/proxy/pom.xml" />
       </set>

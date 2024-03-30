@@ -103,27 +103,17 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
         SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
 
-        if (cursorItem.isNA() && clickedItem.isNA()) {
+        if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {
             save(getPlayer(), slotToSaveUpTo);
-            return;
-        }
-
-        if (cursorItem.getMaterial() == Material.ARROW && (clickedItem.isNA() || clickedItem.getMaterial() == Material.AIR)) {
-            save(getPlayer(), slotToSaveUpTo);
-            return;
-        }
-
-        if (clickedItem.getMaterial() == Material.ARROW && (cursorItem.isNA() || cursorItem.getMaterial() == Material.AIR)) {
-            save(getPlayer(), slotToSaveUpTo);
-            return;
-        }
-
-        if (clickedItem.getMaterial() == Material.ARROW) {
             return;
         }
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Quiver!");
+    }
+
+    public boolean isItemAllowed(SkyBlockItem item) {
+        return item.isNA() || item.getMaterial() == Material.ARROW;
     }
 
     public void save(SkyBlockPlayer player, int slotToSaveUpTo) {

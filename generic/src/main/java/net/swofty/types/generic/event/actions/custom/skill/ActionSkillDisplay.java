@@ -21,8 +21,8 @@ public class ActionSkillDisplay extends SkyBlockEvent {
     public void run(Event tempEvent) {
         SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
 
-        double oldValue = event.getOldValue();
-        double newValue = event.getNewValue();
+        double oldValue = event.getOldValueRaw();
+        double newValue = event.getNewValueRaw();
         double difference = newValue - oldValue;
 
         if (difference <= 0) return;
@@ -31,7 +31,8 @@ public class ActionSkillDisplay extends SkyBlockEvent {
         int currentRequirement = event.getSkillCategory().asCategory().getReward(currentLevel + 1).requirement();
 
         event.getPlayer().setDisplayReplacement(StatisticDisplayReplacement.builder()
-                .display("§3+" + difference + " " + event.getSkillCategory() + " (" + newValue + "/" + currentRequirement + ")")
+                .display("§3+" + difference + " " + event.getSkillCategory() + " (" + event.getNewValueCumulative()
+                        + "/" + currentRequirement + ")")
                 .ticksToLast(20)
                 .purpose(StatisticDisplayReplacement.Purpose.SKILL)
                 .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);

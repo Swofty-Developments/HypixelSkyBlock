@@ -29,14 +29,13 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
     @Override
     public void run(Event tempEvent) {
         SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
-        if (event.getNewValue() <= event.getOldValue()) return;
+        if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 
         SkyBlockPlayer player = event.getPlayer();
-        DatapointSkills.PlayerSkills skills = player.getSkills();
         SkillCategories skillCategory = event.getSkillCategory();
 
-        int oldLevel = skillCategory.asCategory().getLevel(event.getOldValue());
-        int newLevel = skillCategory.asCategory().getLevel(event.getNewValue());
+        int oldLevel = skillCategory.asCategory().getLevel(event.getOldValueRaw());
+        int newLevel = skillCategory.asCategory().getLevel(event.getNewValueRaw());
 
         if (oldLevel == newLevel) return;
 
