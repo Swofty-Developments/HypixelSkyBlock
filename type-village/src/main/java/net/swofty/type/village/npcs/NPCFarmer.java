@@ -25,7 +25,7 @@ public class NPCFarmer extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(44, 72, -162, 90, 0);
+                return new Pos(44.5, 72, -162.5, 0, 0);
             }
 
             @Override

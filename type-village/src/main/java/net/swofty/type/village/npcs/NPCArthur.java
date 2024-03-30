@@ -25,7 +25,7 @@ public class NPCArthur extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(51.5, 71, -136.5, 90, 0);
+                return new Pos(51.5, 71, -136.5, 0, 0);
             }
 
             @Override

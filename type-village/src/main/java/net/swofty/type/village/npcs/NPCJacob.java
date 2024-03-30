@@ -25,7 +25,7 @@ public class NPCJacob extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(23, 71, -69, 0, 0);
+                return new Pos(23, 71, -69, 45, 0);
             }
 
             @Override

@@ -25,7 +25,7 @@ public class NPCMaddoxTheSlayer extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-74, 65, -51, 90, 0);
+                return new Pos(-74, 65, -50, 180, 0);
             }
 
             @Override

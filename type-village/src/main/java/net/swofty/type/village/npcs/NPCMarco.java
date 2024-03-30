@@ -25,7 +25,7 @@ public class NPCMarco extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-10, 71, -14, 90, 0);
+                return new Pos(-9.5, 71, -14, -170, 0);
             }
 
             @Override

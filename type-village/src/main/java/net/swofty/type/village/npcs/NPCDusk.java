@@ -29,7 +29,7 @@ public class NPCDusk extends NPCDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-37.5, 68, -125.5, -80, 0f);
+                return new Pos(-37.5, 68, -125.5, -90, 0);
             }
 
             @Override

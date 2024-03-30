@@ -25,7 +25,7 @@ public class NPCMineMerchant extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-8.5, 68, -125.5, 90, 0);
+                return new Pos(-9, 68, -125, 65, 0);
             }
 
             @Override

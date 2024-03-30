@@ -25,7 +25,7 @@ public class NPCGladiator extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(123.5, 79, 165.5, 90, 0);
+                return new Pos(123.5, 79, 165.5, 135, 25);
             }
 
             @Override

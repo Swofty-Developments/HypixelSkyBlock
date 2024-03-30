@@ -25,7 +25,7 @@ public class NPCElizabeth extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-1, 71, -101, -90, 0);
+                return new Pos(0, 71, -101, -90, 0);
             }
 
             @Override

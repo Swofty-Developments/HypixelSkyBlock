@@ -25,7 +25,7 @@ public class NPCTheHandler extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-65, 70, -127, 90, 0);
+                return new Pos(-64.5, 70, -126.5, 0, 45);
             }
 
             @Override

@@ -25,7 +25,7 @@ public class NPCUdium extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(44.8, 10.4, 76, 90, 0);
+                return new Pos(44.8, 10.4, 76, 145, 0);
             }
 
             @Override

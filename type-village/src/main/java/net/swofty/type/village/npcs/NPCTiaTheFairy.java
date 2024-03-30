@@ -25,7 +25,7 @@ public class NPCTiaTheFairy extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(129.5, 66, 137.5, 135, 0);
+                return new Pos(129.5, 66, 137.5, 125, 0);
             }
 
             @Override

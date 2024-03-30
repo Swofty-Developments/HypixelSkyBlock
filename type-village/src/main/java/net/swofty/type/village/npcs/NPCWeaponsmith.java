@@ -25,7 +25,7 @@ public class NPCWeaponsmith extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-9.5, 68, -140.5, 45, 0);
+                return new Pos(-10, 68, -130, 90, 0);
             }
 
             @Override

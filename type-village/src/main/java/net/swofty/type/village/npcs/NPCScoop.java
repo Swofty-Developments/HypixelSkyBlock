@@ -25,7 +25,7 @@ public class NPCScoop extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(5, 181, 25, 90, 0);
+                return new Pos(5.5, 181, 25.5, 90, 0);
             }
 
             @Override

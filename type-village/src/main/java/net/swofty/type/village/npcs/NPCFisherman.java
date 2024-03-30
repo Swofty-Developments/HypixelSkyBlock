@@ -25,7 +25,7 @@ public class NPCFisherman extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(155, 68, 47, 90, 0);
+                return new Pos(155.5, 68, 47.5, 120, 0);
             }
 
             @Override

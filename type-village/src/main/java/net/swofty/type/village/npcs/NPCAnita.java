@@ -25,7 +25,7 @@ public class NPCAnita extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(23.5, 77, -69.5, 0, 0);
+                return new Pos(23, 77, -69.5, 0, 0);
             }
 
             @Override

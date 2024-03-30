@@ -27,7 +27,7 @@ public class NPCPat extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-134, 73, -97, -90, 0);
+                return new Pos(-134.5, 73, -97.5, 0, 0);
             }
 
             @Override

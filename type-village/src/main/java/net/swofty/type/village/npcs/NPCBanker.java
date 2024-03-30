@@ -28,7 +28,7 @@ public class NPCBanker extends NPCDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-24.5, 71, -58.5, -180, 0f);
+                return new Pos(-24.5, 71, -58.5, 180, 0);
             }
 
             @Override

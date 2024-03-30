@@ -25,7 +25,7 @@ public class NPCMadameEleanorQGoldsworthIII extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-50, 77, 76, 90, 0);
+                return new Pos(-49.5, 77, 76.5, 0, 0);
             }
 
             @Override

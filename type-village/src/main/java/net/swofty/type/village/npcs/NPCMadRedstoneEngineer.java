@@ -27,7 +27,7 @@ public class NPCMadRedstoneEngineer extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-52, 65, -29, 90, 0);
+                return new Pos(-52, 65, -29, 180, 0);
             }
 
             @Override

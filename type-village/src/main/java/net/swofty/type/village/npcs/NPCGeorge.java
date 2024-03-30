@@ -25,7 +25,7 @@ public class NPCGeorge extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(39.5, 71, -100.5, 90, 0);
+                return new Pos(39.5, 71, -100.5, 25, 0);
             }
 
             @Override

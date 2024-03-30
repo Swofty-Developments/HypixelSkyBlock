@@ -25,7 +25,7 @@ public class NPCCarpenter extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(15, 72, -21, 90, 0);
+                return new Pos(15.5, 72, -21.5, 90, 0);
             }
 
             @Override

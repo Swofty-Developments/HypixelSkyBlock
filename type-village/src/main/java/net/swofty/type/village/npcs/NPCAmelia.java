@@ -25,7 +25,7 @@ public class NPCAmelia extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-44.5, 85, -4.5, 45, 0);
+                return new Pos(-44.5, 85, -4.5, 0, 0);
             }
 
             @Override

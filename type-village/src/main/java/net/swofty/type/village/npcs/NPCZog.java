@@ -25,7 +25,7 @@ public class NPCZog extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(34, 71, -99, 90, 0);
+                return new Pos(34.5, 71, -96.5, 125, -5);
             }
 
             @Override

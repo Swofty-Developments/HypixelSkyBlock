@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCHootie extends SkyBlockNPC {
+public class NPCHootie extends SkyBlockNPC { //not a real npc but a speaking skull
 
     public NPCHootie() {
         super(new NPCParameters() {

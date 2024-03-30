@@ -26,7 +26,7 @@ public class NPCWoolWeaver extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-47, 74, -30, 90, 0);
+                return new Pos(-47, 74, -30.5, 180, 0);
             }
 
             @Override

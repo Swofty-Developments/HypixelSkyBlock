@@ -25,7 +25,7 @@ public class NPCOzanne extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(41.5, 70, -39.5, -45, 0);
+                return new Pos(41.5, 70, -39.5, -40, 0);
             }
 
             @Override

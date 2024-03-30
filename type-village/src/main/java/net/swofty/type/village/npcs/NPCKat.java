@@ -25,7 +25,7 @@ public class NPCKat extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(31.5, 71, -100.5, 90, 0);
+                return new Pos(31.5, 71, -101.5, 60, 0);
             }
 
             @Override
