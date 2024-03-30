@@ -1,10 +1,12 @@
 package net.swofty.types.generic.event.actions.player;
 
+import jdk.jfr.Experimental;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
+import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.event.EventNodes;
@@ -38,12 +40,16 @@ public class ActionPlayerChat extends SkyBlockEvent {
         if (!rank.isStaff())
             message = message.replaceAll("[^\\x00-\\x7F]", "");
 
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
+
         String finalMessage = message;
         MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(onlinePlayer -> {
             if (rank.equals(Rank.DEFAULT)) {
-                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§7: " + finalMessage);
+                onlinePlayer.sendMessage("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                        dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§7: " + finalMessage);
             } else {
-                onlinePlayer.sendMessage(dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§f: " + finalMessage);
+                onlinePlayer.sendMessage("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                        dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§f: " + finalMessage);
             }
         });
     }

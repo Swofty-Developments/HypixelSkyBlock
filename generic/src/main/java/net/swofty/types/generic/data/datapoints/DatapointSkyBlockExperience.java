@@ -9,37 +9,39 @@ import net.swofty.types.generic.levels.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExperience.PlayerSkyBlockExperience> {
     private static final Serializer<PlayerSkyBlockExperience> serializer = new Serializer<>() {
         @Override
         public String serialize(PlayerSkyBlockExperience value) {
-            Map<String, String> serialized = new HashMap<>();
+            List<String> serialized = new ArrayList<>();
 
-            value.getExperience().forEach((cause, exp) -> {
-                serialized.put(SkyBlockLevelCause.getKey(cause), String.valueOf(exp));
+            value.getCompletedExperienceCauses().forEach((cause) -> {
+                serialized.add(SkyBlockLevelCause.getKey(cause));
             });
 
-            return new JSONObject(serialized).toString();
+            return new JSONObject(new HashMap<>(Map.of("values", serialized))).toString();
         }
 
         @Override
         public PlayerSkyBlockExperience deserialize(String json) {
-            JSONObject obj = new JSONObject(json);
-            Map<SkyBlockLevelCauseAbstr, Double> experience = new HashMap<>();
+            List<SkyBlockLevelCauseAbstr> experience = new ArrayList<>();
 
-            for (String key : obj.keySet()) {
-                experience.put(SkyBlockLevelCause.getCause(key), obj.getDouble(key));
-            }
+            JSONObject jsonObject = new JSONObject(json);
+            jsonObject.getJSONArray("values").forEach((value) -> {
+                experience.add(SkyBlockLevelCause.getCause((String) value));
+            });
 
             return new PlayerSkyBlockExperience(experience);
         }
 
         @Override
         public PlayerSkyBlockExperience clone(PlayerSkyBlockExperience value) {
-            return new PlayerSkyBlockExperience(value.getExperience());
+            return new PlayerSkyBlockExperience(value.getCompletedExperienceCauses());
         }
     };
 
@@ -54,22 +56,42 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
     @NoArgsConstructor
     @Getter
     public static class PlayerSkyBlockExperience {
-        private Map<SkyBlockLevelCauseAbstr, Double> experience = new HashMap<>();
+        private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
 
-        public PlayerSkyBlockExperience(Map<SkyBlockLevelCauseAbstr, Double> experience) {
-            this.experience = experience;
+        public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses) {
+            this.completedExperienceCauses = completedExperienceCauses;
         }
 
         public boolean hasExperienceFor(SkyBlockLevelCauseAbstr cause) {
-            return experience.containsKey(cause);
+            return completedExperienceCauses.contains(cause);
         }
 
-        public void addExperience(SkyBlockLevelCauseAbstr cause, double amount) {
-            experience.put(cause, experience.getOrDefault(cause, 0.0) + amount);
+        public void addExperience(SkyBlockLevelCauseAbstr cause) {
+            if (completedExperienceCauses.contains(cause)) return;
+            completedExperienceCauses.add(cause);
+        }
+
+        public String getNextLevelDisplay() {
+            SkyBlockLevelRequirement nextLevel = getLevel().getNextLevel();
+            if (nextLevel == null) return "§cMAX";
+
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+            int completedLength = (int) ((getTotalXP() / (double) nextLevel.getExperience()) * maxBarLength);
+
+            String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+            int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
+            String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(
+                    completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                    maxBarLength
+            ));
+
+            return "§7" + completedLoadingBar + uncompletedLoadingBar + "§r §b" + getTotalXP() + "§3/§b" + nextLevel.getExperience();
         }
 
         public Double getTotalXP() {
-            return experience.values().stream().mapToDouble(Double::doubleValue).sum();
+            if (completedExperienceCauses.isEmpty()) return 0.0;
+            return completedExperienceCauses.stream().mapToDouble(SkyBlockLevelCauseAbstr::xpReward).sum();
         }
 
         public SkyBlockLevelRequirement getLevel() {

@@ -18,6 +18,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;
@@ -204,6 +205,14 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
         if (item.getGenericInstance() == null) return false;
+
+        DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
+        accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getItemTypeAsType());
+
+        getPlayer().getSkyBlockExperience().addExperience(
+                new NewAccessoryLevelCause(item.getAttributeHandler().getItemTypeAsType()
+        ));
+
         return Accessory.class.isInstance(item.getGenericInstance());
     }
 }

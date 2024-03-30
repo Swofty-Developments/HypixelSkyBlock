@@ -32,6 +32,6 @@ public enum SkillCategories {
             e.printStackTrace();
         }
 
-        return null;
+        throw new RuntimeException("Failed to instantiate SkillCategory");
     }
 }

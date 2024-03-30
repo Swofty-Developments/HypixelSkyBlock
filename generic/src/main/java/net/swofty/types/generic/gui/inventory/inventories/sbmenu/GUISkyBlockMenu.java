@@ -11,6 +11,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog.GUIMissionLog;
@@ -18,6 +19,7 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkill
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.StringUtility;
@@ -56,6 +58,29 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStackHead("§aYour SkyBlock Profile",
                         PlayerSkin.fromUuid(player.getUuid().toString()), 1,
                         lore);
+            }
+        });
+        set(new GUIClickableItem(22) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUISkyBlockLevels().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                SkyBlockLevelRequirement levelRequirement = player.getSkyBlockExperience().getLevel();
+
+                return ItemStackCreator.getStackHead("§aSkyBlock Leveling", "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
+                        "§7Your SkyBlock Level: §8[" + levelRequirement.getColor() + levelRequirement + "§8]",
+                        " ",
+                        "§7Determine how far you've",
+                        "§7progressed in SkyBlock and earn",
+                        "§7rewards from completing unique",
+                        "§7tasks.",
+                        " ",
+                        player.getSkyBlockExperience().getNextLevelDisplay(),
+                        " ",
+                        "§eClick to view!");
             }
         });
         set(new GUIClickableItem(29) {

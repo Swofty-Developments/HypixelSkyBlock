@@ -141,7 +141,11 @@ public class SkyBlockPlayer extends Player {
     }
 
     public String getFullDisplayName() {
-        return getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + this.getUsername();
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
+
+        return "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                this.getUsername();
     }
 
     public PlayerShopData getShoppingData() {

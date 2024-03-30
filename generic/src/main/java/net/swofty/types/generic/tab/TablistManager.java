@@ -45,64 +45,66 @@ public abstract class TablistManager {
                 AtomicReference<Map.Entry<String, Integer>> charPrefix = new AtomicReference<>(Map.entry("§", 0));
 
                 getModules().forEach(module -> {
-                    List<TablistModule.TablistEntry> entries = module.getEntries(player);
+                    try {
+                        List<TablistModule.TablistEntry> entries = module.getEntries(player);
 
-                    entries.forEach(entry -> {
-                        List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
-                        properties.add(new PlayerInfoUpdatePacket.Property(
-                                "textures",
-                                entry.registry().getTexture(),
-                                entry.registry().getSignature()));
+                        entries.forEach(entry -> {
+                            List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
+                            properties.add(new PlayerInfoUpdatePacket.Property(
+                                    "textures",
+                                    entry.registry().getTexture(),
+                                    entry.registry().getSignature()));
 
-                        if (!charPrefix.get().getKey().equals(entry.content())) {
-                            charPrefix.set(Map.entry(entry.content(), charPrefix.get().getValue() + 1));
-                        }
+                            if (!charPrefix.get().getKey().equals(entry.content())) {
+                                charPrefix.set(Map.entry(entry.content(), charPrefix.get().getValue() + 1));
+                            }
 
-                        // 0 is AA, 1 is AB, 2 is AC, etc.
-                        // 26 is BA, 27 is BB, 28 is BC, etc.
-                        StringBuilder prefix = new StringBuilder();
-                        int value = charPrefix.get().getValue();
-                        do {
-                            // 'A' has an ASCII value of 65, so adding value % 26 gives us the letter we want.
-                            // We subtract by 1 before the modulus operation because we want 'A' to represent 0, 'B' to represent 1, and so on.
-                            char charToAdd = (char) ('A' + (value - 1) % 26);
-                            prefix.insert(0, charToAdd); // Prepend the character
-                            value = (value - 1) / 26; // Move to the next 'digit'
-                        } while (value > 0);
+                            // 0 is AA, 1 is AB, 2 is AC, etc.
+                            // 26 is BA, 27 is BB, 28 is BC, etc.
+                            StringBuilder prefix = new StringBuilder();
+                            int value = charPrefix.get().getValue();
+                            do {
+                                // 'A' has an ASCII value of 65, so adding value % 26 gives us the letter we want.
+                                // We subtract by 1 before the modulus operation because we want 'A' to represent 0, 'B' to represent 1, and so on.
+                                char charToAdd = (char) ('A' + (value - 1) % 26);
+                                prefix.insert(0, charToAdd); // Prepend the character
+                                value = (value - 1) / 26; // Move to the next 'digit'
+                            } while (value > 0);
 
-                        UUID uuid = UUID.randomUUID();
-                        tablistEntries.get(player).add(uuid);
+                            UUID uuid = UUID.randomUUID();
+                            tablistEntries.get(player).add(uuid);
 
-                        String randomName = UUID.randomUUID().toString().substring(0, 8);
+                            String randomName = UUID.randomUUID().toString().substring(0, 8);
 
-                        TeamsPacket teamPacket = new TeamsPacket(prefix.toString(), new TeamsPacket.CreateTeamAction(
-                                Component.text(prefix.toString()),
-                                (byte) 0x01,
-                                TeamsPacket.NameTagVisibility.ALWAYS,
-                                TeamsPacket.CollisionRule.ALWAYS,
-                                NamedTextColor.RED,
-                                Component.text(prefix.toString()),
-                                Component.empty(),
-                                new ArrayList<>(Collections.singletonList(randomName))
-                        ));
+                            TeamsPacket teamPacket = new TeamsPacket(prefix.toString(), new TeamsPacket.CreateTeamAction(
+                                    Component.text(prefix.toString()),
+                                    (byte) 0x01,
+                                    TeamsPacket.NameTagVisibility.ALWAYS,
+                                    TeamsPacket.CollisionRule.ALWAYS,
+                                    NamedTextColor.RED,
+                                    Component.text(prefix.toString()),
+                                    Component.empty(),
+                                    new ArrayList<>(Collections.singletonList(randomName))
+                            ));
 
-                        player.sendPackets(
-                                teamPacket,
-                                new PlayerInfoUpdatePacket(EnumSet.of(
-                                        PlayerInfoUpdatePacket.Action.ADD_PLAYER,
-                                        PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
-                                        PlayerInfoUpdatePacket.Action.UPDATE_LISTED
-                                ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
-                                                uuid,
-                                                randomName,
-                                                properties,
-                                                true,
-                                                0,
-                                                GameMode.CREATIVE,
-                                                Component.text(entry.content()),
-                                                null)))
-                        );
-                    });
+                            player.sendPackets(
+                                    teamPacket,
+                                    new PlayerInfoUpdatePacket(EnumSet.of(
+                                            PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                                            PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
+                                            PlayerInfoUpdatePacket.Action.UPDATE_LISTED
+                                    ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
+                                            uuid,
+                                            randomName,
+                                            properties,
+                                            true,
+                                            0,
+                                            GameMode.CREATIVE,
+                                            Component.text(entry.content()),
+                                            null)))
+                            );
+                        });
+                    } catch (Exception e) {}
                 });
             });
         }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.ASYNC);

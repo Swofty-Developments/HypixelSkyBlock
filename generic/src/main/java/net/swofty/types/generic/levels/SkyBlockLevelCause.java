@@ -19,7 +19,7 @@ public class SkyBlockLevelCause {
     public static void initializeCauses() {
         // Register all Skill causes
         for (SkillCategories category : SkillCategories.values()) {
-            for (int i = 1; i <= 50; i++) {
+            for (int i = 1; i <= category.asCategory().getHighestLevel(); i++) {
                 CAUSES.put("skill-" + category.name() + "-" + i, new SkillLevelCause(category, i));
             }
         }
@@ -31,6 +31,18 @@ public class SkyBlockLevelCause {
                 CAUSES.put("accessory-" + itemType.name(), new NewAccessoryLevelCause(itemType));
             }
         }
+    }
+
+    public static Double getTotalXP() {
+        double total = 0;
+        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+            total += cause.xpReward();
+        }
+        return total;
+    }
+
+    public static int getAmountOfCauses() {
+        return CAUSES.size();
     }
 
     public static NewAccessoryLevelCause getAccessoryCause(ItemType itemType) {

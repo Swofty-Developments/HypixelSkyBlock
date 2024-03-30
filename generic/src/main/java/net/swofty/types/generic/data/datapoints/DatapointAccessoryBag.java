@@ -89,6 +89,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         }
 
         public void addDiscoveredAccessory(ItemType type) {
+            if (discoveredAccessories.contains(type)) return;
             discoveredAccessories.add(type);
         }
 

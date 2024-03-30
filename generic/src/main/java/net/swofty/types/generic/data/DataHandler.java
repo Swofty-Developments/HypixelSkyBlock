@@ -174,9 +174,15 @@ public class DataHandler {
 
             // Delay this as player needs to be loaded
             MathUtility.delay(() -> {
+                SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = skyBlockPlayer.getSkyBlockExperience();
+
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);
                 Team team = new TeamBuilder("ZZZZZ" + teamName, MinecraftServer.getTeamManager())
-                        .prefix(Component.text(rank.getPrefix()))
+                        .prefix(Component.text(
+                                "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                                        rank.getPrefix()
+                        ))
                         .teamColor(rank.getTextColor())
                         .build();
                 player.setTeam(team);

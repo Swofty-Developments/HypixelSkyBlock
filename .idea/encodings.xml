@@ -104,6 +104,8 @@
     <file url="file://$PROJECT_DIR$/service-generic/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-protocol/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-protocol/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/type-island/src/main/java" charset="UTF-8" />

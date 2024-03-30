@@ -19,4 +19,9 @@ public class SkillLevelCause extends SkyBlockLevelCauseAbstr {
     public boolean hasUnlocked(SkyBlockPlayer player) {
         return player.getSkills().getCurrentLevel(category) >= level;
     }
+
+    @Override
+    public double xpReward() {
+        return 5;
+    }
 }
