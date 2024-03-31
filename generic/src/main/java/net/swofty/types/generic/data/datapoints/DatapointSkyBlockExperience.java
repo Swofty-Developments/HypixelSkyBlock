@@ -97,6 +97,8 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
         public void addExperience(SkyBlockLevelCauseAbstr cause) {
             if (completedExperienceCauses.contains(cause)) return;
+            String causeKey = SkyBlockLevelCause.getKey(cause);
+            if (completedExperienceCauses.stream().anyMatch((c) -> SkyBlockLevelCause.getKey(c).equals(causeKey))) return;
 
             double oldXP = getTotalXP();
             completedExperienceCauses.add(cause);
