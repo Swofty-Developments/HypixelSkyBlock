@@ -10,7 +10,7 @@ public class NPCMalik extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Malik", "§e§lCLICK"};
+                return new String[]{"§9Malik", "§e§lBLACKSMITH"};
             }
 
             @Override
@@ -25,7 +25,7 @@ public class NPCMalik extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-81, 56, -120, 90, 0);
+                return new Pos(-80.5, 56, -119.5, 180, 0);
             }
 
             @Override

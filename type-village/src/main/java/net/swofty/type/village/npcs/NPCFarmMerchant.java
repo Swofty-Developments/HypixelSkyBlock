@@ -27,7 +27,7 @@ public class NPCFarmMerchant extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(15.5, 70.0, -70.5, 90f, 0f);
+                return new Pos(15.5, 70.0, -71.8, 90, 0);
             }
 
             @Override

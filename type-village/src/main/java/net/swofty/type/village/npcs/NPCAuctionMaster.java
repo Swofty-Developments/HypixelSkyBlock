@@ -30,7 +30,7 @@ public class NPCAuctionMaster extends NPCDialogue {
 
             @Override
             public Pos position() {
-                return new Pos(-46.5, 73.0, -90.5);
+                return new Pos(-46.5, 73, -90.5, -90, 0);
             }
 
             @Override

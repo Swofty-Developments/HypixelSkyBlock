@@ -25,7 +25,7 @@ public class NPCCurator extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-63, 77, 84, 0, 0);
+                return new Pos(-62.5, 77, 84.5, 180, 0);
             }
 
             @Override

@@ -25,7 +25,7 @@ public class NPCOphelia extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-86, 55, -140, 90, 0);
+                return new Pos(-85.5, 55, -139.5, 0, 0);
             }
 
             @Override

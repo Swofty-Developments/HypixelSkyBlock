@@ -11,7 +11,7 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
-@CommandParameters(description = "Opens up a reci[e GUI",
+@CommandParameters(description = "Opens up a recipe GUI",
         usage = "/viewrecipe <recipe>",
         permission = Rank.DEFAULT,
         aliases = "vr",

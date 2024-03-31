@@ -25,7 +25,7 @@ public class NPCTaylor extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(22, 71, -45.5, 90, 0);
+                return new Pos(22, 71, -45.5, 0, 0);
             }
 
             @Override

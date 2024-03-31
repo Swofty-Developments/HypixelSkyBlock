@@ -25,7 +25,7 @@ public class NPCRosetta extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-12, 68, -141, 90, 0);
+                return new Pos(-11.5, 68, -140.5, 45, 0);
             }
 
             @Override

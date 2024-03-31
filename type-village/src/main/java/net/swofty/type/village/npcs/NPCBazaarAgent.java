@@ -26,7 +26,7 @@ public class NPCBazaarAgent extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-39, 70, -79.5, 0f, 0f);
+                return new Pos(-39.5, 70, -79, 0, 0);
             }
 
             @Override

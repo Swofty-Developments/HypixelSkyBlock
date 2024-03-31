@@ -25,7 +25,7 @@ public class NPCSecuritySloth extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(2, 70, -76, 90, 0);
+                return new Pos(2.5, 70, -75.5, 0, 0);
             }
 
             @Override

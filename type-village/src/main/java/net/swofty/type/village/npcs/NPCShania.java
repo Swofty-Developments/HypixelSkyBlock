@@ -4,7 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCShania extends SkyBlockNPC {
+public class NPCShania extends SkyBlockNPC { //a speaking cow
 
     public NPCShania() {
         super(new NPCParameters() {
@@ -25,7 +25,7 @@ public class NPCShania extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(48, 72, -160, 90, 0);
+                return new Pos(48.5, 72, -159.5, 90, 0);
             }
 
             @Override

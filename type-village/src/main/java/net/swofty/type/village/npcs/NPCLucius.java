@@ -25,7 +25,7 @@ public class NPCLucius extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(124, 73, 165, 90, 0);
+                return new Pos(125, 73, 165, 30, 0);
             }
 
             @Override

@@ -25,7 +25,7 @@ public class NPCMaxwell extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(46.5, 69, -34, 90, 0);
+                return new Pos(46.5, 69, -34.5, 180, 0);
             }
 
             @Override

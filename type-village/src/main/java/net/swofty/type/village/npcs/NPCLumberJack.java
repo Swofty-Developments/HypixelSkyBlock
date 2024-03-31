@@ -25,7 +25,7 @@ public class NPCLumberJack extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-112, 74, -36, 90, 0);
+                return new Pos(-112.5, 74, -36.5, -90, 0);
             }
 
             @Override

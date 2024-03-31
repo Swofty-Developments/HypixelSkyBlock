@@ -25,7 +25,7 @@ public class NPCAdventurer extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-41, 70, -64.5, 180, 0);
+                return new Pos(-41.5, 70, -64.5, 180, 0);
             }
 
             @Override

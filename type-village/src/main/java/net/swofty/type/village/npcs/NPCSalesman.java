@@ -7,7 +7,7 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 public class NPCSalesman extends SkyBlockNPC {
 
     public NPCSalesman() {
-        super(new NPCParameters() {
+        super(new NPCParameters() { //different name and skin for each season
             @Override
             public String[] holograms() {
                 return new String[]{"§9Salesman", "§e§lCLICK"};
@@ -25,7 +25,7 @@ public class NPCSalesman extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(7, 70, -85, 90, 0);
+                return new Pos(7, 70, -85, 25, 0);
             }
 
             @Override

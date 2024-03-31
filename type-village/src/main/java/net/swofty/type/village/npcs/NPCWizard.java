@@ -25,7 +25,7 @@ public class NPCWizard extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(46, 122, 75, 90, 0);
+                return new Pos(46.5, 122, 75.5, 130, 0);
             }
 
             @Override

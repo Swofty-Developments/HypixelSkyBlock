@@ -25,7 +25,7 @@ public class NPCErihann extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(40, 100, 69.5, 90, 0);
+                return new Pos(40.2, 100, 69.4, -40, 0);
             }
 
             @Override

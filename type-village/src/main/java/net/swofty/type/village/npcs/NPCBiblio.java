@@ -25,7 +25,7 @@ public class NPCBiblio extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(7.6, 71, -99.8, 0, 0);
+                return new Pos(7.6, 71, -99.8, 90, 0);
             }
 
             @Override

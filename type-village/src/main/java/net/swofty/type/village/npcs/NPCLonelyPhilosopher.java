@@ -25,7 +25,7 @@ public class NPCLonelyPhilosopher extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-250, 130, 41, 90, 0);
+                return new Pos(-250.7, 130, 41.2, 40, 0);
             }
 
             @Override

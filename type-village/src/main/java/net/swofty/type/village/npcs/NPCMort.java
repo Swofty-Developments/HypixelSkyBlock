@@ -10,7 +10,7 @@ public class NPCMort extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Mort", "§e§lCLICK"};
+                return new String[]{"§9Mort", "§e§lGATE KEEPER"};
             }
 
             @Override
@@ -25,7 +25,7 @@ public class NPCMort extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-89, 55, -129, 90, 0);
+                return new Pos(-88.5, 55, -128.5, -90, 0);
             }
 
             @Override

@@ -25,7 +25,7 @@ public class NPCAuctionAgent3 extends SkyBlockNPC {
 
             @Override
             public Pos position() {
-                return new Pos(-30.438, 73.0, -85.311, 0.3f, 0.2f);
+                return new Pos(-31, 73, -85.5, 180, 0);
             }
 
             @Override
