@@ -13,6 +13,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
+import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
@@ -20,6 +21,7 @@ import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
@@ -112,6 +114,14 @@ public class PlayerStatistics {
             ItemStatistic statistic = entry.getKey();
             Double value = entry.getValue();
             spare = spare.add(ItemStatistics.builder().with(statistic, value).build());
+        }
+
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
+        for (int i = 0; i < experience.getLevel().asInt(); i++) {
+            List<SkyBlockLevelStatisticUnlock> unlocks = experience.getLevel().getStatisticUnlocks();
+            for (SkyBlockLevelStatisticUnlock unlock : unlocks) {
+                spare = spare.add(unlock.getStatistics());
+            }
         }
 
         return spare;

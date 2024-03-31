@@ -54,9 +54,6 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 PlayerProfiles profiles = player.getProfiles();
-                PlayerProfiles toSet = new PlayerProfiles();
-                toSet.setProfiles(profiles.getProfiles());
-
                 UUID profileId = UUID.randomUUID();
 
                 DataHandler handler = DataHandler.initUserWithDefaultData(player.getUuid());
@@ -65,14 +62,13 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
                 Document document = handler.toDocument(profileId);
 
                 profiles.addProfile(profileId);
-                toSet.addProfile(profileId);
                 ProfilesDatabase.collection.insertOne(document);
 
                 player.getHookManager().registerHook(new ActionPlayerDataSave(), (nil) -> {
-                    toSet.setCurrentlySelected(profileId);
+                    profiles.setCurrentlySelected(profileId);
 
                     UserDatabase database = new UserDatabase(player.getUuid());
-                    database.saveProfiles(toSet);
+                    database.saveProfiles(profiles);
                 }, false);
 
                 player.sendTo(ServerType.ISLAND, true);

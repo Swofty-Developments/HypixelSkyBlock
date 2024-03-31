@@ -29,6 +29,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
@@ -429,7 +430,15 @@ public class SkyBlockPlayer extends Player {
     }
 
     public DatapointSkyBlockExperience.PlayerSkyBlockExperience getSkyBlockExperience() {
-        return getDataHandler().get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue();
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience =
+                getDataHandler().get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class)
+                        .getValue();
+        experience.setAttachedPlayer(this);
+        return experience;
+    }
+
+    public boolean hasUnlockedXPCause(SkyBlockLevelCauseAbstr cause) {
+        return getSkyBlockExperience().hasExperienceFor(cause);
     }
 
     public PlayerEnchantmentHandler getEnchantmentHandler() {

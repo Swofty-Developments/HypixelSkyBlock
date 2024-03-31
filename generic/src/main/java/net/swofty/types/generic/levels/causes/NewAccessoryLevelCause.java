@@ -12,11 +12,6 @@ public class NewAccessoryLevelCause extends SkyBlockLevelCauseAbstr {
     }
 
     @Override
-    public boolean hasUnlocked(SkyBlockPlayer player) {
-        return player.getAccessoryBag().hasDiscoveredAccessory(itemType);
-    }
-
-    @Override
     public double xpReward() {
         return 1;
     }

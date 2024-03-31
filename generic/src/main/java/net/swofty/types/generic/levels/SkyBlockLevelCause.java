@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.types.generic.levels.causes.LevelCause;
 import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
 import net.swofty.types.generic.levels.causes.SkillLevelCause;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -32,6 +33,11 @@ public class SkyBlockLevelCause {
                 CAUSES.put("accessory-" + itemType.name(), new NewAccessoryLevelCause(itemType));
             }
         }
+
+        // Register all level causes up to 500
+        for (int i = 0; i <= 500; i++) {
+            CAUSES.put("level-" + i, new LevelCause(i));
+        }
     }
 
     public static Double getTotalXP() {
@@ -44,6 +50,17 @@ public class SkyBlockLevelCause {
 
     public static int getAmountOfCauses() {
         return CAUSES.size();
+    }
+
+    public static LevelCause getLevelCause(int level) {
+        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+            if (cause instanceof LevelCause levelCause) {
+                if (levelCause.getLevel() == level) {
+                    return levelCause;
+                }
+            }
+        }
+        return null;
     }
 
     public static NewAccessoryLevelCause getAccessoryCause(ItemType itemType) {

@@ -13,8 +13,16 @@ import java.util.List;
 @Getter
 public enum SkyBlockEmblems {
     SKILLS(Material.DIAMOND_SWORD, List.of("§7These symbols are related to", "§7levelling up your Skills!"), List.of(
-            new SkyBlockEmblem("Mining Pickaxe", Material.STONE_PICKAXE, "⸕",
-                    SkyBlockLevelCause.getSkillCause(SkillCategories.MINING, 50))
+            new SkyBlockEmblem("Mining Pickaxe", Material.STONE_PICKAXE, "§7⸕",
+                    SkyBlockLevelCause.getSkillCause(SkillCategories.MINING, 50)),
+            new SkyBlockEmblem("Mining Master", Material.GOLDEN_PICKAXE, "§6⸕",
+                    SkyBlockLevelCause.getSkillCause(SkillCategories.MINING, 60))
+    )),
+    LEVELING(Material.SKELETON_SKULL, List.of("§7These symbols are unlocked by", "§7leveling up your SkyBlock Level."), List.of(
+            new SkyBlockEmblem("Diamond", Material.NAME_TAG, "§7◆",
+                    SkyBlockLevelCause.getLevelCause(10)),
+            new SkyBlockEmblem("Spade", Material.NAME_TAG, "§7♠",
+                    SkyBlockLevelCause.getLevelCause(20))
     )),
     ;
 
@@ -31,7 +39,7 @@ public enum SkyBlockEmblems {
     public int amountUnlocked(SkyBlockPlayer player) {
         int amount = 0;
         for (SkyBlockEmblem emblem : emblems) {
-            if (emblem.cause.hasUnlocked(player)) {
+            if (player.hasUnlockedXPCause(emblem.cause())) {
                 amount++;
             }
         }

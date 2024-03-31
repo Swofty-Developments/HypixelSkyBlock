@@ -14,6 +14,8 @@ import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUISkyBlockLevels extends SkyBlockInventoryGUI {
     public GUISkyBlockLevels() {
@@ -87,6 +89,92 @@ public class GUISkyBlockLevels extends SkyBlockInventoryGUI {
                         "§eClick to view!");
             }
         });
+
+        SkyBlockLevelRequirement currentLevel = getPlayer().getSkyBlockExperience().getLevel();
+        List<SkyBlockLevelRequirement> levels = new ArrayList<>();
+        levels.add(currentLevel);
+        for (int i = 0; i < 5; i++) {
+            if (currentLevel.getNextLevel() == null) {
+                break;
+            }
+            levels.add(currentLevel.getNextLevel());
+            currentLevel = currentLevel.getNextLevel();
+        }
+
+        int unlockedLevel = getPlayer().getSkyBlockExperience().getLevel().asInt();
+        for (int i = 0; i < 5; i++) {
+            if (levels.get(i) == null) {
+                break;
+            }
+
+            SkyBlockLevelRequirement level = levels.get(i);
+            set(new GUIClickableItem(19 + i) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUISkyBlockLevel(level).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    List<String> lore = new ArrayList<>();
+                    Material material = level.isMilestone() ? Material.RED_STAINED_GLASS : Material.RED_STAINED_GLASS_PANE;
+
+                    if (unlockedLevel == level.asInt()){
+                        lore.add("§8Your Level");
+                        lore.add(" ");
+                        material = level.isMilestone() ? Material.LIME_STAINED_GLASS : Material.LIME_STAINED_GLASS_PANE;
+                    } else if (unlockedLevel + 1 == level.asInt()) {
+                        lore.add("§8Next Level");
+                        lore.add(" ");
+                        material = level.isMilestone() ? Material.YELLOW_STAINED_GLASS : Material.YELLOW_STAINED_GLASS_PANE;
+                    }
+
+                    lore.add("§7Rewards:");
+                    level.getUnlocks().forEach(unlock -> {
+                        lore.addAll(unlock.getDisplay(player, level.asInt()));
+                    });
+                    lore.add(" ");
+                    if (unlockedLevel == level.asInt()) {
+                        lore.add("§a§lUNLOCKED");
+                        lore.add(" ");
+                    }
+                    lore.add("§eClick to view rewards!");
+
+                    return ItemStackCreator.getStack("§7Level " + level.asInt(),
+                            material,
+                            1, lore);
+                }
+            });
+        }
+
+        SkyBlockLevelRequirement currentLevelMilestone = getPlayer().getSkyBlockExperience().getLevel().getNextMilestoneLevel();
+        if (currentLevelMilestone != null)
+            set(new GUIClickableItem(30) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUISkyBlockLevel(currentLevelMilestone).open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§8Next Milestone Level");
+                    lore.add(" ");
+                    lore.add("§7Rewards:");
+                    currentLevelMilestone.getUnlocks().forEach(unlock -> {
+                        lore.addAll(unlock.getDisplay(player, currentLevelMilestone.asInt()));
+                    });
+                    lore.add(" ");
+                    lore.add("§7XP Left to Gain: §b" + (currentLevelMilestone.getCumulativeExperience() - player.getSkyBlockExperience().getTotalXP())
+                            + " XP §8(" + (int) (player.getSkyBlockExperience().getTotalXP() / currentLevelMilestone.getCumulativeExperience() * 100) + "%)");
+                    lore.add(" ");
+                    lore.add("§eClick to view rewards!");
+
+                    return ItemStackCreator.getStack("§7Level " + currentLevelMilestone.asInt(),
+                            Material.PURPLE_STAINED_GLASS_PANE,
+                            1, lore);
+                }
+            });
 
         updateItemStacks(getInventory(), getPlayer());
     }

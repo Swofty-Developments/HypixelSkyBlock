@@ -79,7 +79,7 @@ public class GUIEmblem extends SkyBlockPaginatedGUI<SkyBlockEmblems.SkyBlockEmbl
 
     @Override
     public GUIClickableItem createItemFor(SkyBlockEmblems.SkyBlockEmblem item, int slot, SkyBlockPlayer player) {
-        boolean unlocked = item.cause().hasUnlocked(player);
+        boolean unlocked = player.hasUnlockedXPCause(item.cause());
         CauseEmblem causeEmblem = (CauseEmblem) item.cause();
 
         return new GUIClickableItem(slot) {

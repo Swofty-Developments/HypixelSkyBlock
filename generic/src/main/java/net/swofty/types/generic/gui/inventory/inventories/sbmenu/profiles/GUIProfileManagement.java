@@ -199,12 +199,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
             lore.add("§7Purse Coins: §6" + handler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue());
 
         String age = StringUtility.profileAge(
-                        System.currentTimeMillis() - handler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue())
-                .replaceFirst("s", " second(s)").replaceFirst("m", " minute(s)")
-                .replaceFirst("h", " hour(s)");
-
-        if (!age.contains("second"))
-            age = age.replaceFirst("d", " day(s)");
+                        System.currentTimeMillis() - handler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue());
 
         lore.add("§7Age: §9" + age);
 

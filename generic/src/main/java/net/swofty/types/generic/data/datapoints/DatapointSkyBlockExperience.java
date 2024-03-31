@@ -2,12 +2,16 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
+import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -69,6 +73,8 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
     public static class PlayerSkyBlockExperience {
         private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
         private Map.Entry<SkyBlockEmblems, Integer> currentEmblem = null;
+        @Setter
+        private SkyBlockPlayer attachedPlayer = null;
 
         public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
             this.completedExperienceCauses = completedExperienceCauses;
@@ -91,7 +97,14 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
         public void addExperience(SkyBlockLevelCauseAbstr cause) {
             if (completedExperienceCauses.contains(cause)) return;
+
+            double oldXP = getTotalXP();
             completedExperienceCauses.add(cause);
+            double newXP = getTotalXP();
+
+            if (getAttachedPlayer() != null)
+                SkyBlockEvent.callSkyBlockEvent(new SkyBlockXPModificationEvent(
+                        getAttachedPlayer(), cause, oldXP, newXP));
         }
 
         public String getNextLevelDisplay() {

@@ -3,31 +3,28 @@ package net.swofty.types.generic.levels.causes;
 import lombok.Getter;
 import net.swofty.types.generic.levels.abstr.CauseEmblem;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 @Getter
-public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
-    private final SkillCategories category;
-    private final int level;
+public class LevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
+    private int level;
 
-    public SkillLevelCause(SkillCategories category, int level) {
-        this.category = category;
+    public LevelCause(int level) {
         this.level = level;
     }
 
     @Override
     public double xpReward() {
-        return 5;
+        return 0;
     }
 
     @Override
     public String getEmblemRequiresMessage() {
-        return "Requires " + category + " Skill " + level;
+        return "Requires SkyBlock Level " + level;
     }
 
     @Override
     public String emblemEisplayName() {
-        return category.toString() + " Skill " + level;
+        return "SkyBlock Level " + level;
     }
 }
