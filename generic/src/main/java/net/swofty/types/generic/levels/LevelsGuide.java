@@ -6,6 +6,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterSkills;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;

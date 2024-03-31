@@ -1,4 +1,4 @@
-package net.swofty.types.generic.levels;
+package net.swofty.types.generic.levels.abstr;
 
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

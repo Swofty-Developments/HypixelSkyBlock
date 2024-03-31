@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
+import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.levels.SkyBlockLevelCauseAbstr;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExperience.PlayerSkyBlockExperience> {
     private static final Serializer<PlayerSkyBlockExperience> serializer = new Serializer<>() {
@@ -24,7 +23,14 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
                 serialized.add(SkyBlockLevelCause.getKey(cause));
             });
 
-            return new JSONObject(new HashMap<>(Map.of("values", serialized))).toString();
+            if (value.getCurrentEmblem() == null) return new JSONObject(new HashMap<>(Map.of(
+                    "values", serialized
+            ))).toString();
+
+            return new JSONObject(new HashMap<>(Map.of(
+                    "values", serialized,
+                    "emblem", value.getCurrentEmblem().getKey().name() + ":" + value.getCurrentEmblem().getValue()
+            ))).toString();
         }
 
         @Override
@@ -33,15 +39,20 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
             JSONObject jsonObject = new JSONObject(json);
             jsonObject.getJSONArray("values").forEach((value) -> {
-                experience.add(SkyBlockLevelCause.getCause((String) value));
+                if (value instanceof String)
+                    experience.add(SkyBlockLevelCause.getCause((String) value));
             });
 
-            return new PlayerSkyBlockExperience(experience);
+            if (!jsonObject.has("emblem") || jsonObject.isNull("emblem")) return new PlayerSkyBlockExperience(experience, null);
+            String[] emblem = jsonObject.getString("emblem").split(":");
+            AbstractMap.SimpleEntry<SkyBlockEmblems, Integer> currentEmblem = new HashMap.SimpleEntry<>(SkyBlockEmblems.valueOf(emblem[0]), Integer.parseInt(emblem[1]));
+
+            return new PlayerSkyBlockExperience(experience, currentEmblem);
         }
 
         @Override
         public PlayerSkyBlockExperience clone(PlayerSkyBlockExperience value) {
-            return new PlayerSkyBlockExperience(value.getCompletedExperienceCauses());
+            return new PlayerSkyBlockExperience(value.getCompletedExperienceCauses(), value.getCurrentEmblem());
         }
     };
 
@@ -57,9 +68,21 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
     @Getter
     public static class PlayerSkyBlockExperience {
         private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
+        private Map.Entry<SkyBlockEmblems, Integer> currentEmblem = null;
 
-        public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses) {
+        public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
             this.completedExperienceCauses = completedExperienceCauses;
+            this.currentEmblem = currentEmblem;
+        }
+
+        public @Nullable SkyBlockEmblems.SkyBlockEmblem getEmblem() {
+            if (currentEmblem == null) return null;
+            return currentEmblem.getKey().getEmblems().get(currentEmblem.getValue());
+        }
+
+        public void setEmblem(SkyBlockEmblems emblems, SkyBlockEmblems.SkyBlockEmblem emblem) {
+            currentEmblem = new HashMap.SimpleEntry<>(SkyBlockEmblems.getCategoryFromEmblem(emblem),
+                    emblems.getEmblems().indexOf(emblem));
         }
 
         public boolean hasExperienceFor(SkyBlockLevelCauseAbstr cause) {

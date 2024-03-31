@@ -40,17 +40,12 @@ public class ActionPlayerChat extends SkyBlockEvent {
         if (!rank.isStaff())
             message = message.replaceAll("[^\\x00-\\x7F]", "");
 
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
-
         String finalMessage = message;
         MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(onlinePlayer -> {
-            if (rank.equals(Rank.DEFAULT)) {
-                onlinePlayer.sendMessage("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
-                        dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§7: " + finalMessage);
-            } else {
-                onlinePlayer.sendMessage("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
-                        dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + player.getUsername() + "§f: " + finalMessage);
-            }
+            if (rank.equals(Rank.DEFAULT))
+                onlinePlayer.sendMessage(player.getFullDisplayName() + "§7: " + finalMessage);
+            else
+                onlinePlayer.sendMessage(player.getFullDisplayName() + "§f: " + finalMessage);
         });
     }
 }

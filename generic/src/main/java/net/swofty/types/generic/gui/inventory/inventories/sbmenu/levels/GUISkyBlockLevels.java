@@ -65,6 +65,28 @@ public class GUISkyBlockLevels extends SkyBlockInventoryGUI {
                         "§eClick to view!");
             }
         });
+        set(new GUIClickableItem(43) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIEmblems().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aPrefix Emblems", Material.NAME_TAG, 1,
+                        "§7Add some spice by having an emblem",
+                        "§7next to your name in chat and in tab!",
+                        " ",
+                        "§7Emblems are unlocked through various",
+                        "§7activities such as leveling up",
+                        "§7or completing achievements!",
+                        " ",
+                        "§7Emblems also show important data",
+                        "§7associated with them in chat!",
+                        " ",
+                        "§eClick to view!");
+            }
+        });
 
         updateItemStacks(getInventory(), getPlayer());
     }

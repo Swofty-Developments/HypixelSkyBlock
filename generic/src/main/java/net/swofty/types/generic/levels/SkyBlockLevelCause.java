@@ -3,6 +3,7 @@ package net.swofty.types.generic.levels;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Accessory;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
 import net.swofty.types.generic.levels.causes.SkillLevelCause;
 import net.swofty.types.generic.skill.SkillCategories;

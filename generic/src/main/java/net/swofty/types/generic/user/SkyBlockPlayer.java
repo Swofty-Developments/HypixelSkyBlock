@@ -28,6 +28,7 @@ import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockM
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
@@ -142,8 +143,15 @@ public class SkyBlockPlayer extends Player {
 
     public String getFullDisplayName() {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
+        SkyBlockEmblems.SkyBlockEmblem emblem = experience.getEmblem();
+        return getFullDisplayName(emblem);
+    }
+
+    public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
 
         return "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                (displayEmblem == null ? "" : displayEmblem.emblem() + " ") +
                 getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                 this.getUsername();
     }
