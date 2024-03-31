@@ -131,7 +131,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
         }
 
         public SkyBlockLevelRequirement getLevel() {
-            return SkyBlockLevelRequirement.getFromXP(getTotalXP());
+            return SkyBlockLevelRequirement.getFromTotalXP(getTotalXP());
         }
     }
 }

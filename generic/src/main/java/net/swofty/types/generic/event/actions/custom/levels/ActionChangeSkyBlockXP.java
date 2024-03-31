@@ -4,7 +4,6 @@ import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.actions.custom.skill.ActionSkillSkyBlockLevel;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.levels.SkyBlockLevelUnlock;
@@ -28,8 +27,8 @@ public class ActionChangeSkyBlockXP extends SkyBlockEvent {
         if (event.getNewXP() <= event.getOldXP()) return;
         SkyBlockPlayer player = event.getPlayer();
 
-        SkyBlockLevelRequirement oldLevel = SkyBlockLevelRequirement.getFromXP(event.getOldXP());
-        SkyBlockLevelRequirement newLevel = SkyBlockLevelRequirement.getFromXP(event.getNewXP());
+        SkyBlockLevelRequirement oldLevel = SkyBlockLevelRequirement.getFromTotalXP(event.getOldXP());
+        SkyBlockLevelRequirement newLevel = SkyBlockLevelRequirement.getFromTotalXP(event.getNewXP());
 
         if (oldLevel == newLevel) {
             player.sendMessage("§b+§3" + (event.getNewXP() - event.getOldXP()) + " §bSkyBlock XP");
@@ -42,12 +41,14 @@ public class ActionChangeSkyBlockXP extends SkyBlockEvent {
             List<SkyBlockLevelUnlock> unlocks = newLevel.getUnlocks();
 
             player.sendMessage("§3§m---------------------------------");
-            player.sendMessage("§b§lSKYBLOCK LEVEL UP! §7" + oldLevel.asInt() + " §8§l-> §3" + newLevel.asInt());
+            player.sendMessage("  §b§lSKYBLOCK LEVEL UP! §7" + oldLevel.asInt() + " §8§l-> §3" + newLevel.asInt());
             if (!unlocks.isEmpty()) {
                 player.sendMessage(" ");
-                player.sendMessage("§a§lREWARDS");
+                player.sendMessage("  §a§lREWARDS");
                 unlocks.forEach(unlock -> {
-                    unlock.getDisplay(player, newLevel.asInt()).forEach(player::sendMessage);
+                    unlock.getDisplay(player, newLevel.asInt()).forEach(line -> {
+                        player.sendMessage("  §8" + line);
+                    });
                 });
             }
             player.sendMessage("§3§m---------------------------------");

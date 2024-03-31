@@ -69,6 +69,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 SkyBlockLevelRequirement levelRequirement = player.getSkyBlockExperience().getLevel();
+                SkyBlockLevelRequirement nextLevel = levelRequirement.getNextLevel();
 
                 return ItemStackCreator.getStackHead("§aSkyBlock Leveling", "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
                         "§7Your SkyBlock Level: §8[" + levelRequirement.getColor() + levelRequirement + "§8]",
@@ -78,6 +79,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7rewards from completing unique",
                         "§7tasks.",
                         " ",
+                        "§7Progress to Level " + (nextLevel == null ? "§cMAX" : nextLevel),
                         player.getSkyBlockExperience().getNextLevelDisplay(),
                         " ",
                         "§eClick to view!");

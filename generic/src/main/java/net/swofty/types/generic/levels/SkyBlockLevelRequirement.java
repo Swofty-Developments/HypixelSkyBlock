@@ -92,14 +92,15 @@ public enum SkyBlockLevelRequirement {
         return String.valueOf(ordinal());
     }
 
-    public static SkyBlockLevelRequirement getFromXP(double xp) {
-        int cumulative = 0;
+    public static SkyBlockLevelRequirement getFromTotalXP(double xp) {
+        SkyBlockLevelRequirement toReturn = LEVEL_0;
         for (SkyBlockLevelRequirement requirement : values()) {
-            cumulative += requirement.experience;
-            if (cumulative >= xp) {
-                return requirement;
+            if (xp < requirement.experience) {
+                return toReturn;
+            } else {
+                toReturn = requirement;
             }
         }
-        return null;
+        return toReturn;
     }
 }

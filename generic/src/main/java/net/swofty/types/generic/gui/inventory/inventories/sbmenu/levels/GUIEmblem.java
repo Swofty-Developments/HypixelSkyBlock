@@ -115,7 +115,9 @@ public class GUIEmblem extends SkyBlockPaginatedGUI<SkyBlockEmblems.SkyBlockEmbl
                     ));
                 }
 
-                return ItemStackCreator.getStack(name, item.displayMaterial(), 1, lore);
+                return ItemStackCreator.getStack(name,
+                        unlocked ? item.displayMaterial() : Material.GRAY_DYE,
+                        1, lore);
             }
         };
     }
