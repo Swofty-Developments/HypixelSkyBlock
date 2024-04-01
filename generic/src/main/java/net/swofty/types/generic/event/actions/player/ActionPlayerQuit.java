@@ -10,6 +10,8 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.item.updater.PlayerItemOrigin;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -60,6 +62,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
                     player);
             SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
         }
+        PlayerItemOrigin.clearCache(player.getUuid());
         PacketListenerAirJump.playerData.remove(player);
         CustomEventCaller.clearCache(player);
         NPCDialogue.remove(player);

@@ -22,6 +22,13 @@ public class ItemStatistics {
         return new ItemStatisticsBuilder();
     }
 
+    @Override
+    public String toString() {
+        return "ItemStatistics{" +
+                "statistics=" + statistics +
+                '}';
+    }
+
     // Builder class
     public static class ItemStatisticsBuilder {
         private final Map<ItemStatistic, Double> statistics = new EnumMap<>(ItemStatistic.class);

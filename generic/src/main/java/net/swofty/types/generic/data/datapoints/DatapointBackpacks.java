@@ -19,7 +19,7 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
     }
 
     public DatapointBackpacks(String key) {
-        super(key, new PlayerBackpacks(new HashMap<>(), 1), serializer);
+        super(key, new PlayerBackpacks(), serializer);
     }
 
     @Getter
@@ -28,6 +28,11 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
         private final Map<Integer, SkyBlockItem> backpacks;
         @Setter
         private int unlockedSlots;
+
+        public PlayerBackpacks() {
+            this.backpacks = new HashMap<>();
+            this.unlockedSlots = 1;
+        }
 
         public PlayerBackpacks(Map<Integer, SkyBlockItem> backpacks, int unlockedSlots) {
             this.backpacks = backpacks;

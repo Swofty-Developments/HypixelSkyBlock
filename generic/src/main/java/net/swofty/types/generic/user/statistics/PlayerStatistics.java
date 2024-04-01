@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -21,6 +22,7 @@ import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
@@ -46,16 +48,13 @@ public class PlayerStatistics {
     }
 
     public ItemStatistics allArmorStatistics() {
+        PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
         ArrayList<SkyBlockItem> armorPieces = new ArrayList<>();
 
-        ItemStack helmet = player.getInventory().getHelmet();
-        ItemStack chestplate = player.getInventory().getChestplate();
-        ItemStack leggings = player.getInventory().getLeggings();
-        ItemStack boots = player.getInventory().getBoots();
-        if (SkyBlockItem.isSkyBlockItem(helmet)) armorPieces.add(new SkyBlockItem(helmet));
-        if (SkyBlockItem.isSkyBlockItem(chestplate)) armorPieces.add(new SkyBlockItem(chestplate));
-        if (SkyBlockItem.isSkyBlockItem(leggings)) armorPieces.add(new SkyBlockItem(leggings));
-        if (SkyBlockItem.isSkyBlockItem(boots)) armorPieces.add(new SkyBlockItem(boots));
+        armorPieces.add(cache.get(PlayerItemOrigin.HELMET));
+        armorPieces.add(cache.get(PlayerItemOrigin.CHESTPLATE));
+        armorPieces.add(cache.get(PlayerItemOrigin.LEGGINGS));
+        armorPieces.add(cache.get(PlayerItemOrigin.BOOTS));
 
         ItemStatistics total = ItemStatistics.builder().build();
         for (SkyBlockItem item : armorPieces) {
@@ -69,10 +68,7 @@ public class PlayerStatistics {
     }
 
     public ItemStatistics mainHandStatistics() {
-        ItemStack mainhand = player.getInventory().getItemInMainHand();
-        if (!SkyBlockItem.isSkyBlockItem(mainhand)) return ItemStatistics.EMPTY;
-
-        SkyBlockItem item = new SkyBlockItem(mainhand);
+        SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
 
         if (item.getGenericInstance() != null)
             if (item.getGenericInstance() instanceof ConstantStatistics)
@@ -282,7 +278,7 @@ public class PlayerStatistics {
                 player.sendActionBar(Component.text(toSend));
             });
             return TaskSchedule.tick(4);
-        });
+        }, ExecutionType.ASYNC);
     }
 
     public static void statisticsLoop() {
@@ -316,7 +312,7 @@ public class PlayerStatistics {
                 }
             });
             return TaskSchedule.tick(30);
-        });
+        }, ExecutionType.ASYNC);
     }
 
     public static void missionLoop() {
@@ -366,7 +362,7 @@ public class PlayerStatistics {
                 barCache.put(player, bar);
             });
             return TaskSchedule.tick(30);
-        });
+        }, ExecutionType.ASYNC);
     }
 
     public static void manaLoop() {
@@ -382,7 +378,7 @@ public class PlayerStatistics {
                 }
             });
             return TaskSchedule.seconds(1);
-        });
+        }, ExecutionType.ASYNC);
     }
 }
 

@@ -33,9 +33,12 @@ import java.util.function.BiFunction;
 
 public class PlayerItemUpdater {
     public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack) {
-        if (stack.hasTag(Tag.Boolean("Uneditable")) && stack.getTag(Tag.Boolean("Uneditable"))) {
-            return ItemStackCreator.getFromStack(stack);
-        }
+        return playerUpdateFull(player, stack).getValue();
+    }
+
+    public static Map.Entry<SkyBlockItem, ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack) {
+        if (stack.hasTag(Tag.Boolean("Uneditable")) && stack.getTag(Tag.Boolean("Uneditable")))
+            return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 
         if (!SkyBlockItem.isSkyBlockItem(stack) || stack.getMaterial().equals(Material.AIR)) {
             /**
@@ -48,7 +51,7 @@ public class PlayerItemUpdater {
             lore.updateLore(player);
             stack = lore.getStack();
 
-            return itemAsBuilder.lore(stack.getLore()).amount(stack.amount());
+            return Map.entry(item, itemAsBuilder.lore(stack.getLore()).amount(stack.amount()));
         }
 
         /**
@@ -149,23 +152,42 @@ public class PlayerItemUpdater {
             item.getAttributeHandler().setGemData(gemData);
         }
 
-        return toReturn.amount(stack.amount()).lore(stack.getLore()).displayName(stack.getDisplayName());
+        return Map.entry(item,
+                toReturn.amount(stack.amount())
+                        .lore(stack.getLore())
+                        .displayName(stack.getDisplayName()));
     }
 
     public static void updateLoop(Scheduler scheduler) {
         scheduler.submitTask(() -> {
+            List<CompletableFuture<Void>> futures = new ArrayList<>();
+
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                Arrays.stream(PlayerItemOrigin.values()).forEach(origin -> {
-                    if (!origin.shouldBeLooped()) return;
+                futures.add(CompletableFuture.runAsync(() -> {
+                    PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
 
-                    ItemStack item = origin.getStack(player);
-                    if (item == null) return;
-                    if (item.isAir()) return;
+                    Arrays.stream(PlayerItemOrigin.values()).forEach(origin -> {
+                        if (!origin.shouldBeLooped()) return;
 
-                    origin.setStack(player, playerUpdate(player, item).build());
-                });
+                        ItemStack item = origin.getStack(player);
+                        if (item == null || item.isAir()) {
+                            cache.put(origin, new SkyBlockItem(Material.AIR));
+                            return;
+                        }
+
+                        Map.Entry<SkyBlockItem, ItemStack.Builder> builder = playerUpdateFull(player, item);
+                        cache.put(origin, builder.getKey());
+                        origin.setStack(player, builder.getValue().build());
+                    });
+
+                    PlayerItemOrigin.setCache(player.getUuid(), cache);
+                }));
             });
-            return TaskSchedule.tick(40);
+
+            // Wait for all futures to complete, do it async so they're at the same time
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+            return TaskSchedule.tick(10);
         });
     }
 }

@@ -1,9 +1,12 @@
 package net.swofty.types.generic.item.updater;
 
+import lombok.NonNull;
+import lombok.Setter;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -25,9 +28,12 @@ public enum PlayerItemOrigin {
         player.getInventory().setItemStack((Integer) entry.getValue(), entry.getKey());
     }, false);
 
+    private final static Map<UUID, OriginCache> cache = new HashMap<>();
+
     private final Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever;
     private final BiConsumer<SkyBlockPlayer, Map.Entry<ItemStack, Object>> setter;
     private final boolean loop;
+    @Setter
     private Object data;
 
     PlayerItemOrigin(Function<Map.Entry<SkyBlockPlayer, Object>, ItemStack> retriever,
@@ -36,10 +42,6 @@ public enum PlayerItemOrigin {
         this.setter = setter;
         this.loop = loop;
         this.data = new Object();
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 
     public ItemStack getStack(SkyBlockPlayer player) {
@@ -52,5 +54,31 @@ public enum PlayerItemOrigin {
 
     public Boolean shouldBeLooped() {
         return loop;
+    }
+
+    public static OriginCache getFromCache(UUID uuid) {
+        if (!cache.containsKey(uuid))
+            cache.put(uuid, new OriginCache(new HashMap<>()));
+        return cache.get(uuid);
+    }
+
+    public static void setCache(UUID uuid, OriginCache cache) {
+        PlayerItemOrigin.cache.put(uuid, cache);
+    }
+
+    public static void clearCache(UUID uuid) {
+        cache.remove(uuid);
+    }
+
+    public record OriginCache(HashMap<PlayerItemOrigin, SkyBlockItem> cache) {
+        public @NonNull SkyBlockItem get(PlayerItemOrigin origin) {
+            if (!cache.containsKey(origin))
+                return new SkyBlockItem(ItemStack.AIR);
+            return cache.get(origin);
+        }
+
+        public void put(PlayerItemOrigin origin, SkyBlockItem item) {
+            cache.put(origin, item);
+        }
     }
 }
