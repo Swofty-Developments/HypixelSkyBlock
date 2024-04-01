@@ -6,10 +6,18 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
+import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
+import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUITiaTheFairy extends SkyBlockInventoryGUI {
     public GUITiaTheFairy() {
@@ -20,27 +28,58 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
+
+        int collectedAmount = getPlayer().getFairySouls().getCollectedFairySouls().size();
+        boolean canExchange = collectedAmount >= 5;
+        FairySoulExchangeLevels nextLevel = getPlayer().getFairySouls().getNextExchangeLevel();
+
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                if (!canExchange) {
+                    player.sendMessage("§cYou don't have enough Fairy Souls!");
+                    return;
+                }
 
+                player.closeInventory();
+                player.getFairySouls().exchange();
+                player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                                .setValue(player.getFairySouls());
+                player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
+                nextLevel.getDisplay().forEach(player::sendMessage);
+
+                DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
+                        DataHandler.Data.BACKPACKS, DatapointBackpacks.class
+                ).getValue();
+                backpacks.setUnlockedSlots(backpacks.getUnlockedSlots() +
+                        nextLevel.getBackpackSlots());
+                getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class)
+                        .setValue(backpacks);
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStackHead("§aExchange Fairy Souls", "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
+                List<String> lore = new ArrayList<>(List.of(
                         "§7Find §dFairy Souls §7around the",
                         "§7world and bring them back to me",
                         "§7and I will reward you with",
-                        "§7Skyblock XP and Backpack Slots!",
+                        "§7SkyBlock XP and Backpack Slots!",
                         "",
-                        "§7Fairy Souls: §e0§7/§d5",
+                        "§7Fairy Souls: " + (canExchange ? "§a" : "§e") + collectedAmount + "§7/§d5",
                         "",
-                        "§7Next Reward:",
-                        "§8+ §b10 Skyblock XP",
-                        "§6Backpack Slot #2",
+                        "§7Next Reward:"
+                ));
+
+                nextLevel.getDisplay().forEach(s -> lore.add("§7" + s));
+
+                lore.addAll(List.of(
                         "",
-                        "§cYou don't have enough Fairy Souls!");
+                        (canExchange ? "§eClick to exchange!" : "§cYou don't have enough Fairy Souls!"  )
+                ));
+
+                return ItemStackCreator.getStackHead("§aExchange Fairy Souls",
+                        "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387",
+                        1, lore);
             }
         });
         updateItemStacks(getInventory(), getPlayer());

@@ -1,13 +1,14 @@
 package net.swofty.types.generic.levels;
 
 import lombok.SneakyThrows;
+import net.swofty.types.generic.collection.CollectionCategories;
+import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.types.generic.levels.causes.LevelCause;
-import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
-import net.swofty.types.generic.levels.causes.SkillLevelCause;
+import net.swofty.types.generic.levels.causes.*;
 import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +39,24 @@ public class SkyBlockLevelCause {
         for (int i = 0; i <= 500; i++) {
             CAUSES.put("level-" + i, new LevelCause(i));
         }
+
+        // Register all collection causes
+        for (ItemType itemType : ItemType.values()) {
+            CollectionCategory category = CollectionCategories.getCategory(itemType);
+            if (category == null) continue;
+
+            for (CollectionCategory.ItemCollection collection : category.getCollections()) {
+                for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
+                    CAUSES.put("collection-" + itemType.name() + "-" + collection.getPlacementOf(reward),
+                            new CollectionLevelCause( itemType, collection.getPlacementOf(reward)));
+                }
+            }
+        }
+
+        // Register all Fairy Exchange rewards
+        for (int i = 1; i <= FairySoulExchangeLevels.values().length; i++) {
+            CAUSES.put("fairy-soul-exchange-" + i, new FairySoulExchangeLevelCause(i));
+        }
     }
 
     public static Double getTotalXP() {
@@ -46,6 +65,27 @@ public class SkyBlockLevelCause {
             total += cause.xpReward();
         }
         return total;
+    }
+
+    public static FairySoulExchangeLevelCause getFairySoulExchangeCause(int exchangeCount) {
+        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+            if (cause instanceof FairySoulExchangeLevelCause exchangeCause) {
+                if (exchangeCause.getExchangeCount() == exchangeCount) {
+                    return exchangeCause;
+                }
+            }
+        }
+        return null;
+    }
+    public static CollectionLevelCause getCollectionCause(ItemType itemType, int level) {
+        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+            if (cause instanceof CollectionLevelCause collectionCause) {
+                if (collectionCause.getType() == itemType && collectionCause.getLevel() == level) {
+                    return collectionCause;
+                }
+            }
+        }
+        return null;
     }
 
     public static int getAmountOfCauses() {
@@ -95,7 +135,7 @@ public class SkyBlockLevelCause {
                 return entry.getKey();
             }
         }
-        return null;
+        throw new IllegalArgumentException("Cause not found " + cause.getClass().getSimpleName());
     }
 
     public static List<SkyBlockLevelCauseAbstr> getSkillCauses(SkillCategories category, int levelUpToInclusive) {

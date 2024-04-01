@@ -31,7 +31,8 @@ public class ActionChangeSkyBlockXP extends SkyBlockEvent {
         SkyBlockLevelRequirement newLevel = SkyBlockLevelRequirement.getFromTotalXP(event.getNewXP());
 
         if (oldLevel == newLevel) {
-            player.sendMessage("§b+§3" + (event.getNewXP() - event.getOldXP()) + " §bSkyBlock XP");
+            if (event.getCause().shouldDisplayMessage(player))
+                player.sendMessage("§b+§3" + (event.getNewXP() - event.getOldXP()) + " §bSkyBlock XP");
         } else {
             if (!(event.getCause() instanceof LevelCause)) {
                 player.getSkyBlockExperience().addExperience(

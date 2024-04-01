@@ -3,7 +3,7 @@ package net.swofty.types.generic.event.actions.player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.fairysouls.EntityFairySoul;
+import net.swofty.types.generic.entity.EntityFairySoul;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;

@@ -34,6 +34,10 @@ public record ProfilesDatabase(String id) implements MongoDB {
         return doc.get(key);
     }
 
+    public static void replaceDocument(String uniqueId, Document document) {
+        collection.replaceOne(Filters.eq("_id", uniqueId), document);
+    }
+
     public List<Document> getAll() {
         FindIterable<Document> results = collection.find();
         List<Document> list = new ArrayList<>();

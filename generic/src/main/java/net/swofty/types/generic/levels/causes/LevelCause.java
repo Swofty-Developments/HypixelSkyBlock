@@ -27,4 +27,9 @@ public class LevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
     public String emblemEisplayName() {
         return "SkyBlock Level " + level;
     }
+
+    @Override
+    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+        return false; // Only used for emblems, should not display
+    }
 }

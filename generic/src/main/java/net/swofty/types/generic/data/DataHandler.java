@@ -281,7 +281,7 @@ public class DataHandler {
         }),
         SHOPPING_DATA("shopping_data", false, false, true, DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()), (player, datapoint) -> {}),
         TOGGLES("toggles", true, false, false, DatapointToggles.class, new DatapointToggles("toggles")),
-        FAIRY_SOULS("fairy_souls", false, false, false, DatapointIntegerList.class, new DatapointIntegerList("fairy_souls")),
+        FAIRY_SOULS("player_fairy_souls", false, false, false, DatapointFairySouls.class, new DatapointFairySouls("player_fairy_souls")),
         CREATED("created", false, true, false, DatapointLong.class, new DatapointLong("created", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
             if (datapoint.getValue().equals(0L)) {

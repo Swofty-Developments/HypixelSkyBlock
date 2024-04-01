@@ -113,19 +113,27 @@ public abstract class Datapoint<T> {
                 coopMembersProfiles.removeAll(updatedProfiles);
                 coopMembersProfiles.remove(dataHandler.getUuid());
                 coopMembersProfiles.forEach(uuid -> {
-                    ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
-                    DataHandler dataHandler = DataHandler.fromDocument(profilesDatabase.getDocument());
-                    dataHandler.getDatapoint(key).value = value;
+                    Thread.startVirtualThread(() -> {
+                        ProfilesDatabase profilesDatabase = new ProfilesDatabase(uuid.toString());
+                        UUID playerUUID = dataHandler.getUuid();
+                        ProxyPlayer proxyPlayer = new ProxyPlayer(playerUUID);
 
-                    UUID playerUUID = dataHandler.getUuid();
-                    ProxyPlayer proxyPlayer = new ProxyPlayer(playerUUID);
+                        if (proxyPlayer.isOnline().join()) {
+                            // Put the freshest data in the DB
+                            proxyPlayer.refreshCoopData(key);
+                        }
 
-                    Document document = dataHandler.toDocument(uuid);
-                    ProfilesDatabase.collection.replaceOne(profilesDatabase.getDocument(), document);
+                        DataHandler dataHandler = DataHandler.fromDocument(profilesDatabase.getDocument());
+                        dataHandler.getDatapoint(key).value = value;
 
-                    if (proxyPlayer.isOnline().join()) {
-                        proxyPlayer.refreshCoopData(key);
-                    }
+                        Document document = dataHandler.toDocument(uuid);
+                        ProfilesDatabase.collection.replaceOne(profilesDatabase.getDocument(), document);
+
+                        if (proxyPlayer.isOnline().join()) {
+                            // Refresh the player's data with the new data
+                            proxyPlayer.refreshCoopData(key);
+                        }
+                    });
                 });
             }
         }

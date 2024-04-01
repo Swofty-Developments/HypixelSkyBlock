@@ -2,15 +2,19 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUITiaTheFairy;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCTiaTheFairy extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCTiaTheFairy extends NPCDialogue {
     public NPCTiaTheFairy() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Tia The Fairy", "§e§lCLICK"};
+                return new String[]{"Tia The Fairy", "§e§lCLICK"};
             }
 
             @Override
@@ -37,6 +41,29 @@ public class NPCTiaTheFairy extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
+        if (isInDialogue(e.player()))
+            return;
+        DatapointToggles.Toggles toggle = e.player().getToggles();
+
+        if (!toggle.get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_TIA)) {
+            setDialogue(e.player(), "hello");
+            toggle.set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_TIA, true);
+            return;
+        }
+
         new GUITiaTheFairy().open(e.player());
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Welcome to the Fairy Pond! I am Tia.",
+                                "You may have noticed some strange orbs laying around the island.",
+                                "They are the souls of my fallen sisters.",
+                                "If you find any more during your travels, please bring them back to me!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 }

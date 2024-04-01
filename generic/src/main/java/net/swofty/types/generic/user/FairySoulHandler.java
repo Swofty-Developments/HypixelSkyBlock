@@ -1,6 +1,7 @@
 package net.swofty.types.generic.user;
 
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
@@ -10,7 +11,7 @@ public record FairySoulHandler(SkyBlockPlayer player) {
 
     public int getFound(FairySoulZone zone) {
         int amount = 0;
-        for (Integer id : player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue()) {
+        for (Integer id : player.getFairySouls().getAllFairySouls()) {
             if (FairySoulDatabase.getAllSouls().get(id).getZone() == zone) {
                 amount++;
             }
@@ -29,6 +30,6 @@ public record FairySoulHandler(SkyBlockPlayer player) {
     }
 
     public int getTotalFoundFairySouls() {
-        return player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size();
+        return player.getFairySouls().getAllFairySouls().size();
     }
 }

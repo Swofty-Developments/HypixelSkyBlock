@@ -5,8 +5,9 @@ import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
+import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
+import net.swofty.types.generic.entity.EntityFairySoul;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -41,11 +42,21 @@ public class FairySoul {
     }
 
     public void collect(SkyBlockPlayer player) {
-        if (player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).hasOrAdd(id)) {
+        DatapointFairySouls.PlayerFairySouls fairySouls = player.getFairySouls();
+        if (!fairySouls.getAllFairySouls().contains(id)) {
+            fairySouls.addCollectedFairySouls(id);
+
             player.sendMessage("§d§lSOUL! §fYou found a §dFairy Soul§f!");
-        } else {
-            player.sendMessage("§dYou have already found that Fairy Soul!");
+            player.sendMessage("§7Go to Tia the Fairy in the §eHub§7 to exchange it for rewards!");
+            player.getDataHandler()
+                    .get(DataHandler.Data.FAIRY_SOULS, DatapointFairySouls.class)
+                    .setValue(fairySouls);
+            return;
         }
+
+        player.sendMessage("§dYou have already found that Fairy Soul!");
+        if (!fairySouls.getExchangedFairySouls().contains(id))
+            player.sendMessage("§7Go to Tia the Fairy in the §eHub§7 to exchange it for rewards!");
     }
 
     public static List<FairySoul> getFairySouls() {

@@ -1,10 +1,14 @@
 package net.swofty.types.generic.levels.causes;
 
 import lombok.Getter;
+import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.levels.abstr.CauseEmblem;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.Arrays;
 
 @Getter
 public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {
@@ -18,6 +22,11 @@ public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmb
 
     @Override
     public double xpReward() {
+        for (SkillCategory.Reward unlock : category.asCategory().getReward(level).unlocks()) {
+            if (unlock.type() == SkillCategory.Reward.UnlockType.XP) {
+                return ((SkillCategory.XPReward) unlock).getXP();
+            }
+        }
         return 5;
     }
 
@@ -29,5 +38,10 @@ public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmb
     @Override
     public String emblemEisplayName() {
         return category.toString() + " Skill " + level;
+    }
+
+    @Override
+    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+        return false; // This is handled by the Skill up message
     }
 }

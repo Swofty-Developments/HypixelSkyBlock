@@ -1,4 +1,4 @@
-package net.swofty.types.generic.user.fairysouls;
+package net.swofty.types.generic.entity;
 
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -7,6 +7,7 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.utility.ExtraItemTags;
 
 import java.util.UUID;

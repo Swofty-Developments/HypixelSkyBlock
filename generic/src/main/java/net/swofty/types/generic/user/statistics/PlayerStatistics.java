@@ -106,7 +106,7 @@ public class PlayerStatistics {
     public ItemStatistics spareStatistics() {
         ItemStatistics spare = ItemStatistics.builder().build();
 
-        int fairySouls = player.getDataHandler().get(DataHandler.Data.FAIRY_SOULS, DatapointIntegerList.class).getValue().size();
+        int fairySouls = player.getFairySouls().getExchangedFairySouls().size();
         spare = spare.add(ItemStatistics.builder().with(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
 
         DatapointSkills.PlayerSkills skills = player.getSkills();

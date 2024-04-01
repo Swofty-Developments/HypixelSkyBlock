@@ -1,6 +1,8 @@
 package net.swofty.types.generic.data.datapoints;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.serializer.InventorySerializer;
@@ -17,13 +19,19 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
     }
 
     public DatapointBackpacks(String key) {
-        super(key, new PlayerBackpacks(), serializer);
+        super(key, new PlayerBackpacks(new HashMap<>(), 1), serializer);
     }
 
+    @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public record PlayerBackpacks(Map<Integer, SkyBlockItem> backpacks, int unlockedSlots) {
-        public PlayerBackpacks() {
-            this(new HashMap<>(), 1);
+    public static class PlayerBackpacks {
+        private final Map<Integer, SkyBlockItem> backpacks;
+        @Setter
+        private int unlockedSlots;
+
+        public PlayerBackpacks(Map<Integer, SkyBlockItem> backpacks, int unlockedSlots) {
+            this.backpacks = backpacks;
+            this.unlockedSlots = unlockedSlots;
         }
 
         public int getHighestBackpackSlot() {

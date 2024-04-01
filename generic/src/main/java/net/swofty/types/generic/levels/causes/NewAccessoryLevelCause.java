@@ -15,4 +15,9 @@ public class NewAccessoryLevelCause extends SkyBlockLevelCauseAbstr {
     public double xpReward() {
         return 1;
     }
+
+    @Override
+    public boolean shouldDisplayMessage(SkyBlockPlayer player) {
+        return true;
+    }
 }

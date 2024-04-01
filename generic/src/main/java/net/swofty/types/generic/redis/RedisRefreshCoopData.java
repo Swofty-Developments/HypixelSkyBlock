@@ -1,13 +1,16 @@
 package net.swofty.types.generic.redis;
 
+import com.mongodb.client.model.Filters;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.bson.Document;
 
 import java.util.UUID;
+import java.util.logging.Filter;
 
 public class RedisRefreshCoopData implements ProxyToClient {
     @Override
@@ -26,6 +29,9 @@ public class RedisRefreshCoopData implements ProxyToClient {
         player.getDataHandler().getDatapoint(datapoint).setValueBypassCoop(
                 dataHandler.getDatapoint(datapoint).getValue()
         );
+
+        Document toReplace = player.getDataHandler().toDocument(player.getProfiles().getCurrentlySelected());
+        ProfilesDatabase.replaceDocument(player.getProfiles().getCurrentlySelected().toString(), toReplace);
 
         return "ok";
     }
