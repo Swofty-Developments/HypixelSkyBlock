@@ -51,7 +51,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIStorageBackpackPage(data.getHighestBackpackSlot(),
-                            data.backpacks().get(data.getHighestBackpackSlot())).open(player);
+                            data.getBackpacks().get(data.getHighestBackpackSlot())).open(player);
                 }
 
                 @Override
@@ -61,11 +61,11 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
                 }
             });
 
-            if (data.backpacks().containsKey(page + 1))
+            if (data.getBackpacks().containsKey(page + 1))
                 set(new GUIClickableItem(7) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIStorageBackpackPage(page + 1, data.backpacks().get(page + 1)).open(player);
+                        new GUIStorageBackpackPage(page + 1, data.getBackpacks().get(page + 1)).open(player);
                     }
 
                     @Override
@@ -79,7 +79,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(5) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIStorageBackpackPage(data.getLowestBackpackSlot(), data.backpacks().get(data.getLowestBackpackSlot())).open(player);
+                    new GUIStorageBackpackPage(data.getLowestBackpackSlot(), data.getBackpacks().get(data.getLowestBackpackSlot())).open(player);
                 }
 
                 @Override
@@ -89,11 +89,11 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
                 }
             });
 
-            if (data.backpacks().containsKey(page - 1))
+            if (data.getBackpacks().containsKey(page - 1))
                 set(new GUIClickableItem(6) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIStorageBackpackPage(page - 1, data.backpacks().get(page - 1)).open(player);
+                        new GUIStorageBackpackPage(page - 1, data.getBackpacks().get(page - 1)).open(player);
                     }
 
                     @Override
@@ -137,7 +137,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
             item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)));
         }
 
-        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().backpacks().put(page, item);
+        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
             item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)));
         }
 
-        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().backpacks().put(page, item);
+        getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item);
     }
 
     @Override

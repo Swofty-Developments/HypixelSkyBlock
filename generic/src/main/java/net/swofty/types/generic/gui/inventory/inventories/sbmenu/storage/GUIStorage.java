@@ -100,12 +100,12 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                 DataHandler.Data.BACKPACKS, DatapointBackpacks.class
         ).getValue();
 
-        Map<Integer, SkyBlockItem> backpackItems = backpacks.backpacks();
+        Map<Integer, SkyBlockItem> backpackItems = backpacks.getBackpacks();
 
         for (int backpack_slot = 27; backpack_slot <= 44; backpack_slot++) {
             int slot = backpack_slot - 26;
 
-            if (backpacks.unlockedSlots() < slot) {
+            if (backpacks.getUnlockedSlots() < slot) {
                 set(new GUIItem(backpack_slot) {
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -140,7 +140,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
 
                         backpackItems.put(slot, item);
                         player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
-                                new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.unlockedSlots())
+                                new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
                         );
 
                         player.sendMessage("§ePlacing backpack in slot " + slot + "...");
