@@ -25,7 +25,8 @@ import java.util.UUID;
 
 @EventParameters(description = "Load player data on join",
         node = EventNodes.PLAYER_DATA,
-        requireDataLoaded = false)
+        requireDataLoaded = false,
+        isAsync = true)
 public class ActionPlayerDataSpawn extends SkyBlockEvent {
 
     @Override

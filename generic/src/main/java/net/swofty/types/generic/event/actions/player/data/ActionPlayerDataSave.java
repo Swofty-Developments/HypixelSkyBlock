@@ -24,7 +24,8 @@ import java.util.UUID;
 
 @EventParameters(description = "Saves player data on quit",
         node = EventNodes.PLAYER,
-        requireDataLoaded = false)
+        requireDataLoaded = false,
+        isAsync = true)
 public class ActionPlayerDataSave extends SkyBlockEvent {
 
     @Override

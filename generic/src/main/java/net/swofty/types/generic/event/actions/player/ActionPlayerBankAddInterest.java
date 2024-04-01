@@ -46,6 +46,8 @@ public class ActionPlayerBankAddInterest extends SkyBlockEvent {
             totalEarnt += bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE;
         }
 
+        if (totalEarnt == 0) return;
+
         bankData.setAmount(bankData.getAmount() + totalEarnt);
         bankData.setLastClaimedInterest(SkyBlockCalendar.getElapsed());
         bankData.addTransaction(new DatapointBankData.Transaction(
