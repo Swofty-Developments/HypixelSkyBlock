@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
@@ -33,14 +34,21 @@ public class ActionIslandItemDrop extends SkyBlockEvent {
 
         if (material == null) return;
 
+        SkyBlockItem item;
+        if (ItemDropChanger.get(material) != null) {
+            item = ItemDropChanger.get(material).getItemSupplier().get();
+        } else {
+            item = new SkyBlockItem(material);
+        }
+
         SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
-                player, material, playerBreakEvent.getBlockPosition()
+                player, item.getMaterial(), playerBreakEvent.getBlockPosition()
         ));
 
         /**
          * Handle block dropping
          */
-        DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(new SkyBlockItem(material), player);
+        DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
         Pos pos = Pos.fromPoint(playerBreakEvent.getBlockPosition());
         // Move the dropped item to the center of the block
         pos = pos.add(0.5, 0.5, 0.5);
