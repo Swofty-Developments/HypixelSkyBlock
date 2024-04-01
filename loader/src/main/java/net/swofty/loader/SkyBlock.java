@@ -40,7 +40,7 @@ public class SkyBlock {
     @Setter
     private static SkyBlockTypeLoader typeLoader;
 
-    private static final boolean ENABLE_SPARK = false;
+    private static final boolean ENABLE_SPARK = true;
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -138,7 +138,7 @@ public class SkyBlock {
         /**
          * Start the server
          */
-        MinecraftServer.setBrandName("SkyBlock");
+        MinecraftServer.setBrandName("SkyBlock-Python");
 
 
         /**
