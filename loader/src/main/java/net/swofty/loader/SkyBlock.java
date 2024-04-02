@@ -40,7 +40,7 @@ public class SkyBlock {
     @Setter
     private static SkyBlockTypeLoader typeLoader;
 
-    private static final boolean ENABLE_SPARK = true;
+    private static final boolean ENABLE_SPARK = Configuration.getOrDefault("spark" , false);
 
     @SneakyThrows
     public static void main(String[] args) {
