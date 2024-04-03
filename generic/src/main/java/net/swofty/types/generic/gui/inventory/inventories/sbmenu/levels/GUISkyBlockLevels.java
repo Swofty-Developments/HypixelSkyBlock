@@ -4,9 +4,12 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.emblem.GUIEmblems;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.rewards.GUILevelRewards;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
@@ -27,6 +30,59 @@ public class GUISkyBlockLevels extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
         set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
+
+        set(new GUIClickableItem(50) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                player.sendMessage(player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT) ?
+                        "§cSkyBlock Levels in Chat is now disabled!" :
+                        "§aSkyBlock Levels in Chat is now enabled!");
+
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT,
+                        !player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT));
+
+                getInventory().setItemStack(50, getItem(player).build());
+                getInventory().update();
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§bSkyBlock Levels in Chat",
+                        player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT)
+                                ? Material.LIME_DYE : Material.GRAY_DYE,
+                        1,
+                        "§7View other players' SkyBlock Level",
+                        "§7and their selected emblem in their",
+                        "§7chat messages.",
+                        " ",
+                        player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT)
+                                ? "§a§lENABLED" : "§c§lDISABLED",
+                        " ",
+                        "§eClick to toggle!");
+            }
+        });
+
+        set(new GUIClickableItem(34) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUILevelRewards().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                List<String> lore = new ArrayList<>();
+                lore.add("§7Unlock rewards for leveling up");
+                lore.add("§7your SkyBlock Level.");
+                lore.add(" ");
+                lore.addAll(GUILevelRewards.getAsDisplay(GUILevelRewards.getUnlocked(player),
+                        GUILevelRewards.getTotalAwards()));
+                lore.add(" ");
+                lore.add("§eClick to view rewards!");
+
+                return ItemStackCreator.getStack("§aLeveling Rewards",
+                        Material.CHEST, 1, lore);
+            }
+        });
 
         set(new GUIItem(4) {
             @Override
