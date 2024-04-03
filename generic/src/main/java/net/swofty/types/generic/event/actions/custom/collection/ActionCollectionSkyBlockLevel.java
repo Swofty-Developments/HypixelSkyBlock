@@ -8,7 +8,6 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.levels.causes.CollectionLevelCause;
 
 @EventParameters(description = "Handles the adding of SkyBlock XP in relation to collections",
         node = EventNodes.CUSTOM,

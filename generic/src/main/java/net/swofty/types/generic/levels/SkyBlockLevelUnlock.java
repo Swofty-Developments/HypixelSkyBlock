@@ -12,6 +12,7 @@ public abstract class SkyBlockLevelUnlock {
     public abstract List<String> getDisplay(SkyBlockPlayer player, int level);
 
     public enum UnlockType {
-        STATISTIC
+        STATISTIC,
+        CUSTOM
     }
 }

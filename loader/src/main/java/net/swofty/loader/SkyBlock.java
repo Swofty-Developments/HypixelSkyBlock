@@ -141,11 +141,6 @@ public class SkyBlock {
          * Start the server
          */
         MinecraftServer.setBrandName("SkyBlock");
-
-
-
-
-
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
         startServer.whenComplete((port, throwable) -> {
             minecraftServer.start(Configuration.get("host-name"), port);

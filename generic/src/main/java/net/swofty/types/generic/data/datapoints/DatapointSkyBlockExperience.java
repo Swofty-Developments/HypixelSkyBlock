@@ -9,8 +9,9 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.types.generic.levels.causes.LevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
         @Override
         public PlayerSkyBlockExperience deserialize(String json) {
-            List<SkyBlockLevelCauseAbstr> experience = new ArrayList<>();
+            List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> experience = new ArrayList<>();
 
             JSONObject jsonObject = new JSONObject(json);
             jsonObject.getJSONArray("values").forEach((value) -> {
@@ -71,14 +72,18 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
     @NoArgsConstructor
     @Getter
     public static class PlayerSkyBlockExperience {
-        private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
+        private List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
         private Map.Entry<SkyBlockEmblems, Integer> currentEmblem = null;
         @Setter
         private SkyBlockPlayer attachedPlayer = null;
 
-        public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
+        public PlayerSkyBlockExperience(List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
             this.completedExperienceCauses = completedExperienceCauses;
             this.currentEmblem = currentEmblem;
+        }
+
+        public List<SkyBlockLevelCauseAbstr> getOfType(Class type) {
+            return completedExperienceCauses.stream().filter(type::isInstance).toList();
         }
 
         public @Nullable SkyBlockEmblems.SkyBlockEmblem getEmblem() {
@@ -91,11 +96,11 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
                     emblems.getEmblems().indexOf(emblem));
         }
 
-        public boolean hasExperienceFor(SkyBlockLevelCauseAbstr cause) {
+        public boolean hasExperienceFor(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {
             return completedExperienceCauses.contains(cause);
         }
 
-        public void addExperience(SkyBlockLevelCauseAbstr cause) {
+        public void addExperience(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {
             if (completedExperienceCauses.contains(cause)) return;
             String causeKey = SkyBlockLevelCause.getKey(cause);
             if (completedExperienceCauses.stream().anyMatch((c) -> SkyBlockLevelCause.getKey(c).equals(causeKey))) return;
@@ -129,7 +134,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
         public Double getTotalXP() {
             if (completedExperienceCauses.isEmpty()) return 0.0;
-            return completedExperienceCauses.stream().mapToDouble(SkyBlockLevelCauseAbstr::xpReward).sum();
+            return completedExperienceCauses.stream().mapToDouble(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr::xpReward).sum();
         }
 
         public SkyBlockLevelRequirement getLevel() {

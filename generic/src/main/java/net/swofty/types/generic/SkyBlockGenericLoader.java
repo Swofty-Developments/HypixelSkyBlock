@@ -17,9 +17,6 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
-import net.minestom.server.network.packet.server.play.TeamsPacket;
-import net.minestom.server.scoreboard.Team;
-import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
@@ -52,7 +49,10 @@ import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
+import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.types.generic.levels.unlocks.CustomLevelUnlock;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -370,9 +370,10 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockValueEvent.register();
 
         /**
-         * Cache custom unlock collections
+         * Cache custom collections
          */
         Thread.startVirtualThread(() -> {
+            // Collection Unlocks
             CollectionCategories.getCategories().forEach(category -> {
                 Arrays.stream(category.getCollections()).forEach(collection -> {
                     List<CollectionCategory.ItemCollectionReward> rewards = List.of(collection.rewards());
@@ -384,6 +385,15 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                             }
                         });
                     });
+                });
+            });
+
+            // Level Unlocks
+            Arrays.stream(SkyBlockLevelRequirement.values()).forEach(requirement -> {
+                requirement.getUnlocks().forEach(unlock -> {
+                    if (unlock instanceof CustomLevelUnlock award) {
+                        CustomLevelAward.addToCache(requirement.asInt(), award.getAward());
+                    }
                 });
             });
         });

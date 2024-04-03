@@ -28,6 +28,7 @@ import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockM
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
@@ -145,13 +146,23 @@ public class SkyBlockPlayer extends Player {
     public String getFullDisplayName() {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
         SkyBlockEmblems.SkyBlockEmblem emblem = experience.getEmblem();
-        return getFullDisplayName(emblem);
+        return getFullDisplayName(emblem, experience.getLevel().getColor());
+    }
+
+    public String getFullDisplayName(String levelColor) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
+        return getFullDisplayName(experience.getEmblem(), levelColor);
     }
 
     public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem) {
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
+        return getFullDisplayName(displayEmblem, experience.getLevel().getColor());
+    }
 
-        return "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+    public String getFullDisplayName(SkyBlockEmblems.SkyBlockEmblem displayEmblem, String levelColor) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getSkyBlockExperience();
+
+        return "§8[" + levelColor + experience.getLevel() + "§8] " +
                 (displayEmblem == null ? "" : displayEmblem.emblem() + " ") +
                 getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                 this.getUsername();
@@ -427,6 +438,10 @@ public class SkyBlockPlayer extends Player {
         if (entry == null) return false;
 
         return getCollection().get(entry.getKey()) > entry.getValue();
+    }
+
+    public boolean hasCustomLevelAward(CustomLevelAward award) {
+        return getSkyBlockExperience().getLevel().asInt() >= CustomLevelAward.getLevel(award);
     }
 
     public DatapointFairySouls.PlayerFairySouls getFairySouls() {

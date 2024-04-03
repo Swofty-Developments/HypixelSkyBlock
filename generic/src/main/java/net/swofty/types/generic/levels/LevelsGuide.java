@@ -6,7 +6,6 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterSkills;
 import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +53,7 @@ public enum LevelsGuide {
 
 
     public static class TasksSet {
-        private Map<SkyBlockLevelCauseAbstr, String> causes;
+        private Map<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr, String> causes;
         private String name;
         private ItemStack material;
         private SkyBlockInventoryGUI guiToOpen;
@@ -65,7 +64,7 @@ public enum LevelsGuide {
         }
 
         public static class Builder {
-            private Map<SkyBlockLevelCauseAbstr, String> causes;
+            private Map<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr, String> causes;
             private ItemStack material;
             private SkyBlockInventoryGUI guiToOpen;
             private Function<SkyBlockPlayer, List<String>> display;
@@ -76,12 +75,12 @@ public enum LevelsGuide {
                 this.display = display;
             }
 
-            public Builder cause(SkyBlockLevelCauseAbstr cause, @Nullable String display) {
+            public Builder cause(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause, @Nullable String display) {
                 causes.put(cause, display);
                 return this;
             }
 
-            public Builder cause(List<SkyBlockLevelCauseAbstr> cause, @Nullable String display) {
+            public Builder cause(List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> cause, @Nullable String display) {
                 cause.forEach(c -> causes.put(c, display));
                 return this;
             }
