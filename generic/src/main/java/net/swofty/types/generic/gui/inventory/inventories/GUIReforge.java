@@ -114,11 +114,9 @@ public class GUIReforge extends SkyBlockInventoryGUI {
 
                 if (stack.isAir()) return;
 
-                e.setCancelled(e.getClickType() == ClickType.START_SHIFT_CLICK);
+                updateFromItem(null);
 
                 player.addAndUpdateItem(stack);
-
-                updateFromItem(null);
 
 
             }
