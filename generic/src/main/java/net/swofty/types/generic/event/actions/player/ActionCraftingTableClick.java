@@ -28,6 +28,8 @@ public class ActionCraftingTableClick extends SkyBlockEvent {
             return;
         }
 
+        interactEvent.setBlockingItemUse(true);
+
         new GUICrafting().open(player);
     }
 }

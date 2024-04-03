@@ -3,6 +3,7 @@ package net.swofty.types.generic.server.attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -65,7 +66,7 @@ public class SkyBlockServerAttributes {
     public static void saveAttributeLoop() {
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             AttributeDatabase.saveDocument(toDocument());
-        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3));
+        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3) , ExecutionType.ASYNC);
     }
 
     public enum Attributes {

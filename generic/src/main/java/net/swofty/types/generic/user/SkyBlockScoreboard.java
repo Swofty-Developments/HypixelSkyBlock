@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
+import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -89,7 +90,7 @@ public class SkyBlockScoreboard {
                 sidebarCache.put(player.getUuid(), sidebar);
             }
             return TaskSchedule.tick(2);
-        });
+        } , ExecutionType.ASYNC);
     }
 
     public static void removeCache(Player player) {
