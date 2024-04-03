@@ -2,12 +2,13 @@ package net.swofty.types.generic.levels;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
+import net.swofty.types.generic.levels.causes.LevelCause;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -117,6 +118,15 @@ public enum SkyBlockEmblems {
         return StringUtility.toNormalCase(name());
     }
 
+    public static List<SkyBlockEmblem> getEmblemsWithLevelCause() {
+        List<SkyBlockEmblem> emblems = new ArrayList<>();
+        Arrays.stream(values()).forEach(emblem -> {
+            emblem.getEmblems().stream().filter(emblem1 -> emblem1.cause() instanceof LevelCause).forEach(emblems::add);
+        });
+
+        return emblems;
+    }
+
     public static SkyBlockEmblems getCategoryFromEmblem(SkyBlockEmblem emblem) {
         for (SkyBlockEmblems emblems : values()) {
             for (SkyBlockEmblem emblem1 : emblems.emblems) {
@@ -128,5 +138,5 @@ public enum SkyBlockEmblems {
         return null;
     }
 
-    public record SkyBlockEmblem(String displayName, Material displayMaterial, String emblem, SkyBlockLevelCauseAbstr cause) {}
+    public record SkyBlockEmblem(String displayName, Material displayMaterial, String emblem, net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {}
 }

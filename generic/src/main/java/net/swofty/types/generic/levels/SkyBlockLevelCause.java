@@ -5,7 +5,6 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Accessory;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.causes.*;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SkyBlockLevelCause {
-    private static final Map<String, SkyBlockLevelCauseAbstr> CAUSES = new HashMap<>();
+    private static final Map<String, net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> CAUSES = new HashMap<>();
 
     @SneakyThrows
     public static void initializeCauses() {
@@ -61,14 +60,14 @@ public class SkyBlockLevelCause {
 
     public static Double getTotalXP() {
         double total = 0;
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             total += cause.xpReward();
         }
         return total;
     }
 
     public static FairySoulExchangeLevelCause getFairySoulExchangeCause(int exchangeCount) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof FairySoulExchangeLevelCause exchangeCause) {
                 if (exchangeCause.getExchangeCount() == exchangeCount) {
                     return exchangeCause;
@@ -78,7 +77,7 @@ public class SkyBlockLevelCause {
         return null;
     }
     public static CollectionLevelCause getCollectionCause(ItemType itemType, int level) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof CollectionLevelCause collectionCause) {
                 if (collectionCause.getType() == itemType && collectionCause.getLevel() == level) {
                     return collectionCause;
@@ -93,7 +92,7 @@ public class SkyBlockLevelCause {
     }
 
     public static LevelCause getLevelCause(int level) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof LevelCause levelCause) {
                 if (levelCause.getLevel() == level) {
                     return levelCause;
@@ -104,7 +103,7 @@ public class SkyBlockLevelCause {
     }
 
     public static NewAccessoryLevelCause getAccessoryCause(ItemType itemType) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof NewAccessoryLevelCause accessoryCause) {
                 if (accessoryCause.itemType == itemType) {
                     return accessoryCause;
@@ -115,7 +114,7 @@ public class SkyBlockLevelCause {
     }
 
     public static SkillLevelCause getSkillCause(SkillCategories category, int level) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof SkillLevelCause skillCause) {
                 if (skillCause.getCategory() == category && skillCause.getLevel() == level) {
                     return skillCause;
@@ -125,12 +124,12 @@ public class SkyBlockLevelCause {
         return null;
     }
 
-    public static SkyBlockLevelCauseAbstr getCause(String key) {
+    public static net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr getCause(String key) {
         return CAUSES.get(key);
     }
 
-    public static String getKey(SkyBlockLevelCauseAbstr cause) {
-        for (Map.Entry<String, SkyBlockLevelCauseAbstr> entry : CAUSES.entrySet()) {
+    public static String getKey(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {
+        for (Map.Entry<String, net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> entry : CAUSES.entrySet()) {
             if (entry.getValue() == cause) {
                 return entry.getKey();
             }
@@ -138,9 +137,9 @@ public class SkyBlockLevelCause {
         throw new IllegalArgumentException("Cause not found " + cause.getClass().getSimpleName());
     }
 
-    public static List<SkyBlockLevelCauseAbstr> getSkillCauses(SkillCategories category, int levelUpToInclusive) {
-        List<SkyBlockLevelCauseAbstr> causes = new ArrayList<>();
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+    public static List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> getSkillCauses(SkillCategories category, int levelUpToInclusive) {
+        List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> causes = new ArrayList<>();
+        for (net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof SkillLevelCause skillCause) {
                 if (skillCause.getCategory() == category && skillCause.getLevel() <= levelUpToInclusive) {
                     causes.add(skillCause);

@@ -45,6 +45,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         CustomGroups.staffMembers.remove(player);
         SkyBlockScoreboard.removeCache(player);
         ActionPlayerFall.fallHeight.remove(player);
+        player.getPetData().updatePetEntityImpl(null);
         SkyBlockNPC.getNpcs().forEach((npc, entity) -> {
             entity.clearCache(player);
         });

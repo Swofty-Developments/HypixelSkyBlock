@@ -90,7 +90,7 @@ public class SkyBlockScoreboard {
                 sidebarCache.put(player.getUuid(), sidebar);
             }
             return TaskSchedule.tick(2);
-        } , ExecutionType.ASYNC);
+        });
     }
 
     public static void removeCache(Player player) {

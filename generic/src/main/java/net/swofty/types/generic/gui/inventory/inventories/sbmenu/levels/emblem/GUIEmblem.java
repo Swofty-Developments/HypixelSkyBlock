@@ -1,15 +1,12 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.emblem;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.abstr.CauseEmblem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
