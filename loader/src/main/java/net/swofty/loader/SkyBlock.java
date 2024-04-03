@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -138,14 +139,10 @@ public class SkyBlock {
         /**
          * Start the server
          */
-        MinecraftServer.setBrandName("SkyBlock-Python");
+        MinecraftServer.setBrandName("SkyBlock");
 
 
-        /**
-         * Start spark if enabled
-         */
-        if (ENABLE_SPARK)
-          Spark.enable(Files.createTempDirectory("spark"));
+
 
 
         CompletableFuture<Integer> startServer = new CompletableFuture<>();
@@ -156,6 +153,17 @@ public class SkyBlock {
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
+
+            /**
+             * Start spark if enabled
+             */
+            if (ENABLE_SPARK) {
+                try {
+                    Spark.enable(Files.createTempDirectory("spark"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             RedisMessage.sendMessageToProxy(
                     "server-name", "",

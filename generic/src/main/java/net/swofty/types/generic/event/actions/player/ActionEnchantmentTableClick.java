@@ -29,6 +29,8 @@ public class ActionEnchantmentTableClick extends SkyBlockEvent {
             return;
         }
 
+        interactEvent.setBlockingItemUse(true);
+
         new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(interactEvent.getBlockPosition())).open(player);
     }
 }
