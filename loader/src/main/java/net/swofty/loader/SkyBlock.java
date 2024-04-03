@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.velocity.VelocityProxy;
+import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.Configuration;
@@ -207,6 +208,6 @@ public class SkyBlock {
             }, TaskSchedule.tick(4), TaskSchedule.stop());
 
             return TaskSchedule.seconds(1);
-        });
+        } , ExecutionType.ASYNC);
     }
 }
