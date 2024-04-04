@@ -16,11 +16,15 @@ public class ItemListCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             new GUICreative().open((SkyBlockPlayer) sender);
         });
 
         ArgumentString lookup = new ArgumentString("lookup");
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String lookupValue = context.get(lookup);
             new GUICreative().open((SkyBlockPlayer) sender, lookupValue, 1);
         }, lookup);

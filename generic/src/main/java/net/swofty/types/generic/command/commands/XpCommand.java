@@ -18,6 +18,8 @@ public class XpCommand extends SkyBlockCommand {
         ArgumentInteger levelArgument = ArgumentType.Integer("level");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             int level = context.get(levelArgument);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 

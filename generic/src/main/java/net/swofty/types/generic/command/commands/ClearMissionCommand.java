@@ -18,6 +18,8 @@ public class ClearMissionCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             sender.sendMessage("§aYour missions have been cleared.");
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class)

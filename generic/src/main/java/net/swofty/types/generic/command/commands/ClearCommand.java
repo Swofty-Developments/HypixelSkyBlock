@@ -19,6 +19,8 @@ public class ClearCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.getInventory().clear();
             MinecraftServer.getSchedulerManager().scheduleTask(() -> player.getInventory().setItemStack(8,

@@ -21,6 +21,8 @@ public class PlayMusicCommand extends SkyBlockCommand {
         ArgumentEnum<Songs> song = new ArgumentEnum<>("song", Songs.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             if (!SkyBlockSongsHandler.isEnabled) {
                 player.sendMessage("§cSkyBlock songs are not enabled on this server.");

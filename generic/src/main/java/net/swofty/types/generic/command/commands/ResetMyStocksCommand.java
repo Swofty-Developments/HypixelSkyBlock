@@ -14,6 +14,8 @@ public class ResetMyStocksCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.getShoppingData().resetStocks();
             player.sendMessage("§aWhoop!");

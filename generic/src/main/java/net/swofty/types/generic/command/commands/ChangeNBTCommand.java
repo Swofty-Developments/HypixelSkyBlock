@@ -24,6 +24,8 @@ public class ChangeNBTCommand extends SkyBlockCommand {
         ArgumentString valueArgument = ArgumentType.String("value");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String key = context.get(keyArgument);
             String value = context.get(valueArgument);
 

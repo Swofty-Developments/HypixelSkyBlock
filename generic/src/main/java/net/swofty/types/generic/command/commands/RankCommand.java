@@ -18,6 +18,8 @@ public class RankCommand extends SkyBlockCommand {
         ArgumentEnum<Rank> rankArgument = ArgumentType.Enum("rank", Rank.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final Player player = context.get(entityArgument).findFirstPlayer(sender);
             final Rank rank = context.get(rankArgument);
 

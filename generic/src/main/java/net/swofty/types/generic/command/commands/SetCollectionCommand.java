@@ -21,6 +21,8 @@ public class SetCollectionCommand extends SkyBlockCommand {
         ArgumentInteger amountArgument = new ArgumentInteger("amount");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             ItemType type = context.get(itemType);
             int amount = context.get(amountArgument);

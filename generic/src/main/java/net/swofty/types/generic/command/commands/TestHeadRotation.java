@@ -22,6 +22,8 @@ public class TestHeadRotation extends SkyBlockCommand {
         ArgumentDouble x = ArgumentType.Double("x");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             Double xValue = context.get(x);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 

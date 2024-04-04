@@ -30,6 +30,8 @@ public class CoopCommand extends SkyBlockCommand {
         ArgumentStringArray args = ArgumentType.StringArray("player");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             if (checkIfAlreadyExisting(player)) return;

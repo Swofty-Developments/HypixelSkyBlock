@@ -25,7 +25,9 @@ public class TestParticleEngineCommand extends SkyBlockCommand
             ArgumentBoolean wireframe = ArgumentType.Boolean("wireframe");
 
             command.addSyntax((sender, context) -> {
-                 double radius = context.get(doubleArgument);
+                if (!permissionCheck(sender)) return;
+
+                double radius = context.get(doubleArgument);
                  int intensity = context.get(intArg);
                  int duration = context.get(durationArg);
 

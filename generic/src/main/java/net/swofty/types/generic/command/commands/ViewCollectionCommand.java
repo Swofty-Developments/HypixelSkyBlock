@@ -22,6 +22,8 @@ public class ViewCollectionCommand extends SkyBlockCommand {
         ArgumentEnum<ItemType> itemArgument = ArgumentType.Enum("item", ItemType.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final ItemType itemType = context.get(itemArgument);
 
             if (CollectionCategories.getCategory(itemType) == null) {

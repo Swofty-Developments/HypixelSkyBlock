@@ -21,6 +21,8 @@ public class VersionCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             MinecraftVersion playerVersion = ((SkyBlockPlayer) sender).getVersion();
             sender.sendMessage("§aYou are currently running §e" + playerVersion.name() + "§a!");
         });

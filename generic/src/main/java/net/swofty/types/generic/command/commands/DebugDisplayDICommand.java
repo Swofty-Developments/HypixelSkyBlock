@@ -21,6 +21,8 @@ public class DebugDisplayDICommand extends SkyBlockCommand {
         ArgumentInteger damage = ArgumentType.Integer("damage");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             new DamageIndicator()

@@ -19,6 +19,8 @@ public class AnvilGUICommand extends SkyBlockCommand {
         ArgumentString text = ArgumentType.String("text");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String anvilText = context.get(text);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 

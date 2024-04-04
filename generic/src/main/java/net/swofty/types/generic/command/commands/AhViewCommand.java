@@ -21,6 +21,8 @@ public class AhViewCommand extends SkyBlockCommand {
         ArgumentUUID uuid = new ArgumentUUID("uuid");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             UUID ah = context.get(uuid);
 
             new GUIAuctionViewItem(ah, new GUIAuctionBrowser()).open((SkyBlockPlayer) sender);

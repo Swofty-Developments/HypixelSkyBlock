@@ -24,6 +24,8 @@ public class AddCrystalCommand extends SkyBlockCommand {
         ArgumentEnum<ItemType> itemType = new ArgumentEnum<>("itemType", ItemType.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             ItemType type = context.get(itemType);
             try {
                 CustomSkyBlockItem item = type.clazz.newInstance();
