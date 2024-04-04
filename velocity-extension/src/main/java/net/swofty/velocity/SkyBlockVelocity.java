@@ -7,9 +7,13 @@ import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.permission.PermissionFunction;
+import com.velocitypowered.api.permission.PermissionProvider;
+import com.velocitypowered.api.permission.PermissionSubject;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
@@ -93,6 +97,11 @@ public class SkyBlockVelocity {
         server.getEventManager().register(this, PostLoginEvent.class,
                 (AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
                     injectPlayer(postLoginEvent.getPlayer());
+                    continuation.resume();
+                }));
+        server.getEventManager().register(this, PermissionsSetupEvent.class,
+                (AwaitingEventExecutor<PermissionsSetupEvent>) permissionsEvent -> EventTask.withContinuation(continuation -> {
+                    permissionsEvent.setProvider(permissionSubject -> PermissionFunction.ALWAYS_FALSE);
                     continuation.resume();
                 }));
         server.getEventManager().register(this, DisconnectEvent.class, PostOrder.LAST,

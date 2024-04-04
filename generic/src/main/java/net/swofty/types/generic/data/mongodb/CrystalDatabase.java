@@ -28,9 +28,9 @@ public class CrystalDatabase {
         return collection.find(Filters.eq("_id", key)).first();
     }
 
-    public void addCrystal(String url, Pos position, ItemType itemType) {
+    public static void addCrystal(String url, Pos position, ItemType itemType) {
         Document doc = new Document();
-        doc.append("_id", collection.countDocuments() + 1);
+        doc.append("_id", Math.toIntExact((collection.countDocuments() + 1)));
         doc.append("url", url);
         doc.append("x", position.x());
         doc.append("y", position.y());

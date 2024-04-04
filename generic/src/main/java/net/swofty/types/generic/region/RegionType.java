@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
 import net.swofty.types.generic.region.mining.configurations.MineCoalConfiguration;
 import net.swofty.types.generic.region.mining.configurations.MineWheatConfiguration;
+import net.swofty.types.generic.region.mining.configurations.WheatAndFlowersConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 public enum RegionType {
     PRIVATE_ISLAND("Your Island", "§a"),
-    VILLAGE("Village", MineWheatConfiguration.class),
+    VILLAGE("Village", WheatAndFlowersConfiguration.class),
     MOUNTAIN("Mountain"),
     FOREST("Forest"),
     FARM("Farm", MineWheatConfiguration.class),

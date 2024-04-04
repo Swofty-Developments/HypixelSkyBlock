@@ -293,7 +293,12 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     ItemType type = crystal.itemType;
                     try {
                         ServerOrb asCrystal = (ServerOrb) type.clazz.newInstance();
-                        ServerCrystalImpl crystalImpl = new ServerCrystalImpl(asCrystal.getOrbSpawnMaterial(), crystal.url);
+                        ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
+                                asCrystal.getOrbSpawnMaterial(),
+                                crystal.url,
+                                asCrystal.getBlocksToPlaceOn()
+                        );
+
                         crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
                                 new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
                     } catch (InstantiationException | IllegalAccessException e) {

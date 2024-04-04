@@ -1,5 +1,6 @@
 package net.swofty.types.generic.utility.groups;
 
+import net.minestom.server.item.Material;
 import net.swofty.types.generic.region.RegionType;
 
 import java.util.Arrays;
@@ -31,5 +32,22 @@ public final class Groups {
             RegionType.DIVANS_GATEWAY,
             RegionType.FAR_RESERVE,
             RegionType.RAMPARTS_QUARRY
+    );
+    public static final List<Material> FLOWERS = Arrays.asList(
+            Material.POPPY,
+            Material.BLUE_ORCHID,
+            Material.ALLIUM,
+            Material.AZURE_BLUET,
+            Material.RED_TULIP,
+            Material.ORANGE_TULIP,
+            Material.WHITE_TULIP,
+            Material.PINK_TULIP,
+            Material.OXEYE_DAISY,
+            Material.CORNFLOWER,
+            Material.LILY_OF_THE_VALLEY,
+            Material.WITHER_ROSE,
+            Material.SUNFLOWER,
+            Material.LILAC,
+            Material.PEONY
     );
 }

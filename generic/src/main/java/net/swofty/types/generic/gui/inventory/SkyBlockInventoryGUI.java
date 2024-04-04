@@ -15,10 +15,11 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public abstract class SkyBlockInventoryGUI {
-    public static final Map<UUID, SkyBlockInventoryGUI> GUI_MAP = new HashMap<>();
+    public static final Map<UUID, SkyBlockInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
 
     protected String title;
     protected InventoryType size;
@@ -29,7 +30,7 @@ public abstract class SkyBlockInventoryGUI {
     public SkyBlockInventoryGUI(String title, InventoryType size) {
         this.title = title;
         this.size = size;
-        this.items = new ArrayList<>();
+        this.items = Collections.synchronizedList(new ArrayList<>());
     }
 
     /**

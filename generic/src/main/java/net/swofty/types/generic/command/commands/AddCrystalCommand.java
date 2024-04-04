@@ -29,7 +29,12 @@ public class AddCrystalCommand extends SkyBlockCommand {
                 CustomSkyBlockItem item = type.clazz.newInstance();
 
                 // Spawn the orb
-                ServerCrystalImpl crystal = new ServerCrystalImpl(((ServerOrb) item).getOrbSpawnMaterial(), ((SkullHead) item).getSkullTexture(null, new SkyBlockItem(type)));
+                ServerOrb asOrb = (ServerOrb) item;
+                ServerCrystalImpl crystal = new ServerCrystalImpl(
+                        asOrb.getOrbSpawnMaterial(),
+                        ((SkullHead) item).getSkullTexture(null, new SkyBlockItem(type)),
+                        asOrb.getBlocksToPlaceOn()
+                );
                 crystal.setInstance(((SkyBlockPlayer) sender).getInstance(), ((SkyBlockPlayer) sender).getPosition());
 
                 new CrystalDatabase().addCrystal(((SkullHead) item).getSkullTexture(null, new SkyBlockItem(type)),

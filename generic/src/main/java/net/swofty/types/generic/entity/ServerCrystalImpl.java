@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ServerCrystalImpl extends LivingEntity {
     private final String url;
-    private final Material toPlace;
+    private final Function<ServerCrystalImpl, Block> toPlace;
+    private final List<Material> lookingFor;
     private Task upAndDownTask;
     private Task rotationTask;
     private Task cropsTask;
@@ -35,21 +37,27 @@ public class ServerCrystalImpl extends LivingEntity {
     @Getter
     private boolean goingDown = false;
 
-    public ServerCrystalImpl(@NotNull Material toPlace, @NotNull String url) {
+    public ServerCrystalImpl(@NotNull Function<ServerCrystalImpl, Block> toPlace,
+                             @NotNull String url,
+                             List<Material> lookingFor) {
         super(EntityType.ARMOR_STAND);
 
         this.toPlace = toPlace;
         this.url = url;
+        this.lookingFor = lookingFor;
     }
 
     @Override
     public void spawn() {
         super.spawn();
 
-        List<Pos> farmland = MathUtility.getNearbyBlocks(getInstance(),
-                getPosition(),
-                18,
-                Material.FARMLAND.block());
+        List<Pos> landToPlaceOn = new ArrayList<>();
+        lookingFor.forEach(materialLooking -> {
+            landToPlaceOn.addAll(MathUtility.getNearbyBlocks(getInstance(),
+                    getPosition(),
+                    18,
+                    materialLooking.block()));
+        });
 
         ArmorStandMeta meta = (ArmorStandMeta) getEntityMeta();
         meta.setSmall(true);
@@ -100,10 +108,10 @@ public class ServerCrystalImpl extends LivingEntity {
             if (isDead()) {
                 cropsTask.cancel();
             }
-            if (farmland.isEmpty()) return;
+            if (landToPlaceOn.isEmpty()) return;
 
             Map<Block, Pos> possible = new HashMap<>();
-            for (Pos block : farmland) {
+            for (Pos block : landToPlaceOn) {
                 Block a = instance.getBlock(block.add(0, 1, 0));
                 if (a.isAir()) {
                     possible.put(a, block);
@@ -114,8 +122,13 @@ public class ServerCrystalImpl extends LivingEntity {
             Block block = MathUtility.getRandomElement(new ArrayList<>(possible.keySet()));
             if (block == null) return;
 
-            instance.setBlock(possible.get(block).add(0, 1, 0),
-                    toPlace.block().withProperty("age", "7"));
+            Pos position = possible.get(block).add(0, 1, 0);
+            Block blockToPlace = toPlace.apply(this);
+            try {
+                instance.setBlock(position, blockToPlace.withProperty("age", "7"));
+            } catch (IllegalArgumentException e) {
+                instance.setBlock(position, blockToPlace);
+            }
 
             Pos blockLocation = possible.get(block).add(0, 1, 0);
             Pos crystalLocation = getPosition().add(0, 1, 0);

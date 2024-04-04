@@ -151,6 +151,7 @@ public enum ItemType {
     NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
     WHEAT_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, WheatCrystal.class),
+    FLOWER_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, FlowerCrystal.class),
     MUTANT_NETHER_WART(Material.PLAYER_HEAD, Rarity.RARE, MutantNetherWart.class),
     POLISHED_PUMPKIN(Material.PLAYER_HEAD, Rarity.RARE, PolishedPumpkin.class),
     BOX_OF_SEEDS(Material.PLAYER_HEAD, Rarity.RARE, BoxOfSeeds.class),

@@ -29,7 +29,7 @@ public class GUILevelRewards extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(31));
-        set(GUIClickableItem.getGoBackItem(30, new GUILevelRewards()));
+        set(GUIClickableItem.getGoBackItem(30, new GUISkyBlockLevels()));
 
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getPlayer().getSkyBlockExperience();
 
