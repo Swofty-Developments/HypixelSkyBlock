@@ -22,6 +22,8 @@ public class ViewRecipeCommand extends SkyBlockCommand {
         ArgumentEnum<ItemType> itemArgument = ArgumentType.Enum("item", ItemType.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final ItemType item = context.get(itemArgument);
             new GUIRecipe(item, null).open((SkyBlockPlayer) sender);
         }, itemArgument);

@@ -21,6 +21,8 @@ public class FinishMissionSetCommand extends SkyBlockCommand {
         ArgumentEnum<MissionSet> set = ArgumentType.Enum("set", MissionSet.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             MissionSet missionSet = context.get(set);
 
             Arrays.stream(missionSet.getMissions()).forEach(mission -> {

@@ -31,6 +31,8 @@ public class RegionCommand extends SkyBlockCommand {
                 ArgumentType.RelativeBlockPosition("pos2"));
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String regionId = context.get(removeRegion).get("region_id");
             SkyBlockRegion region = SkyBlockRegion.getFromID(regionId);
 
@@ -44,6 +46,8 @@ public class RegionCommand extends SkyBlockCommand {
         }, removeRegion);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String regionId = context.get(addRegion).get("region_id");
             RelativeVec position1 = context.get(addRegion).get("pos1");
             RelativeVec position2 = context.get(addRegion).get("pos2");

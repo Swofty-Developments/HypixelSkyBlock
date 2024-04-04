@@ -15,6 +15,8 @@ public class RemoveOrbCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             new CrystalDatabase().removeCrystals(((SkyBlockPlayer) sender).getPosition(), 1.5);
         });
     }

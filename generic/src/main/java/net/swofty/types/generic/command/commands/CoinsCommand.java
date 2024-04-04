@@ -22,6 +22,8 @@ public class CoinsCommand extends SkyBlockCommand {
         ArgumentNumber<Double> doubleArgument = ArgumentType.Double("amount").min(0D);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(context.get(doubleArgument));

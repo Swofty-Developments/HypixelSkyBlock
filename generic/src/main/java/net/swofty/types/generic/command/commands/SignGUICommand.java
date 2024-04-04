@@ -20,6 +20,8 @@ public class SignGUICommand extends SkyBlockCommand {
         ArgumentString text = ArgumentType.String("text");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String signContent = context.get(text);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 

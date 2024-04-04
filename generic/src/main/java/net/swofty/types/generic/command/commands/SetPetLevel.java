@@ -21,6 +21,8 @@ public class SetPetLevel extends SkyBlockCommand {
         ArgumentInteger level = new ArgumentInteger("level");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             int levelAsInt = context.get(level);
 

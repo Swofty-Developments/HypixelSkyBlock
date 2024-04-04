@@ -21,6 +21,8 @@ public class SpawnHologramCommand extends SkyBlockCommand {
         ArgumentStringArray nameArgument = ArgumentType.StringArray("name");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             String[] nameArray = context.get(nameArgument);
             String name = String.join(" ", nameArray);
             SkyBlockPlayer player = (SkyBlockPlayer) sender;

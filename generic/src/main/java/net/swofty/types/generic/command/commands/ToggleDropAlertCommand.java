@@ -18,6 +18,8 @@ public class ToggleDropAlertCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             DatapointToggles.Toggles toggles = ((SkyBlockPlayer) sender).getToggles();
 
             toggles.inverse(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES);

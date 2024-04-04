@@ -21,6 +21,8 @@ public class GamemodeCommand extends SkyBlockCommand {
         gamemode.setFormat(ArgumentEnum.Format.LOWER_CASED);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final GameMode gamemodeType = context.get(gamemode);
 
             ((SkyBlockPlayer) sender).setGameMode(gamemodeType);

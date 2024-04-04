@@ -1,6 +1,7 @@
 package net.swofty.types.generic.command;
 
 import lombok.Getter;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
@@ -23,6 +24,18 @@ public abstract class SkyBlockCommand {
     }
 
     public abstract void run(MinestomCommand command);
+
+    public boolean permissionCheck(CommandSender sender) {
+        SkyBlockPlayer player = (SkyBlockPlayer) sender;
+        DataHandler dataHandler = player.getDataHandler();
+        boolean passes = dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(params.permission());
+
+        if (!passes) {
+            player.sendMessage("§cYou do not have permission to use this command.");
+        }
+
+        return passes;
+    }
 
     public static class MinestomCommand extends Command {
 

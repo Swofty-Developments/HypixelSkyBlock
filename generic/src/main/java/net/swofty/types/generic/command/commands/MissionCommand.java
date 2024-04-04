@@ -15,6 +15,8 @@ public class MissionCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             MissionData data = ((SkyBlockPlayer) sender).getMissionData();
 
             sender.sendMessage("Active Missions: " + data.getActiveMissions().size());

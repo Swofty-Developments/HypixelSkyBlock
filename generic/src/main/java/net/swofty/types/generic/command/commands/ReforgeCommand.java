@@ -19,6 +19,8 @@ public class ReforgeCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 AttributeHandler attributeHandler = item.getAttributeHandler();
                 ReforgeType reforgeType = ((Reforgable) item.getGenericInstance()).getReforgeType();

@@ -15,6 +15,8 @@ public class TestBankHashCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             ProxyPlayer proxyPlayer = player.asProxyPlayer();
 

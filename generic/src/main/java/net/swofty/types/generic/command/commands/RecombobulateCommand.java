@@ -17,6 +17,8 @@ public class RecombobulateCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 AttributeHandler attributeHandler = item.getAttributeHandler();
                 attributeHandler.setRecombobulated(!attributeHandler.isRecombobulated());

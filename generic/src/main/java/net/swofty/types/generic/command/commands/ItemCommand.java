@@ -22,6 +22,8 @@ public class ItemCommand extends SkyBlockCommand {
         ArgumentInteger amountArgument = ArgumentType.Integer("amount");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final ItemType itemType = context.get(itemArgument);
 
             SkyBlockItem item = new SkyBlockItem(itemType);

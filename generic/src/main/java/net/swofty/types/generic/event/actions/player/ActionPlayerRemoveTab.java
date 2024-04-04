@@ -7,6 +7,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
+import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.event.EventNodes;
@@ -32,8 +33,8 @@ public class ActionPlayerRemoveTab extends SkyBlockEvent {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
         Player player = event.getPlayer();
 
-        MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player2 -> {
-            Rank player2Rank = ((SkyBlockPlayer) player2).getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+        SkyBlockGenericLoader.getLoadedPlayers().forEach(player2 -> {
+            Rank player2Rank = player2.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
             Rank playerRank = ((SkyBlockPlayer) player).getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
 
             player2.sendPacket(new TeamsPacket("ZZZZZ" + player.getUsername(), new TeamsPacket.CreateTeamAction(

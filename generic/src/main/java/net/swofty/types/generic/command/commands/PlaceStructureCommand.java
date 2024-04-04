@@ -20,6 +20,8 @@ public class PlaceStructureCommand extends SkyBlockCommand {
         ArgumentInteger rotation = ArgumentType.Integer("rotation");
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             IslandPortal portal = new IslandPortal(context.get(rotation),

@@ -23,6 +23,8 @@ public class ViewSkillCommand extends SkyBlockCommand {
         ArgumentEnum<SkillCategories> skillArgument = ArgumentType.Enum("skill", SkillCategories.class);
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             final SkillCategories skillCategory = context.get(skillArgument);
             new GUISkillCategory(skillCategory, 0).open((SkyBlockPlayer) sender);
         }, skillArgument);

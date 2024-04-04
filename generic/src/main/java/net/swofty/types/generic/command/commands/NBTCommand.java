@@ -17,6 +17,8 @@ public class NBTCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
+
             ItemStack item = ((SkyBlockPlayer) sender).getInventory().getItemInMainHand();
             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
 
