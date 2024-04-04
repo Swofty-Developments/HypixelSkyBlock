@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
@@ -17,6 +18,7 @@ import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Reforgable;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 
@@ -98,6 +100,27 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             updateItemStacks(getInventory(), getPlayer());
             return;
         }
+
+        set(new GUIClickableItem(13) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
+            }
+
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                ItemStack stack = e.getClickedItem();
+
+
+                if (stack.isAir()) return;
+
+                updateFromItem(null);
+
+                player.addAndUpdateItem(stack);
+
+
+            }
+        });
 
         if (item.getAmount() > 1 ||
                 item.getGenericInstance() == null ||
