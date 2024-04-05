@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.types.generic.enchantment.impl.EnchantmentEfficiency;
-import net.swofty.types.generic.enchantment.impl.EnchantmentProtection;
-import net.swofty.types.generic.enchantment.impl.EnchantmentScavenger;
-import net.swofty.types.generic.enchantment.impl.EnchantmentSharpness;
+import net.swofty.types.generic.enchantment.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +16,13 @@ public enum EnchantmentType {
     SHARPNESS(EnchantmentSharpness.class),
     EFFICIENCY(EnchantmentEfficiency.class),
     SCAVENGER(EnchantmentScavenger.class),
-    PROTECTION(EnchantmentProtection.class);
+    PROTECTION(EnchantmentProtection.class),
+    EXECUTE(EnchantmentExecute.class),
+    FIRE_ASPECT(EnchantmentFireAspect.class),
+    FIRST_STRIKE(EnchantmentFirstStrike.class),
+    CRITICAL(EnchantmentCritical.class),
+    DRAGON_HUNTER(EnchantmentDragonHunter.class),
+    ENDER_SLAYER(EnchantmentEnderSlayer.class);
 
     private final Class<? extends Ench> clazz;
     private final List<EnchantmentType> conflicts;
