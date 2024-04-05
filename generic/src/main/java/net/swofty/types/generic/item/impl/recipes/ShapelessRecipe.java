@@ -154,7 +154,7 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
         uniqueMaterials.removeIf(material -> {
             try {
                 return material.material == null || material.material == Material.AIR;
-            } catch (NullPointerException _) {
+            } catch (NullPointerException ignored) {
                 return true;
             }
         });
