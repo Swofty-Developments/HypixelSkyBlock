@@ -23,7 +23,7 @@ public class EmeraldMinion implements CustomSkyBlockItem, Minion {
 
     @Override
     public ItemType getFirstBaseItem() {
-        return ItemType.IRON_PICKAXE;
+        return ItemType.WOODEN_PICKAXE;
     }
 
 }
