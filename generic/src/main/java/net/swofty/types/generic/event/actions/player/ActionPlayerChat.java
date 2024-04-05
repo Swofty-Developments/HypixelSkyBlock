@@ -1,17 +1,19 @@
 package net.swofty.types.generic.event.actions.player;
 
-import jdk.jfr.Experimental;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChatEvent;
+import net.swofty.commons.ServerType;
+import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.categories.Rank;
+
+import java.util.List;
 
 @EventParameters(description = "Handles chat stuff",
         node = EventNodes.PLAYER,
@@ -41,7 +43,17 @@ public class ActionPlayerChat extends SkyBlockEvent {
             message = message.replaceAll("[^\\x00-\\x7F]", "");
 
         String finalMessage = message;
-        MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(onlinePlayer -> {
+
+        List<SkyBlockPlayer> receivers = SkyBlockGenericLoader.getLoadedPlayers();
+
+
+        receivers.removeIf(receiver -> {
+            return SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND &&
+                    !receiver.getInstance().equals(player.getInstance());
+        });
+
+
+        receivers.forEach(onlinePlayer -> {
             if (rank.equals(Rank.DEFAULT))
                 onlinePlayer.sendMessage(player.getFullDisplayName() + "§7: " + finalMessage);
             else
