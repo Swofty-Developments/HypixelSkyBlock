@@ -24,12 +24,20 @@ import java.util.*;
         requireDataLoaded = false)
 public class MissionTalkToVillagers extends SkyBlockProgressMission implements MissionRepeater {
     private static final List<String> villagers = List.of(
-            "Duke",
+            "Andrew",
+            "Jack",
+            "Jamie",
+            "Tom",
             "Leo",
             "Felix",
+            "Ryu",
+            "Duke",
+            "Lynn",
+            "Stella",
             "Vex",
-            "Jack"
+            "Liam"
     );
+
 
     @Override
     public Class<? extends Event> getEvent() {
