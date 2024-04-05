@@ -6,7 +6,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class AncientFruit implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName {
+public class AncientFruit implements DecorationHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -26,4 +26,5 @@ public class AncientFruit implements CustomSkyBlockItem, DecorationHead, ExtraUn
     public String getDisplayName() {
         return "Ancient Fruit";
     }
+
 }
