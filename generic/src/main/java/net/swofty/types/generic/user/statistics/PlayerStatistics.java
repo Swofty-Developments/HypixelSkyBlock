@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.ExecutionType;
@@ -16,6 +17,7 @@ import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
@@ -47,7 +49,7 @@ public class PlayerStatistics {
         this.player = player;
     }
 
-    public ItemStatistics allArmorStatistics() {
+    public ItemStatistics allArmorStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
         ArrayList<SkyBlockItem> armorPieces = new ArrayList<>();
 
@@ -62,12 +64,17 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
+            total = total.add(calculateExtraItemStatistics(
+                    item,
+                    item.getAttributeHandler().getStatistics(),
+                    causer,
+                    enemy
+            ));
         }
         return total;
     }
 
-    public ItemStatistics mainHandStatistics() {
+    public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
 
         if (item.getGenericInstance() != null)
@@ -75,7 +82,12 @@ public class PlayerStatistics {
                 return ItemStatistics.EMPTY;
 
         ItemStatistics statistics = item.getAttributeHandler().getStatistics();
-        statistics = calculateExtraItemStatistics(item, statistics);
+        statistics = calculateExtraItemStatistics(
+                item,
+                statistics,
+                causer,
+                enemy
+        );
 
         return statistics;
     }
@@ -123,10 +135,15 @@ public class PlayerStatistics {
         return spare;
     }
 
+
     public ItemStatistics allStatistics() {
+        return allStatistics(null, null);
+    }
+
+    public ItemStatistics allStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics total = ItemStatistics.builder().build();
-        total = total.add(allArmorStatistics());
-        total = total.add(mainHandStatistics());
+        total = total.add(allArmorStatistics(causer, enemy));
+        total = total.add(mainHandStatistics(causer, enemy));
         total = total.add(spareStatistics());
         total = total.add(petStatistics());
         total = total.add(accessoryStatistics);
@@ -134,6 +151,7 @@ public class PlayerStatistics {
         ItemStatistics baseStats = ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.SPEED, 100D)
+                .with(ItemStatistic.CRIT_DAMAGE, 50D)
                 .build();
 
         total = total.add(baseStats);
@@ -149,7 +167,12 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
+                total = total.add(calculateExtraItemStatistics(
+                        item,
+                        item.getAttributeHandler().getStatistics(),
+                        null,
+                        null
+                ));
             }
         }
         for (SkyBlockItem item : player.getAccessoryBag().getAllAccessories()) {
@@ -157,15 +180,21 @@ public class PlayerStatistics {
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-            total = total.add(calculateExtraItemStatistics(item, item.getAttributeHandler().getStatistics()));
+            total = total.add(calculateExtraItemStatistics(
+                    item,
+                    item.getAttributeHandler().getStatistics(),
+                    null,
+                    null
+            ));
         }
         accessoryStatistics = total;
     }
 
-    private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics) {
+    private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics,
+                                                        SkyBlockPlayer causer, LivingEntity enemy) {
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
-        statistics = getEnchantStatistics(item, statistics);
+        statistics = getEnchantStatistics(item, statistics, causer, enemy);
 
         return statistics;
     }
@@ -183,10 +212,21 @@ public class PlayerStatistics {
         return statistics;
     }
 
-    private ItemStatistics getEnchantStatistics(SkyBlockItem item, ItemStatistics statistics) {
+    private ItemStatistics getEnchantStatistics(SkyBlockItem item, ItemStatistics statistics,
+                                                SkyBlockPlayer causer, LivingEntity enemy) {
         for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
             ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level());
             statistics = statistics.add(enchantmentStatistics);
+
+            if (causer != null && enemy != null) {
+                if (enchantment.type().getEnch() instanceof EventBasedEnchant eventBasedStatistic) {
+                    statistics = statistics.add(eventBasedStatistic.getStatisticsOnDamage(
+                            causer,
+                            enemy,
+                            enchantment.level()
+                    ));
+                }
+            }
         }
         return statistics;
     }
@@ -201,8 +241,9 @@ public class PlayerStatistics {
         return statistics;
     }
 
-    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics) {
-        ItemStatistics all = allStatistics();
+    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics,
+                                                              SkyBlockPlayer causer, LivingEntity enemy) {
+        ItemStatistics all = allStatistics(causer, enemy);
         return runPrimaryDamageFormula(all, enemyStatistics);
     }
 
@@ -218,7 +259,7 @@ public class PlayerStatistics {
 
         double initialDamage = (5 + baseDamage);
         double strengthDamage = (1 + (strength / 100));
-        double criticalDamage = isCrit ? (1 + (critDamage / 100)) : 1;
+        double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;
 
         double baseDamageAdditiveMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_ADDITIVE) / 100);
         double baseDamageMultiplicativeMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_MULTIPLICATIVE));

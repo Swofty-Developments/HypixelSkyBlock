@@ -43,7 +43,7 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         LivingEntity livingEntity = (LivingEntity) targetEntity;
 
         ItemStatistics entityStats = mob.getStatistics();
-        Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats);
+        Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, livingEntity);
 
         double damage = hit.getKey();
         boolean critical = hit.getValue();

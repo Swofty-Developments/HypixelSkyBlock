@@ -66,7 +66,7 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.DAMAGE, 5D)

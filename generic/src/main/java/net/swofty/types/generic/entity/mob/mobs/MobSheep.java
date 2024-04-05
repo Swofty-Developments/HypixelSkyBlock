@@ -38,7 +38,7 @@ public class MobSheep extends SkyBlockMob {
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .build();
