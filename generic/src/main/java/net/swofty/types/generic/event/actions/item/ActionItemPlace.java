@@ -29,13 +29,17 @@ public class ActionItemPlace extends SkyBlockEvent {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof PlaceEvent placeable) {
-            if (!((CustomSkyBlockItem) item.getGenericInstance()).isPlaceable()) {
-                event.setCancelled(true);
-                return;
-            }
+        if (item.getGenericInstance() == null) return;
 
-            placeable.onPlace(event, player, item);
+        Object instance = item.getGenericInstance();
+
+        if (instance instanceof PlaceEvent placeEvent) {
+            placeEvent.onPlace(event, player, item);
+            return;
+        }
+
+        if (instance instanceof CustomSkyBlockItem && !((CustomSkyBlockItem) instance).isPlaceable()) {
+            event.setCancelled(true);
         }
     }
 }

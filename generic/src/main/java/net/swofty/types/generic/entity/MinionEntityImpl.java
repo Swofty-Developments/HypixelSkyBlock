@@ -14,12 +14,13 @@ import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
 public class MinionEntityImpl extends LivingEntity {
     @Getter
-    private static final List<MinionEntityImpl> activeMinions = new ArrayList<>();
+    private static final List<MinionEntityImpl> activeMinions = Collections.synchronizedList(new ArrayList<>());
 
     private final IslandMinionData.IslandMinion islandMinion;
     private final SkyBlockMinion minion;

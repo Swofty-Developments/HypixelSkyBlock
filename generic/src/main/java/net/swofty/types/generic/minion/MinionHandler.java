@@ -22,6 +22,7 @@ import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public record MinionHandler(Scheduler scheduler) {
@@ -29,7 +30,11 @@ public record MinionHandler(Scheduler scheduler) {
 
     public void start() {
         scheduler.submitTask(() -> {
-            minionLoop();
+            try {
+                minionLoop();
+            } catch (ConcurrentModificationException exception) {
+                exception.printStackTrace();
+            }
             return TaskSchedule.tick(3);
         }, ExecutionType.ASYNC);
     }
