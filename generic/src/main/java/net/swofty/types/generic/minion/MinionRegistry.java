@@ -9,6 +9,9 @@ public enum MinionRegistry {
     COBBLESTONE(MinionCobblestone.class, ItemType.COBBLESTONE_MINION),
     COAL(MinionCoal.class, ItemType.COAL_MINION),
     SNOW(MinionSnow.class, ItemType.SNOW_MINION),
+    DIAMOND(MinionDiamond.class, ItemType.DIAMOND_MINION),
+
+    EMERALD(MinionDiamond.class, ItemType.EMERALD_MINION),
     ACACIA(MinionAcacia.class, ItemType.ACACIA_MINION),
     BIRCH(MinionBirch.class, ItemType.BIRCH_MINION),
     DARK_OAK(MinionDarkOak.class, ItemType.DARK_OAK_MINION),

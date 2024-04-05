@@ -22,6 +22,57 @@ public class GUIJerry extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(31));
 
+        set(new GUIClickableItem(11) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, (short) 0, 1,
+                        "§7View the latest features and",
+                        "§7changes to the game.",
+                        "",
+                        "§eClick to open!"
+                );
+            }
+        });
+
+        set(new GUIClickableItem(13) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                player.sendMessage("§cNo new deliveries.");
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, (short) 0, 1,
+                        "§7Any items that may be delivered to",
+                        "§7yourself or your island will appear",
+                        "§7here for collection!",
+                        "",
+                        "§eClick to open!"
+                );
+            }
+        });
+
+        set(new GUIClickableItem(15) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIGuests().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, (short) 0, 1,
+                        "§7Learn all about how to §a/visit",
+                        "§7players across the SkyBlock universe!",
+                        " ",
+                        "§eClick to learn!"
+                );
+            }
+        });
+
         set(new GUIClickableItem(35) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

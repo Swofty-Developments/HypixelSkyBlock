@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public enum ItemDropChanger {
     STONE(Material.STONE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
     COBBLESTONE(Material.COBBLESTONE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
-    ANDESITE(Material.ANDESITE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
+    OAK_WOOD(Material.OAK_WOOD, () -> new SkyBlockItem(ItemType.OAK_LOG)),
 
     COAL_ORE(Material.COAL_ORE, () -> new SkyBlockItem(ItemType.COAL)),
     ;
