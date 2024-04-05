@@ -2,22 +2,18 @@ package net.swofty.types.generic.item.items.weapon;
 
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Reforgable, Enchantable, Craftable,
-                                 GemstoneItem, NotFinishedYet {
+public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, SwordImpl, Craftable, GemstoneItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -60,21 +56,6 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Refo
     @Override
     public AbilityActivation getAbilityActivation() {
         return AbilityActivation.RIGHT_CLICK;
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
-    }
-
-    @Override
-    public boolean showEnchantLores() {
-        return true;
-    }
-
-    @Override
-    public List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.SWORD);
     }
 
     @Override
