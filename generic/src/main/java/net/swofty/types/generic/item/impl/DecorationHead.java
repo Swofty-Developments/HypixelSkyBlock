@@ -12,13 +12,10 @@ public interface DecorationHead extends SkullHead, PlaceEvent {
     @Override
     default void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
         event.setCancelled(true);
-
-
         if (SkyBlockConst.getTypeLoader().getType() != ServerType.ISLAND) return;
 
         DecorationEntityImpl entity = new DecorationEntityImpl(item , player);
         entity.spawn(player.getInstance() , event.getBlockPosition());
-
     }
 
 }

@@ -31,14 +31,14 @@ public class ActionItemPlace extends SkyBlockEvent {
 
         if (item.getGenericInstance() == null) return;
 
-        Object genericInstance = item.getGenericInstance();
+        Object instance = item.getGenericInstance();
 
-        if (genericInstance instanceof PlaceEvent) {
-            ((PlaceEvent) genericInstance).onPlace(event, player, item);
+        if (instance instanceof PlaceEvent placeEvent) {
+            placeEvent.onPlace(event, player, item);
             return;
         }
 
-        if (genericInstance instanceof CustomSkyBlockItem && !((CustomSkyBlockItem) genericInstance).isPlaceable()) {
+        if (instance instanceof CustomSkyBlockItem && !((CustomSkyBlockItem) instance).isPlaceable()) {
             event.setCancelled(true);
         }
     }

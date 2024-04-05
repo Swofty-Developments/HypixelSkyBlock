@@ -32,7 +32,7 @@ public record MinionHandler(Scheduler scheduler) {
         scheduler.submitTask(() -> {
             try {
                 minionLoop();
-            }catch (ConcurrentModificationException exception){
+            } catch (ConcurrentModificationException exception) {
                 exception.printStackTrace();
             }
             return TaskSchedule.tick(3);
