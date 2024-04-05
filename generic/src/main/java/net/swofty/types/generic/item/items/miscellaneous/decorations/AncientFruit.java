@@ -1,17 +1,12 @@
 package net.swofty.types.generic.item.items.miscellaneous.decorations;
 
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomDisplayName;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.ExtraUnderNameDisplay;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class AncientFruit implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, CustomDisplayName {
+public class AncientFruit implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
