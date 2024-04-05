@@ -6,6 +6,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.causes.SkillLevelCause;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
@@ -36,6 +37,6 @@ public class ActionSkillSkyBlockLevel extends SkyBlockEvent {
 
         if (oldLevel == newLevel) return;
 
-        player.getSkyBlockExperience().addExperience(new SkillLevelCause(skillCategory, newLevel));
+        player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getSkillCause(skillCategory, newLevel));
     }
 }

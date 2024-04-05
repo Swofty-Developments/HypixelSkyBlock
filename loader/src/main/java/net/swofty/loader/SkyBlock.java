@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.bungee.BungeeCordProxy;
 import net.minestom.server.extras.velocity.VelocityProxy;
+import net.minestom.server.item.Material;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -125,9 +126,7 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("has-island", RedisHasIslandLoaded.class);
         proxyAPI.registerProxyToClient("bank-hash", RedisBankHash.class);
         proxyAPI.start();
-
         VelocityProxy.enable(Configuration.get("velocity-secret"));
-
 
         /**
          * Start spark if enabled
@@ -139,7 +138,6 @@ public class SkyBlock {
                 throw new RuntimeException(e);
             }
         }
-
 
         /**
          * Ensure all services are running

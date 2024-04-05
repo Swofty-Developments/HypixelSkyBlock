@@ -38,13 +38,15 @@ public abstract class SkyBlockMob extends EntityCreature {
     private static List<SkyBlockMob> mobs = new ArrayList<>();
     @Getter
     private long lastAttack = System.currentTimeMillis();
+    @Getter
+    private boolean hasBeenDamaged = false;
 
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
 
         this.setCustomNameVisible(true);
-        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getStatistics().get(ItemStatistic.HEALTH).floatValue());
-        this.setHealth(getStatistics().get(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
+        this.setHealth(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
@@ -69,16 +71,27 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract Integer getLevel();
     public abstract List<GoalSelector> getGoalSelectors();
     public abstract List<TargetSelector> getTargetSelectors();
-    public abstract ItemStatistics getStatistics();
+    public abstract ItemStatistics getBaseStatistics();
     public abstract List<MobDrop> getDrops();
     public abstract SkillCategories getSkillCategory();
     public abstract long damageCooldown();
 
     public record MobDrop(float chance, int min, int max, ItemType item) { }
 
+    public ItemStatistics getStatistics() {
+        ItemStatistics statistics = getBaseStatistics().clone();
+
+        // Set health to current enemy health
+        statistics.set(ItemStatistic.HEALTH, (double) getHealth());
+
+        return statistics;
+    }
+
     @Override
     public boolean damage(@NotNull Damage damage) {
         boolean toReturn = super.damage(damage);
+
+        setHasBeenDamaged(true);
 
         Point sourcePoint = damage.getSourcePosition();
         if (sourcePoint != null) {

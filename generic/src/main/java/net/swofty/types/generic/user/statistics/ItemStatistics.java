@@ -22,6 +22,10 @@ public class ItemStatistics {
         return new ItemStatisticsBuilder();
     }
 
+    public ItemStatistics clone() {
+        return new ItemStatistics(new EnumMap<>(this.statistics));
+    }
+
     @Override
     public String toString() {
         return "ItemStatistics{" +
@@ -51,6 +55,11 @@ public class ItemStatistics {
         for (ItemStatistic stat : ItemStatistic.values()) {
             this.statistics.merge(stat, other.get(stat), Double::sum);
         }
+        return this;
+    }
+
+    public ItemStatistics set(ItemStatistic stat, Double value) {
+        this.statistics.put(stat, value);
         return this;
     }
 
