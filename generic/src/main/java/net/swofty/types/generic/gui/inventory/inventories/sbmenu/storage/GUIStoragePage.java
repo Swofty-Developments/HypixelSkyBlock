@@ -123,7 +123,7 @@ public class GUIStoragePage extends SkyBlockInventoryGUI {
 
     @Override
     public boolean allowHotkeying() {
-        return false;
+        return true;
     }
 
     @Override

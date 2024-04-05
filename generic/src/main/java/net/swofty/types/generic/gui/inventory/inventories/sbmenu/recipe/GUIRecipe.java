@@ -121,7 +121,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return PlayerItemUpdater.playerUpdate(player, recipe.getResult().getItemStack())
-                        .amount(recipe.getAmount());
+                        .amount(recipe.getResult().getAmount());
             }
         });
 

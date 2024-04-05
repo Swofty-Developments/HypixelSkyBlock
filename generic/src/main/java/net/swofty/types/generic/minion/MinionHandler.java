@@ -45,6 +45,8 @@ public record MinionHandler(Scheduler scheduler) {
             long timeBetweenActions = tier.timeBetweenActions() * 1000L;
             long lastAction = islandMinion.getLastAction();
 
+            if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;
+
             /** seems like I need this debug every other week, so keep it here for now
             System.out.println("Minion loop");
             System.out.println("Time between actions: " + timeBetweenActions);

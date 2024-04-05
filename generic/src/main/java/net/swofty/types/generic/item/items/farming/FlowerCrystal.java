@@ -12,7 +12,7 @@ import net.swofty.types.generic.entity.ServerCrystalImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Placeable;
+import net.swofty.types.generic.item.impl.PlaceEvent;
 import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
-public class FlowerCrystal implements CustomSkyBlockItem, SkullHead, Placeable, ServerOrb {
+public class FlowerCrystal implements CustomSkyBlockItem, SkullHead, ServerOrb, PlaceEvent {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

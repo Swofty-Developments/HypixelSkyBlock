@@ -65,14 +65,24 @@ public enum FairySoulExchangeLevels {
         this.backpackSlots = backpackSlots;
     }
 
+    public int previousAmountOfUnlockedSlots(int baseNumber) {
+        int previous = 0;
+        for (FairySoulExchangeLevels levels : values()) {
+            if (levels.ordinal() < this.ordinal()) {
+                previous += levels.getBackpackSlots();
+            }
+        }
+        return baseNumber + previous;
+    }
+
     public List<String> getDisplay() {
         List<String> toReturn = new ArrayList<>();
 
-        if (backpackSlots > 0) {
-            toReturn.add("§6" + backpackSlots + " Backpack Slots");
-        }
         if (skyBlockXP > 0) {
-            toReturn.add("§8+ §b" + skyBlockXP + " SkyBlock XP");
+            toReturn.add("§8+§b" + skyBlockXP + " SkyBlock XP");
+        }
+        for (int i = 0; i < backpackSlots; i++) {
+            toReturn.add("§6Backpack Slot #" + (previousAmountOfUnlockedSlots(1) + i + 1));
         }
 
         return toReturn;

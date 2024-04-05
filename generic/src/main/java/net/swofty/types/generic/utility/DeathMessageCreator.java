@@ -4,6 +4,7 @@ import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import org.tinylog.Logger;
 
 public record DeathMessageCreator(Damage type) {
     public String createPersonal() {
@@ -17,6 +18,7 @@ public record DeathMessageCreator(Damage type) {
             case "attack.fall":
                 yield "fell from a high place";
             default:
+                Logger.warn("Unknown death type: " + type.getType().name());
                 yield "died";
         };
     }
@@ -32,6 +34,7 @@ public record DeathMessageCreator(Damage type) {
             case "attack.fall":
                 yield "fell from a high place";
             default:
+                Logger.warn("Unknown death type: " + type.getType().name());
                 yield "died";
         };
     }

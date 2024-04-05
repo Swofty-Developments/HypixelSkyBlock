@@ -22,6 +22,9 @@ public interface RegionPopulator {
 
         if (randomPosition == null) return;
 
+        if (!SkyBlockConst.getInstanceContainer().isChunkLoaded(randomPosition))
+            SkyBlockConst.getInstanceContainer().loadChunk(randomPosition);
+
         SkyBlockMob mob = registry.asMob();
         mob.setInstance(SkyBlockConst.getInstanceContainer(), randomPosition);
     }

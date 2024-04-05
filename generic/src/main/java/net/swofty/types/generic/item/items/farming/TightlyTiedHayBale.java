@@ -8,6 +8,8 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class TightlyTiedHayBale implements Enchanted, Sellable, Craftable, SkullHead {
     @Override
     public double getSellValue() {

@@ -66,6 +66,10 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
+        SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
+        if (clickedItem.isNA() || clickedItem.getMaterial().equals(Material.AIR)) return;
+
+
     }
 
     @Override

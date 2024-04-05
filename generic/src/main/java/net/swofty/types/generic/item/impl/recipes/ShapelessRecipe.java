@@ -150,7 +150,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 .map(MaterialQuantifiable::getMaterial)
                 .distinct()
                 .toList());
-        uniqueMaterials.removeIf(material -> material.material == null || material.material == Material.AIR);
+
+        uniqueMaterials.removeIf(material -> {
+            try {
+                return material.material == null || material.material == Material.AIR;
+            } catch (NullPointerException _) {
+                return true;
+            }
+        });
 
         return CACHED_RECIPES.stream()
                 .filter(recipe -> {

@@ -10,6 +10,10 @@ import java.util.List;
 public interface CustomSkyBlockItem {
     ItemStatistics getStatistics();
 
+    default boolean isPlaceable() {
+        return false;
+    }
+
     default List<String> getLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return null;
     }
