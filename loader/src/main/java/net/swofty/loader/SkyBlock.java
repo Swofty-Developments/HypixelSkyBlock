@@ -104,7 +104,8 @@ public class SkyBlock {
                 "proxy-online",
                 "server-initialized",
                 "server-name",
-                "player-handler"
+                "player-handler",
+                "player-count"
         ));
         Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
         Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
@@ -126,6 +127,19 @@ public class SkyBlock {
         proxyAPI.start();
 
         VelocityProxy.enable(Configuration.get("velocity-secret"));
+
+
+        /**
+         * Start spark if enabled
+         */
+        if (ENABLE_SPARK) {
+            try {
+                Spark.enable(Files.createTempDirectory("spark"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
         /**
          * Ensure all services are running
@@ -152,16 +166,6 @@ public class SkyBlock {
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
 
-            /**
-             * Start spark if enabled
-             */
-            if (ENABLE_SPARK) {
-                try {
-                    Spark.enable(Files.createTempDirectory("spark"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
 
             RedisMessage.sendMessageToProxy(
                     "server-name", "",

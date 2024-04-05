@@ -98,6 +98,8 @@ public enum ItemType {
     DARK_OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, DarkOakMinion.class),
     JUNGLE_MINION(Material.PLAYER_HEAD, Rarity.RARE, JungleMinion.class),
     OAK_MINION(Material.PLAYER_HEAD, Rarity.RARE, OakMinion.class),
+    DIAMOND_MINION(Material.PLAYER_HEAD, Rarity.RARE, DiamondMinion.class),
+    EMERALD_MINION(Material.PLAYER_HEAD, Rarity.RARE, EmeraldMinion.class),
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
 
     /**
