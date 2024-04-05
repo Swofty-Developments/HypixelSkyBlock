@@ -28,6 +28,8 @@ import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
+import net.swofty.types.generic.item.items.foraging.*;
+import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.jerrysworkshop.GlacialFragment;
 import net.swofty.types.generic.item.items.jerrysworkshop.GreenGift;
@@ -59,8 +61,7 @@ import net.swofty.types.generic.item.items.vanilla.Coal;
 import net.swofty.types.generic.item.items.vanilla.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.Stick;
 import net.swofty.types.generic.item.items.vanilla.Wheat;
-import net.swofty.types.generic.item.items.weapon.Hyperion;
-import net.swofty.types.generic.item.items.weapon.Rogue;
+import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
 import net.swofty.types.generic.item.items.vanilla.bow.Bow;
 import net.swofty.types.generic.item.items.vanilla.weapon.DiamondSword;
@@ -76,6 +77,7 @@ public enum ItemType {
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
+    BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
     WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON),
 
     /**
@@ -169,10 +171,10 @@ public enum ItemType {
      * Foraging Props
      */
     WOODEN_AXE(Material.WOODEN_AXE, Rarity.COMMON),
-    ROOKIE_AXE(Material.STONE_AXE, Rarity.COMMON),
-    PROMISING_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
-    SWEET_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
-    EFFICIENT_AXE(Material.IRON_AXE, Rarity.UNCOMMON),
+    ROOKIE_AXE(Material.STONE_AXE, Rarity.COMMON, RookieAxe.class),
+    PROMISING_AXE(Material.IRON_AXE, Rarity.UNCOMMON, PromisingAxe.class),
+    SWEET_AXE(Material.IRON_AXE, Rarity.UNCOMMON, SweetAxe.class),
+    EFFICIENT_AXE(Material.IRON_AXE, Rarity.UNCOMMON, EfficientAxe.class),
 
     /**
      * Fishing Props
@@ -347,15 +349,14 @@ public enum ItemType {
      * Swords
      */
     HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
-
-    ROGUE(Material.GOLDEN_SWORD, Rarity.COMMON, Rogue.class),
+    ROGUE(Material.GOLDEN_SWORD, Rarity.COMMON, RogueSword.class),
     DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
     WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
-    UNDEAD_SWORD(Material.IRON_SWORD, Rarity.COMMON),
-    END_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON),
-    SPIDER_SWORD(Material.IRON_SWORD, Rarity.COMMON),
+    UNDEAD_SWORD(Material.IRON_SWORD, Rarity.COMMON, UndeadSword.class),
+    END_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, EndSword.class),
+    SPIDER_SWORD(Material.IRON_SWORD, Rarity.COMMON, SpiderSword.class),
 
     /**
      * Bows
