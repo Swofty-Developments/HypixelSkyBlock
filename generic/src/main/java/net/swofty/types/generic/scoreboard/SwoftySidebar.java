@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Represents a sidebar which can contain up to 16 {@link ScoreboardLine}.
  * <p>
  * In order to use it you need to create a new instance using the constructor {@link #SwoftySidebar(String)} and create new lines
- * with {@link #createLine(ScoreboardLine)}. You can then add a {@link Player} to the viewing list using {@link #addViewer(Player)}
+ * with {@link #createLine(ScoreboardLine , Player)}. You can then add a {@link Player} to the viewing list using {@link #addViewer(Player)}
  * and remove him later with {@link #removeViewer(Player)}.
  * <p>
  * Lines can be modified using their respective identifier using
@@ -115,7 +115,7 @@ public class SwoftySidebar implements Scoreboard {
      * @throws IllegalArgumentException if the sidebar already contains the line {@code scoreboardLine}
      *                                  or has a line with the same id
      */
-    public void createLine(@NotNull ScoreboardLine scoreboardLine) {
+    public void createLine(@NotNull ScoreboardLine scoreboardLine , Player player) {
         synchronized (lines) {
             Check.stateCondition(lines.size() >= MAX_LINES_COUNT, "You cannot have more than " + MAX_LINES_COUNT + "  lines");
             Check.argCondition(lines.contains(scoreboardLine), "You cannot add two times the same ScoreboardLine");
@@ -128,7 +128,7 @@ public class SwoftySidebar implements Scoreboard {
 
             // Setup line
             scoreboardLine.retrieveName(availableColors);
-            scoreboardLine.createTeam();
+            scoreboardLine.createTeam((SkyBlockPlayer) player);
 
             // Finally add the line in cache
             this.lines.add(scoreboardLine);
@@ -328,10 +328,24 @@ public class SwoftySidebar implements Scoreboard {
         /**
          * Creates a new {@link SidebarTeam}
          */
-        private void createTeam() {
-            this.entityName = '§' + Integer.toHexString(colorName);
+        private void createTeam(SkyBlockPlayer player) {
+            String text = StringUtility.getTextFromComponent(content);
+            TextComponent prefix = (TextComponent) content;
+            TextComponent suffix = Component.empty();
 
-            this.sidebarTeam = new SidebarTeam(teamName, content, Component.empty(), entityName);
+            if (text.length() > 16 && !player.getVersion().isMoreRecentThan(MinecraftVersion.MINECRAFT_1_13_2)) {
+                ChatColor lastColor = ChatColor.getLastColor(prefix.content());
+                prefix = Component.text(text.substring(0 , 16));
+                suffix = Component.text(text.substring(16));
+
+                if (lastColor != null){
+                    suffix = Component.text(lastColor + suffix.content());
+                }
+
+            }
+
+            this.entityName = '§' + Integer.toHexString(colorName);
+            this.sidebarTeam = new SidebarTeam(teamName, prefix, suffix, entityName);
         }
 
         private void returnName(IntLinkedOpenHashSet colors) {
