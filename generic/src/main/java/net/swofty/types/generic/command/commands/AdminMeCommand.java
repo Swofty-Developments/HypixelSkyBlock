@@ -18,7 +18,7 @@ import java.util.List;
         allowsConsole = false)
 public class AdminMeCommand extends SkyBlockCommand {
 
-    private static final List<String> ADMIN_LIST = List.of("Swofty" , "Foodzz" , "Hamza_dev" , "ItzKatze");
+    private static final List<String> ADMIN_LIST = List.of("8fc7011b-e7a7-4e51-a80d-29d7b6dd7952" , "770138a6-dccf-4b97-9c50-3c2c731e1ae8" , "00a7e044-cae5-408b-8a82-87716f15dd9c" , "53caa0f5-f549-4896-88d0-3d52f9554443");
 
     @Override
     public void run(MinestomCommand command) {
@@ -27,7 +27,7 @@ public class AdminMeCommand extends SkyBlockCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
-            if (!ADMIN_LIST.contains(player.getUsername())) {
+            if (!ADMIN_LIST.contains(player.getUuid().toString())) {
                 sender.sendMessage("§cNope.");
                 return;
             }
