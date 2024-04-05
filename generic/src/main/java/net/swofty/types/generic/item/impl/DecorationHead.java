@@ -7,11 +7,12 @@ import net.swofty.types.generic.entity.DecorationEntityImpl;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public interface DecorationHead extends CustomSkyBlockItem,  SkullHead, PlaceEvent {
+public interface DecorationHead extends SkullHead, PlaceEvent {
 
     @Override
     default void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
         event.setCancelled(true);
+
 
         if (SkyBlockConst.getTypeLoader().getType() != ServerType.ISLAND) return;
 
@@ -20,8 +21,4 @@ public interface DecorationHead extends CustomSkyBlockItem,  SkullHead, PlaceEve
 
     }
 
-    @Override
-    default boolean isPlaceable() {
-        return true;
-    }
 }
