@@ -16,13 +16,7 @@ public enum EnchantmentType {
     SHARPNESS(EnchantmentSharpness.class),
     EFFICIENCY(EnchantmentEfficiency.class),
     SCAVENGER(EnchantmentScavenger.class),
-    PROTECTION(EnchantmentProtection.class),
-    EXECUTE(EnchantmentExecute.class),
-    FIRE_ASPECT(EnchantmentFireAspect.class),
-    FIRST_STRIKE(EnchantmentFirstStrike.class),
-    CRITICAL(EnchantmentCritical.class),
-    DRAGON_HUNTER(EnchantmentDragonHunter.class),
-    ENDER_SLAYER(EnchantmentEnderSlayer.class);
+    PROTECTION(EnchantmentProtection.class);
 
     private final Class<? extends Ench> clazz;
     private final List<EnchantmentType> conflicts;
