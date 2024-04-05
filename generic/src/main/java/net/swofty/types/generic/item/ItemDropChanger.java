@@ -10,8 +10,8 @@ public enum ItemDropChanger {
     STONE(Material.STONE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
     COBBLESTONE(Material.COBBLESTONE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
     OAK_WOOD(Material.OAK_WOOD, () -> new SkyBlockItem(ItemType.OAK_LOG)),
-
     COAL_ORE(Material.COAL_ORE, () -> new SkyBlockItem(ItemType.COAL)),
+    GRASS_BLOCK(Material.GRASS_BLOCK, () -> new SkyBlockItem(ItemType.DIRT)),
     ;
 
     private final Material material;
