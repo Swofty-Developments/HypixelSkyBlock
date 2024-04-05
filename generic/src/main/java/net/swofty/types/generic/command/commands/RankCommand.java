@@ -10,7 +10,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.HELPER, allowsConsole = false)
+@CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.ADMIN, allowsConsole = true)
 public class RankCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
