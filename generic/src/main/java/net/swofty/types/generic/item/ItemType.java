@@ -114,6 +114,8 @@ public enum ItemType {
     OBSIDIAN_MINION(Material.PLAYER_HEAD, Rarity.RARE, ObsidianMinion.class),
     SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
     GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
+
+    //hm
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
 
     /**

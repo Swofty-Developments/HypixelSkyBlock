@@ -25,5 +25,5 @@ public class SandMinion implements CustomSkyBlockItem, Minion {
     public ItemType getFirstBaseItem() {
         return ItemType.WOODEN_SHOVEL;
     }
-
+//hm
 }

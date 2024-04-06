@@ -25,5 +25,5 @@ public class QuartzMinion implements CustomSkyBlockItem, Minion {
     public ItemType getFirstBaseItem() {
         return ItemType.WOODEN_PICKAXE;
     }
-
+//hm
 }

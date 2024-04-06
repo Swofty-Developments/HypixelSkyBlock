@@ -26,4 +26,6 @@ public class IceMinion implements CustomSkyBlockItem, Minion {
         return ItemType.WOODEN_PICKAXE;
     }
 
+//hm
+
 }
