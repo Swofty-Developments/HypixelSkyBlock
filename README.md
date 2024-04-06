@@ -3,7 +3,7 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/atlasmc)
 
-A 1.8 to 1.20.4 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase.
+A 1.16 to 1.20.4 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase.
 
 #### Releases
 
@@ -15,7 +15,7 @@ Javadocs can be found [here](https://swofty-developments.github.io/HypixelSkyBlo
 
 ## Recommended Device Specifications
 This project is not meant to be a small server, and as such, it requires a decent amount of resources to run. The following are the minimum specifications for running this server:
-- 16GB of RAM (4GB for Mongo, 12GB across servers and services)
+- 16GB of RAM (4GB for MongoDB, 12GB across servers and services)
 - 6 Cores (For sufficient multi-threading)
 - 15GB of Storage
 
