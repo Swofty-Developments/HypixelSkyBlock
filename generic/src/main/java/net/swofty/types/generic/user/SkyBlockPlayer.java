@@ -68,17 +68,14 @@ import java.util.stream.Stream;
 
 @Getter
 public class SkyBlockPlayer extends Player {
-
     @Setter
     private float mana = 100;
-
     public float health = 100;
-
     public long joined;
-
+    @Setter
+    public boolean hasAuthenticated = true;
     @Setter
     public boolean bypassBuild = false;
-
     @Setter
     public boolean isBankDelayed = false;
 
@@ -469,10 +466,15 @@ public class SkyBlockPlayer extends Player {
     }
 
     public void sendTo(ServerType type) {
-        sendTo(type, false);
+        sendTo(type, false, false);
     }
 
     public void sendTo(ServerType type, boolean force) {
+        sendTo(type, force, false);
+    }
+
+    public void sendTo(ServerType type, boolean force, boolean authenticationBypass) {
+        if (!authenticationBypass && !hasAuthenticated) return;
         ProxyPlayer player = asProxyPlayer();
 
         if (type == SkyBlockConst.getTypeLoader().getType() && !force) {

@@ -47,6 +47,7 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
         PlayerSpawnEvent playerLoginEvent = (PlayerSpawnEvent) event;
         SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
+        if (!player.hasAuthenticated) return;
         if (!playerLoginEvent.isFirstSpawn()) return;
 
         Thread.startVirtualThread(() -> {

@@ -47,7 +47,7 @@ public class ActionPlayerBankAddInterest extends SkyBlockEvent {
         }
 
         // Cap at bank limit
-        totalEarnt = Math.min(bankData.getAmount() + totalEarnt, bankData.getBalanceLimit());
+        totalEarnt = Math.min(bankData.getAmount() + totalEarnt, bankData.getBalanceLimit() - bankData.getAmount());
 
         if (totalEarnt == 0) return;
 

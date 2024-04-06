@@ -38,6 +38,7 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         PlayerDisconnectEvent playerDisconnectEvent = (PlayerDisconnectEvent) event;
 
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
+        if (!player.hasAuthenticated) return;
 
         /*
         Remove from caches

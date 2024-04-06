@@ -25,8 +25,8 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 2. Start a MongoDB service either locally or remotely, a guide for installation can be found [here](https://www.mongodb.com/try/download/community?tck=docs_server).
 3. Ensure you have the `Java 21` SDK installed.
 4. Start a Redis server, if you're on Windows you can run an installer [here](https://www.memurai.com/)
-5. Follow the 'Proxy Setup Guide' below.
-6. Follow the 'Game Server Setup Guide' below.
+5. Follow the 'Proxy Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
+6. Follow the 'Game Server Setup Guide' below. (Note, if you want to run a cracked server, you must set "require-authentication" to true in your config)
 7. Follow the 'Service Setup Guide' below.
 8. Follow the 'Resource Pack Setup Guide' below.
 9. To give yourself ADMIN, log in and out of the server, go into your MongoDB compass, click on Minestom -> data, find your profile and set your rank to "ADMIN". Log back in and you'll have it.

@@ -70,6 +70,8 @@ public class SkyBlockVelocity {
     private static SkyBlockVelocity plugin;
     @Getter
     private static RegisteredServer limboServer;
+    @Getter
+    private static boolean shouldAuthenticate = false;
 
     @Inject
     private ProxyServer proxy;
@@ -86,6 +88,7 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
+        shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
         /**
          * Cross version support!
          */
@@ -167,6 +170,12 @@ public class SkyBlockVelocity {
 
         // TODO: Force Resource Pack
         event.setInitialServer(toSendTo.server());
+
+        if (shouldAuthenticate) {
+            RedisMessage.sendMessageToServer(toSendTo.internalID(),
+                    "authenticate",
+                    event.getPlayer().getUniqueId().toString());
+        }
     }
 
     @Subscribe

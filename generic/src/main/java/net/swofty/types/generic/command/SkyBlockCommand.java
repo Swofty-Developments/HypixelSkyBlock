@@ -28,6 +28,7 @@ public abstract class SkyBlockCommand {
     public boolean permissionCheck(CommandSender sender) {
         SkyBlockPlayer player = (SkyBlockPlayer) sender;
         DataHandler dataHandler = player.getDataHandler();
+        if (!player.hasAuthenticated) return false;
         boolean passes = dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(params.permission());
 
         if (!passes) {
@@ -54,6 +55,7 @@ public abstract class SkyBlockCommand {
                 SkyBlockPlayer player = (SkyBlockPlayer) commandSender;
                 DataHandler dataHandler = player.getDataHandler();
 
+                if (!player.hasAuthenticated) return false;
                 return dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(command.getParams().permission());
             });
 

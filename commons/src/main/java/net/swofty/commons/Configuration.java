@@ -35,9 +35,7 @@ public class Configuration {
             String s = new String(Files.readAllBytes(Paths.get(file.toURI())));
             JSONObject object = new JSONObject(s);
             return (T) object.get(key);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex) {}
 
         return def;
     }

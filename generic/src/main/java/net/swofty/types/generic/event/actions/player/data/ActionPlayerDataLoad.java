@@ -39,8 +39,8 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
 
         Logger.info("New player joined: " + playerLoginEvent.getPlayer().getUsername() + "...");
 
-        // Ensure we use player here
-        final Player player = playerLoginEvent.getPlayer();
+        final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
+        if (!player.hasAuthenticated) return;
         UUID playerUuid = player.getUuid();
         UUID islandUUID;
 
@@ -68,7 +68,7 @@ public class ActionPlayerDataLoad extends SkyBlockEvent implements EventExceptio
             // Island is already loaded, presumably from a coop
             island = SkyBlockIsland.getIsland(islandUUID);
         }
-        ((SkyBlockPlayer) player).setSkyBlockIsland(island);
+        player.setSkyBlockIsland(island);
 
         ProfilesDatabase profilesDatabase = new ProfilesDatabase(profileId.toString());
         DataHandler handler;

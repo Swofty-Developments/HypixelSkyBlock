@@ -40,6 +40,8 @@ public class ActionPlayerDataSave extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
         UUID uuid = player.getUuid();
 
+        if (!player.hasAuthenticated) return;
+
         player.getDataHandler().runOnSave(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             player.getSkyBlockIsland().runVacantCheck();

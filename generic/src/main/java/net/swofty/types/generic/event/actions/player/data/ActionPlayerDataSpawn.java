@@ -12,6 +12,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -38,10 +39,14 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
     public void run(Event tempEvent) {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
         if (!event.isFirstSpawn()) return;
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        if (!player.hasAuthenticated) {
+            RedisAuthenticate.promptAuthentication(player);
+            return;
+        }
 
         Logger.info("Loading player data for " + event.getPlayer().getUsername() + "...");
 
-        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
         PlayerProfiles profiles = player.getProfiles();
 

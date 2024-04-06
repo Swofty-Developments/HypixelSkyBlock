@@ -23,6 +23,7 @@ public class ActionPlayerTeleport extends SkyBlockEvent {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!event.isFirstSpawn()) return;
+        if (!player.hasAuthenticated) return;
 
         Thread.startVirtualThread(() -> {
             SharedInstance instance = player.getSkyBlockIsland().getSharedInstance().join();

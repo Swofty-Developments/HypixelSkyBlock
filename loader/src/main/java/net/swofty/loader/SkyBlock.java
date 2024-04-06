@@ -125,6 +125,7 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);
         proxyAPI.registerProxyToClient("has-island", RedisHasIslandLoaded.class);
         proxyAPI.registerProxyToClient("bank-hash", RedisBankHash.class);
+        proxyAPI.registerProxyToClient("authenticate", RedisAuthenticate.class);
         proxyAPI.start();
         VelocityProxy.enable(Configuration.get("velocity-secret"));
 

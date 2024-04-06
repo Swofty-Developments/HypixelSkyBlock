@@ -59,6 +59,7 @@ import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
+import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.attribute.SkyBlockServerAttributes;
@@ -113,6 +114,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         MongoClient mongoClient = MongoClients.create(settings);
 
+        AuthenticationDatabase.connect(mongoClient);
         ProfilesDatabase.connect(mongoClient);
         RegionDatabase.connect(mongoClient);
         IslandDatabase.connect(mongoClient);
@@ -419,9 +421,13 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         MinecraftServer.getConnectionManager().setPlayerProvider((uuid, username, playerConnection) -> {
             SkyBlockPlayer player = new SkyBlockPlayer(uuid, username, playerConnection);
 
-            Thread thread = Thread.ofVirtual().start(() -> {
+            Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
             });
+
+            if (RedisAuthenticate.toAuthenticate.contains(uuid)) {
+                player.setHasAuthenticated(false);
+            }
 
             Logger.info("Received new player: " + username + " (" + uuid + ")");
 
