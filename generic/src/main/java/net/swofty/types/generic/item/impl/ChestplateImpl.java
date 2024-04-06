@@ -5,9 +5,9 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface HelmetImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
+public interface ChestplateImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
     default String getExtraRarityDisplay() {
-        return " HELMET";
+        return " CHESTPLATE";
     }
 
     default ReforgeType getReforgeType() {
