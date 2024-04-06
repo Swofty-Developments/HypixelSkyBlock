@@ -28,10 +28,13 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.raphimc.vialoader.ViaLoader;
 import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.swofty.commons.Configuration;
+import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.data.CoopDatabase;
@@ -149,8 +152,22 @@ public class SkyBlockVelocity {
 
     @Subscribe
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
+        Player player = event.getPlayer();
+
+        MinecraftVersion playerVersion = MinecraftVersion.byProtocolId(Via.getAPI().getPlayerVersion(player.getUniqueId()));
+
+        if (!playerVersion.isMoreRecentThan(MinecraftVersion.MINECRAFT_1_16)){
+            player.disconnect(
+                    Component.text("§cOops! It looks like you're using an incompatible version.")
+                            .append(Component.newline())
+                            .append(Component.text("§aPlease update your Minecraft client to versions 1.16 - 1.20."))
+            );
+
+            return;
+        }
+
         if (!GameManager.hasType(ServerType.ISLAND)) {
-            event.getPlayer().disconnect(
+            player.disconnect(
                     Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
             );
             return;
@@ -161,7 +178,7 @@ public class SkyBlockVelocity {
         GameManager.GameServer toSendTo = gameServers.get(0);
 
         for (BalanceConfiguration configuration : configurations) {
-            GameManager.GameServer server = configuration.getServer(event.getPlayer(), gameServers);
+            GameManager.GameServer server = configuration.getServer(player, gameServers);
             if (server != null) {
                 toSendTo = server;
                 break;
@@ -174,7 +191,7 @@ public class SkyBlockVelocity {
         if (shouldAuthenticate) {
             RedisMessage.sendMessageToServer(toSendTo.internalID(),
                     "authenticate",
-                    event.getPlayer().getUniqueId().toString());
+                    player.getUniqueId().toString());
         }
     }
 
