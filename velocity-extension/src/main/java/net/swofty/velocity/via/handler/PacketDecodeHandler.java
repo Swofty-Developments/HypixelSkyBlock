@@ -27,14 +27,14 @@ public class PacketDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
         if (!info.shouldTransformPacket()) {
             out.add(bytebuf.retain());
             return;
-        } else {
-            ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(bytebuf);
-            try {
-                info.transformIncoming(transformedBuf, CancelDecoderException::generate);
-                out.add(transformedBuf.retain());
-            } finally {
-                transformedBuf.release();
-            }
+        }
+
+        ByteBuf transformedBuf = ctx.alloc().buffer().writeBytes(bytebuf);
+        try {
+            info.transformIncoming(transformedBuf, CancelDecoderException::generate);
+            out.add(transformedBuf.retain());
+        } finally {
+            transformedBuf.release();
         }
     }
 
