@@ -96,7 +96,7 @@ public class GUISkyBlockLevels extends SkyBlockInventoryGUI {
                         "§8Classic Mode",
                         " ",
                         "§7Your level: " + level.getColor() + level,
-                        "§7You have: §b" + player.getSkyBlockExperience().getTotalXP() + " XP",
+                        "§7You have: §b" + Math.round(player.getSkyBlockExperience().getTotalXP()) + " XP",
                         " ",
                         "§7You have completed §3" + (new DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)) + "% §7of the total",
                         "§7SkyBlock XP Tasks.");

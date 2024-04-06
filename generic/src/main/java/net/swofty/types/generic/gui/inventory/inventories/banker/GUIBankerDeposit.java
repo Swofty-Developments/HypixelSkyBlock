@@ -150,7 +150,7 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
             ));
 
             player.sendMessage("§aYou have deposited §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                    bankData.getAmount()
+                    StringUtility.commaify(bankData.getAmount())
                     + " coins§a in your account.");
             return;
         }
@@ -196,7 +196,7 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
                 player.sendMessage("§aYou have deposited §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                        bankData.getAmount()
+                        StringUtility.commaify(bankData.getAmount())
                         + " coins§a in your account.");
                 player.setBankDelayed(false);
             }

@@ -10,7 +10,7 @@ public class NPCWeaponsmith extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Weaponsmith", "§e§lCLICK"};
+                return new String[]{"Weaponsmith", "§e§lCLICK"};
             }
 
             @Override

@@ -37,7 +37,7 @@ public class ListenerPlayerHandler extends RedisListener {
         switch (action) {
             case "transfer" -> {
                 ServerType type = ServerType.valueOf(json.getString("type"));
-                if (!GameManager.hasType(type)) {
+                if (!GameManager.hasType(type) || TransferHandler.playersInLimbo.contains(player)) {
                     return "true";
                 }
 

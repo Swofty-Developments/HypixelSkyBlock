@@ -12,7 +12,7 @@ public class NPCMadRedstoneEngineer extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Mad Redstone Engineer", "§e§lCLICK"};
+                return new String[]{"Mad Redstone Engineer", "§e§lCLICK"};
             }
 
             @Override

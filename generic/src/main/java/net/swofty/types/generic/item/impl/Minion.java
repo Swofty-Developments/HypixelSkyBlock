@@ -34,6 +34,8 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
         List<SkyBlockRecipe<?>> toReturn = new ArrayList<>();
 
         getMinionRegistry().asSkyBlockMinion().getTiers().forEach(tier -> {
+            if (!tier.craftable()) return; // Skip non-craftable tiers
+
             List<String> pattern = new ArrayList<>(Arrays.asList(
                     "AAA",
                     "ABA",

@@ -11,7 +11,7 @@ public class NPCWoolWeaver extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Wool Weaver", "§e§lCLICK"};
+                return new String[]{"Wool Weaver", "§e§lCLICK"};
             }
 
             @Override

@@ -12,7 +12,7 @@ public class NPCBuilder extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Builder", "§e§lCLICK"};
+                return new String[]{"Builder", "§e§lCLICK"};
             }
 
             @Override

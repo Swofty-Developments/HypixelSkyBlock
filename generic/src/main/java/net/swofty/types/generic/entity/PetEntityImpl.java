@@ -80,6 +80,8 @@ public class PetEntityImpl extends LivingEntity {
             }
             teleport(getPosition().add(0, yLevel, 0));
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                if (player.getInstance() != getInstance()) return;
+
                 player.sendPacket(new ParticlePacket(
                         particle,
                         false,

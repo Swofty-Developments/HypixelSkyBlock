@@ -12,6 +12,14 @@ public enum ItemDropChanger {
     OAK_WOOD(Material.OAK_WOOD, () -> new SkyBlockItem(ItemType.OAK_LOG)),
     COAL_ORE(Material.COAL_ORE, () -> new SkyBlockItem(ItemType.COAL)),
     GRASS_BLOCK(Material.GRASS_BLOCK, () -> new SkyBlockItem(ItemType.DIRT)),
+    OAK_LEAVES(Material.OAK_LEAVES, () -> {
+        if (Math.random() < 0.05) {
+            return new SkyBlockItem(ItemType.DECORATION_APPLE);
+        } else {
+            int amount = (int) (Math.random() * 3) + 1;
+            return new SkyBlockItem(ItemType.STICK, amount);
+        }
+    }),
     ;
 
     private final Material material;

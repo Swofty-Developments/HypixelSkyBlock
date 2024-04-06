@@ -10,7 +10,7 @@ public class NPCLumberMerchant extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Lumber Merchant", "§e§lCLICK"};
+                return new String[]{"Lumber Merchant", "§e§lCLICK"};
             }
 
             @Override

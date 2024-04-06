@@ -129,7 +129,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
                     maxBarLength
             ));
 
-            return "§7" + completedLoadingBar + uncompletedLoadingBar + "§r §b" + getTotalXP() + "§3/§b" + nextLevel.getExperience();
+            return "§7" + completedLoadingBar + uncompletedLoadingBar + "§r §b" + Math.round(getTotalXP()) + "§3/§b" + nextLevel.getExperience();
         }
 
         public Double getTotalXP() {

@@ -15,7 +15,7 @@ public abstract class SkyBlockMinion {
     public abstract List<MinionExpectations> getExpectations();
     public abstract MinionAction getAction();
 
-    public record MinionTier(int tier, int timeBetweenActions, int storage, String texture, Material heldItem) {
+    public record MinionTier(int tier, int timeBetweenActions, int storage, String texture, Material heldItem, boolean craftable) {
         public int getSlots() {
             return storage / 64;
         }
