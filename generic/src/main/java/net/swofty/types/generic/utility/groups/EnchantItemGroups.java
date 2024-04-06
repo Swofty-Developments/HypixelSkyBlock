@@ -14,6 +14,7 @@ public enum EnchantItemGroups {
     FISHING_ROD("Tools"),
     GAUNTLET("Melee Weapon"),
     DRILL("Tools"),
+    BOW("Bow"),
     ;
 
     private final String displayName;

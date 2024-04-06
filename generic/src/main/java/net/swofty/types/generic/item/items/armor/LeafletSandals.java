@@ -14,20 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeafletSandals implements CustomSkyBlockItem, Reforgable, ExtraRarityDisplay, LeatherColour, Sellable, Craftable {
+public class LeafletSandals implements CustomSkyBlockItem, BootsImpl, LeatherColour, Sellable, Craftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder().with(ItemStatistic.HEALTH, 15D).build();
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " BOOTS";
     }
 
     @Override

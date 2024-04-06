@@ -5,14 +5,25 @@ import net.minestom.server.coordinate.Vec;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
-public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforgable {
+import java.util.List;
+
+public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforgable, Enchantable {
     default String getExtraRarityDisplay() {
         return " BOW";
     }
 
     default ReforgeType getReforgeType() {
         return ReforgeType.BOWS;
+    }
+
+    default boolean showEnchantLores() {
+        return true;
+    }
+
+    default List<EnchantItemGroups> getEnchantItemGroups() {
+        return List.of(EnchantItemGroups.BOW);
     }
 
     void onBowShoot(SkyBlockPlayer player, SkyBlockItem item);

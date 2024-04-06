@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.armor;
 
+import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.ReforgeType;
@@ -13,20 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeafletHat implements CustomSkyBlockItem, Reforgable, ExtraRarityDisplay, Sellable, Craftable {
+public class LeafletHat implements CustomSkyBlockItem, HelmetImpl, Sellable, Craftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20D).build();
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " HELMET";
     }
 
     @Override
