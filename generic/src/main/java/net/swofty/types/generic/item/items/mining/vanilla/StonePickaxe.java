@@ -1,14 +1,19 @@
 package net.swofty.types.generic.item.items.mining.vanilla;
 
-import net.swofty.types.generic.item.ReforgeType;
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class StonePickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarityDisplay, Enchantable, Reforgable {
+public class StonePickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -23,23 +28,17 @@ public class StonePickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarity
     }
 
     @Override
-    public String getExtraRarityDisplay() {
-        return " PICKAXE";
-    }
+    public SkyBlockRecipe<?> getRecipe() {
+        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.COBBLESTONE, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        List<String> pattern = List.of(
+                "AAA",
+                " B ",
+                " B ");
 
-    @Override
-    public boolean showEnchantLores() {
-        return true;
-    }
-
-    @Override
-    public List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.PICKAXE, EnchantItemGroups.TOOLS);
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.PICKAXES;
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STONE_PICKAXE), ingredientMap, pattern);
     }
 }
 

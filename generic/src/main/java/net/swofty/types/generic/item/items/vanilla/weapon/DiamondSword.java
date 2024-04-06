@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarityDisplay, Craftable, Reforgable {
+public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -23,34 +23,15 @@ public class DiamondSword implements CustomSkyBlockItem, Enchantable, ExtraRarit
     }
 
     @Override
-    public boolean showEnchantLores() {
-        return true;
-    }
-
-    @Override
-    public List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.SWORD);
-    }
-
-    @Override
-    public String getExtraRarityDisplay() {
-        return " SWORD";
-    }
-
-    @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('D', new MaterialQuantifiable(ItemType.DIRT, 3));
-        ingredientMap.put('P', new MaterialQuantifiable(ItemType.IRON_PICKAXE, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.DIAMOND, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
         List<String> pattern = List.of(
-                "DD",
-                "PD");
+                "A",
+                "A",
+                "B");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern);
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
     }
 }

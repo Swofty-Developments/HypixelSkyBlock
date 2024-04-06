@@ -1,18 +1,28 @@
 package net.swofty.types.generic.item.items.vanilla;
 
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Craftable;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Stick implements CustomSkyBlockItem, Craftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STICK), 4)
-                .add(ItemType.OAK_PLANKS, 2);
+        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
+        List<String> pattern = List.of(
+                "A",
+                "A");
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STICK, 4), ingredientMap, pattern);
     }
 
     @Override
