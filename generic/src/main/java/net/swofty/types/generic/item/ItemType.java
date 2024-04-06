@@ -108,6 +108,14 @@ public enum ItemType {
     LAPIS_MINION(Material.PLAYER_HEAD, Rarity.RARE, LapisMinion.class),
     REDSTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, RedstoneMinion.class),
     ENDSTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, EndstoneMinion.class),
+
+    ICE_MINION(Material.PLAYER_HEAD, Rarity.RARE, IceMinion.class),
+    QUARTZ_MINION(Material.PLAYER_HEAD, Rarity.RARE, QuartzMinion.class),
+    OBSIDIAN_MINION(Material.PLAYER_HEAD, Rarity.RARE, ObsidianMinion.class),
+    SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
+    GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
+
+    //hm
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
 
     /**
