@@ -22,7 +22,13 @@ public class ForagingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.OAK_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.OAK_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -84,7 +90,13 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SPRUCE_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.SPRUCE_MINION);
+                                return item;
+                            }
+                        },new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -146,7 +158,13 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.BIRCH_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.BIRCH_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -214,7 +232,13 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.JUNGLE_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.JUNGLE_MINION);
+                                return item;
+                            }
+                        },new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -276,7 +300,13 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.ACACIA_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ACACIA_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -338,7 +368,13 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.DARK_OAK_LOG,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.DARK_OAK_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

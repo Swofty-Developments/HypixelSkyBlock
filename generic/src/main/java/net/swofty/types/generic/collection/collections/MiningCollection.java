@@ -177,7 +177,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.GOLD_INGOT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.GOLD_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -251,7 +257,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.LAPIS_LAZULI,
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.LAPIS_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -323,7 +335,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.GRAVEL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.GRAVEL_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -385,7 +403,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.DIAMOND,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.DIAMOND_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -453,7 +477,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.EMERALD,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.EMERALD_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -521,7 +551,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.END_STONE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ENDSTONE_MINION);
+                                return item;
+                            }
+                        },  new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -803,7 +839,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.ICE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.ICE_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -887,7 +929,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.IRON_INGOT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.IRON_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1110,7 +1158,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.QUARTZ,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.QUARTZ_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1216,7 +1270,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.OBSIDIAN,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.OBSIDIAN_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1346,7 +1406,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.REDSTONE,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.REDSTONE_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1499,7 +1565,13 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SAND,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50,new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.SAND_MINION);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
