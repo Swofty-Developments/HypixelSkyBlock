@@ -3,8 +3,6 @@ package net.swofty.types.generic.user;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.scoreboard.Sidebar;
-import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -55,32 +53,32 @@ public class SkyBlockScoreboard {
 
                 SwoftySidebar sidebar = new SwoftySidebar(Component.text(STR."  \{getSidebarName(skyblockName, false)}\{player.isCoop() ? " §b§lCO-OP  " : "  "}"));
 
-                addLine(STR."§7\{new SimpleDateFormat("MM/dd/yy").format(new Date())} §8m\{SkyBlockConst.getServerName()}   ", sidebar , player);
-                addLine("§7 ", sidebar , player);
-                addLine(STR."§f \{SkyBlockCalendar.getMonthName()} \{StringUtility.ntify(SkyBlockCalendar.getDay())}", sidebar , player);
-                addLine(STR."§7 \{SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed())}", sidebar , player);
+                addLine(STR."§7\{new SimpleDateFormat("MM/dd/yy").format(new Date())} §8m\{SkyBlockConst.getServerName()}   ", sidebar);
+                addLine("§7 ", sidebar);
+                addLine(STR."§f \{SkyBlockCalendar.getMonthName()} \{StringUtility.ntify(SkyBlockCalendar.getDay())}", sidebar);
+                addLine(STR."§7 \{SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed())}", sidebar);
                 try {
-                    addLine(STR."§7 ⏣ \{region.getType().getColor()}\{region.getType().getName()}", sidebar , player);
+                    addLine(STR."§7 ⏣ \{region.getType().getColor()}\{region.getType().getName()}", sidebar);
                 } catch (NullPointerException ignored) {
-                    addLine(" §7Unknown", sidebar , player);
+                    addLine(" §7Unknown", sidebar);
                 }
-                addLine("§7 ", sidebar , player);
-                addLine(STR."§fPurse: §6\{StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())}\{coinReplacement == null ? "" : STR." §e(+\{coinReplacement.getDisplay()})"}", sidebar , player);
-                addLine("§7 ", sidebar , player);
+                addLine("§7 ", sidebar);
+                addLine(STR."§fPurse: §6\{StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())}\{coinReplacement == null ? "" : STR." §e(+\{coinReplacement.getDisplay()})"}", sidebar);
+                addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
                     MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
 
-                    addLine("§fObjective", sidebar , player);
-                    addLine(STR."§e\{mission}", sidebar , player);
+                    addLine("§fObjective", sidebar);
+                    addLine(STR."§e\{mission}", sidebar);
 
                     SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
                     if (progressMission != null)
-                        addLine(STR."§7 (§e\{mission.getMissionProgress()}§7/§a\{progressMission.getMaxProgress()}§7)", sidebar , player);
-                    addLine("§7 ", sidebar , player);
+                        addLine(STR."§7 (§e\{mission.getMissionProgress()}§7/§a\{progressMission.getMaxProgress()}§7)", sidebar);
+                    addLine("§7 ", sidebar);
                 }
 
-                addLine("§ewww.hypixel.net", sidebar , player);
+                addLine("§ewww.hypixel.net", sidebar);
 
                 sidebar.addViewer(player);
 
@@ -94,12 +92,12 @@ public class SkyBlockScoreboard {
         sidebarCache.remove(player.getUuid());
     }
 
-    private static void addLine(String text, SwoftySidebar sidebar , Player player) {
+    private static void addLine(String text, SwoftySidebar sidebar) {
         for (SwoftySidebar.ScoreboardLine existingLine : sidebar.getLines()) {
             sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
         }
 
-        sidebar.createLine(new SwoftySidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0) , player );
+        sidebar.createLine(new SwoftySidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
     }
 
     private static String getSidebarName(int counter, boolean isGuest) {
