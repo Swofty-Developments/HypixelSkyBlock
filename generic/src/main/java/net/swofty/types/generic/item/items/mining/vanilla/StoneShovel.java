@@ -1,20 +1,18 @@
-package net.swofty.types.generic.item.items.vanilla.weapon;
+package net.swofty.types.generic.item.items.mining.vanilla;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WoodenSword implements CustomSkyBlockItem, SwordImpl, Craftable, Sellable {
+public class StoneShovel implements CustomSkyBlockItem, ShovelImpl, Craftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -25,14 +23,14 @@ public class WoodenSword implements CustomSkyBlockItem, SwordImpl, Craftable, Se
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.COBBLESTONE, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
         List<String> pattern = List.of(
                 "A",
-                "A",
+                "B",
                 "B");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.WOODEN_SWORD), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STONE_SHOVEL), ingredientMap, pattern);
     }
 
     @Override

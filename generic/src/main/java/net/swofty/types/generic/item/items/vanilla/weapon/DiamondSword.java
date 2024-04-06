@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable {
+public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -33,5 +33,10 @@ public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable {
                 "B");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern);
+    }
+
+    @Override
+    public double getSellValue() {
+        return 8;
     }
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable {
+public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -39,5 +39,10 @@ public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable
                 " B ");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.WOODEN_PICKAXE), ingredientMap, pattern);
+    }
+
+    @Override
+    public double getSellValue() {
+        return 1;
     }
 }
