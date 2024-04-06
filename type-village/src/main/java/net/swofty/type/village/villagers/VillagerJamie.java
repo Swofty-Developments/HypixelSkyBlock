@@ -48,7 +48,7 @@ public class VillagerJamie extends NPCVillagerDialogue {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        e.player().addAndUpdateItem(new SkyBlockItem(ItemType.ROGUE, 1));
+                        e.player().addAndUpdateItem(new SkyBlockItem(ItemType.ROGUE_SWORD, 1));
                     });
                 }
             }

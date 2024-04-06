@@ -105,7 +105,6 @@ public enum ItemType {
     LAPIS_MINION(Material.PLAYER_HEAD, Rarity.RARE, LapisMinion.class),
     REDSTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, RedstoneMinion.class),
     ENDSTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, EndstoneMinion.class),
-
     ICE_MINION(Material.PLAYER_HEAD, Rarity.RARE, IceMinion.class),
     QUARTZ_MINION(Material.PLAYER_HEAD, Rarity.RARE, QuartzMinion.class),
     OBSIDIAN_MINION(Material.PLAYER_HEAD, Rarity.RARE, ObsidianMinion.class),
@@ -374,7 +373,7 @@ public enum ItemType {
      * Swords
      */
     HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY, Hyperion.class),
-    ROGUE(Material.GOLDEN_SWORD, Rarity.COMMON, RogueSword.class),
+    ROGUE_SWORD(Material.GOLDEN_SWORD, Rarity.COMMON, RogueSword.class),
     DIAMOND_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, DiamondSword.class),
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
@@ -382,6 +381,11 @@ public enum ItemType {
     UNDEAD_SWORD(Material.IRON_SWORD, Rarity.COMMON, UndeadSword.class),
     END_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, EndSword.class),
     SPIDER_SWORD(Material.IRON_SWORD, Rarity.COMMON, SpiderSword.class),
+    ASPECT_OF_THE_JERRY(Material.WOODEN_SWORD, Rarity.COMMON, AspectOfTheJerry.class),
+    FANCY_SWORD(Material.GOLDEN_SWORD, Rarity.COMMON, FancySword.class),
+    HUNTER_KNIFE(Material.IRON_SWORD, Rarity.UNCOMMON, HunterKnife.class),
+    PRISMARINE_BLADE(Material.PRISMARINE_SHARD, Rarity.UNCOMMON, PrismarineBlade.class),
+    SILVER_FANG(Material.GHAST_TEAR, Rarity.UNCOMMON, SilverFang.class),
 
     /**
      * Bows
