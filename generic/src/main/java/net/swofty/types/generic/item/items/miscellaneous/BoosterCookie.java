@@ -41,8 +41,6 @@ public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchante
 
     @Override
     public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        Thread.startVirtualThread(() -> {
-            new GUIBoosterCookie().open(player);
-        });
+        new GUIBoosterCookie().open(player);
     }
 }

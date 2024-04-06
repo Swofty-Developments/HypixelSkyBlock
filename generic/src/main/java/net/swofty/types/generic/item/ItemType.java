@@ -58,10 +58,7 @@ import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
 import net.swofty.types.generic.item.items.talismans.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.talismans.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.talismans.zombie.ZombieTalisman;
-import net.swofty.types.generic.item.items.vanilla.Coal;
-import net.swofty.types.generic.item.items.vanilla.Cobblestone;
-import net.swofty.types.generic.item.items.vanilla.Stick;
-import net.swofty.types.generic.item.items.vanilla.Wheat;
+import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
 import net.swofty.types.generic.item.items.vanilla.bow.Bow;
@@ -492,8 +489,8 @@ public enum ItemType {
     /**
      * Vanilla Items
      */
-    CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON),
-    OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON),
+    CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON , CraftingTable.class),
+    OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON , OakPlanks.class),
     STICK(Material.STICK, Rarity.COMMON, Stick.class),
     ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.COMMON),
     BAKED_POTATO(Material.BAKED_POTATO, Rarity.COMMON),
