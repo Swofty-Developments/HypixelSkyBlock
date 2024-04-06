@@ -48,7 +48,7 @@ public class MinionDiamond extends SkyBlockMinion {
                         Material.IRON_PICKAXE, true),
                 new MinionTier(12, 12, 960,
                         "a59c8a65014721b7dc612cefcadf263f0496c41430937d1802d6cfad9947c87b",
-                        Material.IRON_PICKAXE, true)
+                        Material.IRON_PICKAXE, false)
         );
     }
 
