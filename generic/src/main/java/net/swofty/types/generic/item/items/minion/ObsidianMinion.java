@@ -23,7 +23,7 @@ public class ObsidianMinion implements CustomSkyBlockItem, Minion {
 
     @Override
     public ItemType getFirstBaseItem() {
-        return ItemType.DIAMOND_PICKAXE;
+        return ItemType.WOODEN_PICKAXE;
     }
 //hm
 }

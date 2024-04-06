@@ -15,19 +15,19 @@ public class MinionEndstone extends SkyBlockMinion {
         return List.of(
                 new MinionTier(1, 26, 64,
                         "b339b471723eb35b21f2d87699aea156dc54b491b9516b4f2f27f3e6373ca2c0",
-                        Material.IRON_PICKAXE, true),
+                        Material.WOODEN_PICKAXE, true),
                 new MinionTier(2, 26, 192,
                         "564962ca65c940b824ee7a9236ccc6b10758465a3320de10f703bf453cc03d1b",
-                        Material.IRON_PICKAXE, true),
+                        Material.WOODEN_PICKAXE, true),
                 new MinionTier(3, 24, 192,
                         "fe56d6792d0d777080c8636ea7d668767ce1562fee8713e81ef7d3ed65cb93f5",
-                        Material.IRON_PICKAXE, true),
+                        Material.STONE_PICKAXE, true),
                 new MinionTier(4, 24, 384,
                         "eb90a11594df73d7916032e62a11c618cfee278b8f027388693d291a5e45955a",
-                        Material.IRON_PICKAXE, true),
+                        Material.STONE_PICKAXE, true),
                 new MinionTier(5, 22, 384,
                         "1028057e8e64d1b5571481d62e7afb1411dc2ef74733f578294f26bd72890f7a",
-                        Material.IRON_PICKAXE, true),
+                        Material.STONE_PICKAXE, true),
                 new MinionTier(6, 22, 576,
                         "75d7bb694abe9a799510f436666d00877698a301f90638c5af7f7cb07718de6e",
                         Material.IRON_PICKAXE, true),
@@ -39,13 +39,13 @@ public class MinionEndstone extends SkyBlockMinion {
                         Material.IRON_PICKAXE, true),
                 new MinionTier(9, 16, 768,
                         "7bec17adb9b84df18eb705c31ecc674535b2f4fff6698b2772351530c2684146",
-                        Material.IRON_PICKAXE, true),
+                        Material.GOLDEN_PICKAXE, true),
                 new MinionTier(10, 16, 960,
                         "4f7961a1c44fd88ea005d427fc0f702b0925e9413e5df4ffc19cea1ef104468",
-                        Material.IRON_PICKAXE, true),
+                        Material.GOLDEN_PICKAXE, true),
                 new MinionTier(11, 13, 960,
                         "77f79d20092e2a689fe8cbec48ea8b028967aad930728129ccc6303616fece20",
-                        Material.IRON_PICKAXE, true)
+                        Material.DIAMOND_PICKAXE, true)
         );
     }
 
