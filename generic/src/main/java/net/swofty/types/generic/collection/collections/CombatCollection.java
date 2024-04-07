@@ -407,6 +407,12 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.SILVER_FANG);
+                                return item;
+                            }
                         }),
                         new ItemCollectionReward(10000, new UnlockXP() {
                             @Override
