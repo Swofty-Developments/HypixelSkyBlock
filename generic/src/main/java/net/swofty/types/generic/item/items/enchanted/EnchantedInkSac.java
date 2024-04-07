@@ -13,4 +13,5 @@ public class EnchantedInkSac implements Enchanted, Sellable {
     public double getSellValue() {
         return 160;
     }
+
 }
