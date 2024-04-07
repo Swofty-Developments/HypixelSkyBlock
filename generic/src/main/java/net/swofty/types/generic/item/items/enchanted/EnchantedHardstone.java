@@ -13,26 +13,12 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class EnchantedHardstone implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedHardstone implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 576;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.ENCHANTED_HARD_STONE), 1)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64)
-                .add(ItemType.HARD_STONE, 64);
-    }
 
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {

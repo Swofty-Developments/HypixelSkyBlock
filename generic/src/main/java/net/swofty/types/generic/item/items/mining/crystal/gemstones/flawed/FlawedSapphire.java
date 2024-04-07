@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FlawedSapphire implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FlawedSapphire implements GemstoneImpl, Sellable {
     @Override
     public double getSellValue() {
         return 240;
@@ -42,16 +42,5 @@ public class FlawedSapphire implements GemstoneImpl, Sellable, DefaultCraftable 
                 "§7§7Some say that when §eharnessed",
                 "§eproperly§7, it can give its",
                 "§7owner extra §b✎ Intelligence§7."));
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWED_SAPPHIRE_GEM), 1)
-                .add(ItemType.ROUGH_SAPPHIRE_GEM, 16)
-                .add(ItemType.ROUGH_SAPPHIRE_GEM, 16)
-                .add(ItemType.ROUGH_SAPPHIRE_GEM, 16)
-                .add(ItemType.ROUGH_SAPPHIRE_GEM, 16)
-                .add(ItemType.ROUGH_SAPPHIRE_GEM, 16);
     }
 }

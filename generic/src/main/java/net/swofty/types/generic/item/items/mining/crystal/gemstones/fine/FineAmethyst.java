@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FineAmethyst implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FineAmethyst implements GemstoneImpl, Sellable {
     @Override
     public double getSellValue() {
         return 19200;
@@ -31,16 +31,5 @@ public class FineAmethyst implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public Gemstone getAssociatedGemstone() {
         return Gemstone.AMETHYST;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FINE_AMETHYST_GEM), 1)
-                .add(ItemType.FLAWED_AMETHYST_GEM, 16)
-                .add(ItemType.FLAWED_AMETHYST_GEM, 16)
-                .add(ItemType.FLAWED_AMETHYST_GEM, 16)
-                .add(ItemType.FLAWED_AMETHYST_GEM, 16)
-                .add(ItemType.FLAWED_AMETHYST_GEM, 16);
     }
 }

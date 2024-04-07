@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MinerOutfitChestplate implements CustomSkyBlockItem, ChestplateImpl, LeatherColour, Craftable, Sellable {
+public class MinerOutfitChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,5 +42,10 @@ public class MinerOutfitChestplate implements CustomSkyBlockItem, ChestplateImpl
     @Override
     public double getSellValue() {
         return 1920;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.CHESTPLATE;
     }
 }

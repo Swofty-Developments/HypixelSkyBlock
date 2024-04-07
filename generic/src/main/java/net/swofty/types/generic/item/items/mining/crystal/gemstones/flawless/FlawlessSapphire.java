@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawlessSapphire implements GemstoneImpl, Unstackable, DefaultCraftable {
+public class FlawlessSapphire implements GemstoneImpl, Unstackable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "957cfa9c75ba584645ee2af6d9867d767ddea4667cdfc72dc1061dd1975ca7d0";
@@ -28,14 +28,4 @@ public class FlawlessSapphire implements GemstoneImpl, Unstackable, DefaultCraft
         return Gemstone.SAPPHIRE;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWLESS_SAPPHIRE_GEM), 1)
-                .add(ItemType.FINE_SAPPHIRE_GEM, 16)
-                .add(ItemType.FINE_SAPPHIRE_GEM, 16)
-                .add(ItemType.FINE_SAPPHIRE_GEM, 16)
-                .add(ItemType.FINE_SAPPHIRE_GEM, 16)
-                .add(ItemType.FINE_SAPPHIRE_GEM, 16);
-    }
 }

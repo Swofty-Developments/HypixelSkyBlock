@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawlessRuby implements GemstoneImpl, Unstackable, DefaultCraftable {
+public class FlawlessRuby implements GemstoneImpl, Unstackable {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
@@ -29,14 +29,4 @@ public class FlawlessRuby implements GemstoneImpl, Unstackable, DefaultCraftable
         return Gemstone.RUBY;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWLESS_RUBY_GEM), 1)
-                .add(ItemType.FINE_RUBY_GEM, 16)
-                .add(ItemType.FINE_RUBY_GEM, 16)
-                .add(ItemType.FINE_RUBY_GEM, 16)
-                .add(ItemType.FINE_RUBY_GEM, 16)
-                .add(ItemType.FINE_RUBY_GEM, 16);
-    }
 }

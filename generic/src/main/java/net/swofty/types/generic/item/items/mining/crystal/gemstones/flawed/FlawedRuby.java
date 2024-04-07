@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawedRuby implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FlawedRuby implements GemstoneImpl, Sellable {
 
     @Override
     public GemRarity getAssociatedGemRarity() {
@@ -32,16 +32,5 @@ public class FlawedRuby implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "46d81068cbdf4a364231a26453d6cd660a0095f9cd8795307c5be667427712e";
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWED_RUBY_GEM), 1)
-                .add(ItemType.ROUGH_RUBY_GEM, 16)
-                .add(ItemType.ROUGH_RUBY_GEM, 16)
-                .add(ItemType.ROUGH_RUBY_GEM, 16)
-                .add(ItemType.ROUGH_RUBY_GEM, 16)
-                .add(ItemType.ROUGH_RUBY_GEM, 16);
     }
 }

@@ -8,20 +8,10 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
-public class EnchantedInkSac implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedInkSac implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 160;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FISHING,
-                new SkyBlockItem(ItemType.ENCHANTED_INK_SAC), 1)
-                .add(ItemType.INK_SAC, 16)
-                .add(ItemType.INK_SAC, 16)
-                .add(ItemType.INK_SAC, 16)
-                .add(ItemType.INK_SAC, 16)
-                .add(ItemType.INK_SAC, 16);
-    }
 }

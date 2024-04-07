@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawedJasper implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FlawedJasper implements GemstoneImpl, Sellable {
     @Override
     public double getSellValue() {
         return 240;
@@ -31,16 +31,5 @@ public class FlawedJasper implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public Gemstone getAssociatedGemstone() {
         return Gemstone.JASPER;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWED_JASPER_GEM), 1)
-                .add(ItemType.ROUGH_JASPER_GEM, 16)
-                .add(ItemType.ROUGH_JASPER_GEM, 16)
-                .add(ItemType.ROUGH_JASPER_GEM, 16)
-                .add(ItemType.ROUGH_JASPER_GEM, 16)
-                .add(ItemType.ROUGH_JASPER_GEM, 16);
     }
 }

@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FineAmber implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FineAmber implements GemstoneImpl, Sellable {
 
     @Override
     public double getSellValue() {
@@ -32,16 +32,5 @@ public class FineAmber implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public Gemstone getAssociatedGemstone() {
         return Gemstone.AMBER;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FINE_AMBER_GEM), 1)
-                .add(ItemType.FLAWED_AMBER_GEM, 16)
-                .add(ItemType.FLAWED_AMBER_GEM, 16)
-                .add(ItemType.FLAWED_AMBER_GEM, 16)
-                .add(ItemType.FLAWED_AMBER_GEM, 16)
-                .add(ItemType.FLAWED_AMBER_GEM, 16);
     }
 }

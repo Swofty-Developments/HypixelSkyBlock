@@ -7,15 +7,11 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedCobblestone implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedCobblestone implements Enchanted, Sellable {
 
     @Override
     public double getSellValue() {
         return 160;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.COBBLESTONE);
-    }
 }
