@@ -9,20 +9,9 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
-public class EnchantedSponge implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedSponge implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 2000;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FISHING,
-                new SkyBlockItem(ItemType.ENCHANTED_SPONGE), 1)
-                .add(ItemType.SPONGE, 8)
-                .add(ItemType.SPONGE, 8)
-                .add(ItemType.SPONGE, 8)
-                .add(ItemType.SPONGE, 8)
-                .add(ItemType.SPONGE, 8);
     }
 }

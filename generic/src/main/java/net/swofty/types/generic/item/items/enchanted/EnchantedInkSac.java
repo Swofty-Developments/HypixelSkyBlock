@@ -14,4 +14,7 @@ public class EnchantedInkSac implements Enchanted, Sellable {
         return 160;
     }
 
+
+
+
 }

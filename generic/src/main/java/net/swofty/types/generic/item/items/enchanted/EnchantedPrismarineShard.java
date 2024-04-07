@@ -9,20 +9,9 @@ import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
-public class EnchantedPrismarineShard implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedPrismarineShard implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 400;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FISHING,
-                new SkyBlockItem(ItemType.ENCHANTED_PRISMARINE_SHARD), 1)
-                .add(ItemType.PRISMARINE_SHARD, 16)
-                .add(ItemType.PRISMARINE_SHARD, 16)
-                .add(ItemType.PRISMARINE_SHARD, 16)
-                .add(ItemType.PRISMARINE_SHARD, 16)
-                .add(ItemType.PRISMARINE_SHARD, 16);
     }
 }

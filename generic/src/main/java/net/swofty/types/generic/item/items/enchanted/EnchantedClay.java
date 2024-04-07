@@ -13,4 +13,7 @@ public class EnchantedClay implements Enchanted, Sellable {
         return 480;
     }
 
+
+
+
 }
