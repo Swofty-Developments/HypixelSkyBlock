@@ -76,6 +76,30 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.MINERS_OUTFIT_HELMET);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.MINERS_OUTFIT_CHESTPLATE);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.MINERS_OUTFIT_LEGGINGS);
+                                return item;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.MINERS_OUTFIT_BOOTS);
+                                return item;
+                            }
                         }),
                         new ItemCollectionReward(25000, new UnlockXP() {
                             @Override

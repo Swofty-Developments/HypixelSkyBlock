@@ -632,5 +632,5 @@ public class SkyBlockPlayer extends Player {
                     handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
-
+\
 }
