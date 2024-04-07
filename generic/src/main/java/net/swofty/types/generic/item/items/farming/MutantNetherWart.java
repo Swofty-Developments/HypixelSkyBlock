@@ -1,21 +1,14 @@
 package net.swofty.types.generic.item.items.farming;
 
-
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class MutantNetherWart implements Enchanted, Sellable, DefaultCraftable, SkullHead {
+public class MutantNetherWart implements Enchanted, Sellable, SkullHead {
     @Override
     public double getSellValue() {
         return 102400;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_NETHER_WART);
     }
 
     @Override

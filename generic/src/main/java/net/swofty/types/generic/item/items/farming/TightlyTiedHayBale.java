@@ -1,32 +1,14 @@
 package net.swofty.types.generic.item.items.farming;
 
-
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
-import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class TightlyTiedHayBale implements Enchanted, Sellable, DefaultCraftable, SkullHead {
+public class TightlyTiedHayBale implements Enchanted, Sellable, SkullHead {
     @Override
     public double getSellValue() {
         return 1119744;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
-                new SkyBlockItem(ItemType.TIGHTLY_TIED_HAY_BALE), 1)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                .add(ItemType.ENCHANTED_HAY_BAL, 16);
     }
 
     @Override

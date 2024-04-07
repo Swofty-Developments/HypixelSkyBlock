@@ -1,21 +1,14 @@
 package net.swofty.types.generic.item.items.farming;
 
-
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class PolishedPumpkin implements Enchanted, Sellable, DefaultCraftable, SkullHead {
+public class PolishedPumpkin implements Enchanted, Sellable, SkullHead {
     @Override
     public double getSellValue() {
         return 256000;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_PUMPKIN);
     }
 
     @Override

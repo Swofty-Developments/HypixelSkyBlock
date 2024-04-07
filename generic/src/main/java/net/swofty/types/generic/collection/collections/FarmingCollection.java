@@ -2,12 +2,21 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.enchantment.EnchantmentType;
-import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.item.items.enchanted.*;
+import net.swofty.types.generic.item.items.farming.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static net.swofty.types.generic.item.impl.SkyBlockRecipe.getStandardEnchantedRecipe;
 
 public class FarmingCollection extends CollectionCategory {
     @Override
@@ -50,9 +59,15 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BREAD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_BREAD), 1)
+                                        .add(ItemType.WHEAT, 10)
+                                        .add(ItemType.WHEAT, 10)
+                                        .add(ItemType.WHEAT, 10)
+                                        .add(ItemType.WHEAT, 10)
+                                        .add(ItemType.WHEAT, 10)
+                                        .add(ItemType.WHEAT, 10);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -68,9 +83,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_HAY_BAL);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedHayBale.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_BREAD);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -98,9 +112,18 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.TIGHTLY_TIED_HAY_BALE);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.TIGHTLY_TIED_HAY_BALE), 1)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -130,9 +153,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1750, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_CARROT);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedCarrot.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.CARROT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -154,9 +176,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GOLDEN_CARROT);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedGoldenCarrot.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_CARROT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -198,9 +219,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_CACTUS_GREEN);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedCactusGreen.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.CACTUS_GREEN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -228,9 +248,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_CACTUS);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedCactus.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_CACTUS_GREEN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -266,9 +285,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COCOA_BEANS);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedCocoaBeans.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.COCOA_BEANS);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -284,9 +302,14 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COOKIE);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_COOKIE), 1)
+                                        .add(ItemType.ENCHANTED_COCOA_BEANS, 32)
+                                        .add(ItemType.ENCHANTED_COCOA_BEANS, 32)
+                                        .add(ItemType.ENCHANTED_COCOA_BEANS, 32)
+                                        .add(ItemType.ENCHANTED_COCOA_BEANS, 32)
+                                        .add(ItemType.WHEAT, 32);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -340,9 +363,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_FEATHER);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedFeather.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.FEATHER);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -390,9 +412,15 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.SMALL_BACKPACK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.LEATHER, 10));
+                                List<String> pattern = List.of(
+                                        "LLL",
+                                        "L L",
+                                        "LLL");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.SMALL_BACKPACK), ingredientMap, pattern);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -402,9 +430,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RAW_BEEF);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRawBeef.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.BEEF);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -414,9 +441,16 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.MEDIUM_BACKPACK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.LEATHER, 64));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.SMALL_BACKPACK, 1));
+                                List<String> pattern = List.of(
+                                        "LLL",
+                                        "LBL",
+                                        "LLL");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.MEDIUM_BACKPACK), ingredientMap, pattern);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -426,9 +460,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_LEATHER);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedLeather.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.LEATHER);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -444,9 +477,16 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.LARGE_BACKPACK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.ENCHANTED_LEATHER, 2));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.MEDIUM_BACKPACK, 1));
+                                List<String> pattern = List.of(
+                                        "LLL",
+                                        "LBL",
+                                        "LLL");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LARGE_BACKPACK), ingredientMap, pattern);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -462,9 +502,16 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.GREATER_BACKPACK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.ENCHANTED_LEATHER, 4));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.LARGE_BACKPACK, 1));
+                                List<String> pattern = List.of(
+                                        "LLL",
+                                        "LBL",
+                                        "LLL");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.GREATER_BACKPACK), ingredientMap, pattern);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -494,9 +541,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MELON);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedMelon.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.MELON_SLICE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -506,9 +552,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(15000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GLISTERING_MELON);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedGlisteringMelon.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.GLISTERING_MELON);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -518,9 +563,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MELON_BLOCK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedMelonBlock.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_MELON);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -571,19 +615,7 @@ public class FarmingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(2500, new UnlockRecipe() {
-                            @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.BROWN_MUSHROOM_BLOCK);
-                                return item;
-                            }
-                        }, new UnlockRecipe() {
-                            @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.RED_MUSHROOM_BLOCK);
-                                return item;
-                            }
-                        }, new UnlockXP() {
+                        new ItemCollectionReward(2500, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -591,15 +623,13 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BROWN_MUSHROOM);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedBrownMushroom.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.BROWN_MUSHROOM);
                             }
                         }, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RED_MUSHROOM);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRedMushroom.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.RED_MUSHROOM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -615,15 +645,13 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BROWN_MUSHROOM_BLOCK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedBrownMushroomBlock.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_BROWN_MUSHROOM);
                             }
                         }, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RED_MUSHROOM_BLOCK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRedMushroomBlock.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_RED_MUSHROOM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -665,9 +693,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_MUTTON);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedMutton.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.MUTTON);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -689,9 +716,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_COOKED_MUTTON);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedCookedMutton.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_MUTTON);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -733,9 +759,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_NETHER_WART);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedNetherWart.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.NETHER_WART);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -781,9 +806,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.MUTANT_NETHER_WART);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(MutantNetherWart.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_NETHER_WART);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -818,9 +842,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1750, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_POTATO);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedPotato.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.POTATO);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -842,9 +865,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BAKED_POTATO);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedBakedPotato.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_POTATO);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -880,9 +902,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PUMPKIN);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedPumpkin.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.PUMPKIN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -928,9 +949,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.POLISHED_PUMPKIN);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(PolishedPumpkin.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_PUMPKIN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -965,9 +985,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RAW_CHICKEN);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRawChicken.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.CHICKEN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -977,9 +996,18 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_EGG);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_EGG), 1)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16)
+                                        .add(ItemType.EGG, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1007,9 +1035,18 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(50000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.SUPER_ENCHANTED_EGG);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.SUPER_ENCHANTED_EGG), 1)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16)
+                                        .add(ItemType.ENCHANTED_EGG, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1019,9 +1056,18 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.OMEGA_ENCHANTED_EGG);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.OMEGA_ENCHANTED_EGG), 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1)
+                                        .add(ItemType.SUPER_ENCHANTED_EGG, 1);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1051,9 +1097,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PORK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedPork.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.PORKCHOP);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1075,9 +1120,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_GRILLED_PORK);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedGrilledPork.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_PORK);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1119,9 +1163,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RABBIT_FOOT);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRabbitFoot.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.RABBIT_FOOT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1137,9 +1180,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_RABBIT_HIDE);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedRabbitHide.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.RABBIT_HIDE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1181,9 +1223,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SEEDS);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedSeeds.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.WHEAT_SEEDS);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1211,9 +1252,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.BOX_OF_SEEDS);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(BoxOfSeeds.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_SEEDS);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1243,9 +1283,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SUGAR);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedSugar.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.SUGAR);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1255,9 +1294,12 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_PAPER);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_PAPER), 1)
+                                        .add(ItemType.SUGAR_CANE, 64)
+                                        .add(ItemType.SUGAR_CANE, 64)
+                                        .add(ItemType.SUGAR_CANE, 64);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1267,9 +1309,18 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BOOKSHELF);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_BOOKSHELF), 1)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_PAPER, 2)
+                                        .add(ItemType.ENCHANTED_PAPER, 2)
+                                        .add(ItemType.ENCHANTED_PAPER, 2)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1285,9 +1336,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(20000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SUGAR_CANE);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedSugarCane.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_SUGAR);
                             }
                         }, new UnlockXP() {
                             @Override

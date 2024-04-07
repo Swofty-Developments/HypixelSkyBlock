@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
+
 public class JumboBackpack implements Backpack, DefaultCraftable {
     @Override
     public int getRows() {
