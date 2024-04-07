@@ -1,7 +1,5 @@
 package net.swofty.types.generic.item.items.enchanted;
 
-
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;

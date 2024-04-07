@@ -2,21 +2,14 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.enchantment.EnchantmentType;
-import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
-import net.swofty.types.generic.item.items.backpacks.MediumBackpack;
-import net.swofty.types.generic.item.items.backpacks.SmallBackpack;
 import net.swofty.types.generic.item.items.enchanted.*;
-import net.swofty.types.generic.item.items.farming.BoxOfSeeds;
-import net.swofty.types.generic.item.items.farming.MutantNetherWart;
-import net.swofty.types.generic.item.items.farming.PolishedPumpkin;
-import net.swofty.types.generic.item.items.farming.TightlyTiedHayBale;
+import net.swofty.types.generic.item.items.farming.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -91,7 +84,7 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedHayBal.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_BREAD);
+                                return getStandardEnchantedRecipe(EnchantedHayBale.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_BREAD);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -120,7 +113,17 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(TightlyTiedHayBale.class, SkyBlockRecipe.RecipeType.FARMING, ItemType.ENCHANTED_HAY_BAL);
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
+                                        new SkyBlockItem(ItemType.TIGHTLY_TIED_HAY_BALE), 1)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BAL, 16);
                             }
                         }, new UnlockXP() {
                             @Override
