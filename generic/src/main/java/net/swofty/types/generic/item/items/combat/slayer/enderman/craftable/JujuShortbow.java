@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Vec;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,7 +13,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class JujuShortbow implements CustomSkyBlockItem, Craftable, BowImpl, NotFinishedYet {
+public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

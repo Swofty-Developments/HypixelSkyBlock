@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, Craftable, HelmetImpl, GemstoneItem, NotFinishedYet {
+public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -56,5 +56,10 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable,
         return List.of(
                 new GemstoneItemSlot(Gemstone.Slots.RUBY, 0)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

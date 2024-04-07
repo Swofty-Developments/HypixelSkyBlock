@@ -8,7 +8,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class SilverMagmafish implements CustomSkyBlockItem, SkullHead, Sellable, Craftable {
+public class SilverMagmafish implements CustomSkyBlockItem, SkullHead, Sellable, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NullBlade implements CustomSkyBlockItem, Craftable, Enchanted {
+public class NullBlade implements CustomSkyBlockItem, DefaultCraftable, Enchanted {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

@@ -4,7 +4,7 @@ import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.GemstoneImpl;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.Unstackable;
@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawlessTopaz implements GemstoneImpl, Unstackable, Craftable {
+public class FlawlessTopaz implements GemstoneImpl, Unstackable, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "d10964f3c479ad7d9afaf68a42cab7c107d2d884f575cae2f070ec6f935b3be";

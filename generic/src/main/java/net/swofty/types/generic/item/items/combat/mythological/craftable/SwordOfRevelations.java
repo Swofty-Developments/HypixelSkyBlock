@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.combat.mythological.craftable;
 
-import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class SwordOfRevelations implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class SwordOfRevelations implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -45,5 +44,10 @@ public class SwordOfRevelations implements CustomSkyBlockItem, Craftable, SwordI
                 "§7mythological creatures and Minos",
                 "§7followers but receive §c+75%",
                 "§c§7damage from them."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

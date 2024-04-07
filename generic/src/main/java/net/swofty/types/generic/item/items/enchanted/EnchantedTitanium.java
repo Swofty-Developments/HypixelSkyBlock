@@ -7,7 +7,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class EnchantedTitanium implements Enchanted, Sellable, Craftable, SkullHead {
+public class EnchantedTitanium implements Enchanted, Sellable, DefaultCraftable, SkullHead {
     @Override
     public double getSellValue() {
         return 3200;

@@ -1,12 +1,11 @@
 package net.swofty.types.generic.item.items.vanilla;
 
-import net.swofty.types.generic.item.impl.BlockImpl;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.SkillableMine;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class Coal implements CustomSkyBlockItem,SkillableMine {
+public class Coal implements CustomSkyBlockItem, SkillableMine {
 
     @Override
     public SkillCategories getSkillCategory() {

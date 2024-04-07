@@ -5,9 +5,9 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 
-public class EnchantedPoisonousPotato implements Enchanted, Sellable, Craftable {
+public class EnchantedPoisonousPotato implements Enchanted, Sellable, DefaultCraftable {
     @Override
     public double getSellValue() {
         return 1600;

@@ -24,8 +24,11 @@ import net.swofty.types.generic.item.items.crimson.*;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.*;
+import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.foraging.*;
+import net.swofty.types.generic.item.items.foraging.vanilla.*;
+import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.spooky.*;
@@ -41,10 +44,6 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.types.generic.item.items.mining.dwarven.*;
-import net.swofty.types.generic.item.items.mining.vanilla.DiamondPickaxe;
-import net.swofty.types.generic.item.items.mining.vanilla.IronPickaxe;
-import net.swofty.types.generic.item.items.mining.vanilla.StonePickaxe;
-import net.swofty.types.generic.item.items.mining.vanilla.WoodenPickaxe;
 import net.swofty.types.generic.item.items.minion.*;
 import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
@@ -56,13 +55,10 @@ import net.swofty.types.generic.item.items.talismans.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.talismans.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.talismans.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
+import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
 import net.swofty.types.generic.item.items.vanilla.bow.Bow;
-import net.swofty.types.generic.item.items.vanilla.weapon.DiamondSword;
-import net.swofty.types.generic.item.items.vanilla.weapon.IronSword;
-import net.swofty.types.generic.item.items.vanilla.weapon.StoneSword;
-import net.swofty.types.generic.item.items.vanilla.weapon.WoodenSword;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
@@ -73,7 +69,6 @@ public enum ItemType {
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
-    WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON),
 
     /**
      * Talismans
@@ -169,11 +164,11 @@ public enum ItemType {
      * Farming Props
      */
     ROOKIE_HOE(Material.STONE_HOE, Rarity.COMMON, RookieHoe.class),
-    WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON),
-    STONE_HOE(Material.STONE_HOE, Rarity.COMMON),
-    IRON_HOE(Material.IRON_HOE, Rarity.COMMON),
-    DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON),
-    NETHERITE_HOE(Material.NETHERITE_HOE, Rarity.RARE),
+    WOODEN_HOE(Material.WOODEN_HOE, Rarity.COMMON, WoodenHoe.class),
+    STONE_HOE(Material.STONE_HOE, Rarity.COMMON, StoneHoe.class),
+    GOLDEN_HOE(Material.GOLDEN_HOE, Rarity.COMMON, GoldenHoe.class),
+    IRON_HOE(Material.IRON_HOE, Rarity.COMMON, IronHoe.class),
+    DIAMOND_HOE(Material.DIAMOND_HOE, Rarity.UNCOMMON, DiamondHoe.class),
     WHEAT(Material.WHEAT, Rarity.COMMON, Wheat.class),
     WHEAT_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, WheatCrystal.class),
     FLOWER_CRYSTAL(Material.PLAYER_HEAD, Rarity.SPECIAL, FlowerCrystal.class),
@@ -191,7 +186,11 @@ public enum ItemType {
     /**
      * Foraging Props
      */
-    WOODEN_AXE(Material.WOODEN_AXE, Rarity.COMMON),
+    WOODEN_AXE(Material.WOODEN_AXE, Rarity.COMMON, WoodenAxe.class),
+    STONE_AXE(Material.STONE_AXE, Rarity.COMMON, StoneAxe.class),
+    GOLDEN_AXE(Material.GOLDEN_AXE, Rarity.COMMON, GoldenAxe.class),
+    IRON_AXE(Material.IRON_AXE, Rarity.COMMON, IronAxe.class),
+    DIAMOND_AXE(Material.DIAMOND_AXE, Rarity.UNCOMMON, DiamondAxe.class),
     ROOKIE_AXE(Material.STONE_AXE, Rarity.COMMON, RookieAxe.class),
     PROMISING_AXE(Material.IRON_AXE, Rarity.UNCOMMON, PromisingAxe.class),
     SWEET_AXE(Material.IRON_AXE, Rarity.UNCOMMON, SweetAxe.class),
@@ -366,6 +365,7 @@ public enum ItemType {
     IRON_PICKAXE(Material.IRON_PICKAXE, Rarity.COMMON, IronPickaxe.class),
     STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
     WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
+    GOLDEN_PICKAXE(Material.GOLDEN_PICKAXE, Rarity.COMMON, GoldenPickaxe.class),
     ROOKIE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON),
     PROMISING_PICKAXE(Material.IRON_PICKAXE, Rarity.UNCOMMON),
     PICKONIMBUS_2000(Material.DIAMOND_PICKAXE, Rarity.EPIC, Pickonimbus2000.class),
@@ -379,6 +379,7 @@ public enum ItemType {
     IRON_SWORD(Material.IRON_SWORD, Rarity.COMMON, IronSword.class),
     STONE_SWORD(Material.STONE_SWORD, Rarity.COMMON, StoneSword.class),
     WOODEN_SWORD(Material.WOODEN_SWORD, Rarity.COMMON, WoodenSword.class),
+    GOLDEN_SWORD(Material.GOLDEN_SWORD, Rarity.COMMON, GoldenSword.class),
     UNDEAD_SWORD(Material.IRON_SWORD, Rarity.COMMON, UndeadSword.class),
     END_SWORD(Material.DIAMOND_SWORD, Rarity.UNCOMMON, EndSword.class),
     SPIDER_SWORD(Material.IRON_SWORD, Rarity.COMMON, SpiderSword.class),
@@ -387,6 +388,15 @@ public enum ItemType {
     HUNTER_KNIFE(Material.IRON_SWORD, Rarity.UNCOMMON, HunterKnife.class),
     PRISMARINE_BLADE(Material.PRISMARINE_SHARD, Rarity.UNCOMMON, PrismarineBlade.class),
     SILVER_FANG(Material.GHAST_TEAR, Rarity.UNCOMMON, SilverFang.class),
+
+    /**
+     * Shovels
+     */
+    WOODEN_SHOVEL(Material.WOODEN_SHOVEL, Rarity.COMMON, WoodenShovel.class),
+    STONE_SHOVEL(Material.STONE_SHOVEL, Rarity.COMMON, StoneShovel.class),
+    GOLDEN_SHOVEL(Material.GOLDEN_SHOVEL, Rarity.COMMON, GoldenShovel.class),
+    IRON_SHOVEL(Material.IRON_SHOVEL, Rarity.COMMON, IronShovel.class),
+    DIAMOND_SHOVEL(Material.DIAMOND_SHOVEL, Rarity.UNCOMMON, DiamondShovel.class),
 
     /**
      * Bows
@@ -760,6 +770,14 @@ public enum ItemType {
         if (clazz.newInstance() instanceof CustomDisplayName name)
             return name.getDisplayName();
         return StringUtility.toNormalCase(this.name());
+    }
+
+    @SneakyThrows
+    public <T extends CustomSkyBlockItem> T getNewInstance(Class<T> clazz) {
+        if (clazz != null) {
+            return clazz.getDeclaredConstructor().newInstance();
+        }
+        return null;
     }
 
     public static ItemType get(String name) {

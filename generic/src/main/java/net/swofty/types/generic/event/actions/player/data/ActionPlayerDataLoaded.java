@@ -80,6 +80,7 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
 
             MinecraftServer.getBossBarManager().removeAllBossBars(player);
             MathUtility.delay(() -> {
+                if (!player.isOnline()) return;
                 player.getPetData().updatePetEntityImpl(player);
             }, 20);
 

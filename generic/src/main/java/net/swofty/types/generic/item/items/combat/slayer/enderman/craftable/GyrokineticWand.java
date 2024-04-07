@@ -1,18 +1,16 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
-import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class GyrokineticWand implements CustomSkyBlockItem, Craftable, Enchanted, NotFinishedYet {
+public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, Enchanted, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

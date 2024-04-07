@@ -12,7 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Craftable, Unstackable, HelmetImpl {
+public class ZombieHeart implements CustomSkyBlockItem, NotFinishedYet, Sellable, SkullHead,
+        Unstackable, StandardItem {
 
     @Override
     public ItemStatistics getStatistics() {
@@ -42,15 +43,7 @@ public class ZombieHeart implements CustomSkyBlockItem, Sellable, SkullHead, Cra
     }
 
     @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
-        List<String> pattern = List.of(
-                "AAA",
-                "A A",
-                "AAA");
-
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ZOMBIE_HEART), ingredientMap, pattern);
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

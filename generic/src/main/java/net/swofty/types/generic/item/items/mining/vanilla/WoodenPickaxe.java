@@ -2,19 +2,17 @@ package net.swofty.types.generic.item.items.mining.vanilla;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WoodenPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarityDisplay, Enchantable, Reforgable, Craftable {
+public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -29,36 +27,21 @@ public class WoodenPickaxe implements CustomSkyBlockItem, MiningTool, ExtraRarit
     }
 
     @Override
-    public String getExtraRarityDisplay() {
-        return " PICKAXE";
-    }
-
-    @Override
-    public boolean showEnchantLores() {
-        return true;
-    }
-
-    @Override
-    public List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.PICKAXE, EnchantItemGroups.TOOLS);
-    }
-
-    @Override
-    public ReforgeType getReforgeType() {
-        return ReforgeType.PICKAXES;
-    }
-
-    @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('W', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
-        ingredientMap.put('S', new MaterialQuantifiable(ItemType.STICK, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
         ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
-                "WWW",
-                " S ",
-                " S ");
+                "AAA",
+                " B ",
+                " B ");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.WOODEN_PICKAXE), ingredientMap, pattern);
+    }
+
+    @Override
+    public double getSellValue() {
+        return 1;
     }
 }

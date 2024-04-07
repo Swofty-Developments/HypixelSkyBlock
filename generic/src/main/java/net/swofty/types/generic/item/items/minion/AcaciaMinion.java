@@ -26,4 +26,9 @@ public class AcaciaMinion implements CustomSkyBlockItem, Minion {
         return ItemType.WOODEN_AXE;
     }
 
+    @Override
+    public boolean isByDefaultCraftable() {
+        return false;
+    }
+
 }

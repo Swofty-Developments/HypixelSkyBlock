@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class BlastOLantern implements CustomSkyBlockItem, SkullHead, Sellable, CustomDisplayName, Craftable, NotFinishedYet {
+public class BlastOLantern implements CustomSkyBlockItem, SkullHead, Sellable, CustomDisplayName, DefaultCraftable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

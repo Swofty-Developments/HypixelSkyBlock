@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
 import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
-import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;

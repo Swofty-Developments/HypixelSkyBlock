@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem, NotFinishedYet {
+public class AxeOfTheShreeded implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -59,5 +59,10 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, Craftable, SwordImp
                 new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000),
                 new GemstoneItemSlot(Gemstone.Slots.COMBAT, 100000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

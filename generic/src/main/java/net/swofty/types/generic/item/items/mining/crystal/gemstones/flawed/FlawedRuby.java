@@ -4,7 +4,7 @@ import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.GemstoneImpl;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawedRuby implements GemstoneImpl, Sellable, Craftable {
+public class FlawedRuby implements GemstoneImpl, Sellable, DefaultCraftable {
 
     @Override
     public GemRarity getAssociatedGemRarity() {

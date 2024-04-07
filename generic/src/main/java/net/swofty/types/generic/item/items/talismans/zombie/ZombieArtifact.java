@@ -7,7 +7,7 @@ import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdate
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ZombieArtifact extends SkyBlockValueEvent implements Talisman, Craftable {
+public class ZombieArtifact extends SkyBlockValueEvent implements Talisman, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "c3fb4e5db97f479c66a42bbd8a7d781daf201a8ddaf77afcf4aef87779aa8b4";

@@ -8,7 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 
-public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, SwordImpl, NotFinishedYet {
+public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -49,5 +49,10 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, Sw
     @Override
     public AbilityActivation getAbilityActivation() {
         return AbilityActivation.RIGHT_CLICK;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

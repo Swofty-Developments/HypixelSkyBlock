@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PrismarineBlade implements CustomSkyBlockItem, SwordImpl, Craftable, Sellable {
+public class PrismarineBlade implements CustomSkyBlockItem, StandardItem, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -37,5 +37,10 @@ public class PrismarineBlade implements CustomSkyBlockItem, SwordImpl, Craftable
     @Override
     public double getSellValue() {
         return 160;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

@@ -2,17 +2,15 @@ package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class WeirdTuba implements CustomSkyBlockItem, Craftable, NotFinishedYet {
+public class WeirdTuba implements CustomSkyBlockItem, DefaultCraftable, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

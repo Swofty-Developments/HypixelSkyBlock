@@ -26,8 +26,7 @@ public class SinfulDice implements CustomSkyBlockItem, SkullHead, Unstackable, R
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "",
-                "§8Snake eyes!",
-                "§eRight-click to view recipes!"));
+                "§8Snake eyes!"));
     }
 
     @Override

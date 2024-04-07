@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TessellatedEnderPearl implements CustomSkyBlockItem, SkullHead, Craftable, Sellable, Unstackable {
+public class TessellatedEnderPearl implements CustomSkyBlockItem, SkullHead, DefaultCraftable, Sellable, Unstackable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class RevenantViscera implements CustomSkyBlockItem, Sellable, Enchanted, Craftable {
+public class RevenantViscera implements CustomSkyBlockItem, Sellable, Enchanted, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;

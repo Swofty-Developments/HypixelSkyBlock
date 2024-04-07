@@ -5,20 +5,22 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface HelmetImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
-    default String getExtraRarityDisplay() {
-        return " HELMET";
-    }
-
-    default ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
-    }
+public interface DrillImpl extends Enchantable, Reforgable, ExtraRarityDisplay {
+    int getBreakingPower();
 
     default boolean showEnchantLores() {
         return true;
     }
 
     default List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.ARMOR);
+        return List.of(EnchantItemGroups.DRILL);
+    }
+
+    default ReforgeType getReforgeType() {
+        return ReforgeType.PICKAXES;
+    }
+
+    default String getExtraRarityDisplay() {
+        return " DRILL";
     }
 }

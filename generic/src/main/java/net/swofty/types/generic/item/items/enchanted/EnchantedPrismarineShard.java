@@ -6,10 +6,10 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
-public class EnchantedPrismarineShard implements Enchanted, Sellable, Craftable {
+public class EnchantedPrismarineShard implements Enchanted, Sellable, DefaultCraftable {
     @Override
     public double getSellValue() {
         return 400;

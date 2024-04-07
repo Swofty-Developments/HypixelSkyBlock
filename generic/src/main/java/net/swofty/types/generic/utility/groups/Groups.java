@@ -45,7 +45,7 @@ public final class Groups {
             Material.OXEYE_DAISY,
             Material.CORNFLOWER,
             Material.LILY_OF_THE_VALLEY,
-            Material.WITHER_ROSE,
+            Material.DANDELION,
             Material.SUNFLOWER,
             Material.LILAC,
             Material.PEONY

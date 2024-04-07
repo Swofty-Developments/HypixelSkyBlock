@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class VoidwalkerKatana implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,5 +41,10 @@ public class VoidwalkerKatana implements CustomSkyBlockItem, Craftable, SwordImp
                 "§7Deal §a+150% §7damage to Endermen§7.",
                 "§7§7Receive §a3% §7less damage",
                 "§7from Endermen§7 when held."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

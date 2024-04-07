@@ -8,7 +8,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchantedBrownMushroomBlock implements Enchanted, Sellable, MultiCraftable {
+public class EnchantedBrownMushroomBlock implements Enchanted, Sellable, MultiDefaultCraftable {
 
     @Override
     public double getSellValue() {

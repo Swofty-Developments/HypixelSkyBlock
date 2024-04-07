@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.items.armor;
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeafletTunic implements CustomSkyBlockItem, ChestplateImpl, LeatherColour, Sellable, Craftable {
+public class LeafletTunic implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder().with(ItemStatistic.HEALTH, 35D).build();
@@ -41,5 +40,10 @@ public class LeafletTunic implements CustomSkyBlockItem, ChestplateImpl, Leather
                 "LLL");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_TUNIC), ingredientMap, pattern);
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.CHESTPLATE;
     }
 }

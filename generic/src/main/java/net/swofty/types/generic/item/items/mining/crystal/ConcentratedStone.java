@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ConcentratedStone implements Enchanted, Sellable, Craftable, SkullHead {
+public class ConcentratedStone implements Enchanted, Sellable, DefaultCraftable, SkullHead {
     @Override
     public double getSellValue() {
         return 200000;

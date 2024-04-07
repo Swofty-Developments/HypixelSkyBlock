@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class RevenantFalchion implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class RevenantFalchion implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,5 +41,10 @@ public class RevenantFalchion implements CustomSkyBlockItem, Craftable, SwordImp
         return new ArrayList<>(Arrays.asList(
                 "§7Deals §a+150% §7damage to",
                 "§7§7Zombies§7."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

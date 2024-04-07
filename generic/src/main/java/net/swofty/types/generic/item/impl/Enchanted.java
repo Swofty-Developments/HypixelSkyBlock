@@ -15,33 +15,6 @@ public interface Enchanted extends CustomSkyBlockItem {
     }
 
     default SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
-        List<ItemType> matchTypes = Arrays.stream(ItemType.values())
-                .filter(itemType -> itemType.clazz != null)
-                .filter(itemType -> itemType.clazz.equals(this.getClass()))
-                .toList();
-
-        if (matchTypes.isEmpty()) {
-            throw new RuntimeException("No matching ItemType found");
-        } else {
-            ShapelessRecipe recipe = new ShapelessRecipe(type, new SkyBlockItem(matchTypes.getFirst()))
-                    .add(craftingMaterial, 32)
-                    .add(craftingMaterial, 32)
-                    .add(craftingMaterial, 32)
-                    .add(craftingMaterial, 32)
-                    .add(craftingMaterial, 32);
-            recipe.setCustomRecipeDisplay(new SkyBlockItem[] {
-                    new SkyBlockItem(ItemType.AIR),
-                    new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
-                    new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
-                    new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
-            });
-
-            return recipe;
-        }
+        return SkyBlockRecipe.getStandardEnchantedRecipe(this.getClass(), type, craftingMaterial);
     }
 }

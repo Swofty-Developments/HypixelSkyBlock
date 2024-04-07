@@ -5,13 +5,9 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface SwordImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
+public interface ShovelImpl extends ExtraRarityDisplay, Enchantable {
     default String getExtraRarityDisplay() {
-        return " SWORD";
-    }
-
-    default ReforgeType getReforgeType() {
-        return ReforgeType.SWORDS;
+        return " SHOVEL";
     }
 
     default boolean showEnchantLores() {
@@ -19,6 +15,6 @@ public interface SwordImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
     }
 
     default List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.SWORD);
+        return List.of(EnchantItemGroups.TOOLS);
     }
 }

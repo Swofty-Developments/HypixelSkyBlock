@@ -5,13 +5,13 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface BootsImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
+public interface AxeImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
     default String getExtraRarityDisplay() {
-        return " BOOTS";
+        return " AXE";
     }
 
     default ReforgeType getReforgeType() {
-        return ReforgeType.ARMOR;
+        return ReforgeType.AXES;
     }
 
     default boolean showEnchantLores() {
@@ -19,6 +19,6 @@ public interface BootsImpl extends ExtraRarityDisplay, Reforgable, Enchantable {
     }
 
     default List<EnchantItemGroups> getEnchantItemGroups() {
-        return List.of(EnchantItemGroups.ARMOR);
+        return List.of(EnchantItemGroups.TOOLS);
     }
 }

@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class RecluseFang implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class RecluseFang implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -44,5 +43,10 @@ public class RecluseFang implements CustomSkyBlockItem, Craftable, SwordImpl, No
                 "§7strength against them.",
                 "§7Bonus: §c+0❁",
                 "§8+1 strength per 40 squashed"));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

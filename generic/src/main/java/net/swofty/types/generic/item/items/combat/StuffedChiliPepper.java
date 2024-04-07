@@ -4,13 +4,12 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StuffedChiliPepper implements Enchanted, Sellable, SkullHead, Craftable {
+public class StuffedChiliPepper implements Enchanted, Sellable, SkullHead, DefaultCraftable {
 
     @Override
     public double getSellValue() {

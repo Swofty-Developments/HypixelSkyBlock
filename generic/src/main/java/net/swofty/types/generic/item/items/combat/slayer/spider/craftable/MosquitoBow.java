@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class MosquitoBow implements CustomSkyBlockItem, Craftable, BowImpl, NotFinishedYet {
+public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();

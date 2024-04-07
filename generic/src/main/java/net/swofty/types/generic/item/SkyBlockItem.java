@@ -13,7 +13,8 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeType;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.MiningTool;
+import net.swofty.types.generic.item.impl.DrillImpl;
+import net.swofty.types.generic.item.impl.PickaxeImpl;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
@@ -49,8 +50,10 @@ public class SkyBlockItem {
 
         ItemAttributeBreakingPower breakingPower = (ItemAttributeBreakingPower) getAttribute("breaking_power");
         try {
-            MiningTool t = (MiningTool) ItemType.valueOf(itemType).clazz.newInstance();
+            PickaxeImpl t = (PickaxeImpl) ItemType.valueOf(itemType).clazz.newInstance();
             breakingPower.setValue(t.getBreakingPower());
+            DrillImpl s = (DrillImpl) ItemType.valueOf(itemType).clazz.newInstance();
+            breakingPower.setValue(s.getBreakingPower());
         } catch (ClassCastException castEx) {
             breakingPower.setValue(0);
 

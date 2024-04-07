@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CrownOfGreed implements CustomSkyBlockItem, HelmetImpl, Sellable, Enchanted, NotFinishedYet {
+public class CrownOfGreed implements CustomSkyBlockItem, StandardItem, Sellable, Enchanted, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -31,5 +31,10 @@ public class CrownOfGreed implements CustomSkyBlockItem, HelmetImpl, Sellable, E
                 "§7but cost §6100x §7the weapon's",
                 "§7damage in §6coins §7from your",
                 "§7purse."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

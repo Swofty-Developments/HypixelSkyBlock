@@ -23,14 +23,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unstackable, Craftable {
+public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unstackable, DefaultCraftable {
     MinionRegistry getMinionRegistry();
 
     ItemType getBaseCraftMaterial();
     ItemType getEnchantedCraftMaterial();
     ItemType getFirstBaseItem();
+    boolean isByDefaultCraftable();
 
     default List<SkyBlockRecipe<?>> getRecipes() {
+        if (!isByDefaultCraftable()) return new ArrayList<>();
+
+       return getRawRecipes();
+    }
+
+    default List<SkyBlockRecipe<?>> getRawRecipes() {
         List<SkyBlockRecipe<?>> toReturn = new ArrayList<>();
 
         getMinionRegistry().asSkyBlockMinion().getTiers().forEach(tier -> {

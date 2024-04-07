@@ -12,7 +12,6 @@ import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;

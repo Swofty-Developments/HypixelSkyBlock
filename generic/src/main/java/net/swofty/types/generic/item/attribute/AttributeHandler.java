@@ -53,6 +53,24 @@ public class AttributeHandler {
         return null;
     }
 
+    public void setSoulBound(boolean coopAllowed) {
+        ((ItemAttributeSoulbound) item.getAttribute("soul_bound")).setValue(
+                new ItemAttributeSoulbound.SoulBoundData(coopAllowed)
+        );
+    }
+
+    public ItemAttributeSoulbound.SoulBoundData getSoulBoundData() {
+        if (item.getGenericInstance() == null)
+            return null;
+        ItemAttributeSoulbound.SoulBoundData potentialData = ((ItemAttributeSoulbound) item
+                .getAttribute("soul_bound"))
+                .getValue();
+        if (potentialData != null) return potentialData;
+        if (item.getGenericInstance() instanceof DefaultSoulbound soulBound)
+            return new ItemAttributeSoulbound.SoulBoundData(soulBound.isCoopAllowed());
+        return null;
+    }
+
     public @Nullable ItemAttributeGemData.GemData getGemData() {
         if (item.getGenericInstance() == null) return null;
         if (item.getGenericInstance() instanceof GemstoneItem) {
