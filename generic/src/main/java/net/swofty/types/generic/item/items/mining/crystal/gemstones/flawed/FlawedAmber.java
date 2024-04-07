@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawedAmber implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FlawedAmber implements GemstoneImpl, Sellable {
     @Override
     public double getSellValue() {
         return 240;
@@ -21,17 +21,6 @@ public class FlawedAmber implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "173bcfc39eb85df1848535985214060a1bd1b3bb47defe4201476edc31671744";
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWED_AMBER_GEM), 1)
-                .add(ItemType.ROUGH_AMBER_GEM, 16)
-                .add(ItemType.ROUGH_AMBER_GEM, 16)
-                .add(ItemType.ROUGH_AMBER_GEM, 16)
-                .add(ItemType.ROUGH_AMBER_GEM, 16)
-                .add(ItemType.ROUGH_AMBER_GEM, 16);
     }
 
     @Override

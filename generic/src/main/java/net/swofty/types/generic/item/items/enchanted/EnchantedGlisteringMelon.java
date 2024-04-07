@@ -9,24 +9,10 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 
-public class EnchantedGlisteringMelon implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedGlisteringMelon implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 1000;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
-                new SkyBlockItem(ItemType.ENCHANTED_GLISTERING_MELON), 1)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32)
-                .add(ItemType.GLISTERING_MELON, 32);
-    }
 }

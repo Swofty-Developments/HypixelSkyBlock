@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawlessJasper implements GemstoneImpl, Unstackable, DefaultCraftable {
+public class FlawlessJasper implements GemstoneImpl, Unstackable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "ff993d3a43d40597b474485976160d0cf52ac64d157307d3b1c941db224d0ac6";
@@ -28,14 +28,4 @@ public class FlawlessJasper implements GemstoneImpl, Unstackable, DefaultCraftab
         return Gemstone.JASPER;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWLESS_JASPER_GEM), 1)
-                .add(ItemType.FINE_JASPER_GEM, 16)
-                .add(ItemType.FINE_JASPER_GEM, 16)
-                .add(ItemType.FINE_JASPER_GEM, 16)
-                .add(ItemType.FINE_JASPER_GEM, 16)
-                .add(ItemType.FINE_JASPER_GEM, 16);
-    }
 }

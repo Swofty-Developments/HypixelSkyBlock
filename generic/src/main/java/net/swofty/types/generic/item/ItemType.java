@@ -5,10 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.items.armor.LeafletHat;
-import net.swofty.types.generic.item.items.armor.LeafletPants;
-import net.swofty.types.generic.item.items.armor.LeafletSandals;
-import net.swofty.types.generic.item.items.armor.LeafletTunic;
+import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.DaedalusAxe;
@@ -355,6 +352,10 @@ public enum ItemType {
     LEAFLET_TUNIC(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeafletTunic.class),
     LEAFLET_PANTS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeafletPants.class),
     LEAFLET_SANDALS(Material.LEATHER_BOOTS, Rarity.COMMON, LeafletSandals.class),
+    MINERS_OUTFIT_HELMET(Material.LEATHER_HELMET, Rarity.UNCOMMON, MinerOutfitHelmet.class),
+    MINERS_OUTFIT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.UNCOMMON, MinerOutfitChestplate.class),
+    MINERS_OUTFIT_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.UNCOMMON, MinerOutfitLeggings.class),
+    MINERS_OUTFIT_BOOTS(Material.LEATHER_BOOTS, Rarity.UNCOMMON, MinerOutfitBoots.class),
 
     /**
      * Pickaxes

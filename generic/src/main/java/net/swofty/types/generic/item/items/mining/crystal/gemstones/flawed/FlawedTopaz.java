@@ -12,7 +12,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class FlawedTopaz implements GemstoneImpl, Sellable, DefaultCraftable {
+public class FlawedTopaz implements GemstoneImpl, Sellable {
     @Override
     public double getSellValue() {
         return 240;
@@ -33,14 +33,4 @@ public class FlawedTopaz implements GemstoneImpl, Sellable, DefaultCraftable {
         return Gemstone.TOPAZ;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.FLAWED_TOPAZ_GEM), 1)
-                .add(ItemType.ROUGH_TOPAZ_GEM, 16)
-                .add(ItemType.ROUGH_TOPAZ_GEM, 16)
-                .add(ItemType.ROUGH_TOPAZ_GEM, 16)
-                .add(ItemType.ROUGH_TOPAZ_GEM, 16)
-                .add(ItemType.ROUGH_TOPAZ_GEM, 16);
-    }
 }

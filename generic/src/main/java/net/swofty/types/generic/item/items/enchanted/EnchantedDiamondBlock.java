@@ -7,15 +7,11 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedDiamondBlock implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedDiamondBlock implements Enchanted, Sellable {
 
     @Override
     public double getSellValue() {
         return 204800;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_DIAMOND);
-    }
 }
