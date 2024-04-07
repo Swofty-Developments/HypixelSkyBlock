@@ -26,7 +26,12 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             1, new int[] { 22 },
             2, new int[] { 20, 24 },
             3, new int[] { 20, 22, 24 },
-            4, new int[] { 19, 21, 23, 25 }
+            4, new int[] { 19, 21, 23, 25 },
+            5, new int[] { 20, 21, 22, 23, 24 },
+            6, new int[] { 20, 21, 22, 23, 24, 31},
+            7, new int[] { 19, 20, 21, 22, 23, 24, 25},
+            8, new int[] { 19, 21, 23, 25, 28, 29, 30, 31 },
+            9, new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26 }
     ));
 
     private final ItemType item;
@@ -77,7 +82,7 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
-                        SkyBlockItem item = ((CollectionCategory.UnlockRecipe) unlock).getItem();
+                        SkyBlockItem item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult();
                         new GUIRecipe(item.getAttributeHandler().getItemTypeAsType(), null).open(player);
                     }
                 }

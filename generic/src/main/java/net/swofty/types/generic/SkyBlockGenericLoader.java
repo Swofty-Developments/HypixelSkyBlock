@@ -420,7 +420,14 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 Arrays.stream(collection.rewards()).forEach(reward -> {
                     Arrays.stream(reward.unlocks()).forEach(unlock -> {
                         if (unlock instanceof CollectionCategory.UnlockRecipe recipe) {
-                            recipes.add(recipe.getRecipe());
+                            SkyBlockRecipe<?> recipeInstance = recipe.getRecipe();
+                            recipeInstance.setCanCraft((player) -> {
+                                int amount = player.getCollection().get(collection.type());
+                                return new SkyBlockRecipe.CraftingResult(
+                                        amount >= reward.requirement(),
+                                        new String[]{"§a" + collection.type().getDisplayName() + " §e" + reward.requirement() + " §7is required to craft this item."}
+                                );
+                            });
                         }
                     });
                 });

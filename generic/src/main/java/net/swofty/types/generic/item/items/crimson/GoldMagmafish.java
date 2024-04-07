@@ -8,7 +8,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class GoldMagmafish implements CustomSkyBlockItem, SkullHead, Sellable, DefaultCraftable {
+public class GoldMagmafish implements CustomSkyBlockItem, SkullHead, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -22,16 +22,5 @@ public class GoldMagmafish implements CustomSkyBlockItem, SkullHead, Sellable, D
     @Override
     public double getSellValue() {
         return 128000;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FISHING,
-                new SkyBlockItem(ItemType.GOLD_MAGMAFISH), 1)
-                .add(ItemType.SILVER_MAGMAFISH, 16)
-                .add(ItemType.SILVER_MAGMAFISH, 16)
-                .add(ItemType.SILVER_MAGMAFISH, 16)
-                .add(ItemType.SILVER_MAGMAFISH, 16)
-                .add(ItemType.SILVER_MAGMAFISH, 16);
     }
 }
