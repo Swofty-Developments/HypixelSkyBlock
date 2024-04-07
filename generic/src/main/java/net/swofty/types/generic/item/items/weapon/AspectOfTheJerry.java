@@ -1,5 +1,7 @@
 package net.swofty.types.generic.item.items.weapon;
 
+import net.kyori.adventure.sound.Sound;
+import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -17,14 +19,14 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('E', new MaterialQuantifiable(ItemType.MOVE_JERRY, 1));
-        ingredientMap.put('S', new MaterialQuantifiable(ItemType.STICK, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.MOVE_JERRY, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
         List<String> pattern = List.of(
-                "E",
-                "E",
-                "S");
+                "A",
+                "A",
+                "B");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.DIAMOND_SWORD), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ASPECT_OF_THE_JERRY), ingredientMap, pattern);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
 
     @Override
     public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
-        player.sendMessage("§eJerry..");
+        player.playSound(Sound.sound(SoundEvent.ENTITY_VILLAGER_YES, Sound.Source.RECORD, 1f, 1f));
     }
 
     @Override

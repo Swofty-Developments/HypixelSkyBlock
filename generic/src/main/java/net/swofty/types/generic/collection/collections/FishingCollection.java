@@ -392,7 +392,13 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(25, new UnlockXP() {
+                        new ItemCollectionReward(25, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockItem getItem() {
+                                SkyBlockItem item = new SkyBlockItem(ItemType.PRISMARINE_BLADE);
+                                return item;
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
