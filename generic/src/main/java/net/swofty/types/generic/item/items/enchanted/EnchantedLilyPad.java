@@ -7,14 +7,9 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedLilyPad implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedLilyPad implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 1600;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemType.LILY_PAD);
     }
 }
