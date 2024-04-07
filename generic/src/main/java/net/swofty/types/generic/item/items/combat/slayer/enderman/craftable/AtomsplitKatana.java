@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem, NotFinishedYet {
+public class AtomsplitKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -59,5 +59,10 @@ public class AtomsplitKatana implements CustomSkyBlockItem, Craftable, SwordImpl
                 new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 100000),
                 new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 250000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

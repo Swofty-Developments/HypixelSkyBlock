@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -64,14 +64,19 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        List<SkyBlockRecipe<?>> recipes;
-        try {
-            recipes = ((Craftable) item.getGenericInstance()).getRecipes();
-        } catch (NullPointerException | ClassCastException e2) {
+        ItemType itemType = item.getAttributeHandler().getItemTypeAsType();
+        if (itemType == null) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
+        List<SkyBlockRecipe<?>> recipes = SkyBlockRecipe.getFromType(itemType);
+        if (recipes.isEmpty()) {
+            getPlayer().closeInventory();
+            getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
+            return;
+        }
+
         if (recipeIndex >= recipes.size())
             recipeIndex = 0;
         SkyBlockRecipe recipe = recipes.get(recipeIndex);
@@ -135,7 +140,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                     set(new GUIClickableItem(craftSlot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                            if (!(ingredient.getGenericInstance() instanceof Craftable))
+                            if (!(ingredient.getGenericInstance() instanceof DefaultCraftable))
                                 return;
 
                             new GUIRecipe(
@@ -149,7 +154,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
                             ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
-                            if (ingredient.getGenericInstance() instanceof Craftable) {
+                            if (ingredient.getGenericInstance() instanceof DefaultCraftable) {
                                 ArrayList<Component> lore = new ArrayList<>(builder.build().getLore());
                                 lore.add(Component.text(" "));
                                 lore.add(Component.text("§eClick to view recipe!"));

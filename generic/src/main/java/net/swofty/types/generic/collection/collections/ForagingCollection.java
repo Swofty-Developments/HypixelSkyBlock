@@ -4,8 +4,13 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.items.enchanted.*;
 
 import java.util.List;
+
+import static net.swofty.types.generic.item.impl.SkyBlockRecipe.getStandardEnchantedRecipe;
 
 public class ForagingCollection extends CollectionCategory {
     @Override
@@ -22,11 +27,15 @@ public class ForagingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.OAK_LOG,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.OAK_MINION);
-                                return item;
+                            public SkyBlockRecipe getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.OAK_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -60,9 +69,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_OAK_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -92,9 +100,13 @@ public class ForagingCollection extends CollectionCategory {
                 new ItemCollection(ItemType.SPRUCE_LOG,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.SPRUCE_MINION);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.SPRUCE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         },new UnlockXP() {
                             @Override
@@ -122,9 +134,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_SPRUCE_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedSpruceWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -158,11 +169,15 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.BIRCH_LOG,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.BIRCH_MINION);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.BIRCH_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -196,9 +211,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_BIRCH_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedBirchWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -234,9 +248,13 @@ public class ForagingCollection extends CollectionCategory {
                 new ItemCollection(ItemType.JUNGLE_LOG,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.JUNGLE_MINION);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.JUNGLE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         },new UnlockXP() {
                             @Override
@@ -270,9 +288,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_JUNGLE_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedJungleWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -300,11 +317,15 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.ACACIA_LOG,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ACACIA_MINION);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.ACACIA_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -338,9 +359,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_ACACIA_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedAcaciaWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.ACACIA_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -368,11 +388,15 @@ public class ForagingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.DARK_OAK_LOG,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.DARK_OAK_MINION);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemType.DARK_OAK_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -400,9 +424,8 @@ public class ForagingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
-                            public SkyBlockItem getItem() {
-                                SkyBlockItem item = new SkyBlockItem(ItemType.ENCHANTED_DARK_OAK_WOOD);
-                                return item;
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(EnchantedDarkOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.DARK_OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override

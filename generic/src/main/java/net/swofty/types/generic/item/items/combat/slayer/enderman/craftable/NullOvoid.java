@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class NullOvoid implements CustomSkyBlockItem, Craftable, Enchanted {
+public class NullOvoid implements CustomSkyBlockItem, DefaultCraftable, Enchanted {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         return new ShapelessRecipe(SkyBlockRecipe.RecipeType.SLAYER,

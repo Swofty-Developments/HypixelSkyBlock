@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem, SwordImpl, NotFinishedYet {
+public class DaedalusAxe implements CustomSkyBlockItem, DefaultCraftable, GemstoneItem, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -53,5 +53,10 @@ public class DaedalusAxe implements CustomSkyBlockItem, Craftable, GemstoneItem,
                 new GemstoneItemSlot(Gemstone.Slots.COMBAT, 50000),
                 new GemstoneItemSlot(Gemstone.Slots.COMBAT, 100000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

@@ -26,4 +26,9 @@ public class OakMinion implements CustomSkyBlockItem, Minion {
         return ItemType.WOODEN_AXE;
     }
 
+    @Override
+    public boolean isByDefaultCraftable() {
+        return false;
+    }
+
 }

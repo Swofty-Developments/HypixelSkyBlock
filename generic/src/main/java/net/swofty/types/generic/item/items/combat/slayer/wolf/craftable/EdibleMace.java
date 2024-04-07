@@ -1,9 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
-import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -13,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class EdibleMace implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -46,5 +44,10 @@ public class EdibleMace implements CustomSkyBlockItem, Craftable, SwordImpl, Not
                 "§7for §a30 §7seconds.",
                 "§7§8Debuff doesn\u0027t stack.",
                 "§8Mana Cost: §3100"));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ShamanSword implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet{
+public class ShamanSword implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet{
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -42,5 +41,10 @@ public class ShamanSword implements CustomSkyBlockItem, Craftable, SwordImpl, No
         return new ArrayList<>(Arrays.asList(
                 "§7Deal §c+1 Damage §7per §c50 max ❤§7.",
                 "§7Receive §a-20% §7damage from wolves."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

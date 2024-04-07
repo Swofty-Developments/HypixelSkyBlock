@@ -2,19 +2,17 @@ package net.swofty.types.generic.item.items.vanilla.weapon;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable, Sellable {
+public class DiamondSword implements CustomSkyBlockItem, StandardItem, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -38,5 +36,10 @@ public class DiamondSword implements CustomSkyBlockItem, SwordImpl, Craftable, S
     @Override
     public double getSellValue() {
         return 8;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

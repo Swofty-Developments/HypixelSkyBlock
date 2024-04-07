@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, Unstackable, HelmetImpl, NotFinishedYet {
+public class WardenHelmet implements CustomSkyBlockItem, SkullHead, DefaultCraftable, Unstackable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -49,5 +48,10 @@ public class WardenHelmet implements CustomSkyBlockItem, SkullHead, Craftable, U
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "e5eb0bd85aaddf0d29ed082eac03fcade43d0ee803b0e8162add28a6379fb54e";
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

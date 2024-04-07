@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbility, SwordImpl, Craftable {
+public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -64,5 +64,10 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 1D)
                 .build();
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

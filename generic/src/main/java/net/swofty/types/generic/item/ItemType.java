@@ -771,6 +771,14 @@ public enum ItemType {
         return StringUtility.toNormalCase(this.name());
     }
 
+    @SneakyThrows
+    public <T extends CustomSkyBlockItem> T getNewInstance(Class<T> clazz) {
+        if (clazz != null) {
+            return clazz.getDeclaredConstructor().newInstance();
+        }
+        return null;
+    }
+
     public static ItemType get(String name) {
         try {
             return ItemType.valueOf(name);

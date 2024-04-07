@@ -5,6 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
@@ -47,7 +48,7 @@ public abstract class CollectionCategory {
             Arrays.stream(unlocks).forEach(unlock -> {
                 switch (unlock.type()) {
                     case RECIPE -> {
-                        ItemStack.Builder item = ((UnlockRecipe) unlock).getItem().getItemStackBuilder();
+                        ItemStack.Builder item = ((UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
                         item = new NonPlayerItemUpdater(item).getUpdatedItem();
 
                         lore.add("§7  §e" + StringUtility.getTextFromComponent(item.build().getMeta().getDisplayName()) + " §7Recipes");
@@ -84,7 +85,7 @@ public abstract class CollectionCategory {
 
         @Override
         public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
-            ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getItem().getItemStackBuilder()).getUpdatedItem();
+            ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipe().getResult()).getUpdatedItem();
             ArrayList<String> lore = new ArrayList<>(
                     updatedItem.build().getLore().stream().map(StringUtility::getTextFromComponent).toList()
             );
@@ -94,7 +95,14 @@ public abstract class CollectionCategory {
             return ItemStackCreator.updateLore(updatedItem, lore);
         }
 
-        public abstract SkyBlockItem getItem();
+        public abstract SkyBlockRecipe<?> getRecipe();
+
+        public List<SkyBlockRecipe<?>> getRecipes() {
+            if (getRecipe() != null) {
+                return List.of(getRecipe());
+            }
+            return List.of();
+        }
     }
 
     public abstract static class UnlockXP extends Unlock {

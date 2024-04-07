@@ -1,12 +1,12 @@
 package net.swofty.types.generic.item.items.weapon;
 
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Soulbound;
-import net.swofty.types.generic.item.impl.SwordImpl;
+import net.swofty.types.generic.item.impl.DefaultSoulbound;
+import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class HunterKnife implements CustomSkyBlockItem, SwordImpl, Soulbound {
+public class HunterKnife implements CustomSkyBlockItem, StandardItem, DefaultSoulbound {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -15,7 +15,12 @@ public class HunterKnife implements CustomSkyBlockItem, SwordImpl, Soulbound {
     }
 
     @Override
-    public boolean isSoulbound() {
-        return true;
+    public boolean isCoopAllowed() {
+        return false;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

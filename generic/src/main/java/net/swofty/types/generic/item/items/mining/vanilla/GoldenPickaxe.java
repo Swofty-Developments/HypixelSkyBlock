@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoldenPickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable, Sellable {
+public class GoldenPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

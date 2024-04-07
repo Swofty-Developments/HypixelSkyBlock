@@ -3,9 +3,8 @@ package net.swofty.types.generic.item.items.vanilla;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.BlockImpl;
-import net.swofty.types.generic.item.impl.Craftable;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
+import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CraftingTable implements BlockImpl, Craftable {
+public class CraftingTable implements PlaceableCustomSkyBlockItem, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -25,4 +24,8 @@ public class CraftingTable implements BlockImpl, Craftable {
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
     }
 
+    @Override
+    public ItemStatistics getStatistics() {
+        return ItemStatistics.EMPTY;
+    }
 }

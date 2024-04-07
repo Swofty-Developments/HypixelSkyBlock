@@ -8,21 +8,10 @@ import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-public class AbsoluteEnderPearl implements Enchanted, Sellable, Craftable, SkullHead {
+public class AbsoluteEnderPearl implements Enchanted, Sellable, SkullHead {
     @Override
     public double getSellValue() {
         return 11200;
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                new SkyBlockItem(ItemType.ABSOLUTE_ENDER_PEARL), 1)
-                .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                .add(ItemType.ENCHANTED_ENDER_PEARL, 16);
     }
 
     @Override

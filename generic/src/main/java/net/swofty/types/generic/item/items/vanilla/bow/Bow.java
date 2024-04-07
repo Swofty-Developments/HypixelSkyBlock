@@ -1,7 +1,6 @@
 package net.swofty.types.generic.item.items.vanilla.bow;
 
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.PlayerProjectile;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Bow implements CustomSkyBlockItem, BowImpl, Craftable {
+public class Bow implements CustomSkyBlockItem, BowImpl, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

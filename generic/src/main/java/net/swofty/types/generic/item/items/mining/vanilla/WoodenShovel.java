@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WoodenShovel implements CustomSkyBlockItem, ShovelImpl, Craftable, Sellable {
+public class WoodenShovel implements CustomSkyBlockItem, ShovelImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

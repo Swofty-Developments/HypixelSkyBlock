@@ -195,10 +195,20 @@ public class SkyBlock {
         scheduler.submitTask(() -> {
             AtomicBoolean responded = new AtomicBoolean(false);
 
-            RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
-                if (response.equals("true"))
-                    responded.set(true);
-            });
+            try {
+                RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
+                    if (response.equals("true"))
+                        responded.set(true);
+                });
+            } catch (Exception e) {
+                MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                System.exit(0);
+            }
 
             scheduler.scheduleTask(() -> {
                 if (!responded.get()) {

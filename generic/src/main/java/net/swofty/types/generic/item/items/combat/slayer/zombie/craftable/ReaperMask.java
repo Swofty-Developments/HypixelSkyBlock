@@ -13,7 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, GemstoneItem, Unstackable, HelmetImpl, NotFinishedYet {
+public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftable, GemstoneItem,
+                                   Unstackable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -64,5 +65,10 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, Craftable, Gem
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "1fc0184473fe882d2895ce7cbc8197bd40ff70bf10d3745de97b6c2a9c5fc78f";
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -13,7 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, HelmetImpl, Craftable, NotFinishedYet {
+public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, StandardItem,
+        DefaultCraftable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -49,5 +49,10 @@ public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstack
                 "AAA");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.CRYSTALLIZED_HEART), ingredientMap, pattern);
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HELMET;
     }
 }

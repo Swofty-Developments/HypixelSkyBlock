@@ -7,13 +7,12 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, Craftable, Sellable {
+public class WoodenPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

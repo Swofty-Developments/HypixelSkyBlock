@@ -1,10 +1,11 @@
 package net.swofty.types.generic.item.items.vanilla;
 
-import net.swofty.types.generic.item.impl.BlockImpl;
+import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.SkillableMine;
 import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class Cobblestone implements BlockImpl, SkillableMine {
+public class Cobblestone implements PlaceableCustomSkyBlockItem, SkillableMine {
 
     @Override
     public SkillCategories getSkillCategory() {
@@ -14,5 +15,10 @@ public class Cobblestone implements BlockImpl, SkillableMine {
     @Override
     public double getMiningValueForSkill() {
         return 1;
+    }
+
+    @Override
+    public ItemStatistics getStatistics() {
+        return ItemStatistics.EMPTY;
     }
 }

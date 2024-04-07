@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SilverFang implements CustomSkyBlockItem, SwordImpl, Enchanted, Craftable, Sellable {
+public class SilverFang implements CustomSkyBlockItem, StandardItem, Enchanted, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -21,19 +21,12 @@ public class SilverFang implements CustomSkyBlockItem, SwordImpl, Enchanted, Cra
     }
 
     @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
-        List<String> pattern = List.of(
-                " A ",
-                "AAA",
-                " A ");
-
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.SILVER_FANG), ingredientMap, pattern);
+    public double getSellValue() {
+        return 2000;
     }
 
     @Override
-    public double getSellValue() {
-        return 2000;
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

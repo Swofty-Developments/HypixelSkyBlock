@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class VorpalKatana implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem, NotFinishedYet {
+public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -60,5 +60,10 @@ public class VorpalKatana implements CustomSkyBlockItem, Craftable, SwordImpl, G
                 new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000),
                 new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 100000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

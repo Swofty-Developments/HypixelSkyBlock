@@ -5,12 +5,16 @@ import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -47,6 +51,54 @@ public abstract class SkyBlockRecipe<T> {
             return shapedRecipe;
         }
         return ShapelessRecipe.parseShapelessRecipe(stacks);
+    }
+
+    public static @NotNull List<SkyBlockRecipe<?>> getFromType(ItemType type) {
+        ArrayList<SkyBlockRecipe<?>> recipes = new ArrayList<>();
+        ShapedRecipe.CACHED_RECIPES.forEach(recipe -> {
+            ItemType itemType = recipe.getResult().getAttributeHandler().getItemTypeAsType();
+            if (itemType != null && itemType == type) {
+                recipes.add(recipe);
+            }
+        });
+        ShapelessRecipe.CACHED_RECIPES.forEach(recipe -> {
+            ItemType itemType = recipe.getResult().getAttributeHandler().getItemTypeAsType();
+            if (itemType != null && itemType == type) {
+                recipes.add(recipe);
+            }
+        });
+        return recipes;
+    }
+
+    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(Class<?> clazz, SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
+        List<ItemType> matchTypes = Arrays.stream(ItemType.values())
+                .filter(itemType -> itemType.clazz != null)
+                .filter(itemType -> itemType.clazz.equals(clazz))
+                .toList();
+
+        if (matchTypes.isEmpty()) {
+            throw new RuntimeException("No matching ItemType found");
+        } else {
+            ShapelessRecipe recipe = new ShapelessRecipe(type, new SkyBlockItem(matchTypes.getFirst()))
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32)
+                    .add(craftingMaterial, 32);
+            recipe.setCustomRecipeDisplay(new SkyBlockItem[] {
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(craftingMaterial, 32),
+                    new SkyBlockItem(ItemType.AIR),
+            });
+
+            return recipe;
+        }
     }
 
     public static List<String> getMissionDisplay(List<String> lore, UUID uuid) {

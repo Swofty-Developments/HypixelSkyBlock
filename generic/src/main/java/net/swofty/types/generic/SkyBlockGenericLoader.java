@@ -44,7 +44,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
-import net.swofty.types.generic.item.impl.Craftable;
+import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
@@ -408,12 +408,25 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Load item recipes
          */
-        loopThroughPackage("net.swofty.types.generic.item.items", Craftable.class)
+        loopThroughPackage("net.swofty.types.generic.item.items", DefaultCraftable.class)
                 .forEach(recipe -> {
                     try {
                         recipe.getRecipes().forEach(SkyBlockRecipe::init);
                     } catch (Exception e) {}
                 });
+        CollectionCategories.getCategories().forEach(category -> {
+            Arrays.stream(category.getCollections()).forEach(collection -> {
+                List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
+                Arrays.stream(collection.rewards()).forEach(reward -> {
+                    Arrays.stream(reward.unlocks()).forEach(unlock -> {
+                        if (unlock instanceof CollectionCategory.UnlockRecipe recipe) {
+                            recipes.add(recipe.getRecipe());
+                        }
+                    });
+                });
+                recipes.forEach(SkyBlockRecipe::init);
+            });
+        });
 
         /**
          * Handle ConnectionManager

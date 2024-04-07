@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoldenSword implements CustomSkyBlockItem, SwordImpl, Craftable, Sellable {
+public class GoldenSword implements CustomSkyBlockItem, StandardItem, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -36,5 +36,10 @@ public class GoldenSword implements CustomSkyBlockItem, SwordImpl, Craftable, Se
     @Override
     public double getSellValue() {
         return 4;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

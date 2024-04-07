@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StoneHoe implements CustomSkyBlockItem, HoeImpl, Craftable, Sellable {
+public class StoneHoe implements CustomSkyBlockItem, StandardItem, DefaultCraftable, Sellable {
 
     @Override
     public ItemStatistics getStatistics() {
@@ -35,5 +35,10 @@ public class StoneHoe implements CustomSkyBlockItem, HoeImpl, Craftable, Sellabl
     @Override
     public double getSellValue() {
         return 2;
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.HOE;
     }
 }

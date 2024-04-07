@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, SwordImpl, Craftable, GemstoneItem, NotFinishedYet {
+public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem,
+        DefaultCraftable, GemstoneItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()
@@ -76,5 +77,9 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Swor
                 new GemstoneItemSlot(Gemstone.Slots.SAPPHIRE, 250000),
                 new GemstoneItemSlot(Gemstone.Slots.COMBAT, 250000)
         );
+    }
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

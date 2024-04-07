@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StoneAxe implements CustomSkyBlockItem, AxeImpl, Craftable, Sellable {
+public class StoneAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

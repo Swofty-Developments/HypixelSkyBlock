@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class PoochSword implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem, NotFinishedYet {
+public class PoochSword implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -49,5 +49,10 @@ public class PoochSword implements CustomSkyBlockItem, Craftable, SwordImpl, Gem
         return List.of(
                 new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

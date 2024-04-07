@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -12,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ScorpionFoil implements CustomSkyBlockItem, Craftable, SwordImpl, NotFinishedYet {
+public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -47,5 +46,10 @@ public class ScorpionFoil implements CustomSkyBlockItem, Craftable, SwordImpl, N
                 "§7your next attack is empowered",
                 "§7for §c+250% damage§7.",
                 "§8Tickers refill after 5 seconds."));
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiamondShovel implements CustomSkyBlockItem, ShovelImpl, Craftable, Sellable {
+public class DiamondShovel implements CustomSkyBlockItem, ShovelImpl, DefaultCraftable, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.builder()

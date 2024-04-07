@@ -9,6 +9,7 @@ import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
@@ -20,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ItemLore {
@@ -204,6 +204,10 @@ public class ItemLore {
                 if (handler.getReforge() != null)
                     displayName = handler.getReforge().prefix() + " " + displayName;
             }
+
+            ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
+            if (bound != null)
+                addLoreLine("8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
 
             if (item.getGenericInstance() instanceof ArrowImpl) {
                 addLoreLine("§8Stats added when shot!");

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FlawedSapphire implements GemstoneImpl, Sellable, Craftable {
+public class FlawedSapphire implements GemstoneImpl, Sellable, DefaultCraftable {
     @Override
     public double getSellValue() {
         return 240;

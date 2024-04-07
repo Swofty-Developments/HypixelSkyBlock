@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class ReaperFalchion implements CustomSkyBlockItem, Craftable, SwordImpl, GemstoneItem, NotFinishedYet {
+public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -51,5 +51,10 @@ public class ReaperFalchion implements CustomSkyBlockItem, Craftable, SwordImpl,
         return List.of(
                 new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000)
         );
+    }
+
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.SWORD;
     }
 }
