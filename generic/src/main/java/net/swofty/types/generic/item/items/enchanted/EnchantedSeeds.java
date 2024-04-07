@@ -7,14 +7,10 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
-public class EnchantedSeeds implements Enchanted, Sellable, DefaultCraftable {
+public class EnchantedSeeds implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
         return 480;
     }
 
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.WHEAT_SEEDS);
-    }
 }

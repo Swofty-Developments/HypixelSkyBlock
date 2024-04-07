@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SmallBackpack implements Backpack, DefaultCraftable {
+public class SmallBackpack implements Backpack {
     @Override
     public int getRows() {
         return 1;
@@ -23,17 +23,5 @@ public class SmallBackpack implements Backpack, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62";
-    }
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('L', new MaterialQuantifiable(ItemType.LEATHER, 10));
-        List<String> pattern = List.of(
-                "LLL",
-                "L L",
-                "LLL");
-
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.SMALL_BACKPACK), ingredientMap, pattern);
     }
 }

@@ -12,22 +12,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SuperEnchantedEgg implements Enchanted, DefaultCraftable {
-
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
-                new SkyBlockItem(ItemType.SUPER_ENCHANTED_EGG), 1)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16)
-                .add(ItemType.ENCHANTED_EGG, 16);
-    }
+public class SuperEnchantedEgg implements Enchanted {
 
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
