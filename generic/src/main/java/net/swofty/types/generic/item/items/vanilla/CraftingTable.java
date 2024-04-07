@@ -18,12 +18,11 @@ public class CraftingTable implements BlockImpl, Craftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('P', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
         List<String> pattern = List.of(
-                "PP",
-                "PP");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE,
-                new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
+                "AA",
+                "AA");
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.CRAFTING_TABLE), ingredientMap, pattern);
     }
 
 }
