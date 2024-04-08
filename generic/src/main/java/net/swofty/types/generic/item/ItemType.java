@@ -29,6 +29,7 @@ import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
 import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.spooky.*;
@@ -102,9 +103,12 @@ public enum ItemType {
     OBSIDIAN_MINION(Material.PLAYER_HEAD, Rarity.RARE, ObsidianMinion.class),
     SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
     GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
-
-    //hm
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
+
+    /**
+    * Minion Upgrades
+    */
+    AUTO_SMELTER(Material.FURNACE, Rarity.COMMON, AutoSmelter.class),
 
     /**
      * Pets

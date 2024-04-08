@@ -3,12 +3,16 @@ package net.swofty.types.generic.collection.collections;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.items.enchanted.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static net.swofty.types.generic.item.impl.SkyBlockRecipe.getStandardEnchantedRecipe;
 
@@ -53,6 +57,56 @@ public class ForagingCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_HAT), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "LLL",
+                                        "L L",
+                                        "L L");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_PANTS), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "L L",
+                                        "L L");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_SANDALS), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "L L",
+                                        "LLL",
+                                        "LLL");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_TUNIC), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(500, new UnlockXP() {

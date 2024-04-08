@@ -13,7 +13,7 @@ public class BossCollection extends CollectionCategory {
 
     @Override
     public String getName() {
-        return "§dBoss";
+        return "§cBoss";
     }
 
     @Override
