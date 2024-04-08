@@ -5,6 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.items.accessories.FarmingTalisman;
 import net.swofty.types.generic.item.items.accessories.HasteRing;
 import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.backpacks.*;
@@ -84,6 +85,7 @@ public enum ItemType {
     SPEED_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SpeedTalisman.class),
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
     HASTE_RING(Material.PLAYER_HEAD, Rarity.RARE, HasteRing.class),
+    FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
 
     /**
      * Minions
