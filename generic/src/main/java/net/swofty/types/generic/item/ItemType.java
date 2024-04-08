@@ -35,6 +35,8 @@ import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
+import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
+import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.jerrysworkshop.GlacialFragment;
@@ -61,6 +63,9 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
+import net.swofty.types.generic.item.items.vanilla.farming.*;
+import net.swofty.types.generic.item.items.vanilla.mining.Coal;
+import net.swofty.types.generic.item.items.vanilla.mining.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
@@ -530,11 +535,11 @@ public enum ItemType {
     BOOKSHELF(Material.BOOKSHELF, Rarity.COMMON),
     BOWL(Material.BOWL, Rarity.COMMON),
     BREAD(Material.BREAD, Rarity.COMMON),
-    CARROT(Material.CARROT, Rarity.COMMON),
+    CARROT(Material.CARROT, Rarity.COMMON, Carrot.class),
     CHARCOAL(Material.CHARCOAL, Rarity.COMMON),
     COAL(Material.COAL, Rarity.COMMON, Coal.class),
     COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON, Cobblestone.class),
-    COCOA_BEANS(Material.COCOA_BEANS, Rarity.COMMON),
+    COCOA_BEANS(Material.COCOA_BEANS, Rarity.COMMON, CocoaBean.class),
     DARK_OAK_WOOD(Material.DARK_OAK_WOOD, Rarity.COMMON),
     DIAMOND(Material.DIAMOND, Rarity.COMMON),
     DIAMOND_BLOCK(Material.DIAMOND_BLOCK, Rarity.COMMON),
@@ -542,7 +547,7 @@ public enum ItemType {
     EMERALD(Material.EMERALD, Rarity.COMMON),
     EMERALD_BLOCK(Material.EMERALD_BLOCK, Rarity.COMMON),
     ENDER_PEARL(Material.ENDER_PEARL, Rarity.COMMON),
-    FEATHER(Material.FEATHER, Rarity.COMMON),
+    FEATHER(Material.FEATHER, Rarity.COMMON, Feather.class),
     FLINT(Material.FLINT, Rarity.COMMON),
     GLOWSTONE_DUST(Material.GLOWSTONE_DUST, Rarity.COMMON),
     GOLD_INGOT(Material.GOLD_INGOT, Rarity.COMMON),
@@ -557,7 +562,7 @@ public enum ItemType {
     LAPIS_LAZULI(Material.LAPIS_LAZULI, Rarity.COMMON),
     IRON_BLOCK(Material.IRON_BLOCK, Rarity.COMMON),
     JUNGLE_WOOD(Material.JUNGLE_WOOD, Rarity.COMMON),
-    LEATHER(Material.LEATHER, Rarity.COMMON),
+    LEATHER(Material.LEATHER, Rarity.COMMON, Leather.class),
     MAGMA_CREAM(Material.MAGMA_CREAM, Rarity.COMMON),
     OAK_WOOD(Material.OAK_WOOD, Rarity.COMMON),
     OAK_LOG(Material.OAK_LOG, Rarity.COMMON),
@@ -570,8 +575,8 @@ public enum ItemType {
     OBSIDIAN(Material.OBSIDIAN, Rarity.COMMON),
     PACKED_ICE(Material.PACKED_ICE, Rarity.COMMON),
     PAPER(Material.PAPER, Rarity.COMMON),
-    POTATO(Material.POTATO, Rarity.COMMON),
-    PUMPKIN(Material.PUMPKIN, Rarity.COMMON),
+    POTATO(Material.POTATO, Rarity.COMMON, Potato.class),
+    PUMPKIN(Material.PUMPKIN, Rarity.COMMON, Pumpkin.class),
     REDSTONE(Material.REDSTONE, Rarity.COMMON),
     REDSTONE_BLOCK(Material.REDSTONE_BLOCK, Rarity.COMMON),
     ROTTEN_FLESH(Material.ROTTEN_FLESH, Rarity.COMMON),
@@ -579,18 +584,19 @@ public enum ItemType {
     SPONGE(Material.SPONGE, Rarity.COMMON),
     SPRUCE_WOOD(Material.SPRUCE_WOOD, Rarity.COMMON),
     STRING(Material.STRING, Rarity.COMMON),
-    SUGAR_CANE(Material.SUGAR_CANE, Rarity.COMMON),
+    SUGAR_CANE(Material.SUGAR_CANE, Rarity.COMMON, SugarCane.class),
     SUGAR(Material.SUGAR, Rarity.COMMON),
     SNOW(Material.SNOW, Rarity.COMMON),
     SNOW_BLOCK(Material.SNOW_BLOCK, Rarity.COMMON),
-    MELON_SLICE(Material.MELON_SLICE, Rarity.COMMON),
-    RED_MUSHROOM(Material.RED_MUSHROOM, Rarity.COMMON),
-    MUTTON(Material.MUTTON, Rarity.COMMON),
-    NETHER_WART(Material.NETHER_WART, Rarity.COMMON),
-    CHICKEN(Material.CHICKEN, Rarity.COMMON),
-    PORKCHOP(Material.PORKCHOP, Rarity.COMMON),
-    RABBIT(Material.RABBIT, Rarity.COMMON),
-    WHEAT_SEEDS(Material.WHEAT_SEEDS, Rarity.COMMON),
+    MELON_SLICE(Material.MELON_SLICE, Rarity.COMMON, Melon.class),
+    RED_MUSHROOM(Material.RED_MUSHROOM, Rarity.COMMON, Mushroom.class),
+    BROWN_MUSHROOM(Material.BROWN_MUSHROOM, Rarity.COMMON, Mushroom.class),
+    MUTTON(Material.MUTTON, Rarity.COMMON, Mutton.class),
+    NETHER_WART(Material.NETHER_WART, Rarity.COMMON, NetherWart.class),
+    CHICKEN(Material.CHICKEN, Rarity.COMMON, RawChicken.class),
+    PORKCHOP(Material.PORKCHOP, Rarity.COMMON, RawPorkchop.class),
+    RABBIT(Material.RABBIT, Rarity.COMMON, RawRabbit.class),
+    WHEAT_SEEDS(Material.WHEAT_SEEDS, Rarity.COMMON, Seeds.class),
     MYCELIUM(Material.MYCELIUM, Rarity.COMMON),
     RED_SAND(Material.RED_SAND, Rarity.COMMON),
     QUARTZ(Material.QUARTZ, Rarity.COMMON),
@@ -612,10 +618,10 @@ public enum ItemType {
     GLISTERING_MELON(Material.GLISTERING_MELON_SLICE, Rarity.COMMON),
     GLOWSTONE(Material.GLOWSTONE, Rarity.COMMON),
     HAY_BAL(Material.HAY_BLOCK, Rarity.COMMON),
-    POISONOUS_POTATO(Material.POISONOUS_POTATO, Rarity.COMMON),
+    POISONOUS_POTATO(Material.POISONOUS_POTATO, Rarity.COMMON, Potato.class),
     POPPY(Material.POPPY, Rarity.COMMON),
-    RABBIT_FOOT(Material.RABBIT_FOOT, Rarity.COMMON),
-    RABBIT_HIDE(Material.RABBIT_HIDE, Rarity.COMMON),
+    RABBIT_FOOT(Material.RABBIT_FOOT, Rarity.COMMON, RawRabbit.class),
+    RABBIT_HIDE(Material.RABBIT_HIDE, Rarity.COMMON, RawRabbit.class),
     BEEF(Material.BEEF, Rarity.COMMON),
     WOOL(Material.WHITE_WOOL, Rarity.COMMON),
     COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON),
@@ -626,8 +632,7 @@ public enum ItemType {
     BLAZE_POWDER(Material.BLAZE_POWDER, Rarity.COMMON),
     GOLDEN_CARROT(Material.GOLDEN_CARROT, Rarity.COMMON),
     WATER_BOTTLE(Material.POTION, Rarity.COMMON),
-    CACTUS(Material.CACTUS, Rarity.COMMON),
-    BROWN_MUSHROOM(Material.BROWN_MUSHROOM, Rarity.COMMON),
+    CACTUS(Material.CACTUS, Rarity.COMMON, Cactus.class),
 
     /**
      * Enchanted Items
