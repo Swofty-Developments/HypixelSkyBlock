@@ -94,6 +94,19 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "ABA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.COMPACTOR), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(5000, new UnlockXP() {
                             @Override
@@ -169,11 +182,37 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 32));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "AAA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.HASTE_RING), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(70000, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 64));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE_BLOCK, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "ABA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.SUPER_COMPACTOR_3000), ingredientMap, pattern);
                             }
                         })
                 ),

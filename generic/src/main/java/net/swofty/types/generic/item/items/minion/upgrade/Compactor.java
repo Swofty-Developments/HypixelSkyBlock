@@ -2,6 +2,7 @@ package net.swofty.types.generic.item.items.minion.upgrade;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -9,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AutoSmelter implements CustomSkyBlockItem, NotFinishedYet {
+public class Compactor implements CustomSkyBlockItem, Enchanted,NotFinishedYet {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
@@ -19,7 +20,8 @@ public class AutoSmelter implements CustomSkyBlockItem, NotFinishedYet {
         return new ArrayList<>(Arrays.asList(
                 "§7This item can be used as a",
                 "§7minion upgrade. This will",
-                "§7automatically smelt materials",
-                "§7that a minion produces."));
+                "§7automatically turn materials",
+                "§7that a minion produces into",
+                "§7their block form."));
     }
 }

@@ -11,6 +11,7 @@ public enum CustomCollectionAward {
     // ENCHANTMENTS
     SCAVENGER_DISCOUNT("§9Scavenger §7Exp Discount §a(-25%)"),
     PROTECTION_DISCOUNT("§9Protection §7Exp Discount §a(-25%)"),
+    HARVESTING_DISCOUNT("§9Harvesting §7Exp Discount §a(-25%)"),
 
     // BAGS
     QUIVER("§aQuiver"),

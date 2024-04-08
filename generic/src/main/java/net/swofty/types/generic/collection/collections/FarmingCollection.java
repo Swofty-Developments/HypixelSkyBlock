@@ -2,6 +2,7 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -44,11 +45,29 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.HARVESTING_DISCOUNT;
+                            }
                         }),
                         new ItemCollectionReward(250, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BAL, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.WHEAT_SEEDS, 1));
+                                List<String> pattern = List.of(
+                                        "ABA",
+                                        "BAB",
+                                        "ABA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.FARMING_TALISMAN), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(500, new UnlockXP() {
