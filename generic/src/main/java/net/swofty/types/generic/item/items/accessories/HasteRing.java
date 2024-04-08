@@ -16,6 +16,7 @@ public class HasteRing implements Talisman, NotFinishedYet {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return null;
+        return List.of("§7Gives §aHaste I §7for §a15",
+                "§7seconds when breaking any block.");
     }
 }
