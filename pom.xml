@@ -12,7 +12,6 @@
     <modules>
         <module>packer</module>
         <module>commons</module>
-        <module>loader</module>
         <module>dungeons</module>
 
         <module>velocity-extension</module>
@@ -21,13 +20,14 @@
         <module>service-protocol</module>
         <module>service-generic</module>
         <module>generic</module>
+        <module>spark</module>
+        <module>loader</module>
 
         <module>type-island</module>
         <module>type-village</module>
 
         <module>service-auctionhouse</module>
         <module>service-bazaar</module>
-        <module>spark</module>
     </modules>
 
     <properties>
