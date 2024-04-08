@@ -4,9 +4,11 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.items.crimson.EnchantedMyceliumCube;
 import net.swofty.types.generic.item.items.crimson.EnchantedRedSandCube;
 import net.swofty.types.generic.item.items.crimson.EnchantedSulphurCube;
@@ -14,7 +16,9 @@ import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.mining.crystal.ConcentratedStone;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static net.swofty.types.generic.item.impl.SkyBlockRecipe.getStandardEnchantedRecipe;
 
@@ -60,6 +64,19 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.COBBLESTONE, 8));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.COAL, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "ABA",
+                                        "AAA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.AUTO_SMELTER), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
@@ -88,6 +105,57 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "A A",
+                                        "A A");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_BOOTS), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "A A",
+                                        "AAA",
+                                        "AAA");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_CHESTPLATE), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "   ");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_HELMET), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "A A");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_LEGGINGS), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(25000, new UnlockXP() {

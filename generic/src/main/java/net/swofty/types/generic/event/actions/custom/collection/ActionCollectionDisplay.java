@@ -3,7 +3,6 @@ package net.swofty.types.generic.event.actions.custom.collection;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -15,8 +14,6 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @EventParameters(description = "Handles the displays when updating collections",
         node = EventNodes.CUSTOM,
@@ -81,7 +78,7 @@ public class ActionCollectionDisplay extends SkyBlockEvent {
                 Arrays.stream(oldReward.unlocks()).forEach(unlock -> {
                     switch (unlock.type()) {
                         case RECIPE -> {
-                            ItemStack.Builder item = ((CollectionCategory.UnlockRecipe) unlock).getItem().getItemStackBuilder();
+                            ItemStack.Builder item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
                             item = new NonPlayerItemUpdater(item).getUpdatedItem();
 
                             player.sendMessage("    §7" + StringUtility.getTextFromComponent(item.build().getMeta().getDisplayName()) + " §7Recipes");
