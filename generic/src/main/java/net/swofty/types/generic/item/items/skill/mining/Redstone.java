@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.SkillableMine;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class HardStone implements CustomSkyBlockItem, SkillableMine, Sellable {
+public class Redstone implements CustomSkyBlockItem, SkillableMine, Sellable {
 
     @Override
     public SkillCategories getSkillCategory() {
