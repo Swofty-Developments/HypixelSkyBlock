@@ -1,5 +1,6 @@
 package net.swofty.service.protocol;
 
+import com.mongodb.util.JSON;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -29,7 +30,6 @@ public abstract class ProtocolSpecification {
                     // Serialize the value to a string
                     value = new JacksonSerializer<>(Object.class).serialize(value);
                 }
-                // Put the value directly; JSONObject supports various types
                 json.put(entry.key, value);
             } else if (entry.required) {
                 System.out.println("Message: " + json.toString());
@@ -46,20 +46,25 @@ public abstract class ProtocolSpecification {
         for (ProtocolEntries<?> entry : serviceProtocol ? getServiceProtocolEntries() : getReturnedProtocolEntries()) {
             if (!json.has(entry.key)) {
                 if (entry.required) {
-                    System.out.println("Message: " + json.toString());
+                    System.out.println("Message: " + json);
                     throw new IllegalArgumentException("Missing required field: " + entry.key);
                 }
                 // Optional fields are skipped if not present
                 continue;
             }
 
-            Object value = json.get(entry.key);
+            Object value;
             if (entry.serializer != null) {
                 // Deserialize value using the provided serializer
-                value = entry.serializer.deserialize((String) value);
+                try {
+                    value = entry.serializer.deserialize(json.getString(entry.key));
+                } catch (Exception e) {
+                    System.out.println("Message: " + json.toString());
+                    throw new IllegalArgumentException("Failed to deserialize field: " + entry.key, e);
+                }
             } else {
                 // Deserialize value using Jackson
-                value = new JacksonSerializer<>(Object.class).deserialize((String) value);
+                value = new JacksonSerializer<>(Object.class).deserialize(json.getString(entry.key));
             }
 
             values.put(entry.key, value);
