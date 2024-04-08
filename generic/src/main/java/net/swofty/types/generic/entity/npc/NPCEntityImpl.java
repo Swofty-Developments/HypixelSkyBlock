@@ -74,7 +74,7 @@ public class NPCEntityImpl extends Entity {
             if (packetsSent.contains(player)) {
                 player.sendPacket(new PlayerInfoRemovePacket(uuid));
             }
-        }, TaskSchedule.seconds(3), TaskSchedule.stop());
+        }, TaskSchedule.tick(2), TaskSchedule.stop());
     }
 
     @Override
@@ -88,8 +88,7 @@ public class NPCEntityImpl extends Entity {
 
     /**
      * Clears the cache for a player, is only run on quit, {@see QuitAction.java}
-     *
-     * @param player
+     * @param player The player to clear the cache for
      */
     public void clearCache(SkyBlockPlayer player) {
         inRangeOf.remove(player);
