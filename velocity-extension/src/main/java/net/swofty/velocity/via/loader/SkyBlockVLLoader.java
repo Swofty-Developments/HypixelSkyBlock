@@ -9,6 +9,6 @@ import net.raphimc.vialoader.impl.viaversion.VLLoader;
 public class SkyBlockVLLoader extends VLLoader {
     @Override
     public void load() {
-        Via.getManager().getProviders().use(VersionProvider.class, userConnection -> userConnection.isClientSide() ? ProtocolVersion.v1_20_3 : ProtocolVersion.v1_13_2);
+        Via.getManager().getProviders().use(VersionProvider.class, userConnection ->  ProtocolVersion.v1_20_3 );
     }
 }
