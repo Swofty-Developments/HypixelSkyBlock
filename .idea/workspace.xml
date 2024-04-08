@@ -6,44 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Fixed compilation error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/AcaciaMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/foraging/AcaciaMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/BirchMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/foraging/BirchMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/CoalMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/CoalMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/CobblestoneMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/CobblestoneMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/DarkOakMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/foraging/DarkOakMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/DiamondMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/DiamondMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/EmeraldMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/EmeraldMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/EndstoneMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/EndstoneMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/GoldMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/GoldMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/GravelMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/GravelMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/IceMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/IceMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/IronMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/mining/IronMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/JungleMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/foraging/JungleMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/SpruceMinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/minion/foraging/SpruceMinion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/MinionRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/MinionRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionAcacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionAcacia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionBirch.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionBirch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionCoal.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionCoal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionCobblestone.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionCobblestone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionDarkOak.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionDarkOak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionDiamond.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionDiamond.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionEmerald.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionEmerald.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionEndstone.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionEndstone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionGold.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionGold.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionGravel.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionGravel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionIce.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionIce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionIron.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionIron.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionJungle.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionJungle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionLapis.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionLapis.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionOak.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionOak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionObsidian.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionObsidian.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionQuartz.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionQuartz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionRedstone.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionRedstone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionSand.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionSand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionSnow.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/mining/MinionSnow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/MinionSpruce.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/minion/minions/foraging/MinionSpruce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type-village/src/main/java/net/swofty/type/village/TypeVillageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/type-village/src/main/java/net/swofty/type/village/TypeVillageLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,25 +21,24 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;history&quot;: [
+    &quot;history&quot;: [
     {
-      &quot;state&quot;: &quot;OPEN&quot;
-    }
-  ],
-  &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
+    }
+    ],
+    &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+    }
+    }</component>
   <component name="GithubProjectSettings">
     <option name="branchProtectionPatterns">
       <list>
@@ -85,12 +46,14 @@
       </list>
     </option>
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Epicportal14/HypixelSkyBlock.git&quot;,
-    &quot;accountId&quot;: &quot;3f2f7cde-8e5f-4e0d-b101-716894773034&quot;
-  }
-}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b98e548e-ac17-4a7b-a57e-57d3ea90f165" />
+        <option name="url" value="https://github.com/Swofty-Developments/HypixelSkyBlock.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/jdks/jdk-17.0.2+8/lib/src.zip!/java.base/java/lang/Object.java" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/lang/Integer.java" root0="SKIP_INSPECTION" />
@@ -137,18 +100,16 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
+    &quot;associatedIndex&quot;: 8
+    }</component>
   <component name="ProjectId" id="2ZO39acjvIUm3Qg9FOcRCbk61Bj" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
+    &quot;keyToString&quot;: {
     &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;Application.AuctionService.executor&quot;: &quot;Run&quot;,
     &quot;Application.BazaarService.executor&quot;: &quot;Run&quot;,
@@ -189,15 +150,15 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
+    },
+    &quot;keyToStringList&quot;: {
     &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
-      &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
+    &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
     ]
-  }
-}</component>
+    }
+    }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\configuration\songs" />
@@ -367,6 +328,14 @@
         <item itemvalue="Application.SkyBlockPacker" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
