@@ -7,6 +7,7 @@ import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.function.Function;
@@ -217,12 +218,16 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                 .filter(recipe -> {
                     List<String> recipePattern = recipe.getPattern();
                     int patternRows = recipePattern.size();
-                    int patternCols = recipePattern.get(0).length();
+                    int patternCols = recipePattern.getFirst().length();
 
                     for (int row = 0; row <= 3 - patternRows; row++) {
                         for (int col = 0; col <= 3 - patternCols; col++) {
-                            if (matchesPattern(recipe, grid, row, col)) {
-                                return true;
+                            try {
+                                if (matchesPattern(recipe, grid, row, col)) {
+                                    return true;
+                                }
+                            } catch (Exception e) {
+                                Logger.error("Error in recipe " + recipe.getResult().getMaterial() + " at row " + row + " col " + col);
                             }
                         }
                     }
