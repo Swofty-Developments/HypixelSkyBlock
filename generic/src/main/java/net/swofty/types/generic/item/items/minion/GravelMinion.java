@@ -26,4 +26,9 @@ public class GravelMinion implements CustomSkyBlockItem, Minion {
         return ItemType.WOODEN_SHOVEL;
     }
 
+    @Override
+    public boolean isByDefaultCraftable() {
+        return false;
+    }
+
 }

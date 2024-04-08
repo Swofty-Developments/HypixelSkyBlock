@@ -26,4 +26,9 @@ public class IronMinion implements CustomSkyBlockItem, Minion {
         return ItemType.WOODEN_PICKAXE;
     }
 
+    @Override
+    public boolean isByDefaultCraftable() {
+        return false;
+    }
+
 }
