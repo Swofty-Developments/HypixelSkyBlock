@@ -1,8 +1,5 @@
 package net.swofty.types.generic.item.items.miscellaneous;
 
-import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerItemAnimationEvent;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.gui.inventory.inventories.GUIBoosterCookie;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;

@@ -34,12 +34,13 @@ import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
-import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
+import net.swofty.types.generic.item.items.miscellaneous.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.skill.farming.*;
 import net.swofty.types.generic.item.items.skill.foraging.*;
+import net.swofty.types.generic.item.items.skill.mining.*;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.jerrysworkshop.GlacialFragment;
 import net.swofty.types.generic.item.items.jerrysworkshop.GreenGift;
@@ -55,8 +56,6 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.types.generic.item.items.mining.dwarven.*;
 import net.swofty.types.generic.item.items.minion.foraging.*;
 import net.swofty.types.generic.item.items.minion.mining.*;
-import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
-import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
 import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.accessories.SkeletonTalisman;
@@ -65,9 +64,6 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
-import net.swofty.types.generic.item.items.skill.mining.*;
-import net.swofty.types.generic.item.items.skill.foraging.*;
-import net.swofty.types.generic.item.items.skill.farming.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
@@ -82,6 +78,9 @@ public enum ItemType {
     AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
+    GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
+    KISMET_FEATHER(Material.FEATHER, Rarity.RARE, KismetFeather.class),
+    KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
 
     /**
      * Accessories
