@@ -172,6 +172,10 @@ public class SkyBlockItem {
         return getMaterial() == Material.BEDROCK;
     }
 
+    public boolean isAir() {
+        return getMaterial() == Material.AIR;
+    }
+
     public static boolean isSkyBlockItem(ItemStack item) {
         return item.hasTag(Tag.String("item_type"));
     }

@@ -289,6 +289,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
         SkyBlockItem item = new SkyBlockItem(current);
 
         if (item.isNA()) return;
+        if (item.isAir()) return;
 
         DatapointAuctionEscrow.AuctionEscrow escrow = getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
 
