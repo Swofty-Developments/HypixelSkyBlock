@@ -22,6 +22,7 @@ import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -151,8 +152,11 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, (short) 0, 1,
-                            "§7" + result.errorMessage()[1]);
+                    List<String> lore = Arrays.asList(result.errorMessage());
+                    // Add gray text to the start of each line
+                    lore = lore.stream().map(line -> "§7" + line).toList();
+
+                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, (short) 0, 1, lore);
                 }
             };
         }

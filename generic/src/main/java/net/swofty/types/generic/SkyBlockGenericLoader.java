@@ -72,6 +72,7 @@ import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.MathUtility;
+import net.swofty.types.generic.utility.StringUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -427,7 +428,9 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                                     int amount = player.getCollection().get(collection.type());
                                     return new SkyBlockRecipe.CraftingResult(
                                             amount >= reward.requirement(),
-                                            new String[]{"§a" + collection.type().getDisplayName() + " §e" + reward.requirement() + " §7is required to craft this item."}
+                                            new String[]{"§7You must have §c" + collection.type().getDisplayName()
+                                                    + " Collection "
+                                                    + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
                                     );
                                 });
                                 recipes.add(recipeInstance);

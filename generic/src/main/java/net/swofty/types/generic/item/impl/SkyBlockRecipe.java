@@ -33,6 +33,7 @@ public abstract class SkyBlockRecipe<T> {
         this.result = result;
         this.recipeType = recipeType;
         this.canCraft = canCraft;
+        this.amount = result.getAmount();
     }
 
     public abstract T setResult(SkyBlockItem result);

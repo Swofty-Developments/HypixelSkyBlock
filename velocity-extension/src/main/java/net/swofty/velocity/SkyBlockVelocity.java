@@ -156,11 +156,11 @@ public class SkyBlockVelocity {
 
         MinecraftVersion playerVersion = MinecraftVersion.byProtocolId(Via.getAPI().getPlayerVersion(player.getUniqueId()));
 
-        if (!playerVersion.isMoreRecentThan(MinecraftVersion.MINECRAFT_1_16)){
+        if (!playerVersion.isMoreRecentThan(MinecraftVersion.MINECRAFT_1_20)){
             player.disconnect(
                     Component.text("§cOops! It looks like you're using an incompatible version.")
                             .append(Component.newline())
-                            .append(Component.text("§aPlease update your Minecraft client to versions 1.16 - 1.20."))
+                            .append(Component.text("§aPlease update your Minecraft client to versions 1.20."))
             );
 
             return;
