@@ -778,11 +778,10 @@ public enum ItemType {
     }
 
     @SneakyThrows
-    public <T extends CustomSkyBlockItem> T getNewInstance(Class<T> clazz) {
-        if (clazz != null) {
-            return clazz.getDeclaredConstructor().newInstance();
-        }
-        return null;
+    public <T extends CustomSkyBlockItem> T getNewInstance(Class<T> toCastTo) {
+        if (clazz == null)
+            return null;
+        return toCastTo.cast(clazz.newInstance());
     }
 
     public static ItemType get(String name) {
