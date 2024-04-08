@@ -60,7 +60,7 @@ public class FarmingCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BAL, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
                                 ingredientMap.put('B', new MaterialQuantifiable(ItemType.WHEAT_SEEDS, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
