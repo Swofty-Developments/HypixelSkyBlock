@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.talismans;
+package net.swofty.types.generic.item.items.accessories;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
@@ -8,7 +8,6 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpeedTalisman implements Talisman, ConstantStatistics {

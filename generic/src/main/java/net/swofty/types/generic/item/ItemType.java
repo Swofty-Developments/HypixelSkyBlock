@@ -5,6 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.items.accessories.HasteRing;
 import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
@@ -30,6 +31,8 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
+import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
+import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.BoosterCookie;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.spooky.*;
@@ -51,11 +54,11 @@ import net.swofty.types.generic.item.items.miscellaneous.MoveJerry;
 import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
 import net.swofty.types.generic.item.items.pet.BeePet;
-import net.swofty.types.generic.item.items.talismans.SkeletonTalisman;
-import net.swofty.types.generic.item.items.talismans.SpeedTalisman;
-import net.swofty.types.generic.item.items.talismans.zombie.ZombieArtifact;
-import net.swofty.types.generic.item.items.talismans.zombie.ZombieRing;
-import net.swofty.types.generic.item.items.talismans.zombie.ZombieTalisman;
+import net.swofty.types.generic.item.items.accessories.SkeletonTalisman;
+import net.swofty.types.generic.item.items.accessories.SpeedTalisman;
+import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
+import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
+import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
@@ -73,13 +76,14 @@ public enum ItemType {
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
 
     /**
-     * Talismans
+     * Accessories
      */
     ZOMBIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, ZombieTalisman.class),
     ZOMBIE_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON, ZombieRing.class),
     ZOMBIE_ARTIFACT(Material.PLAYER_HEAD, Rarity.RARE, ZombieArtifact.class),
     SPEED_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SpeedTalisman.class),
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
+    HASTE_RING(Material.PLAYER_HEAD, Rarity.RARE, HasteRing.class),
 
     /**
      * Minions
@@ -110,6 +114,8 @@ public enum ItemType {
     * Minion Upgrades
     */
     AUTO_SMELTER(Material.FURNACE, Rarity.COMMON, AutoSmelter.class),
+    COMPACTOR(Material.DISPENSER, Rarity.UNCOMMON, Compactor.class),
+    SUPER_COMPACTOR_3000(Material.DISPENSER, Rarity.RARE, SuperCompactor3000.class),
 
     /**
      * Pets
