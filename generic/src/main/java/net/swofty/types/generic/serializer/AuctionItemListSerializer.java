@@ -24,23 +24,23 @@ public class AuctionItemListSerializer implements Serializer<List<AuctionItem>> 
     @Override
     public String serialize(List<AuctionItem> value) {
         JSONArray jsonArray = new JSONArray();
-        value.forEach(auctionItem -> jsonArray.put(auctionItemSerializer.serialize(auctionItem)));
-        return jsonArray.toString();
+        for (AuctionItem auctionItem : value) {
+            jsonArray.put(new JSONObject(auctionItemSerializer.serialize(auctionItem)));
+        }
+        return new JSONObject(new HashMap<String, Object>() {{
+            put("auctionItems", jsonArray);
+        }}).toString();
     }
 
     @Override
     public List<AuctionItem> deserialize(String json) {
-        JSONArray objects = new JSONArray(json);
-        if (objects.isEmpty()) {
-            return new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(json);
+        JSONArray jsonArray = jsonObject.getJSONArray("auctionItems");
+        List<AuctionItem> auctionItems = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            auctionItems.add(auctionItemSerializer.deserialize(jsonArray.getJSONObject(i).toString()));
         }
-
-        return objects.toList().stream()
-                .map(object -> {
-                    JSONObject jsonObject = new JSONObject((HashMap<String, Object>) object);
-                    return auctionItemSerializer.deserialize(jsonObject.toString());
-                })
-                .collect(Collectors.toList());
+        return auctionItems;
     }
 
     @Override
