@@ -8,7 +8,9 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.village.mobs.MobGraveyardZombie;
+import net.swofty.type.village.mobs.MobGraveyardZombieVillager;
 import net.swofty.type.village.mobs.MobRuinsWolf;
+import net.swofty.type.village.mobs.MobRuinsWolfOld;
 import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -96,6 +98,8 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     public List<MobRegistry> getMobs() {
         return new ArrayList<>(List.of(
                 new MobRegistry(EntityType.ZOMBIE, MobGraveyardZombie.class),
+                new MobRegistry(EntityType.ZOMBIE_VILLAGER, MobGraveyardZombieVillager.class),
+                new MobRegistry(EntityType.WOLF, MobRuinsWolfOld.class),
                 new MobRegistry(EntityType.WOLF, MobRuinsWolf.class)
 
         ));

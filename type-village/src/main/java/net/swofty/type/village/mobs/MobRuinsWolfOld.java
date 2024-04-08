@@ -26,20 +26,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
+public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
 
-    public MobRuinsWolf(EntityType entityType) {
+    public MobRuinsWolfOld(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Wolf";
+        return "Old Wolf";
     }
 
     @Override
     public Integer getLevel() {
-        return 15;
+        return 50;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 250D)
-                .with(ItemStatistic.DAMAGE, 90D)
+                .with(ItemStatistic.HEALTH, 15000D)
+                .with(ItemStatistic.DAMAGE, 800D)
                 .build();
     }
 
