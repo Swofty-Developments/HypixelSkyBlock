@@ -78,7 +78,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
                         "§bCo-op profile use the partner",
                         "§bwith the highest rank!",
                         "",
-                        "§epurchase rank at store.funkypixel.net!"
+                        "§epurchase rank at store.hypixel.net!"
                 );
             }
         });

@@ -16,6 +16,11 @@ public class FarmingTalisman implements Talisman, NotFinishedYet {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return null;
+        return List.of("§7Increases your §f✦ Speed §7by",
+                "§a+10 §7while held in the",
+                "§bFarm§7, §bThe Barn§7,",
+                "§eMushroom Dessert§7, and",
+                "§bGarden§7."
+        );
     }
 }
