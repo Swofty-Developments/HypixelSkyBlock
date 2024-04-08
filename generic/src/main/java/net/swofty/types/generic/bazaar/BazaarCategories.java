@@ -15,7 +15,7 @@ public enum BazaarCategories {
             "§b", new BazaarItemSet(ItemType.COBBLESTONE, "Cobblestone",
             ItemType.COBBLESTONE, ItemType.ENCHANTED_COBBLESTONE),
             new BazaarItemSet(ItemType.COAL, "Coal",
-            ItemType.COAL, ItemType.ENCHANTED_COAL, ItemType.ENCHANTED_CHARCOAL, ItemType.ENCHANTED_COAL_BLOCK),
+                    ItemType.COAL, ItemType.ENCHANTED_COAL, ItemType.ENCHANTED_CHARCOAL, ItemType.ENCHANTED_COAL_BLOCK),
             new BazaarItemSet(ItemType.IRON_INGOT, "Iron",
                     ItemType.IRON_INGOT, ItemType.ENCHANTED_IRON_INGOT, ItemType.ENCHANTED_IRON_BLOCK),
             new BazaarItemSet(ItemType.GOLD_INGOT, "Gold",
