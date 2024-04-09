@@ -437,6 +437,7 @@ public class CombatCollection extends CollectionCategory {
                             public SkyBlockRecipe getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
                                 ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         " A ",
                                         "AAA",
