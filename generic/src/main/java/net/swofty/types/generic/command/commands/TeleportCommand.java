@@ -21,13 +21,13 @@ public class TeleportCommand extends SkyBlockCommand {
         ArgumentEntity entityArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true);
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            final Player player1 = context.get(entityArgument).findFirstPlayer(sender);
+            final Player target = context.get(entityArgument).findFirstPlayer(sender);
 
-            if (player1 == null) {
+            if (target == null) {
                 sender.sendMessage("§cCouldn't find a player by the name of §e" + context.getRaw(entityArgument) + "§c.");
                 return;
             }
-            player.teleport(player1.getPosition());
+            player.teleport(target.getPosition());
         });
     }
 }

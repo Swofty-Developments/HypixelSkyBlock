@@ -6,8 +6,6 @@ import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;

@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.FarmingTalisman;
 import net.swofty.types.generic.item.items.accessories.HasteRing;
+import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
@@ -24,6 +25,10 @@ import net.swofty.types.generic.item.items.combat.slayer.wolf.drops.*;
 import net.swofty.types.generic.item.items.combat.slayer.zombie.craftable.*;
 import net.swofty.types.generic.item.items.combat.slayer.zombie.drops.*;
 import net.swofty.types.generic.item.items.crimson.*;
+import net.swofty.types.generic.item.items.dungeon.misc.AncientRose;
+import net.swofty.types.generic.item.items.dungeon.misc.ArchitectsFirstDraft;
+import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
+import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
 import net.swofty.types.generic.item.items.farming.*;
@@ -81,7 +86,6 @@ public enum ItemType {
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
     GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
-    KISMET_FEATHER(Material.FEATHER, Rarity.RARE, KismetFeather.class),
     KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
 
     /**
@@ -94,6 +98,15 @@ public enum ItemType {
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
     HASTE_RING(Material.PLAYER_HEAD, Rarity.RARE, HasteRing.class),
     FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
+    AUTO_RECOMBOBULATOR(Material.PLAYER_HEAD, Rarity.LEGENDARY, AutoRecombobulator.class),
+    CATACOMBS_EXPERT_RING(Material.PLAYER_HEAD, Rarity.EPIC, CatacombsExpertRing.class),
+    WITHER_RELIC(Material.PLAYER_HEAD, Rarity.LEGENDARY, WitherRelic.class),
+    SCARFS_GRIMOIRE(Material.PLAYER_HEAD, Rarity.LEGENDARY, ScarfsGrimoire.class),
+    SCARFS_THESIS(Material.PLAYER_HEAD, Rarity.EPIC, ScarfsThesis.class),
+    SCARFS_STUDIES(Material.PLAYER_HEAD, Rarity.RARE, ScarfsStudies.class),
+    TREASURE_ARTIFACT(Material.PLAYER_HEAD, Rarity.LEGENDARY, TreasureArtifact.class),
+    TREASURE_RING(Material.PLAYER_HEAD, Rarity.EPIC, TreasureRing.class),
+    TREASURE_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, TreasureTalisman.class),
 
     /**
      * Minions
@@ -336,6 +349,14 @@ public enum ItemType {
     HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.LEGENDARY, HighClassArchfiendDice.class),
     WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY, WilsonEngineeringPlans.class),
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
+
+    /**
+     * DungeonItem
+     */
+    ANCIENT_ROSE(Material.POPPY, Rarity.RARE, AncientRose.class),
+    ARCHITECTS_FIRST_DRAFT(Material.PAPER, Rarity.EPIC, ArchitectsFirstDraft.class),
+    KISMET_FEATHER(Material.FEATHER, Rarity.RARE, KismetFeather.class),
+    NECRONS_HANDLE(Material.STICK, Rarity.EPIC, NecronHandle.class),
 
     /**
      * Mythological Ritual
