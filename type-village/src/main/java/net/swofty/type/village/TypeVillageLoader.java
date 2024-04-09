@@ -11,10 +11,6 @@ import net.swofty.type.village.mobs.hub.MobGraveyardZombie;
 import net.swofty.type.village.mobs.hub.MobGraveyardZombieVillager;
 import net.swofty.type.village.mobs.hub.MobRuinsWolf;
 import net.swofty.type.village.mobs.hub.MobRuinsWolfOld;
-import net.swofty.type.village.mobs.park.HowlingSpirit;
-import net.swofty.type.village.mobs.park.PackSpirit;
-import net.swofty.type.village.mobs.park.SoulOfTheAlpha;
-import net.swofty.type.village.mobs.spiderden.*;
 import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -103,21 +99,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
                 new MobRegistry(EntityType.ZOMBIE, MobGraveyardZombie.class),
                 new MobRegistry(EntityType.ZOMBIE_VILLAGER, MobGraveyardZombieVillager.class),
                 new MobRegistry(EntityType.WOLF, MobRuinsWolfOld.class),
-                new MobRegistry(EntityType.WOLF, MobRuinsWolf.class),
-
-                //park
-                new MobRegistry(EntityType.WOLF, HowlingSpirit.class),
-                new MobRegistry(EntityType.WOLF, PackSpirit.class),
-                new MobRegistry(EntityType.WOLF, SoulOfTheAlpha.class),
-
-                //spiderden
-                new MobRegistry(EntityType.SPIDER, DasherSpider.class),
-                new MobRegistry(EntityType.SPIDER, SplitterSpider.class),
-                new MobRegistry(EntityType.SPIDER, WeaverSpider.class),
-                new MobRegistry(EntityType.SPIDER, VoraciousSpider.class),
-                new MobRegistry(EntityType.SKELETON, Skeleton.class),
-                new MobRegistry(EntityType.SILVERFISH, SilverFish.class),
-                new MobRegistry(EntityType.SLIME, RainSlime.class)
+                new MobRegistry(EntityType.WOLF, MobRuinsWolf.class)
         ));
     }
 
