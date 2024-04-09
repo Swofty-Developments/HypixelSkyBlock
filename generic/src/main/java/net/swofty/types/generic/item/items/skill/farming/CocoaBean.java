@@ -1,14 +1,20 @@
-package net.swofty.types.generic.item.items.vanilla;
+package net.swofty.types.generic.item.items.skill.farming;
 
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkillableMine;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class Wheat implements SkillableMine, CustomSkyBlockItem {
+public class CocoaBean implements CustomSkyBlockItem, SkillableMine, Sellable {
     @Override
     public ItemStatistics getStatistics() {
         return ItemStatistics.EMPTY;
+    }
+
+    @Override
+    public double getSellValue() {
+        return 3;
     }
 
     @Override
