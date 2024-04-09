@@ -17,7 +17,6 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.entity.mob.MobRegistry;
-import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
@@ -28,7 +27,6 @@ import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.modules.AccountInformationModule;
 import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.*;

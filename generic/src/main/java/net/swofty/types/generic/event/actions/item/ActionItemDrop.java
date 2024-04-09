@@ -4,8 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.item.ItemDropEvent;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
