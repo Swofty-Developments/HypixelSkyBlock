@@ -28,7 +28,7 @@ public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 251D)
                 .with(ItemStatistic.STRENGTH, 151D)

@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class SpiderSword implements CustomSkyBlockItem, StandardItem, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 30D)
                 .build();

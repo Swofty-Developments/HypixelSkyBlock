@@ -1,13 +1,14 @@
 package net.swofty.types.generic.item.items.armor;
 
 import net.minestom.server.color.Color;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 public class LeafletTunic implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder().with(ItemStatistic.HEALTH, 35D).build();
     }
 

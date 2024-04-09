@@ -5,6 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.FarmingTalisman;
 import net.swofty.types.generic.item.items.accessories.HasteRing;
 import net.swofty.types.generic.item.items.armor.*;
@@ -72,6 +73,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
+    SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),

@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class FTX3070 implements CustomSkyBlockItem, SkullHead {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -7,14 +7,13 @@ import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
-import redis.clients.jedis.bloom.CuckooFilterCommands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GlacialFragment implements CustomSkyBlockItem, SkullHead, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 public interface Backpack extends CustomSkyBlockItem, SkullHead, Interactable, Unstackable {
     int getRows();
 
-    default ItemStatistics getStatistics() {
+    default ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

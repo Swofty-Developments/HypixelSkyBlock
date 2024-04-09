@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class EndSword implements CustomSkyBlockItem, StandardItem, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 35D)
                 .build();

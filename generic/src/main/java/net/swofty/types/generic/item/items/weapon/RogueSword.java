@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 20D)
                 .build();

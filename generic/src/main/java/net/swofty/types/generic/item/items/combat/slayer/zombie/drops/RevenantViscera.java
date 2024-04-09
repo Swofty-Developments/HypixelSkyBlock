@@ -8,7 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 public class RevenantViscera implements CustomSkyBlockItem, Sellable, Enchanted, DefaultCraftable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

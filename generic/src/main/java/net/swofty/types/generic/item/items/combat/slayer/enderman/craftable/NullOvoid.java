@@ -19,7 +19,7 @@ public class NullOvoid implements CustomSkyBlockItem, DefaultCraftable, Enchante
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 }

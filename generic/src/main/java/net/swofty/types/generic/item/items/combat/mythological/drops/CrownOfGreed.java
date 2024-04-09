@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class CrownOfGreed implements CustomSkyBlockItem, StandardItem, Sellable, Enchanted, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 130D)
                 .with(ItemStatistic.DEFENSE, 90D)

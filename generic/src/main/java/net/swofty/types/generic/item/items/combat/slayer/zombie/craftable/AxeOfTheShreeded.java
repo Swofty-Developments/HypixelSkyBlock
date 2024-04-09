@@ -28,7 +28,7 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, DefaultCraftable, S
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 140D)
                 .with(ItemStatistic.STRENGTH, 115D)

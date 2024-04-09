@@ -15,7 +15,7 @@ import java.util.*;
 public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, StandardItem,
         DefaultCraftable, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 50D)
                 .with(ItemStatistic.DEFENSE, 10D)

@@ -60,7 +60,7 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 1D)
                 .build();

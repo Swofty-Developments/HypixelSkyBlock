@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class HamsterWheel implements CustomSkyBlockItem, Sellable, Enchanted {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

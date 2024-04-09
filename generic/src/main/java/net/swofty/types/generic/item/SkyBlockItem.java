@@ -8,10 +8,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.item.attribute.AttributeHandler;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeBreakingPower;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRarity;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeStatistics;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeType;
+import net.swofty.types.generic.item.attribute.attributes.*;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DrillImpl;
 import net.swofty.types.generic.item.impl.PickaxeImpl;
@@ -65,7 +62,7 @@ public class SkyBlockItem {
         try {
             Class<? extends CustomSkyBlockItem> clazz = ItemType.valueOf(itemType).clazz;
             if (clazz != null) {
-                statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics());
+                statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics(this));
                 clazz = ItemType.valueOf(itemType).clazz.newInstance().getClass();
             } else {
                 statisticsAttribute.setValue(ItemStatistics.builder().build());
@@ -115,7 +112,7 @@ public class SkyBlockItem {
 
             // All items re-retrieve their base stats when loaded from an itemstack
             ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
-            statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics());
+            statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics(this));
         } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {
         }
     }
@@ -138,6 +135,10 @@ public class SkyBlockItem {
     }
 
     public Material getMaterial() {
+        ItemAttributeSandboxItem.SandboxData data = getAttributeHandler().getSandboxData();
+        if (data != null && data.getMaterial() != ItemType.AIR)
+            return data.getMaterial().material;
+
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         try {
             return ItemType.valueOf(typeAttribute.getValue()).material;

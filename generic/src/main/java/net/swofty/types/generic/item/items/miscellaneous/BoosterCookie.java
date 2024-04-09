@@ -12,7 +12,7 @@ import java.util.List;
 public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, Unstackable, NotFinishedYet {
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

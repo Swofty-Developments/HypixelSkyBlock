@@ -31,7 +31,7 @@ public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowIm
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 310D)
                 .with(ItemStatistic.STRENGTH, 40D)

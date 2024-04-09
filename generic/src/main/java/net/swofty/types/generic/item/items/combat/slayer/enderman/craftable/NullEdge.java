@@ -29,7 +29,7 @@ public class NullEdge implements CustomSkyBlockItem, DefaultCraftable, Enchanted
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 }

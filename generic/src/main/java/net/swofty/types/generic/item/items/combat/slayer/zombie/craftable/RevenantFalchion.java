@@ -28,7 +28,7 @@ public class RevenantFalchion implements CustomSkyBlockItem, DefaultCraftable, S
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 90D)
                 .with(ItemStatistic.STRENGTH, 50D)

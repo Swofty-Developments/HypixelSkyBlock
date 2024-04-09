@@ -7,7 +7,6 @@ import java.util.Map;
 
 @Getter
 public class ItemStatistics {
-
     public static final ItemStatistics EMPTY = new ItemStatistics(new EnumMap<>(ItemStatistic.class));
 
     private final Map<ItemStatistic, Double> statistics;
@@ -28,9 +27,24 @@ public class ItemStatistics {
 
     @Override
     public String toString() {
-        return "ItemStatistics{" +
-                "statistics=" + statistics +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<ItemStatistic, Double> entry : this.statistics.entrySet()) {
+            builder.append(entry.getKey().name()).append(":").append(entry.getValue()).append(";");
+        }
+        return builder.toString();
+    }
+
+    public static ItemStatistics fromString(String string) {
+        ItemStatisticsBuilder builder = ItemStatistics.builder();
+        if (string.isEmpty())
+            return EMPTY;
+
+        String[] split = string.split(";");
+        for (String s : split) {
+            String[] split1 = s.split(":");
+            builder.with(ItemStatistic.valueOf(split1[0]), Double.parseDouble(split1[1]));
+        }
+        return builder.build();
     }
 
     // Builder class

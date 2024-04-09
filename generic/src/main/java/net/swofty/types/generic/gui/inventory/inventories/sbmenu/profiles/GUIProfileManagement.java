@@ -109,7 +109,6 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
                         player.sendMessage("§cIf you want to delete this profile, switch to another one first!");
                     }
 
-
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
                         List<String> lore = new ArrayList<>(Arrays.asList("§8Selected slot", " "));

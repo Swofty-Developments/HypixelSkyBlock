@@ -8,7 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.List;
 
 public interface CustomSkyBlockItem {
-    ItemStatistics getStatistics();
+    ItemStatistics getStatistics(SkyBlockItem instance);
 
     default boolean isPlaceable() {
         return false;

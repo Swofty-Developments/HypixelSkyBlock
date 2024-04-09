@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class GoldenPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCraftable, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.MINING_SPEED, 250D)
                 .with(ItemStatistic.DAMAGE, 15D)

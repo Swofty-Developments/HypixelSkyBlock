@@ -133,14 +133,20 @@ public abstract class SkyBlockEvent {
                     event, true);
 
         if (event.params.isAsync()) {
-            Thread.startVirtualThread(() -> event.run(concreteEvent));
+            PlayerHookManager finalHookManager = hookManager;
+            Thread.startVirtualThread(() -> {
+                event.run(concreteEvent);
+                if (finalHookManager != null)
+                    finalHookManager.callAndClearHooks(
+                            event, false);
+            });
         } else {
             event.run(concreteEvent);
-        }
 
-        if (hookManager != null)
-            hookManager.callAndClearHooks(
-                    event, false);
+            if (hookManager != null)
+                hookManager.callAndClearHooks(
+                        event, false);
+        }
     }
 
     public static void callSkyBlockEvent(Event event) {

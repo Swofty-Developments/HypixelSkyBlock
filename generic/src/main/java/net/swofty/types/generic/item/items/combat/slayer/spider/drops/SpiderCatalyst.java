@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class SpiderCatalyst implements CustomSkyBlockItem, SkullHead, Sellable, RightClickRecipe {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -16,7 +16,7 @@ public class OakPlanks implements PlaceableCustomSkyBlockItem, DefaultCraftable 
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 }

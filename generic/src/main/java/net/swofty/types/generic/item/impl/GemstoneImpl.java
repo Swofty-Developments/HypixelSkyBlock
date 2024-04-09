@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 
 public interface GemstoneImpl extends CustomSkyBlockItem, SkullHead {
-    default ItemStatistics getStatistics() {
+    default ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

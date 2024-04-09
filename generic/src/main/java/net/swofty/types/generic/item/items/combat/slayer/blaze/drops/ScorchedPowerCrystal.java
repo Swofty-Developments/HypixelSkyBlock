@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class ScorchedPowerCrystal implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

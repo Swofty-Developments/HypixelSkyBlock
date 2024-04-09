@@ -29,10 +29,7 @@ import org.tinylog.Logger;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -101,25 +98,9 @@ public class SkyBlock {
          * Initialize Proxy support
          */
         Logger.info("Initializing proxy support...");
-        ArrayList<String> requiredChannels = new ArrayList<>(Arrays.asList(
-                "proxy-online",
-                "server-initialized",
-                "server-name",
-                "player-handler",
-                "player-count"
-        ));
-        Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
-        Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
-        subTypesOfProtocol.forEach(protocol -> {
-            try {
-                ProtocolSpecification specification = protocol.getDeclaredConstructor().newInstance();
-                requiredChannels.add(specification.getEndpoint());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        });
-        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID, requiredChannels.toArray(new String[0]));
+
+        List<String> outgoingChannels = initOutgoingRedisChannels();
+        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID, outgoingChannels.toArray(new String[0]));
         proxyAPI.registerProxyToClient("ping", RedisPing.class);
         proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
         proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);
@@ -127,6 +108,7 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("bank-hash", RedisBankHash.class);
         proxyAPI.registerProxyToClient("authenticate", RedisAuthenticate.class);
         proxyAPI.start();
+
         VelocityProxy.enable(Configuration.get("velocity-secret"));
 
         /**
@@ -189,6 +171,29 @@ public class SkyBlock {
                         .put("port" , pterodactylPort)
                         .toString(),
                 (response) -> startServer.complete(isPterodactyl ? pterodactylPort : Integer.parseInt(response)) );
+    }
+
+    public static List<String> initOutgoingRedisChannels() {
+        List<String> requiredChannels = new ArrayList<>(Arrays.asList(
+                "proxy-online",
+                "server-initialized",
+                "server-name",
+                "player-handler",
+                "player-count"
+        ));
+        Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
+        Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
+        subTypesOfProtocol.forEach(protocol -> {
+            try {
+                ProtocolSpecification specification = protocol.getDeclaredConstructor().newInstance();
+                requiredChannels.add(specification.getEndpoint());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return requiredChannels;
     }
 
     private static void checkProxyConnected(Scheduler scheduler) {

@@ -26,7 +26,7 @@ public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, En
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

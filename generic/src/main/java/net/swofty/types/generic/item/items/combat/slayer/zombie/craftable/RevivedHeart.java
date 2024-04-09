@@ -15,7 +15,7 @@ import java.util.*;
 
 public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.DEFENSE, 35D)

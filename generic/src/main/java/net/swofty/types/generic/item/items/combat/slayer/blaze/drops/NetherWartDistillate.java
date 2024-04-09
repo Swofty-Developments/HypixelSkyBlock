@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class NetherWartDistillate implements CustomSkyBlockItem, SkullHead, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

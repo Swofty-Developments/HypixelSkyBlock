@@ -293,6 +293,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         if (SkyBlockConst.getInstanceContainer() != null) {
             Thread.startVirtualThread(() -> {
                 CrystalDatabase.getAllCrystals().forEach(crystal -> {
+                    if (crystal.serverType != SkyBlockConst.getTypeLoader().getType()) return;
+
                     ItemType type = crystal.itemType;
                     try {
                         ServerOrb asCrystal = (ServerOrb) type.clazz.newInstance();

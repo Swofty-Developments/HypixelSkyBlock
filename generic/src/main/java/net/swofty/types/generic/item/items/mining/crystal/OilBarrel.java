@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class OilBarrel implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

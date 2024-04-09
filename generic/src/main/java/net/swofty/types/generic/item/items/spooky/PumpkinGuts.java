@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class PumpkinGuts implements CustomSkyBlockItem {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

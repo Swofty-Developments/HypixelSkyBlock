@@ -29,7 +29,7 @@ public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, Sta
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 120D)
                 .with(ItemStatistic.STRENGTH, 100D)

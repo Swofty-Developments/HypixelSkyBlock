@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class SuperCompactor3000 implements CustomSkyBlockItem, Enchanted,NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
     @Override

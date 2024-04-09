@@ -27,7 +27,7 @@ public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, Standar
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 125D)
                 .with(ItemStatistic.STRENGTH, 25D)

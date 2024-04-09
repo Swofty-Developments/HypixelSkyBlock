@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class AllSkillsExpBoost implements CustomSkyBlockItem, PetItem, Enchanted, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class JungleKey implements CustomSkyBlockItem, Enchanted {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

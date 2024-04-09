@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class FarmingExpBoostCommon implements CustomSkyBlockItem, Enchanted, PetItem, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

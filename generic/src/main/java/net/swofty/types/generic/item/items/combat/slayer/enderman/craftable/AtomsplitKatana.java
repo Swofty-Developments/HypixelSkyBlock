@@ -28,7 +28,7 @@ public class AtomsplitKatana implements CustomSkyBlockItem, DefaultCraftable, St
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 245D)
                 .with(ItemStatistic.STRENGTH, 100D)

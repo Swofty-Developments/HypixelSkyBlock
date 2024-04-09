@@ -2,7 +2,6 @@ package net.swofty.types.generic.item.items.miscellaneous;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.instance.block.Block;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class MoveJerry implements CustomSkyBlockItem, Interactable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

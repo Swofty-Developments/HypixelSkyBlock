@@ -1,10 +1,7 @@
 package net.swofty.types.generic.item.items.combat;
 
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
-import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -16,7 +13,7 @@ public class ZombieHeart implements CustomSkyBlockItem, NotFinishedYet, Sellable
         Unstackable, StandardItem {
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 50D)
                 .build();

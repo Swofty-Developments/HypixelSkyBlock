@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SkyBlockMenu implements CustomSkyBlockItem, Interactable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

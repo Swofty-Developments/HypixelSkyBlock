@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.combat.mythological.drops;
 
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 
 public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Sellable, RightClickRecipe {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

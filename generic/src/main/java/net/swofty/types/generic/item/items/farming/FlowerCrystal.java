@@ -25,7 +25,7 @@ import java.util.function.Function;
 
 public class FlowerCrystal implements CustomSkyBlockItem, SkullHead, ServerOrb, PlaceEvent {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

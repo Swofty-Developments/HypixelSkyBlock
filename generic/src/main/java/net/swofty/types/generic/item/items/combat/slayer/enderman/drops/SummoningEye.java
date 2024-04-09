@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class SummoningEye implements CustomSkyBlockItem, SkullHead, Unstackable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

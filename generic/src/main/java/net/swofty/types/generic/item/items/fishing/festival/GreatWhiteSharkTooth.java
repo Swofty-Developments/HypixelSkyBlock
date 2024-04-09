@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class GreatWhiteSharkTooth implements CustomSkyBlockItem, Unstackable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

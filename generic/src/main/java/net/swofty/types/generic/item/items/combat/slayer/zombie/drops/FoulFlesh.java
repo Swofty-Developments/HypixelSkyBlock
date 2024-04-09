@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class FoulFlesh implements CustomSkyBlockItem, Sellable, ExtraUnderNameDisplay {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.mining.crystal;
 
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 
 public class Pickonimbus2000 implements CustomSkyBlockItem, PickaxeImpl, Sellable, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 30D)
                 .with(ItemStatistic.MINING_SPEED, 1500D)

@@ -1,13 +1,12 @@
 package net.swofty.types.generic.data.mongodb;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.ServerType;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.item.ItemType;
 import org.bson.Document;
 import org.tinylog.Logger;
@@ -36,6 +35,7 @@ public class CrystalDatabase {
         doc.append("y", position.y());
         doc.append("z", position.z());
         doc.append("itemType", itemType.name());
+        doc.append("serverType", SkyBlockConst.getTypeLoader().getType().name());
         collection.insertOne(doc);
     }
 
@@ -72,6 +72,7 @@ public class CrystalDatabase {
             crystal.url = url;
             crystal.position = new Pos(x + 0.5, y, z + 0.5);
             crystal.itemType = itemType;
+            crystal.serverType = ServerType.valueOf(doc.getString("serverType"));
 
             crystals.add(crystal);
         }
@@ -82,5 +83,6 @@ public class CrystalDatabase {
         public String url;
         public Pos position;
         public ItemType itemType;
+        public ServerType serverType;
     }
 }

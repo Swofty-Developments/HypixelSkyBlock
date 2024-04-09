@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class CrochetTigerPlushie implements CustomSkyBlockItem, Enchanted, PetItem, SkullHead, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -75,7 +75,6 @@ public class SkyBlockVelocity {
     private static RegisteredServer limboServer;
     @Getter
     private static boolean shouldAuthenticate = false;
-
     @Inject
     private ProxyServer proxy;
 
@@ -153,7 +152,6 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
         Player player = event.getPlayer();
-
         MinecraftVersion playerVersion = MinecraftVersion.byProtocolId(Via.getAPI().getPlayerVersion(player.getUniqueId()));
 
         if (!playerVersion.isMoreRecentThan(MinecraftVersion.MINECRAFT_1_20)){

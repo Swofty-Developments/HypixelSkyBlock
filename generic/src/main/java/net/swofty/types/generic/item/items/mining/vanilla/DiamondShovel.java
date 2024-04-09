@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DiamondShovel implements CustomSkyBlockItem, ShovelImpl, DefaultCraftable, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 30D)
                 .build();

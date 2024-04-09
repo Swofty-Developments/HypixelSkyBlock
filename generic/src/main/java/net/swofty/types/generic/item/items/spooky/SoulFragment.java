@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class SoulFragment implements CustomSkyBlockItem, SkullHead {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

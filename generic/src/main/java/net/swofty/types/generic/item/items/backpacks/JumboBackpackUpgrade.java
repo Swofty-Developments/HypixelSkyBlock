@@ -14,7 +14,7 @@ import java.util.List;
 
 public class JumboBackpackUpgrade implements CustomSkyBlockItem, SkullHead, Interactable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

@@ -7,5 +7,6 @@
   "spark": false,
   "require-authentication": false,
   "host-name": "0.0.0.0",
-  "transfer-timeout": "800"
+  "transfer-timeout": "800",
+  "sandbox-mode": true
 }

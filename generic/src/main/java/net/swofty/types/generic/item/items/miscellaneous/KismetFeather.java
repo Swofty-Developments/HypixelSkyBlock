@@ -11,7 +11,7 @@ import java.util.List;
 
 public class KismetFeather implements CustomSkyBlockItem, Enchanted {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
     @Override

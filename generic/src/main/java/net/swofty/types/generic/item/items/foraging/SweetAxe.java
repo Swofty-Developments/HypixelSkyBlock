@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class SweetAxe implements CustomSkyBlockItem, Reforgable, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 25D)
                 .build();

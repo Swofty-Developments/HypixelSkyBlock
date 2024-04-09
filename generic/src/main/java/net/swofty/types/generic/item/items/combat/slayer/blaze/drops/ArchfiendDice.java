@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class ArchfiendDice implements CustomSkyBlockItem, SkullHead, Unstackable, NotFinishedYet {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

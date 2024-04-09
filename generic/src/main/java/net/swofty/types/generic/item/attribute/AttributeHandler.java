@@ -32,6 +32,16 @@ public class AttributeHandler {
         return item.getGenericInstance() instanceof Enchanted;
     }
 
+    public @Nullable ItemAttributeSandboxItem.SandboxData getSandboxData() {
+        if (item.getGenericInstance() == null) return null;
+        return ((ItemAttributeSandboxItem) item.getAttribute("sandboxdata")).getValue();
+    }
+
+    public void setSandboxData(ItemAttributeSandboxItem.SandboxData data) {
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a sandbox item");
+        ((ItemAttributeSandboxItem) item.getAttribute("sandboxdata")).setValue(data);
+    }
+
     public boolean isPet() {
         return item.getGenericInstance() instanceof Pet;
     }

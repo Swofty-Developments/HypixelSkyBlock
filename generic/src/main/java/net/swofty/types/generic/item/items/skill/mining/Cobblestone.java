@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.skill.mining;
 
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkillableMine;
@@ -19,7 +20,7 @@ public class Cobblestone implements PlaceableCustomSkyBlockItem, SkillableMine, 
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
 

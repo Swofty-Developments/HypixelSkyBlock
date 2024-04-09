@@ -22,7 +22,7 @@ public class SpeedTalisman implements Talisman, ConstantStatistics {
     }
 
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.SPEED, 1D)
                 .build();

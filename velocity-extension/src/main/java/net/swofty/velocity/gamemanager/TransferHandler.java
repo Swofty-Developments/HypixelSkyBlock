@@ -29,7 +29,7 @@ public record TransferHandler(Player player) {
                 throw new RuntimeException(e);
             }
 
-            player.createConnectionRequest(server).fireAndForget();
+            player.createConnectionRequest(server).connectWithIndication();
         }).start();
     }
 }

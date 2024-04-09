@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class WoodenAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable, Sellable {
     @Override
-    public ItemStatistics getStatistics() {
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .with(ItemStatistic.DAMAGE, 10D)
                 .build();
