@@ -56,8 +56,8 @@ public class VillagerAndrew extends NPCVillagerDialogue {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Andrew§f: This game is still under heavy development",
-                                "§e[NPC] Andrew§f: don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!"
+                                "§e[NPC] Andrew§f: This game is still under heavy development.",
+                                "§e[NPC] Andrew§f: Don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!"
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
