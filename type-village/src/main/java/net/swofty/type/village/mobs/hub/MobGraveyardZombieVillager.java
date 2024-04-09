@@ -1,13 +1,8 @@
-package net.swofty.type.village.mobs;
+package net.swofty.type.village.mobs.hub;
 
-import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -26,20 +21,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
+public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
 
-    public MobRuinsWolfOld(EntityType entityType) {
+    public MobGraveyardZombieVillager(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Old Wolf";
+        return "Zombie Villager";
     }
 
     @Override
     public Integer getLevel() {
-        return 50;
+        return 1;
     }
 
     @Override
@@ -49,8 +44,8 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
                         1.6,
                         20,
                         TimeUnit.SERVER_TICK,
-                        RegionType.RUINS), // Attack the target
-                new RandomRegionStrollGoal(this, 15, RegionType.RUINS)  // Walk around
+                        RegionType.GRAVEYARD), // Attack the target
+                new RandomRegionStrollGoal(this, 15, RegionType.GRAVEYARD)  // Walk around
         );
     }
 
@@ -61,22 +56,22 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
                 new ClosestEntityRegionTarget(this,
                         16,
                         entity -> entity instanceof SkyBlockPlayer,
-                        RegionType.RUINS) // If there is none, target the nearest player
+                        RegionType.GRAVEYARD) // If there is none, target the nearest player
         );
     }
 
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 15000D)
-                .with(ItemStatistic.DAMAGE, 800D)
+                .with(ItemStatistic.HEALTH, 120D)
+                .with(ItemStatistic.DAMAGE, 24D)
                 .build();
     }
 
     @Override
     public List<MobDrop> getDrops() {
         return new ArrayList<>(List.of(
-                new MobDrop(20f, 1, 3, ItemType.BONE)
+                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
         ));
     }
 
@@ -91,9 +86,14 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
+    public long getxp() {
+        return 7;
+    }
+
+    @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
-                new Populator(RegionType.RUINS, 50)
+                new Populator(RegionType.GRAVEYARD, 50)
         );
     }
 }

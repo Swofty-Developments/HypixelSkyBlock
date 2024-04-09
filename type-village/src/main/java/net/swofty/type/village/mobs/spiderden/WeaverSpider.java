@@ -1,13 +1,8 @@
-package net.swofty.type.village.mobs;
+package net.swofty.type.village.mobs.spiderden;
 
-import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -26,20 +21,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
+public class WeaverSpider extends SkyBlockMob implements RegionPopulator {
 
-    public MobGraveyardZombieVillager(EntityType entityType) {
+    public WeaverSpider(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Zombie Villager";
+        return "Weaver Spider";
     }
 
     @Override
     public Integer getLevel() {
-        return 1;
+        return 3;
     }
 
     @Override
@@ -49,8 +44,8 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                         1.6,
                         20,
                         TimeUnit.SERVER_TICK,
-                        RegionType.GRAVEYARD), // Attack the target
-                new RandomRegionStrollGoal(this, 15, RegionType.GRAVEYARD)  // Walk around
+                        RegionType.RUINS), // Attack the target
+                new RandomRegionStrollGoal(this, 15, RegionType.SPIDERS_DEN)  // Walk around
         );
     }
 
@@ -61,22 +56,22 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                 new ClosestEntityRegionTarget(this,
                         16,
                         entity -> entity instanceof SkyBlockPlayer,
-                        RegionType.GRAVEYARD) // If there is none, target the nearest player
+                        RegionType.SPIDERS_DEN) // If there is none, target the nearest player
         );
     }
 
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 120D)
-                .with(ItemStatistic.DAMAGE, 24D)
+                .with(ItemStatistic.HEALTH, 160D)
+                .with(ItemStatistic.DAMAGE, 35D)
                 .build();
     }
 
     @Override
     public List<MobDrop> getDrops() {
         return new ArrayList<>(List.of(
-                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
+                new MobDrop(20f, 1, 3, ItemType.SPIDER_EYE)
         ));
     }
 
@@ -93,7 +88,12 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 50)
+                new Populator(RegionType.SPIDERS_DEN, 50)
         );
+    }
+
+    @Override
+    public long getxp() {
+        return 6;
     }
 }
