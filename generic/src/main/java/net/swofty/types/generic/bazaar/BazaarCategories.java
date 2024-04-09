@@ -87,7 +87,27 @@ public enum BazaarCategories {
             new BazaarItemSet(ItemType.LAPIS_LAZULI, "Dwarven Materials",
                     ItemType.MITHRIL, ItemType.ENCHANTED_MITHRIL, ItemType.REFINED_MITHRIL, ItemType.TITANIUM, ItemType.ENCHANTED_TITANIUM, ItemType.REFINED_TITANIUM, ItemType.ENCHANTED_MITHRIL, ItemType.STARFALL, ItemType.TREASURITE, ItemType.SORROW)
     ),
-    COMBAT(Material.IRON_SWORD, Material.RED_STAINED_GLASS_PANE, "§c"),
+    COMBAT(Material.IRON_SWORD, Material.RED_STAINED_GLASS_PANE,
+            "§c",
+            new BazaarItemSet(ItemType.ROTTEN_FLESH, "Rotten Flesh",
+                    ItemType.ROTTEN_FLESH, ItemType.ENCHANTED_ROTTEN_FLESH),
+            new BazaarItemSet(ItemType.BONE, "Bone",
+                    ItemType.BONE, ItemType.ENCHANTED_BONE, ItemType.ENCHANTED_BONE_BLOCK, ItemType.ENCHANTED_BONE_MEAL),
+            new BazaarItemSet(ItemType.STRING, "Arachnids",
+                    ItemType.STRING, ItemType.ENCHANTED_STRING, ItemType.SPIDER_EYE, ItemType.ENCHANTED_SPIDER_EYE, ItemType.ENCHANTED_FERMENTED_SPIDER_EYE, ItemType.SOUL_STRING),
+            new BazaarItemSet(ItemType.GUNPOWDER, "Gunpowder",
+                    ItemType.GUNPOWDER, ItemType.ENCHANTED_GUNPOWDER, ItemType.ENCHANTED_FIREWORK_ROCKET),
+            new BazaarItemSet(ItemType.ENDER_PEARL, "Ender Pearl",
+                    ItemType.ENDER_PEARL, ItemType.ENCHANTED_ENDER_PEARL, ItemType.ENCHANTED_EYE_OF_ENDER),
+            new BazaarItemSet(ItemType.GHAST_TEAR, "Ghast Tear",
+                    ItemType.GHAST_TEAR, ItemType.ENCHANTED_GHAST_TEAR),
+            new BazaarItemSet(ItemType.SLIME_BALL, "Slime Drops",
+                    ItemType.SLIME_BALL, ItemType.ENCHANTED_SLIMEBALL, ItemType.ENCHANTED_SLIME_BLOCK, ItemType.MAGMA_CREAM, ItemType.ENCHANTED_MAGMA_CREAM, ItemType.WHIPPED_MAGMA_CREAM),
+            new BazaarItemSet(ItemType.BLAZE_ROD, "Blaze Rod",
+                    ItemType.BLAZE_ROD, ItemType.ENCHANTED_BLAZE_POWDER, ItemType.ENCHANTED_BLAZE_ROD),
+            new BazaarItemSet(ItemType.FEATHER, "Mythological",
+                    ItemType.GRIFFIN_FEATHER, ItemType.DAEDALUS_STICK, ItemType.ANCIENT_CLAW, ItemType.ENCHANTED_ANCIENT_CLAW)
+    ),
     WOODS_AND_FISHES(Material.FISHING_ROD, Material.ORANGE_STAINED_GLASS_PANE, "§6"),
     ODDITIES(Material.ENCHANTING_TABLE, Material.PINK_STAINED_GLASS_PANE, "§d"),;
 
