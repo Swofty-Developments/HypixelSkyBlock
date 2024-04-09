@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ArchitectsFirstDraft implements CustomSkyBlockItem, NotFinishedYet {
+public class ArchitectsFirstDraft implements CustomSkyBlockItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
