@@ -1,16 +1,18 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCJimBob extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCJimBob extends NPCDialogue {
 
     public NPCJimBob() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Jim Bob", "§e§lCLICK"};
+                return new String[]{"Jim Bob", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +39,18 @@ public class NPCJimBob extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
-
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Have you seen Arthur's §eWheat Minion§f?",
+                                "I can hear that cow mooing all the way over here.",
+                                "I should have thought about that before buying this house!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

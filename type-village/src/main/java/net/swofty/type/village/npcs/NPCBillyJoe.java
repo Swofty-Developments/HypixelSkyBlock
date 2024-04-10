@@ -1,16 +1,19 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCBillyJoe extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBillyJoe extends NPCDialogue {
 
     public NPCBillyJoe() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Billy Joe", "§e§lCLICK"};
+                return new String[]{"Billy Joe", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +40,17 @@ public class NPCBillyJoe extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
-
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "You can hold as many §aAccessories §fas you want in your inventory. They will always work.",
+                                "If you have more then one of the same type of the Accessory in your inventory, §conly one §fwill work."
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

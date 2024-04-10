@@ -1,16 +1,18 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCGladiator extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCGladiator extends NPCDialogue {
 
     public NPCGladiator() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Gladiator", "§e§lCLICK"};
+                return new String[]{"§bGladiator", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +39,20 @@ public class NPCGladiator extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
 
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Welcome to the §bColosseum§f!",
+                                "Oh...wait. Nevermind.",
+                                "Here you can join me in drinking away your sorrows."
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

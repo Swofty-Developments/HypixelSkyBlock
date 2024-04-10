@@ -445,8 +445,8 @@ public enum ItemType {
      * Bows
      */
     FLINT_ARROW(Material.ARROW, Rarity.COMMON, Arrow.class),
-    WITHER_BOW(Material.BOW, Rarity.UNCOMMON),
-    ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE),
+    WITHER_BOW(Material.BOW, Rarity.UNCOMMON, WitherBow.class),
+    ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE, ArtisanalShortbow.class),
     BOW(Material.BOW, Rarity.COMMON, Bow.class),
 
     /**
