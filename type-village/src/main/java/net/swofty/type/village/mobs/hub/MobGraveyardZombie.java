@@ -1,13 +1,8 @@
-package net.swofty.type.village.mobs;
+package net.swofty.type.village.mobs.hub;
 
-import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -26,15 +21,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
+public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
 
-    public MobGraveyardZombieVillager(EntityType entityType) {
+    public MobGraveyardZombie(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Zombie Villager";
+        return "Graveyard Zombie";
     }
 
     @Override
@@ -68,8 +63,8 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 120D)
-                .with(ItemStatistic.DAMAGE, 24D)
+                .with(ItemStatistic.HEALTH, 100D)
+                .with(ItemStatistic.DAMAGE, 5D)
                 .build();
     }
 
@@ -88,6 +83,11 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public long damageCooldown() {
         return 500;
+    }
+
+    @Override
+    public long getxp() {
+        return 6;
     }
 
     @Override

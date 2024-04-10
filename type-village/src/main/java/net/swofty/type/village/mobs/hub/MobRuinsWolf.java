@@ -1,13 +1,8 @@
-package net.swofty.type.village.mobs;
+package net.swofty.type.village.mobs.hub;
 
-import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -95,5 +90,10 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
         return Arrays.asList(
                 new Populator(RegionType.RUINS, 50)
         );
+    }
+
+    @Override
+    public long getxp() {
+        return 10;
     }
 }

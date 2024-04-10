@@ -75,6 +75,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract List<MobDrop> getDrops();
     public abstract SkillCategories getSkillCategory();
     public abstract long damageCooldown();
+    public abstract long getxp();
 
     public record MobDrop(float chance, int min, int max, ItemType item) { }
 
@@ -122,7 +123,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + 7);
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getxp());
 
         if (getDrops().isEmpty()) return;
         if (getLastDamageSource() == null) return;

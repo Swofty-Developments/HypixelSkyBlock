@@ -430,6 +430,7 @@ public enum ItemType {
     HUNTER_KNIFE(Material.IRON_SWORD, Rarity.UNCOMMON, HunterKnife.class),
     PRISMARINE_BLADE(Material.PRISMARINE_SHARD, Rarity.UNCOMMON, PrismarineBlade.class),
     SILVER_FANG(Material.GHAST_TEAR, Rarity.UNCOMMON, SilverFang.class),
+    ASPECT_OF_THE_END(Material.DIAMOND_SWORD, Rarity.RARE, AspectOfTheEnd.class),
 
     /**
      * Shovels

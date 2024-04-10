@@ -58,4 +58,9 @@ public class MobSheep extends SkyBlockMob {
     public long damageCooldown() {
         return 200;
     }
+
+    @Override
+    public long getxp() {
+        return 0;
+    }
 }
