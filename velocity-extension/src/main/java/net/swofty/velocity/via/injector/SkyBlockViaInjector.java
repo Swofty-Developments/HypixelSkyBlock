@@ -79,8 +79,10 @@ public class SkyBlockViaInjector implements ViaInjector {
 
     public static int getLowestSupportedProtocolVersion() {
         try {
-            if (GET_PLAYER_INFO_FORWARDING_MODE != null && ((Enum<?>)GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration())).name().equals("MODERN")) {
-                return ProtocolVersion.v1_16.getVersion();
+            if (GET_PLAYER_INFO_FORWARDING_MODE != null
+                    && ((Enum<?>) GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration()))
+                    .name().equals("MODERN")) {
+                return ProtocolVersion.v1_13.getVersion();
             }
         } catch (InvocationTargetException | IllegalAccessException ignored) {}
 
