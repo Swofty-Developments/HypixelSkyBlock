@@ -51,9 +51,9 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
         return Collections.singletonList(
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
-                                "Hello there, I'm the blacksmith.",
-                                "I can repair your tools for a price.",
-                                "gergegeg"
+                                "§e[NPC] Blacksmith§f: I'm the town Blacksmith! I can §areforge §fitems for you, for a price.",
+                                "§e[NPC] Blacksmith§f: Reforging usually costs Coins, but since I'm feeling friendly I can reforge your first item for Coal x10.",
+                                "§e[NPC] Blacksmith§f: Go into the Mine to collect Coal, then come back to learn how to reforge items!"
                         }).build()
         ).stream().toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
