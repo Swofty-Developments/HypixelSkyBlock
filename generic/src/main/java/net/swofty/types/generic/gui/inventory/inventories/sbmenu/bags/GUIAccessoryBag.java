@@ -18,6 +18,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -206,13 +207,17 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         if (item.getMaterial().equals(Material.AIR)) return true;
         if (item.getGenericInstance() == null) return false;
 
-        DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
-        accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getItemTypeAsType());
+        if (item.getGenericInstance() instanceof Accessory) {
+            DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
+            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getItemTypeAsType());
 
-        getPlayer().getSkyBlockExperience().addExperience(
-                new NewAccessoryLevelCause(item.getAttributeHandler().getItemTypeAsType())
-        );
+            getPlayer().getSkyBlockExperience().addExperience(
+                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getItemTypeAsType())
+            );
 
-        return Accessory.class.isInstance(item.getGenericInstance());
+            return true;
+        } else {
+            return false;
+        }
     }
 }

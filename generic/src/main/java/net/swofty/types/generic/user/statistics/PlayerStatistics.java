@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.attribute.Attribute;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
@@ -292,6 +293,7 @@ public class PlayerStatistics {
         manaLoop();
         missionLoop();
         statisticsLoop();
+        speedLoop();
     }
 
     public static void barLoop() {
@@ -334,6 +336,19 @@ public class PlayerStatistics {
         });
     }
 
+    public static void speedLoop() {
+        Scheduler scheduler = MinecraftServer.getSchedulerManager();
+        scheduler.submitTask(() -> {
+            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                Thread.startVirtualThread(() -> {
+                    double speed = player.getStatistics().allStatistics().get(ItemStatistic.SPEED);
+                    player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
+                });
+            });
+            return TaskSchedule.tick(4);
+        });
+    }
+
     public static void healthLoop() {
         Scheduler scheduler = MinecraftServer.getSchedulerManager();
         scheduler.submitTask(() -> {
@@ -372,7 +387,7 @@ public class PlayerStatistics {
                     }
                     return;
                 }
-                MissionData.ActiveMission activeMission = activeMissions.get(0);
+                MissionData.ActiveMission activeMission = activeMissions.getFirst();
                 BossBar bar;
 
                 if (activeMission.isProgress()) {

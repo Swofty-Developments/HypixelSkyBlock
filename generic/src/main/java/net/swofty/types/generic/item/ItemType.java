@@ -38,6 +38,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
+import net.swofty.types.generic.item.items.minion.upgrade.BeeMinionSkin;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.*;
@@ -111,6 +112,8 @@ public enum ItemType {
     /**
      * Minions
      */
+    BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
+
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
     SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),

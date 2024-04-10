@@ -27,6 +27,37 @@ public class CrystalDatabase {
         return collection.find(Filters.eq("_id", key)).first();
     }
 
+    public static List<CrystalData> getFromAround(ServerType type, Pos pos, double distance) {
+        List<CrystalData> crystals = new ArrayList<>();
+        for (Document doc : collection.find()) {
+            if (ServerType.valueOf(doc.getString("serverType")) != type) {
+                continue;
+            }
+            int x = doc.getInteger("x");
+            int y = doc.getInteger("y");
+            int z = doc.getInteger("z");
+            if (pos.distance(new Pos(x, y, z)) <= distance) {
+                Integer id = doc.getInteger("_id");
+                String url = doc.getString("url");
+                Double x1 = doc.getDouble("x");
+                Double y1 = doc.getDouble("y");
+                Double z1 = doc.getDouble("z");
+                ItemType itemType = ItemType.valueOf(doc.getString("itemType"));
+                ServerType serverType = ServerType.valueOf(doc.getString("serverType"));
+
+                CrystalData crystal = new CrystalData();
+
+                crystal.url = url;
+                crystal.position = new Pos(x1 + 0.5, y1, z1 + 0.5);
+                crystal.itemType = itemType;
+                crystal.serverType = serverType;
+
+                crystals.add(crystal);
+            }
+        }
+        return crystals;
+    }
+
     public static void addCrystal(String url, Pos position, ItemType itemType) {
         Document doc = new Document();
         doc.append("_id", Math.toIntExact((collection.countDocuments() + 1)));

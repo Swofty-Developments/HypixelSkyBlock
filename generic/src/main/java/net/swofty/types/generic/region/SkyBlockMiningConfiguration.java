@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
@@ -22,7 +24,7 @@ public abstract class SkyBlockMiningConfiguration {
 
     public abstract MiningTask handleStageTwo(MiningTask task, Pos brokenBlock);
 
-    public abstract List<Material> getMineableBlocks();
+    public abstract List<Material> getMineableBlocks(Instance instance, Point point);
 
     public abstract long getRegenerationTime();
 

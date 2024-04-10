@@ -1,4 +1,4 @@
-package net.swofty.type.island.gui;
+package net.swofty.types.generic.gui.inventory.inventories;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -8,10 +8,10 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.inventories.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.MaterialQuantifiable;
@@ -20,10 +20,14 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.extension.MinionExtension;
+import net.swofty.types.generic.minion.extension.MinionExtensionData;
+import net.swofty.types.generic.minion.extension.MinionExtensions;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
@@ -43,6 +47,19 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        if (e.player().isCoop()) {
+            CoopDatabase.Coop coop = e.player().getCoop();
+            coop.getOnlineMembers().forEach(member -> {
+                if (member.getUuid() == e.player().getUuid()) return;
+
+                if (SkyBlockInventoryGUI.GUI_MAP.containsKey(member.getUuid())) {
+                    if (SkyBlockInventoryGUI.GUI_MAP.get(member.getUuid()) instanceof GUIMinion) {
+                        e.player().closeInventory();
+                        e.player().sendMessage("§cYou can't open this inventory while a coop member has it open!");
+                    }
+                }
+            });
+        }
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
 
         set(new GUIClickableItem(53) {
@@ -134,6 +151,14 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                                 "§e" + minionTiers.get(minion.getTier()).storage(),
                         " ",
                         "§eClick to view!");
+            }
+        });
+
+        MinionExtensionData extensionData = minion.getExtensionData();
+        Arrays.stream(MinionExtensions.values()).forEach(extensionValue -> {
+            for (int slot : extensionValue.getSlots()) {
+                MinionExtension minionExtension = extensionData.getMinionExtension(slot);
+                set(minionExtension.getDisplayItem(minion, slot));
             }
         });
 

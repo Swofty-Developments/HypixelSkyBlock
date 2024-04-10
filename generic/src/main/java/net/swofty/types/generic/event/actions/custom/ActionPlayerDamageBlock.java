@@ -42,7 +42,7 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
                 || region == null
                 || region.getType().getMiningHandler() == null
                 || Material.fromNamespaceId(player.getInstance().getBlock(e.getBlockPosition()).namespace()) == null
-                || !region.getType().getMiningHandler().getMineableBlocks().contains(
+                || !region.getType().getMiningHandler().getMineableBlocks(player.getInstance(), e.getBlockPosition()).contains(
                 Material.fromNamespaceId(player.getInstance().getBlock(e.getBlockPosition()).namespace()))
                 || player.getGameMode().equals(GameMode.CREATIVE)) {
 
