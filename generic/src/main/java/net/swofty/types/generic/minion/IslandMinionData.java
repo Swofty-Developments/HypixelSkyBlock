@@ -10,6 +10,7 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.user.SkyBlockIsland;
 
 import java.util.*;
@@ -30,7 +31,8 @@ public class IslandMinionData {
                 previousData.tier(), new ArrayList<>(),
                 previousData.generatedResources(),
                 System.currentTimeMillis(), null,
-                new MinionHandler.InternalMinionTags());
+                new MinionHandler.InternalMinionTags(),
+                new MinionExtensionData());
         minions.add(islandMinion);
         return islandMinion;
     }
@@ -52,6 +54,7 @@ public class IslandMinionData {
         private long lastAction;
         private MinionEntityImpl minionEntity;
         private MinionHandler.InternalMinionTags internalMinionTags;
+        private final MinionExtensionData extensionData;
 
         public void spawnMinion(SharedInstance instance) {
             minionEntity = new MinionEntityImpl(this, minion.asSkyBlockMinion());
@@ -113,6 +116,7 @@ public class IslandMinionData {
             data.put("tier", tier);
             data.put("generatedItems", generatedItems);
             data.put("minionUUID", minionUUID.toString());
+            data.put("extensionData", extensionData.toString());
             return data;
         }
 
@@ -124,6 +128,11 @@ public class IslandMinionData {
                         Integer.parseInt(item.split(",")[1])
                 ));
             });
+            MinionExtensionData extensionData;
+            if (data.containsKey("extensionData"))
+                extensionData = MinionExtensionData.fromString(data.get("extensionData").toString());
+            else
+                extensionData = new MinionExtensionData();
 
             return new IslandMinion(
                     UUID.fromString(data.get("minionUUID").toString()),
@@ -138,7 +147,8 @@ public class IslandMinionData {
                     (int) data.get("generatedItems"),
                     System.currentTimeMillis(),
                     null,
-                    new MinionHandler.InternalMinionTags()
+                    new MinionHandler.InternalMinionTags(),
+                    extensionData
             );
         }
     }

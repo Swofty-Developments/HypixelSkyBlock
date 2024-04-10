@@ -46,6 +46,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         this.setCustomNameVisible(true);
         this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(getBaseStatistics().get(ItemStatistic.SPEED).floatValue() / 1000);
         this.setHealth(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
@@ -99,15 +100,15 @@ public abstract class SkyBlockMob extends EntityCreature {
             double x = sourcePoint.x() - getPosition().x();
             double z = sourcePoint.z() - getPosition().z();
             double distance = Math.sqrt(x * x + z * z);
-            double knockback = 2;
-            setVelocity(new Vec(x / distance * knockback, 0.5, z / distance * knockback));
+            double knockback = -3;
+            setVelocity(new Vec(x / distance * knockback, 1, z / distance * knockback));
         }
 
         this.setCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
-                        + Math.round(getStatistics().get(ItemStatistic.HEALTH))
+                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
         ));
 
         return toReturn;

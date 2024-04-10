@@ -1,6 +1,8 @@
 package net.swofty.types.generic.region.mining.configurations;
 
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -37,7 +39,7 @@ public class MineCoalConfiguration extends SkyBlockMiningConfiguration {
     }
 
     @Override
-    public List<Material> getMineableBlocks() {
+    public List<Material> getMineableBlocks(Instance instance, Point point) {
         return List.of(Material.COAL_ORE, Material.COBBLESTONE, Material.STONE, Material.ANDESITE);
     }
 

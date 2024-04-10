@@ -52,7 +52,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         Material material = Material.fromNamespaceId(block.name());
         SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-        if (mining == null || material == null || !mining.getMineableBlocks().contains(material)) {
+        if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), playerBreakEvent.getBlockPosition()).contains(material)) {
             return;
         }
 

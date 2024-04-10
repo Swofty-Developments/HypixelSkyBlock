@@ -21,6 +21,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
                 .with(ItemStatistic.DAMAGE, 100D)
                 .with(ItemStatistic.HEALTH, 20D)
                 .with(ItemStatistic.DEFENSE, 30D)
+                .with(ItemStatistic.SPEED, 50D)
                 .build();
     }
 
