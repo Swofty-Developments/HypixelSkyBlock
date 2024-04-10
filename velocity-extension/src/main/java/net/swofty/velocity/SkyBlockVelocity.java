@@ -160,7 +160,6 @@ public class SkyBlockVelocity {
                             .append(Component.newline())
                             .append(Component.text("§aPlease update your Minecraft client to versions 1.20."))
             );
-
             return;
         }
 

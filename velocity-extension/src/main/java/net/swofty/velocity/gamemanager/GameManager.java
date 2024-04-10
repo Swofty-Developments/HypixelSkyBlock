@@ -62,6 +62,14 @@ public class GameManager {
 
     public static void loopServers(ProxyServer server) {
         server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
+            server.getAllPlayers().forEach(player -> {
+                if (player.getCurrentServer().isPresent() &&
+                        player.getCurrentServer().get().getServer() == SkyBlockVelocity.getLimboServer() &&
+                        !TransferHandler.playersInLimbo.contains(player)) {
+                    new TransferHandler(player).transferTo(getFromType(ServerType.ISLAND).getFirst().server());
+                }
+            });
+
             servers.forEach((serverType, registeredServers) -> {
                 registeredServers.forEach(registeredServer -> {
                     RegisteredServer givenServer = registeredServer.server();
