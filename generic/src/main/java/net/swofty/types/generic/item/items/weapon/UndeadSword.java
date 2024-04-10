@@ -22,10 +22,8 @@ public class UndeadSword implements CustomSkyBlockItem, StandardItem, NotFinishe
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "Deals §a+100% §7damage to",
-                "Zombie Pigmen,",
-                "Skeletons, Withers, and",
-                "Zombies."
+                "Deals §a+100% §7damage to Zombies,",
+                "Skeletons, Zombie Pigmen, and Withers."
         ));
     }
 
