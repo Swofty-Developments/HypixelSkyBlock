@@ -2,10 +2,13 @@ package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.types.generic.mission.MissionData;
 
-public class VillagerAndrew extends SkyBlockVillagerNPC {
+import java.util.stream.Stream;
+
+public class VillagerAndrew extends NPCVillagerDialogue {
     public VillagerAndrew() {
         super(new NPCVillagerParameters() {
             @Override
@@ -25,13 +28,37 @@ public class VillagerAndrew extends SkyBlockVillagerNPC {
 
             @Override
             public VillagerMeta.Profession profession() {
-                return VillagerMeta.Profession.LIBRARIAN;
+                return VillagerMeta.Profession.NONE;
             }
         });
     }
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        e.player().sendMessage("§e[NPC] Andrew§f: This game is still under heavy development, don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!");
+        if (isInDialogue(e.player())) return;
+
+        MissionData data = e.player().getMissionData();
+        if (data.isCurrentlyActive("speak_to_villagers")) {
+            if (data.getMission("speak_to_villagers").getKey().getCustomData()
+                    .values()
+                    .stream()
+                    .anyMatch(value -> value.toString().contains(getID()))) {
+                if (System.currentTimeMillis() -
+                        (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
+                    setDialogue(e.player(), "quest-hello");
+                }
+            }
+        }
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                                "§e[NPC] Andrew§f: This game is still under heavy development.",
+                                "§e[NPC] Andrew§f: Don't forget to check the §adiscord (discord.gg/atlasmc) §foften for updates!"
+                        }).build()
+        ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }
 }

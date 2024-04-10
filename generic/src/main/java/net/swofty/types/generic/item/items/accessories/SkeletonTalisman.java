@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.entity.EntityType;
+import net.swofty.types.generic.event.actions.player.PlayerActionDamageMob;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;

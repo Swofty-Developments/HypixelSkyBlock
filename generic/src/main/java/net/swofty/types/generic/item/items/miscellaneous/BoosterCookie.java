@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, Unstackable, NotFinishedYet {
@@ -17,8 +17,8 @@ public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchante
     }
 
     @Override
-    public List<String> getAbsoluteLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return Arrays.asList(
+    public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(List.of(
                 "§7Consume to gain the §dCookie",
                 "§dBuff §7for §b4 §7days:",
                 "§7▸ Ability to gain §bBits§7!",
@@ -31,12 +31,7 @@ public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchante
                 "§7▸ Sell items directly to the trades and cookie menu",
                 "§7▸ AFK §aimmunity §7on your island",
                 "§7▸ Toggle specific §dpotion effects"
-        );
-    }
-
-    @Override
-    public String getAbsoluteName(SkyBlockPlayer player, SkyBlockItem item) {
-        return "§6Booster Cookie";
+        ));
     }
 
     @Override

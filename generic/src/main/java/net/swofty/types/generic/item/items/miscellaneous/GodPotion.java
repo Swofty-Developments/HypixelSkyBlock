@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GodPotion implements CustomSkyBlockItem, SkullHead, Interactable, NotFinishedYet {
@@ -24,8 +24,8 @@ public class GodPotion implements CustomSkyBlockItem, SkullHead, Interactable, N
     }
 
     @Override
-    public List<String> getAbsoluteLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return Arrays.asList(
+    public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(List.of(
                 "§7Consume this potion to receive an",
                 "§7assortment of positive §dpotion",
                 "§deffects§7!",
@@ -34,6 +34,6 @@ public class GodPotion implements CustomSkyBlockItem, SkullHead, Interactable, N
                 "§a12 hours §7+ §a0 hours §7(§bAlchemy Level§7)",
                 "",
                 "§eRight-click to consume."
-        );
+        ));
     }
 }
