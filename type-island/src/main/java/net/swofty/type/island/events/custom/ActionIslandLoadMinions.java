@@ -61,7 +61,8 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
             if (minionFuel != null) {
                 double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-                timeBetweenActions = (long) (timeBetweenActions * (1 - percentageSpeedIncrease));
+                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+                timeBetweenActions = (long) (timeBetweenActions / (percentageSpeedIncrease / 100));
             }
 
             int amountOfActions = Math.round((float) (currentTime - lastSaved) / (timeBetweenActions * 1000L));
