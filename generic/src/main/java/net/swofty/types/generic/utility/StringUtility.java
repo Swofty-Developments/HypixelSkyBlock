@@ -8,7 +8,6 @@ import net.minestom.server.item.Material;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +88,7 @@ public class StringUtility {
         return String.valueOf(number); // Fallback, should not be reached
     }
 
-    public static String formatTime(long millis) {
+    public static String formatTimeLeft(long millis) {
         StringBuilder sb = new StringBuilder();
         long days = TimeUnit.MILLISECONDS.toDays(millis);
         long hours = TimeUnit.MILLISECONDS.toHours(millis % TimeUnit.DAYS.toMillis(1));
@@ -138,7 +137,7 @@ public class StringUtility {
     }
 
     public static String getAuctionSetupFormattedTime(long millis) {
-        return formatTime(millis).replaceAll(" ", "")
+        return formatTimeLeft(millis).replaceAll(" ", "")
                 .replaceAll("s$", "");
     }
 

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.minion.upgrade;
+package net.swofty.types.generic.item.items.minion.upgrade.skin;
 
 import net.minestom.server.color.Color;
 import net.minestom.server.item.ItemStack;

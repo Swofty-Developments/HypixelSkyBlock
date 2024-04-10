@@ -1,13 +1,18 @@
 package net.swofty.types.generic.item.items.skill.mining;
 
+import com.mongodb.lang.Nullable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkillableMine;
 import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable {
+import java.util.List;
+
+public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, MinionFuelItem {
 
     @Override
     public SkillCategories getSkillCategory() {
@@ -20,6 +25,13 @@ public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable {
     }
 
     @Override
+    public List<String> getLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return List.of("§7Increases the speed of",
+                "§7your minion by §a5% §7for 30",
+                "§7minutes.");
+    }
+
+    @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
     }
@@ -27,5 +39,15 @@ public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable {
     @Override
     public double getSellValue() {
         return 2;
+    }
+
+    @Override
+    public double getMinionFuelPercentage() {
+        return 5;
+    }
+
+    @Override
+    public long getFuelLastTimeInMS() {
+        return 1800000; // 30 Minutes
     }
 }

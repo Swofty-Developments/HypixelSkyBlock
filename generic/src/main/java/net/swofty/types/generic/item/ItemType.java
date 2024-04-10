@@ -38,7 +38,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
-import net.swofty.types.generic.item.items.minion.upgrade.BeeMinionSkin;
+import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.*;
