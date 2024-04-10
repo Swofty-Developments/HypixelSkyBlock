@@ -37,7 +37,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cNot yet implemented");
+                new GUISkyBlockProfile().open(player);
             }
 
             @Override
