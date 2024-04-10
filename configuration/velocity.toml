@@ -16,7 +16,7 @@ show-max-players = 500
 online-mode = true
 
 # Should the proxy enforce the new public key security standard? By default, this is on.
-force-key-authentication = true
+force-key-authentication = false
 
 # If client's ISP/AS sent from this proxy is different from the one from Mojang's
 # authentication server, the player is kicked. This disallows some VPN and proxy
