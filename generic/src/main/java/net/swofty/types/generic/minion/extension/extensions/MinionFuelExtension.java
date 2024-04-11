@@ -132,11 +132,18 @@ public class MinionFuelExtension extends MinionExtension {
 
     @Override
     public String toString() {
+        if (getItemTypePassedIn() == null) {
+            return "null";
+        }
         return getItemTypePassedIn().toString() + ":" + insertionTime;
     }
 
     @Override
     public void fromString(String string) {
+        if (string.equals("null")) {
+            setItemTypePassedIn(null);
+            return;
+        }
         String[] split = string.split(":");
         setItemTypePassedIn(ItemType.valueOf(split[0]));
         insertionTime = Long.parseLong(split[1]);

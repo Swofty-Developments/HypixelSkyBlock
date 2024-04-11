@@ -188,6 +188,14 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             return;
         }
 
+        MinionExtensionData extensionData = minion.getExtensionData();
+        Arrays.stream(MinionExtensions.values()).forEach(extensionValue -> {
+            for (int slot : extensionValue.getSlots()) {
+                MinionExtension minionExtension = extensionData.getMinionExtension(slot);
+                set(minionExtension.getDisplayItem(minion, slot));
+            }
+        });
+
         SkyBlockMinion.MinionTier minionTier = minion.getMinion().asSkyBlockMinion().getTiers().get(
                 minion.getTier() - 1
         );

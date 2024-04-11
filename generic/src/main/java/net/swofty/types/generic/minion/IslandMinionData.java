@@ -66,14 +66,14 @@ public class IslandMinionData {
             minionEntity.remove();
         }
 
-        public void addItem(SkyBlockItem item) {
+        public boolean addItem(SkyBlockItem item) {
             int slots = minion.asSkyBlockMinion().getTiers().get(getTier() - 1).getSlots();
             // Calculate the total number of items in minion as if they were in stacks of 64.
             int totalItemsInStacks = itemsInMinion.stream().mapToInt(materialQuantifiable -> materialQuantifiable.getAmount()).sum();
 
             // Check if adding the new item would exceed the total slot capacity (slots * 64).
             if ((totalItemsInStacks + item.getAmount()) > (slots * 64)) {
-                return; // Do not add the item if it exceeds capacity.
+                return false; // Do not add the item if it exceeds capacity.
             }
 
             // Increment the generatedItems counter by the amount of the new item.
@@ -91,6 +91,7 @@ public class IslandMinionData {
                 // If the item does not exist, add it as a new entry.
                 itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
             }
+            return true;
         }
 
         public SkyBlockItem asSkyBlockItem() {

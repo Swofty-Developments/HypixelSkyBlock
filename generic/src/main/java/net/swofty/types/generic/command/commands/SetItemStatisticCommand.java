@@ -47,6 +47,11 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                 double amt = context.get(amount);
                 double cap = 0;
 
+                if (amt < 1) {
+                    player.sendMessage("§cThe amount must be greater than 0.");
+                    return;
+                }
+
                 if (stat.getSuffix().contains("%")) {
                     cap = 5;
                 } else {

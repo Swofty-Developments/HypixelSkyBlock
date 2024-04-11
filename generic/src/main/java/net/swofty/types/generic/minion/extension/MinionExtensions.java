@@ -2,12 +2,14 @@ package net.swofty.types.generic.minion.extension;
 
 import lombok.Getter;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionSkinExtension;
 
 @Getter
 public enum MinionExtensions {
     SKIN_SLOT(MinionSkinExtension.class, 10),
     FUEL_SLOT(MinionFuelExtension.class, 19),
+    SHIPPING_SLOT(MinionShippingExtension.class, 28),
     ;
 
     private final Class<? extends MinionExtension> instance;

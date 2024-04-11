@@ -2,16 +2,11 @@ package net.swofty.types.generic.minion;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.Material;
-import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.item.ItemType;
@@ -20,9 +15,8 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
 import net.swofty.types.generic.utility.MathUtility;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +52,7 @@ public record MinionHandler(Scheduler scheduler) {
             if (minionFuel != null) {
                 double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
                 // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
-                timeBetweenActions = (long) (timeBetweenActions / (percentageSpeedIncrease / 100));
+                timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
             }
 
             if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;
@@ -87,7 +81,8 @@ public record MinionHandler(Scheduler scheduler) {
 
             if (!allBlocksMeetExpectations) {
                 // To not overload with replacing holograms if not needed
-                if (tags.getState() == InternalMinionTags.State.NOT_PERFECT) return;
+                if (tags.getState() == InternalMinionTags.State.BAD_FULL) return;
+                if (tags.getState() == InternalMinionTags.State.BAD_LOCATION) return;
 
                 if (tags.getAssociatedHologram() != null) {
                     ServerHolograms.removeExternalHologram(tags.getAssociatedHologram());
@@ -99,7 +94,7 @@ public record MinionHandler(Scheduler scheduler) {
                         .text(new String[]{"§c>!<", "§cThis location isn't perfect! :("})
                         .build();
 
-                tags.setState(InternalMinionTags.State.NOT_PERFECT);
+                tags.setState(InternalMinionTags.State.BAD_LOCATION);
                 tags.setAssociatedHologram(hologram);
                 ServerHolograms.addExternalHologram(hologram);
                 return;
@@ -110,9 +105,10 @@ public record MinionHandler(Scheduler scheduler) {
             if (itemsInMinion.size() == tier.getSlots() && action.checkMaterials(
                     islandMinion,
                     instance
-            )) {
+            ) && extensionData.getOfType(MinionShippingExtension.class).getItemTypePassedIn() == null) {
                 // To not overload with replacing holograms if not needed
-                if (tags.getState() == InternalMinionTags.State.NOT_PERFECT) return;
+                if (tags.getState() == InternalMinionTags.State.BAD_FULL) return;
+                if (tags.getState() == InternalMinionTags.State.BAD_LOCATION) return;
 
                 if (tags.getAssociatedHologram() != null) {
                     ServerHolograms.removeExternalHologram(tags.getAssociatedHologram());
@@ -124,14 +120,15 @@ public record MinionHandler(Scheduler scheduler) {
                         .text(new String[]{"§c>!<", "§cMy storage is full! :("})
                         .build();
 
-                tags.setState(InternalMinionTags.State.NOT_PERFECT);
+                tags.setState(InternalMinionTags.State.BAD_FULL);
                 tags.setAssociatedHologram(hologram);
                 ServerHolograms.addExternalHologram(hologram);
                 return;
             }
 
             // If the minion is in a perfect location, remove any previous not perfect holograms
-            if (tags.getState() == InternalMinionTags.State.NOT_PERFECT) {
+            if (tags.getState() == InternalMinionTags.State.BAD_LOCATION ||
+                    tags.getState() == InternalMinionTags.State.BAD_FULL) {
                 ServerHolograms.removeExternalHologram(tags.getAssociatedHologram());
                 tags.setState(InternalMinionTags.State.IDLE);
             }
@@ -189,7 +186,8 @@ public record MinionHandler(Scheduler scheduler) {
 
         public enum State {
             IDLE,
-            NOT_PERFECT,
+            BAD_FULL,
+            BAD_LOCATION,
             ROTATING
         }
     }
