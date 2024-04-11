@@ -3,11 +3,8 @@ package net.swofty.type.village.npcs;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.village.gui.GUIShopBea;
-import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
 import java.util.stream.Stream;
 

@@ -25,6 +25,7 @@ public class GUIJerry extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUIPatchNotes().open(player);
             }
 
             @Override
