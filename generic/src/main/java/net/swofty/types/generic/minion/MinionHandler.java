@@ -14,8 +14,12 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.minion.extension.MinionExtensionData;
+import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 import org.tinylog.Logger;
@@ -47,8 +51,15 @@ public record MinionHandler(Scheduler scheduler) {
             Instance instance = minionEntity.getInstance();
             MinionAction action = minion.getAction();
             SkyBlockMinion.MinionTier tier = minion.getTiers().get(islandMinion.getTier() - 1);
-            long timeBetweenActions = tier.timeBetweenActions() * 1000L;
             long lastAction = islandMinion.getLastAction();
+            MinionExtensionData extensionData = islandMinion.getExtensionData();
+            long timeBetweenActions = tier.timeBetweenActions() * 1000L;
+            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+            if (minionFuel != null) {
+                double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
+                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+                timeBetweenActions = (long) (timeBetweenActions / (percentageSpeedIncrease / 100));
+            }
 
             if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;
 

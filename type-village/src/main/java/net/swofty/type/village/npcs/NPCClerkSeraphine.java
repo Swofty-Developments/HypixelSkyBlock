@@ -1,16 +1,18 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCClerkSeraphine extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCClerkSeraphine extends NPCDialogue {
 
     public NPCClerkSeraphine() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Clerk Seraphine", "§e§lCLICK"};
+                return new String[]{"Clerk Seraphine", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +39,19 @@ public class NPCClerkSeraphine extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Welcome to the §bCommunity Center§f!",
+                                "Contribute to community projects, upgrade your account, and more by talking to §dElizabeth§f!",
+                                "You can also vote in the §bmayor elections §fby heading through the warp upstairs!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

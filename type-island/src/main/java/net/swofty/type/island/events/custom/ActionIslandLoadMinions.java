@@ -9,10 +9,14 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.extension.MinionExtensionData;
+import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
 
@@ -51,8 +55,16 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
         minionData.getMinions().forEach((data) -> {
             int tierIndex = data.getTier();
             SkyBlockMinion.MinionTier tier = data.getMinion().asSkyBlockMinion().getTiers().get(tierIndex - 1);
+            MinionExtensionData extensionData = data.getExtensionData();
 
             long timeBetweenActions = tier.timeBetweenActions();
+            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+            if (minionFuel != null) {
+                double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
+                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+                timeBetweenActions = (long) (timeBetweenActions / (percentageSpeedIncrease / 100));
+            }
+
             int amountOfActions = Math.round((float) (currentTime - lastSaved) / (timeBetweenActions * 1000L));
 
             data.spawnMinion(event.getIsland().getIslandInstance());

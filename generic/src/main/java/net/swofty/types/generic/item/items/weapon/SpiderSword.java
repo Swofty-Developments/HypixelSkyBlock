@@ -22,9 +22,8 @@ public class SpiderSword implements CustomSkyBlockItem, StandardItem, NotFinishe
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "Deals §a+100% §7damage to",
-                "Spiders, Cave Spiders,",
-                "and Sliverfish."
+                "Deals §a+100% §7damage to Cave Spiders,",
+                "Spiders, and Sliverfish."
         ));
     }
 

@@ -38,7 +38,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
-import net.swofty.types.generic.item.items.minion.upgrade.BeeMinionSkin;
+import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.*;
@@ -448,8 +448,8 @@ public enum ItemType {
      * Bows
      */
     FLINT_ARROW(Material.ARROW, Rarity.COMMON, Arrow.class),
-    WITHER_BOW(Material.BOW, Rarity.UNCOMMON),
-    ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE),
+    WITHER_BOW(Material.BOW, Rarity.UNCOMMON, WitherBow.class),
+    ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE, ArtisanalShortbow.class),
     BOW(Material.BOW, Rarity.COMMON, Bow.class),
 
     /**

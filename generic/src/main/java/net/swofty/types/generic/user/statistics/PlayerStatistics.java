@@ -45,6 +45,7 @@ public class PlayerStatistics {
     @Getter
     private double manaRegenerationPercentBonus;
     private ItemStatistics accessoryStatistics = ItemStatistics.builder().build();
+    private final List<TemporaryStatistic> temporaryStatistics = Collections.synchronizedList(new ArrayList<>());
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -146,6 +147,7 @@ public class PlayerStatistics {
         total = total.add(allArmorStatistics(causer, enemy));
         total = total.add(mainHandStatistics(causer, enemy));
         total = total.add(spareStatistics());
+        total = total.add(getTemporaryStatistics());
         total = total.add(petStatistics());
         total = total.add(accessoryStatistics);
 
@@ -232,6 +234,21 @@ public class PlayerStatistics {
         return statistics;
     }
 
+    private ItemStatistics getTemporaryStatistics() {
+        ItemStatistics statistics = ItemStatistics.builder().build();
+
+        synchronized (temporaryStatistics) {
+            temporaryStatistics.removeIf(temporaryStatistic -> temporaryStatistic.getExpiration() < System.currentTimeMillis());
+            for (TemporaryStatistic temporaryStatistic : temporaryStatistics) {
+                statistics = statistics.add(ItemStatistics.builder()
+                        .with(temporaryStatistic.getStatistic(), temporaryStatistic.getValue())
+                        .build());
+            }
+
+            return statistics;
+        }
+    }
+
     private ItemStatistics getGemstoneStatistics(SkyBlockItem item, ItemStatistics statistics) {
         for (ItemStatistic statistic : ItemStatistic.values()) {
             int extra = Gemstone.getExtraStatisticFromGemstone(statistic, item);
@@ -277,6 +294,10 @@ public class PlayerStatistics {
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             manaRegenerationPercentBonus -= percent;
         }, TaskSchedule.tick(ticks), TaskSchedule.stop());
+    }
+
+    public void boostStatistic(TemporaryStatistic temporaryStatistic) {
+        temporaryStatistics.add(temporaryStatistic);
     }
 
     public void boostHealthRegeneration(double percent, int ticks) {
