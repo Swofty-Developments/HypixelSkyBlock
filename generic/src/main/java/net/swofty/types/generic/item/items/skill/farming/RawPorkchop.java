@@ -8,7 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class RawPorkchop implements CustomSkyBlockItem, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

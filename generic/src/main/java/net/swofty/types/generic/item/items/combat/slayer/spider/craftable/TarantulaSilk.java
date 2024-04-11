@@ -23,7 +23,7 @@ public class TarantulaSilk implements CustomSkyBlockItem, Sellable, DefaultCraft
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

@@ -8,6 +8,6 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class DerelictAshe implements CustomSkyBlockItem, Enchanted {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }

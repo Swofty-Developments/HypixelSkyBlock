@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Sellable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

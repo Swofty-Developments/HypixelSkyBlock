@@ -26,6 +26,6 @@ public class CraftingTable implements PlaceableCustomSkyBlockItem, DefaultCrafta
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }

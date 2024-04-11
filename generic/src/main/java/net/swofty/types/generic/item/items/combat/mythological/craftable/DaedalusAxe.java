@@ -28,7 +28,7 @@ public class DaedalusAxe implements CustomSkyBlockItem, DefaultCraftable, Gemsto
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

@@ -29,7 +29,7 @@ public class TessellatedEnderPearl implements CustomSkyBlockItem, SkullHead, Def
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

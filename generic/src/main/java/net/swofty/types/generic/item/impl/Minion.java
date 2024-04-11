@@ -111,7 +111,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
     @Override
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

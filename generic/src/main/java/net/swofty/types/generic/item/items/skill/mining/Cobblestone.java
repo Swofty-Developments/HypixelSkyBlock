@@ -21,7 +21,7 @@ public class Cobblestone implements PlaceableCustomSkyBlockItem, SkillableMine, 
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

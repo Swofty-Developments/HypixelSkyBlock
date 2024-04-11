@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class BundleOfMagmaArrows implements CustomSkyBlockItem, SkullHead, Sellable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

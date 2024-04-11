@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class WilsonEngineeringPlans implements CustomSkyBlockItem, Unstackable, Enchanted {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

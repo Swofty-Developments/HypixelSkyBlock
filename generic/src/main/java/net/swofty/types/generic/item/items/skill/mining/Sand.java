@@ -21,7 +21,7 @@ public class Sand implements CustomSkyBlockItem, SkillableMine, Sellable {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

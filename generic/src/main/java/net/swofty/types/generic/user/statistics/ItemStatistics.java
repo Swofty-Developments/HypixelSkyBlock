@@ -21,6 +21,8 @@ public class ItemStatistics {
         return new ItemStatisticsBuilder();
     }
 
+    public static ItemStatistics empty() { return ItemStatistics.builder().build(); }
+
     public ItemStatistics clone() {
         return new ItemStatistics(new EnumMap<>(this.statistics));
     }

@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class Volta implements CustomSkyBlockItem, Sellable, SkullHead, ExtraUnderNameDisplay {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

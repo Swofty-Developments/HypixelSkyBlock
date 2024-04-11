@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ArchitectsFirstDraft implements CustomSkyBlockItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {

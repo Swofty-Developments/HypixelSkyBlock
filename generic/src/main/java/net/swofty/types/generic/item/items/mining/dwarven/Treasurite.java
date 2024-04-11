@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class Treasurite implements CustomSkyBlockItem, SkullHead {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override
