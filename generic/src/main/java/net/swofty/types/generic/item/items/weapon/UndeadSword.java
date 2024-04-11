@@ -5,6 +5,7 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
@@ -45,7 +46,10 @@ public class UndeadSword extends SkyBlockValueEvent implements CustomSkyBlockIte
     @Override
     public void run(ValueUpdateEvent tempEvent) {
         PlayerDamageMobValueUpdateEvent event = (PlayerDamageMobValueUpdateEvent) tempEvent;
-
+        SkyBlockPlayer player = event.getPlayer();
+        SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
+        if(item.isNA() || item.isAir()) return;
+        if(item.getAttributeHandler().getItemTypeAsType() != ItemType.UNDEAD_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.ZOMBIE || event.getMob().getEntityType() == EntityType.ZOMBIFIED_PIGLIN || event.getMob().getEntityType() == EntityType.SKELETON || event.getMob().getEntityType() == EntityType.WITHER_SKELETON) {
             event.setValue((((float) event.getValue()) *2));
         }
