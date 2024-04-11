@@ -6,16 +6,12 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
-import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.TemporaryStatistic;
-import net.swofty.types.generic.utility.ChatColor;
 
 import java.util.List;
 
@@ -27,7 +23,7 @@ public class AspectOfTheEnd implements CustomSkyBlockItem, CustomSkyBlockAbility
 
     @Override
     public String getAbilityDescription() {
-        return "Teleports you " + ChatColor.GREEN + "8 blocks " + ChatColor.GRAY + "ahead and gain " + ChatColor.GREEN + "+50 " + ChatColor.WHITE + "✦ " + ChatColor.WHITE + "Speed " + ChatColor.GRAY + "for " + ChatColor.GREEN + "3 seconds.";
+        return "Teleports you §a8 blocks §7ahead and gain §a+50 §f✦ Speed §7for §a3 seconds.";
     }
 
     @Override
