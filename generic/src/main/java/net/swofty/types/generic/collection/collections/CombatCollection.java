@@ -250,6 +250,19 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
+                                List<String> pattern = List.of(
+                                        "A",
+                                        "A",
+                                        "B");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.COMBAT, new SkyBlockItem(ItemType.ASPECT_OF_THE_END), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
                             @Override
