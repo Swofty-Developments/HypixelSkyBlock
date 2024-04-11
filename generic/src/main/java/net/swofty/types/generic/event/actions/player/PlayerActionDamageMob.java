@@ -5,11 +5,15 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.event.value.SkyBlockValueEvent;
+import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
+import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.event.EventNodes;
@@ -48,8 +52,13 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         double damage = hit.getKey();
         boolean critical = hit.getValue();
 
+        PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(
+                (SkyBlockPlayer) event.getTarget(), hit, mob);
+        SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
+        ((SkyBlockPlayer) event.getEntity()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+
         new DamageIndicator()
-                .damage((float) damage)
+                .damage((float) valueEvent.getValue())
                 .pos(targetEntity.getPosition())
                 .critical(critical)
                 .display(targetEntity.getInstance());

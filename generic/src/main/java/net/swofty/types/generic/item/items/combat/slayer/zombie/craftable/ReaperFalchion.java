@@ -52,7 +52,6 @@ public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, Sta
                 new GemstoneItemSlot(Gemstone.Slots.JASPER, 50000)
         );
     }
-
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;
