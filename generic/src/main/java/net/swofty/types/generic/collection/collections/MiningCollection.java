@@ -1166,7 +1166,7 @@ public class MiningCollection extends CollectionCategory {
                                         "ABA",
                                         " A ");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.SUPER_COMPACTOR_3000), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.ENCHANTED_HOPPER), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
