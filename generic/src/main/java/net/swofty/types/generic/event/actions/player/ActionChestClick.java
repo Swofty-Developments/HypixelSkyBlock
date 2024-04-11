@@ -4,11 +4,10 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.block.Block;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.gui.inventory.GUIChest;
+import net.swofty.types.generic.gui.inventory.inventories.GUIChest;
 import net.swofty.types.generic.item.ChestImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -32,9 +31,6 @@ public class ActionChestClick extends SkyBlockEvent {
         Point position = event.getBlockPosition();
 
         ChestImpl chest = new ChestImpl(instance, position);
-
         new GUIChest(chest).open(player);
-
-
     }
 }

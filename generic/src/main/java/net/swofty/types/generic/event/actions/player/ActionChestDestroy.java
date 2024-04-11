@@ -31,9 +31,6 @@ public class ActionChestDestroy extends SkyBlockEvent {
         Point position = event.getBlockPosition();
 
         ChestImpl chest = new ChestImpl(instance, position);
-
         chest.getItemsList().forEach(player::addAndUpdateItem);
-
-
     }
 }

@@ -1,9 +1,11 @@
-package net.swofty.types.generic.gui.inventory;
+package net.swofty.types.generic.gui.inventory.inventories;
 
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ChestImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -48,8 +50,5 @@ public class GUIChest extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
-    }
-
+    public void onBottomClick(InventoryPreClickEvent e) {}
 }
