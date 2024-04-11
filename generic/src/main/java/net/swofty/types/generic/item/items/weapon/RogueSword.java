@@ -5,10 +5,11 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.user.statistics.TemporaryStatistic;
 
 import java.util.ArrayList;
 
-public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, NotFinishedYet {
+public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
@@ -33,7 +34,11 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
 
     @Override
     public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
-        player.sendMessage("Will add the speed ability later!");
+        player.getStatistics().boostStatistic(TemporaryStatistic.builder()
+                .withStatistic(ItemStatistic.SPEED)
+                .withValue(100D)
+                .withExpirationInTicks(30 * 20)
+                .build());
     }
 
     @Override
