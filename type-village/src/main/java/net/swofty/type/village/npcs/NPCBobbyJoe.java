@@ -1,16 +1,18 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCBobbyJoe extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBobbyJoe extends NPCDialogue {
 
     public NPCBobbyJoe() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Bobby Joe", "§e§lCLICK"};
+                return new String[]{"Bobby Joe", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +39,19 @@ public class NPCBobbyJoe extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Darn it! where did I leave my belongings? Those §dFairies §fmust be upto no good.",
+                                "WELCOME! Plenty of room here for all of your needs!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 
 }

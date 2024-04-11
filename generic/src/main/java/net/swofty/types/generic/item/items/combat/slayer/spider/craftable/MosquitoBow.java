@@ -53,7 +53,5 @@ public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
     }
 
     @Override
-    public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {
-
-    }
+    public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {}
 }

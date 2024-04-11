@@ -1,16 +1,18 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCMinikloon extends SkyBlockNPC {
+import java.util.stream.Stream;
 
-    public NPCMinikloon() {
+public class NPCSwofty extends NPCDialogue {
+
+    public NPCSwofty() {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Minikloon", "§e§lCLICK"};
+                return new String[]{"§cSwofty", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +39,18 @@ public class NPCMinikloon extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Don't forget to report the bugs on discord.gg/atlasmc!",
+                                "If you find an exploit, you can even report it directly to a staff member!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

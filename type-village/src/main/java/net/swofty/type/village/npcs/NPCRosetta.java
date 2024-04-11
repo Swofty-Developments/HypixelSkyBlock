@@ -10,7 +10,7 @@ public class NPCRosetta extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Rosetta", "§e§lCLICK"};
+                return new String[]{"§aStarter Gear", "§fRosetta", "§e§lCLICK"};
             }
 
             @Override
