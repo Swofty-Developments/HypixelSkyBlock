@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.github.Swofty-Developments</groupId>
             <artifactId>AtlasRedisAPI</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>

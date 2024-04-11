@@ -97,7 +97,11 @@ public class MinionFuelExtension extends MinionExtension {
 
         return new GUIClickableItem(slot) {
             @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {}
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                setItemTypePassedIn(null);
+                minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                new GUIMinion(minion).open(player);
+            }
 
             @Override
             public boolean canPickup() {
@@ -116,7 +120,9 @@ public class MinionFuelExtension extends MinionExtension {
                                 " ",
                                 "§7Current Fuel: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
                                 "§7Time Left: §e" + StringUtility.formatTimeLeft(timeFuelLasts - (System.currentTimeMillis() - insertionTime)),
-                                "§7Modifier: §a" + ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getMinionFuelPercentage() + "%"
+                                "§7Modifier: §a" + ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getMinionFuelPercentage() + "%",
+                                " ",
+                                "§cClick to destroy this fuel."
                         ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
 
                 return item;
