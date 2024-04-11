@@ -94,6 +94,12 @@ public class MinionShippingExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    if (!e.getCursorItem().isAir()) {
+                        player.sendMessage("§cYour cursor must be empty to pick this item up!");
+                        e.setCancelled(true);
+                        return;
+                    }
+
                     if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
                         e.setCancelled(true);
 
@@ -103,12 +109,6 @@ public class MinionShippingExtension extends MinionExtension {
                         player.setCoins(player.getCoins() + heldCoins);
                         player.sendMessage("§aYou have received §6" + StringUtility.commaify(heldCoins) + " coins§a from your Minion!");
                         heldCoins = 0;
-                        return;
-                    }
-
-                    if (!e.getCursorItem().isAir()) {
-                        player.sendMessage("§cYou can only remove the current item.");
-                        e.setCancelled(true);
                         return;
                     }
 

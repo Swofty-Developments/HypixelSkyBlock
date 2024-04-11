@@ -52,6 +52,8 @@ public record MinionHandler(Scheduler scheduler) {
             if (minionFuel != null) {
                 double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
                 // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+                if (extensionData.hasMinionUpgrade(ItemType.FLY_SWATTER))
+                    percentageSpeedIncrease += 20;
                 timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
             }
 

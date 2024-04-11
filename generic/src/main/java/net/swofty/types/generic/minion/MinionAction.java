@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionShippingItem;
 import net.swofty.types.generic.item.impl.Sellable;
@@ -33,6 +34,13 @@ public abstract class MinionAction {
         double sellAmount = item.getGenericInstance() == null ? 0 :
                 (item.getGenericInstance() instanceof Sellable
                         ? ((Sellable) item.getGenericInstance()).getSellValue() : 0);
+
+        if (extensionData.hasMinionUpgrade(ItemType.DIAMOND_SPREADING)) {
+            if (Math.random() < 0.1) {
+                SkyBlockItem diamond = new SkyBlockItem(ItemType.DIAMOND);
+                islandMinion.addItem(diamond);
+            }
+        }
 
         if (!hasAdded && sellAmount > 0) {
             MinionShippingExtension shippingExtension = (MinionShippingExtension)

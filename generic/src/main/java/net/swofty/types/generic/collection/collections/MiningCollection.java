@@ -594,6 +594,18 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.DIAMOND_SPREADING), Map.of(
+                                        'E', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1),
+                                        'V', new MaterialQuantifiable(ItemType.VINES, 1)
+                                ), List.of(
+                                        "VVV",
+                                        "VEV",
+                                        "VVV"
+                                ));
+                            }
                         }),
                         new ItemCollectionReward(10000, new UnlockXP() {
                             @Override

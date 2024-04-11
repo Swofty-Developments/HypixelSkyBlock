@@ -11,22 +11,19 @@ import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionSkinItem;
+import net.swofty.types.generic.item.impl.MinionUpgradeItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.types.generic.item.updater.PlayerItemOrigin;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-public class MinionSkinExtension extends MinionExtension {
+public class MinionUpgradeExtension extends MinionExtension {
 
-    public MinionSkinExtension(@Nullable ItemType itemType, @Nullable Object data) {
+    public MinionUpgradeExtension(@Nullable ItemType itemType, @Nullable Object data) {
         super(itemType, data);
     }
 
@@ -36,21 +33,27 @@ public class MinionSkinExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
+                    SkyBlockItem upgradeItem = new SkyBlockItem(e.getCursorItem());
 
-                    if (skinItem.getGenericInstance() == null) {
-                        player.sendMessage("§cThis item is not a valid Minion Skin.");
+                    if (upgradeItem.getGenericInstance() == null) {
+                        player.sendMessage("§cThis item is not a valid Minion Upgrade.");
                         e.setCancelled(true);
                         return;
                     }
 
-                    if (skinItem.getGenericInstance() instanceof MinionSkinItem) {
+                    ItemType itemType = upgradeItem.getAttributeHandler().getItemTypeAsType();
+                    if (minion.getExtensionData().hasMinionUpgrade(itemType)) {
+                        player.sendMessage("§cThis upgrade is already applied to your minion.");
+                        e.setCancelled(true);
+                        return;
+                    }
+
+                    if (upgradeItem.getGenericInstance() instanceof MinionUpgradeItem) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypePassedIn(skinItem.getAttributeHandler().getItemTypeAsType());
-                        minion.getExtensionData().setData(slot, MinionSkinExtension.this);
-                        minion.getMinionEntity().updateMinionDisplay(minion);
+                        setItemTypePassedIn(itemType);
+                        minion.getExtensionData().setData(slot, MinionUpgradeExtension.this);
                     } else {
-                        player.sendMessage("§cThis item is not a valid Minion Skin.");
+                        player.sendMessage("§cThis item is not a valid Minion Upgrade.");
                         e.setCancelled(true);
                     }
                 }
@@ -67,10 +70,10 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aMinion Skin Slot", Material.LIME_STAINED_GLASS_PANE, 1,
-                            "§7You can insert a Minion Skin",
-                            "§7here to change the appearance of",
-                            "§7your minion.");
+                    return ItemStackCreator.getStack("§aUpgrade Slot", Material.YELLOW_STAINED_GLASS_PANE, 1,
+                            "§7You can improve your minion by",
+                            "§7adding a minion upgrade item",
+                            "§7here.");
                 }
             };
         } else {
@@ -86,8 +89,7 @@ public class MinionSkinExtension extends MinionExtension {
                     player.addAndUpdateItem(getItemTypePassedIn());
                     setItemTypePassedIn(null);
                     e.setClickedItem(ItemStack.AIR);
-                    minion.getExtensionData().setData(slot, MinionSkinExtension.this);
-                    minion.getMinionEntity().updateMinionDisplay(minion);
+                    minion.getExtensionData().setData(slot, MinionUpgradeExtension.this);
                 }
 
                 @Override
@@ -103,16 +105,16 @@ public class MinionSkinExtension extends MinionExtension {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
-                    item = item.displayName(Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false))
+                    item = item.displayName(Component.text("§aUpgrade Slot").decoration(TextDecoration.ITALIC, false))
                             .lore(Stream.of(
-                                    "§7You can insert a Minion Skin",
-                                    "§7here to change the appearance of",
-                                    "§7your minion.",
+                                    "§7You can improve your minion by",
+                                    "§7adding a minion upgrade item",
+                                    "§7here.",
                                     " ",
-                                    "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
+                                    "§7Current Upgrade: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
                                     " ",
                                     "§eClick to remove."
-                    ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
+                            ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
 
                     return item;
                 }

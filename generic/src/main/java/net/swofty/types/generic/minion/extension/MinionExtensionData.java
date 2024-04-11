@@ -2,6 +2,7 @@ package net.swofty.types.generic.minion.extension;
 
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.minion.extension.extensions.MinionUpgradeExtension;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -19,6 +20,12 @@ public class MinionExtensionData {
         return extensionData.values().stream().filter(clazz::isInstance).findFirst().orElse(
                 clazz.getConstructor(ItemType.class, Object.class).newInstance(null, null)
         );
+    }
+
+    public boolean hasMinionUpgrade(ItemType type) {
+        return extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionUpgradeExtension)
+                .anyMatch(extension -> extension.getItemTypePassedIn() == type);
     }
 
     @SneakyThrows

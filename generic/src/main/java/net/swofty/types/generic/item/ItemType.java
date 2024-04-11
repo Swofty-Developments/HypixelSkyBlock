@@ -37,12 +37,10 @@ import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
-import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
+import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
-import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
-import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
 import net.swofty.types.generic.item.items.miscellaneous.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
@@ -114,8 +112,6 @@ public enum ItemType {
     /**
      * Minions
      */
-    BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
-
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
     SNOW_MINION(Material.PLAYER_HEAD, Rarity.RARE, SnowMinion.class),
@@ -146,6 +142,9 @@ public enum ItemType {
     SUPER_COMPACTOR_3000(Material.DISPENSER, Rarity.RARE, SuperCompactor3000.class),
     BUDGET_HOPPER(Material.HOPPER, Rarity.UNCOMMON, BudgetHopper.class),
     ENCHANTED_HOPPER(Material.HOPPER, Rarity.RARE, EnchantedHopper.class),
+    BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
+    FLY_CATCHER(Material.COBWEB, Rarity.EPIC, FlyCatcher.class),
+    DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE, DiamondSpreading.class),
 
     /**
      * Pets
@@ -606,6 +605,7 @@ public enum ItemType {
     OAK_PLANKS(Material.OAK_PLANKS, Rarity.COMMON),
     OBSIDIAN(Material.OBSIDIAN, Rarity.COMMON, Obsidian.class),
     PACKED_ICE(Material.PACKED_ICE, Rarity.COMMON),
+    VINES(Material.VINE, Rarity.COMMON),
     PAPER(Material.PAPER, Rarity.COMMON),
     POTATO(Material.POTATO, Rarity.COMMON, Potato.class),
     PUMPKIN(Material.PUMPKIN, Rarity.COMMON, Pumpkin.class),

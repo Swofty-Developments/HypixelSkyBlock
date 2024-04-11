@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.minion.upgrade;
+package net.swofty.types.generic.item.items.minion.upgrade.upgrade;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SuperCompactor3000 implements CustomSkyBlockItem, Enchanted,NotFinishedYet {
+public class Compactor implements CustomSkyBlockItem, Enchanted, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
@@ -22,8 +22,6 @@ public class SuperCompactor3000 implements CustomSkyBlockItem, Enchanted,NotFini
                 "§7minion upgrade. This will",
                 "§7automatically turn materials",
                 "§7that a minion produces into",
-                "§7their enchanted form when there",
-                "§7are enough resources in the",
-                "§7minion's storage."));
+                "§7their block form."));
     }
 }

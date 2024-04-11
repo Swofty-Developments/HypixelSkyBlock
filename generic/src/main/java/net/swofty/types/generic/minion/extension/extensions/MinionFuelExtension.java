@@ -104,11 +104,6 @@ public class MinionFuelExtension extends MinionExtension {
             }
 
             @Override
-            public boolean canPickup() {
-                return false;
-            }
-
-            @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 long timeFuelLasts = ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getFuelLastTimeInMS();
 

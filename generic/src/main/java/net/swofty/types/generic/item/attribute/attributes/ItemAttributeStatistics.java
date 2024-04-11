@@ -20,12 +20,11 @@ public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
     public ItemStatistics loadFromString(String string) {
         String[] split = string.split(",");
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, Math.max(Double.parseDouble(split[0]), 0D))
-                .with(ItemStatistic.DEFENSE, Math.max(Double.parseDouble(split[1]), 0D))
-                .with(ItemStatistic.HEALTH, Math.max(Double.parseDouble(split[2]), 0D))
-                .with(ItemStatistic.INTELLIGENCE, Math.max(Double.parseDouble(split[3]), 0D))
-                .with(ItemStatistic.STRENGTH, Math.max(Double.parseDouble(split[4]), 0D))
-                .with(ItemStatistic.MINING_SPEED, Math.max(Double.parseDouble(split[5]), 0D))
+                .with(ItemStatistic.DAMAGE, Math.max(Math.min(Double.parseDouble(split[0]), 1000D), 0D))
+                .with(ItemStatistic.DEFENSE, Math.max(Math.min(Double.parseDouble(split[1]), 1000D), 0D))
+                .with(ItemStatistic.HEALTH, Math.max(Math.min(Double.parseDouble(split[2]), 1000D), 0D))
+                .with(ItemStatistic.INTELLIGENCE, Math.max(Math.min(Double.parseDouble(split[3]), 1000D), 0D))
+                .with(ItemStatistic.STRENGTH, Math.max(Math.min(Double.parseDouble(split[4]), 1000D), 0D))
                 .build();
     }
 
