@@ -9,6 +9,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
+import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.item.items.crimson.EnchantedMyceliumCube;
 import net.swofty.types.generic.item.items.crimson.EnchantedRedSandCube;
 import net.swofty.types.generic.item.items.crimson.EnchantedSulphurCube;
@@ -283,6 +284,17 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
+                                        new SkyBlockItem(ItemType.ENCHANTED_CHARCOAL), 1)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.OAK_WOOD, 32); // Not only Oak any wood should make charcoal.
                             }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
