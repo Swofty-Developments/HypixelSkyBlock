@@ -39,6 +39,7 @@ import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.AutoSmelter;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
+import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.minion.upgrade.Compactor;
 import net.swofty.types.generic.item.items.minion.upgrade.SuperCompactor3000;
@@ -114,7 +115,6 @@ public enum ItemType {
      * Minions
      */
     BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
-    BUDGET_HOPPER(Material.HOPPER, Rarity.UNCOMMON, BudgetHopper.class),
 
     COBBLESTONE_MINION(Material.PLAYER_HEAD, Rarity.RARE, CobblestoneMinion.class),
     COAL_MINION(Material.PLAYER_HEAD, Rarity.RARE, CoalMinion.class),
@@ -144,6 +144,8 @@ public enum ItemType {
     AUTO_SMELTER(Material.FURNACE, Rarity.COMMON, AutoSmelter.class),
     COMPACTOR(Material.DISPENSER, Rarity.UNCOMMON, Compactor.class),
     SUPER_COMPACTOR_3000(Material.DISPENSER, Rarity.RARE, SuperCompactor3000.class),
+    BUDGET_HOPPER(Material.HOPPER, Rarity.UNCOMMON, BudgetHopper.class),
+    ENCHANTED_HOPPER(Material.HOPPER, Rarity.RARE, EnchantedHopper.class),
 
     /**
      * Pets
@@ -663,6 +665,7 @@ public enum ItemType {
     GOLDEN_CARROT(Material.GOLDEN_CARROT, Rarity.COMMON),
     WATER_BOTTLE(Material.POTION, Rarity.COMMON),
     CACTUS(Material.CACTUS, Rarity.COMMON, Cactus.class),
+    CHEST(Material.CHEST, Rarity.COMMON),
 
     /**
      * Enchanted Items

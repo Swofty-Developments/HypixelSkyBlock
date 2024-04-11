@@ -17,27 +17,9 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.TemporaryStatistic;
 import net.swofty.types.generic.utility.ChatColor;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class AspectOfTheEnd implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem,
-                                       DefaultCraftable, GemstoneItem {
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
-        List<String> pattern = List.of(
-                "A",
-                "A",
-                "B");
-
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ASPECT_OF_THE_END), ingredientMap, pattern);
-    }
-
+public class AspectOfTheEnd implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, GemstoneItem {
     @Override
     public String getAbilityName() {
         return "Instant Transmission";

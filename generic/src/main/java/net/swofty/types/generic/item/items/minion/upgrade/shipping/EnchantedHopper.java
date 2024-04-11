@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.items.minion.upgrade.shipping;
 import com.mongodb.lang.Nullable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.MinionShippingItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -10,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public class BudgetHopper implements CustomSkyBlockItem, MinionShippingItem, Sellable {
+public class EnchantedHopper implements CustomSkyBlockItem, Enchanted, MinionShippingItem, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.EMPTY;
@@ -27,11 +28,11 @@ public class BudgetHopper implements CustomSkyBlockItem, MinionShippingItem, Sel
 
     @Override
     public double getPercentageOfOriginalPrice() {
-        return 50;
+        return 90;
     }
 
     @Override
     public double getSellValue() {
-        return 1200;
+        return 192000;
     }
 }
