@@ -12,6 +12,7 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
+import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -51,7 +52,7 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         double damage = hit.getKey();
         boolean critical = hit.getValue();
 
-        PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
+        PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(
                 (SkyBlockPlayer) event.getTarget(), hit, mob);
         SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
         ((SkyBlockPlayer) event.getEntity()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
