@@ -13,7 +13,7 @@ import java.util.Locale;
 public class FlyCatcher implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

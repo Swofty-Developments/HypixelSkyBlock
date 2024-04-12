@@ -137,9 +137,7 @@ public class PlayerItemUpdater {
             for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
                 if (slot.unlockPrice == 0) {
                     // Slot should be unlocked by default
-
                     if (gemData.hasGem(index)) continue;
-
                     gemData.putGem(
                             new ItemAttributeGemData.GemData.GemSlots(
                                     index,

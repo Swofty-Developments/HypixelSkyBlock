@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class BeeMinionSkin implements CustomSkyBlockItem, MinionSkinItem, SkullHead {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {

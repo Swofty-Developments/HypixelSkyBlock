@@ -80,7 +80,7 @@ public class ItemAttributeSandboxItem extends ItemAttribute<ItemAttributeSandbox
                 "Set the display type of the item"
         ));
         private String displayName = "§6Sandbox Item";
-        private ItemStatistics statistics = ItemStatistics.EMPTY;
+        private ItemStatistics statistics = ItemStatistics.empty();
         private boolean showLoreLinesToggle = true;
         private ItemType material = ItemType.AIR;
     }

@@ -29,4 +29,5 @@ public class FarmSuitHelmet implements CustomSkyBlockItem, StandardItem, Leather
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.HELMET;
+    }
 }

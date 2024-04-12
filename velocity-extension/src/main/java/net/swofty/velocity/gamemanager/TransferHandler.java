@@ -24,7 +24,7 @@ public record TransferHandler(Player player) {
             playersInLimbo.remove(player);
 
             try {
-                Thread.sleep(50);
+                Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")) / 5);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

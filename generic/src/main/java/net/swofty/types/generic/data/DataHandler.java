@@ -174,6 +174,7 @@ public class DataHandler {
             // Delay this as player needs to be loaded
             MathUtility.delay(() -> {
                 SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
+                if (!player.isOnline()) return;
                 DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = skyBlockPlayer.getSkyBlockExperience();
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + "_" + player.getUsername(), 16);

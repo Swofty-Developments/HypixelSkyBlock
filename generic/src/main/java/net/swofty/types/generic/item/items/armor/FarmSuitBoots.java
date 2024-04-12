@@ -29,3 +29,4 @@ public class FarmSuitBoots implements CustomSkyBlockItem, StandardItem, LeatherC
     public StandardItemType getStandardItemType() {
         return StandardItemType.BOOTS;
     }
+}

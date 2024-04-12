@@ -18,7 +18,7 @@ public interface Ench {
     List<EnchantItemGroups> getGroups();
 
     default ItemStatistics getStatistics(int level) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     default List<EnchantmentSource> getSources(SkyBlockPlayer player) {

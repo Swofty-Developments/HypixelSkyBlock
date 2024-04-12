@@ -42,9 +42,9 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
         SkyBlockMob mob;
         if (receiver instanceof SkyBlockMob skyBlockMob) {
             mob = skyBlockMob;
-        } else return ItemStatistics.EMPTY;
+        } else return ItemStatistics.empty();
 
-        if (mob.isHasBeenDamaged()) return ItemStatistics.EMPTY;
+        if (mob.isHasBeenDamaged()) return ItemStatistics.empty();
 
         mob.setHasBeenDamaged(true);
         return ItemStatistics.builder().with(ItemStatistic.DAMAGE_ADDITIVE, MULTIPLIERS[level - 1]).build();
@@ -52,7 +52,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
 
     @Override
     public ItemStatistics getStatistics(int level) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

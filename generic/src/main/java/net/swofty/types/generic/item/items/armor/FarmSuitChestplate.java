@@ -29,3 +29,4 @@ public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, Lea
     public StandardItemType getStandardItemType() {
         return StandardItemType.CHESTPLATE;
     }
+}

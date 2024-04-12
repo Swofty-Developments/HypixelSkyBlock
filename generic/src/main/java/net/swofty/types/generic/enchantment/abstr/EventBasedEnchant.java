@@ -9,6 +9,6 @@ import javax.swing.text.html.parser.Entity;
 
 public interface EventBasedEnchant {
     default ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }

@@ -81,7 +81,7 @@ public class PlayerStatistics {
 
         if (item.getGenericInstance() != null)
             if (item.getGenericInstance() instanceof ConstantStatistics)
-                return ItemStatistics.EMPTY;
+                return ItemStatistics.empty();
 
         ItemStatistics statistics = item.getAttributeHandler().getStatistics();
         statistics = calculateExtraItemStatistics(
@@ -96,7 +96,7 @@ public class PlayerStatistics {
 
     public ItemStatistics petStatistics() {
         SkyBlockItem pet = player.getPetData().getEnabledPet();
-        if (pet == null) return ItemStatistics.EMPTY;
+        if (pet == null) return ItemStatistics.empty();
 
         ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics(
                 pet.getAttributeHandler().getRarity()

@@ -7,8 +7,6 @@ import java.util.Map;
 
 @Getter
 public class ItemStatistics {
-    public static final ItemStatistics EMPTY = new ItemStatistics(new EnumMap<>(ItemStatistic.class));
-
     private final Map<ItemStatistic, Double> statistics;
 
     // Private constructor used by the builder
@@ -39,7 +37,7 @@ public class ItemStatistics {
     public static ItemStatistics fromString(String string) {
         ItemStatisticsBuilder builder = ItemStatistics.builder();
         if (string.isEmpty())
-            return EMPTY;
+            return builder.build();
 
         String[] split = string.split(";");
         for (String s : split) {

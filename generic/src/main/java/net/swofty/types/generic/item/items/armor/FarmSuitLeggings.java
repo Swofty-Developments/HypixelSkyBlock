@@ -29,3 +29,4 @@ public class FarmSuitLeggings implements CustomSkyBlockItem, StandardItem, Leath
     public StandardItemType getStandardItemType() {
         return StandardItemType.LEGGINGS;
     }
+}
