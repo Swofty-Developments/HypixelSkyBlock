@@ -50,7 +50,7 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
                 .withStatistic(ItemStatistic.SPEED)
                 .withValue(10D)
-                .withExpiry(player1 -> true)
+                .withExpiry(player1 -> false)
                 .build());
     }
 }
