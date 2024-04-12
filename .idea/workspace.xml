@@ -1,15 +1,12 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="more items abilitiessss, Check HasteRing!">
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Fixed compilation error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/region/ActionRegionBlockBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/region/ActionRegionBlockBreak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/impl/BlockBreakEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/FarmingTalisman.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/FarmingTalisman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/HasteRing.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/HasteRing.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,31 +22,39 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;history&quot;: [
+    &quot;history&quot;: [
     {
-      &quot;state&quot;: &quot;OPEN&quot;
-    }
-  ],
-  &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Epicportal14/HypixelSkyBlock.git&quot;,
-    &quot;accountId&quot;: &quot;3f2f7cde-8e5f-4e0d-b101-716894773034&quot;
-  }
-}</component>
+    }
+    ],
+    &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+    }
+    }</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b98e548e-ac17-4a7b-a57e-57d3ea90f165" />
+        <option name="url" value="https://github.com/Swofty-Developments/HypixelSkyBlock.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/jdks/jdk-17.0.2+8/lib/src.zip!/java.base/java/lang/Object.java" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/lang/Integer.java" root0="SKIP_INSPECTION" />
@@ -99,15 +104,13 @@
     &quot;associatedIndex&quot;: 8
     }</component>
   <component name="ProjectId" id="2ZO39acjvIUm3Qg9FOcRCbk61Bj" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
+    &quot;keyToString&quot;: {
     &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;Application.AuctionService.executor&quot;: &quot;Run&quot;,
     &quot;Application.BazaarService.executor&quot;: &quot;Run&quot;,
@@ -150,13 +153,13 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
+    },
+    &quot;keyToStringList&quot;: {
     &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
-      &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
+    &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
     ]
-  }
-}</component>
+    }
+    }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\configuration\songs" />
@@ -327,6 +330,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -448,6 +459,102 @@
       <workItem from="1712122156636" duration="12157000" />
       <workItem from="1712199270434" duration="9789000" />
       <workItem from="1712290123850" duration="5135000" />
+    </task>
+    <task id="LOCAL-00126" summary="More performance fixes">
+      <option name="closed" value="true" />
+      <created>1710039397714</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1710039397714</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Removed redundant imports across the codebase">
+      <option name="closed" value="true" />
+      <created>1710048012677</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1710048012677</updated>
+    </task>
+    <task id="LOCAL-00128" summary="Added audio engine along with /playsong">
+      <option name="closed" value="true" />
+      <created>1710065993770</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1710065993770</updated>
+    </task>
+    <task id="LOCAL-00129" summary="Added steps for setting up the audio engine">
+      <option name="closed" value="true" />
+      <created>1710066121615</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1710066121615</updated>
+    </task>
+    <task id="LOCAL-00130" summary="Renamed all instances of Orb to Crystal">
+      <option name="closed" value="true" />
+      <created>1710079242729</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1710079242729</updated>
+    </task>
+    <task id="LOCAL-00131" summary="Renamed all instances of Orb to Crystal">
+      <option name="closed" value="true" />
+      <created>1710079378569</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1710079378569</updated>
+    </task>
+    <task id="LOCAL-00132" summary="Start to Gems">
+      <option name="closed" value="true" />
+      <created>1710121129302</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1710121129303</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Added Gems to player statistics calculation">
+      <option name="closed" value="true" />
+      <created>1710158879804</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1710158879804</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Fixed a variety of bugs and made island-loading async">
+      <option name="closed" value="true" />
+      <created>1710317162492</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1710317162493</updated>
+    </task>
+    <task id="LOCAL-00135" summary="Added /wipeme command and fixed merges">
+      <option name="closed" value="true" />
+      <created>1710317551468</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1710317551468</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Updated to AtlasRedisAPI 1.1.1">
+      <option name="closed" value="true" />
+      <created>1710500096231</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1710500096232</updated>
+    </task>
+    <task id="LOCAL-00137" summary="Updated Minestom dependencies">
+      <option name="closed" value="true" />
+      <created>1710500799328</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1710500799328</updated>
     </task>
     <task id="LOCAL-00138" summary="Patched up Neruxov's implementation of Items in the shop">
       <option name="closed" value="true" />
@@ -745,103 +852,7 @@
       <option name="project" value="LOCAL" />
       <updated>1712299954950</updated>
     </task>
-    <task id="LOCAL-00175" summary="some fixed conflicts">
-      <option name="closed" value="true" />
-      <created>1712567909809</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1712567909809</updated>
-    </task>
-    <task id="LOCAL-00176" summary="cannot add air(O2) in ah!">
-      <option name="closed" value="true" />
-      <created>1712569000881</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1712569000882</updated>
-    </task>
-    <task id="LOCAL-00177" summary="Added Items In Farming Section of Bazaar!">
-      <option name="closed" value="true" />
-      <created>1712573062052</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1712573062052</updated>
-    </task>
-    <task id="LOCAL-00178" summary="Added Some Mobs!">
-      <option name="closed" value="true" />
-      <created>1712575789168</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1712575789168</updated>
-    </task>
-    <task id="LOCAL-00179" summary="Added Items in Combat section of Bazaar!">
-      <option name="closed" value="true" />
-      <created>1712653353913</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1712653353914</updated>
-    </task>
-    <task id="LOCAL-00180" summary="Added Few More Mobs and Added Xp abstract!">
-      <option name="closed" value="true" />
-      <created>1712660415656</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1712660415656</updated>
-    </task>
-    <task id="LOCAL-00181" summary="Fixed The Things reminded By swofty!">
-      <option name="closed" value="true" />
-      <created>1712679571456</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1712679571457</updated>
-    </task>
-    <task id="LOCAL-00182" summary="Skyblock Player Profile Gui">
-      <option name="closed" value="true" />
-      <created>1712758165295</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1712758165296</updated>
-    </task>
-    <task id="LOCAL-00183" summary="Undead Sword Ability Test!">
-      <option name="closed" value="true" />
-      <created>1712812233113</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1712812233114</updated>
-    </task>
-    <task id="LOCAL-00184" summary="Undead Sword Ability Test (2)!">
-      <option name="closed" value="true" />
-      <created>1712814965543</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1712814965543</updated>
-    </task>
-    <task id="LOCAL-00185" summary="more items abilitiessss!">
-      <option name="closed" value="true" />
-      <created>1712815831838</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1712815831838</updated>
-    </task>
-    <task id="LOCAL-00186" summary="more items abilitiessss, Check HasteRing!">
-      <option name="closed" value="true" />
-      <created>1712926234977</created>
-      <option name="number" value="00186" />
-      <option name="presentableId" value="LOCAL-00186" />
-      <option name="project" value="LOCAL" />
-      <updated>1712926234978</updated>
-    </task>
-    <option name="localTasksCounter" value="187" />
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -861,6 +872,19 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Adding wilderness song" />
+    <MESSAGE value="Fully implemented the Pet GUI" />
+    <MESSAGE value="Fixed variety of bugs" />
+    <MESSAGE value="Fixed pets in Bea not properly displaying level 100" />
+    <MESSAGE value="Fixed bugs in relation to Tablist cache" />
+    <MESSAGE value="Bows are now functional, with Quiver support" />
+    <MESSAGE value="Added damage with proper calculation" />
+    <MESSAGE value="Player to Mob damage now works" />
+    <MESSAGE value="Arrows now deal damage + mobs have damage displays" />
+    <MESSAGE value="Added the Accessory Bag, fully functional with stats" />
+    <MESSAGE value="Overhauled Enchantment system, comes with Protection, Sharpness, Efficiency and Scavenging" />
+    <MESSAGE value="Added CustomDisplayName" />
+    <MESSAGE value="Start to SkyBlock Levels + variety of bug fixes" />
     <MESSAGE value="Added Emblems" />
     <MESSAGE value="Further work on Levels and fixed a minor profile glitch" />
     <MESSAGE value="Minor cosmetic changes" />
@@ -873,20 +897,7 @@
     <MESSAGE value="Minor fixes" />
     <MESSAGE value="Lots of various bug fixes" />
     <MESSAGE value="Fixed compilation error" />
-    <MESSAGE value="Added Items to Mining section of Bazaar except gemstone and crystal" />
-    <MESSAGE value="some fixed conflicts" />
-    <MESSAGE value="cannot add air(O2) in ah!" />
-    <MESSAGE value="Added Items In Farming Section of Bazaar!" />
-    <MESSAGE value="Added Some Mobs!" />
-    <MESSAGE value="Added Items in Combat section of Bazaar!" />
-    <MESSAGE value="Added Few More Mobs and Added Xp abstract!" />
-    <MESSAGE value="Fixed The Things reminded By swofty!" />
-    <MESSAGE value="Skyblock Player Profile Gui" />
-    <MESSAGE value="Undead Sword Ability Test!" />
-    <MESSAGE value="Undead Sword Ability Test (2)!" />
-    <MESSAGE value="more items abilitiessss!" />
-    <MESSAGE value="more items abilitiessss, Check HasteRing!" />
-    <option name="LAST_COMMIT_MESSAGE" value="more items abilitiessss, Check HasteRing!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed compilation error" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
