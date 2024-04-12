@@ -404,6 +404,10 @@ public enum ItemType {
     MINERS_OUTFIT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.UNCOMMON, MinerOutfitChestplate.class),
     MINERS_OUTFIT_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.UNCOMMON, MinerOutfitLeggings.class),
     MINERS_OUTFIT_BOOTS(Material.LEATHER_BOOTS, Rarity.UNCOMMON, MinerOutfitBoots.class),
+    FARM_SUIT_HELMET(Material.LEATHER_HELMET, Rarity.COMMON, FarmSuitHelmet.class),
+    FARM_SUIT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, FarmSuitChestplate.class),
+    FARM_SUIT_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, FarmSuitLeggings.class),
+    FARM_SUIT_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, FarmSuitBoots.class),
 
     /**
      * Pickaxes
