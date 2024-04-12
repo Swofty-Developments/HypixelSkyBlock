@@ -12,6 +12,7 @@ import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
@@ -59,13 +60,22 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
 
             long timeBetweenActions = tier.timeBetweenActions();
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+
+            //Handle percentage speed increase from both fuels and minion upgrades
+            double percentageSpeedIncrease = 0;
             if (minionFuel != null) {
-                double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
-                if (extensionData.hasMinionUpgrade(ItemType.FLY_CATCHER))
-                    percentageSpeedIncrease += 20;
-                timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
+                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
             }
+
+            //Handle speed increases from minion upgrades
+            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
+                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                }
+            }
+
+            // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+            timeBetweenActions = (long) (timeBetweenActions / (1 + (percentageSpeedIncrease / 100)));
 
             int amountOfActions = Math.round((float) (currentTime - lastSaved) / (timeBetweenActions * 1000L));
 

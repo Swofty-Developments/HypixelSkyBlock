@@ -13,6 +13,7 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
@@ -49,13 +50,21 @@ public record MinionHandler(Scheduler scheduler) {
             MinionExtensionData extensionData = islandMinion.getExtensionData();
             long timeBetweenActions = tier.timeBetweenActions() * 1000L;
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+
+            //Handle percentage speed increase from both fuels and minion upgrades
+            double percentageSpeedIncrease = 0;
             if (minionFuel != null) {
-                double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
-                if (extensionData.hasMinionUpgrade(ItemType.FLY_SWATTER))
-                    percentageSpeedIncrease += 20;
-                timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
+                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
             }
+
+            //Handle speed increases from minion upgrades
+            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
+                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                }
+            }
+
+            timeBetweenActions = (long) (timeBetweenActions / (1 + (percentageSpeedIncrease / 100)));
 
             if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;
 
