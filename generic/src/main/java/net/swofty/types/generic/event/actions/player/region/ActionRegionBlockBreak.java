@@ -5,12 +5,14 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.BlockBreakEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -33,6 +35,8 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
     @Override
     public void run(Event event) {
         PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
+        ItemStack itemStack = playerBreakEvent.getPlayer().getItemInMainHand();
+        SkyBlockItem playeritem = new SkyBlockItem(itemStack);
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
         if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
@@ -46,6 +50,8 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             return;
         }
 
+        Object instance = playeritem.getGenericInstance();
+
         RegionType type = region.getType();
 
         Block block = playerBreakEvent.getBlock();
@@ -53,6 +59,11 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
         if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), playerBreakEvent.getBlockPosition()).contains(material)) {
+            return;
+        }
+
+        if (instance instanceof BlockBreakEvent breakEvent) {
+            breakEvent.onBreak(playerBreakEvent, player, playeritem);
             return;
         }
 
