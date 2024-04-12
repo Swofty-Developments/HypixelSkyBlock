@@ -272,6 +272,11 @@ public abstract class SkyBlockInventoryGUI {
                     SkyBlockInventoryGUI.CloseReason.SERVER_EXITED
             );
             GUI_MAP.remove(player.getUuid());
+
+            if (previouslyOpen.getInventory().getInventoryType() == size) {
+                inventory = previouslyOpen.getInventory();
+                inventory.setTitle(Component.text(getTitle()));
+            }
         }
 
         InventoryGUIOpenEvent openEvent = new InventoryGUIOpenEvent(player, this, inventory);
