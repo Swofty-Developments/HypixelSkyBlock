@@ -90,7 +90,7 @@ public abstract class CollectionCategory {
             lore.add(" ");
             int others = getRecipes().size() - 1;
             if (others > 0) {
-                lore.add("§7+" + others + " more recipes");
+                lore.add("§8+" + others + " more recipes");
             }
             lore.add("§eClick to view recipe");
 

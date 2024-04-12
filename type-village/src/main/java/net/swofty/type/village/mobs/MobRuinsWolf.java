@@ -89,7 +89,7 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
     @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
-                new Populator(RegionType.RUINS, 50)
+                new Populator(RegionType.RUINS, 20)
         );
     }
 

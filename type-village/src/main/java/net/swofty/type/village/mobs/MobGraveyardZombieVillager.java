@@ -94,7 +94,7 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 50)
+                new Populator(RegionType.GRAVEYARD, 5)
         );
     }
 }
