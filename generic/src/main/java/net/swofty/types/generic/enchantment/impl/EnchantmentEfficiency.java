@@ -9,6 +9,7 @@ import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
         return new ApplyLevels(new HashMap<>(Map.of(
                 1, 9,
                 2, 13,
@@ -38,7 +39,7 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
         return new TableLevels(new HashMap<>(Map.of(
                 1, 10,
                 2, 15,

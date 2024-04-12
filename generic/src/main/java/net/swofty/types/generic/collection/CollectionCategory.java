@@ -47,10 +47,9 @@ public abstract class CollectionCategory {
             Arrays.stream(unlocks).forEach(unlock -> {
                 switch (unlock.type()) {
                     case RECIPE -> {
-                        ItemStack.Builder item = ((UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
-                        item = new NonPlayerItemUpdater(item).getUpdatedItem();
-
-                        lore.add("§7  §e" + StringUtility.getTextFromComponent(item.build().getMeta().getDisplayName()) + " §7Recipes");
+                        ((UnlockRecipe) unlock).getRecipes().forEach(recipe -> {
+                            lore.add("§7  §e" + recipe.getResult().getDisplayName() + " §7Recipes");
+                        });
                     }
                     case XP -> {
                         lore.add("§7  §8+§b" + ((UnlockXP) unlock).xp() + " SkyBlock XP");
@@ -84,11 +83,15 @@ public abstract class CollectionCategory {
 
         @Override
         public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
-            ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipe().getResult()).getUpdatedItem();
+            ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
             ArrayList<String> lore = new ArrayList<>(
                     updatedItem.build().getLore().stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add(" ");
+            int others = getRecipes().size() - 1;
+            if (others > 0) {
+                lore.add("§7+" + others + " more recipes");
+            }
             lore.add("§eClick to view recipe");
 
             return ItemStackCreator.updateLore(updatedItem, lore);

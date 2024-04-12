@@ -1,5 +1,6 @@
 package net.swofty.types.generic.enchantment.abstr;
 
+import lombok.NonNull;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -13,7 +14,7 @@ public interface Ench {
 
     String getDescription(int level);
 
-    ApplyLevels getLevelsToApply(SkyBlockPlayer player);
+    ApplyLevels getLevelsToApply(@NonNull SkyBlockPlayer player);
 
     List<EnchantItemGroups> getGroups();
 

@@ -6,6 +6,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
         return new ApplyLevels(new HashMap<>(Map.of(
                 1, 9,
                 2, 14,
@@ -43,7 +44,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
         return new TableLevels(new HashMap<>(Map.of(
                 1, 10,
                 2, 15,

@@ -15,6 +15,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFro
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
         Map<Integer, Integer> costs = new HashMap<>(Map.of(
                 1, 9,
                 2, 18,
@@ -54,7 +55,7 @@ public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFro
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 20,

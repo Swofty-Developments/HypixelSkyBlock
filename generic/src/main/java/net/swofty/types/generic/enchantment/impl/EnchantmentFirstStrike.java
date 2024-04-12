@@ -9,6 +9,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public ApplyLevels getLevelsToApply(SkyBlockPlayer player) {
+    public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
         return new ApplyLevels(new HashMap<>(Map.of(
                 3, 36,
                 4, 48,
@@ -56,7 +57,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
     }
 
     @Override
-    public TableLevels getLevelsFromTableToApply(SkyBlockPlayer player) {
+    public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
         return new TableLevels(new HashMap<>(Map.of(
                 1, 20,
                 2, 30,
