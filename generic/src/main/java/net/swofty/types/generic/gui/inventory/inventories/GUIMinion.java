@@ -208,11 +208,6 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             int finalI = i;
             set(new GUIClickableItem(slot) {
                 @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (!e.getCursorItem().isAir()) {
                         player.sendMessage("§cYou can't put items in this inventory!");
@@ -229,6 +224,9 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                     MaterialQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
                     minion.getItemsInMinion().remove(item);
+
+                    player.addAndUpdateItem(new SkyBlockItem(item.getMaterial(), item.getAmount()));
+                    refreshItems(player);
                 }
 
                 @Override
