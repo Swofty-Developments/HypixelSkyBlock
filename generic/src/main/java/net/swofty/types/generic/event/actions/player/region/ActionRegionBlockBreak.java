@@ -12,7 +12,6 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.BlockBreakEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -35,8 +34,6 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
     @Override
     public void run(Event event) {
         PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
-        ItemStack itemStack = playerBreakEvent.getPlayer().getItemInMainHand();
-        SkyBlockItem playeritem = new SkyBlockItem(itemStack);
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
         if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
@@ -50,7 +47,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             return;
         }
 
-        Object instance = playeritem.getGenericInstance();
+
 
         RegionType type = region.getType();
 
@@ -62,10 +59,6 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             return;
         }
 
-        if (instance instanceof BlockBreakEvent breakEvent) {
-            breakEvent.onBreak(playerBreakEvent, player, playeritem);
-            return;
-        }
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
 
