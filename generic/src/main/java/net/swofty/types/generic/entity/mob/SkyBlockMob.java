@@ -46,7 +46,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         this.setCustomNameVisible(true);
         this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
-        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(getBaseStatistics().get(ItemStatistic.SPEED).floatValue() / 1000);
+        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().get(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(

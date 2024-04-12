@@ -53,7 +53,7 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         boolean critical = hit.getValue();
 
         PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(
-                (SkyBlockPlayer) event.getTarget(), hit, mob);
+                (SkyBlockPlayer) event.getEntity(), (float) damage, mob);
         SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
         ((SkyBlockPlayer) event.getEntity()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
 

@@ -1,4 +1,4 @@
-package net.swofty.type.village.mobs.hub;
+package net.swofty.type.village.mobs;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -21,20 +21,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
+public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
 
-    public MobRuinsWolf(EntityType entityType) {
+    public MobGraveyardZombieVillager(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Wolf";
+        return "Zombie Villager";
     }
 
     @Override
     public Integer getLevel() {
-        return 15;
+        return 1;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
                         1.6,
                         20,
                         TimeUnit.SERVER_TICK,
-                        RegionType.RUINS), // Attack the target
-                new RandomRegionStrollGoal(this, 15, RegionType.RUINS)  // Walk around
+                        RegionType.GRAVEYARD), // Attack the target
+                new RandomRegionStrollGoal(this, 15, RegionType.GRAVEYARD)  // Walk around
         );
     }
 
@@ -56,22 +56,23 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
                 new ClosestEntityRegionTarget(this,
                         16,
                         entity -> entity instanceof SkyBlockPlayer,
-                        RegionType.RUINS) // If there is none, target the nearest player
+                        RegionType.GRAVEYARD) // If there is none, target the nearest player
         );
     }
 
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 250D)
-                .with(ItemStatistic.DAMAGE, 90D)
+                .with(ItemStatistic.HEALTH, 120D)
+                .with(ItemStatistic.DAMAGE, 24D)
+                .with(ItemStatistic.SPEED, 100D)
                 .build();
     }
 
     @Override
     public List<MobDrop> getDrops() {
         return new ArrayList<>(List.of(
-                new MobDrop(20f, 1, 3, ItemType.BONE)
+                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
         ));
     }
 
@@ -86,14 +87,14 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.RUINS, 50)
-        );
+    public long getxp() {
+        return 7;
     }
 
     @Override
-    public long getxp() {
-        return 10;
+    public List<Populator> getPopulators() {
+        return Arrays.asList(
+                new Populator(RegionType.GRAVEYARD, 50)
+        );
     }
 }

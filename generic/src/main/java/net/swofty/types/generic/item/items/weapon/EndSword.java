@@ -49,7 +49,7 @@ public class EndSword extends SkyBlockValueEvent implements CustomSkyBlockItem, 
         if(item.isNA() || item.isAir()) return;
         if(item.getAttributeHandler().getItemTypeAsType() != ItemType.END_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.ENDER_DRAGON || event.getMob().getEntityType() == EntityType.ENDERMITE || event.getMob().getEntityType() == EntityType.ENDERMAN) {
-            event.setValue((((float) event.getValue()) *2));
+            event.setValue((((float) event.getValue()) * 2));
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.swofty.type.village.mobs.hub;
+package net.swofty.type.village.mobs;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -65,6 +65,7 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 15000D)
                 .with(ItemStatistic.DAMAGE, 800D)
+                .with(ItemStatistic.SPEED, 100D)
                 .build();
     }
 

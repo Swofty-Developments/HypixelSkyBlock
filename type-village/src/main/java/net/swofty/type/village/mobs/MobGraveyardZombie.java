@@ -1,4 +1,4 @@
-package net.swofty.type.village.mobs.hub;
+package net.swofty.type.village.mobs;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -65,6 +65,7 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
         return ItemStatistics.builder()
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.DAMAGE, 5D)
+                .with(ItemStatistic.SPEED, 100D)
                 .build();
     }
 

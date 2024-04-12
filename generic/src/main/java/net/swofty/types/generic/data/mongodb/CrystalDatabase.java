@@ -33,9 +33,9 @@ public class CrystalDatabase {
             if (ServerType.valueOf(doc.getString("serverType")) != type) {
                 continue;
             }
-            int x = doc.getInteger("x");
-            int y = doc.getInteger("y");
-            int z = doc.getInteger("z");
+            double x = doc.getDouble("x");
+            double y = doc.getDouble("y");
+            double z = doc.getDouble("z");
             if (pos.distance(new Pos(x, y, z)) <= distance) {
                 Integer id = doc.getInteger("_id");
                 String url = doc.getString("url");

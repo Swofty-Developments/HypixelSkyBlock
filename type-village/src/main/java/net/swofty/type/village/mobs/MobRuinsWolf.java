@@ -1,4 +1,4 @@
-package net.swofty.type.village.mobs.hub;
+package net.swofty.type.village.mobs;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -21,20 +21,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
+public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
 
-    public MobGraveyardZombieVillager(EntityType entityType) {
+    public MobRuinsWolf(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Zombie Villager";
+        return "Wolf";
     }
 
     @Override
     public Integer getLevel() {
-        return 1;
+        return 15;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                         1.6,
                         20,
                         TimeUnit.SERVER_TICK,
-                        RegionType.GRAVEYARD), // Attack the target
-                new RandomRegionStrollGoal(this, 15, RegionType.GRAVEYARD)  // Walk around
+                        RegionType.RUINS), // Attack the target
+                new RandomRegionStrollGoal(this, 15, RegionType.RUINS)  // Walk around
         );
     }
 
@@ -56,22 +56,23 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                 new ClosestEntityRegionTarget(this,
                         16,
                         entity -> entity instanceof SkyBlockPlayer,
-                        RegionType.GRAVEYARD) // If there is none, target the nearest player
+                        RegionType.RUINS) // If there is none, target the nearest player
         );
     }
 
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 120D)
-                .with(ItemStatistic.DAMAGE, 24D)
+                .with(ItemStatistic.HEALTH, 250D)
+                .with(ItemStatistic.DAMAGE, 90D)
+                .with(ItemStatistic.SPEED, 100D)
                 .build();
     }
 
     @Override
     public List<MobDrop> getDrops() {
         return new ArrayList<>(List.of(
-                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
+                new MobDrop(20f, 1, 3, ItemType.BONE)
         ));
     }
 
@@ -86,14 +87,14 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     }
 
     @Override
-    public long getxp() {
-        return 7;
+    public List<Populator> getPopulators() {
+        return Arrays.asList(
+                new Populator(RegionType.RUINS, 50)
+        );
     }
 
     @Override
-    public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 50)
-        );
+    public long getxp() {
+        return 10;
     }
 }
