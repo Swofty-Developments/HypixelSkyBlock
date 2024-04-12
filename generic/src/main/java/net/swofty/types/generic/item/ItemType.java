@@ -146,6 +146,7 @@ public enum ItemType {
     BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
     FLY_CATCHER(Material.COBWEB, Rarity.EPIC, FlyCatcher.class),
     DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE, DiamondSpreading.class),
+    MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.RARE, MinionExpander.class),
 
     /**
      * Pets
