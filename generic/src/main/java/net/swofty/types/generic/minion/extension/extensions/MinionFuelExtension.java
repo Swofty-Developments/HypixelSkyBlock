@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 public class MinionFuelExtension extends MinionExtension {
     private long insertionTime = 0;
+    private int count = 0;
 
     public MinionFuelExtension(@Nullable ItemType itemType, @Nullable Object data) {
         super(itemType, data);
@@ -53,19 +54,17 @@ public class MinionFuelExtension extends MinionExtension {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
+                    SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
 
-                    if (skinItem.getGenericInstance() == null) {
+                    if (fuelItem.getGenericInstance() == null) {
                         player.sendMessage("§cThis item is not a valid Minion Fuel item.");
                         e.setCancelled(true);
                         return;
                     }
 
-                    if (skinItem.getGenericInstance() instanceof MinionFuelItem) {
+                    if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypePassedIn(skinItem.getAttributeHandler().getItemTypeAsType());
-                        insertionTime = System.currentTimeMillis();
-                        minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                        MinionFuelExtension.this.AddFuel(minion, slot, fuelItem);
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Fuel item.");
                         e.setCancelled(true);
@@ -107,14 +106,14 @@ public class MinionFuelExtension extends MinionExtension {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 long timeFuelLasts = ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getFuelLastTimeInMS();
 
-                ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
+                ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
                 item = item.displayName(Component.text("§aMinion Fuel Slot").decoration(TextDecoration.ITALIC, false))
                         .lore(Stream.of(
                                 "§7This Minion fuel increases the",
                                 "§7speed of your minion.",
                                 " ",
                                 "§7Current Fuel: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
-                                "§7Time Left: §e" + StringUtility.formatTimeLeft(timeFuelLasts - (System.currentTimeMillis() - insertionTime)),
+                                "§7Time Left: §e" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)),
                                 "§7Modifier: §a" + ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getMinionFuelPercentage() + "%",
                                 " ",
                                 "§cClick to destroy this fuel."
@@ -125,12 +124,21 @@ public class MinionFuelExtension extends MinionExtension {
         };
     }
 
+    public void AddFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
+        if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
+            setItemTypePassedIn(fuelItem.getAttributeHandler().getItemTypeAsType());
+            insertionTime = System.currentTimeMillis();
+            count = fuelItem.getAmount();
+            minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+        }
+    }
+
     @Override
     public String toString() {
         if (getItemTypePassedIn() == null) {
             return "null";
         }
-        return getItemTypePassedIn().toString() + ":" + insertionTime;
+        return getItemTypePassedIn().toString() + ":" + insertionTime + ":" + count;
     }
 
     @Override
@@ -142,5 +150,7 @@ public class MinionFuelExtension extends MinionExtension {
         String[] split = string.split(":");
         setItemTypePassedIn(ItemType.valueOf(split[0]));
         insertionTime = Long.parseLong(split[1]);
+        if(split.length > 2)
+            count = Integer.parseInt(split[2]);
     }
 }
