@@ -29,7 +29,7 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
 
     @Override
     public String getAbilityDescription() {
-        return "Grants §f+100 speed §7for §a30s";
+        return "Grants §f+100✦ Speed §7for §a30s";
     }
 
     @Override

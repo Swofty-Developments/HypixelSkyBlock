@@ -50,7 +50,6 @@ public class VillagerDuke extends NPCVillagerDialogue {
                 }
             }
         }
-
         setDialogue(e.player(), "initial-hello");
     }
 
