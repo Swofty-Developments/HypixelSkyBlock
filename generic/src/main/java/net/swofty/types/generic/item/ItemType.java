@@ -37,6 +37,7 @@ import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.upgrade.fuel.BlockofCoal;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
@@ -660,7 +661,7 @@ public enum ItemType {
     RABBIT_HIDE(Material.RABBIT_HIDE, Rarity.COMMON, RawRabbit.class),
     BEEF(Material.BEEF, Rarity.COMMON),
     WOOL(Material.WHITE_WOOL, Rarity.COMMON),
-    COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON),
+    COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON, BlockofCoal.class),
     LAPIS_LAZULI_BLOCK(Material.LAPIS_BLOCK, Rarity.COMMON),
     QUARTZ_BLOCK(Material.QUARTZ_BLOCK, Rarity.COMMON),
     BROWN_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
