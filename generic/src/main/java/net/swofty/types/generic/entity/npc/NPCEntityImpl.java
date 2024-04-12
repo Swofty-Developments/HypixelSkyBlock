@@ -40,7 +40,6 @@ public class NPCEntityImpl extends Entity {
     public void updateNewViewer(@NotNull Player player) {
         super.updateNewViewer(player);
 
-
         List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
         if (skinTexture != null && skinSignature != null) {
             properties.add(new PlayerInfoUpdatePacket.Property("textures", skinTexture, skinSignature));
