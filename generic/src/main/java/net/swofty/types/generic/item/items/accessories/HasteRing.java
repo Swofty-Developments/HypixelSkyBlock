@@ -22,7 +22,7 @@ import java.util.List;
 @EventParameters(description = "break block get haste effect",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)
-public class HasteRing extends SkyBlockEvent implements Talisman, NotFinishedYet {
+public class HasteRing extends SkyBlockEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "3c26a1ec929d4b144266c56af11d9abaf93f6b274872c96d3e34cb7c7965";

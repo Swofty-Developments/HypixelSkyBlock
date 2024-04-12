@@ -11,8 +11,7 @@ import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.PlayerStatistics;
-import net.swofty.types.generic.user.statistics.TemporaryStatistic;
+import net.swofty.types.generic.user.statistics.TemporaryConditionalStatistic;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
 @EventParameters(description = "Farming talisman ability",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)
-public class FarmingTalisman extends SkyBlockEvent implements Talisman, NotFinishedYet {
+public class FarmingTalisman extends SkyBlockEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc";
@@ -46,12 +45,12 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman, NotFinis
         PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
 
-        if (event.getTo() == null || !event.getTo().equals(RegionType.FARM) && !event.getTo().equals(RegionType.THE_BARN) && !event.getTo().equals(RegionType.MUSHROOM_DESERT)) return;
+        if (event.getTo() == null ||!event.getTo().equals(RegionType.FARM) &&!event.getTo().equals(RegionType.THE_BARN) &&!event.getTo().equals(RegionType.MUSHROOM_DESERT)) return;
 
-        player.getStatistics().boostStatistic(TemporaryStatistic.builder()
+        player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
                 .withStatistic(ItemStatistic.SPEED)
                 .withValue(10D)
-                        .withExpirationInTicks(10*20)
+                .withExpiry(player1 -> true)
                 .build());
     }
 }

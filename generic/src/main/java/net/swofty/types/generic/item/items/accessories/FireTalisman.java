@@ -16,11 +16,11 @@ public class FireTalisman implements Talisman, NotFinishedYet {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Increases your §f✦ Speed §7by",
-                "§a+10 §7while held in the",
-                "§bFarm§7, §bThe Barn§7,",
-                "§eMushroom Dessert§7, and",
-                "§bGarden§7."
+        return List.of("§7Provides immunity against damage",
+                "§7from §cFire§7.",
+                "",
+                "§7While in the §cCrimson Isle§7, grants",
+                "§7a §a20% §7damage reduction instead."
         );
     }
 }

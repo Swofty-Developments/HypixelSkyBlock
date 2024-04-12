@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WitherRelic extends SkyBlockValueEvent implements Talisman, NotFinishedYet {
+public class WitherRelic extends SkyBlockValueEvent implements Talisman {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Reduces the damage taken from",
