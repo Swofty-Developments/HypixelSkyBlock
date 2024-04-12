@@ -6,8 +6,7 @@ import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
-import net.swofty.types.generic.item.items.accessories.FarmingTalisman;
-import net.swofty.types.generic.item.items.accessories.HasteRing;
+import net.swofty.types.generic.item.items.accessories.*;
 import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.backpacks.*;
@@ -66,8 +65,6 @@ import net.swofty.types.generic.item.items.minion.foraging.*;
 import net.swofty.types.generic.item.items.minion.mining.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
 import net.swofty.types.generic.item.items.pet.BeePet;
-import net.swofty.types.generic.item.items.accessories.SkeletonTalisman;
-import net.swofty.types.generic.item.items.accessories.SpeedTalisman;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
@@ -100,6 +97,11 @@ public enum ItemType {
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
     HASTE_RING(Material.PLAYER_HEAD, Rarity.RARE, HasteRing.class),
     FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
+    LAVA_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, FarmingTalisman.class),
+    POTATO_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
+    POWER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
+    BAT_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, BatTalisman.class),
+    FIRE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FireTalisman.class),
     AUTO_RECOMBOBULATOR(Material.PLAYER_HEAD, Rarity.LEGENDARY, AutoRecombobulator.class),
     CATACOMBS_EXPERT_RING(Material.PLAYER_HEAD, Rarity.EPIC, CatacombsExpertRing.class),
     WITHER_RELIC(Material.PLAYER_HEAD, Rarity.LEGENDARY, WitherRelic.class),
