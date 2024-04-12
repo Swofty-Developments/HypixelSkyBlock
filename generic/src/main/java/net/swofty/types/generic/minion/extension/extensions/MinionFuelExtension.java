@@ -3,8 +3,10 @@ package net.swofty.types.generic.minion.extension.extensions;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -43,8 +45,12 @@ public class MinionFuelExtension extends MinionExtension {
         } else {
             long timeFuelLasts = ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getFuelLastTimeInMS();
             if (System.currentTimeMillis() - insertionTime > timeFuelLasts) {
-                shouldDisplayItem = false;
-                setItemTypePassedIn(null);
+                count -= 1;
+                if(count <= 0) {
+                    shouldDisplayItem = false;
+                    setItemTypePassedIn(null);
+                }
+                insertionTime = System.currentTimeMillis();
                 minion.getExtensionData().setData(slot, MinionFuelExtension.this);
                 minion.getMinionEntity().updateMinionDisplay(minion);
             }
@@ -63,8 +69,13 @@ public class MinionFuelExtension extends MinionExtension {
                     }
 
                     if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
-                        e.setClickedItem(ItemStack.AIR);
-                        MinionFuelExtension.this.AddFuel(minion, slot, fuelItem);
+                        int added = MinionFuelExtension.this.AddFuel(minion, slot, fuelItem);
+                        if(added >= fuelItem.getAmount())
+                            e.setCursorItem(ItemStack.AIR);
+                        else{
+                            fuelItem.setAmount(fuelItem.getAmount() - added);
+                            e.setCursorItem(fuelItem.getItemStack());
+                        }
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Fuel item.");
                         e.setCancelled(true);
@@ -95,10 +106,32 @@ public class MinionFuelExtension extends MinionExtension {
             };
 
         return new GUIClickableItem(slot) {
+
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                setItemTypePassedIn(null);
-                minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                if(e.getClickType() == ClickType.RIGHT_CLICK) {
+                    setItemTypePassedIn(null);
+                    minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                    new GUIMinion(minion).open(player);
+                }else{
+                    SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
+                    if (! (fuelItem.getGenericInstance() instanceof MinionFuelItem)){
+                        player.sendMessage("§cYou can only put fuel in this slot.");
+                    }else{
+                        if(getItemTypePassedIn() != fuelItem.getAttributeHandler().getItemTypeAsType()){
+                            player.sendMessage("§aReplaced your old fuel!");
+                        }
+                        int added = MinionFuelExtension.this.AddFuel(minion, slot, fuelItem);
+                        if(added < fuelItem.getAmount()){
+                            fuelItem.setAmount(fuelItem.getAmount() - added);
+                        }
+                        e.getInventory().setCursorItem(player,fuelItem.getItemStack());
+                    }
+                }
+            }
+
+            @Override
+            public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
                 new GUIMinion(minion).open(player);
             }
 
@@ -116,7 +149,7 @@ public class MinionFuelExtension extends MinionExtension {
                                 "§7Time Left: §e" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)),
                                 "§7Modifier: §a" + ((MinionFuelItem) new SkyBlockItem(getItemTypePassedIn()).getGenericInstance()).getMinionFuelPercentage() + "%",
                                 " ",
-                                "§cClick to destroy this fuel."
+                                "§cRight Click to destroy this fuel."
                         ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
 
                 return item;
@@ -124,13 +157,22 @@ public class MinionFuelExtension extends MinionExtension {
         };
     }
 
-    public void AddFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
+    public int AddFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
         if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
-            setItemTypePassedIn(fuelItem.getAttributeHandler().getItemTypeAsType());
             insertionTime = System.currentTimeMillis();
-            count = fuelItem.getAmount();
+            int add = fuelItem.getAmount();
+            if(getItemTypePassedIn() != fuelItem.getAttributeHandler().getItemTypeAsType()) {
+                count = add;
+            }else{
+                add = count + add > 64 ? 64 - count : add;
+                count += add;
+            }
+            setItemTypePassedIn(fuelItem.getAttributeHandler().getItemTypeAsType());
             minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+            minion.getMinionEntity().updateMinionDisplay(minion);
+            return add;
         }
+        return 0;
     }
 
     @Override
