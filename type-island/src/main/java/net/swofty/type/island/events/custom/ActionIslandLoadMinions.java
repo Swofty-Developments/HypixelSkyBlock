@@ -12,6 +12,7 @@ import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
@@ -62,8 +63,12 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
             if (minionFuel != null) {
                 double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
                 // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
-                if (extensionData.hasMinionUpgrade(ItemType.FLY_CATCHER))
-                    percentageSpeedIncrease += 20;
+
+                for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+                    if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
+                        percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                    }
+                }
                 timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
             }
 

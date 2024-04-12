@@ -4,13 +4,14 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.MinionUpgradeItem;
+import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 import java.util.Locale;
 
-public class FlyCatcher implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted {
+public class FlyCatcher implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted, MinionUpgradeSpeedItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -25,5 +26,10 @@ public class FlyCatcher implements CustomSkyBlockItem, MinionUpgradeItem, Enchan
                 "§7by flies. Increases the speed of",
                 "§7your minion by §a20%§7."
         );
+    }
+
+    @Override
+    public int getPercentageSpeedIncrease() {
+        return 20;
     }
 }

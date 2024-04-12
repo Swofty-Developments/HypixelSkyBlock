@@ -2,11 +2,14 @@ package net.swofty.types.generic.minion.extension;
 
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.extension.extensions.MinionUpgradeExtension;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class MinionExtensionData {
     private final Map<Integer, MinionExtension> extensionData = new HashMap<>();
@@ -26,6 +29,10 @@ public class MinionExtensionData {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionUpgradeExtension)
                 .anyMatch(extension -> extension.getItemTypePassedIn() == type);
+    }
+
+    public SkyBlockItem[] getMinionUpgrades(){
+        return extensionData.values().stream().filter(extension -> extension instanceof MinionUpgradeExtension).filter(extension -> extension.getItemTypePassedIn() != null).map(extension -> new SkyBlockItem(extension.getItemTypePassedIn())).toArray(SkyBlockItem[]::new);
     }
 
     @SneakyThrows
