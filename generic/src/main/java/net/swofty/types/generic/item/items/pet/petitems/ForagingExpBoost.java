@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class ForagingExpBoost implements CustomSkyBlockItem, Enchanted, PetItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

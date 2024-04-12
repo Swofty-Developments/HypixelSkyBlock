@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 public class CompostBundle implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

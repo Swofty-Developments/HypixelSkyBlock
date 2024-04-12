@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class HamsterWheel implements CustomSkyBlockItem, Sellable, Enchanted, MinionFuelItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

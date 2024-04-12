@@ -15,7 +15,7 @@ import java.util.List;
 public class GodPotion implements CustomSkyBlockItem, SkullHead, Interactable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

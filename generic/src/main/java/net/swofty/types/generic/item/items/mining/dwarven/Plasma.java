@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class Plasma implements CustomSkyBlockItem, Sellable, SkullHead {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

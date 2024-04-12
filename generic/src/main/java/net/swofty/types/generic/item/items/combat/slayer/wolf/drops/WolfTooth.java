@@ -10,7 +10,7 @@ public class WolfTooth implements CustomSkyBlockItem, Sellable, Enchanted {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

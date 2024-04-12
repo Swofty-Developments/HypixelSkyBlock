@@ -26,6 +26,6 @@ public class Stick implements CustomSkyBlockItem, DefaultCraftable {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }

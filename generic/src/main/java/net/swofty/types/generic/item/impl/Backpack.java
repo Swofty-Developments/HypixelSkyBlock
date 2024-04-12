@@ -11,7 +11,7 @@ public interface Backpack extends CustomSkyBlockItem, SkullHead, Interactable, U
     int getRows();
 
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     default void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {

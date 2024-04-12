@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface GemstoneImpl extends CustomSkyBlockItem, SkullHead {
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     GemRarity getAssociatedGemRarity();

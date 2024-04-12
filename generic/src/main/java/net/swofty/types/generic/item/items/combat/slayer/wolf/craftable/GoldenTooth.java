@@ -23,7 +23,7 @@ public class GoldenTooth implements CustomSkyBlockItem, Sellable, DefaultCraftab
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

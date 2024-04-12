@@ -7,6 +7,6 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class WormMembrane implements CustomSkyBlockItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }
