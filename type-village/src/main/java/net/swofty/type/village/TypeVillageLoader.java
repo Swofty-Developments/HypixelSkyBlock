@@ -16,6 +16,7 @@ import net.swofty.type.village.tab.VillageServerModule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.bazaar.BazaarCategories;
+import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
@@ -126,14 +127,18 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<SkyBlockVillagerNPC> getVillagerNPCs() {
-        List<SkyBlockVillagerNPC> npcs = new ArrayList<>();
-
-        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.village.villagers",
-                NPCVillagerDialogue.class
+                SkyBlockVillagerNPC.class
         ).toList());
+    }
 
-        return npcs;
+    @Override
+    public List<SkyBlockAnimalNPC> getAnimalNPCs() {
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.village.animalnpcs",
+                SkyBlockAnimalNPC.class
+        ).toList());
     }
 
     @Override

@@ -32,6 +32,7 @@ import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.*;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
+import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.entity.mob.MobRegistry;
@@ -153,6 +154,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             typeLoader.getNPCs().forEach(SkyBlockNPC::register);
             typeLoader.getVillagerNPCs().forEach(SkyBlockVillagerNPC::register);
+            typeLoader.getAnimalNPCs().forEach(SkyBlockAnimalNPC::register);
         }
 
         /**
