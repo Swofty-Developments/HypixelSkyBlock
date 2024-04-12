@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class UndeadCatalyst implements CustomSkyBlockItem, SkullHead, Sellable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

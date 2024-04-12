@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class EnchantedBook implements CustomSkyBlockItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

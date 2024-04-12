@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class ManaDisintegrator implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, Unstackable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

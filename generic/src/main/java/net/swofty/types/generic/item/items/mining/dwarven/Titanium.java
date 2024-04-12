@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class Titanium implements CustomSkyBlockItem, Sellable, SkillableMine, SkullHead {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

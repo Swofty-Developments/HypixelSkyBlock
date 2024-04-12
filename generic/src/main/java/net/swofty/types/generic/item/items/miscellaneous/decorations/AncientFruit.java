@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 public class AncientFruit implements CustomSkyBlockItem , DecorationHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

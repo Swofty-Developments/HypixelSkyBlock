@@ -18,7 +18,7 @@ import java.util.List;
 public class MoveJerry implements CustomSkyBlockItem, Interactable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

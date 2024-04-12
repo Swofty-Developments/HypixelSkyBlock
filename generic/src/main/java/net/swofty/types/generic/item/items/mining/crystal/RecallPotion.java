@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class RecallPotion implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

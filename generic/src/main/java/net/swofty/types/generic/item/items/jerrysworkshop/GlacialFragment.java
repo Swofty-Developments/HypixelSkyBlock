@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class GlacialFragment implements CustomSkyBlockItem, SkullHead, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

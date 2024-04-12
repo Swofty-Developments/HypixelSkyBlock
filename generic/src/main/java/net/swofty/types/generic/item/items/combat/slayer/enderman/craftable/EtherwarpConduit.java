@@ -27,7 +27,7 @@ public class EtherwarpConduit implements CustomSkyBlockItem, DefaultCraftable, S
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

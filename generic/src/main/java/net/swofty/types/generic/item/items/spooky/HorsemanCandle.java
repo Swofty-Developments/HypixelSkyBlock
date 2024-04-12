@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class HorsemanCandle implements CustomSkyBlockItem, SkullHead, CustomDisplayName, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

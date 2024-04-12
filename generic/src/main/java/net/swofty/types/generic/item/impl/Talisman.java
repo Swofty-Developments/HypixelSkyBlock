@@ -22,6 +22,6 @@ public interface Talisman extends CustomSkyBlockItem, SkullHead, ExtraRarityDisp
 
     @Override
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 }

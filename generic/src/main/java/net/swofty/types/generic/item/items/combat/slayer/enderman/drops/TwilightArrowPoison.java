@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class TwilightArrowPoison implements CustomSkyBlockItem, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

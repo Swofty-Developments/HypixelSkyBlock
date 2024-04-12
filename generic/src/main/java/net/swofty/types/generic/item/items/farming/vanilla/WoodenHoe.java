@@ -15,7 +15,7 @@ public class WoodenHoe implements CustomSkyBlockItem, StandardItem, DefaultCraft
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

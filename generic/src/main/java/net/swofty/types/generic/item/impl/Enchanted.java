@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public interface Enchanted extends CustomSkyBlockItem {
     @Override
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     default SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {

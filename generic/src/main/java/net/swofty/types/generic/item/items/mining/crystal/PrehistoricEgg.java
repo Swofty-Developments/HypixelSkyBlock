@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class PrehistoricEgg implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

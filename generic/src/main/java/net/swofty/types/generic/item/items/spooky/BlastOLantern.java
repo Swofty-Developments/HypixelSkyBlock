@@ -14,7 +14,7 @@ import java.util.*;
 public class BlastOLantern implements CustomSkyBlockItem, SkullHead, Sellable, CustomDisplayName, DefaultCraftable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public class BlazeRodDistillate implements CustomSkyBlockItem, SkullHead, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

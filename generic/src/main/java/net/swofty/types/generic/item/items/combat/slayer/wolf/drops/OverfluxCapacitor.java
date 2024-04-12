@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class OverfluxCapacitor implements CustomSkyBlockItem, Enchanted, Unstackable, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

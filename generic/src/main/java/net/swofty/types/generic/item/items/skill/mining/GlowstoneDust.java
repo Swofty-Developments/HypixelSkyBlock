@@ -21,7 +21,7 @@ public class GlowstoneDust implements CustomSkyBlockItem, SkillableMine, Sellabl
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override

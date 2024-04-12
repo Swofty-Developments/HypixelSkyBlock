@@ -26,7 +26,7 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interac
     int particleId();
     SkillCategories getSkillCategory();
     default ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
     default void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
         interact(player, item);

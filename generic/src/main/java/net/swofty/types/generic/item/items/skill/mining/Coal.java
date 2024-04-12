@@ -33,7 +33,7 @@ public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, Minion
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.EMPTY;
+        return ItemStatistics.empty();
     }
 
     @Override
