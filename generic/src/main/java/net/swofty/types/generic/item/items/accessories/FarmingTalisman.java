@@ -51,6 +51,7 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman, NotFinis
         player.getStatistics().boostStatistic(TemporaryStatistic.builder()
                 .withStatistic(ItemStatistic.SPEED)
                 .withValue(10D)
+                        .withExpirationInTicks(10*20)
                 .build());
     }
 }
