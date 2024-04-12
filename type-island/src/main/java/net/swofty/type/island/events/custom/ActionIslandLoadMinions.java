@@ -60,17 +60,22 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
 
             long timeBetweenActions = tier.timeBetweenActions();
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
-            if (minionFuel != null) {
-                double percentageSpeedIncrease = ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-                // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
 
-                for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
-                    if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
-                        percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
-                    }
-                }
-                timeBetweenActions = (long) (timeBetweenActions * (1 - (percentageSpeedIncrease / 100)));
+            //Handle percentage speed increase from both fuels and minion upgrades
+            double percentageSpeedIncrease = 0;
+            if (minionFuel != null) {
+                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
             }
+
+            //Handle speed increases from minion upgrades
+            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
+                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                }
+            }
+
+            // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
+            timeBetweenActions = (long) (timeBetweenActions / (1 + (percentageSpeedIncrease / 100)));
 
             int amountOfActions = Math.round((float) (currentTime - lastSaved) / (timeBetweenActions * 1000L));
 
