@@ -233,6 +233,24 @@ public class AttributeHandler {
         return ((ItemAttributeRecombobulated) item.getAttribute("recombobulated")).getValue();
     }
 
+    public boolean isMithrilInfused(){
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
+        if (item.getGenericInstance() instanceof Minion) {
+            return ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).getValue();
+        } else {
+            throw new RuntimeException("Item is not a minion");
+        }
+    }
+
+    public void setMithrilInfused(boolean value){
+        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
+        if (item.getGenericInstance() instanceof Minion) {
+            ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).setValue(value);
+        } else {
+            throw new RuntimeException("Item is not a minion");
+        }
+    }
+
     public int getBreakingPower() {
         return ((ItemAttributeBreakingPower) item.getAttribute("breaking_power")).getValue();
     }
