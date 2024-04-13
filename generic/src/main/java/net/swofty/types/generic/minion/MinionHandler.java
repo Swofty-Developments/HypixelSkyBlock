@@ -49,21 +49,9 @@ public record MinionHandler(Scheduler scheduler) {
             long lastAction = islandMinion.getLastAction();
             MinionExtensionData extensionData = islandMinion.getExtensionData();
             long timeBetweenActions = tier.timeBetweenActions() * 1000L;
-            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
 
             //Handle percentage speed increase from both fuels and minion upgrades
-            double percentageSpeedIncrease = 0;
-            if (minionFuel != null) {
-                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-            }
-
-            //Handle speed increases from minion upgrades
-            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
-                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
-                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
-                }
-            }
-
+            double percentageSpeedIncrease = islandMinion.getSpeedPercentage();
             timeBetweenActions = (long) (timeBetweenActions / (1 + (percentageSpeedIncrease / 100)));
 
             if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;

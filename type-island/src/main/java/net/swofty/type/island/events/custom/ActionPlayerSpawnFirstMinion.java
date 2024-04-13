@@ -29,7 +29,8 @@ public class ActionPlayerSpawnFirstMinion extends SkyBlockEvent {
             IslandMinionData.IslandMinion minion = event.getIsland().getMinionData().initializeMinion(
                     new Pos(-4, 100, 28), // Default Cobble Minion position
                     MinionRegistry.COBBLESTONE,
-                    new ItemAttributeMinionData.MinionData(1, 0)
+                    new ItemAttributeMinionData.MinionData(1, 0),
+                    false
             );
 
             event.getIsland().getMinionData().spawn(minion);

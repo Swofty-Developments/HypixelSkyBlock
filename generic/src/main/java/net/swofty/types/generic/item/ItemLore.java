@@ -66,6 +66,11 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
+            if (item.getGenericInstance() instanceof AnvilCombinable) {
+                addLoreLine("§8Combinable in Anvil");
+                addLoreLine(null);
+            }
+
             // Handle Item Statistics
             if (handler.isMiningTool()) {
                 addLoreLine("§8Breaking Power " + handler.getBreakingPower());

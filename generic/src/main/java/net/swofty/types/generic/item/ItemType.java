@@ -37,6 +37,7 @@ import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
 import net.swofty.types.generic.item.items.minion.upgrade.fuel.BlockofCoal;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
@@ -147,6 +148,8 @@ public enum ItemType {
     FLY_CATCHER(Material.COBWEB, Rarity.EPIC, FlyCatcher.class),
     DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE, DiamondSpreading.class),
     MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.RARE, MinionExpander.class),
+
+    MITHRIL_INFUSION(Material.PLAYER_HEAD, Rarity.UNCOMMON, MithrilInfusion.class),
 
     /**
      * Pets
