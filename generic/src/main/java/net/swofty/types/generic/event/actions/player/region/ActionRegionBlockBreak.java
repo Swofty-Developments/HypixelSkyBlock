@@ -5,6 +5,7 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
@@ -46,6 +47,8 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             return;
         }
 
+
+
         RegionType type = region.getType();
 
         Block block = playerBreakEvent.getBlock();
@@ -55,6 +58,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), playerBreakEvent.getBlockPosition()).contains(material)) {
             return;
         }
+
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
 
