@@ -50,7 +50,6 @@ public class VillagerVex extends NPCVillagerDialogue {
                 }
             }
         }
-
         setDialogue(e.player(), "hello");
     }
 

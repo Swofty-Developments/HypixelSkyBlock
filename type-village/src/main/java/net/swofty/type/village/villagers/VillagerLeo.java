@@ -54,7 +54,6 @@ public class VillagerLeo extends NPCVillagerDialogue {
                 }
             }
         }
-
         setDialogue(e.player(), "hello");
     }
 

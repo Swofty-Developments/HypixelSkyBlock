@@ -8,19 +8,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FireTalisman implements Talisman, NotFinishedYet {
-    @Override
-    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc";
-    }
-
+public class LavaTalisman implements Talisman, NotFinishedYet {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Provides immunity against damage",
-                "§7from §cFire§7.",
+                "§7from §omost §cLava§7.",
                 "",
                 "§7While in the §cCrimson Isle§7, grants",
-                "§7a §a20% §7damage reduction instead."
-        );
+                "§7a §a20% §7damage reduction instead.");
+    }
+
+    @Override
+    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return "1c73b35c-ecd3-3f79-a79a-c68e72841b56";
     }
 }
