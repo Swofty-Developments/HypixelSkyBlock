@@ -9,6 +9,12 @@ import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.*;
 import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.armor.*;
+import net.swofty.types.generic.item.items.armor.celeste.*;
+import net.swofty.types.generic.item.items.armor.mercenary.*;
+import net.swofty.types.generic.item.items.armor.mineroutfit.*;
+import net.swofty.types.generic.item.items.armor.rosetta.*;
+import net.swofty.types.generic.item.items.armor.squire.*;
+import net.swofty.types.generic.item.items.armor.starlight.*;
 import net.swofty.types.generic.item.items.backpacks.*;
 import net.swofty.types.generic.item.items.combat.*;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.DaedalusAxe;
@@ -69,6 +75,10 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
+import net.swofty.types.generic.item.items.vanilla.armor.IronBoots;
+import net.swofty.types.generic.item.items.vanilla.armor.IronChestplate;
+import net.swofty.types.generic.item.items.vanilla.armor.IronHelmet;
+import net.swofty.types.generic.item.items.vanilla.armor.IronLeggings;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
@@ -145,10 +155,14 @@ public enum ItemType {
     SUPER_COMPACTOR_3000(Material.DISPENSER, Rarity.RARE, SuperCompactor3000.class),
     BUDGET_HOPPER(Material.HOPPER, Rarity.UNCOMMON, BudgetHopper.class),
     ENCHANTED_HOPPER(Material.HOPPER, Rarity.RARE, EnchantedHopper.class),
-    BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
     FLY_CATCHER(Material.COBWEB, Rarity.EPIC, FlyCatcher.class),
     DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE, DiamondSpreading.class),
     MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.RARE, MinionExpander.class),
+
+    /**
+     * Minion Skins
+     */
+    BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON, BeeMinionSkin.class),
 
     /**
      * Pets
@@ -412,6 +426,26 @@ public enum ItemType {
     FARM_SUIT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, FarmSuitChestplate.class),
     FARM_SUIT_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, FarmSuitLeggings.class),
     FARM_SUIT_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, FarmSuitBoots.class),
+    ROSETTA_HELMET(Material.DIAMOND_HELMET, Rarity.UNCOMMON, RosettaHelmet.class),
+    ROSETTA_CHESTPLATE(Material.DIAMOND_CHESTPLATE, Rarity.UNCOMMON, RosettaChestplate.class),
+    ROSETTA_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.UNCOMMON, RosettaLeggings.class),
+    ROSETTA_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, RosettaBoots.class),
+    SQUIRE_HELMET(Material.CHAINMAIL_HELMET, Rarity.UNCOMMON, SquireHelmet.class),
+    SQUIRE_CHESTPLATE(Material.IRON_CHESTPLATE, Rarity.UNCOMMON, SquireChestplate.class),
+    SQUIRE_LEGGINGS(Material.CHAINMAIL_LEGGINGS, Rarity.UNCOMMON, SquireLeggings.class),
+    SQUIRE_BOOTS(Material.LEATHER_BOOTS, Rarity.UNCOMMON, SquireBoots.class),
+    MERCENARY_HELMET(Material.CHAINMAIL_HELMET, Rarity.RARE, MercenaryHelmet.class),
+    MERCENARY_CHESTPLATE(Material.IRON_CHESTPLATE, Rarity.RARE, MercenaryChestplate.class),
+    MERCENARY_LEGGINGS(Material.CHAINMAIL_LEGGINGS, Rarity.RARE, MercenaryLeggings.class),
+    MERCENARY_BOOTS(Material.LEATHER_BOOTS, Rarity.RARE, MercenaryBoots.class),
+    CELESTE_HELMET(Material.LEATHER_HELMET, Rarity.UNCOMMON, CelesteHelmet.class),
+    CELESTE_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.UNCOMMON, CelesteChestplate.class),
+    CELESTE_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.UNCOMMON, CelesteLeggings.class),
+    CELESTE_BOOTS(Material.LEATHER_BOOTS, Rarity.UNCOMMON, CelesteBoots.class),
+    STARLIGHT_HELMET(Material.GOLDEN_HELMET, Rarity.RARE, StarlightHelmet.class),
+    STARLIGHT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.RARE, StarlightChestplate.class),
+    STARLIGHT_LEGGINGS(Material.GOLDEN_LEGGINGS, Rarity.RARE, StarlightLeggings.class),
+    STARLIGHT_BOOTS(Material.LEATHER_BOOTS, Rarity.RARE, StarlightBoots.class),
 
     /**
      * Pickaxes
@@ -445,6 +479,8 @@ public enum ItemType {
     PRISMARINE_BLADE(Material.PRISMARINE_SHARD, Rarity.UNCOMMON, PrismarineBlade.class),
     SILVER_FANG(Material.GHAST_TEAR, Rarity.UNCOMMON, SilverFang.class),
     ASPECT_OF_THE_END(Material.DIAMOND_SWORD, Rarity.RARE, AspectOfTheEnd.class),
+    SQUIRE_SWORD(Material.IRON_SWORD, Rarity.UNCOMMON, SquireSword.class),
+    MERCENARY_AXE(Material.IRON_AXE, Rarity.RARE, MercenaryAxe.class),
 
     /**
      * Shovels
@@ -674,6 +710,10 @@ public enum ItemType {
     WATER_BOTTLE(Material.POTION, Rarity.COMMON),
     CACTUS(Material.CACTUS, Rarity.COMMON, Cactus.class),
     CHEST(Material.CHEST, Rarity.COMMON),
+    IRON_HELMET(Material.IRON_HELMET, Rarity.COMMON, IronHelmet.class),
+    IRON_CHESTPLATE(Material.IRON_CHESTPLATE, Rarity.COMMON, IronChestplate.class),
+    IRON_LEGGINGS(Material.IRON_LEGGINGS, Rarity.COMMON, IronLeggings.class),
+    IRON_BOOTS(Material.IRON_BOOTS, Rarity.COMMON, IronBoots.class),
 
     /**
      * Enchanted Items
