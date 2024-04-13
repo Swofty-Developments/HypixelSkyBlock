@@ -1,7 +1,7 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.village.gui.GUIRosetta;
+import net.swofty.type.village.gui.rosetta.GUIRosetta;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
@@ -40,5 +40,4 @@ public class NPCRosetta extends SkyBlockNPC {
     public void onClick(PlayerClickNPCEvent e) {
        new GUIRosetta().open(e.player());
     }
-
 }

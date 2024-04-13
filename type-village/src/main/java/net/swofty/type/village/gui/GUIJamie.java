@@ -32,7 +32,7 @@ public class GUIJamie extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
-                "§7Damage: §c+20",
+                        "§7Damage: §c+20",
                         "",
                         "§6Ability: Speed Boost §e§lRIGHT CLICK",
                         "§7Grants §f+100✦ Speed §7for",
