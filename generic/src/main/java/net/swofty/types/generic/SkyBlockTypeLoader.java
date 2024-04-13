@@ -6,6 +6,7 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
@@ -39,6 +40,8 @@ public interface SkyBlockTypeLoader {
     List<SkyBlockNPC> getNPCs();
 
     List<SkyBlockVillagerNPC> getVillagerNPCs();
+
+    List<SkyBlockAnimalNPC> getAnimalNPCs();
 
     List<ServiceType> getRequiredServices();
 

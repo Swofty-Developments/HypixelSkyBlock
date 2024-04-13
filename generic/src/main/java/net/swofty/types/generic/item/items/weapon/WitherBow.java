@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WitherBow extends SkyBlockValueEvent implements CustomSkyBlockItem, BowImpl, NotFinishedYet {
+public class WitherBow extends SkyBlockValueEvent implements CustomSkyBlockItem, BowImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()

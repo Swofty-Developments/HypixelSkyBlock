@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.commons.ServerType;
+import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
@@ -48,6 +49,9 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         ActionPlayerFall.fallHeight.remove(player);
         player.getPetData().updatePetEntityImpl(null);
         SkyBlockNPC.getNpcs().forEach((npc, entity) -> {
+            entity.clearCache(player);
+        });
+        SkyBlockAnimalNPC.getAnimalNPCs().forEach((npc, entity) -> {
             entity.clearCache(player);
         });
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {

@@ -238,7 +238,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             ShopItem item = p.get(i);
             SkyBlockItem sbItem = item.item;
 
-            ShopPrice price = item.price.multiply(item.amount);
+            ShopPrice price = item.price;
             ShopPrice stackPrice = item.price.divide(item.modifier);
 
             set(new GUIClickableItem(slot) {

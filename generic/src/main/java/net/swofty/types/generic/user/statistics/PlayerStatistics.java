@@ -46,6 +46,7 @@ public class PlayerStatistics {
     private double manaRegenerationPercentBonus;
     private ItemStatistics accessoryStatistics = ItemStatistics.builder().build();
     private final List<TemporaryStatistic> temporaryStatistics = Collections.synchronizedList(new ArrayList<>());
+    private final List<TemporaryConditionalStatistic> temporaryConditionalStatistics = Collections.synchronizedList(new ArrayList<>());
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -245,6 +246,13 @@ public class PlayerStatistics {
                         .build());
             }
 
+            temporaryConditionalStatistics.removeIf(temporaryStatistic -> !temporaryStatistic.getExpiry().apply(player));
+            for (TemporaryConditionalStatistic temporaryStatistic : temporaryConditionalStatistics) {
+                statistics = statistics.add(ItemStatistics.builder()
+                        .with(temporaryStatistic.getStatistic(), temporaryStatistic.getValue())
+                        .build());
+            }
+
             return statistics;
         }
     }
@@ -298,6 +306,10 @@ public class PlayerStatistics {
 
     public void boostStatistic(TemporaryStatistic temporaryStatistic) {
         temporaryStatistics.add(temporaryStatistic);
+    }
+
+    public void boostStatistic(TemporaryConditionalStatistic temporaryStatistic) {
+        temporaryConditionalStatistics.add(temporaryStatistic);
     }
 
     public void boostHealthRegeneration(double percent, int ticks) {
