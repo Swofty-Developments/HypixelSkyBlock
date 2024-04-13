@@ -15,29 +15,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IronBoots implements CustomSkyBlockItem, StandardItem, DefaultCraftable {
+public class LeatherChestplate implements CustomSkyBlockItem, StandardItem, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 15D)
-                .with(ItemStatistic.DEFENSE, 10D)
+                .with(ItemStatistic.DEFENSE, 15D)
                 .build();
     }
 
     @Override
     public StandardItemType getStandardItemType() {
-        return StandardItemType.BOOTS;
+        return StandardItemType.CHESTPLATE;
     }
-
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.IRON_INGOT, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.LEATHER, 1));
         ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "A A",
-                "A A");
+                "AAA",
+                "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.IRON_BOOTS), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.LEATHER_CHESTPLATE), ingredientMap, pattern);
     }
 }

@@ -75,10 +75,7 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.vanilla.*;
-import net.swofty.types.generic.item.items.vanilla.armor.IronBoots;
-import net.swofty.types.generic.item.items.vanilla.armor.IronChestplate;
-import net.swofty.types.generic.item.items.vanilla.armor.IronHelmet;
-import net.swofty.types.generic.item.items.vanilla.armor.IronLeggings;
+import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
@@ -714,6 +711,11 @@ public enum ItemType {
     IRON_CHESTPLATE(Material.IRON_CHESTPLATE, Rarity.COMMON, IronChestplate.class),
     IRON_LEGGINGS(Material.IRON_LEGGINGS, Rarity.COMMON, IronLeggings.class),
     IRON_BOOTS(Material.IRON_BOOTS, Rarity.COMMON, IronBoots.class),
+    LEATHER_HELMET(Material.LEATHER_HELMET, Rarity.COMMON, LeatherHelmet.class),
+    LEATHER_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeatherChestplate.class),
+    LEATHER_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeatherLeggings.class),
+    LEATHER_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, LeatherBoots.class),
+
 
     /**
      * Enchanted Items
