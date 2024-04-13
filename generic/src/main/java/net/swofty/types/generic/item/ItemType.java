@@ -715,6 +715,14 @@ public enum ItemType {
     LEATHER_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeatherChestplate.class),
     LEATHER_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeatherLeggings.class),
     LEATHER_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, LeatherBoots.class),
+    GOLDEN_HELMET(Material.GOLDEN_HELMET, Rarity.COMMON, GoldenHelmet.class),
+    GOLDEN_CHESTPLATE(Material.GOLDEN_CHESTPLATE, Rarity.COMMON, GoldenChestplate.class),
+    GOLDEN_LEGGINGS(Material.GOLDEN_LEGGINGS, Rarity.COMMON, GoldenLeggings.class),
+    GOLDEN_BOOTS(Material.GOLDEN_BOOTS, Rarity.COMMON, GoldenBoots.class),
+    DIAMOND_HELMET(Material.DIAMOND_HELMET, Rarity.UNCOMMON, DiamondHelmet.class),
+    DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, Rarity.UNCOMMON, DiamondChestplate.class),
+    DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.UNCOMMON, DiamondLeggings.class),
+    DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, DiamondBoots.class),
 
 
     /**
