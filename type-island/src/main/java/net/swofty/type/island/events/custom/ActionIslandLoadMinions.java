@@ -62,17 +62,7 @@ public class ActionIslandLoadMinions extends SkyBlockEvent {
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
 
             //Handle percentage speed increase from both fuels and minion upgrades
-            double percentageSpeedIncrease = 0;
-            if (minionFuel != null) {
-                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
-            }
-
-            //Handle speed increases from minion upgrades
-            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
-                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
-                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
-                }
-            }
+            double percentageSpeedIncrease = data.getSpeedPercentage();
 
             // Decrease timeBetweenActions by the percentage speed increase, so if above is 300, then it's 3x faster
             timeBetweenActions = (long) (timeBetweenActions / (1 + (percentageSpeedIncrease / 100)));

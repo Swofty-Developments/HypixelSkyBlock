@@ -10,7 +10,11 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMithrilInfusion;
+import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
+import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.user.SkyBlockIsland;
 
 import java.util.*;
@@ -25,14 +29,15 @@ public class IslandMinionData {
     }
 
     public IslandMinion initializeMinion(
-            Pos position, MinionRegistry minion, ItemAttributeMinionData.MinionData previousData) {
+            Pos position, MinionRegistry minion, ItemAttributeMinionData.MinionData previousData, boolean mithrilInfusion) {
         IslandMinion islandMinion = new IslandMinion(
                 UUID.randomUUID(), position, minion,
                 previousData.tier(), new ArrayList<>(),
                 previousData.generatedResources(),
                 System.currentTimeMillis(), null,
                 new MinionHandler.InternalMinionTags(),
-                new MinionExtensionData());
+                new MinionExtensionData(),
+                mithrilInfusion);
         minions.add(islandMinion);
         return islandMinion;
     }
@@ -55,6 +60,7 @@ public class IslandMinionData {
         private MinionEntityImpl minionEntity;
         private MinionHandler.InternalMinionTags internalMinionTags;
         private final MinionExtensionData extensionData;
+        private boolean mithrilInfusion;
 
         public void spawnMinion(SharedInstance instance) {
             minionEntity = new MinionEntityImpl(this, minion.asSkyBlockMinion());
@@ -100,6 +106,7 @@ public class IslandMinionData {
                     getTier(),
                     getGeneratedItems()
             ));
+            toReturn.getAttributeHandler().setMithrilInfused(mithrilInfusion);
             return toReturn;
         }
 
@@ -118,7 +125,31 @@ public class IslandMinionData {
             data.put("generatedItems", generatedItems);
             data.put("minionUUID", minionUUID.toString());
             data.put("extensionData", extensionData.toString());
+            data.put("mithrilInfusion", mithrilInfusion);
             return data;
+        }
+
+        public int getSpeedPercentage(){//Handle percentage speed increase from both fuels and minion upgrades
+            int percentageSpeedIncrease = 0;
+
+            //Handle Mithril Infusion
+            if(isMithrilInfusion())
+                percentageSpeedIncrease += 10;
+
+            //Handle Minion Fuel
+            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+            if (minionFuel != null) {
+                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
+            }
+
+            //Handle speed increases from minion upgrades
+            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
+                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                }
+            }
+
+            return percentageSpeedIncrease;
         }
 
         public static IslandMinion deserialize(Map<String, Object> data) {
@@ -149,7 +180,8 @@ public class IslandMinionData {
                     System.currentTimeMillis(),
                     null,
                     new MinionHandler.InternalMinionTags(),
-                    extensionData
+                    extensionData,
+                    data.containsKey("mithrilInfusion") && (boolean) data.get("mithrilInfusion")
             );
         }
     }

@@ -19,6 +19,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -91,7 +92,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
         IslandMinionData minionData = player.getSkyBlockIsland().getMinionData();
 
-        if (minionData.getMinions().size() == slots) {
+        if (minionData.getMinions().size() >= slots) {
             player.sendMessage("§cYou have reached the maximum amount of minions you can place!");
             event.setCancelled(true);
             return;
@@ -99,7 +100,8 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
         IslandMinionData.IslandMinion minion = minionData.initializeMinion(Pos.fromPoint(event.getBlockPosition()),
                 getMinionRegistry(),
-                item.getAttributeHandler().getMinionData());
+                item.getAttributeHandler().getMinionData(),
+                item.getAttributeHandler().isMithrilInfused());
         minionData.spawn(minion);
 
         event.setBlock(Block.AIR);
@@ -141,9 +143,18 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
         SkyBlockMinion minion = item.getAttributeHandler().getMinionType().asSkyBlockMinion();
         ItemAttributeMinionData.MinionData data = item.getAttributeHandler().getMinionData();
+        boolean mithrilInfusion = item.getAttributeHandler().isMithrilInfused();
         SkyBlockMinion.MinionTier tier = minion.getTiers().get(data.tier() - 1);
 
-        lore.add("§7Time Between Actions: §a" + tier.timeBetweenActions() + "s");
+        int percentageSpeed = 0;
+        if(mithrilInfusion)
+            percentageSpeed += 10;
+
+        double timeBetweenActions = tier.timeBetweenActions() / (1. + percentageSpeed/100.);
+
+        final DecimalFormat formattter = new DecimalFormat("#.##");
+
+        lore.add("§7Time Between Actions: §a" + formattter.format(timeBetweenActions) + "s");
         lore.add("§7Max Storage: §e" + tier.storage());
         lore.add("§7Resources Generated: §b" + data.generatedResources());
 
