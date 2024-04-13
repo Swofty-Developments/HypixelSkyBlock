@@ -2,10 +2,9 @@ package net.swofty.type.village.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.swofty.type.village.gui.GUIJamie;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
@@ -48,11 +47,13 @@ public class VillagerJamie extends NPCVillagerDialogue {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        e.player().addAndUpdateItem(new SkyBlockItem(ItemType.ROGUE_SWORD, 1));
+                        new GUIJamie().open(e.player());
                     });
+                    return;
                 }
             }
         }
+        setDialogue(e.player(), "hello");
     }
 
     @Override
@@ -61,6 +62,11 @@ public class VillagerJamie extends NPCVillagerDialogue {
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
                                 "§e[NPC] Jamie§f: You might have noticed that you have a Mana bar!",
+                                "§e[NPC] Jamie§f: Some items have mysterious properties, called Abilities.",
+                                "§e[NPC] Jamie§f: Abilities use your Mana as a resource. Here, take this Rogue Sword. I don't need it!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("hello").lines(new String[]{
                                 "§e[NPC] Jamie§f: Some items have mysterious properties, called Abilities.",
                                 "§e[NPC] Jamie§f: Abilities use your Mana as a resource. Here, take this Rogue Sword. I don't need it!"
                         }).build()

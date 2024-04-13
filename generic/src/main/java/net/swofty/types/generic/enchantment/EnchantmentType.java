@@ -19,6 +19,7 @@ public enum EnchantmentType {
     PROTECTION(EnchantmentProtection.class),
     CRITICAL(EnchantmentCritical.class),
     FIRST_STRIKE(EnchantmentFirstStrike.class),
+    GROWTH(EnchantmentGrowth.class),
     ;
 
     private final Class<? extends Ench> clazz;
