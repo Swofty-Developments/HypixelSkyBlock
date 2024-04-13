@@ -1,12 +1,10 @@
 package net.swofty.type.village.gui;
 
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIShopWeaponsmith extends SkyBlockShopGUI{
 
@@ -21,7 +19,7 @@ public class GUIShopWeaponsmith extends SkyBlockShopGUI{
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.SPIDER_SWORD), 1, new CoinShopPrice(100), 1));
         attachItem(ShopItem.Single(new SkyBlockItem(Material.DIAMOND_SWORD), 1, new CoinShopPrice(60), 1));
         attachItem(ShopItem.Single(new SkyBlockItem(Material.BOW), 1, new CoinShopPrice(25), 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ARROW), 12, new CoinShopPrice(40), 1));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ARROW), 1, new CoinShopPrice(3), 1));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WITHER_BOW), 1, new CoinShopPrice(250), 1));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ARTISANAL_SHORTBOW), 1, new CoinShopPrice(600), 1));
     }
