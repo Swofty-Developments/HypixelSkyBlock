@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.armor;
+package net.swofty.types.generic.item.items.armor.farmsuit;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
