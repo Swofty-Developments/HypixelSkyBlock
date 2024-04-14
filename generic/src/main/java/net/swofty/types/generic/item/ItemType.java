@@ -598,6 +598,7 @@ public enum ItemType {
      * Vanilla Items
      */
     CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON , CraftingTable.class),
+    ANVIL(Material.ANVIL, Rarity.COMMON , Anvil.class),
     OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON , OakPlanks.class),
     STICK(Material.STICK, Rarity.COMMON, Stick.class),
     ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.COMMON, Acacia.class),
