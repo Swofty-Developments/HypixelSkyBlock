@@ -8,8 +8,15 @@ import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.*;
 import net.swofty.types.generic.item.items.accessories.dungeon.*;
-import net.swofty.types.generic.item.items.armor.*;
 import net.swofty.types.generic.item.items.armor.celeste.*;
+import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitBoots;
+import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitChestplate;
+import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitHelmet;
+import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitLeggings;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletHat;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletPants;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletSandals;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletTunic;
 import net.swofty.types.generic.item.items.armor.mercenary.*;
 import net.swofty.types.generic.item.items.armor.mineroutfit.*;
 import net.swofty.types.generic.item.items.armor.rosetta.*;
@@ -727,6 +734,7 @@ public enum ItemType {
     DIAMOND_CHESTPLATE(Material.DIAMOND_CHESTPLATE, Rarity.UNCOMMON, DiamondChestplate.class),
     DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.UNCOMMON, DiamondLeggings.class),
     DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, DiamondBoots.class),
+    APPLE(Material.APPLE, Rarity.COMMON),
 
 
     /**
