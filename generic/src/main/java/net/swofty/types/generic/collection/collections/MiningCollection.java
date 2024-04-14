@@ -16,6 +16,8 @@ import net.swofty.types.generic.item.items.crimson.EnchantedSulphurCube;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.mining.crystal.ConcentratedStone;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
+import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -794,6 +796,59 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_RUBY_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedJade.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JADE_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_SAPPHIRE_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_AMETHYST_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_AMBER_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_TOPAZ_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawedJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JASPER_GEM);
+                            }
+                        },new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(1000, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(2500, new UnlockXP() {
+                            @Override
+                            public int xp() {
+                                return 4;
+                            }
+                        }),
+                        new ItemCollectionReward(5000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
                                 return getStandardEnchantedRecipe(FineRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_RUBY_GEM);
                             }
                         }, new UnlockRecipe() {
@@ -826,25 +881,7 @@ public class MiningCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return getStandardEnchantedRecipe(FineJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_JASPER_GEM);
                             }
-                        },new UnlockXP() {
-                            @Override
-                            public int xp() {
-                                return 4;
-                            }
-                        }),
-                        new ItemCollectionReward(1000, new UnlockXP() {
-                            @Override
-                            public int xp() {
-                                return 4;
-                            }
-                        }),
-                        new ItemCollectionReward(2500, new UnlockXP() {
-                            @Override
-                            public int xp() {
-                                return 4;
-                            }
-                        }),
-                        new ItemCollectionReward(5000, new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -866,7 +903,42 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {return 4;
                             }
                         }),
-                        new ItemCollectionReward(500000, new UnlockXP() {
+                        new ItemCollectionReward(500000, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_RUBY_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessJade.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_JADE_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_SAPPHIRE_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_AMETHYST_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_AMBER_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_TOPAZ_GEM);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return getStandardEnchantedRecipe(FlawlessJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_JASPER_GEM);
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {return 4;
                             }
