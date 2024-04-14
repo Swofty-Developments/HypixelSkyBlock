@@ -37,6 +37,12 @@ public class ActionPlayerTravel extends SkyBlockEvent {
         NamespaceID block = player.getInstance().getBlock(player.getPosition()).namespace();
 
         if (block == Block.NETHER_PORTAL.namespace()) {
+
+            if (!MissionSet.GETTING_STARTED.hasCompleted(player)) {
+                player.sendMessage("§cYou must complete your starting missions!");
+                return;
+            }
+
             player.sendTo(ServerType.VILLAGE);
             delay.add(player.getUuid());
 
