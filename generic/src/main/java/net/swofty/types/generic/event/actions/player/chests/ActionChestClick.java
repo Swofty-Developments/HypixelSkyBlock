@@ -27,7 +27,9 @@ public class ActionChestClick extends SkyBlockEvent {
 
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!SkyBlockConst.isIslandServer()) return;
+
         if (!event.getBlock().name().equals("minecraft:chest")) return;
+        event.setBlockingItemUse(true);
 
         Instance instance = event.getInstance();
         Point position = event.getBlockPosition();
