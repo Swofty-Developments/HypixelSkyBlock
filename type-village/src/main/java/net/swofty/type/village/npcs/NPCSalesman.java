@@ -1,16 +1,21 @@
 package net.swofty.type.village.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
-public class NPCSalesman extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCSalesman extends NPCDialogue {
 
     public NPCSalesman() {
         super(new NPCParameters() { //different name and skin for each season
             @Override
             public String[] holograms() {
-                return new String[]{"§9Salesman", "§e§lCLICK"};
+                return new String[]{"§bSalesman", "§e§lCLICK"};
             }
 
             @Override
@@ -36,8 +41,18 @@ public class NPCSalesman extends SkyBlockNPC {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+    public void onClick(PlayerClickNPCEvent event) {
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Thank you for supporting the server and allowing us maintain SkyBlock!",
+                                "If you want to support us, head over to the Hypixel Store§b store.hypixel.net"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }
+
