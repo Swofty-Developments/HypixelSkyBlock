@@ -58,7 +58,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE, ""), 45 , 53);
 
         set(GUIClickableItem.getCloseItem(49));
-        set(new GUIItem(13) {
+        set(new GUIItem(resultSlot) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
@@ -309,12 +309,10 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(13) {
+        set(new GUIClickableItem(resultSlot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                SkyBlockItem result = new SkyBlockItem(e.getClickedItem());
-
-                player.addAndUpdateItem(result);
+                giveResult(e.getInventory(),player);
                 new GUIAnvil().open(player);
             }
 
@@ -330,6 +328,12 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
     public void giveResult(Inventory inventory, SkyBlockPlayer player){
         if(get(resultSlot) instanceof GUIClickableItem){
             player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(resultSlot)));
+            set(new GUIItem(resultSlot) {
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
+                }
+            });
         }
     }
 
