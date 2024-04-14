@@ -44,7 +44,7 @@ public class GUIRosetta extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§eRosetta's Armor", Material.DIAMOND_HELMET, 1,
                         "§7Custom-designed and",
-                        "hand-crafted diamond armor.",
+                        "§7hand-crafted diamond armor.",
                         "",
                         "§eClick to view set!");
             }
@@ -60,7 +60,7 @@ public class GUIRosetta extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§eSquire Armor", Material.CHAINMAIL_HELMET, 1,
                         "§7Solid set to venture into the",
-                        "deep caverns.",
+                        "§7deep caverns.",
                         "",
                         "§eClick to view set!");
             }
@@ -76,7 +76,7 @@ public class GUIRosetta extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§eMercenary Armor", Material.IRON_HELMET, 1,
                         "§7Kickstart your warrior",
-                        "journey!",
+                        "§7journey!",
                         "",
                         "§eClick to view set!");
             }
@@ -92,7 +92,7 @@ public class GUIRosetta extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§eCeleste Armor", Material.LEATHER_HELMET, 1,
                         "§7Dip a toe into the world of",
-                        "magic.",
+                        "§7magic.",
                         "",
                         "§eClick to view set!");
             }

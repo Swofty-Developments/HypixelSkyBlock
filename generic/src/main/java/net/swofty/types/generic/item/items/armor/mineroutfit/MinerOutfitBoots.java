@@ -5,7 +5,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class MinerOutfitBoots implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
+public class MinerOutfitBoots implements CustomSkyBlockItem, CustomDisplayName, StandardItem, LeatherColour, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -24,5 +24,10 @@ public class MinerOutfitBoots implements CustomSkyBlockItem, StandardItem, Leath
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.BOOTS;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Miner's Outfit Boots";
     }
 }

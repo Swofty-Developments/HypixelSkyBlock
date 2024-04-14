@@ -4,10 +4,12 @@ import lombok.Getter;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.sets.LeafletSet;
+import net.swofty.types.generic.item.set.sets.MinerOutfitSet;
 
 @Getter
 public enum ArmorSetRegistry {
     LEAFLET(LeafletSet.class, ItemType.LEAFLET_SANDALS, ItemType.LEAFLET_PANTS, ItemType.LEAFLET_TUNIC, ItemType.LEAFLET_HAT),
+    MINOR_OUTFIT(MinerOutfitSet.class, ItemType.MINERS_OUTFIT_BOOTS, ItemType.MINERS_OUTFIT_LEGGINGS, ItemType.MINERS_OUTFIT_CHESTPLATE, ItemType.MINERS_OUTFIT_HELMET),
     ;
 
     private final Class<? extends ArmorSet> clazz;

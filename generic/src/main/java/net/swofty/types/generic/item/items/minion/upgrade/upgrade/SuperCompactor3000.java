@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SuperCompactor3000 implements CustomSkyBlockItem, Enchanted,NotFinishedYet {
+public class SuperCompactor3000 implements CustomSkyBlockItem, Enchanted, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
