@@ -39,11 +39,8 @@ public class VillagerMathsEnjoyer extends NPCVillagerDialogue {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        showMathsDialogue(e.player());
-    }
-
-    private void showMathsDialogue(Player player) {
-        setDialogue((SkyBlockPlayer) player, "hello");
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
 
     @Override
