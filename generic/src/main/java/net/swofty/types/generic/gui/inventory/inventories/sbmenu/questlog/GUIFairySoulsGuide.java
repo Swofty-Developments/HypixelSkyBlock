@@ -80,7 +80,7 @@ public class GUIFairySoulsGuide extends SkyBlockInventoryGUI {
 
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStackHead(fairySouls.regionName, fairySouls.texture, 1,
+                    return ItemStackCreator.getStackHead("§d" + fairySouls.regionName, fairySouls.texture, 1,
                             "§7Fairy Souls: §e" + player.getFairySoulHandler().getFound(fairySouls.zone) + "§7/§d" + player.getFairySoulHandler().getMax(fairySouls.zone));
                 }
             });
