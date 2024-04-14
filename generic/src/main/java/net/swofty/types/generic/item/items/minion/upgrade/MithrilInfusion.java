@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MithrilInfusion implements CustomSkyBlockItem, SkullHead, AnvilCombinable, NotFinishedYet {
+public class MithrilInfusion implements CustomSkyBlockItem, SkullHead, AnvilCombinable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "7e051df4dd2151481f5145b93fb7a9aa62888fbcb90add9890ad07caf1faca73";

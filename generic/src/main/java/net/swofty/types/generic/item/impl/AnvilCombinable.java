@@ -7,6 +7,8 @@ public interface AnvilCombinable extends ExtraUnderNameDisplay {
     void apply(SkyBlockItem item);
     boolean canApply(SkyBlockPlayer player, SkyBlockItem item);
 
+    default int applyCostLevels() { return 0; }
+
     default String getExtraUnderNameDisplay() {
         return "Combinable in Anvil";
     }
