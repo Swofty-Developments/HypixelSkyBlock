@@ -10,7 +10,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
@@ -23,7 +22,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.shop.ShopPrice;
-import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.types.generic.utility.StringUtility;
@@ -239,7 +237,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             SkyBlockItem sbItem = item.item;
 
             ShopPrice price = item.price;
-            ShopPrice stackPrice = item.price.divide(item.modifier);
+            ShopPrice stackPrice = item.price.divide(item.amount);
 
             set(new GUIClickableItem(slot) {
                 @Override
@@ -358,7 +356,6 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         private final SkyBlockItem item;
         private final int amount;
         private final ShopPrice price;
-        private final double modifier;
         private final boolean stackable;
         private List<String> lore = null;
         @Setter
@@ -368,12 +365,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             this.lore = lores;
         }
 
-        public static ShopItem Stackable(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
-            return new ShopItem(item, amount, price, modifier, true);
+        public static ShopItem Stackable(SkyBlockItem item, int amount, ShopPrice price) {
+            return new ShopItem(item, amount, price, true);
         }
 
-        public static ShopItem Single(SkyBlockItem item, int amount, ShopPrice price, double modifier) {
-            return new ShopItem(item, amount, price, modifier, false);
+        public static ShopItem Single(SkyBlockItem item, int amount, ShopPrice price) {
+            return new ShopItem(item, amount, price, false);
         }
 
     }

@@ -12,9 +12,9 @@ public class GUIStarlightArmor extends SkyBlockShopGUI {
 
     @Override
     public void initializeShopItems() {
-        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_HELMET), 1, new CoinShopPrice(35000), 1));
-        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_CHESTPLATE), 1, new CoinShopPrice(70000), 1));
-        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_LEGGINGS), 1, new CoinShopPrice(45000), 1));
-        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_BOOTS), 1, new CoinShopPrice(30000), 1));
+        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_HELMET), 1, new CoinShopPrice(35000)));
+        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_CHESTPLATE), 1, new CoinShopPrice(70000)));
+        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_LEGGINGS), 1, new CoinShopPrice(45000)));
+        attachItem(SkyBlockShopGUI.ShopItem.Single(new SkyBlockItem(ItemType.STARLIGHT_BOOTS), 1, new CoinShopPrice(30000)));
     }
 }
