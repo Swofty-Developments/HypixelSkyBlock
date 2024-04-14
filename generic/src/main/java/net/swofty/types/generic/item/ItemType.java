@@ -752,7 +752,7 @@ public enum ItemType {
     ENCHANTED_DIAMOND_BLOCK(Material.DIAMOND_BLOCK, Rarity.UNCOMMON, EnchantedDiamondBlock.class),
     ENCHANTED_EMERALD_BLOCK(Material.EMERALD_BLOCK, Rarity.UNCOMMON, EnchantedEmeraldBlock.class),
     ENCHANTED_GOLD_INGOT(Material.GOLD_INGOT, Rarity.UNCOMMON, EnchantedGold.class),
-    ENCHANTED_GOLD_BLOCK(Material.GOLD_BLOCK, Rarity.UNCOMMON, EnchantedGoldBlock.class),
+    ENCHANTED_GOLD_BLOCK(Material.GOLD_BLOCK, Rarity.RARE, EnchantedGoldBlock.class),
     ENCHANTED_JUNGLE_WOOD(Material.JUNGLE_LOG, Rarity.UNCOMMON, EnchantedJungleWood.class),
     ENCHANTED_GUNPOWDER(Material.GUNPOWDER, Rarity.UNCOMMON, EnchantedGunpowder.class),
     ENCHANTED_IRON_INGOT(Material.IRON_INGOT, Rarity.UNCOMMON, EnchantedIron.class),
