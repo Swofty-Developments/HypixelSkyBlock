@@ -1,10 +1,7 @@
 package net.swofty.types.generic.item.items.minion.upgrade;
 
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.AnvilCombinable;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.NotFinishedYet;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +31,13 @@ public class MithrilInfusion implements CustomSkyBlockItem, SkullHead, AnvilComb
 
     @Override
     public void apply(SkyBlockItem item) {
+        item.getAttributeHandler().setMithrilInfused(true);
+    }
 
+    @Override
+    public boolean canApply(SkyBlockPlayer player, SkyBlockItem item) {
+        if(!(item.getGenericInstance() instanceof Minion))
+            return false;
+        return !item.getAttributeHandler().isMithrilInfused();
     }
 }
