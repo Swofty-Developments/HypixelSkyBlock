@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.ServerType;
+import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
@@ -37,6 +38,12 @@ public class ActionPlayerTravel extends SkyBlockEvent {
         NamespaceID block = player.getInstance().getBlock(player.getPosition()).namespace();
 
         if (block == Block.NETHER_PORTAL.namespace()) {
+
+            if (!MissionSet.GETTING_STARTED.hasCompleted(player)) {
+                player.sendMessage("§cYou must complete your starting missions!");
+                return;
+            }
+
             player.sendTo(ServerType.VILLAGE);
             delay.add(player.getUuid());
 
