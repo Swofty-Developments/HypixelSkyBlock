@@ -1,11 +1,18 @@
 package net.swofty.type.village.villagers;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class VillagerMathsEnjoyer extends SkyBlockVillagerNPC {
+import java.util.stream.Stream;
+
+public class VillagerMathsEnjoyer extends NPCVillagerDialogue {
+
     public VillagerMathsEnjoyer() {
         super(new NPCVillagerParameters() {
             @Override
@@ -32,6 +39,23 @@ public class VillagerMathsEnjoyer extends SkyBlockVillagerNPC {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        showMathsDialogue(e.player());
+    }
+
+    private void showMathsDialogue(Player player) {
+        setDialogue((SkyBlockPlayer) player, "hello");
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return new DialogueSet[]{
+                DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "§e[NPC] Maths Enjoyer: §fHey if you really want to know...",
+                                "§e[NPC] Maths Enjoyer: The formula to §6Magical Power §fis...",
+                                "§e[NPC] Maths Enjoyer: §dStats Mult. §f= §b29.97§e(§aln(§b0.0019§6MP§a+1)§e)^§b1.2",
+                                "§e[NPC] Maths Enjoyer: Have fun with that!"
+                        }).build()
+        };
     }
 }
