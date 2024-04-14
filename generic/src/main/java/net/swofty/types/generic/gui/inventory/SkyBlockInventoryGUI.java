@@ -276,6 +276,9 @@ public abstract class SkyBlockInventoryGUI {
             if (previouslyOpen.getInventory().getInventoryType() == size) {
                 inventory = previouslyOpen.getInventory();
                 inventory.setTitle(Component.text(getTitle()));
+                for (int slot = 0; slot < inventory.getSize(); slot++) {
+                    inventory.setItemStack(slot, ItemStack.AIR);
+                }
             }
         }
 
