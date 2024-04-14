@@ -67,8 +67,9 @@ public class VillagerJamie extends NPCVillagerDialogue {
                         }).build(),
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
+                                "§e[NPC] Jamie§f: You might have noticed that you have a Mana bar!",
                                 "§e[NPC] Jamie§f: Some items have mysterious properties, called Abilities.",
-                                "§e[NPC] Jamie§f: Abilities use your Mana as a resource. Here, take this Rogue Sword. I don't need it!"
+                                "§e[NPC] Jamie§f: Abilities use your Mana as a resource."
                         }).build()
         ).toArray(NPCVillagerDialogue.DialogueSet[]::new);
     }

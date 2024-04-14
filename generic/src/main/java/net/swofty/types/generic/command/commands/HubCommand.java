@@ -24,7 +24,6 @@ public class HubCommand extends SkyBlockCommand {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
             }
-
             player.sendTo(ServerType.VILLAGE);
         });
     }

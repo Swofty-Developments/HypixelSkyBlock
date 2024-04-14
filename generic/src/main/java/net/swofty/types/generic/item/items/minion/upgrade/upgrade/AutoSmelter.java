@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AutoSmelter implements CustomSkyBlockItem, MinionUpgradeItem {
+public class AutoSmelter implements CustomSkyBlockItem, MinionUpgradeItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

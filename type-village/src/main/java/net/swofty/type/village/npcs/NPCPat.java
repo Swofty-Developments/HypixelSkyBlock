@@ -12,7 +12,7 @@ public class NPCPat extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Pat", "§e§lCLICK"};
+                return new String[]{"Pat", "§e§lCLICK"};
             }
 
             @Override

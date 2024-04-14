@@ -35,7 +35,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(10) {
+        set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
@@ -51,7 +51,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(11) {
+        set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
@@ -83,7 +83,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(13) {
+        set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
@@ -99,7 +99,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIClickableItem(14) {
+        set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
@@ -110,6 +110,22 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aSkyBlock v1.1.1", Material.HOPPER, (short) 0, 1,
                         "§711th April 2024",
+                        "",
+                        "§eClick to view!");
+            }
+        });
+
+        set(new GUIClickableItem(9) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                player.sendMessage(Component.text("§fView Patch Notes §e§lCLICK HERE")
+                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/channels/830345347867476000/849739331278733332/1229007700302495765")));
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.3", Material.GOLD_INGOT, (short) 0, 1,
+                        "§714th April 2024",
                         "",
                         "§eClick to view!");
             }

@@ -26,6 +26,7 @@ public class GUIJamie extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.addAndUpdateItem(ItemType.ROGUE_SWORD);
+                player.closeInventory();
                 player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
             }
 
