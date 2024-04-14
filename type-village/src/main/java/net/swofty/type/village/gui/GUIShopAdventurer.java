@@ -14,12 +14,12 @@ public class GUIShopAdventurer extends SkyBlockShopGUI {
 
     @Override
     public void initializeShopItems() {
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ROTTEN_FLESH), 1, new CoinShopPrice(8), 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BONE), 1, new CoinShopPrice(8), 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.STRING), 1, new CoinShopPrice(10), 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.SLIME_BALL), 1, new CoinShopPrice(14), 1));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GUNPOWDER), 1, new CoinShopPrice(10), 1));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ZOMBIE_TALISMAN), 1, new CoinShopPrice(500), 1));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.SKELETON_TALISMAN), 1, new CoinShopPrice(500), 1));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ROTTEN_FLESH), 1, new CoinShopPrice(8)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BONE), 1, new CoinShopPrice(8)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.STRING), 1, new CoinShopPrice(10)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.SLIME_BALL), 1, new CoinShopPrice(14)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GUNPOWDER), 1, new CoinShopPrice(10)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ZOMBIE_TALISMAN), 1, new CoinShopPrice(500)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.SKELETON_TALISMAN), 1, new CoinShopPrice(500)));
     }
 }

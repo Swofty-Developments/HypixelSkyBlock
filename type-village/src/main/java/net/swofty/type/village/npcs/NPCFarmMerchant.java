@@ -3,8 +3,7 @@ package net.swofty.type.village.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.gui.inventory.inventories.shop.GUIShopFarmMerchant;
-import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.type.village.gui.GUIShopFarmMerchant;
 
 public class NPCFarmMerchant extends SkyBlockNPC {
 

@@ -23,9 +23,9 @@ public class GUIRosettaArmor extends SkyBlockShopGUI {
     }
     @Override
     public void initializeShopItems() {
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_HELMET), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1050), 1));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_CHESTPLATE), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1320), 1));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_LEGGINGS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1200), 1));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_BOOTS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(960), 1));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_HELMET), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1050)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_CHESTPLATE), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1320)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_LEGGINGS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1200)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_BOOTS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(960)));
     }
 }
