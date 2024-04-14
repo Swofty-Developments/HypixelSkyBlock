@@ -1,6 +1,8 @@
 package net.swofty.types.generic.item.attribute;
 
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,13 +12,13 @@ public abstract class ItemAttribute<T> {
 
     public T value;
 
-    protected ItemAttribute() {
-        value = getDefaultValue();
+    public ItemAttribute() {
+        value = getDefaultValue(null);
     }
 
     public abstract String getKey();
 
-    public abstract T getDefaultValue();
+    public abstract T getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass);
 
     public abstract T loadFromString(String string);
 

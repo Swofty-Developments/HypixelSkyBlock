@@ -5,9 +5,7 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface PickaxeImpl extends Enchantable, Reforgable, ExtraRarityDisplay {
-    int getBreakingPower();
-
+public interface PickaxeImpl extends Enchantable, Reforgable, ExtraRarityDisplay, BreakingPower {
     default boolean showEnchantLores() {
         return true;
     }

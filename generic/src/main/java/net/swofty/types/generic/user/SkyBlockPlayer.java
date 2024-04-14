@@ -503,7 +503,7 @@ public class SkyBlockPlayer extends Player {
 
         if (block.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) return -1;
         if (block.getStrength() > 0) {
-            double time = (block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
+            double time = Math.round(block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
             ValueUpdateEvent event = new MiningValueUpdateEvent(
                     this,
                     time,
@@ -512,11 +512,7 @@ public class SkyBlockPlayer extends Player {
             SkyBlockValueEvent.callValueUpdateEvent(event);
             time = (double) event.getValue();
 
-            double softcap = ((double) 20 / 3) * block.getStrength();
-            if (time < 1)
-                return 1;
-
-            return Math.min(time, softcap);
+            return time;
         }
 
         return 0;

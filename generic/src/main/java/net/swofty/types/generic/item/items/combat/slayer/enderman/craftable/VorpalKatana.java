@@ -43,7 +43,7 @@ public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, Stand
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Deal §a+250% §7damage to Endermen§7.",
-                "§7§7Receive §a9% §7less damage",
+                "§7§7Receive §a9% §7less mobdamage",
                 "§7from Endermen§7 when held.",
                 "",
                 "§6Ability: Soulcry §e§lRIGHT CLICK",

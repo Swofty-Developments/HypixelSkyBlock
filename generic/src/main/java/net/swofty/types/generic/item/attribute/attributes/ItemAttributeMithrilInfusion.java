@@ -1,6 +1,8 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemAttributeMithrilInfusion extends ItemAttribute<Boolean> {
     @Override
@@ -9,7 +11,7 @@ public class ItemAttributeMithrilInfusion extends ItemAttribute<Boolean> {
     }
 
     @Override
-    public Boolean getDefaultValue() {
+    public Boolean getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return false;
     }
 

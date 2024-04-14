@@ -50,7 +50,7 @@ public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, En
                 "§7§8(Catacombs, etc.)",
                 "§7",
                 "§7§a||| Aligned",
-                "§7Splits incoming damage and",
+                "§7Splits incoming mobdamage and",
                 "§7applies it over §a3s§7.",
                 "§7§8Soulflow Cost: §32",
                 "§8Mana Cost: §3220",

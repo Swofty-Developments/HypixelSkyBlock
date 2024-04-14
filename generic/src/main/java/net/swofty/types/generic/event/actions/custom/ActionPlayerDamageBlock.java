@@ -45,6 +45,7 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
                 || !region.getType().getMiningHandler().getMineableBlocks(player.getInstance(), e.getBlockPosition()).contains(
                 Material.fromNamespaceId(player.getInstance().getBlock(e.getBlockPosition()).namespace()))
                 || player.getGameMode().equals(GameMode.CREATIVE)) {
+            // Cancel the task if the player is no longer breaking the block or changed block
 
             BreakingTask prev = CLICKING.get(player.getUuid());
             if (prev != null)
@@ -61,14 +62,13 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
         }
 
         if (CLICKING.containsKey(player.getUuid())) {
+            System.out.println("Already clicking");
             return;
         }
 
         // Ensure that the player isn't just using their hand
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if (!item.getAttributeHandler().isMiningTool()) {
-            return;
-        }
+        if (!item.getAttributeHandler().isMiningTool()) return;
 
         BreakingTask task = new BreakingTask(
                 player,

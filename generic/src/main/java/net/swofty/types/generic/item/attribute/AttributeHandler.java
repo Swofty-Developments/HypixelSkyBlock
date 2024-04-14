@@ -252,7 +252,11 @@ public class AttributeHandler {
     }
 
     public int getBreakingPower() {
-        return ((ItemAttributeBreakingPower) item.getAttribute("breaking_power")).getValue();
+        return ((ItemAttributeBreakingPower) item.getAttribute("breaking-power")).getValue();
+    }
+
+    public void setBreakingPower(int breakingPower) {
+        ((ItemAttributeBreakingPower) item.getAttribute("breaking-power")).setValue(breakingPower);
     }
 
     public boolean isMiningTool() {

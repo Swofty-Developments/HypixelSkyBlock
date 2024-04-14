@@ -1,4 +1,4 @@
-package net.swofty.types.generic.event.actions.player;
+package net.swofty.types.generic.event.actions.player.mobdamage;
 
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
@@ -17,7 +17,7 @@ import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-@EventParameters(description = "For damage indicators",
+@EventParameters(description = "For mobdamage indicators",
         node = EventNodes.ALL,
         requireDataLoaded = false)
 public class PlayerActionArrowDamageMob extends SkyBlockEvent {

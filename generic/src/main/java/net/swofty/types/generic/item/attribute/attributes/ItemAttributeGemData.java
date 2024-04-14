@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
     }
 
     @Override
-    public GemData getDefaultValue() {
+    public GemData getDefaultValue(@org.jetbrains.annotations.Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new GemData(new ArrayList<>());
     }
 

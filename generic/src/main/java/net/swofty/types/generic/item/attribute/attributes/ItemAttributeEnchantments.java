@@ -2,6 +2,8 @@ package net.swofty.types.generic.item.attribute.attributes;
 
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ public class ItemAttributeEnchantments extends ItemAttribute<SkyBlockEnchantment
     }
 
     @Override
-    public SkyBlockEnchantment.ItemEnchantments getDefaultValue() {
+    public SkyBlockEnchantment.ItemEnchantments getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new SkyBlockEnchantment.ItemEnchantments(new ArrayList<>());
     }
 

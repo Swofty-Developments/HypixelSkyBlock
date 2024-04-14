@@ -1,18 +1,13 @@
 package net.swofty.types.generic.item.items.accessories;
 
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.types.generic.event.value.ValueUpdateEvent;
-import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;

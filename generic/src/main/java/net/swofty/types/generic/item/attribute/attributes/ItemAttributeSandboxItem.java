@@ -6,21 +6,22 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ItemAttributeSandboxItem extends ItemAttribute<ItemAttributeSandboxItem.SandboxData> {
-
     @Override
     public String getKey() {
         return "sandboxdata";
     }
 
     @Override
-    public SandboxData getDefaultValue() {
+    public SandboxData getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new SandboxData();
     }
 

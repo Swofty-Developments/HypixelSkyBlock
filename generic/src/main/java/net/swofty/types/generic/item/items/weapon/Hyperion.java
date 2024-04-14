@@ -37,7 +37,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
 
     @Override
     public String getAbilityDescription() {
-        return "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing damage taken and granting an absorption shield for §e5 §7seconds.";
+        return "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.";
     }
 
     @Override

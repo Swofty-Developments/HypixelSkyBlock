@@ -15,7 +15,7 @@ import java.util.List;
 public class WitherRelic extends SkyBlockValueEvent implements Talisman {
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Reduces the damage taken from",
+        return List.of("§7Reduces the mobdamage taken from",
                 "§7Wither by §a25%§7.");
     }
 

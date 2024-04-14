@@ -41,8 +41,8 @@ public class SoulEsoward implements CustomSkyBlockItem, DefaultCraftable, Enchan
         return new ArrayList<>(Arrays.asList(
                 "§6Ability: Soulward §e§lRIGHT CLICK",
                 "§7Become §9invulnerable§7 for",
-                "§7§a5s§7, but can't deal damage.",
-                "§7Halves your damage for §a2s",
+                "§7§a5s§7, but can't deal mobdamage.",
+                "§7Halves your mobdamage for §a2s",
                 "§a§7afterwards.",
                 "§7§8Soulflow Cost: §310",
                 "§8Mana Cost: §3350",

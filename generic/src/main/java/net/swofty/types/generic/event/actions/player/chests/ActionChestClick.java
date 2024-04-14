@@ -1,36 +1,38 @@
-package net.swofty.types.generic.event.actions.player;
+package net.swofty.types.generic.event.actions.player.chests;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerBlockBreakEvent;
+import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.instance.Instance;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.gui.inventory.inventories.GUIChest;
 import net.swofty.types.generic.item.ChestImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Handles destroying Chest",
+@EventParameters(description = "Handles clicking on the Chest",
         node = EventNodes.PLAYER,
         requireDataLoaded = true)
-public class ActionChestDestroy extends SkyBlockEvent {
+public class ActionChestClick extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerBlockBreakEvent.class;
+        return PlayerBlockInteractEvent.class;
     }
 
     @Override
     public void run(Event tempEvent) {
-        PlayerBlockBreakEvent event = (PlayerBlockBreakEvent) tempEvent;
+        PlayerBlockInteractEvent event = (PlayerBlockInteractEvent) tempEvent;
 
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
-
+        if (!SkyBlockConst.isIslandServer()) return;
         if (!event.getBlock().name().equals("minecraft:chest")) return;
 
         Instance instance = event.getInstance();
         Point position = event.getBlockPosition();
 
         ChestImpl chest = new ChestImpl(instance, position);
-        chest.getItemsList().forEach(player::addAndUpdateItem);
+        new GUIChest(chest).open(player);
     }
 }

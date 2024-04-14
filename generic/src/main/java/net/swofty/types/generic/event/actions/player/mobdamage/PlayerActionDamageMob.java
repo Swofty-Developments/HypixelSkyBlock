@@ -1,4 +1,4 @@
-package net.swofty.types.generic.event.actions.player;
+package net.swofty.types.generic.event.actions.player.mobdamage;
 
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
@@ -8,12 +8,9 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityAttackEvent;
-import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.minestom.server.event.player.PlayerHandAnimationEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
-import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.event.EventNodes;
@@ -23,7 +20,7 @@ import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-@EventParameters(description = "For damage indicators",
+@EventParameters(description = "For mobdamage indicators",
         node = EventNodes.ALL,
         requireDataLoaded = false)
 public class PlayerActionDamageMob extends SkyBlockEvent {
@@ -44,10 +41,10 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         if (event.getTarget() instanceof SkyBlockMob skyBlockMob)
             mob = skyBlockMob;
         else return;
-        LivingEntity livingEntity = (LivingEntity) targetEntity;
+        LivingEntity targetLivingEntity = (LivingEntity) targetEntity;
 
         ItemStatistics entityStats = mob.getStatistics();
-        Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, livingEntity);
+        Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, targetLivingEntity);
 
         double damage = hit.getKey();
         boolean critical = hit.getValue();
@@ -55,7 +52,6 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(
                 (SkyBlockPlayer) event.getEntity(), (float) damage, mob);
         SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
-        ((SkyBlockPlayer) event.getEntity()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
 
         new DamageIndicator()
                 .damage((float) valueEvent.getValue())
@@ -63,6 +59,6 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
                 .critical(critical)
                 .display(targetEntity.getInstance());
 
-        livingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
+        targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
     }
 }

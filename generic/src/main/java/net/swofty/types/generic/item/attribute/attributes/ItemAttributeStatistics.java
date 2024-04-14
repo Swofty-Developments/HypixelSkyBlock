@@ -1,18 +1,19 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
-
     @Override
     public String getKey() {
         return "statistics";
     }
 
     @Override
-    public ItemStatistics getDefaultValue() {
+    public ItemStatistics getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return ItemStatistics.builder().build();
     }
 

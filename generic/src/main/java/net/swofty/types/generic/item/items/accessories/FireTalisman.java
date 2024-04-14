@@ -16,7 +16,7 @@ public class FireTalisman implements Talisman, NotFinishedYet {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Provides immunity against damage",
+        return List.of("§7Provides immunity against mobdamage",
                 "§7from §cFire§7.",
                 "",
                 "§7While in the §cCrimson Isle§7, grants",

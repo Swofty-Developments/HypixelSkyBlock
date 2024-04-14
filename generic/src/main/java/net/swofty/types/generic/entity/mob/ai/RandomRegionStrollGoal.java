@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.ai.GoalSelector;
+import net.minestom.server.instance.block.Block;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import org.jetbrains.annotations.NotNull;
@@ -71,20 +72,26 @@ public class RandomRegionStrollGoal extends GoalSelector {
         List<Vec> blocks = new ArrayList<>();
 
         for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    int entityX = getEntityCreature().getPosition().blockX() + x;
-                    int entityY = getEntityCreature().getPosition().blockY() + y;
-                    int entityZ = getEntityCreature().getPosition().blockZ()  + z;
+            for (int z = -radius; z <= radius; z++) {
+                int entityX = getEntityCreature().getPosition().blockX() + x;
+                int y = getEntityCreature().getPosition().blockY();
+                int entityZ = getEntityCreature().getPosition().blockZ()  + z;
 
-                    SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(new Pos(entityX, entityY, entityZ));
+                if (entityCreature.getInstance() != null) {
+                    if (!entityCreature.getInstance().isChunkLoaded(new Pos(entityX, y, entityZ)))
+                        entityCreature.getInstance().loadChunk(new Pos(entityX, y, entityZ));
+                    Block block = entityCreature.getInstance().getBlock(entityX, y, entityZ);
 
-                    if (region == null)
-                        continue;
-
-                    if (region.getType() == type)
-                        blocks.add(new Vec(x, y, z));
+                    if (!block.isAir()) continue;
                 }
+
+                SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(new Pos(entityX, y, entityZ));
+
+                if (region == null)
+                    continue;
+
+                if (region.getType() == type)
+                    blocks.add(new Vec(x, y, z));
             }
         }
 

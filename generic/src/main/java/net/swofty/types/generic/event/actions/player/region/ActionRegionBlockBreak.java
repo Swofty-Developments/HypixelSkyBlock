@@ -36,7 +36,7 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
-        if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
+        if (player.isBypassBuild() || SkyBlockConst.isIslandServer()) {
             return;
         }
 
@@ -47,8 +47,6 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             return;
         }
 
-
-
         RegionType type = region.getType();
 
         Block block = playerBreakEvent.getBlock();
@@ -58,7 +56,6 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
         if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), playerBreakEvent.getBlockPosition()).contains(material)) {
             return;
         }
-
 
         mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
 

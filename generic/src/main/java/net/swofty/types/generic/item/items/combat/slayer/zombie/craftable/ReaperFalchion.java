@@ -42,7 +42,7 @@ public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, Sta
         return new ArrayList<>(Arrays.asList(
                 "§7Heal §c10❤ §7per hit.",
                 "§7Deal §a+200% §7damage to Zombies§7.",
-                "§7§7Receive §a20% §7less damage",
+                "§7§7Receive §a20% §7less mobdamage",
                 "§7from Zombies§7 when held."));
     }
 

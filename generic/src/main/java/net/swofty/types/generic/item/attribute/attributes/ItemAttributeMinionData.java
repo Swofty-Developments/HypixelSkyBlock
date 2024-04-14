@@ -1,6 +1,8 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemAttributeMinionData extends ItemAttribute<ItemAttributeMinionData.MinionData> {
 
@@ -10,7 +12,7 @@ public class ItemAttributeMinionData extends ItemAttribute<ItemAttributeMinionDa
     }
 
     @Override
-    public MinionData getDefaultValue() {
+    public MinionData getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new MinionData(1, 0);
     }
 

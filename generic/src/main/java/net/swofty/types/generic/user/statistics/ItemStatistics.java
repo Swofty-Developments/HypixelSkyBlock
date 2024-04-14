@@ -1,6 +1,7 @@
 package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -61,8 +62,13 @@ public class ItemStatistics {
         }
     }
 
-    public Double get(ItemStatistic stat) {
-        return this.statistics.getOrDefault(stat, 0D);
+    public Double get(@Nullable ItemStatistic stat) {
+        if (stat == null) return 0D;
+        double value = this.statistics.getOrDefault(stat, 0D);
+        if (stat == ItemStatistic.SPEED)
+            value = Math.min(value, 400D);
+
+        return value;
     }
 
     public ItemStatistics add(ItemStatistics other) {

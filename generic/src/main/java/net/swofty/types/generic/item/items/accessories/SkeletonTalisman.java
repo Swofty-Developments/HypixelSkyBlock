@@ -1,7 +1,6 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.entity.EntityType;
-import net.swofty.types.generic.event.actions.player.PlayerActionDamageMob;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
@@ -20,7 +19,7 @@ public class SkeletonTalisman extends SkyBlockValueEvent implements Talisman {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Reduces the damage taken from", "§7Skeletons by §a5%.");
+        return List.of("§7Reduces the mobdamage taken from", "§7Skeletons by §a5%.");
     }
 
     @Override

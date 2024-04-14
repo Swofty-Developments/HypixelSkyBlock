@@ -2,6 +2,7 @@ package net.swofty.types.generic.item;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -27,13 +28,19 @@ public class SkyBlockItem {
     @Setter
     private int amount = 1;
 
+    @SneakyThrows
     public SkyBlockItem(String itemType, int amount) {
         itemType = itemType.replace("minecraft:", "").toUpperCase();
+        Class<? extends CustomSkyBlockItem> clazz = null;
 
-        ItemAttribute.getPossibleAttributes().forEach(attribute -> {
-            attribute.setValue(attribute.getDefaultValue());
+        try {
+            clazz = ItemType.valueOf(itemType).clazz;
+        } catch (Exception e) {}
+
+        for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+            attribute.setValue(attribute.getDefaultValue(clazz));
             attributes.add(attribute);
-        });
+        }
 
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         typeAttribute.setValue(itemType);
@@ -45,25 +52,10 @@ public class SkyBlockItem {
             rarityAttribute.setValue(Rarity.COMMON);
         }
 
-        ItemAttributeBreakingPower breakingPower = (ItemAttributeBreakingPower) getAttribute("breaking_power");
-        try {
-            PickaxeImpl t = (PickaxeImpl) ItemType.valueOf(itemType).clazz.newInstance();
-            breakingPower.setValue(t.getBreakingPower());
-            DrillImpl s = (DrillImpl) ItemType.valueOf(itemType).clazz.newInstance();
-            breakingPower.setValue(s.getBreakingPower());
-        } catch (ClassCastException castEx) {
-            breakingPower.setValue(0);
-
-            // Any other exception must be ignored.
-        } catch (Exception ignored) {
-        }
-
         ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
         try {
-            Class<? extends CustomSkyBlockItem> clazz = ItemType.valueOf(itemType).clazz;
             if (clazz != null) {
                 statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics(this));
-                clazz = ItemType.valueOf(itemType).clazz.newInstance().getClass();
             } else {
                 statisticsAttribute.setValue(ItemStatistics.builder().build());
             }
@@ -94,13 +86,16 @@ public class SkyBlockItem {
 
     public SkyBlockItem(ItemStack item) {
         amount = item.getAmount();
+        try {
+            clazz = ItemType.valueOf(item.getTag(Tag.String("item_type"))).clazz.newInstance().getClass();
+        } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {}
 
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
             if (item.hasTag(Tag.String(attribute.getKey()))) {
                 attribute.setValue(attribute.loadFromString(item.getTag(Tag.String(attribute.getKey()))));
                 attributes.add(attribute);
             } else {
-                attribute.setValue(attribute.getDefaultValue());
+                attribute.setValue(attribute.getDefaultValue(clazz));
                 attributes.add(attribute);
             }
         });
@@ -108,8 +103,6 @@ public class SkyBlockItem {
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         String itemType = typeAttribute.getValue();
         try {
-            clazz = ItemType.valueOf(itemType).clazz.newInstance().getClass();
-
             // All items re-retrieve their base stats when loaded from an itemstack
             ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
             statisticsAttribute.setValue(ItemType.valueOf(itemType).clazz.newInstance().getStatistics(this));

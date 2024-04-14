@@ -67,6 +67,12 @@ public abstract class SkyBlockNPC {
             if (entity.getInstance() != SkyBlockConst.getInstanceContainer()) return;
 
             Pos npcPosition = entity.getPosition();
+            Pos requestedPosition = npc.getParameters().positionPerPlayer().apply(player);
+            if (!npcPosition.equals(requestedPosition)) {
+                entity.setInstance(SkyBlockConst.getInstanceContainer(), requestedPosition);
+                npcPosition = requestedPosition;
+            }
+
             Pos playerPosition = player.getPosition();
             ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
             double entityDistance = entity.getDistance(playerPosition);

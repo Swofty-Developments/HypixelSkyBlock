@@ -8,6 +8,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.data.mongodb.RegionDatabase;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;

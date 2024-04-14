@@ -27,7 +27,7 @@ public class ZombieArtifact extends SkyBlockValueEvent implements Talisman, Defa
     @Override
     public List<String> getTalismanDisplay() {
         return List.of(
-                "§7Reduces the damage taken from",
+                "§7Reduces the mobdamage taken from",
                 "§7§7Zombies by §a15%§7.");
     }
 

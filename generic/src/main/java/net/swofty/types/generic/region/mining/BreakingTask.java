@@ -51,7 +51,7 @@ public class BreakingTask {
                     BlockFace.BOTTOM));
 
             this.counter = 0;
-            MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
                 SkyBlockEvent.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
@@ -60,7 +60,7 @@ public class BreakingTask {
                         player,
                         block.pos(),
                         ClientPlayerDiggingPacket.Status.STARTED_DIGGING));
-            }, TaskSchedule.tick(1), TaskSchedule.stop());
+            });
             return TaskSchedule.stop();
         }
 

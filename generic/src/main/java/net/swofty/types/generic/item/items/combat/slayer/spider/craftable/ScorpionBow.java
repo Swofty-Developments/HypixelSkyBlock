@@ -41,7 +41,7 @@ public class ScorpionBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
                 "§6Ability: Stinger",
                 "§8Fully charged shots while sneaking",
                 "§7Slows the victim and deal §c35x",
-                "§c§7your §cStrength ❁ §7as damage",
+                "§c§7your §cStrength ❁ §7as mobdamage",
                 "§7per second for §a6s§7.",
                 "§8Mana Cost: §3150"));
     }

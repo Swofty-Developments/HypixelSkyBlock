@@ -42,7 +42,7 @@ public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, Sta
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Deal §a+200% §7damage to Endermen§7.",
-                "§7§7Receive §a6% §7less damage",
+                "§7§7Receive §a6% §7less mobdamage",
                 "§7from Endermen§7 when held.",
                 "",
                 "§6Ability: Soulcry §e§lRIGHT CLICK",

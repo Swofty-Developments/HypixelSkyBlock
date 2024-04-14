@@ -3,7 +3,9 @@ package net.swofty.types.generic.item.attribute.attributes;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.serializer.InventorySerializer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class ItemAttributeBackpackData extends ItemAttribute<ItemAttributeBackpa
     }
 
     @Override
-    public ItemAttributeBackpackData.BackpackData getDefaultValue() {
+    public ItemAttributeBackpackData.BackpackData getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new BackpackData();
     }
 

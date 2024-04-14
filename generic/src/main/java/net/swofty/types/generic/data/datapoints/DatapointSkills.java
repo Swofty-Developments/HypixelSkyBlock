@@ -123,7 +123,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                     getRaw(category),
                     getCumulative(category),
                     value,
-                    getCumulative(category) + (getRaw(category) - value)
+                    getCumulative(category) + (getRaw(category) - value) + (value - getRaw(category))
             ));
             skills.put(category, value);
         }

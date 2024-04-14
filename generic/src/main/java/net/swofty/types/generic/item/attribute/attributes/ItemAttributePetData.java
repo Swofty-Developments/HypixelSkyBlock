@@ -4,19 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.PetData> {
-
     @Override
     public String getKey() {
         return "pet_data";
     }
 
     @Override
-    public PetData getDefaultValue() {
+    public PetData getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
         return new PetData(0);
     }
 

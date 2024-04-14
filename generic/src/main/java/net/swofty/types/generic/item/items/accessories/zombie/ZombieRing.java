@@ -27,7 +27,7 @@ public class ZombieRing extends SkyBlockValueEvent implements Talisman, DefaultC
     @Override
     public List<String> getTalismanDisplay() {
         return List.of(
-                "§7Reduces the damage taken from",
+                "§7Reduces the mobdamage taken from",
                 "§7§7Zombies by §a10%§7.");
     }
 

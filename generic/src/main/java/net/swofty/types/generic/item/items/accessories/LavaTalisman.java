@@ -11,7 +11,7 @@ import java.util.List;
 public class LavaTalisman implements Talisman, NotFinishedYet {
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Provides immunity against damage",
+        return List.of("§7Provides immunity against mobdamage",
                 "§7from §omost §cLava§7.",
                 "",
                 "§7While in the §cCrimson Isle§7, grants",
