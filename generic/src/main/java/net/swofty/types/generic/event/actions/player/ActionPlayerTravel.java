@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.ServerType;
+import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
