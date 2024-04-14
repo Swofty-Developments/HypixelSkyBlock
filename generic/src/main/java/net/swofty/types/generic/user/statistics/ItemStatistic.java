@@ -1,6 +1,8 @@
 package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.utility.StringUtility;
 
 @Getter
 public enum ItemStatistic {
@@ -37,6 +39,15 @@ public enum ItemStatistic {
         this.prefix = prefix;
         this.suffix = suffix;
         this.symbol = symbol;
+    }
+
+    public static String getStatisticDisplayFloat(SkyBlockPlayer player, ItemStatistic statistic) {
+        PlayerStatistics statistics = player.getStatistics();
+        return  " " + statistic.getColour() + statistic.getSymbol() + " " + StringUtility.toNormalCase((statistic.name()) + " §f" + statistics.allStatistics().get(statistic).floatValue()) + statistic.getSuffix();
+    }
+    public static String getStatisticDisplayInt(SkyBlockPlayer player, ItemStatistic statistic) {
+        PlayerStatistics statistics = player.getStatistics();
+        return  " " + statistic.getColour() + statistic.getSymbol() + " " + StringUtility.toNormalCase((statistic.name()) + " §f" + statistics.allStatistics().get(statistic).intValue()) + statistic.getSuffix();
     }
 
 }

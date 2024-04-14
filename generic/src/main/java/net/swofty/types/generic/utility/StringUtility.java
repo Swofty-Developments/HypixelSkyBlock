@@ -34,6 +34,19 @@ public class StringUtility {
         return "Just now";
     }
 
+    public static String formatTimeWentBy(long millis) {
+        long timeDifference = System.currentTimeMillis() - millis;
+        // Simplified the calculation logic by abstracting repetitive calculations
+        long[] timeUnits = {TimeUnit.DAYS.toMillis(1), TimeUnit.HOURS.toMillis(1), TimeUnit.MINUTES.toMillis(1)};
+        String[] timeLabels = {"d", "h", "m"};
+        for (int i = 0; i < timeUnits.length; i++) {
+            if (timeDifference >= timeUnits[i]) {
+                return (timeDifference / timeUnits[i]) + timeLabels[i];
+            }
+        }
+        return "Just now";
+    }
+
     public static String createLineProgressBar(int length, ChatColor progressColor, double current, double max) {
         double percent = Math.min(current, max) / max;
         long completed = Math.round((double) length * percent);
@@ -112,7 +125,7 @@ public class StringUtility {
     }
 
     public static String profileAge(long tbf) {
-        return formatTimeAsAgo(System.currentTimeMillis() - tbf);
+        return formatTimeWentBy(System.currentTimeMillis() - tbf);
     }
 
 
