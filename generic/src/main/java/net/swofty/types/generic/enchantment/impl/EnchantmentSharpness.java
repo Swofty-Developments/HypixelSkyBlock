@@ -18,7 +18,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
 
     @Override
     public String getDescription(int level) {
-        return "Increases melee mobdamage dealt by §a" + increases[level - 1] + "%§7.";
+        return "Increases melee damage dealt by §a" + increases[level - 1] + "%§7.";
     }
 
     @Override

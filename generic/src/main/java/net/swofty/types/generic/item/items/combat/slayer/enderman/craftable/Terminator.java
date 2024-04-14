@@ -43,7 +43,7 @@ public class Terminator implements CustomSkyBlockItem, DefaultCraftable, BowImpl
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Shoots §b3 §7arrows at once.",
-                "§7Can mobdamage endermen.",
+                "§7Can damage endermen.",
                 "",
                 "§cDivides your §9☣ Crit Chance §cby 4!",
                 "",

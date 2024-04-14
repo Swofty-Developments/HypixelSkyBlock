@@ -45,7 +45,7 @@ public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowIm
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Hits §c3 §7mobs on impact.",
-                "§7Can mobdamage endermen.",
+                "§7Can damage endermen.",
                 "",
                 "§5Shortbow: Instantly shoots!"));
     }

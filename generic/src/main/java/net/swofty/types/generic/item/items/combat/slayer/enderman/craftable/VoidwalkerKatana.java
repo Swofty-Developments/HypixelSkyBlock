@@ -39,7 +39,7 @@ public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, S
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "§7Deal §a+150% §7damage to Endermen§7.",
-                "§7§7Receive §a3% §7less mobdamage",
+                "§7§7Receive §a3% §7less damage",
                 "§7from Endermen§7 when held."));
     }
 

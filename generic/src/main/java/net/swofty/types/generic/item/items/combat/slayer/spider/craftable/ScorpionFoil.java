@@ -44,7 +44,7 @@ public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, Stand
                 "§7Blocking clears §e1 Ⓞ §7and heals §c60❤§7.",
                 "§7Once all tickers are cleared,",
                 "§7your next attack is empowered",
-                "§7for §c+250% mobdamage§7.",
+                "§7for §c+250% damage§7.",
                 "§8Tickers refill after 5 seconds."));
     }
 

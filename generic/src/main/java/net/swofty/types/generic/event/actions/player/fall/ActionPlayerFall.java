@@ -11,7 +11,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 
 import java.util.HashMap;
 
-@EventParameters(description = "For the purpose of simulating fall mobdamage",
+@EventParameters(description = "For the purpose of simulating fall damage",
         node = EventNodes.PLAYER,
         requireDataLoaded = true)
 public class ActionPlayerFall extends SkyBlockEvent {

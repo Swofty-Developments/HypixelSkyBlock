@@ -8,7 +8,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles Entity mobdamage animations",
+@EventParameters(description = "Handles Entity damage animations",
         node = EventNodes.ENTITY,
         requireDataLoaded = false)
 public class ActionAnimateEntityDamage extends SkyBlockEvent {

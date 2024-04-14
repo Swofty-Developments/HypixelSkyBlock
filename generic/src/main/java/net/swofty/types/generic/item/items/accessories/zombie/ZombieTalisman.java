@@ -19,7 +19,7 @@ public class ZombieTalisman extends SkyBlockValueEvent implements Talisman {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7Reduces the mobdamage taken from", "§7Zombies by §a5%.");
+        return List.of("§7Reduces the damage taken from", "§7Zombies by §a5%.");
     }
 
     @Override

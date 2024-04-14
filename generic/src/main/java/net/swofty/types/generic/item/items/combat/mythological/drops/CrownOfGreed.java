@@ -27,7 +27,7 @@ public class CrownOfGreed implements CustomSkyBlockItem, StandardItem, Sellable,
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Hits have §c+25% §7base mobdamage,",
+                "§7Hits have §c+25% §7base damage,",
                 "§7but cost §6100x §7the weapon's",
                 "§7damage in §6coins §7from your",
                 "§7purse."));

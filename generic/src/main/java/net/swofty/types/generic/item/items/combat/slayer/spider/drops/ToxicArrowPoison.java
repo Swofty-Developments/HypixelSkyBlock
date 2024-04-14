@@ -25,7 +25,7 @@ public class ToxicArrowPoison implements CustomSkyBlockItem, Sellable {
         return new ArrayList<>(Arrays.asList(
                 "§8Consumed on arrow shot",
                 "§7Arrows deal an additional",
-                "§7§210% §7of mobdamage as poison",
+                "§7§210% §7of damage as poison",
                 "§7and reduce healing by §224%",
                 "§2§7over §b4 §7seconds."));
     }

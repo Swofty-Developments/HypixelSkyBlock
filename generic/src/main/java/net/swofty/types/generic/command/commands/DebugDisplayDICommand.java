@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.DamageIndicator;
 
 @CommandParameters(aliases = "dmgindicdisplaydebugcmd",
-        description = "Display mobdamage indic",
+        description = "Display damage indic",
         usage = "/dmgindicdisplaydebugcmd <dmg> <crit>",
         permission = Rank.ADMIN,
         allowsConsole = false)
@@ -18,7 +18,7 @@ public class DebugDisplayDICommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
         ArgumentBoolean crit = ArgumentType.Boolean("critical");
-        ArgumentInteger damage = ArgumentType.Integer("mobdamage");
+        ArgumentInteger damage = ArgumentType.Integer("damage");
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;

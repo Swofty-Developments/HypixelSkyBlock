@@ -17,7 +17,7 @@ import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-@EventParameters(description = "For mobdamage indicators",
+@EventParameters(description = "For damage indicators",
         node = EventNodes.ALL,
         requireDataLoaded = false)
 public class PlayerActionArrowDamageMob extends SkyBlockEvent {
