@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.armor;
+package net.swofty.types.generic.item.items.armor.farmsuit;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -8,11 +8,11 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 
 
-public class FarmSuitLeggings implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable , NotFinishedYet {
+public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable , NotFinishedYet {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().with(ItemStatistic.DEFENSE, 15D).build();
+        return ItemStatistics.builder().with(ItemStatistic.DEFENSE, 40D).build();
     }
 
     @Override
@@ -22,11 +22,11 @@ public class FarmSuitLeggings implements CustomSkyBlockItem, StandardItem, Leath
 
     @Override
     public double getSellValue() {
-        return 30;
+        return 40;
     }
 
     @Override
     public StandardItemType getStandardItemType() {
-        return StandardItemType.LEGGINGS;
+        return StandardItemType.CHESTPLATE;
     }
 }

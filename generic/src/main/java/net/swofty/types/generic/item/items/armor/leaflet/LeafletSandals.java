@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.armor;
+package net.swofty.types.generic.item.items.armor.leaflet;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -6,10 +6,10 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class LeafletTunic implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
+public class LeafletSandals implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 35D).build();
+        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 15D).build();
     }
 
     @Override
@@ -24,6 +24,6 @@ public class LeafletTunic implements CustomSkyBlockItem, StandardItem, LeatherCo
 
     @Override
     public StandardItemType getStandardItemType() {
-        return StandardItemType.CHESTPLATE;
+        return StandardItemType.BOOTS;
     }
 }
