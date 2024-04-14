@@ -605,7 +605,7 @@ public enum ItemType {
      * Vanilla Items
      */
     CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON , CraftingTable.class),
-    ANVIL(Material.ANVIL, Rarity.COMMON , Anvil.class),
+    ANVIL(Material.ANVIL, Rarity.COMMON, Anvil.class),
     OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON , OakPlanks.class),
     STICK(Material.STICK, Rarity.COMMON, Stick.class),
     ACACIA_WOOD(Material.ACACIA_WOOD, Rarity.COMMON, Acacia.class),
@@ -640,10 +640,10 @@ public enum ItemType {
     EYE_OF_ENDER(Material.ENDER_EYE, Rarity.COMMON),
     GHAST_TEAR(Material.GHAST_TEAR, Rarity.COMMON),
     ICE(Material.ICE, Rarity.COMMON, Ice.class),
-    IRON_INGOT(Material.IRON_INGOT, Rarity.COMMON, IronOre.class),
+    IRON_INGOT(Material.IRON_INGOT, Rarity.COMMON, IronIngot.class),
     GRAVEL(Material.GRAVEL, Rarity.COMMON, Gravel.class),
     LAPIS_LAZULI(Material.LAPIS_LAZULI, Rarity.COMMON, LapisLazuli.class),
-    IRON_BLOCK(Material.IRON_BLOCK, Rarity.COMMON),
+    IRON_BLOCK(Material.IRON_BLOCK, Rarity.COMMON, IronBlock.class),
     JUNGLE_WOOD(Material.JUNGLE_WOOD, Rarity.COMMON, Jungle.class),
     LEATHER(Material.LEATHER, Rarity.COMMON, Leather.class),
     MAGMA_CREAM(Material.MAGMA_CREAM, Rarity.COMMON),
