@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
-import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;

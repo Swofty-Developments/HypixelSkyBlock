@@ -1,10 +1,14 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.missions.MissionKillZombies;
 
-public class NPCBartender extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBartender extends NPCDialogue {
 
     public NPCBartender() {
         super(new NPCParameters() {
@@ -37,7 +41,28 @@ public class NPCBartender extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class)) {
+            setDialogue(e.player(), "quest-talk");
+            return;
+        }
+        setDialogue(e.player(), "quest-hello");
+        MissionData data = e.player().getMissionData();
+        data.startMission(MissionKillZombies.class);
     }
 
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("quest-hello").lines(new String[]{
+                            "§e[NPC] Bartender: §fWelcome to the Bar, friend!",
+                            "§e[NPC] Bartender: §fThese are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
+                            "§e[NPC] Bartender: §fCould you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("quest-talk").lines(new String[]{
+                            "§e[NPC] Bartender: §fClear out some more of those Zombies and I'll pay you greatly for it!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }
