@@ -29,6 +29,7 @@ import net.swofty.types.generic.minion.extension.MinionExtensions;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -150,12 +151,15 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<SkyBlockMinion.MinionTier> minionTiers = minion.getMinion().asSkyBlockMinion().getTiers();
 
+                int speedPercentage = minion.getSpeedPercentage();
+                final DecimalFormat formattter = new DecimalFormat("#.##");
+
                 return ItemStackCreator.getStack("§aNext Tier", Material.GOLD_INGOT, 1,
                         "§7View the items required to upgrade",
                         "§7this minion to the next tier.",
                         " ",
-                        "§7Time Between Actions: §8" + minionTiers.get(minion.getTier() - 1).timeBetweenActions() + "s"
-                             + " §l> §a" + minionTiers.get(minion.getTier()).timeBetweenActions() + "s",
+                        "§7Time Between Actions: §8" + formattter.format(minionTiers.get(minion.getTier() - 1).timeBetweenActions() / (1. + speedPercentage/100.)) + "s"
+                             + " §l> §a" + formattter.format(minionTiers.get(minion.getTier()).timeBetweenActions() / (1. + speedPercentage/100.)) + "s",
                         "§7Max Storage: §8" + minionTiers.get(minion.getTier() - 1).storage() + " §l> " +
                                 "§e" + minionTiers.get(minion.getTier()).storage(),
                         " ",
