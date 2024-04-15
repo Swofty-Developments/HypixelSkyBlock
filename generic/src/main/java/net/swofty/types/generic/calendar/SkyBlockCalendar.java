@@ -108,6 +108,6 @@ public final class SkyBlockCalendar {
         hours = hours > 12 ? hours - 12 : (hours == 0 ? 12 : hours);
 
         String symbol = isDaytime ? "§e" + DAY_SYMBOL : "§b" + NIGHT_SYMBOL;
-        return String.format("%d:%s %s %s", hours, formattedMinutes, timePeriod, symbol);
+        return String.format("%d:%s%s %s", hours, formattedMinutes, timePeriod, symbol);
     }
 }

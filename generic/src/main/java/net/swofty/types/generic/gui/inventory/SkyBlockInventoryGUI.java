@@ -26,6 +26,7 @@ public abstract class SkyBlockInventoryGUI {
     protected final List<GUIItem> items;
     private Inventory inventory;
     private SkyBlockPlayer player;
+    private boolean hasFinishedLoading = false;
 
     public SkyBlockInventoryGUI(String title, InventoryType size) {
         this.title = title;
@@ -267,6 +268,11 @@ public abstract class SkyBlockInventoryGUI {
 
         SkyBlockInventoryGUI previouslyOpen = GUI_MAP.get(player.getUuid());
         if (previouslyOpen != null) {
+            if (!previouslyOpen.hasFinishedLoading) {
+                player.sendMessage("§cPlease wait before doing this!");
+                return;
+            }
+
             previouslyOpen.onClose(
                     new InventoryCloseEvent(previouslyOpen.getInventory(), player),
                     SkyBlockInventoryGUI.CloseReason.SERVER_EXITED
@@ -290,6 +296,7 @@ public abstract class SkyBlockInventoryGUI {
             updateItemStacks(inventory, player);
             ActionPlayerChangeSkyBlockMenuDisplay.setMainMenu(player);
             onOpen(openEvent);
+            hasFinishedLoading = true;
 
             if (this instanceof RefreshingGUI gui) {
                 MinecraftServer.getSchedulerManager().submitTask(() -> {

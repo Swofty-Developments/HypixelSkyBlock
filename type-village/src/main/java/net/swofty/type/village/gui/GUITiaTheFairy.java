@@ -12,6 +12,7 @@ import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
 
@@ -46,6 +47,10 @@ public class GUITiaTheFairy extends SkyBlockInventoryGUI {
                                 .setValue(player.getFairySouls());
                 player.sendMessage("§aYou have exchanged your Fairy Souls for rewards!");
                 nextLevel.getDisplay().forEach(player::sendMessage);
+
+                player.getSkyBlockExperience().addExperience(
+                        SkyBlockLevelCause.getFairySoulExchangeCause(nextLevel.ordinal())
+                );
 
                 DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
                         DataHandler.Data.BACKPACKS, DatapointBackpacks.class

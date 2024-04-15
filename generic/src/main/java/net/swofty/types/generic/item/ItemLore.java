@@ -16,6 +16,7 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,11 +73,11 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
+            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH),
+                    handler.getReforge(), rarity);
             boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE),
                     handler.getReforge(), rarity);
             boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE),
-                    handler.getReforge(), rarity);
-            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH),
                     handler.getReforge(), rarity);
             boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.get(ItemStatistic.STRENGTH),
                     handler.getReforge(), rarity);
@@ -247,12 +248,12 @@ public class ItemLore {
 
         String color = statistic.isRed() ? "&c" : "&a";
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-                color + statistic.getPrefix() + overallValue + statistic.getSuffix();
+                color + statistic.getPrefix() + Math.round(overallValue) + statistic.getSuffix();
 
         if (reforgeValue != 0)
-            line += " §9(" + (reforgeValue > 0 ? "+" : "") + reforgeValue + ")";
+            line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
         if (gemstoneValue != 0)
-            line += " §d(" + (gemstoneValue >= 1 ? "+" : "") + gemstoneValue + ")";
+            line += " §d(" + (Math.round(gemstoneValue) >= 1 ? "+" : "") + Math.round(gemstoneValue) + ")";
 
         addLoreLine(line);
         return true;

@@ -298,7 +298,7 @@ public class SkyBlockPlayer extends Player {
         return CoopDatabase.getFromMember(getUuid());
     }
 
-    public ArmorSetRegistry getArmorSet() {
+    public @Nullable ArmorSetRegistry getArmorSet() {
         ItemType helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getItemTypeAsType();
         ItemType chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getItemTypeAsType();
         ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getItemTypeAsType();

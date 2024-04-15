@@ -3,6 +3,8 @@ package net.swofty.types.generic.server.eventcaller;
 import lombok.Getter;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.types.generic.item.set.ArmorSetRegistry;
+import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -48,6 +50,22 @@ public class PlayerValues {
                     (RegionType) regionTypes.getKey(),
                     (RegionType) regionTypes.getValue()));
         }),
+        ARMOR_SET(ArmorSetRegistry.class, SkyBlockPlayer::getArmorSet, (player, armorSet) -> {
+            ArmorSetRegistry oldSet = (ArmorSetRegistry) armorSet.getKey();
+            ArmorSetRegistry newSet = (ArmorSetRegistry) armorSet.getValue();
+
+            try {
+                if (oldSet != null && oldSet.getClazz().newInstance() instanceof SetEvents setEvents) {
+                    setEvents.setTakeOff(player);
+                }
+
+                if (newSet != null && newSet.getClazz().newInstance() instanceof SetEvents setEvents) {
+                    setEvents.setPutOn(player);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
         ;
 
         private final Class<?> type;

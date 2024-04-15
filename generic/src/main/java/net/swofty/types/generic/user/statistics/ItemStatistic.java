@@ -12,16 +12,16 @@ public enum ItemStatistic {
     DAMAGE_MULTIPLICATIVE("Damage", true, "§c", "+", "x", "❁"),
 
     // Player Statistics
-    HEALTH("Health", true, "§c", "+", "", "❤"),
+    HEALTH("Health", false, "§a", "+", "", "❤"),
     DEFENSE("Defense", false, "§a", "+", "", "❈"),
     SPEED("Speed", false, "§f", "+", "", "✦"),
     STRENGTH("Strength", true, "§c", "+", "", "❁"),
     INTELLIGENCE("Intelligence", false, "§b", "+", "", "✎"),
     MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
-    CRIT_CHANCE("Crit Chance", true, "§b", "+", "%", "☠"),
-    CRIT_DAMAGE("Crit Damage", true, "§b", "+", "%", "☣"),
+    CRIT_CHANCE("Crit Chance", true, "§9", "+", "%", "☠"),
+    CRIT_DAMAGE("Crit Damage", true, "§9", "+", "%", "☣"),
     FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
-    MAGIC_FIND("Magic Find", false, "§d", "+", "%", "✯"),
+    MAGIC_FIND("Magic Find", false, "§b", "+", "%", "✯"),
     //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
     ;
 

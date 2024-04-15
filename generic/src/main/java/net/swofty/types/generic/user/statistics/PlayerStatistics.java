@@ -67,9 +67,8 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(calculateExtraItemStatistics(
+            total = total.add(calculateExtraItemStatisticsToAdd(
                     item,
-                    item.getAttributeHandler().getStatistics(),
                     causer,
                     enemy
             ));
@@ -84,15 +83,12 @@ public class PlayerStatistics {
             if (item.getGenericInstance() instanceof ConstantStatistics)
                 return ItemStatistics.empty();
 
-        ItemStatistics statistics = item.getAttributeHandler().getStatistics();
-        statistics = calculateExtraItemStatistics(
-                item,
-                statistics,
-                causer,
-                enemy
-        );
-
-        return statistics;
+        return item.getAttributeHandler().getStatistics().add(
+                calculateExtraItemStatisticsToAdd(
+                        item,
+                        causer,
+                        enemy
+                ));
     }
 
     public ItemStatistics petStatistics() {
@@ -156,6 +152,7 @@ public class PlayerStatistics {
                 .with(ItemStatistic.HEALTH, 100D)
                 .with(ItemStatistic.SPEED, 100D)
                 .with(ItemStatistic.CRIT_DAMAGE, 50D)
+                .with(ItemStatistic.CRIT_CHANCE, 30D)
                 .build();
 
         total = total.add(baseStats);
@@ -171,9 +168,8 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                total = total.add(calculateExtraItemStatistics(
+                total = total.add(calculateExtraItemStatisticsToAdd(
                         item,
-                        item.getAttributeHandler().getStatistics(),
                         null,
                         null
                 ));
@@ -184,9 +180,8 @@ public class PlayerStatistics {
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-            total = total.add(calculateExtraItemStatistics(
+            total = total.add(calculateExtraItemStatisticsToAdd(
                     item,
-                    item.getAttributeHandler().getStatistics(),
                     null,
                     null
             ));
@@ -194,8 +189,9 @@ public class PlayerStatistics {
         accessoryStatistics = total;
     }
 
-    private ItemStatistics calculateExtraItemStatistics(SkyBlockItem item, ItemStatistics statistics,
+    private ItemStatistics calculateExtraItemStatisticsToAdd(SkyBlockItem item,
                                                         SkyBlockPlayer causer, LivingEntity enemy) {
+        ItemStatistics statistics = ItemStatistics.builder().build();
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
         statistics = getEnchantStatistics(item, statistics, causer, enemy);
@@ -219,7 +215,7 @@ public class PlayerStatistics {
     private ItemStatistics getEnchantStatistics(SkyBlockItem item, ItemStatistics statistics,
                                                 SkyBlockPlayer causer, LivingEntity enemy) {
         for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
-            ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level());
+            ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level()).clone();
             statistics = statistics.add(enchantmentStatistics);
 
             if (causer != null && enemy != null) {

@@ -242,7 +242,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (!player.getShoppingData().canPurchase(item.item, item.amount)) {
+                    if (item.isHasStock() && !player.getShoppingData().canPurchase(item.item, item.amount)) {
                         player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                         return;
                     }
@@ -262,7 +262,9 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     sbItem.setAmount(item.amount);
                     player.addAndUpdateItem(sbItem);
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                    player.getShoppingData().documentPurchase(item.getItem(), item.amount);
+
+                    if (item.hasStock)
+                        player.getShoppingData().documentPurchase(item.getItem(), item.amount);
 
                     updateThis(player);
                 }
@@ -292,9 +294,11 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     lore.add("§7Cost");
                     lore.addAll(price.getGUIDisplay());
                     lore.add("");
-                    lore.add("§7Stock");
-                    lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem()) + " §7remaining");
-                    lore.add("");
+                    if (item.hasStock) {
+                        lore.add("§7Stock");
+                        lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem()) + " §7remaining");
+                        lore.add("");
+                    }
                     lore.add("§eClick to trade!");
 
                     if (item.stackable)
@@ -360,6 +364,15 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         private List<String> lore = null;
         @Setter
         private String displayName = null;
+        private boolean hasStock = true;
+
+        public ShopItem(SkyBlockItem item, int amount, ShopPrice price, boolean stackable, boolean hasStock) {
+            this.item = item;
+            this.amount = amount;
+            this.price = price;
+            this.stackable = stackable;
+            this.hasStock = hasStock;
+        }
         
         public void setDisplayLore(List<String> lores) {
             this.lore = lores;

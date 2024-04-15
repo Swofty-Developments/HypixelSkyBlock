@@ -6,9 +6,10 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
+import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class MinerOutfitSet extends SkyBlockValueEvent implements ArmorSet {
+public class MinerOutfitSet implements ArmorSet, SetEvents {
 
     @Override
     public String getName() {
@@ -21,14 +22,12 @@ public class MinerOutfitSet extends SkyBlockValueEvent implements ArmorSet {
     }
 
     @Override
-    public Class<? extends ValueUpdateEvent> getValueEvent() {
-        return MiningValueUpdateEvent.class;
+    public void setPutOn(SkyBlockPlayer player) {
+        player.addEffect(new Potion(PotionEffect.HASTE, (byte) 2 , 1000000));
     }
 
     @Override
-    public void run(ValueUpdateEvent event) {
-        if (!isWearingSet(event.getPlayer())) return;
-        SkyBlockPlayer player = event.getPlayer();
-        player.addEffect(new Potion(PotionEffect.HASTE, (byte) 2 , 1000000));
+    public void setTakeOff(SkyBlockPlayer player) {
+        player.removeEffect(PotionEffect.HASTE);
     }
 }

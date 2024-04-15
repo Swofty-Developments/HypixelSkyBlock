@@ -53,7 +53,7 @@ public class SkyBlockLevelCause {
         }
 
         // Register all Fairy Exchange rewards
-        for (int i = 1; i <= FairySoulExchangeLevels.values().length; i++) {
+        for (int i = 0; i <= FairySoulExchangeLevels.values().length; i++) {
             CAUSES.put("fairy-soul-exchange-" + i, new FairySoulExchangeLevelCause(i));
         }
     }

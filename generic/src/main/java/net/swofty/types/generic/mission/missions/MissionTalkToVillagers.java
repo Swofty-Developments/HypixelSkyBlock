@@ -7,6 +7,8 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -94,11 +96,10 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.sendMessage("On end thrown");
-
-        for (Map.Entry<String, Object> entry : customData.entrySet()) {
-            player.sendMessage(entry.getKey() + " " + entry.getValue());
-        }
+        mission.getObjectiveCompleteText(new ArrayList<>(List.of("§61000 §7Coins"))).forEach(player::sendMessage);
+        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
+                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
+        );
     }
 
     @Override
