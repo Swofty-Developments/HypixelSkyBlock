@@ -296,6 +296,18 @@ public class MiningCollection extends CollectionCategory {
                                         .add(ItemType.COAL, 32)
                                         .add(ItemType.OAK_WOOD, 32); // Not only Oak any wood should make charcoal.
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_COAL_BLOCK, 2));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                List<String> pattern = List.of(
+                                        "ABA",
+                                        " A ");
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ENCHANTED_LAVA_BUCKET), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
                             @Override
@@ -1575,6 +1587,20 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.FLAMES, 4));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_RED_SAND_CUBE, 1));
+                                ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_SULPHUR_CUBE, 1));
+                                ingredientMap.put('D', new MaterialQuantifiable(ItemType.PLASMA_BUCKET, 1));
+                                List<String> pattern = List.of(
+                                        "ABA",
+                                        "CDC",
+                                        "ABA");
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.EVERBURNING_FLAME), ingredientMap, pattern);
                             }
                         })
                 ),

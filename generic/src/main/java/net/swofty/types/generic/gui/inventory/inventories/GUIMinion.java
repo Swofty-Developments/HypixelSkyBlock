@@ -1,5 +1,7 @@
 package net.swofty.types.generic.gui.inventory.inventories;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -16,6 +18,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
@@ -28,6 +31,7 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
@@ -127,7 +131,12 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, minion.asSkyBlockItem().getItemStack());
+                List<Component> lore = new ArrayList<>();
+                Minion.getLore(minion.asSkyBlockItem(),minion.getSpeedPercentage()).forEach(line -> {
+                    lore.add(Component.text("§r" + line.replace("&", "§"))
+                            .decorations(Collections.singleton(TextDecoration.ITALIC), false));
+                });
+                return PlayerItemUpdater.playerUpdate(player,minion.asSkyBlockItem().getItemStack()).lore(lore);
             }
         });
 
