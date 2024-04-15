@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viarewind-common</artifactId>
-            <version>3.0.6-SNAPSHOT</version>
+            <version>3.0.7-24w09a-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.viaversion</groupId>
