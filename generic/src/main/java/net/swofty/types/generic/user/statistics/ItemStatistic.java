@@ -11,18 +11,47 @@ public enum ItemStatistic {
     DAMAGE_ADDITIVE("Damage", true, "§c", "+", "%", "❁"), // EXPECTS PERCENTAGES
     DAMAGE_MULTIPLICATIVE("Damage", true, "§c", "+", "x", "❁"),
 
-    // Player Statistics
+    // Combat Statistics
     HEALTH("Health", true, "§c", "+", "", "❤"),
     DEFENSE("Defense", false, "§a", "+", "", "❈"),
-    SPEED("Speed", false, "§f", "+", "", "✦"),
     STRENGTH("Strength", true, "§c", "+", "", "❁"),
     INTELLIGENCE("Intelligence", false, "§b", "+", "", "✎"),
-    MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
     CRIT_CHANCE("Crit Chance", true, "§b", "+", "%", "☠"),
     CRIT_DAMAGE("Crit Damage", true, "§b", "+", "%", "☣"),
-    FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
+    FEROCITY("Ferocity", true, "§c", "+", "", "⫽"),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "", "⚔"),
+    ABILITY_DAMAGE("Ability Damage", true, "§c", "+", "", "๑"),
+    HEALTH_REGEN("Health Regen", true, "§c", "+", "", "❣"),
+    VITALITY("Vitality", false, "§4", "+", "", "♨"),
+    MENDING("Mending", false, "§a", "+", "", "☄"),
+    TRUE_DEFENSE("True Defense", false, "§f", "+", "", "❂"),
+
+    // Misc Statistics
+    SPEED("Speed", false, "§f", "+", "", "✦"),
     MAGIC_FIND("Magic Find", false, "§d", "+", "%", "✯"),
-    //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
+    SEA_CREATURE_CHANCE("Sea Creature Chance", false, "§3", "+", "%", "α"),
+    PET_LUCK("Pet Luck", false, "§d", "+", "", "♣"),
+    FISHING_SPEED("Fishing Speed", false, "§b", "+", "", "☂"),
+
+    // Gathering Statistics
+    MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
+    BREAKING_POWER("Breaking Power", false, "§2", "+", "", "Ⓟ"),
+    FORAGING_FORTUNE("Foraging Fortune", false, "§6", "+", "", "☘"),
+    FARMING_FORTUNE("Farming Fortune", false, "§6", "+", "", "☘"),
+    MINING_FORTUNE("Mining Fortune", false, "§6", "+", "", "☘"),
+
+    // Wisdom Statistics
+    COMBAT_WISDOM("Combat Wisdom", false, "§3", "+", "", "☯"),
+    MINING_WISDOM("Mining Wisdom", false, "§3", "+", "", "☯"),
+    FORAGING_WISDOM("Foraging Wisdom", false, "§3", "+", "", "☯"),
+    FARMING_WISDOM("Farming Wisdom", false, "§3", "+", "", "☯"),
+    FISHING_WISDOM("Fishing Wisdom", false, "§3", "+", "", "☯"),
+    ENCHANTING_WISDOM("Enchanting Wisdom", false, "§3", "+", "", "☯"),
+    ALCHEMY_WISDOM("Alchemy Wisdom", false, "§3", "+", "", "☯"),
+    CARPENTRY_WISDOM("Carpentry Wisdom", false, "§3", "+", "", "☯"),
+    RUNECRAFTING_WISDOM("Runecrafting Wisdom", false, "§3", "+", "", "☯"),
+    SOCIAL_WISDOM("Social Wisdom", false, "§3", "+", "", "☯"),
+    TAMING_WISDOM("Taming Wisdom", false, "§3", "+", "", "☯"),
     ;
 
     private final String displayName;

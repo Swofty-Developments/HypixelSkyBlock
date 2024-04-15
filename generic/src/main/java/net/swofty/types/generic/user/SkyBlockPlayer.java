@@ -426,10 +426,6 @@ public class SkyBlockPlayer extends Player {
                 + this.getUsername();
     }
 
-    public float getMaxMana() {
-        return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
-    }
-
     public boolean hasCustomCollectionAward(CustomCollectionAward award) {
         Map.Entry<ItemType, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
         if (entry == null) return false;
@@ -459,10 +455,6 @@ public class SkyBlockPlayer extends Player {
 
     public PlayerEnchantmentHandler getEnchantmentHandler() {
         return new PlayerEnchantmentHandler(this);
-    }
-
-    public Double getMiningSpeed() {
-        return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
     }
 
     public void sendTo(ServerType type) {
@@ -518,15 +510,6 @@ public class SkyBlockPlayer extends Player {
         return 0;
     }
 
-    public float getDefense() {
-        float defence = 0;
-
-        PlayerStatistics statistics = this.getStatistics();
-        defence += statistics.allStatistics().get(ItemStatistic.DEFENSE);
-
-        return defence;
-    }
-
     public void playSuccessSound() {
         playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
     }
@@ -568,29 +551,6 @@ public class SkyBlockPlayer extends Player {
     }
 
     @Override
-    public float getMaxHealth() {
-        PlayerStatistics statistics = this.getStatistics();
-        return statistics.allStatistics().get(ItemStatistic.HEALTH).floatValue();
-    }
-
-    @Override
-    public float getHealth() {
-        return this.health;
-    }
-
-    @Override
-    public void setHealth(float health) {
-        if ((System.currentTimeMillis() - joined) < 3000)
-            return;
-        if (health < 0) {
-            kill();
-            return;
-        }
-        this.health = health;
-        this.sendPacket(new UpdateHealthPacket((health / getMaxHealth()) * 20, 20, 20));
-    }
-
-    @Override
     public void sendMessage(@NotNull String message) {
         super.sendMessage(message.replace("&", "§"));
     }
@@ -629,5 +589,46 @@ public class SkyBlockPlayer extends Player {
             return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                     handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
+    }
+
+    // Statistics
+    @Override
+    public float getMaxHealth() {
+        PlayerStatistics statistics = this.getStatistics();
+        return statistics.allStatistics().get(ItemStatistic.HEALTH).floatValue();
+    }
+
+    @Override
+    public float getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(float health) {
+        if ((System.currentTimeMillis() - joined) < 3000)
+            return;
+        if (health < 0) {
+            kill();
+            return;
+        }
+        this.health = health;
+        this.sendPacket(new UpdateHealthPacket((health / getMaxHealth()) * 20, 20, 20));
+    }
+
+    public float getDefense() {
+        float defence = 0;
+
+        PlayerStatistics statistics = this.getStatistics();
+        defence += statistics.allStatistics().get(ItemStatistic.DEFENSE);
+
+        return defence;
+    }
+
+    public Double getMiningSpeed() {
+        return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
+    }
+
+    public float getMaxMana() {
+        return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
     }
 }

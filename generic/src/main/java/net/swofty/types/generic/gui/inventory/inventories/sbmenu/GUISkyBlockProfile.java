@@ -174,6 +174,13 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         ItemStatistic.getStatisticDisplayFloat(player, ItemStatistic.INTELLIGENCE),
                         ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.CRIT_CHANCE),
                         ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.CRIT_DAMAGE),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FEROCITY),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.BONUS_ATTACK_SPEED),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.ABILITY_DAMAGE),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.HEALTH_REGEN),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.VITALITY),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MENDING),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.TRUE_DEFENSE),
                         "",
                         "§eClick for details!"
                 );
@@ -192,6 +199,10 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         "§7items, or more of them.",
                         "",
                         ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MINING_SPEED),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.BREAKING_POWER),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FORAGING_FORTUNE),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FARMING_FORTUNE),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MINING_FORTUNE),
                         "",
                         "§eClick for details!"
                 );
@@ -208,6 +219,18 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§3Wisdom Stats", Material.BOOK, 1,
                         "§7Increases the §3XP §7you gain on your",
                         "§7skills",
+                        "",
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.COMBAT_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FORAGING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MINING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FARMING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FISHING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.ENCHANTING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.CARPENTRY_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.RUNECRAFTING_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.ALCHEMY_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.SOCIAL_WISDOM),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.TAMING_WISDOM),
                         "",
                         "§eClick for details!"
                 );
@@ -228,6 +251,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         "",
                         ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.SPEED),
                         ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MAGIC_FIND),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.SEA_CREATURE_CHANCE),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.PET_LUCK),
+                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.FISHING_SPEED),
                         "",
                         "§eClick for details!"
                 );
