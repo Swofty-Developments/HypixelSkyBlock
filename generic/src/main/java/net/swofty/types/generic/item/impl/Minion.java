@@ -132,23 +132,30 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
     @Override
     default List<String> getAbsoluteLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        boolean mithrilInfusion = item.getAttributeHandler().isMithrilInfused();
+
+        int percentageSpeed = 0;
+        if(mithrilInfusion)
+            percentageSpeed += 10;
+
+        return getLore(item, percentageSpeed);
+    }
+
+    public static List<String> getLore(SkyBlockItem item, int percentageSpeed){
+        MinionRegistry minionRegistry = ((Minion)item.getGenericInstance()).getMinionRegistry();
+
         List<String> lore = new ArrayList<>(Arrays.asList(
                 "§7Place this minion and it will start",
-                "§7generating and mining " + getMinionRegistry().name().toLowerCase() + "!",
+                "§7generating and mining " + minionRegistry.name().toLowerCase() + "!",
                 "§7Requires an open area to place",
-                getMinionRegistry().name().toLowerCase() + ". Minions also work",
+                "§7" + minionRegistry.name().toLowerCase() + ". Minions also work",
                 "§7you are offline!",
                 ""
         ));
 
         SkyBlockMinion minion = item.getAttributeHandler().getMinionType().asSkyBlockMinion();
         ItemAttributeMinionData.MinionData data = item.getAttributeHandler().getMinionData();
-        boolean mithrilInfusion = item.getAttributeHandler().isMithrilInfused();
         SkyBlockMinion.MinionTier tier = minion.getTiers().get(data.tier() - 1);
-
-        int percentageSpeed = 0;
-        if(mithrilInfusion)
-            percentageSpeed += 10;
 
         double timeBetweenActions = tier.timeBetweenActions() / (1. + percentageSpeed/100.);
 
@@ -160,7 +167,6 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unsta
 
         lore.add(" ");
         lore.add("§9§lRARE");
-
         return lore;
     }
 

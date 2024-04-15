@@ -29,6 +29,6 @@ public class EnchantedCharcoal implements Enchanted, Sellable, MinionFuelItem {
 
     @Override
     public long getFuelLastTimeInMS() {
-        return 129600000;
+        return 129600000; // 1.5 Days
     }
 }

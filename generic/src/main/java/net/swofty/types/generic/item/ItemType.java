@@ -50,7 +50,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
-import net.swofty.types.generic.item.items.minion.upgrade.fuel.BlockofCoal;
+import net.swofty.types.generic.item.items.minion.upgrade.fuel.*;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
@@ -163,8 +163,17 @@ public enum ItemType {
     FLY_CATCHER(Material.COBWEB, Rarity.EPIC, FlyCatcher.class),
     DIAMOND_SPREADING(Material.DIAMOND, Rarity.RARE, DiamondSpreading.class),
     MINION_EXPANDER(Material.COMMAND_BLOCK, Rarity.RARE, MinionExpander.class),
-
     MITHRIL_INFUSION(Material.PLAYER_HEAD, Rarity.UNCOMMON, MithrilInfusion.class),
+
+    /**
+     * Minion Fuels
+     */
+
+    ENCHANTED_LAVA_BUCKET(Material.LAVA_BUCKET, Rarity.RARE, EnchantedLavaBucket.class),
+    MAGMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, MagmaBucket.class),
+    PLASMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, PlasmaBucket.class),
+    EVERBURNING_FLAME(Material.PLAYER_HEAD, Rarity.EPIC, EverburningFlame.class),
+    HEAT_CORE(Material.PLAYER_HEAD, Rarity.SPECIAL, HeatCore.class),
 
     /**
      * Minion Skins
@@ -600,6 +609,10 @@ public enum ItemType {
     PLASMA(Material.PLAYER_HEAD, Rarity.RARE, Plasma.class),
     VOLTA(Material.PLAYER_HEAD, Rarity.RARE, Volta.class),
 
+    /**
+     * Crimson Isles
+     */
+    FLAMES(Material.RED_SAND, Rarity.COMMON, Flames.class),
 
     /**
      * Vanilla Items
