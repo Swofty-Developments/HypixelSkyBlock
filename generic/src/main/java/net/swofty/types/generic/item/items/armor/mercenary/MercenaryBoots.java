@@ -12,8 +12,8 @@ public class MercenaryBoots implements CustomSkyBlockItem, StandardItem, Leather
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 30D)
-                .with(ItemStatistic.DEFENSE, 30D)
+                .withAdditive(ItemStatistic.HEALTH, 30D)
+                .withAdditive(ItemStatistic.DEFENSE, 30D)
                 .build();
     }
 

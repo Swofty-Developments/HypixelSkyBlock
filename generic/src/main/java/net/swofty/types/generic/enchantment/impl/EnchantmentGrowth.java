@@ -17,7 +17,7 @@ public class EnchantmentGrowth implements Ench, EnchFromTable {
 
     @Override
     public String getDescription(int level) {
-        return "Grants §a+" + increases[level - 1] + ItemStatistic.HEALTH.getColour() + ItemStatistic.HEALTH.getSymbol() + " " + ItemStatistic.HEALTH.getDisplayName();
+        return "Grants §a+" + increases[level - 1] + ItemStatistic.HEALTH.getDisplayColor() + ItemStatistic.HEALTH.getSymbol() + " " + ItemStatistic.HEALTH.getDisplayName();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class EnchantmentGrowth implements Ench, EnchFromTable {
     @Override
     public ItemStatistics getStatistics(int level) {
         double increase = increases[level - 1];
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, increase).build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, increase).build();
     }
 
     @Override

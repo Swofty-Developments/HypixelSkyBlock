@@ -1,13 +1,9 @@
 package net.swofty.types.generic.skill;
 
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
@@ -65,10 +61,16 @@ public abstract class SkillCategory {
                     case REGION_ACCESS -> {
                         lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
                     }
-                    case STATS -> {
-                        ItemStatistic statistic = ((StatisticReward) unlock).getStatistic();
-                        lore.add("§7  §8+§b" + statistic.getColour() +
-                                statistic.getSymbol() + ((StatisticReward) unlock).amountAdded() + statistic.getSuffix()
+                    case STATS_ADDITIVE -> {
+                        ItemStatistic statistic = ((AdditiveStatisticReward) unlock).getStatistic();
+                        lore.add("§7  §8+§b" + statistic.getDisplayColor() +
+                                statistic.getSymbol() + ((AdditiveStatisticReward) unlock).amountAdded() + statistic.getSuffix()
+                                + " " + statistic.getDisplayName());
+                    }
+                    case STATS_MULTIPLICATIVE -> {
+                        ItemStatistic statistic = ((MultiplicativePercentageStatisticReward) unlock).getStatistic();
+                        lore.add("§7  §8+§b" + statistic.getDisplayColor() +
+                                statistic.getSymbol() + (((MultiplicativePercentageStatisticReward) unlock).amountAdded() * 100) + "%"
                                 + " " + statistic.getDisplayName());
                     }
                 }
@@ -87,7 +89,8 @@ public abstract class SkillCategory {
             REGION_ACCESS,
             COINS,
             XP,
-            STATS
+            STATS_ADDITIVE,
+            STATS_MULTIPLICATIVE
         }
     }
 
@@ -120,16 +123,38 @@ public abstract class SkillCategory {
         public abstract int getXP();
     }
 
-    public abstract static class StatisticReward extends Reward {
+    public abstract static class AdditiveStatisticReward extends Reward {
         @Override
         public UnlockType type() {
-            return UnlockType.STATS;
+            return UnlockType.STATS_ADDITIVE;
         }
 
         @Override
         public void onUnlock(SkyBlockPlayer player) {
             DatapointSkills.PlayerSkills skills = player.getSkills();
-            skills.addStatistic(getStatistic(), amountAdded());
+            ItemStatistics statistics = ItemStatistics.builder()
+                    .withAdditive(getStatistic(), amountAdded())
+                    .build();
+            skills.setStatistics(skills.getSkillStatistics().add(statistics));
+        }
+
+        public abstract ItemStatistic getStatistic();
+        public abstract Double amountAdded();
+    }
+
+    public abstract static class MultiplicativePercentageStatisticReward extends Reward {
+        @Override
+        public UnlockType type() {
+            return UnlockType.STATS_MULTIPLICATIVE;
+        }
+
+        @Override
+        public void onUnlock(SkyBlockPlayer player) {
+            DatapointSkills.PlayerSkills skills = player.getSkills();
+            ItemStatistics statistics = ItemStatistics.builder()
+                    .withMultiplicativePercentage(getStatistic(), amountAdded())
+                    .build();
+            skills.setStatistics(skills.getSkillStatistics().add(statistics));
         }
 
         public abstract ItemStatistic getStatistic();

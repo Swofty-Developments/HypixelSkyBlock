@@ -40,11 +40,11 @@ public class AccountInformationModule extends TablistModule {
         entries.add(new TablistEntry("§e§lSkills: §a" +
                 skillCategory + " " + skills.getCurrentLevel(skillCategory) + ": §3" + skills.getPercentage(skillCategory) + "%",
                 TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Speed: " + ItemStatistic.SPEED.getColour() +
-                ItemStatistic.SPEED.getSymbol() + playerStatistics.get(ItemStatistic.SPEED),
+        entries.add(new TablistEntry(" Speed: " + ItemStatistic.SPEED.getDisplayColor() +
+                ItemStatistic.SPEED.getSymbol() + playerStatistics.getOverall(ItemStatistic.SPEED),
                 TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Strength: " + ItemStatistic.STRENGTH.getColour() +
-                ItemStatistic.STRENGTH.getSymbol() + playerStatistics.get(ItemStatistic.STRENGTH),
+        entries.add(new TablistEntry(" Strength: " + ItemStatistic.STRENGTH.getDisplayColor() +
+                ItemStatistic.STRENGTH.getSymbol() + playerStatistics.getOverall(ItemStatistic.STRENGTH),
                 TablistSkinRegistry.GRAY));
         entries.add(getGrayEntry());
 

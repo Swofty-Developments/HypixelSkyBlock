@@ -11,8 +11,8 @@ public class FancySword implements CustomSkyBlockItem, StandardItem, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 50D)
-                .with(ItemStatistic.SPEED, 40D)
+                .withAdditive(ItemStatistic.DAMAGE, 50D)
+                .withAdditive(ItemStatistic.SPEED, 40D)
                 .build();
     }
 

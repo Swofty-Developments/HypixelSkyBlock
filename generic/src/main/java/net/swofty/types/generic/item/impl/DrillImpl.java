@@ -5,7 +5,7 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface DrillImpl extends Enchantable, Reforgable, ExtraRarityDisplay, BreakingPower {
+public interface DrillImpl extends Enchantable, Reforgable, ExtraRarityDisplay {
 
     default boolean showEnchantLores() {
         return true;

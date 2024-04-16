@@ -52,7 +52,7 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                     return;
                 }
 
-                if (stat.getSuffix().contains("%")) {
+                if (stat.getIsPercentage()) {
                     cap = 5;
                 } else {
                     cap = 50;
@@ -63,8 +63,8 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                 for (SkyBlockItem item : player.getAllInventoryItems()) {
                     if (item.getGenericInstance() == null) continue;
                     if (item.getGenericInstance() instanceof DefaultSoulbound) {
-                        if (item.getAttributeHandler().getStatistics().get(stat) > cap) {
-                            cap = item.getAttributeHandler().getStatistics().get(stat);
+                        if (item.getAttributeHandler().getStatistics().getOverall(stat) > cap) {
+                            cap = item.getAttributeHandler().getStatistics().getOverall(stat);
                         }
                     }
                 }
@@ -77,7 +77,7 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                 }
 
                 player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
-                    item.getAttributeHandler().getStatistics().set(stat, amt);
+                    item.getAttributeHandler().getStatistics().addAdditive(stat, amt);
                 });
 
                 player.sendMessage("§aUpdated the " + stat.getDisplayName() + " of the item in your hand to §e" + amt + "§a.");

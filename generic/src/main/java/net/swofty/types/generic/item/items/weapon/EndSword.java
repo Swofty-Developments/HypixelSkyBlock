@@ -19,7 +19,7 @@ public class EndSword extends SkyBlockValueEvent implements CustomSkyBlockItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 35D)
+                .withAdditive(ItemStatistic.DAMAGE, 35D)
                 .build();
     }
 

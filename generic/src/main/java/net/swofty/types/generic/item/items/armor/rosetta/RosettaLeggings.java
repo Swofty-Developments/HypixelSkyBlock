@@ -16,8 +16,8 @@ public class RosettaLeggings implements CustomSkyBlockItem, CustomDisplayName, S
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 15D)
-                .with(ItemStatistic.DEFENSE, 30D)
+                .withAdditive(ItemStatistic.HEALTH, 15D)
+                .withAdditive(ItemStatistic.DEFENSE, 30D)
                 .build();
     }
 

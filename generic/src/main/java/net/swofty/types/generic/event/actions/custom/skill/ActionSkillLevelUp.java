@@ -2,14 +2,10 @@ package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.Event;
-import net.minestom.server.item.ItemStack;
-import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -62,11 +58,17 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
                     case COINS -> {
                         player.sendMessage("    §8+§6" + ((SkillCategory.CoinReward) unlock).getCoins() + " §7Coins");
                     }
-                    case STATS -> {
-                        player.sendMessage("    §8+§b" + ((SkillCategory.StatisticReward) unlock).getStatistic().getColour() +
-                                ((SkillCategory.StatisticReward) unlock).getStatistic().getSymbol() +
-                                ((SkillCategory.StatisticReward) unlock).amountAdded() + ((SkillCategory.StatisticReward) unlock).getStatistic().getSuffix()
-                                + " " + ((SkillCategory.StatisticReward) unlock).getStatistic().getDisplayName());
+                    case STATS_ADDITIVE -> {
+                        player.sendMessage("    §8+§b" + ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic().getDisplayColor() +
+                                ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic().getSymbol() +
+                                ((SkillCategory.AdditiveStatisticReward) unlock).amountAdded() + ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic().getSuffix()
+                                + " " + ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic().getDisplayName());
+                    }
+                    case STATS_MULTIPLICATIVE -> {
+                        player.sendMessage("    §8+§b" + ((SkillCategory.MultiplicativePercentageStatisticReward) unlock).getStatistic().getDisplayColor() +
+                                ((SkillCategory.MultiplicativePercentageStatisticReward) unlock).getStatistic().getSymbol() +
+                                ((SkillCategory.MultiplicativePercentageStatisticReward) unlock).amountAdded() + "%"
+                                + " " + ((SkillCategory.MultiplicativePercentageStatisticReward) unlock).getStatistic().getDisplayName());
                     }
                     case REGION_ACCESS -> {
                         player.sendMessage("    §8+§aAccess to " + ((SkillCategory.RegionReward) unlock).getRegion());

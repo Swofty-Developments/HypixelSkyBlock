@@ -2,8 +2,8 @@ package net.swofty.types.generic.item.attribute.attributes;
 
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
-import net.swofty.types.generic.item.impl.BreakingPower;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
 import org.jetbrains.annotations.Nullable;
 
 public class ItemAttributeBreakingPower extends ItemAttribute<Integer> {
@@ -15,8 +15,9 @@ public class ItemAttributeBreakingPower extends ItemAttribute<Integer> {
     @SneakyThrows
     @Override
     public Integer getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
-        if (itemClass != null && itemClass.newInstance() instanceof BreakingPower power)
-            return power.getBreakingPower();
+        try {
+            return itemClass.newInstance().getStatistics(null).getOverall(ItemStatistic.BREAKING_POWER).intValue();
+        } catch (Exception e) {}
         return 0;
     }
 

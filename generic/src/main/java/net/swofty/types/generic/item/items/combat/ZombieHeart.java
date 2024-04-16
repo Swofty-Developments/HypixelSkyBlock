@@ -14,7 +14,7 @@ public class ZombieHeart implements CustomSkyBlockItem, NotFinishedYet, Sellable
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 50D)
+                .withAdditive(ItemStatistic.HEALTH, 50D)
                 .build();
     }
 

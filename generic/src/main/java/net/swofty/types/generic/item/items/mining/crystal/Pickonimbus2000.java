@@ -13,14 +13,10 @@ public class Pickonimbus2000 implements CustomSkyBlockItem, PickaxeImpl, Sellabl
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 30D)
-                .with(ItemStatistic.MINING_SPEED, 1500D)
+                .withAdditive(ItemStatistic.DAMAGE, 30D)
+                .withAdditive(ItemStatistic.MINING_SPEED, 1500D)
+                .withAdditive(ItemStatistic.BREAKING_POWER, 7D)
                 .build();
-    }
-
-    @Override
-    public int getBreakingPower() {
-        return 7;
     }
 
     @Override

@@ -45,8 +45,7 @@ public class AspectOfTheEnd implements CustomSkyBlockItem, CustomSkyBlockAbility
         player.teleport(toTeleportTo.add(0, 0.5, 0));
         player.playSound(Sound.sound(SoundEvent.ENTITY_ENDERMAN_TELEPORT, Sound.Source.PLAYER, 1, 1));
         player.getStatistics().boostStatistic(TemporaryStatistic.builder()
-                .withStatistic(ItemStatistic.SPEED)
-                .withValue(50D)
+                .withStatistics(ItemStatistics.builder().withAdditive(ItemStatistic.SPEED, 50D).build())
                 .withExpirationInTicks(3 * 20)
                 .build());
     }
@@ -69,8 +68,8 @@ public class AspectOfTheEnd implements CustomSkyBlockItem, CustomSkyBlockAbility
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100D)
-                .with(ItemStatistic.STRENGTH, 100D)
+                .withAdditive(ItemStatistic.DAMAGE, 100D)
+                .withAdditive(ItemStatistic.STRENGTH, 100D)
                 .build();
     }
 

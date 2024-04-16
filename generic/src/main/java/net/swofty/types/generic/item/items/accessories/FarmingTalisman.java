@@ -9,8 +9,10 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.TemporaryConditionalStatistic;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,12 +47,18 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
 
-        if (event.getTo() == null ||!event.getTo().equals(RegionType.FARM) &&!event.getTo().equals(RegionType.THE_BARN) &&!event.getTo().equals(RegionType.MUSHROOM_DESERT)) return;
+        if (event.getTo() == null || !event.getTo().equals(RegionType.FARM) &&
+                !event.getTo().equals(RegionType.THE_BARN) &&
+                !event.getTo().equals(RegionType.MUSHROOM_DESERT) ||
+                player.getRegion() == null
+        ) return;
+        String region = player.getRegion().getName();
 
         player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
-                .withStatistic(ItemStatistic.SPEED)
-                .withValue(10D)
-                .withExpiry(player1 -> false)
+                .withStatistics(ItemStatistics.builder().withAdditive(ItemStatistic.SPEED, 10D).build())
+                .withExpiry(newPlayer -> {
+                    return newPlayer.getRegion() != null && newPlayer.getRegion().getName().equals(region);
+                })
                 .build());
     }
 }

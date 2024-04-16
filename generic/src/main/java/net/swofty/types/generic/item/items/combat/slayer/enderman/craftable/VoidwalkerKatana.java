@@ -29,9 +29,9 @@ public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, S
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 80D)
-                .with(ItemStatistic.STRENGTH, 40D)
-                .with(ItemStatistic.CRIT_DAMAGE, 10D)
+                .withAdditive(ItemStatistic.DAMAGE, 80D)
+                .withAdditive(ItemStatistic.STRENGTH, 40D)
+                .withAdditive(ItemStatistic.CRIT_DAMAGE, 10D)
                 .build();
     }
 

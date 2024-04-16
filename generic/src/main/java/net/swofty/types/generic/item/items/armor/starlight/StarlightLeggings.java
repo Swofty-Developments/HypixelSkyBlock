@@ -10,9 +10,9 @@ public class StarlightLeggings implements CustomSkyBlockItem, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 30D)
-                .with(ItemStatistic.DEFENSE, 30D)
-                .with(ItemStatistic.INTELLIGENCE, 50D)
+                .withAdditive(ItemStatistic.HEALTH, 30D)
+                .withAdditive(ItemStatistic.DEFENSE, 30D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 

@@ -8,7 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class LeafletHat implements CustomSkyBlockItem, StandardItem, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 20D).build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 20D).build();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 100;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -73,7 +73,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 250;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -98,7 +98,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 500;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -123,7 +123,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 750;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -154,7 +154,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -179,7 +179,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 2000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -204,7 +204,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 3000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
             @Override
             public ItemStatistic getStatistic() {
                 return ItemStatistic.HEALTH;
@@ -229,7 +229,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 4000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -254,7 +254,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 5000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -279,7 +279,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 7500;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -304,7 +304,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 10000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -329,7 +329,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 15000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -354,7 +354,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 20000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -379,7 +379,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 25000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -404,7 +404,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 30000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -429,7 +429,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 40000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -454,7 +454,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 50000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -479,7 +479,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 65000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -504,7 +504,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 80000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -529,7 +529,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 100000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -554,7 +554,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 125000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -579,7 +579,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 150000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -604,7 +604,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 175000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -629,7 +629,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 200000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -654,7 +654,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 225000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -679,7 +679,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 250000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -704,7 +704,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 275000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -729,7 +729,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 300000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -754,7 +754,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 325000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -779,7 +779,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 350000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -804,7 +804,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 375000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -829,7 +829,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 400000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -854,7 +854,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 425000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -879,7 +879,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 450000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -904,7 +904,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 475000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -929,7 +929,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 500000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -954,7 +954,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 550000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -979,7 +979,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 600000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1004,7 +1004,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 650000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1029,7 +1029,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 700000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1054,7 +1054,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 750000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1079,7 +1079,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 800000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1104,7 +1104,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 850000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1129,7 +1129,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 900000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1154,7 +1154,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1179,7 +1179,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1204,7 +1204,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1229,7 +1229,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1254,7 +1254,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1279,7 +1279,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1304,7 +1304,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1329,7 +1329,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1354,7 +1354,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1379,7 +1379,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1404,7 +1404,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1429,7 +1429,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1454,7 +1454,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1479,7 +1479,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1504,7 +1504,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;
@@ -1529,7 +1529,7 @@ public class FarmingSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new StatisticReward() {
+                        new AdditiveStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.HEALTH;

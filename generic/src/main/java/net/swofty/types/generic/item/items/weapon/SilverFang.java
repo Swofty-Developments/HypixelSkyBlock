@@ -9,7 +9,7 @@ public class SilverFang implements CustomSkyBlockItem, StandardItem, Enchanted, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100D)
+                .withAdditive(ItemStatistic.DAMAGE, 100D)
                 .build();
     }
 

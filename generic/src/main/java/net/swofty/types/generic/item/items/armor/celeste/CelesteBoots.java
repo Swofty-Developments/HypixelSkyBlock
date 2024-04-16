@@ -12,9 +12,9 @@ public class CelesteBoots implements CustomSkyBlockItem, StandardItem, LeatherCo
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 5D)
-                .with(ItemStatistic.DEFENSE, 5D)
-                .with(ItemStatistic.INTELLIGENCE, 20D)
+                .withAdditive(ItemStatistic.HEALTH, 5D)
+                .withAdditive(ItemStatistic.DEFENSE, 5D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 20D)
                 .build();
     }
 

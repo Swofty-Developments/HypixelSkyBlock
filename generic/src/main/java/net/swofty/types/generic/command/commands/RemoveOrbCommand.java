@@ -1,5 +1,6 @@
 package net.swofty.types.generic.command.commands;
 
+import net.minestom.server.instance.SharedInstance;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;

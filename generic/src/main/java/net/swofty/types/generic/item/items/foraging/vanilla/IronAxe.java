@@ -16,7 +16,7 @@ public class IronAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable, S
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 25D)
+                .withAdditive(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 

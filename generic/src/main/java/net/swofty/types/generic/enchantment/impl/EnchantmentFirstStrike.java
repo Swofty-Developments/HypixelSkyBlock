@@ -48,12 +48,7 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
         if (mob.isHasBeenDamaged()) return ItemStatistics.empty();
 
         mob.setHasBeenDamaged(true);
-        return ItemStatistics.builder().with(ItemStatistic.DAMAGE_ADDITIVE, MULTIPLIERS[level - 1]).build();
-    }
-
-    @Override
-    public ItemStatistics getStatistics(int level) {
-        return ItemStatistics.empty();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
     }
 
     @Override

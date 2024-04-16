@@ -34,9 +34,9 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftab
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 150D)
-                .with(ItemStatistic.DEFENSE, 100D)
-                .with(ItemStatistic.INTELLIGENCE, 100D)
+                .withAdditive(ItemStatistic.HEALTH, 150D)
+                .withAdditive(ItemStatistic.DEFENSE, 100D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 100D)
                 .build();
     }
 

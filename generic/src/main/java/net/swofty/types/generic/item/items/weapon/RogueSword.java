@@ -13,7 +13,7 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 20D)
+                .withAdditive(ItemStatistic.DAMAGE, 20D)
                 .build();
     }
 
@@ -35,8 +35,7 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
     @Override
     public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
         player.getStatistics().boostStatistic(TemporaryStatistic.builder()
-                .withStatistic(ItemStatistic.SPEED)
-                .withValue(100D)
+                .withStatistics(ItemStatistics.builder().withAdditive(ItemStatistic.SPEED, 100D).build())
                 .withExpirationInTicks(30 * 20)
                 .build());
     }

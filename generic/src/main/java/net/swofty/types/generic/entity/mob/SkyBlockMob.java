@@ -49,15 +49,15 @@ public abstract class SkyBlockMob extends EntityCreature {
         super(entityType);
 
         this.setCustomNameVisible(true);
-        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
-        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().get(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
-        this.setHealth(getBaseStatistics().get(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
+        this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
-                        + Math.round(getStatistics().get(ItemStatistic.HEALTH))
+                        + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
         ));
 
         setAutoViewable(true);
@@ -84,11 +84,11 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
+        ItemStatistics toSubtract = ItemStatistics.builder()
+                .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
+                .build();
 
-        // Set health to current enemy health
-        statistics.set(ItemStatistic.HEALTH, (double) getHealth());
-
-        return statistics;
+        return statistics.sub(toSubtract);
     }
 
     @Override

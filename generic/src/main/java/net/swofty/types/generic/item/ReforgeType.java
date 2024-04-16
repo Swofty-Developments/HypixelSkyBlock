@@ -2,36 +2,38 @@ package net.swofty.types.generic.item;
 
 import lombok.Getter;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Getter
 public enum ReforgeType {
     SWORDS(List.of(
-            new Reforge("Epic", List.of(
-                    new Reforge.ReforgeSet(ItemStatistic.STRENGTH, level -> (double) (10 + (level * 5)))
-            ))
+            new Reforge("Epic", (originalStatistics, level) -> {
+                return originalStatistics.addAdditive(ItemStatistic.STRENGTH, (double) (10 + (level * 5)));
+            })
     )),
     BOWS(List.of(
-            new Reforge("Grand", List.of(
-                    new Reforge.ReforgeSet(ItemStatistic.STRENGTH, level -> (double) (25 + (level * 7)))
-            ))
+            new Reforge("Grand", (originalStatistics, level) -> {
+                return originalStatistics.addAdditive(ItemStatistic.STRENGTH, (double) (25 + (level * 7)));
+            })
     )),
     ARMOR(List.of()),
     EQUIPMENT(List.of()),
     FISHING_RODS(List.of()),
     PICKAXES(List.of(
-            new Reforge("Unyielding", List.of(
-                    new Reforge.ReforgeSet(ItemStatistic.SPEED, level -> level * 1.15),
-                    new Reforge.ReforgeSet(ItemStatistic.MINING_SPEED, Double::valueOf)
-            )),
-            new Reforge("Excellent", List.of(
-                    new Reforge.ReforgeSet(ItemStatistic.SPEED, level -> level * 1.1),
-                    new Reforge.ReforgeSet(ItemStatistic.MINING_SPEED, level -> level * 4d)
-            ))
+            new Reforge("Unyielding", (originalStatistics, level) -> {
+                return originalStatistics.addAdditive(ItemStatistic.SPEED, level * 1.15)
+                        .addAdditive(ItemStatistic.MINING_SPEED, level.doubleValue());
+            }),
+            new Reforge("Excellent", (originalStatistics, level) -> {
+                return originalStatistics.addAdditive(ItemStatistic.SPEED, level * 1.1)
+                        .addAdditive(ItemStatistic.MINING_SPEED, level.doubleValue() * 4);
+            })
     )),
     AXES(List.of()),
     HOES(List.of()),
@@ -44,25 +46,9 @@ public enum ReforgeType {
         this.reforges = reforges;
     }
 
-    public record Reforge(String prefix, List<ReforgeSet> set) {
-        public Set<ItemStatistic> getStatistics() {
-            return Set.copyOf(set.stream().map(ReforgeSet::statistic).toList());
-        }
-
-        public Double getBonusCalculation(ItemStatistic statistic, Integer level) {
-            try {
-                return set.stream()
-                        .filter(reforgeSet -> reforgeSet.statistic() == statistic)
-                        .findFirst()
-                        .orElseThrow()
-                        .bonusCalculation()
-                        .apply(level);
-            } catch (NoSuchElementException ex) {
-                return 0D;
-            }
-        }
-
-        public record ReforgeSet(ItemStatistic statistic, Function<Integer, Double> bonusCalculation) {
+    public record Reforge(String prefix, BiFunction<ItemStatistics, Integer, ItemStatistics> calculation) {
+        public ItemStatistics getAfterCalculation(ItemStatistics statistic, Integer level) {
+            return calculation.apply(statistic, level);
         }
     }
 }

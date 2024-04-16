@@ -19,7 +19,7 @@ public class GoldenChestplate implements CustomSkyBlockItem, StandardItem, Defau
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DEFENSE, 25D)
+                .withAdditive(ItemStatistic.DEFENSE, 25D)
                 .build();
     }
 

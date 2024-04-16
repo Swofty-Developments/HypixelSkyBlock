@@ -1,5 +1,6 @@
 package net.swofty.type.village.mobs;
 
+import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
@@ -11,11 +12,14 @@ import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,17 +67,27 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 120D)
-                .with(ItemStatistic.DAMAGE, 24D)
-                .with(ItemStatistic.SPEED, 100D)
+                .withAdditive(ItemStatistic.HEALTH, 120D)
+                .withAdditive(ItemStatistic.DAMAGE, 24D)
+                .withAdditive(ItemStatistic.SPEED, 100D)
                 .build();
     }
 
     @Override
-    public List<MobDrop> getDrops() {
-        return new ArrayList<>(List.of(
-                new MobDrop(20f, 1, 3, ItemType.ROTTEN_FLESH)
-        ));
+    public @Nullable SkyBlockLootTable getLootTable() {
+        return new SkyBlockLootTable() {
+            @Override
+            public @NonNull List<LootRecord> getLootTable() {
+                return List.of(
+                        new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20)
+                );
+            }
+
+            @Override
+            public @NotNull CalculationMode getCalculationMode() {
+                return CalculationMode.CALCULATE_INDIVIDUAL;
+            }
+        };
     }
 
     @Override

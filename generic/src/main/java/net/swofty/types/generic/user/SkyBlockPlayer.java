@@ -2,6 +2,7 @@ package net.swofty.types.generic.user;
 
 import com.mongodb.client.model.Filters;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -377,7 +378,7 @@ public class SkyBlockPlayer extends Player {
         return item;
     }
 
-    public SkyBlockRegion getRegion() {
+    public @Nullable SkyBlockRegion getRegion() {
         if (isOnIsland())
             return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
@@ -427,7 +428,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public float getMaxMana() {
-        return (float) (100 + getStatistics().allStatistics().get(ItemStatistic.INTELLIGENCE));
+        return (float) (100 + getStatistics().allStatistics().getOverall(ItemStatistic.INTELLIGENCE));
     }
 
     public boolean hasCustomCollectionAward(CustomCollectionAward award) {
@@ -462,7 +463,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public Double getMiningSpeed() {
-        return this.getStatistics().allStatistics().get(ItemStatistic.MINING_SPEED);
+        return this.getStatistics().allStatistics().getOverall(ItemStatistic.MINING_SPEED);
     }
 
     public void sendTo(ServerType type) {
@@ -522,7 +523,7 @@ public class SkyBlockPlayer extends Player {
         float defence = 0;
 
         PlayerStatistics statistics = this.getStatistics();
-        defence += statistics.allStatistics().get(ItemStatistic.DEFENSE);
+        defence += statistics.allStatistics().getOverall(ItemStatistic.DEFENSE);
 
         return defence;
     }
@@ -570,7 +571,7 @@ public class SkyBlockPlayer extends Player {
     @Override
     public float getMaxHealth() {
         PlayerStatistics statistics = this.getStatistics();
-        return statistics.allStatistics().get(ItemStatistic.HEALTH).floatValue();
+        return statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
     }
 
     @Override

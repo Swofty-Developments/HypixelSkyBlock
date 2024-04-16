@@ -30,9 +30,9 @@ public class SkyBlockLevelStatisticUnlock extends SkyBlockLevelUnlock {
     @Override
     public List<String> getDisplay(SkyBlockPlayer player, int level) {
         ArrayList<String> lore = new ArrayList<>();
-        statistics.getStatistics().forEach((key, value) -> {
+        statistics.getStatisticsAdditive().forEach((key, value) -> {
             if (value > 0)
-                lore.add("§8 +§a" + value + key.getSuffix() + " " + key.getColour() + key.getSymbol() + " " + key.getDisplayName());
+                lore.add("§8 +§a" + value + key.getSuffix() + " " + key.getDisplayColor() + key.getSymbol() + " " + key.getDisplayName());
         });
         return lore;
     }

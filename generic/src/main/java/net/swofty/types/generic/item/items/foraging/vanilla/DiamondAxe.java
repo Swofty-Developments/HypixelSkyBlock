@@ -16,7 +16,7 @@ public class DiamondAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 30D)
+                .withAdditive(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
 

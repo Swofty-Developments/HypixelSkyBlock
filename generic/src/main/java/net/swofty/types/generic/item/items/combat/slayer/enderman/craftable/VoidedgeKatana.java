@@ -31,10 +31,10 @@ public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, Sta
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 125D)
-                .with(ItemStatistic.STRENGTH, 60D)
-                .with(ItemStatistic.CRIT_DAMAGE, 20D)
-                .with(ItemStatistic.INTELLIGENCE, 50D)
+                .withAdditive(ItemStatistic.DAMAGE, 125D)
+                .withAdditive(ItemStatistic.STRENGTH, 60D)
+                .withAdditive(ItemStatistic.CRIT_DAMAGE, 20D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 

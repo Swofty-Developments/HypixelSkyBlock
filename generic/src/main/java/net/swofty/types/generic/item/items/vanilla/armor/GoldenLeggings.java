@@ -19,7 +19,7 @@ public class GoldenLeggings implements CustomSkyBlockItem, StandardItem, Default
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DEFENSE, 15D)
+                .withAdditive(ItemStatistic.DEFENSE, 15D)
                 .build();
     }
 

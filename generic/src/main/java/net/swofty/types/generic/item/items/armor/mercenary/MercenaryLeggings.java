@@ -10,8 +10,8 @@ public class MercenaryLeggings implements CustomSkyBlockItem, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 60D)
-                .with(ItemStatistic.DEFENSE, 60D)
+                .withAdditive(ItemStatistic.HEALTH, 60D)
+                .withAdditive(ItemStatistic.DEFENSE, 60D)
                 .build();
     }
 

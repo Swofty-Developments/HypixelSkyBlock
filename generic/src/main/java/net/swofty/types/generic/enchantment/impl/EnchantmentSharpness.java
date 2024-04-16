@@ -40,7 +40,7 @@ public class EnchantmentSharpness implements Ench, EnchFromTable {
     @Override
     public  ItemStatistics getStatistics(int level) {
         int increase = increases[level - 1];
-        return ItemStatistics.builder().with(ItemStatistic.DAMAGE_ADDITIVE, (double) increase).build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.DAMAGE, (double) increase).build();
     }
 
     @Override

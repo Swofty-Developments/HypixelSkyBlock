@@ -168,12 +168,6 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         "§7Gives you a better chance at",
                         "§7fighting strong monsters.",
                         "",
-                        ItemStatistic.getStatisticDisplayFloat(player, ItemStatistic.HEALTH),
-                        ItemStatistic.getStatisticDisplayFloat(player, ItemStatistic.DEFENSE),
-                        ItemStatistic.getStatisticDisplayFloat(player, ItemStatistic.STRENGTH),
-                        ItemStatistic.getStatisticDisplayFloat(player, ItemStatistic.INTELLIGENCE),
-                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.CRIT_CHANCE),
-                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.CRIT_DAMAGE),
                         "",
                         "§eClick for details!"
                 );
@@ -191,7 +185,6 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         "§7Lets you collect and harvest better",
                         "§7items, or more of them.",
                         "",
-                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MINING_SPEED),
                         "",
                         "§eClick for details!"
                 );
@@ -226,8 +219,6 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         "§7Augments various aspects of your",
                         "§7gameplay!",
                         "",
-                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.SPEED),
-                        ItemStatistic.getStatisticDisplayInt(player, ItemStatistic.MAGIC_FIND),
                         "",
                         "§eClick for details!"
                 );

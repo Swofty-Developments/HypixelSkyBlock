@@ -16,7 +16,7 @@ public class StoneSword implements CustomSkyBlockItem, StandardItem, DefaultCraf
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 25D)
+                .withAdditive(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 

@@ -10,8 +10,8 @@ public class SquireChestplate implements CustomSkyBlockItem, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 40D)
-                .with(ItemStatistic.DEFENSE, 40D)
+                .withAdditive(ItemStatistic.HEALTH, 40D)
+                .withAdditive(ItemStatistic.DEFENSE, 40D)
                 .build();
     }
 

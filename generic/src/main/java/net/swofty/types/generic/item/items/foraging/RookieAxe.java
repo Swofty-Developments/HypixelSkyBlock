@@ -11,7 +11,7 @@ public class RookieAxe implements CustomSkyBlockItem, Reforgable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 20D)
+                .withAdditive(ItemStatistic.DAMAGE, 20D)
                 .build();
     }
 

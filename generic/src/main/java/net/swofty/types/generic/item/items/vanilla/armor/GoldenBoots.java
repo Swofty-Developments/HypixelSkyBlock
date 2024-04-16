@@ -19,7 +19,7 @@ public class GoldenBoots implements CustomSkyBlockItem, StandardItem, DefaultCra
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DEFENSE, 5D)
+                .withAdditive(ItemStatistic.DEFENSE, 5D)
                 .build();
     }
 

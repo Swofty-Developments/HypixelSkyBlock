@@ -73,19 +73,19 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
-            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.get(ItemStatistic.HEALTH),
+            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.getOverall(ItemStatistic.HEALTH),
                     handler.getReforge(), rarity);
-            boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.get(ItemStatistic.DAMAGE),
+            boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.getOverall(ItemStatistic.DAMAGE),
                     handler.getReforge(), rarity);
-            boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.get(ItemStatistic.DEFENSE),
+            boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.getOverall(ItemStatistic.DEFENSE),
                     handler.getReforge(), rarity);
-            boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.get(ItemStatistic.STRENGTH),
+            boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.getOverall(ItemStatistic.STRENGTH),
                     handler.getReforge(), rarity);
-            boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.get(ItemStatistic.INTELLIGENCE),
+            boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.getOverall(ItemStatistic.INTELLIGENCE),
                     handler.getReforge(), rarity);
-            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.get(ItemStatistic.MINING_SPEED),
+            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.getOverall(ItemStatistic.MINING_SPEED),
                     handler.getReforge(), rarity);
-            boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.get(ItemStatistic.SPEED),
+            boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.getOverall(ItemStatistic.SPEED),
                     handler.getReforge(), rarity);
 
             // Handle Gemstone lore
@@ -239,16 +239,20 @@ public class ItemLore {
         double reforgeValue = 0;
         double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, new SkyBlockItem(stack));
         if (reforge != null) {
-            overallValue += reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
-            reforgeValue = reforge.getBonusCalculation(statistic, rarity.ordinal() + 1);
+            overallValue += reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1)
+                    .getOverall(statistic);
+            reforgeValue = reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1)
+                    .getOverall(statistic) - overallValue;
         }
         overallValue += gemstoneValue;
 
         if (overallValue == 0) return false;
 
-        String color = statistic.isRed() ? "&c" : "&a";
+        String color = statistic.getLoreColor();
+        String prefix = statistic.getIsPercentage() ? "" : "+";
+        String suffix = statistic.getIsPercentage() ? "%" : "";
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-                color + statistic.getPrefix() + Math.round(overallValue) + statistic.getSuffix();
+                color + prefix + Math.round(overallValue) + suffix;
 
         if (reforgeValue != 0)
             line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";

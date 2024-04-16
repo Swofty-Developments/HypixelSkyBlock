@@ -16,8 +16,8 @@ public class RosettaBoots implements CustomSkyBlockItem, CustomDisplayName, Stan
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 15D)
-                .with(ItemStatistic.DEFENSE, 20D)
+                .withAdditive(ItemStatistic.HEALTH, 15D)
+                .withAdditive(ItemStatistic.DEFENSE, 20D)
                 .build();
     }
 

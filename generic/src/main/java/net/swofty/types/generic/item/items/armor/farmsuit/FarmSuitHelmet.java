@@ -12,7 +12,7 @@ public class FarmSuitHelmet implements CustomSkyBlockItem, StandardItem, Leather
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().with(ItemStatistic.DEFENSE, 15D).build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.DEFENSE, 15D).build();
     }
 
     @Override

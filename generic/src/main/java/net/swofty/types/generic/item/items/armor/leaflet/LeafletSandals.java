@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class LeafletSandals implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().with(ItemStatistic.HEALTH, 15D).build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 15D).build();
     }
 
     @Override

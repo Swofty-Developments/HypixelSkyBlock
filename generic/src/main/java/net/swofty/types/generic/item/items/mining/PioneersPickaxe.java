@@ -14,7 +14,8 @@ public class PioneersPickaxe implements CustomSkyBlockItem, PickaxeImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 1D)
+                .withAdditive(ItemStatistic.MINING_SPEED, 1D)
+                .withAdditive(ItemStatistic.BREAKING_POWER, 1D)
                 .build();
     }
 
@@ -25,10 +26,5 @@ public class PioneersPickaxe implements CustomSkyBlockItem, PickaxeImpl {
                 "§7§omodel! Invented by the famous",
                 "§7§oThomas Pickson."
         ));
-    }
-
-    @Override
-    public int getBreakingPower() {
-        return 1;
     }
 }

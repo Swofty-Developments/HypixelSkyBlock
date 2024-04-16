@@ -31,11 +31,10 @@ public class Terminator implements CustomSkyBlockItem, DefaultCraftable, BowImpl
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 310D)
-                .with(ItemStatistic.STRENGTH, 50D)
-                .with(ItemStatistic.CRIT_DAMAGE, 250D)
-                //.with(ItemStatistic.BONUS_ATTACK_SPEED, 40D)
-                //.with(ItemStatistic.SHOT_COOLDOWN, 0.5s)
+                .withAdditive(ItemStatistic.DAMAGE, 310D)
+                .withAdditive(ItemStatistic.STRENGTH, 50D)
+                .withAdditive(ItemStatistic.CRIT_DAMAGE, 250D)
+                .withAdditive(ItemStatistic.BONUS_ATTACK_SPEED, 40D)
                 .build();
     }
 

@@ -10,8 +10,8 @@ public class SquireSword implements CustomSkyBlockItem, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 50D)
-                .with(ItemStatistic.STRENGTH, 10D)
+                .withAdditive(ItemStatistic.DAMAGE, 50D)
+                .withAdditive(ItemStatistic.STRENGTH, 10D)
                 .build();
     }
 

@@ -30,8 +30,8 @@ public class WardenHelmet implements CustomSkyBlockItem, SkullHead, DefaultCraft
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 300D)
-                .with(ItemStatistic.DEFENSE, 100D)
+                .withAdditive(ItemStatistic.HEALTH, 300D)
+                .withAdditive(ItemStatistic.DEFENSE, 100D)
                 .build();
     }
 

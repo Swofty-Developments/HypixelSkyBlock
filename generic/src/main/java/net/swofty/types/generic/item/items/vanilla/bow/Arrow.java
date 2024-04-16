@@ -10,7 +10,7 @@ public class Arrow implements CustomSkyBlockItem, ArrowImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 1D)
+                .withAdditive(ItemStatistic.DAMAGE, 1D)
                 .build();
     }
 }

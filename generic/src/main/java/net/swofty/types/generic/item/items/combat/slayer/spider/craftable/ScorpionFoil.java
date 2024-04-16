@@ -29,8 +29,8 @@ public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, Stand
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100D)
-                .with(ItemStatistic.STRENGTH, 100D)
+                .withAdditive(ItemStatistic.DAMAGE, 100D)
+                .withAdditive(ItemStatistic.STRENGTH, 100D)
                 .build();
     }
 

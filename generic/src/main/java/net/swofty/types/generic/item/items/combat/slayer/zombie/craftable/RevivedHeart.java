@@ -17,9 +17,9 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, Unstackable,
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 100D)
-                .with(ItemStatistic.DEFENSE, 35D)
-                .with(ItemStatistic.INTELLIGENCE, 100D)
+                .withAdditive(ItemStatistic.HEALTH, 100D)
+                .withAdditive(ItemStatistic.DEFENSE, 35D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 100D)
                 .build();
     }
 

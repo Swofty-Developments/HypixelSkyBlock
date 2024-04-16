@@ -30,9 +30,9 @@ public class ShamanSword implements CustomSkyBlockItem, DefaultCraftable, Standa
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100D)
-                .with(ItemStatistic.STRENGTH, 20D)
-                .with(ItemStatistic.SPEED, 5D)
+                .withAdditive(ItemStatistic.DAMAGE, 100D)
+                .withAdditive(ItemStatistic.STRENGTH, 20D)
+                .withAdditive(ItemStatistic.SPEED, 5D)
                 .build();
     }
 

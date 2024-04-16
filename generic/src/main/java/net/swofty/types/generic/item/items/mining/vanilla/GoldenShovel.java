@@ -16,7 +16,7 @@ public class GoldenShovel implements CustomSkyBlockItem, ShovelImpl, DefaultCraf
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 15D)
+                .withAdditive(ItemStatistic.DAMAGE, 15D)
                 .build();
     }
 

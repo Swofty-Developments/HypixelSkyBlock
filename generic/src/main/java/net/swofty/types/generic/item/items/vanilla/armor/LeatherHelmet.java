@@ -19,7 +19,7 @@ public class LeatherHelmet implements CustomSkyBlockItem, StandardItem, DefaultC
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DEFENSE, 5D)
+                .withAdditive(ItemStatistic.DEFENSE, 5D)
                 .build();
     }
 

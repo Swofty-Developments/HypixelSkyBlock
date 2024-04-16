@@ -19,8 +19,8 @@ public class IronLeggings implements CustomSkyBlockItem, StandardItem, DefaultCr
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 15D)
-                .with(ItemStatistic.DEFENSE, 25D)
+                .withAdditive(ItemStatistic.HEALTH, 15D)
+                .withAdditive(ItemStatistic.DEFENSE, 25D)
                 .build();
     }
 

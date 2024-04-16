@@ -30,9 +30,9 @@ public class PoochSword implements CustomSkyBlockItem, DefaultCraftable, Standar
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 120D)
-                .with(ItemStatistic.STRENGTH, 20D)
-                .with(ItemStatistic.SPEED, 5D)
+                .withAdditive(ItemStatistic.DAMAGE, 120D)
+                .withAdditive(ItemStatistic.STRENGTH, 20D)
+                .withAdditive(ItemStatistic.SPEED, 5D)
                 .build();
     }
 

@@ -29,9 +29,9 @@ public class RecluseFang implements CustomSkyBlockItem, DefaultCraftable, Standa
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 120D)
-                .with(ItemStatistic.STRENGTH, 30D)
-                .with(ItemStatistic.CRIT_DAMAGE, 20D)
+                .withAdditive(ItemStatistic.DAMAGE, 120D)
+                .withAdditive(ItemStatistic.STRENGTH, 30D)
+                .withAdditive(ItemStatistic.CRIT_DAMAGE, 20D)
                 .build();
     }
 

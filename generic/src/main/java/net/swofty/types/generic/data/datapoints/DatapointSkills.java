@@ -10,6 +10,7 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 import org.json.JSONObject;
 
@@ -28,9 +29,8 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                 jsonObject.put(category.toString(), value.getRaw(category));
             }
 
-            for (ItemStatistic statistic : ItemStatistic.values()) {
-                jsonObject.put(statistic.toString(), value.getStatistic(statistic));
-            }
+            ItemStatistics statistics = value.skillStatistics;
+            jsonObject.put("statistics", statistics.toString());
 
             return jsonObject.toString();
         }
@@ -38,7 +38,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         @Override
         public PlayerSkills deserialize(String json) {
             HashMap<SkillCategories, Double> skills = new HashMap<>(PlayerSkills.getDefault().getSkills());
-            HashMap<ItemStatistic, Double> skillStatistics = new HashMap<>(PlayerSkills.getDefault().getSkillStatistics());
+            ItemStatistics skillStatistics = ItemStatistics.empty();
 
             if (json == null || json.isEmpty()) {
                 return new PlayerSkills(skills, skillStatistics);
@@ -54,12 +54,10 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                 }
             }
 
-            for (ItemStatistic statistic : ItemStatistic.values()) {
-                try {
-                    skillStatistics.put(statistic, jsonObject.getDouble(statistic.toString()));
-                } catch (Exception ignored) {
-                    skillStatistics.put(statistic, 0.0);
-                }
+            try {
+                skillStatistics = ItemStatistics.fromString(jsonObject.getString("statistics"));
+            } catch (Exception ignored) {
+                skillStatistics = ItemStatistics.empty();
             }
 
             return new PlayerSkills(skills, skillStatistics);
@@ -83,7 +81,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
     @AllArgsConstructor
     public static class PlayerSkills {
         private Map<SkillCategories, Double> skills;
-        private Map<ItemStatistic, Double> skillStatistics;
+        private ItemStatistics skillStatistics = ItemStatistics.empty();
 
         public Double getRaw(SkillCategories category) {
             return skills.get(category);
@@ -102,18 +100,8 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             return getRaw(category) - cumulative;
         }
 
-        public void addStatistic(ItemStatistic statistic, double amount) {
-            if (skillStatistics.containsKey(statistic)) {
-                skillStatistics.put(statistic, skillStatistics.get(statistic) + amount);
-            } else {
-                skillStatistics.put(statistic, amount);
-            }
-        }
-
-        public Double getStatistic(ItemStatistic statistic) {
-            if (!skillStatistics.containsKey(statistic))
-                return 0.0;
-            return skillStatistics.get(statistic);
+        public void setStatistics(ItemStatistics statistics) {
+            skillStatistics = statistics;
         }
 
         public void setRaw(SkyBlockPlayer player, SkillCategories category, Double value) {
@@ -136,7 +124,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                 SkillCategories.MINING, 0.0,
                 SkillCategories.FORAGING, 0.0,
                 SkillCategories.ENCHANTING, 0.0
-            ), new HashMap<>());
+            ), ItemStatistics.empty());
         }
 
         public Integer getCurrentLevel(SkillCategories category) {

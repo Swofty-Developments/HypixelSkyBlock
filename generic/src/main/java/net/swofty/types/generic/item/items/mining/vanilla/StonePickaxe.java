@@ -16,14 +16,10 @@ public class StonePickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCra
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.MINING_SPEED, 110D)
-                .with(ItemStatistic.DAMAGE, 20D)
+                .withAdditive(ItemStatistic.MINING_SPEED, 110D)
+                .withAdditive(ItemStatistic.DAMAGE, 20D)
+                .withAdditive(ItemStatistic.BREAKING_POWER, 2D)
                 .build();
-    }
-
-    @Override
-    public int getBreakingPower() {
-        return 2;
     }
 
     @Override

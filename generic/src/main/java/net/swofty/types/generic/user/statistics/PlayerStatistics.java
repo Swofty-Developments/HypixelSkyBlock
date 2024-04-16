@@ -69,7 +69,7 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(calculateExtraItemStatisticsToAdd(
+            total = total.add(item.getAttributeHandler().getStatistics()).add(calculateExtraItemStatisticsToAdd(
                     item,
                     causer,
                     enemy
@@ -134,28 +134,17 @@ public class PlayerStatistics {
         );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
 
-        ItemStatistics statistics = ItemStatistics.builder().build();
-        for (ItemStatistic statistic : ItemStatistic.values()) {
-            statistics = statistics.add(ItemStatistics.builder()
-                    .with(statistic, perLevelStatistics.get(statistic) * level)
-                    .build());
-        }
-
-        return statistics;
+        return perLevelStatistics.multiply(level);
     }
 
     public ItemStatistics spareStatistics() {
         ItemStatistics spare = ItemStatistics.builder().build();
 
         int fairySouls = player.getFairySouls().getExchangedFairySouls().size();
-        spare = spare.add(ItemStatistics.builder().with(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
+        spare = spare.add(ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
 
         DatapointSkills.PlayerSkills skills = player.getSkills();
-        for (Map.Entry<ItemStatistic, Double> entry : skills.getSkillStatistics().entrySet()) {
-            ItemStatistic statistic = entry.getKey();
-            Double value = entry.getValue();
-            spare = spare.add(ItemStatistics.builder().with(statistic, value).build());
-        }
+        spare = spare.add(skills.getSkillStatistics());
 
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
         for (int i = 0; i < experience.getLevel().asInt(); i++) {
@@ -181,15 +170,7 @@ public class PlayerStatistics {
         total = total.add(getTemporaryStatistics());
         total = total.add(petStatistics());
         total = total.add(accessoryStatistics);
-
-        ItemStatistics baseStats = ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 100D)
-                .with(ItemStatistic.SPEED, 100D)
-                .with(ItemStatistic.CRIT_DAMAGE, 50D)
-                .with(ItemStatistic.CRIT_CHANCE, 30D)
-                .build();
-
-        total = total.add(baseStats);
+        total = total.add(ItemStatistic.getOfAllBaseValues());
 
         return total;
     }
@@ -202,11 +183,11 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                total = total.add(calculateExtraItemStatisticsToAdd(
+                total = total.add(item.getAttributeHandler().getStatistics().add(calculateExtraItemStatisticsToAdd(
                         item,
                         null,
                         null
-                ));
+                )));
             }
         }
         for (SkyBlockItem item : player.getAccessoryBag().getAllAccessories()) {
@@ -214,11 +195,11 @@ public class PlayerStatistics {
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-            total = total.add(calculateExtraItemStatisticsToAdd(
+            total = total.add(item.getAttributeHandler().getStatistics().add(calculateExtraItemStatisticsToAdd(
                     item,
                     null,
                     null
-            ));
+            )));
         }
         accessoryStatistics = total;
     }
@@ -235,13 +216,8 @@ public class PlayerStatistics {
 
     private ItemStatistics getReforgeStatistics(SkyBlockItem item, ItemStatistics statistics) {
         if (item.getAttributeHandler().getReforge() != null) {
-            ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();
-            for (ItemStatistic statistic : item.getAttributeHandler().getReforge().getStatistics()) {
-                builder.with(statistic, item.getAttributeHandler().getReforge().getBonusCalculation(
-                        statistic,
-                        item.getAttributeHandler().getRarity().ordinal()));
-            }
-            statistics = statistics.add(builder.build());
+            statistics = item.getAttributeHandler().getReforge().getAfterCalculation(statistics,
+                    item.getAttributeHandler().getRarity().ordinal() + 1);
         }
         return statistics;
     }
@@ -271,16 +247,12 @@ public class PlayerStatistics {
         synchronized (temporaryStatistics) {
             temporaryStatistics.removeIf(temporaryStatistic -> temporaryStatistic.getExpiration() < System.currentTimeMillis());
             for (TemporaryStatistic temporaryStatistic : temporaryStatistics) {
-                statistics = statistics.add(ItemStatistics.builder()
-                        .with(temporaryStatistic.getStatistic(), temporaryStatistic.getValue())
-                        .build());
+                statistics = statistics.add(temporaryStatistic.getStatistics());
             }
 
             temporaryConditionalStatistics.removeIf(temporaryStatistic -> !temporaryStatistic.getExpiry().apply(player));
             for (TemporaryConditionalStatistic temporaryStatistic : temporaryConditionalStatistics) {
-                statistics = statistics.add(ItemStatistics.builder()
-                        .with(temporaryStatistic.getStatistic(), temporaryStatistic.getValue())
-                        .build());
+                statistics = statistics.add(temporaryStatistic.getStatistics());
             }
 
             return statistics;
@@ -291,7 +263,7 @@ public class PlayerStatistics {
         for (ItemStatistic statistic : ItemStatistic.values()) {
             int extra = Gemstone.getExtraStatisticFromGemstone(statistic, item);
             if (extra != 0) {
-                statistics = statistics.add(ItemStatistics.builder().with(statistic, (double) extra).build());
+                statistics = statistics.addAdditive(statistic, (double) extra);
             }
         }
         return statistics;
@@ -305,24 +277,24 @@ public class PlayerStatistics {
 
     public static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics) {
         boolean isCrit = false;
-        double critChance = originStatistics.get(ItemStatistic.CRIT_CHANCE);
+        double critChance = originStatistics.getOverall(ItemStatistic.CRIT_CHANCE);
         if (Math.random() <= (critChance / 100))
             isCrit = true;
 
-        double baseDamage = originStatistics.get(ItemStatistic.DAMAGE);
-        double strength = originStatistics.get(ItemStatistic.STRENGTH);
-        double critDamage = originStatistics.get(ItemStatistic.CRIT_DAMAGE);
+        double baseDamage = originStatistics.getOverall(ItemStatistic.DAMAGE);
+        double strength = originStatistics.getOverall(ItemStatistic.STRENGTH);
+        double critDamage = originStatistics.getOverall(ItemStatistic.CRIT_DAMAGE);
 
         double initialDamage = (5 + baseDamage);
         double strengthDamage = (1 + (strength / 100));
         double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;
 
-        double baseDamageAdditiveMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_ADDITIVE) / 100);
-        double baseDamageMultiplicativeMultiplier = 1 + (originStatistics.get(ItemStatistic.DAMAGE_MULTIPLICATIVE));
+        double baseDamageAdditiveMultiplier = 1 + (originStatistics.getAdditive(ItemStatistic.DAMAGE) / 100);
+        double baseDamageMultiplicativeMultiplier = (originStatistics.getMultiplicative(ItemStatistic.DAMAGE));
 
         double damage = initialDamage * strengthDamage * criticalDamage * baseDamageAdditiveMultiplier * baseDamageMultiplicativeMultiplier;
-        if (enemyStatistics.get(ItemStatistic.DEFENSE) > 0)
-            damage = damage * (1 - (enemyStatistics.get(ItemStatistic.DEFENSE) / (enemyStatistics.get(ItemStatistic.DEFENSE) + 100)));
+        if (enemyStatistics.getOverall(ItemStatistic.DEFENSE) > 0)
+            damage = damage * (1 - (enemyStatistics.getOverall(ItemStatistic.DEFENSE) / (enemyStatistics.getOverall(ItemStatistic.DEFENSE) + 100)));
         return new AbstractMap.SimpleEntry<>(damage, isCrit);
     }
 
@@ -404,7 +376,7 @@ public class PlayerStatistics {
         scheduler.submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
-                    double speed = player.getStatistics().allStatistics().get(ItemStatistic.SPEED);
+                    double speed = player.getStatistics().allStatistics().getOverall(ItemStatistic.SPEED);
                     player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
                 });
             });

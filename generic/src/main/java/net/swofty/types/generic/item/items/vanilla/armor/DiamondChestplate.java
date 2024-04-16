@@ -19,7 +19,7 @@ public class DiamondChestplate implements CustomSkyBlockItem, StandardItem, Defa
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DEFENSE, 40D)
+                .withAdditive(ItemStatistic.DEFENSE, 40D)
                 .build();
     }
 

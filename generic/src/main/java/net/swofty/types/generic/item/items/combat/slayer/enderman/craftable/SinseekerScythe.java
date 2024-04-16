@@ -29,8 +29,8 @@ public class SinseekerScythe implements CustomSkyBlockItem, DefaultCraftable, St
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 100D)
-                .with(ItemStatistic.STRENGTH, 100D)
+                .withAdditive(ItemStatistic.DAMAGE, 100D)
+                .withAdditive(ItemStatistic.STRENGTH, 100D)
                 .build();
     }
 

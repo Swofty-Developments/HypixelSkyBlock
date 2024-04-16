@@ -105,13 +105,6 @@ public class GUIViewPlayerProfile extends SkyBlockInventoryGUI {
                 String age = StringUtility.profileAge(System.currentTimeMillis() - dataHandler.get(DataHandler.Data.CREATED, DatapointLong.class).getValue());
                 List<String> lore = new ArrayList<>(List.of());
 
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.HEALTH));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.STRENGTH));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.DEFENSE));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.SPEED));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.CRIT_CHANCE));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.CRIT_DAMAGE));
-                lore.add(ItemStatistic.getStatisticDisplayFloat(viewedPlayer, ItemStatistic.INTELLIGENCE));
 
                 lore.add("§7 ");
                 lore.add("§7SkyBlock Level: " + viewedPlayer.getSkyBlockExperience().getLevel().getColor() + viewedPlayer.getSkyBlockExperience().getLevel());

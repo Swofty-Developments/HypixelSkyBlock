@@ -45,11 +45,10 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7View your equipment, stats, and more!", "§e "));
 
-                statistics.allStatistics().getStatistics().forEach((statistic, value) -> {
-                    if (statistic.getColour() != null)
-                        lore.add(" " + statistic.getColour() + statistic.getSymbol() + " " +
-                                StringUtility.toNormalCase(statistic.name()) + " §f" +
-                                value + statistic.getSuffix());
+                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                    lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                            StringUtility.toNormalCase(statistic.name()) + " §f" +
+                            value + statistic.getSuffix());
                 });
 
                 lore.add("§e ");

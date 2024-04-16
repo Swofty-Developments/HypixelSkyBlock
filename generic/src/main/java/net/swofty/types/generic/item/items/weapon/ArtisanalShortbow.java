@@ -37,7 +37,7 @@ public class ArtisanalShortbow implements CustomSkyBlockItem, BowImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.DAMAGE, 40D)
+                .withAdditive(ItemStatistic.DAMAGE, 40D)
                 .build();
     }
 

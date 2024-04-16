@@ -23,9 +23,9 @@ public class BatTalisman implements Talisman {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .with(ItemStatistic.HEALTH, 1D)
-                .with(ItemStatistic.SPEED, 1D)
-                .with(ItemStatistic.INTELLIGENCE, 1D)
+                .withAdditive(ItemStatistic.HEALTH, 1D)
+                .withAdditive(ItemStatistic.SPEED, 1D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 1D)
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.loottable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,11 @@ import java.util.function.Function;
 
 public abstract class SkyBlockLootTable {
     public abstract @NonNull List<LootRecord> getLootTable();
+    public abstract @NonNull CalculationMode getCalculationMode();
+
+    public int makeAmountBetween(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
 
     public List<ItemType> getLootTableItems() {
         List<ItemType> items = new java.util.ArrayList<>();
@@ -30,18 +36,42 @@ public abstract class SkyBlockLootTable {
      */
     public @NonNull Map<ItemType, LootRecord> runChances(SkyBlockPlayer player, LootAffector... affectors) {
         Map<ItemType, LootRecord> loot = new HashMap<>();
+        CalculationMode mode = getCalculationMode();
 
-        for (LootRecord record : getLootTable()) {
-            if (record.shouldCalculate.apply(player)) {
-                double chance = record.chance;
-                for (LootAffector affector : affectors) {
-                    chance += affector.getAffector().apply(player, chance);
+        if (mode == CalculationMode.PICK_ONE) {
+            double cumulativeChance = 0;
+
+            for (LootRecord record : getLootTable()) {
+                if (record.shouldCalculate.apply(player)) {
+                    cumulativeChance += record.chancePercent;
                 }
+            }
 
-                if (Math.random() * 100 <= record.chance) {
-                    loot.put(record.itemType, record);
-                } else {
-                    loot.put(record.itemType, LootRecord.none(0));
+            int random = (int) (Math.random() * cumulativeChance);
+            double current = 0;
+
+            for (LootRecord record : getLootTable()) {
+                if (record.shouldCalculate.apply(player)) {
+                    current += record.chancePercent;
+                    if (random < current) {
+                        loot.put(record.itemType, record);
+                        break;
+                    }
+                }
+            }
+        } else if (mode == CalculationMode.CALCULATE_INDIVIDUAL) {
+            for (LootRecord record : getLootTable()) {
+                if (record.shouldCalculate.apply(player)) {
+                    double adjustedChancePercent = record.chancePercent;
+
+                    // Apply LootAffectors to the chance percentage
+                    for (LootAffector affector : affectors) {
+                        adjustedChancePercent = affector.getAffector().apply(player, adjustedChancePercent);
+                    }
+
+                    if (Math.random() * 100 < adjustedChancePercent) {
+                        loot.put(record.itemType, record);
+                    }
                 }
             }
         }
@@ -51,11 +81,12 @@ public abstract class SkyBlockLootTable {
 
     @Getter
     @RequiredArgsConstructor
+    @AllArgsConstructor
     public static class LootRecord {
         private final ItemType itemType;
         private final int amount;
-        private final double chance;
-        private final Function<SkyBlockPlayer, Boolean> shouldCalculate;
+        private final double chancePercent;
+        private Function<SkyBlockPlayer, Boolean> shouldCalculate = player -> true;
 
         public static LootRecord none(int chance) {
             return new LootRecord(ItemType.AIR, 0, chance, player -> true);
@@ -68,5 +99,12 @@ public abstract class SkyBlockLootTable {
         public static boolean isNone(LootRecord lootRecord) {
             return lootRecord.itemType == ItemType.AIR && lootRecord.amount == 0;
         }
+    }
+
+    public enum CalculationMode {
+        // Adds up all of the chances and picks one based on that
+        PICK_ONE,
+        // Calculates each item individually, and gives the player each item that they have a chance to get
+        CALCULATE_INDIVIDUAL
     }
 }

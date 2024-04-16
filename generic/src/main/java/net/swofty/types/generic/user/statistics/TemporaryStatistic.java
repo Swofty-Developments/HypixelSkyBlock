@@ -6,13 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TemporaryStatistic {
-    private ItemStatistic statistic;
-    private Double value;
+    private ItemStatistics statistics;
     private long expiration;
 
-    public TemporaryStatistic(ItemStatistic statistic, Double value, long expiration) {
-        this.statistic = statistic;
-        this.value = value;
+    public TemporaryStatistic(ItemStatistics statistics, long expiration) {
+        this.statistics = statistics;
         this.expiration = expiration;
     }
 
@@ -21,17 +19,11 @@ public class TemporaryStatistic {
     }
 
     public static class Builder {
-        private ItemStatistic statistic;
-        private Double value;
+        private ItemStatistics statistics;
         private long expiration;
 
-        public Builder withStatistic(ItemStatistic statistic) {
-            this.statistic = statistic;
-            return this;
-        }
-
-        public Builder withValue(Double value) {
-            this.value = value;
+        public Builder withStatistics(ItemStatistics statistics) {
+            this.statistics = statistics;
             return this;
         }
 
@@ -46,7 +38,7 @@ public class TemporaryStatistic {
         }
 
         public TemporaryStatistic build() {
-            return new TemporaryStatistic(statistic, value, expiration);
+            return new TemporaryStatistic(statistics, expiration);
         }
     }
 }
