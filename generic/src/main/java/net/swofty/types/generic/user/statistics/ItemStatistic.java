@@ -11,19 +11,44 @@ public enum ItemStatistic {
     DAMAGE_ADDITIVE("Damage", true, "§c", "+", "%", "❁"), // EXPECTS PERCENTAGES
     DAMAGE_MULTIPLICATIVE("Damage", true, "§c", "+", "x", "❁"),
 
-    // Player Statistics
-    HEALTH("Health", false, "§a", "+", "", "❤"),
+    // Combat Statistics
+    HEALTH("Health", false, "§c", "+", "", "❤"),
     DEFENSE("Defense", false, "§a", "+", "", "❈"),
-    SPEED("Speed", false, "§f", "+", "", "✦"),
     STRENGTH("Strength", true, "§c", "+", "", "❁"),
     INTELLIGENCE("Intelligence", false, "§b", "+", "", "✎"),
-    MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
     CRIT_CHANCE("Crit Chance", true, "§9", "+", "%", "☠"),
     CRIT_DAMAGE("Crit Damage", true, "§9", "+", "%", "☣"),
     FEROCITY("Ferocity", false, "§a", "+", "", "⫽"),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "", "⚔"),
+    ABILITY_DAMAGE("Ability Damage", false, "§c", "+", "", "๑"),
+    HEALTH_REGEN("Health Regen", false, "§c", "+", "", "❣"),
+    TRUE_DEFENSE("True Defense", false, "§f", "+", "", "❂"),
+
+    // Misc Statistics
+    SPEED("Speed", false, "§f", "+", "%", "✦"),
     MAGIC_FIND("Magic Find", false, "§b", "+", "", "✯"),
+    SEA_CREATURE_CHANCE("Sea Creature Chance", false, "§3", "+", "%", "α"),
     PET_LUCK("Pet Luck", false, "§d", "+", "", "☘"),
-    //BONUS_ATTACK_SPEED("Bonus Attack Speed", false, "§e", "+", "⚔"),
+
+    // Wisdom Statistics
+    COMBAT_WISDOM("Combat Wisdom", false, "§3", "+", "", "☯"),
+    MINING_WISDOM("Mining Wisdom", false, "§3", "+", "", "☯"),
+    FARMING_WISDOM("Farming Wisdom", false, "§3", "+", "", "☯"),
+    FORAGING_WISDOM("Foraging Wisdom", false, "§3", "+", "", "☯"),
+    FISHING_WISDOM("Fishing Wisdom", false, "§3", "+", "", "☯"),
+    ENCHANTING_WISDOM("Enchanting Wisdom", false, "§3", "+", "", "☯"),
+    ALCHEMY_WISDOM("Alchemy Wisdom", false, "§3", "+", "", "☯"),
+    CARPENTRY_WISDOM("Carpentry Wisdom", false, "§3", "+", "", "☯"),
+    SOCIAL_WISDOM("Social Wisdom", false, "§3", "+", "", "☯"),
+    TAMING_WISDOM("Taming Wisdom", false, "§3", "+", "", "☯"),
+    RUNECRAFTING_WISDOM("Runecrafting Wisdom", false, "§3", "+", "", "☯"),
+
+    // Gathering Statistics
+    MINING_SPEED("Mining Speed", false, "§6", "+", "", "⸕"),
+    FARMING_FORTUNE("Farming Fortune", false, "§6", "+", "", "☘"),
+    FORAGING_FORTUNE("Foraging Fortune", false, "§6", "+", "", "☘"),
+    MINING_FORTUNE("Mining Fortune", false, "§6", "+", "", "☘"),
+    BREAKING_POWER("Breaking Power", false, "§2", "+", "", "Ⓟ"),
     ;
 
     private final String displayName;

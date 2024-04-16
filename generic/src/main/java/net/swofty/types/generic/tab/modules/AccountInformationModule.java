@@ -46,6 +46,15 @@ public class AccountInformationModule extends TablistModule {
         entries.add(new TablistEntry(" Strength: " + ItemStatistic.STRENGTH.getColour() +
                 ItemStatistic.STRENGTH.getSymbol() + playerStatistics.get(ItemStatistic.STRENGTH),
                 TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Crit Chance: " + ItemStatistic.CRIT_CHANCE.getColour() +
+                ItemStatistic.CRIT_CHANCE.getSymbol() + playerStatistics.get(ItemStatistic.CRIT_CHANCE),
+                TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Crit Damage: " + ItemStatistic.CRIT_DAMAGE.getColour() +
+                ItemStatistic.CRIT_DAMAGE.getSymbol() + playerStatistics.get(ItemStatistic.CRIT_DAMAGE),
+                TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Attack Speed: " + ItemStatistic.BONUS_ATTACK_SPEED.getColour() +
+                ItemStatistic.BONUS_ATTACK_SPEED.getSymbol() + playerStatistics.get(ItemStatistic.BONUS_ATTACK_SPEED),
+                TablistSkinRegistry.GRAY));
         entries.add(getGrayEntry());
 
 
