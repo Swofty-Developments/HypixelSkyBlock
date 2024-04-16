@@ -29,7 +29,6 @@ public class ArtisanalShortbow implements CustomSkyBlockItem, BowImpl {
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "",
                 "§9Shortbow: Instantly shoots!"
         ));
     }

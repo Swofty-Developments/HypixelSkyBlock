@@ -49,7 +49,7 @@ public class PlayerActionArrowDamageMob extends SkyBlockEvent {
         ItemStatistics entityStats = mob.getStatistics();
         ItemStatistics playerStats = shooter.getStatistics().allStatistics();
         // Add the arrow's statistics to the player's statistics
-        playerStats.add(arrowItem.getAttributeHandler().getStatistics());
+        ItemStatistics.add(playerStats, arrowItem.getAttributeHandler().getStatistics());
 
         Map.Entry<Double, Boolean> hit = PlayerStatistics.runPrimaryDamageFormula(playerStats, entityStats);
 

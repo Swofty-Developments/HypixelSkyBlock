@@ -135,7 +135,7 @@ public abstract class SkillCategory {
             ItemStatistics statistics = ItemStatistics.builder()
                     .withAdditive(getStatistic(), amountAdded())
                     .build();
-            skills.setStatistics(skills.getSkillStatistics().add(statistics));
+            skills.setStatistics(ItemStatistics.add(skills.getSkillStatistics(), statistics));
         }
 
         public abstract ItemStatistic getStatistic();
@@ -154,7 +154,7 @@ public abstract class SkillCategory {
             ItemStatistics statistics = ItemStatistics.builder()
                     .withMultiplicativePercentage(getStatistic(), amountAdded())
                     .build();
-            skills.setStatistics(skills.getSkillStatistics().add(statistics));
+            skills.setStatistics(ItemStatistics.add(skills.getSkillStatistics(), statistics));
         }
 
         public abstract ItemStatistic getStatistic();

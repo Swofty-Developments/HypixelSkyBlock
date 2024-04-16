@@ -100,7 +100,8 @@ public class ItemStatistics {
         }
 
         public ItemStatisticsBuilder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
-            this.statisticsMultiplicative.put(stat, multiplicationValuePercentage / 100);
+            if (multiplicationValuePercentage < 0) multiplicationValuePercentage = 0.0;
+            this.statisticsMultiplicative.put(stat, 1 - (multiplicationValuePercentage / 100));
             return this;
         }
 
@@ -155,24 +156,24 @@ public class ItemStatistics {
         return this.statisticsMultiplicative.getOrDefault(stat, 1D) * 100;
     }
 
-    public ItemStatistics add(ItemStatistics other) {
-        ItemStatistics result = new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
+    public static ItemStatistics add(ItemStatistics first, ItemStatistics other) {
+        ItemStatistics result = new ItemStatistics(new EnumMap<>(first.statisticsAdditive), new EnumMap<>(first.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
-            result.statisticsAdditive.put(stat, this.getAdditive(stat) + other.getAdditive(stat));
-            result.statisticsMultiplicative.put(stat, this.statisticsMultiplicative.getOrDefault(stat, 0D)
+            result.statisticsAdditive.put(stat, first.getAdditive(stat) + other.getAdditive(stat));
+            result.statisticsMultiplicative.put(stat, first.statisticsMultiplicative.getOrDefault(stat, 0D)
                     + other.statisticsMultiplicative.getOrDefault(stat, 0D));
         }
 
         return result;
     }
 
-    public ItemStatistics multiply(double multiplier) {
-        ItemStatistics result = new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
+    public static ItemStatistics multiply(ItemStatistics statistics, double multiplier) {
+        ItemStatistics result = new ItemStatistics(new EnumMap<>(statistics.statisticsAdditive), new EnumMap<>(statistics.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
-            result.statisticsAdditive.put(stat, this.getAdditive(stat) * multiplier);
-            result.statisticsMultiplicative.put(stat, this.getMultiplicative(stat) * multiplier);
+            result.statisticsAdditive.put(stat, statistics.getAdditive(stat) * multiplier);
+            result.statisticsMultiplicative.put(stat, statistics.getMultiplicative(stat) * multiplier);
         }
 
         return result;
@@ -182,8 +183,8 @@ public class ItemStatistics {
         ItemStatistics result = new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
-            result.statisticsAdditive.put(stat, Math.max(this.getAdditive(stat) - other.getAdditive(stat), 0));
-            result.statisticsMultiplicative.put(stat, Math.max(this.getMultiplicative(stat) - other.getMultiplicative(stat), 1));
+            result.statisticsAdditive.put(stat, this.getAdditive(stat) - other.getAdditive(stat));
+            result.statisticsMultiplicative.put(stat, this.getMultiplicative(stat) - other.getMultiplicative(stat));
         }
 
         return result;

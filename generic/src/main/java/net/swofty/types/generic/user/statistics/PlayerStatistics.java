@@ -69,11 +69,11 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() instanceof ConstantStatistics)
                     continue;
 
-            total = total.add(item.getAttributeHandler().getStatistics()).add(calculateExtraItemStatisticsToAdd(
+            total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(), calculateExtraItemStatisticsToAdd(
                     item,
                     causer,
                     enemy
-            ));
+            )));
         }
         return total;
     }
@@ -117,7 +117,7 @@ public class PlayerStatistics {
             if (item.getGenericInstance() instanceof ConstantStatistics)
                 return ItemStatistics.empty();
 
-        return item.getAttributeHandler().getStatistics().add(
+        return ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                 calculateExtraItemStatisticsToAdd(
                         item,
                         causer,
@@ -134,23 +134,23 @@ public class PlayerStatistics {
         );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
 
-        return perLevelStatistics.multiply(level);
+        return ItemStatistics.multiply(perLevelStatistics, level);
     }
 
     public ItemStatistics spareStatistics() {
         ItemStatistics spare = ItemStatistics.builder().build();
 
         int fairySouls = player.getFairySouls().getExchangedFairySouls().size();
-        spare = spare.add(ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
+        spare = ItemStatistics.add(spare, ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
 
         DatapointSkills.PlayerSkills skills = player.getSkills();
-        spare = spare.add(skills.getSkillStatistics());
+        spare = ItemStatistics.add(spare, skills.getSkillStatistics());
 
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
         for (int i = 0; i < experience.getLevel().asInt(); i++) {
             List<SkyBlockLevelStatisticUnlock> unlocks = experience.getLevel().getStatisticUnlocks();
             for (SkyBlockLevelStatisticUnlock unlock : unlocks) {
-                spare = spare.add(unlock.getStatistics());
+                spare = ItemStatistics.add(spare, unlock.getStatistics());
             }
         }
 
@@ -164,13 +164,13 @@ public class PlayerStatistics {
 
     public ItemStatistics allStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics total = ItemStatistics.builder().build();
-        total = total.add(allArmorStatistics(causer, enemy));
-        total = total.add(mainHandStatistics(causer, enemy));
-        total = total.add(spareStatistics());
-        total = total.add(getTemporaryStatistics());
-        total = total.add(petStatistics());
-        total = total.add(accessoryStatistics);
-        total = total.add(ItemStatistic.getOfAllBaseValues());
+        total = ItemStatistics.add(total, allArmorStatistics(causer, enemy));
+        total = ItemStatistics.add(total, mainHandStatistics(causer, enemy));
+        total = ItemStatistics.add(total, spareStatistics());
+        total = ItemStatistics.add(total, getTemporaryStatistics());
+        total = ItemStatistics.add(total, petStatistics());
+        total = ItemStatistics.add(total, accessoryStatistics);
+        total = ItemStatistics.add(total, ItemStatistic.getOfAllBaseValues());
 
         return total;
     }
@@ -183,11 +183,12 @@ public class PlayerStatistics {
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-                total = total.add(item.getAttributeHandler().getStatistics().add(calculateExtraItemStatisticsToAdd(
-                        item,
-                        null,
-                        null
-                )));
+                total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
+                        calculateExtraItemStatisticsToAdd(
+                            item,
+                            null,
+                            null
+                        )));
             }
         }
         for (SkyBlockItem item : player.getAccessoryBag().getAllAccessories()) {
@@ -195,10 +196,11 @@ public class PlayerStatistics {
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
 
-            total = total.add(item.getAttributeHandler().getStatistics().add(calculateExtraItemStatisticsToAdd(
-                    item,
-                    null,
-                    null
+            total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
+                    calculateExtraItemStatisticsToAdd(
+                        item,
+                        null,
+                        null
             )));
         }
         accessoryStatistics = total;
@@ -226,11 +228,11 @@ public class PlayerStatistics {
                                                 SkyBlockPlayer causer, LivingEntity enemy) {
         for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
             ItemStatistics enchantmentStatistics = enchantment.type().getEnch().getStatistics(enchantment.level()).clone();
-            statistics = statistics.add(enchantmentStatistics);
+            statistics = ItemStatistics.add(statistics, enchantmentStatistics);
 
             if (causer != null && enemy != null) {
                 if (enchantment.type().getEnch() instanceof EventBasedEnchant eventBasedStatistic) {
-                    statistics = statistics.add(eventBasedStatistic.getStatisticsOnDamage(
+                    statistics = ItemStatistics.add(statistics, eventBasedStatistic.getStatisticsOnDamage(
                             causer,
                             enemy,
                             enchantment.level()
@@ -247,12 +249,12 @@ public class PlayerStatistics {
         synchronized (temporaryStatistics) {
             temporaryStatistics.removeIf(temporaryStatistic -> temporaryStatistic.getExpiration() < System.currentTimeMillis());
             for (TemporaryStatistic temporaryStatistic : temporaryStatistics) {
-                statistics = statistics.add(temporaryStatistic.getStatistics());
+                statistics = ItemStatistics.add(statistics, temporaryStatistic.getStatistics());
             }
 
             temporaryConditionalStatistics.removeIf(temporaryStatistic -> !temporaryStatistic.getExpiry().apply(player));
             for (TemporaryConditionalStatistic temporaryStatistic : temporaryConditionalStatistics) {
-                statistics = statistics.add(temporaryStatistic.getStatistics());
+                statistics = ItemStatistics.add(statistics, temporaryStatistic.getStatistics());
             }
 
             return statistics;
