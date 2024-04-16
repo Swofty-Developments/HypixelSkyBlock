@@ -61,7 +61,7 @@ public class MobSheep extends SkyBlockMob {
     }
 
     @Override
-    public long getxp() {
+    public long getSkillXP() {
         return 0;
     }
 }

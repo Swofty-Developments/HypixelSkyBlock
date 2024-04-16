@@ -1,15 +1,9 @@
 package net.swofty.type.village.villagers;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-
-import java.util.stream.Stream;
 
 public class VillagerMathsEnjoyer extends NPCVillagerDialogue {
 

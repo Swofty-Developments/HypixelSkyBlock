@@ -21,6 +21,8 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.loottable.LootAffector;
+import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -28,9 +30,11 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 public abstract class SkyBlockMob extends EntityCreature {
@@ -73,12 +77,10 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract List<GoalSelector> getGoalSelectors();
     public abstract List<TargetSelector> getTargetSelectors();
     public abstract ItemStatistics getBaseStatistics();
-    public abstract List<MobDrop> getDrops();
+    public abstract @Nullable SkyBlockLootTable getLootTable();
     public abstract SkillCategories getSkillCategory();
     public abstract long damageCooldown();
-    public abstract long getxp();
-
-    public record MobDrop(float chance, int min, int max, ItemType item) { }
+    public abstract long getSkillXP();
 
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
@@ -124,26 +126,23 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getxp());
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
 
-        if (getDrops().isEmpty()) return;
+        if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
 
-        float random = (float) Math.random();
+        Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
+                .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
 
-        for (MobDrop drop : getDrops()) {
-            if (random <= drop.chance / 100) {
-                int amount = (int) (Math.random() * (drop.max - drop.min) + drop.min);
-                ItemType item = drop.item;
+        for (ItemType itemType : drops.keySet()) {
+            SkyBlockLootTable.LootRecord record = drops.get(itemType);
 
-                DroppedItemEntityImpl droppedItemEntity = new DroppedItemEntityImpl(
-                        new SkyBlockItem(item, amount), player
-                );
-                droppedItemEntity.setInstance(getInstance(), getPosition().add(
-                        Math.random() * 0.5, 0.3, Math.random() * 0.5
-                ));
-            }
+            if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
+
+            SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
+            DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
+            droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }
     }
 

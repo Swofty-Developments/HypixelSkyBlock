@@ -18,7 +18,6 @@ public enum PlayerItemOrigin {
             return entry.getKey().getItemInMainHand();
         return null;
     }, (player, entry) -> player.setItemInMainHand(entry.getKey()), true),
-    OFF_HAND((entry) -> entry.getKey().getItemInOffHand(), (player, entry) -> player.setItemInOffHand(entry.getKey()), true),
     HELMET((entry) -> entry.getKey().getHelmet(), (player, entry) -> player.setHelmet(entry.getKey()), true),
     CHESTPLATE((entry) -> entry.getKey().getChestplate(), (player, entry) -> player.setChestplate(entry.getKey()), true),
     LEGGINGS((entry) -> entry.getKey().getLeggings(), (player, entry) -> player.setLeggings(entry.getKey()), true),

@@ -94,7 +94,7 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public long getxp() {
+    public long getSkillXP() {
         return 40;
     }
 }

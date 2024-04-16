@@ -1,6 +1,7 @@
 package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -17,6 +18,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
+import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
@@ -74,6 +76,38 @@ public class PlayerStatistics {
             ));
         }
         return total;
+    }
+
+    // Returns a map of Level : Amount of that level
+    public @NonNull Map<Integer, Integer> getAllOfEnchants(EnchantmentType enchantmentType,
+                                                           boolean includeAccessories) {
+        List<SkyBlockItem> toCheck = new ArrayList<>();
+        PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
+
+        toCheck.add(cache.get(PlayerItemOrigin.MAIN_HAND));
+        toCheck.add(cache.get(PlayerItemOrigin.HELMET));
+        toCheck.add(cache.get(PlayerItemOrigin.CHESTPLATE));
+        toCheck.add(cache.get(PlayerItemOrigin.LEGGINGS));
+        toCheck.add(cache.get(PlayerItemOrigin.BOOTS));
+
+        if (includeAccessories) {
+            toCheck.addAll(player.getAccessoryBag().getAllAccessories());
+        }
+
+        Map<Integer, Integer> enchantLevels = new HashMap<>();
+
+        for (SkyBlockItem item : toCheck) {
+            if (item == null) continue;
+
+            for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
+                if (enchantment.type() != enchantmentType) continue;
+
+                int level = enchantment.level();
+                enchantLevels.merge(level, 1, Integer::sum);
+            }
+        }
+
+        return enchantLevels;
     }
 
     public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {

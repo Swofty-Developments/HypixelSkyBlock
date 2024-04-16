@@ -87,7 +87,7 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     }
 
     @Override
-    public long getxp() {
+    public long getSkillXP() {
         return 7;
     }
 
