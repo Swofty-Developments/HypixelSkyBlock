@@ -45,7 +45,7 @@ public class CoinShopPrice implements ShopPrice {
 
     @Override
     public ShopPrice divide(double amount) {
-        return new CoinShopPrice(Math.max((int) (this.amount / amount), 1));
+        return new CoinShopPrice(Math.max((this.amount / amount), 1));
     }
 
 }
