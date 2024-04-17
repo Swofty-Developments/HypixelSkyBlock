@@ -32,7 +32,7 @@ public class ActionItemDrop extends SkyBlockEvent {
             return;
         }
 
-        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
+        if (player.getOpenInventory() != null) {
             event.setCancelled(true);
             return;
         }
