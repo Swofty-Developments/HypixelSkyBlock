@@ -43,9 +43,9 @@ public class VillagerMathsEnjoyer extends NPCVillagerDialogue {
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "§e[NPC] Maths Enjoyer: §fHey if you really want to know...",
-                                "§e[NPC] Maths Enjoyer: The formula to §6Magical Power §fis...",
+                                "§e[NPC] Maths Enjoyer: §fThe formula to §6Magical Power §fis...",
                                 "§e[NPC] Maths Enjoyer: §dStats Mult. §f= §b29.97§e(§aln(§b0.0019§6MP§a+1)§e)^§b1.2",
-                                "§e[NPC] Maths Enjoyer: Have fun with that!"
+                                "§e[NPC] Maths Enjoyer: §fHave fun with that!"
                         }).build()
         };
     }
