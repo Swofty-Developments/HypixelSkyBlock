@@ -33,8 +33,8 @@ public class MoveJerry implements CustomSkyBlockItem, Interactable {
             return;
         }
 
-        // Move up one block
-        position = position.add(0, 1, 0);
+        // Move up one block and center jerry
+        position = position.add(0.5, 1, 0.5);
 
         SkyBlockIsland island = player.getSkyBlockIsland();
         JerryInformation jerryInformation = island.getJerryInformation();
