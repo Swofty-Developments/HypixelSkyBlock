@@ -13,7 +13,7 @@ public class MinionCobblestone extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
         return List.of(
-                new MinionTier(1, 2, 64,
+                new MinionTier(1, 14, 64,
                         "2f93289a82bd2a06cbbe61b733cfdc1f1bd93c4340f7a90abd9bdda774109071",
                         Material.WOODEN_PICKAXE, true),
                 new MinionTier(2, 14, 192,
@@ -34,7 +34,7 @@ public class MinionCobblestone extends SkyBlockMinion {
                 new MinionTier(7, 9, 576,
                         "51616e63be0ff341f70862e0049812fa0c27b39a2e77058dd8bfc386375e1d16",
                         Material.IRON_PICKAXE, true),
-                new MinionTier(8, 2, 768,
+                new MinionTier(8, 9, 768,
                         "ea53e3c9f446a77e8c59df305a410a8accb751c002a41e55a1018ce1b3114690",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(9, 8, 768,
