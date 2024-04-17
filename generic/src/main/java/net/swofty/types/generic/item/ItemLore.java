@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.types.generic.item.impl.*;
@@ -16,7 +16,6 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +36,7 @@ public class ItemLore {
     @SneakyThrows
     public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
-        AttributeHandler handler = item.getAttributeHandler();
+        ItemAttributeHandler handler = item.getAttributeHandler();
 
         Rarity rarity = handler.getRarity();
         String type = handler.getItemType();

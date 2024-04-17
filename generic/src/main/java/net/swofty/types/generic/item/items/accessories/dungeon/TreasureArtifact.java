@@ -12,7 +12,7 @@ public class TreasureArtifact implements Talisman, NotFinishedYet {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Grants §a+3% §7extra loot to end",
-                "§7of dungeon chests.");
+                "§7of dungeon blocks.");
     }
 
     @Override

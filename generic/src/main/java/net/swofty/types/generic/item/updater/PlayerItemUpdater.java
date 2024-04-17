@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.updater;
 
-import lombok.Getter;
 import net.minestom.server.color.Color;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.item.Enchantment;
@@ -17,7 +16,7 @@ import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
@@ -28,8 +27,6 @@ import org.json.JSONObject;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiFunction;
 
 public class PlayerItemUpdater {
     public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack) {
@@ -63,7 +60,7 @@ public class PlayerItemUpdater {
         /**
          * Update SkyBlock Item Instance
          */
-        AttributeHandler handler = item.getAttributeHandler();
+        ItemAttributeHandler handler = item.getAttributeHandler();
 
         // Update Rarity
         try {

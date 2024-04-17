@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class AttributeHandler {
+public class ItemAttributeHandler {
     SkyBlockItem item;
 
-    public AttributeHandler(SkyBlockItem item) {
+    public ItemAttributeHandler(SkyBlockItem item) {
         this.item = item;
     }
 

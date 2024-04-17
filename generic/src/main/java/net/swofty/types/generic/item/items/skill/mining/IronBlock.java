@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.skill.mining;
 
+import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -9,12 +10,13 @@ import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IronBlock implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable{
+public class IronBlock implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -34,5 +36,10 @@ public class IronBlock implements PlaceableCustomSkyBlockItem, Sellable, Default
     @Override
     public double getSellValue() {
         return 27;
+    }
+
+    @Override
+    public @Nullable BlockType getAssociatedBlockType() {
+        return null;
     }
 }

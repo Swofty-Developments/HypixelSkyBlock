@@ -4,12 +4,14 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.PlaceEvent;
+import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles item placeable",
@@ -40,6 +42,11 @@ public class ActionItemPlace extends SkyBlockEvent {
 
         if (instance instanceof CustomSkyBlockItem && !((CustomSkyBlockItem) instance).isPlaceable()) {
             event.setCancelled(true);
+        } else {
+            PlaceableCustomSkyBlockItem placeableItem = (PlaceableCustomSkyBlockItem) instance;
+            if (placeableItem.getAssociatedBlockType() != null) {
+                event.setBlock(new SkyBlockBlock(placeableItem.getAssociatedBlockType()).toBlock());
+            }
         }
     }
 }

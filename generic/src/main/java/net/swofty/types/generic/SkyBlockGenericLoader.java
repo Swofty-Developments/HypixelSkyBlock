@@ -24,6 +24,7 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.Songs;
 import net.swofty.proxyapi.ProxyPlayer;
+import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
@@ -320,6 +321,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+
+        /**
+         * Register blocks
+         */
+        BlockAttribute.registerBlockAttributes();
 
         /**
          * Register SkyBlock levels

@@ -5,7 +5,7 @@ import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
 import java.util.Map;
@@ -16,10 +16,10 @@ public class GUIRosettaIronArmor extends SkyBlockShopGUI {
     }
 
     private SkyBlockItem applyEnchantment (SkyBlockItem item, Map<EnchantmentType, Integer> enchantments) {
-        AttributeHandler attributeHandler = item.getAttributeHandler();
+        ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
         enchantments.forEach(((enchantmentType, level) ->
-                attributeHandler.addEnchantment(new SkyBlockEnchantment(enchantmentType, level))));
-        return attributeHandler.asSkyBlockItem();
+                itemAttributeHandler.addEnchantment(new SkyBlockEnchantment(enchantmentType, level))));
+        return itemAttributeHandler.asSkyBlockItem();
     }
 
     @Override

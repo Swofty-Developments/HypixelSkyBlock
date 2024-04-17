@@ -19,7 +19,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.impl.Enchantable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -225,16 +225,16 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        AttributeHandler attributeHandler = item.getAttributeHandler();
+                        ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
 
                         List<String> lore = new ArrayList<>();
                         StringUtility.splitByWordAndLength(enchantmentType.getDescription(1, player), 30)
                                 .forEach(line -> lore.add("§7" + line));
                         lore.add("§a ");
 
-                        if (attributeHandler.hasEnchantment(enchantmentType)) {
+                        if (itemAttributeHandler.hasEnchantment(enchantmentType)) {
                             lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " " +
-                                    StringUtility.getAsRomanNumeral(attributeHandler.getEnchantment(enchantmentType).level())
+                                    StringUtility.getAsRomanNumeral(itemAttributeHandler.getEnchantment(enchantmentType).level())
                                     + " §l✓");
                         } else {
                             lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✖");

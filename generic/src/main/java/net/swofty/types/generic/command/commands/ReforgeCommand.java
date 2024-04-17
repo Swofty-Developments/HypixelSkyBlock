@@ -3,7 +3,7 @@ package net.swofty.types.generic.command.commands;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.ReforgeType;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.impl.Reforgable;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -22,11 +22,11 @@ public class ReforgeCommand extends SkyBlockCommand {
             if (!permissionCheck(sender)) return;
 
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
-                AttributeHandler attributeHandler = item.getAttributeHandler();
+                ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                 ReforgeType reforgeType = ((Reforgable) item.getGenericInstance()).getReforgeType();
                 ReforgeType.Reforge reforge = reforgeType.getReforges().get(MathUtility.random(0, reforgeType.getReforges().size() - 1));
                 try {
-                    attributeHandler.setReforge(reforge);
+                    itemAttributeHandler.setReforge(reforge);
                 } catch (IllegalArgumentException e) {
                     sender.sendMessage("§c" + e.getMessage());
                 }

@@ -7,12 +7,10 @@ import net.minestom.server.item.ItemHideFlag;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.attribute.attributes.*;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.DrillImpl;
-import net.swofty.types.generic.item.impl.PickaxeImpl;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
@@ -158,8 +156,8 @@ public class SkyBlockItem {
         return itemStackBuilder.meta(meta -> meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES));
     }
 
-    public AttributeHandler getAttributeHandler() {
-        return new AttributeHandler(this);
+    public ItemAttributeHandler getAttributeHandler() {
+        return new ItemAttributeHandler(this);
     }
 
     public boolean isNA() {

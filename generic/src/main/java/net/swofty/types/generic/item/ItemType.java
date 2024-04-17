@@ -730,7 +730,7 @@ public enum ItemType {
     GOLDEN_CARROT(Material.GOLDEN_CARROT, Rarity.COMMON),
     WATER_BOTTLE(Material.POTION, Rarity.COMMON),
     CACTUS(Material.CACTUS, Rarity.COMMON, Cactus.class),
-    CHEST(Material.CHEST, Rarity.COMMON),
+    CHEST(Material.CHEST, Rarity.COMMON, Chest.class),
     IRON_HELMET(Material.IRON_HELMET, Rarity.COMMON, IronHelmet.class),
     IRON_CHESTPLATE(Material.IRON_CHESTPLATE, Rarity.COMMON, IronChestplate.class),
     IRON_LEGGINGS(Material.IRON_LEGGINGS, Rarity.COMMON, IronLeggings.class),

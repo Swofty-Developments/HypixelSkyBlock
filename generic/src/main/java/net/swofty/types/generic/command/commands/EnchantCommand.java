@@ -7,9 +7,8 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
-import net.swofty.types.generic.item.attribute.AttributeHandler;
+import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -29,8 +28,8 @@ public class EnchantCommand extends SkyBlockCommand {
             if (!permissionCheck(sender)) return;
 
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
-                AttributeHandler attributeHandler = item.getAttributeHandler();
-                attributeHandler.addEnchantment(
+                ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
+                itemAttributeHandler.addEnchantment(
                         SkyBlockEnchantment.builder()
                                 .level(context.get(level))
                                 .type(context.get(typeArgument))
