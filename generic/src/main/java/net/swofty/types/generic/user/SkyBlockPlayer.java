@@ -540,6 +540,14 @@ public class SkyBlockPlayer extends Player {
         getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
     }
 
+    public double getBits() {
+        return getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).getValue();
+    }
+
+    public void setBits(int bits) {
+        getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(bits);
+    }
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());

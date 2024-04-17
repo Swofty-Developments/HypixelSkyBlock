@@ -8,6 +8,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.data.datapoints.DatapointInteger;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.scoreboard.SwoftySidebar;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
@@ -64,6 +65,7 @@ public class SkyBlockScoreboard {
                 }
                 addLine("§7 ", sidebar);
                 addLine(STR."§fPurse: §6\{StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())}\{coinReplacement == null ? "" : STR." §e(+\{coinReplacement.getDisplay()})"}", sidebar);
+                addLine(STR."§fBits: §b\{StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue())}", sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
