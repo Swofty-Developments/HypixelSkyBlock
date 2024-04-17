@@ -12,7 +12,9 @@ import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.utility.MathUtility;
 
+import java.io.Console;
 import java.util.List;
+import java.util.logging.Logger;
 
 @AllArgsConstructor
 @Getter
@@ -22,13 +24,13 @@ public class MinionMineAction extends MinionAction {
     @Override
     public SkyBlockItem onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
         List<Pos> minePositions = MathUtility.getRangeExcludingSelf(
-                minion.getPosition().sub(0, 1, 0), 2
+                minion.getPosition().sub(0, 1, 0), 2 + minion.getBonusRange()
         );
 
         boolean hasAir = minePositions.stream().anyMatch(pos -> island.getBlock(pos).isAir());
 
         List<Pos> possiblePositions = MathUtility.getRangeExcludingSelf(
-                minion.getPosition().sub(0, 1, 0), 2
+                minion.getPosition().sub(0, 1, 0), 2 + minion.getBonusRange()
         ).stream().filter(pos -> !hasAir || island.getBlock(pos).isAir()).toList();
 
         event.setToLook(MathUtility.getRandomElement(possiblePositions));

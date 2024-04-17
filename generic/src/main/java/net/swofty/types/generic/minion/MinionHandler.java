@@ -64,11 +64,14 @@ public record MinionHandler(Scheduler scheduler) {
             System.out.println("State: " + tags.getState());
             System.out.println("Step: " + tags.getCurrentStep());*/
 
+            //Get the extra minion range granted from minion expanders
+            int extraMinionRange = islandMinion.getBonusRange();
+
             // Check if the minion is in a perfect location
             boolean allBlocksMeetExpectations = true;
             for (SkyBlockMinion.MinionExpectations expectation : minion.getExpectations()) {
                 int yLevel = minionEntity.getPosition().blockY() + expectation.yLevel();
-                List<Pos> positions = MathUtility.getRangeExcludingSelf(minionEntity.getPosition().withY(yLevel), 2);
+                List<Pos> positions = MathUtility.getRangeExcludingSelf(minionEntity.getPosition().withY(yLevel), 2 + extraMinionRange);
 
                 for (Pos position : positions) {
                     if (!Arrays.asList(expectation.material()).contains(instance.getBlock(position))) {

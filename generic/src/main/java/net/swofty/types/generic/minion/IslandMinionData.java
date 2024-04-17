@@ -110,25 +110,6 @@ public class IslandMinionData {
             return toReturn;
         }
 
-        public Map<String, Object> serialize() {
-            List<String> itemsInMinionAsString = new ArrayList<>();
-            itemsInMinion.forEach(item -> {
-                itemsInMinionAsString.add(item.getMaterial().name() + "," + item.getAmount());
-            });
-
-            Map<String, Object> data = new HashMap<>();
-            data.put("position", position.blockX() + "," + position.blockY() + "," + position.blockZ());
-            data.put("itemsInMinion", itemsInMinionAsString);
-            data.put("minion", minion.name());
-            data.put("lastAction", lastAction);
-            data.put("tier", tier);
-            data.put("generatedItems", generatedItems);
-            data.put("minionUUID", minionUUID.toString());
-            data.put("extensionData", extensionData.toString());
-            data.put("mithrilInfusion", mithrilInfusion);
-            return data;
-        }
-
         public int getSpeedPercentage(){//Handle percentage speed increase from both fuels and minion upgrades
             int percentageSpeedIncrease = 0;
 
@@ -150,6 +131,31 @@ public class IslandMinionData {
             }
 
             return percentageSpeedIncrease;
+        }
+
+        public int getBonusRange(){
+            int range = 0;
+            range += extensionData.getMinionUpgradeCount(ItemType.MINION_EXPANDER);
+            return range;
+        }
+
+        public Map<String, Object> serialize() {
+            List<String> itemsInMinionAsString = new ArrayList<>();
+            itemsInMinion.forEach(item -> {
+                itemsInMinionAsString.add(item.getMaterial().name() + "," + item.getAmount());
+            });
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("position", position.blockX() + "," + position.blockY() + "," + position.blockZ());
+            data.put("itemsInMinion", itemsInMinionAsString);
+            data.put("minion", minion.name());
+            data.put("lastAction", lastAction);
+            data.put("tier", tier);
+            data.put("generatedItems", generatedItems);
+            data.put("minionUUID", minionUUID.toString());
+            data.put("extensionData", extensionData.toString());
+            data.put("mithrilInfusion", mithrilInfusion);
+            return data;
         }
 
         public static IslandMinion deserialize(Map<String, Object> data) {
