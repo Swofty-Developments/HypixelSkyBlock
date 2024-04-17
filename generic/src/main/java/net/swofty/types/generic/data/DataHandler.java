@@ -316,7 +316,6 @@ public class DataHandler {
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
-        COOKIE_BUFF("cookie_buff", false, false, false, DatapointBoolean.class, new DatapointBoolean("eaten_cookie")),
         ;
 
         @Getter

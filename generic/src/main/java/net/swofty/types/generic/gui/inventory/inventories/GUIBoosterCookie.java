@@ -38,7 +38,6 @@ public class GUIBoosterCookie extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.setBits(4000);
-                player.hasCookie();
             }
 
             @Override
