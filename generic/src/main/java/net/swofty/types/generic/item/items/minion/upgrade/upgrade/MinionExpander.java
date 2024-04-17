@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public class MinionExpander implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted, MinionUpgradeSpeedItem, NotFinishedYet {
+public class MinionExpander implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted, MinionUpgradeSpeedItem {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

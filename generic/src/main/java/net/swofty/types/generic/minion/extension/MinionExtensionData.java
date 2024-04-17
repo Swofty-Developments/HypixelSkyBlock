@@ -31,6 +31,12 @@ public class MinionExtensionData {
                 .anyMatch(extension -> extension.getItemTypePassedIn() == type);
     }
 
+    public int getMinionUpgradeCount(ItemType type) {
+        return (int)extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionUpgradeExtension)
+                .filter(extension -> extension.getItemTypePassedIn() == type).count();
+    }
+
     public SkyBlockItem[] getMinionUpgrades(){
         return extensionData.values().stream().filter(extension -> extension instanceof MinionUpgradeExtension).filter(extension -> extension.getItemTypePassedIn() != null).map(extension -> new SkyBlockItem(extension.getItemTypePassedIn())).toArray(SkyBlockItem[]::new);
     }
