@@ -64,6 +64,7 @@ public class SkyBlockScoreboard {
                 }
                 addLine("§7 ", sidebar);
                 addLine(STR."§fPurse: §6\{StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())}\{coinReplacement == null ? "" : STR." §e(+\{coinReplacement.getDisplay()})"}", sidebar);
+                addLine(STR."§fBits: §b\{StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointDouble.class).getValue())}", sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {

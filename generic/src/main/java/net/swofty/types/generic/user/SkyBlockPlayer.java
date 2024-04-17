@@ -540,6 +540,18 @@ public class SkyBlockPlayer extends Player {
         getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
     }
 
+    public double getBits() {
+        return getDataHandler().get(DataHandler.Data.BITS, DatapointDouble.class).getValue();
+    }
+
+    public void setBits(double bits) {
+        getDataHandler().get(DataHandler.Data.BITS, DatapointDouble.class).setValue(bits);
+    }
+
+    public boolean hasCookie() {
+        return getDataHandler().get(DataHandler.Data.COOKIE_BUFF, DatapointBoolean.class).getValue();
+    }
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());
