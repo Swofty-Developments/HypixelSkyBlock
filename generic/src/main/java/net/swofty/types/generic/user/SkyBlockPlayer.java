@@ -541,11 +541,11 @@ public class SkyBlockPlayer extends Player {
     }
 
     public double getBits() {
-        return getDataHandler().get(DataHandler.Data.BITS, DatapointDouble.class).getValue();
+        return getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).getValue();
     }
 
-    public void setBits(double bits) {
-        getDataHandler().get(DataHandler.Data.BITS, DatapointDouble.class).setValue(bits);
+    public void setBits(int bits) {
+        getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(bits);
     }
 
     public boolean hasCookie() {
