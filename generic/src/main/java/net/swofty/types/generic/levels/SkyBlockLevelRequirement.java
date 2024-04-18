@@ -239,7 +239,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§f", "White Prefix", null),
+    ), "§f", "White Level Prefix", Material.BONE_MEAL),
     LEVEL_41(4100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -463,7 +463,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§e", null, null),
+    ), "§e", "Yellow Level Prefix", Material.YELLOW_DYE),
     LEVEL_81(8100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -687,7 +687,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§a", null, null),
+    ), "§a", "Green Level Prefix", Material.LIME_DYE),
     LEVEL_121(12100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -911,7 +911,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§2", null, null),
+    ), "§2", "Dark Green Level Prefix", Material.GREEN_DYE),
     LEVEL_161(16100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -1135,7 +1135,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§b", null, null),
+    ), "§b", "Aqua Level Prefix", Material.LIGHT_BLUE_DYE),
     LEVEL_201(20100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -1359,7 +1359,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§3", null, null),
+    ), "§3", "Cyan Level Prefix", Material.CYAN_DYE),
     LEVEL_241(24100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -1583,7 +1583,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§9", null, null),
+    ), "§9", "Blue Level Prefix", Material.LAPIS_LAZULI),
     LEVEL_281(28100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -1807,7 +1807,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§d", null, null),
+    ), "§d", "Pink Level Prefix", Material.PINK_DYE),
     LEVEL_321(32100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -2031,7 +2031,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§5", null, null),
+    ), "§5", "Purple Level Prefix", Material.PURPLE_DYE),
     LEVEL_361(36100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -2255,7 +2255,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§6", null, null),
+    ), "§6", "Gold Level Prefix", Material.ORANGE_DYE),
     LEVEL_401(40100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -2479,7 +2479,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§c", null, null),
+    ), "§c", "Red Level Prefix", Material.RED_DYE),
     LEVEL_441(44100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -2703,7 +2703,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§4", null, null),
+    ), "§4", "Dark Red Level Prefix", Material.REDSTONE),
     LEVEL_481(48100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D

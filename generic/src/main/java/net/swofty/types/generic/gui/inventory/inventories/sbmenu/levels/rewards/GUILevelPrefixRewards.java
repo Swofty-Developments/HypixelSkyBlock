@@ -21,7 +21,7 @@ import java.util.Map;
 public class GUILevelPrefixRewards extends SkyBlockInventoryGUI {
     private static final int[] SLOTS = new int[]{
             19, 20, 21, 22, 23, 24, 25,
-            29, 30, 31, 32, 33
+                29, 30, 31, 32, 33
     };
 
     public GUILevelPrefixRewards() {
