@@ -12,6 +12,7 @@ public class SandboxItem implements CustomSkyBlockItem {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
+        if (instance == null) return ItemStatistics.empty();
         return instance.getAttributeHandler().getSandboxData().getStatistics();
     }
 

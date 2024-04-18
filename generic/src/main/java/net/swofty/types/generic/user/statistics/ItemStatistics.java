@@ -172,8 +172,8 @@ public class ItemStatistics {
         ItemStatistics result = new ItemStatistics(new EnumMap<>(statistics.statisticsAdditive), new EnumMap<>(statistics.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
-            result.statisticsAdditive.put(stat, statistics.getAdditive(stat) * multiplier);
-            result.statisticsMultiplicative.put(stat, statistics.getMultiplicative(stat) * multiplier);
+            result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 0D) * multiplier);
+            result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 0D) * multiplier);
         }
 
         return result;

@@ -57,9 +57,6 @@ coalmine_4,COAL_MINE,-4,-41,71,64,-230,-161,world
 coalmine_5,COAL_MINE,-15,4,75,64,-152,-167,world
 coalmine_6,COAL_MINE,4,-20,64,73,-165,-182,world
 coalmine_7,COAL_MINE,-7,3,69,63,-178,-165,world
-coalminecaves_7,COAL_MINE_CAVES,-34,-47,73,64,-170,-157,world
-coalminecaves_8,COAL_MINE_CAVES,-47,-62,70,61,-163,-139,world
-coalminecaves_9,COAL_MINE_CAVES,-61,-75,67,55,-147,-121,world
 goldmine_1,GOLD_MINE,52,-106,136,14,-261,-404,world
 deepcavern_1,DEEP_CAVERN,181,384,235,0,-945,-1129,world
 gunpowder,GUNPOWDER_MINES,408,211,160,143,-1015,-1119,world
@@ -86,3 +83,4 @@ cliffv,CLIFFSIDE_VEINS,-158,-72,154,114,758,791,world
 vs1,VOID_SEPULTURE,100,56,62,7,-17,-96,end_region
 vs2,VOID_SEPULTURE,68,140,70,23,-96,-21,end_region
 vs3,VOID_SEPULTURE,74,49,50,8,-51,-91,end_region
+POG,WILDERNESS,58,123,71,76,118,123,
