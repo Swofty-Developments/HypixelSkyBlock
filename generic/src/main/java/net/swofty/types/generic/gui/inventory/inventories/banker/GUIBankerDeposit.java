@@ -44,10 +44,10 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aYour whole purse", Material.CHEST, 64,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.commaify(player.getCoins()),
+                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins()),
                         " ",
                         "§eClick to deposit coins!");
             }
@@ -65,10 +65,10 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aHalf of your purse", Material.CHEST, 32,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.commaify(player.getCoins() / 2),
+                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins() / 2),
                         " ",
                         "§eClick to deposit coins!");
             }
@@ -107,7 +107,7 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank deposit",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
                         "§7Amount to deposit: §6Custom",
@@ -149,8 +149,8 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                     player.getUsername()
             ));
 
-            player.sendMessage("§aYou have deposited §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                    StringUtility.commaify(bankData.getAmount())
+            player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
+                    StringUtility.decimalify(bankData.getAmount())
                     + " coins§a in your account.");
             return;
         }
@@ -195,8 +195,8 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 ));
                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
-                player.sendMessage("§aYou have deposited §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                        StringUtility.commaify(bankData.getAmount())
+                player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
+                        StringUtility.decimalify(bankData.getAmount())
                         + " coins§a in your account.");
                 player.setBankDelayed(false);
             }

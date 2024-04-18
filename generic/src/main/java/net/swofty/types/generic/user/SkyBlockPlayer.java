@@ -564,7 +564,7 @@ public class SkyBlockPlayer extends Player {
 
         playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-        sendMessage("§cYou died and lost " + StringUtility.commaify(coins.getValue()) + " coins!");
+        sendMessage("§cYou died and lost " + StringUtility.decimalify(coins.getValue()) + " coins!");
 
         if (!SkyBlockConst.getTypeLoader().getLoaderValues().announceDeathMessages()) return;
 

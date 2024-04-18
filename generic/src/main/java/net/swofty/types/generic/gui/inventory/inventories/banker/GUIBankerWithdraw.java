@@ -46,10 +46,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aEverything in the account", Material.DISPENSER, 64,
                         "§8Bank withdrawal",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 bankBalance
                         ),
-                        "§7Amount to withdraw: §6" + StringUtility.commaify(
+                        "§7Amount to withdraw: §6" + StringUtility.decimalify(
                                 bankBalance
                         ),
                         " ",
@@ -69,10 +69,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aHalf of the account", Material.DISPENSER, 32,
                         "§8Bank withdrawal",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 bankBalance
                         ),
-                        "§7Amount to withdraw: §6" + StringUtility.commaify(
+                        "§7Amount to withdraw: §6" + StringUtility.decimalify(
                                 bankBalance / 2
                         ),
                         " ",
@@ -98,10 +98,10 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§a20% of the account", Material.DISPENSER, 1,
                         "§8Bank withdrawal",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 bankBalance
                         ),
-                        "§7Amount to withdraw: §6" + StringUtility.commaify(
+                        "§7Amount to withdraw: §6" + StringUtility.decimalify(
                                 bankBalance / 5
                         ),
                         " ",
@@ -136,7 +136,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aCustom amount", Material.OAK_SIGN, 1,
                         "§8Bank withdrawal",
                         " ",
-                        "§7Current balance: §6" + StringUtility.commaify(
+                        "§7Current balance: §6" + StringUtility.decimalify(
                                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
                         ),
                         " ",
@@ -174,8 +174,8 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             ));
 
             player.setCoins(player.getCoins() + amount);
-            player.sendMessage("§aYou have withdrawn §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                    StringUtility.commaify(bankData.getAmount())
+            player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
+                    StringUtility.decimalify(bankData.getAmount())
                     + " coins§a in your account.");
             return;
         }
@@ -217,8 +217,8 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 player.setCoins(player.getCoins() + amount);
                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
-                player.sendMessage("§aYou have withdrawn §6" + StringUtility.commaify(amount) + " coins§a! You now have §6" +
-                        StringUtility.commaify(bankData.getAmount())
+                player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
+                        StringUtility.decimalify(bankData.getAmount())
                         + " coins§a in your account.");
                 player.setBankDelayed(false);
             }

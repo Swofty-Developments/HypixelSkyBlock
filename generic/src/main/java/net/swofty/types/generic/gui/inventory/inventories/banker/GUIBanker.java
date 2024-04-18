@@ -78,7 +78,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, (short) 0, 1,
-                        "§7Current balance: §6" + StringUtility.commaify(bankData.getAmount()),
+                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount()),
                         " ",
                         "§7Store coins in the bank to keep",
                         "§7them safe while you go on",
@@ -103,7 +103,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aWithdraw Coins", Material.DISPENSER, (short) 0, 1,
-                        "§7Current balance: §6" + StringUtility.commaify(bankData.getAmount()),
+                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount()),
                         " ",
                         "§7Withdraw coins from the bank",
                         "§7to use them for trading or",
@@ -126,7 +126,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                         DatapointBankData.Transaction transaction = transactions.get(i);
 
                         boolean isNegative = transaction.amount < 0;
-                        String amount = StringUtility.commaify(Math.abs(transaction.amount));
+                        String amount = StringUtility.decimalify(Math.abs(transaction.amount));
 
                         lore.add("§7" + (isNegative ? "§c-" : "§a+")
                                 + " §6" + amount + "§7, §e" + StringUtility.formatTimeAsAgo(transaction.timestamp)

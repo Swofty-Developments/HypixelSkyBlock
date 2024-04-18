@@ -65,7 +65,7 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
             // Attack the target entity
             if (entityCreature.getDistanceSquared(target) <= range * range) {
                 entityCreature.lookAt(target);
-                if (!Cooldown.hasCooldown(time, lastHit, delay)) {
+                if (!Cooldown.hasCooldown(time, lastHit, delay) && !entityCreature.isDead()) {
                     entityCreature.attack(target, true);
                     this.lastHit = time;
                 }
