@@ -67,7 +67,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -103,7 +103,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -139,7 +139,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -175,7 +175,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -211,7 +211,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -247,7 +247,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -283,7 +283,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -319,7 +319,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -355,7 +355,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -391,7 +391,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -427,7 +427,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -469,7 +469,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -505,7 +505,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -541,7 +541,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -577,7 +577,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -613,7 +613,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -649,7 +649,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -685,7 +685,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -721,7 +721,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -757,7 +757,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -793,7 +793,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -829,7 +829,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -865,7 +865,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -901,7 +901,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -937,7 +937,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -973,7 +973,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1009,7 +1009,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1045,7 +1045,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1081,7 +1081,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1117,7 +1117,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1153,7 +1153,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1189,7 +1189,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1225,7 +1225,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1261,7 +1261,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1297,7 +1297,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1333,7 +1333,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1369,7 +1369,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1405,7 +1405,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1441,7 +1441,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1477,7 +1477,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1513,7 +1513,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1549,7 +1549,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1585,7 +1585,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1621,7 +1621,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1657,7 +1657,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1693,7 +1693,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1729,7 +1729,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1765,7 +1765,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1801,7 +1801,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
@@ -1837,7 +1837,7 @@ public class CombatSkill extends SkillCategory {
 
                             @Override
                             public Double amountAdded() {
-                                return 4D;
+                                return 0.04D;
                             }
                         }
                 ),
