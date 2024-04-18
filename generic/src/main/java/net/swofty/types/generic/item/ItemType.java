@@ -8,6 +8,8 @@ import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.*;
 import net.swofty.types.generic.item.items.accessories.dungeon.*;
+import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
+import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
 import net.swofty.types.generic.item.items.armor.celeste.*;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitBoots;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitChestplate;
@@ -112,9 +114,9 @@ public enum ItemType {
     SKELETON_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, SkeletonTalisman.class),
     HASTE_RING(Material.PLAYER_HEAD, Rarity.RARE, HasteRing.class),
     FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
-    LAVA_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, FarmingTalisman.class),
-    POTATO_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
-    POWER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
+    LAVA_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, LavaTalisman.class),
+    POTATO_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PotatoTalisman.class),
+    POWER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PowerTalisman.class),
     BAT_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, BatTalisman.class),
     FIRE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FireTalisman.class),
     AUTO_RECOMBOBULATOR(Material.PLAYER_HEAD, Rarity.LEGENDARY, AutoRecombobulator.class),
@@ -126,6 +128,8 @@ public enum ItemType {
     TREASURE_ARTIFACT(Material.PLAYER_HEAD, Rarity.LEGENDARY, TreasureArtifact.class),
     TREASURE_RING(Material.PLAYER_HEAD, Rarity.EPIC, TreasureRing.class),
     TREASURE_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, TreasureTalisman.class),
+    SPIDER_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, SpiderTalisman.class),
+    SPIDER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC, SpiderArtifact.class),
 
     /**
      * Minions
