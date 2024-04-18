@@ -164,7 +164,7 @@ public class ItemLore {
                 if (ability.getManaCost() > 0)
                     addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
                 if (ability.getAbilityCooldownTicks() > 20)
-                    addLoreLine("§8Cooldown: §a" + StringUtility.commaify((double) ability.getAbilityCooldownTicks() / 20) + "s");
+                    addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getAbilityCooldownTicks() / 20) + "s");
 
                 addLoreLine(null);
             }
