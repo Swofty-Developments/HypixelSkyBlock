@@ -36,8 +36,8 @@ public class ItemStatistics {
         StringBuilder builder = new StringBuilder();
 
         for (ItemStatistic stat : ItemStatistic.values()) {
-            double additiveValue = getAdditive(stat);
-            double multiplicativeValue = getMultiplicativeAsPercentage(stat);
+            double additiveValue = statisticsAdditive.getOrDefault(stat, 0D);
+            double multiplicativeValue = statisticsMultiplicative.getOrDefault(stat, 0D);
 
             if (additiveValue != 0 || multiplicativeValue != 0) {
                 builder.append(stat.name()).append(":");

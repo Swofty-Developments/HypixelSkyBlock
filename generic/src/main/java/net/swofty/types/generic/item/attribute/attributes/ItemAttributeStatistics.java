@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
+import lombok.SneakyThrows;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
@@ -12,8 +13,11 @@ public class ItemAttributeStatistics extends ItemAttribute<ItemStatistics> {
         return "statistics";
     }
 
+    @SneakyThrows
     @Override
     public ItemStatistics getDefaultValue(@Nullable Class<? extends CustomSkyBlockItem> itemClass) {
+        if (itemClass != null)
+            return itemClass.newInstance().getStatistics(null);
         return ItemStatistics.builder().build();
     }
 

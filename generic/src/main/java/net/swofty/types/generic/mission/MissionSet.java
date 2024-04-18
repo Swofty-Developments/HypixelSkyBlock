@@ -3,8 +3,10 @@ package net.swofty.types.generic.mission;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.mission.missions.*;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.mission.missions.*;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
@@ -13,6 +15,7 @@ public enum MissionSet {
     SAVING_UP(MissionTalkToBanker.class, MissionDepositCoinsInBank.class),
     LIBRARY_CARD(MissionTalkToLibrarian.class),
     AUCTIONEER(MissionTalkToAuctionMaster.class),
+    TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

@@ -118,9 +118,12 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
             SkyBlockLevelRequirement nextLevel = getLevel().getNextLevel();
             if (nextLevel == null) return "§cMAX";
 
+            int nextLevelXP = nextLevel.getExperience() - nextLevel.getExperienceOfAllPreviousLevels();
+            double totalXP = getTotalXP() - nextLevel.getExperienceOfAllPreviousLevels();
+
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
-            int completedLength = (int) ((getTotalXP() / (double) nextLevel.getExperience()) * maxBarLength);
+            int completedLength = (int) ((totalXP / (double) nextLevelXP) * maxBarLength);
 
             String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
@@ -129,7 +132,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
                     maxBarLength
             ));
 
-            return "§7" + completedLoadingBar + uncompletedLoadingBar + "§r §b" + Math.round(getTotalXP()) + "§3/§b" + nextLevel.getExperience();
+            return "§7" + completedLoadingBar + uncompletedLoadingBar + "§r §b" + Math.round(totalXP) + "§3/§b" + nextLevelXP;
         }
 
         public Double getTotalXP() {

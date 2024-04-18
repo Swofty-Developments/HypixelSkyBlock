@@ -218,7 +218,7 @@ public class ItemAttributeHandler {
     }
 
     public ItemStatistics getStatistics() {
-        return ((ItemAttributeStatistics) item.getAttribute("statistics")).getValue();
+        return ((ItemAttributeStatistics) item.getAttribute("statistics")).getValue().clone();
     }
 
     public void setStatistics(ItemStatistics statistics) {

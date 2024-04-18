@@ -5,7 +5,6 @@ import net.swofty.type.village.gui.GUITiaTheFairy;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
 import java.util.stream.Stream;
 

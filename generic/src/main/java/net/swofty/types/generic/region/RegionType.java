@@ -22,7 +22,6 @@ public enum RegionType {
     COLOSSEUM("Colosseum"),
     GRAVEYARD("Graveyard", "§c"),
     COAL_MINE("Coal Mine", MineCoalConfiguration.class),
-    COAL_MINE_CAVES("Coal Mine"),
     WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
     HIGH_LEVEL("High Level", "§4"),
     BAZAAR_ALLEY("Bazaar Alley", "§e"),

@@ -42,8 +42,8 @@ public class IslandServerModule extends TablistModule {
             MinionHandler.InternalMinionTags.State minionState = minion.getInternalMinionTags().getState();
 
             switch (minionState) {
-                case BAD_FULL -> content = content + " §7[§4FULL§7]";
-                case BAD_LOCATION -> content = content + " §7[§4BLOCKED§7]";
+                case BAD_FULL -> content = content + " §7[§cFULL§7]";
+                case BAD_LOCATION -> content = content + " §7[§cBLOCKED§7]";
                 default -> content = content + " §7[§aACTIVE§7]";
             }
 

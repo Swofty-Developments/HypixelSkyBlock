@@ -18,6 +18,10 @@ public abstract class SkyBlockMission extends SkyBlockEvent {
 
     public abstract Set<RegionType> getValidRegions();
 
+    public Double getAttachedSkyBlockXP() {
+        return 0D;
+    }
+
     public boolean hasNoEvent() {
         return false;
     }

@@ -114,6 +114,11 @@ public class MissionData {
         }
     }
 
+    @SneakyThrows
+    public @Nullable SkyBlockProgressMission getAsProgressMission(Class<? extends SkyBlockMission> skyBlockMission) {
+        return getAsProgressMission(skyBlockMission.newInstance().getID());
+    }
+
     public Map<String, Object> serialize() {
         Map<String, Object> result = new HashMap<>();
 
@@ -251,6 +256,10 @@ public class MissionData {
 
     public static SkyBlockMission getMissionClass(ActiveMission skyBlockMission) {
         return missionClassCache.get(skyBlockMission.getMissionID());
+    }
+
+    public static List<String> getAllMissionIDs() {
+        return new ArrayList<>(missionClassCache.keySet());
     }
 
     public static void registerMission(Class<? extends SkyBlockMission> skyBlockMission) {

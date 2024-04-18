@@ -5,6 +5,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.levels.SkyBlockLevelUnlock;
 import net.swofty.types.generic.levels.causes.LevelCause;
@@ -36,7 +37,7 @@ public class ActionChangeSkyBlockXP extends SkyBlockEvent {
         } else {
             if (!(event.getCause() instanceof LevelCause)) {
                 player.getSkyBlockExperience().addExperience(
-                        new LevelCause(newLevel.asInt())
+                        SkyBlockLevelCause.getLevelCause(newLevel.asInt())
                 );
             }
             List<SkyBlockLevelUnlock> unlocks = newLevel.getUnlocks();

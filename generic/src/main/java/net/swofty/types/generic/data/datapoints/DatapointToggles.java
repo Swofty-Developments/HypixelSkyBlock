@@ -71,6 +71,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             DISABLE_DROP_MESSAGES(false),
             HAS_SPOKEN_TO_BEA(false),
             HAS_SPOKEN_TO_TIA(false),
+            HAS_DONE_COAL_TRADE_WITH_BLACKSMITH(false),
             ;
 
             private final boolean defaultValue;

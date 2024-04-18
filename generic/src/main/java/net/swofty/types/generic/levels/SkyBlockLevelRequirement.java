@@ -8,6 +8,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -238,7 +239,7 @@ public enum SkyBlockLevelRequirement {
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.STRENGTH, 1D
             ).build())
-    ), "§f", null, null),
+    ), "§f", "White Prefix", null),
     LEVEL_41(4100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withAdditive(
                     ItemStatistic.HEALTH, 5D
@@ -2898,6 +2899,13 @@ public enum SkyBlockLevelRequirement {
             }
         }
         return null;
+    }
+
+    public int getExperienceOfAllPreviousLevels() {
+        return Arrays.stream(values())
+                .filter(requirement -> requirement.ordinal() < ordinal())
+                .mapToInt(SkyBlockLevelRequirement::getExperience)
+                .sum();
     }
 
     public static Map<SkyBlockLevelRequirement, String> getAllPrefixChanges() {

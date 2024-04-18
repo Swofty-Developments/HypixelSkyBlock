@@ -33,7 +33,7 @@ public class GUILevelEmblemRewards extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockLevels()));
+        set(GUIClickableItem.getGoBackItem(48, new GUILevelEmblemRewards()));
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
