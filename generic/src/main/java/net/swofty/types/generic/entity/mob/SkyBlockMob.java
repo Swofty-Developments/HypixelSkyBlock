@@ -54,10 +54,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
+            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                + " §a" + Math.round(getHealth())
+                + "§f/§a"
+                + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
         ));
 
         setAutoViewable(true);
@@ -85,8 +85,8 @@ public abstract class SkyBlockMob extends EntityCreature {
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
         ItemStatistics toSubtract = ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
-                .build();
+            .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
+            .build();
 
         return statistics.sub(toSubtract);
     }
@@ -107,10 +107,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         }
 
         this.setCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
+            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                + " §a" + Math.round(getHealth())
+                + "§f/§a"
+                + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
         ));
 
         return toReturn;
@@ -134,7 +134,7 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (getLastDamageSource().getAttacker() == null) return;
 
         Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
-                .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
+            .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
 
         for (ItemType itemType : drops.keySet()) {
             SkyBlockLootTable.LootRecord record = drops.get(itemType);
@@ -145,5 +145,39 @@ public abstract class SkyBlockMob extends EntityCreature {
             DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
             droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }
+    }
+
+    public static void runRegionPopulators(Scheduler scheduler) {
+        if (SkyBlockConst.isIslandServer()) return;
+
+        scheduler.submitTask(() -> {
+            if (SkyBlockGenericLoader.getLoadedPlayers().isEmpty()) return TaskSchedule.seconds(10);
+
+            MobRegistry.getMobsToRegionPopulate().forEach(mobRegistry -> {
+                RegionPopulator regionPopulator = (RegionPopulator) mobRegistry.getMobCache();
+
+                regionPopulator.getPopulators().forEach(populator -> {
+                    RegionType regionType = populator.regionType();
+                    int minimumAmountToPopulate = populator.minimumAmountToPopulate();
+
+                    int amountInRegion = 0;
+
+                    for (SkyBlockMob mob : SkyBlockRegion.getMobsInRegion(regionType)) {
+                        if (!MobRegistry.getFromMob(mob).equals(mobRegistry)) {
+                            continue;
+                        }
+
+                        amountInRegion++;
+                    }
+
+                    if (amountInRegion < minimumAmountToPopulate) {
+                        for (int i = 0; i < minimumAmountToPopulate - amountInRegion; i++)
+                            RegionPopulator.populateRegion(mobRegistry, populator);
+                    }
+                });
+            });
+
+            return TaskSchedule.seconds(5);
+        });
     }
 }
