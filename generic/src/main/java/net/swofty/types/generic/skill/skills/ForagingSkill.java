@@ -58,6 +58,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(2, 125,
@@ -88,6 +99,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -120,6 +142,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(4, 300,
@@ -150,6 +183,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -182,6 +226,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(6, 750,
@@ -206,6 +261,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -232,6 +298,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(8, 1500,
@@ -256,6 +333,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -282,6 +370,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(10, 3500,
@@ -306,6 +405,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -332,6 +442,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(12, 7500,
@@ -356,6 +477,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -382,6 +514,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 1D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(14, 15000,
@@ -406,6 +549,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 1D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -432,6 +586,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(16, 30000,
@@ -456,6 +621,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -482,6 +658,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(18, 75000,
@@ -506,6 +693,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -532,6 +730,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(20, 200000,
@@ -556,6 +765,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -582,6 +802,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(22, 400000,
@@ -606,6 +837,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -632,6 +874,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(24, 600000,
@@ -656,6 +909,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -682,6 +946,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(26, 800000,
@@ -706,6 +981,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -732,6 +1018,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(28, 1000000,
@@ -756,6 +1053,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -782,6 +1090,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(30, 1200000,
@@ -806,6 +1125,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -832,6 +1162,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(32, 1400000,
@@ -856,6 +1197,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -882,6 +1234,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(34, 1600000,
@@ -906,6 +1269,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -932,6 +1306,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(36, 1800000,
@@ -956,6 +1341,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -982,6 +1378,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(38, 2000000,
@@ -1006,6 +1413,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1032,6 +1450,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(40, 2200000,
@@ -1056,6 +1485,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1082,6 +1522,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(42, 2400000,
@@ -1106,6 +1557,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1132,6 +1594,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(44, 2600000,
@@ -1156,6 +1629,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1182,6 +1666,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(46, 2900000,
@@ -1206,6 +1701,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1232,6 +1738,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(48, 3400000,
@@ -1256,6 +1773,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1282,6 +1810,17 @@ public class ForagingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(50, 4000000,
@@ -1306,6 +1845,17 @@ public class ForagingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FORAGING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 )

@@ -12,14 +12,14 @@ public enum ItemStatistic {
     HEALTH("Health", "§a", "§c",
             false, "❤", 100D, 0D),
     DEFENSE("Defense", "§a", "§a", false, "❈"),
-    STRENGTH("Strength", "§a", "§c", false, "❁"),
+    STRENGTH("Strength", "§c", "§c", false, "❁"),
     INTELLIGENCE("Intelligence", "§a", "§b", false, "✎"),
-    CRIT_CHANCE("Crit Chance", "§a", "§9",
+    CRIT_CHANCE("Crit Chance", "§c", "§9",
             true, "☣", 30D, 0D),
-    CRIT_DAMAGE("Crit Damage", "§a", "§9",
-            false, "☠", 50D, 0D),
-    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§a", "§e", false, "⚔"),
-    ABILITY_DAMAGE("Ability Damage", "§a", "§c", false, "๑"),
+    CRIT_DAMAGE("Crit Damage", "§c", "§9",
+            true, "☠", 50D, 0D),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", false, "⚔"),
+    ABILITY_DAMAGE("Ability Damage", "§c", "§c", false, "๑"),
     TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
     FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
     HEALTH_REGEN("Health Regen", "§a", "§c",
@@ -28,19 +28,40 @@ public enum ItemStatistic {
             false, "♨", 100D, 0D),
     MENDING("Mending", "§a", "§a", false, "☄",
             100D, 0D),
+    SWING_RANGE("Swing Range", "§e", "§e", false, "Ⓢ", 3D, 0D),
 
     // Gathering Stats
     MINING_SPEED("Mining Speed", "§a", "§6", false, "⸕"),
+    MINING_FORTUNE("Mining Fortune", "§a", "§6", false, "☘"),
+    FARMING_FORTUNE("Farming Fortune", "§a", "§6", false, "☘"),
+    FORAGING_FORTUNE("Foraging Fortune", "§a", "§6", false, "☘"),
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
+    PRISTINE("Pristine", "§a", "§5", false, "✧"),
+
+    // Wisdom Stats
+    ALCHEMY_WISDOM("Alchemy Wisdom", "§a", "§3", false, "☯"),
+    CARPENTRY_WISDOM("Carpentry Wisdom", "§a", "§3", false, "☯"),
+    COMBAT_WISDOM("Combat Wisdom", "§a", "§3", false, "☯"),
+    ENCHANTING_WISDOM("Enchanting Wisdom", "§a", "§3", false, "☯"),
+    FARMING_WISDOM("Farming Wisdom", "§a", "§3", false, "☯"),
+    FISHING_WISDOM("Fishing Wisdom", "§a", "§3", false, "☯"),
+    FORAGING_WISDOM("Foraging Wisdom", "§a", "§3", false, "☯"),
+    MINING_WISDOM("Mining Wisdom", "§a", "§3", false, "☯"),
+    RUNECRAFTING_WISDOM("Runecrafting Wisdom", "§a", "§3", false, "☯"),
+    SOCIAL_WISDOM("Social Wisdom", "§a", "§3", false, "☯"),
+    TAMING_WISDOM("Taming Wisdom", "§a", "§3", false, "☯"),
 
     // Misc Stats
     SPEED("Speed", "§a", "§f",
             true, "✦", 100D, 0D),
     MAGIC_FIND("Magic Find", "§a", "§b", true, "✯"),
-    PET_LUCK("Pet Luck", "§a", "§d", true, "♣"),
+    PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
+    SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 0D),
+    FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
+    BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", false, "ൠ"),
 
     // Other Stats
-    DAMAGE("Damage", "§a", "§c", false, "❁",
+    DAMAGE("Damage", "§c", "§c", false, "❁",
             5D, 0D),
     ;
 
@@ -80,6 +101,8 @@ public enum ItemStatistic {
     public String getPrefix() {
         return isPercentage ? "" : "+";
     }
+
+
 
     public static ItemStatistics getOfAllBaseValues() {
         ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();

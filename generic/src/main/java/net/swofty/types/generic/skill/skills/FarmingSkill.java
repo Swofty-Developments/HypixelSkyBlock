@@ -58,6 +58,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(2, 125,
@@ -82,6 +93,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -108,6 +130,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(4, 300,
@@ -132,6 +165,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                         new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -164,6 +208,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(6, 750,
@@ -189,6 +244,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(7, 1000,
@@ -205,16 +271,27 @@ public class FarmingSkill extends SkillCategory {
                             }
                         },
                         new AdditiveStatisticReward() {
-            @Override
-            public ItemStatistic getStatistic() {
-                return ItemStatistic.HEALTH;
-            }
-
-            @Override
-            public Double amountAdded() {
-                return 2D;
-            }
-        }
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.HEALTH;
+                            }
+                
+                            @Override
+                            public Double amountAdded() {
+                                return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
+                        }
                 ),
                 new SkillReward(8, 1500,
                         new XPReward() {
@@ -238,6 +315,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -264,6 +352,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(10, 3500,
@@ -288,6 +387,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -314,6 +424,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(12, 7500,
@@ -338,6 +459,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -364,6 +496,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 2D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(14, 15000,
@@ -388,6 +531,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 2D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -414,6 +568,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 3D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(16, 30000,
@@ -438,6 +603,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 3D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -464,6 +640,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 3D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(18, 75000,
@@ -488,6 +675,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 3D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -514,6 +712,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 3D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(20, 200000,
@@ -535,6 +744,17 @@ public class FarmingSkill extends SkillCategory {
                                 return ItemStatistic.HEALTH;
                             }
 
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
                             @Override
                             public Double amountAdded() {
                                 return 4D;
@@ -564,6 +784,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 4D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(22, 400000,
@@ -585,6 +816,17 @@ public class FarmingSkill extends SkillCategory {
                                 return ItemStatistic.HEALTH;
                             }
 
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
                             @Override
                             public Double amountAdded() {
                                 return 4D;
@@ -614,6 +856,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 4D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(24, 600000,
@@ -635,6 +888,17 @@ public class FarmingSkill extends SkillCategory {
                                 return ItemStatistic.HEALTH;
                             }
 
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
                             @Override
                             public Double amountAdded() {
                                 return 4D;
@@ -664,6 +928,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 4D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(26, 800000,
@@ -688,6 +963,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -714,6 +1000,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(28, 1000000,
@@ -738,6 +1035,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -764,6 +1072,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(30, 1200000,
@@ -788,6 +1107,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -814,6 +1144,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(32, 1400000,
@@ -838,6 +1179,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -864,6 +1216,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(34, 1600000,
@@ -888,6 +1251,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -914,6 +1288,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(36, 1800000,
@@ -938,6 +1323,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -964,6 +1360,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(38, 2000000,
@@ -988,6 +1395,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1014,6 +1432,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(40, 2200000,
@@ -1038,6 +1467,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1064,6 +1504,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(42, 2400000,
@@ -1088,6 +1539,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1114,6 +1576,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(44, 2600000,
@@ -1138,6 +1611,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1164,6 +1648,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(46, 2900000,
@@ -1188,6 +1683,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1214,6 +1720,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(48, 3400000,
@@ -1238,6 +1755,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1264,6 +1792,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(50, 4000000,
@@ -1288,6 +1827,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1314,6 +1864,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(52, 4600000,
@@ -1338,6 +1899,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1364,6 +1936,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(54, 5200000,
@@ -1388,6 +1971,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1414,6 +2008,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(56, 5800000,
@@ -1438,6 +2043,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1464,6 +2080,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(58, 6400000,
@@ -1488,6 +2115,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 ),
@@ -1514,6 +2152,17 @@ public class FarmingSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 5D;
                             }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
+                            }
                         }
                 ),
                 new SkillReward(60, 7000000,
@@ -1538,6 +2187,17 @@ public class FarmingSkill extends SkillCategory {
                             @Override
                             public Double amountAdded() {
                                 return 5D;
+                            }
+                        },
+                        new AdditiveStatisticReward() {
+                            @Override
+                            public ItemStatistic getStatistic() {
+                                return ItemStatistic.FARMING_FORTUNE;
+                            }
+    
+                            @Override
+                            public Double amountAdded() {
+                                return 4D;
                             }
                         }
                 )
