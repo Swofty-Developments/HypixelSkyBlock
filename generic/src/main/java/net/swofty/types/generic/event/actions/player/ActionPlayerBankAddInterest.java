@@ -42,6 +42,9 @@ public class ActionPlayerBankAddInterest extends SkyBlockEvent {
         int times = (int) Math.min(difference / SkyBlockCalendar.INTEREST_INTERVAL, 2);
         double totalEarnt = bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE * times;
 
+        // Cap at bank limit
+        totalEarnt = Math.min(bankData.getAmount() + totalEarnt, bankData.getBalanceLimit() - bankData.getAmount());
+
         if (totalEarnt == 0) return;
 
         bankData.setAmount(bankData.getAmount() + totalEarnt);
