@@ -17,17 +17,17 @@ public class NPCSwofty extends NPCDialogue {
 
             @Override
             public String signature() {
-                return "b1LoQqiHDCmpZDZD1WnNeK93IT5Svy2Zz1qZHP06mLo+yqe7452jTwRgPQue2Rb2E8nc+bvAIJKhmXx9JCcSNuoCL3NNmI5ujj5mfYfDF25AZo6ShwTk+O6yIUXuumAruOgGoxJnXNvrgXYCEU3AhdcNDoUsx01zcVnC3keZdUIA6gDV0Och8clNtQtO2pRHZDXmWSOHAeRETN+Jd++7oITYkLJCp4MXqw0dpbLMP2YMq4KsfQoM6QSZg1gHyizEPVD1q57jn6wfwyidN8N8oaOvTZ+dRoXP2TkrRtx9FfDnuVlOMu14gUx9FRhIY2biEA8pb4cPis9odRk0yUx6rIgySeZuiaV3HZh2OGAd1FhIqg+GijqbyO5u8NcPbTZAQ99eeqqNGVMRLbJW/IYl2iNWj6mtN4LXgforTo2fc/rNwgigve2PnO1avGnymPfq516fQRDrl6AyDI+QIa2lbKWNNiWMXqpl/ad/PnFKpbYh6Mmpu5lOVwYKScb1EpLEve/TFVpG/y/wNlWQqdVIJFnKn8XCmlMvz1jobuj9Adwxn1C60AGL++BFgfsv+hlcmVk7igJ1MHnP3Qujn+rKfQzER37Qi14iZNqEWNH142fTG8raJ0bjzo5cP7n6KEzJDGnQcsAdsZnr8+pbJwPSDygaL19Mwzq1LT95m3OwLrA=";
+                return "hKuUWIcUX7jvLVHWVeY5zyWxGYVf09PR+eAu3RE8NcnM900GJ3npZTM/615g9M/shrKU3Fab1mazE6+hfNfGs5H+CJwEqzJE972ffidiT2iPJl1BgroJGkZAgCgGkc9xDaOkFTKc3E5w1iDiF0Y52BditPkdUP8oF14AEHVLfKnKdPPhnE4+ePtD0eGbsVmS3plg87MD0BpLmSWnIIjDamWIcQSrSl6h9yI78QuWbxzO3G5Z6AOpiiZwLLD7smm3P9MOWPwBDhbjC9G/3x7tI5uLyquqOL1eVIqc4/RK3B05prYR5gKZbiFmDoQSiMXs94iRcnofT3zJvAJ5LQdUMA7geFq5rZbu4+MkDu5eo0Yb+xW1Djewr7NnbKwpiaWxddUgLlWqbRtL602x/PHGin0Zh6qEYWtGZhSJ/9NjZKvRdiED3VitU5MKMyp4LaQEKVuaMfzf4m7oT71ZcPp0Sys68yMONOS/1Sd3UROLeaoWIVUZydgobxPUqYfH506LeW9nQKe5W7aggeRBnV6edbL9hYV1gIph2p3HLoBoDqiNO7LFlm9Ke9KRldrZ0LhrxEo7QWjXSBagEJ3IkEkUDGDs307NMX3ThgxImwG0KLFSToN44QxZfUMDtYll+btz0pcDMnTWEOafTnPoZJE8ui9DeatO+sl2akbPypGTe9o=";
             }
 
             @Override
             public String texture() {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTYxMjU4Mjk3MDEwOCwKICAicHJvZmlsZUlkIiA6ICIyMDkzNGVmOTQ4OGM0NjUxODBhNzhmODYxNTg2YjRjZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNaW5pa2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiZjk1ZDIyZTE1MmQ4YTNhMDQ3NjQ0NGM0MTE0MDQ0OTAzYjkzN2E2NzlhMDBiMTJiMmYxNzRhMTA3NTQ5OSIKICAgIH0KICB9Cn0=";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTU5OTQ1NTM4MzA0MCwKICAicHJvZmlsZUlkIiA6ICIyMWUzNjdkNzI1Y2Y0ZTNiYjI2OTJjNGEzMDBhNGRlYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJHZXlzZXJNQyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xODYxNDI0MWI5ODAzMTljMDJmNWVlM2FlMWE3ZmM3ZWJmOGIzZmRkNTMwMWVkM2Q0ZTIxNTlhODBkYWUxZDJjIiwKICAgICAgIm1ldGFkYXRhIiA6IHsKICAgICAgICAibW9kZWwiIDogInNsaW0iCiAgICAgIH0KICAgIH0KICB9Cn0=";
             }
 
             @Override
             public Pos position() {
-                return new Pos(83.5, 72, -117.5, 0, 0);
+                return new Pos(-5.5, 70, -91.5, -15, 0);
             }
 
             @Override
@@ -48,8 +48,8 @@ public class NPCSwofty extends NPCDialogue {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Don't forget to report the bugs on discord.gg/atlasmc!",
-                                "If you find an exploit, you can even report it directly to a staff member!"
+                                "Make sure to check out our discord server at discord.gg/atlasmc!",
+                                "Feel free to create a pull request to help us :)"
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }
