@@ -126,7 +126,8 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
+        double wisdom = player.getStatistics().allStatistics().getOverall(getSkillCategory().getWisdom());
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP() * (1 + wisdom / 100));
 
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
@@ -144,39 +145,5 @@ public abstract class SkyBlockMob extends EntityCreature {
             DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
             droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }
-    }
-
-    public static void runRegionPopulators(Scheduler scheduler) {
-        if (SkyBlockConst.isIslandServer()) return;
-
-        scheduler.submitTask(() -> {
-            if (SkyBlockGenericLoader.getLoadedPlayers().isEmpty()) return TaskSchedule.seconds(10);
-
-            MobRegistry.getMobsToRegionPopulate().forEach(mobRegistry -> {
-                RegionPopulator regionPopulator = (RegionPopulator) mobRegistry.getMobCache();
-
-                regionPopulator.getPopulators().forEach(populator -> {
-                    RegionType regionType = populator.regionType();
-                    int minimumAmountToPopulate = populator.minimumAmountToPopulate();
-
-                    int amountInRegion = 0;
-
-                    for (SkyBlockMob mob : SkyBlockRegion.getMobsInRegion(regionType)) {
-                        if (!MobRegistry.getFromMob(mob).equals(mobRegistry)) {
-                            continue;
-                        }
-
-                        amountInRegion++;
-                    }
-
-                    if (amountInRegion < minimumAmountToPopulate) {
-                        for (int i = 0; i < minimumAmountToPopulate - amountInRegion; i++)
-                            RegionPopulator.populateRegion(mobRegistry, populator);
-                    }
-                });
-            });
-
-            return TaskSchedule.seconds(5);
-        });
     }
 }
