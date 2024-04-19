@@ -38,16 +38,9 @@ public class ActionPlayerBankAddInterest extends SkyBlockEvent {
             CoopDatabase.Coop coop = player.getCoop();
             coop.getMembersAsProxyPlayerSet(player.getUuid()).asProxyPlayers().forEach(ProxyPlayer::getBankHash);
         }
-
-        double totalEarnt = 0;
-        // Split up difference across INTEREST_INTERVAL, cast to int to get the amount of times interest should be added
-        int times = (int) (difference / SkyBlockCalendar.INTEREST_INTERVAL);
-        for (int i = 0; i < times; i++) {
-            totalEarnt += bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE;
-        }
-
-        // Cap at bank limit
-        totalEarnt = Math.min(bankData.getAmount() + totalEarnt, bankData.getBalanceLimit() - bankData.getAmount());
+        
+        int times = (int) Math.min(difference / SkyBlockCalendar.INTEREST_INTERVAL, 2);
+        double totalEarnt = bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE * times;
 
         if (totalEarnt == 0) return;
 
