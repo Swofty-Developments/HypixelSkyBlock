@@ -12,7 +12,10 @@ public class FarmSuitBoots implements CustomSkyBlockItem, StandardItem, LeatherC
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.DEFENSE, 15D).build();
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.DEFENSE, 15D)
+                .withAdditive(ItemStatistic.FARMING_FORTUNE, 5D)
+                .build();
     }
 
     @Override
