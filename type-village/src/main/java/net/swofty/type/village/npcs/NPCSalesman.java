@@ -41,7 +41,9 @@ public class NPCSalesman extends NPCDialogue {
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent event) {
+    public void onClick(PlayerClickNPCEvent e) {
+        if (isInDialogue(e.player())) return;
+        setDialogue(e.player(), "hello");
     }
 
     @Override
@@ -55,4 +57,3 @@ public class NPCSalesman extends NPCDialogue {
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 }
-
