@@ -193,15 +193,18 @@ public enum ItemType {
      * Pet Items
      */
     ALL_SKILLS_EXP_BOOST(Material.DIAMOND, Rarity.COMMON, AllSkillsExpBoost.class),
-    MINING_EXP_BOOST(Material.IRON_PICKAXE, Rarity.COMMON, MiningExpBoostCommon.class),
-    FARMING_EXP_BOOST(Material.IRON_HOE, Rarity.COMMON, FarmingExpBoostCommon.class),
-    FISHING_EXP_BOOST(Material.SALMON, Rarity.COMMON, FishingExpBoost.class),
+    MINING_EXP_BOOST_COMMON(Material.IRON_PICKAXE, Rarity.COMMON, MiningExpBoostCommon.class),
+    MINING_EXP_BOOST_RARE(Material.IRON_PICKAXE, Rarity.RARE, MiningExpBoostRare.class),
+    FARMING_EXP_BOOST_COMMON(Material.IRON_HOE, Rarity.COMMON, FarmingExpBoostCommon.class),
+    FARMING_EXP_BOOST_RARE(Material.IRON_HOE, Rarity.RARE, FarmingExpBoostRare.class),
+    FISHING_EXP_BOOST(Material.COD, Rarity.COMMON, FishingExpBoost.class),
     FORAGING_EXP_BOOST(Material.IRON_AXE, Rarity.COMMON, ForagingExpBoost.class),
     COMBAT_EXP_BOOST(Material.IRON_SWORD, Rarity.COMMON, CombatExpBoost.class),
     BIG_TEETH(Material.GHAST_TEAR, Rarity.COMMON, BigTeeth.class),
     IRON_CLAWS(Material.IRON_INGOT, Rarity.COMMON, IronClaws.class),
     HARDENED_SCALES(Material.PRISMARINE_CRYSTALS, Rarity.UNCOMMON, HardenedScales.class),
     SHARPENED_CLAWS(Material.PRISMARINE_SHARD, Rarity.UNCOMMON, SharpenedClaws.class),
+    BUBBLEGUM(Material.PLAYER_HEAD, Rarity.RARE, Bubblegum.class),
 
     /**
      * Backpacks
