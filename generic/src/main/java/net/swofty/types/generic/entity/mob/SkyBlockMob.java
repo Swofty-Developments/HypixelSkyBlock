@@ -54,10 +54,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
+            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                + " §a" + Math.round(getHealth())
+                + "§f/§a"
+                + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
         ));
 
         setAutoViewable(true);
@@ -85,8 +85,8 @@ public abstract class SkyBlockMob extends EntityCreature {
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
         ItemStatistics toSubtract = ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
-                .build();
+            .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
+            .build();
 
         return statistics.sub(toSubtract);
     }
@@ -107,10 +107,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         }
 
         this.setCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
+            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                + " §a" + Math.round(getHealth())
+                + "§f/§a"
+                + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
         ));
 
         return toReturn;
@@ -126,14 +126,15 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
+        double wisdom = player.getStatistics().allStatistics().getOverall(getSkillCategory().getWisdom());
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP() * (1 + wisdom / 100));
 
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
 
         Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
-                .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
+            .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
 
         for (ItemType itemType : drops.keySet()) {
             SkyBlockLootTable.LootRecord record = drops.get(itemType);
