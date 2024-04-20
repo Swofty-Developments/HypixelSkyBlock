@@ -21,7 +21,7 @@ public class FarmingExpBoostCommon implements CustomSkyBlockItem, Enchanted, Pet
                 "§7ways but pets can only hold 1 item at",
                 "§7a time so choose wisely!",
                 "",
-                "§7Gives §a+20% §7 pet exp for Farming.",
+                "§7Gives §a+20% §7pet exp for Farming.",
                 "",
                 "§eRight-click on your summoned pet to",
                 "§egive it this item!"));
