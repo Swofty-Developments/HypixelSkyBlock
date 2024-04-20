@@ -84,6 +84,7 @@ import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
+import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
@@ -615,6 +616,11 @@ public enum ItemType {
     SORROW(Material.GHAST_TEAR, Rarity.RARE, Sorrow.class),
     PLASMA(Material.PLAYER_HEAD, Rarity.RARE, Plasma.class),
     VOLTA(Material.PLAYER_HEAD, Rarity.RARE, Volta.class),
+
+    /**
+     * Travel Scrolls
+     */
+    HUB_CASTLE_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubCastleTravelScroll.class),
 
     /**
      * Crimson Isles
