@@ -1,6 +1,9 @@
 package net.swofty.type.village.gui;
 
+import net.minestom.server.item.Enchantment;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.enchantment.EnchantmentType;
+import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
