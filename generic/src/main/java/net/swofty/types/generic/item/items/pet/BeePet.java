@@ -31,10 +31,13 @@ public class BeePet implements Pet, NotFinishedYet {
         int level = petData.getAsLevel(rarity);
 
         RarityValue<Integer> hiveIntelligence = new RarityValue<>(
-                3, 5, 10, 15, 20, 5
+                3, 6, 6, 10, 10, 0
         );
         RarityValue<Integer> hiveStrength = new RarityValue<>(
-                3, 5, 8, 12, 15, 5
+                3, 5, 5, 8, 8, 0
+        );
+        RarityValue<Integer> hiveDefense = new RarityValue<>(
+                2, 3, 3, 5, 5, 0
         );
 
         List<PetAbility> abilities = new ArrayList<>(Collections.singletonList(new PetAbility() {
@@ -45,9 +48,13 @@ public class BeePet implements Pet, NotFinishedYet {
 
             @Override
             public List<String> getDescription(SkyBlockItem instance) {
-                return Arrays.asList("§7Gain §b+" + hiveIntelligence.getForRarity(rarity) + " Intelligence §7and",
-                        "§c+" + hiveStrength.getForRarity(rarity) + " Strength §7for each nearby",
-                        "§7bee.", "§8Max 15 bees");
+                return Arrays.asList(
+                        "§7For each player within §a25 §7 blocks:",
+                        " §7Gain §b+" + hiveIntelligence.getForRarity(rarity) + "✎ Intelligence",
+                        " §7Gain §c+" + hiveStrength.getForRarity(rarity) + "❁ Strength",
+                        " §7Gain §e+" + hiveDefense.getForRarity(rarity) + "❈ Defense",
+                        "§8Max 15 players"
+                );
             }
         }));
 
@@ -60,7 +67,11 @@ public class BeePet implements Pet, NotFinishedYet {
 
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
-                    return Arrays.asList("§7Has §a" + (level * 0.5) + "% §7chance for", "§7flowers to drop an extra one.");
+                    return Arrays.asList("§7Grants §a+20 §7of each to your pet:",
+                            "§6☘ Farming Fortune",
+                            "§6☘ Foraging Fortune",
+                            "§6☘ Mining Fortune"
+                    );
                 }
             });
         } else if (rarity.isAtLeast(Rarity.EPIC)) {
@@ -72,8 +83,11 @@ public class BeePet implements Pet, NotFinishedYet {
 
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
-                    return Arrays.asList("§7Has §a" + (level) + "% §7chance for",
-                            "§7flowers to drop an extra one.");
+                    return Arrays.asList("§7Grants §a+30 §7of each to your pet:",
+                            "§6☘ Farming Fortune",
+                            "§6☘ Foraging Fortune",
+                            "§6☘ Mining Fortune"
+                    );
                 }
             });
         }
@@ -81,13 +95,15 @@ public class BeePet implements Pet, NotFinishedYet {
             abilities.add(new PetAbility() {
                 @Override
                 public String getName() {
-                    return "Honeycomb";
+                    return "Weaponized Honey";
                 }
 
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
-                    return Arrays.asList("§7Gain §b+" + (level * 0.5) + " Intelligence §7and",
-                            "§c+" + (level * 0.5) + " Strength §7for each", "§7bee in your hive.");
+                    return Arrays.asList(
+                            "§7Gain §a25% §7of received damage as §6❤",
+                            "§6Absorption"
+                    );
                 }
             });
         }
@@ -101,11 +117,18 @@ public class BeePet implements Pet, NotFinishedYet {
     }
 
     @Override
+    public ItemStatistics getBaseStatistics() {
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.STRENGTH, 5D)
+                .build();
+    }
+
+    @Override
     public ItemStatistics getPerLevelStatistics(Rarity rarity) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.INTELLIGENCE, 0.5)
                 .withAdditive(ItemStatistic.SPEED, 0.1)
-                .withAdditive(ItemStatistic.STRENGTH, 0.333)
+                .withAdditive(ItemStatistic.STRENGTH, 0.25)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 0.5)
                 .build();
     }
 
