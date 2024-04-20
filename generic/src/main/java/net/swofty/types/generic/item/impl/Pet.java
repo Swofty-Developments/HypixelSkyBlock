@@ -22,6 +22,7 @@ import java.util.List;
 public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
+    ItemStatistics getBaseStatistics();
     ItemStatistics getPerLevelStatistics(Rarity rarity);
     int particleId();
     SkillCategories getSkillCategory();
@@ -67,16 +68,22 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interac
         lore.add("§8" + pet.getSkillCategory().asCategory().getName() + " Pet");
         lore.add(" ");
 
-        addPropertyInt("Magic Find", (getPerLevelStatistics(rarity).getOverall(ItemStatistic.MAGIC_FIND) * 100.0), lore, level);
-        addPropertyPercent("Crit Damage", (getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_DAMAGE)), lore, level);
-        addPropertyPercent("Crit Chance", (getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_CHANCE)), lore, level);
-        double health = getPerLevelStatistics(rarity).getOverall(ItemStatistic.HEALTH);
-        if (health > 0.0)
-            lore.add("§7Health: §a+" + Math.round(health * level) + " HP");
-        addPropertyInt("Strength", getPerLevelStatistics(rarity).getOverall(ItemStatistic.STRENGTH), lore, level);
-        addPropertyInt("Defense", getPerLevelStatistics(rarity).getOverall(ItemStatistic.DEFENSE), lore, level);
-        addPropertyPercent("Speed", getPerLevelStatistics(rarity).getOverall(ItemStatistic.SPEED), lore, level);
-        addPropertyInt("Intelligence", getPerLevelStatistics(rarity).getOverall(ItemStatistic.INTELLIGENCE), lore, level);
+        addPropertyInt("Magic Find", (getBaseStatistics().getOverall(ItemStatistic.MAGIC_FIND) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.MAGIC_FIND) * 100.0 * level), lore);
+        addPropertyPercent("Crit Damage", (getBaseStatistics().getOverall(ItemStatistic.CRIT_DAMAGE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_DAMAGE) * level), lore);
+        addPropertyPercent("Crit Chance", (getBaseStatistics().getOverall(ItemStatistic.CRIT_CHANCE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRIT_CHANCE) * level), lore);
+        addPropertyPercent("Health", (getBaseStatistics().getOverall(ItemStatistic.HEALTH) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.HEALTH) * level), lore);
+        addPropertyInt("Strength", getBaseStatistics().getOverall(ItemStatistic.STRENGTH) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.STRENGTH) * level, lore);
+        addPropertyInt("Defense", getBaseStatistics().getOverall(ItemStatistic.DEFENSE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.DEFENSE) * level, lore);
+        addPropertyInt("Speed", getBaseStatistics().getOverall(ItemStatistic.SPEED) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.SPEED) * level, lore);
+        addPropertyInt("Intelligence", getBaseStatistics().getOverall(ItemStatistic.INTELLIGENCE) +
+                getPerLevelStatistics(rarity).getOverall(ItemStatistic.INTELLIGENCE) * level, lore);
 
         for (PetAbility ability : abilities) {
             lore.add(" ");
@@ -108,17 +115,15 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interac
         return "§7[Lvl " + petData.getAsLevel(rarity) + "] " + rarity.getColor() + getPetName() + " Pet";
     }
 
-    static void addPropertyInt(String name, double value, List<String> lore, int level) {
-        long fin = Math.round(value * level);
+    static void addPropertyInt(String name, double value, List<String> lore) {
         if (value != 0.0) {
-            lore.add("§7" + name + ": §a" + (fin >= 0 ? "+" : "") + fin);
+            lore.add("§7" + name + ": §a" + (value >= 0 ? "+" : "") + value);
         }
     }
 
-    static void addPropertyPercent(String name, double value, List<String> lore, int level) {
-        long fin = Math.round((value * 100.0) * level);
+    static void addPropertyPercent(String name, double value, List<String> lore) {
         if (value != 0.0) {
-            lore.add("§7" + name + ": §a" + (fin >= 0 ? "+" : "") + fin + "%");
+            lore.add("§7" + name + ": §a" + (value >= 0 ? "+" : "") + value + "%");
         }
     }
 }

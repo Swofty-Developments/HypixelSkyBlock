@@ -2,17 +2,14 @@ package net.swofty.types.generic.item.items.mining.vanilla;
 
 import com.mongodb.lang.Nullable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionFuelItem;
-import net.swofty.types.generic.item.impl.Sellable;
-import net.swofty.types.generic.item.impl.SkillableMine;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
 
-public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, MinionFuelItem {
+public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, MinionFuelItem, ExtraUnderNameDisplay {
 
     @Override
     public SkillCategories getSkillCategory() {
@@ -22,6 +19,11 @@ public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, Minion
     @Override
     public double getMiningValueForSkill() {
         return 5;
+    }
+
+    @Override
+    public String getExtraUnderNameDisplay() {
+        return "Brewing Ingredient";
     }
 
     @Override

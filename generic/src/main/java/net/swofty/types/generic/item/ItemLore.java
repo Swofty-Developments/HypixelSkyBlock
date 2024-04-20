@@ -87,6 +87,10 @@ public class ItemLore {
             boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.getOverall(ItemStatistic.SPEED),
                     handler.getReforge(), rarity);
 
+            if (item.getGenericInstance() instanceof ShortBowImpl) {
+                addLoreLine("§7Shot Cooldown: §a" + ((ShortBowImpl) item.getGenericInstance()).getCooldown() + "s");
+            }
+
             // Handle Gemstone lore
             if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
                 ItemAttributeGemData.GemData gemData = handler.getGemData();
@@ -203,6 +207,10 @@ public class ItemLore {
                 addLoreLine("§8This item can be reforged!");
                 if (handler.getReforge() != null)
                     displayName = handler.getReforge().prefix() + " " + displayName;
+            }
+
+            if (item.getGenericInstance() instanceof ArrowImpl) {
+                addLoreLine("§8Stats added when shot!");
             }
 
             ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();

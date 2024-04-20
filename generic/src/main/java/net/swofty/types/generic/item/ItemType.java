@@ -53,6 +53,7 @@ import net.swofty.types.generic.item.items.fishing.festival.*;
 import net.swofty.types.generic.item.items.fishing.vanilla.*;
 import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
+import net.swofty.types.generic.item.items.mining.RookiePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
 import net.swofty.types.generic.item.items.minion.upgrade.fuel.*;
@@ -88,7 +89,7 @@ import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
-import net.swofty.types.generic.item.items.vanilla.bow.Arrow;
+import net.swofty.types.generic.item.items.weapon.FlintArrow;
 import net.swofty.types.generic.item.items.vanilla.bow.Bow;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -479,7 +480,7 @@ public enum ItemType {
     STONE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, StonePickaxe.class),
     WOODEN_PICKAXE(Material.WOODEN_PICKAXE, Rarity.COMMON, WoodenPickaxe.class),
     GOLDEN_PICKAXE(Material.GOLDEN_PICKAXE, Rarity.COMMON, GoldenPickaxe.class),
-    ROOKIE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON),
+    ROOKIE_PICKAXE(Material.STONE_PICKAXE, Rarity.COMMON, RookiePickaxe.class),
     PROMISING_PICKAXE(Material.IRON_PICKAXE, Rarity.UNCOMMON),
     PICKONIMBUS_2000(Material.DIAMOND_PICKAXE, Rarity.EPIC, Pickonimbus2000.class),
 
@@ -517,10 +518,14 @@ public enum ItemType {
     /**
      * Bows
      */
-    FLINT_ARROW(Material.ARROW, Rarity.COMMON, Arrow.class),
     WITHER_BOW(Material.BOW, Rarity.UNCOMMON, WitherBow.class),
     ARTISANAL_SHORTBOW(Material.BOW, Rarity.RARE, ArtisanalShortbow.class),
     BOW(Material.BOW, Rarity.COMMON, Bow.class),
+
+    /**
+     * Arrows
+     */
+    FLINT_ARROW(Material.ARROW, Rarity.COMMON, FlintArrow.class),
 
     /**
      * Jerry's Workshop
@@ -653,7 +658,7 @@ public enum ItemType {
     FEATHER(Material.FEATHER, Rarity.COMMON, Feather.class),
     FLINT(Material.FLINT, Rarity.COMMON, Flint.class),
     GLOWSTONE_DUST(Material.GLOWSTONE_DUST, Rarity.COMMON, GlowstoneDust.class),
-    GOLD_INGOT(Material.GOLD_INGOT, Rarity.COMMON, GoldOre.class),
+    GOLD_INGOT(Material.GOLD_INGOT, Rarity.COMMON, GoldIngot.class),
     GOLD_BLOCK(Material.GOLD_BLOCK, Rarity.COMMON, GoldBlock.class),
     GUNPOWDER(Material.GUNPOWDER, Rarity.COMMON, Gunpowder.class),
     END_STONE(Material.END_STONE, Rarity.COMMON, EndStone.class),

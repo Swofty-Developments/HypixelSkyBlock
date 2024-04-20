@@ -27,7 +27,7 @@ public class EndSword extends SkyBlockValueEvent implements CustomSkyBlockItem, 
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "Deals §a+100% §7damage to Ender",
-                "Dragons, Endermites, and Endermans,"
+                "Dragons, Endermites, and Endermen."
         ));
     }
 
