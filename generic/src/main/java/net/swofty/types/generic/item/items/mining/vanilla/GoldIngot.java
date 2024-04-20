@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.skill.mining;
+package net.swofty.types.generic.item.items.mining.vanilla;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
