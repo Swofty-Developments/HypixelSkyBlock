@@ -11,6 +11,15 @@ import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
 import net.swofty.types.generic.item.items.armor.celeste.*;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoPants;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoPants;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoPants;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitBoots;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitChestplate;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitHelmet;
@@ -495,6 +504,16 @@ public enum ItemType {
     STARLIGHT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.RARE, StarlightChestplate.class),
     STARLIGHT_LEGGINGS(Material.GOLDEN_LEGGINGS, Rarity.RARE, StarlightLeggings.class),
     STARLIGHT_BOOTS(Material.LEATHER_BOOTS, Rarity.RARE, StarlightBoots.class),
+    CHEAP_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.EPIC, CheapTuxedoJacket.class),
+    CHEAP_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.EPIC, CheapTuxedoPants.class),
+    CHEAP_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.EPIC, CheapTuxedoOxfords.class),
+    FANCY_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, FancyTuxedoJacket.class),
+    FANCY_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, FancyTuxedoPants.class),
+    FANCY_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, FancyTuxedoOxfords.class),
+    ELEGANT_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.MYTHIC, ElegantTuxedoJacket.class),
+    ELEGANT_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.MYTHIC, ElegantTuxedoPants.class),
+    ELEGANT_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.MYTHIC, ElegantTuxedoOxfords.class),
+
 
     /**
      * Pickaxes

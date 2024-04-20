@@ -12,9 +12,9 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.GUISkyBlockLevels;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog.GUIMissionLog;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkills;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -24,6 +24,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +45,15 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7View your equipment, stats, and more!", "§e "));
-
+                DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+                List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
+                        "Crit Chance", "Crit Damage", "Swing Range"));
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
-                            StringUtility.toNormalCase(statistic.name()) + " §f" +
-                            value + statistic.getSuffix());
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.name())) {
+                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                                decimalFormat.format(value) + statistic.getSuffix());
+                    }
                 });
 
                 lore.add("§e ");

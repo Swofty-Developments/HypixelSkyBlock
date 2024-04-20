@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class LeafletPants implements CustomSkyBlockItem, LeggingsImpl, LeatherColour, Sellable {
+public class LeafletPants implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 20D).build();
@@ -22,4 +22,8 @@ public class LeafletPants implements CustomSkyBlockItem, LeggingsImpl, LeatherCo
         return 10;
     }
 
+    @Override
+    public StandardItemType getStandardItemType() {
+        return StandardItemType.LEGGINGS;
+    }
 }
