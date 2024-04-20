@@ -6,6 +6,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.user.categories.Rank;
 
 import java.util.stream.Stream;
@@ -62,11 +63,11 @@ public class NPCLonelyPhilosopher extends NPCDialogue {
                 NPCDialogue.DialogueSet.builder()
                         .key("hello").lines(new String[]{
                                 "§fI'm sorry, I have nothing for you."
-                        })
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
                         .key("open_shop").lines(new String[]{
                                 "§fTo fast travel or not to fast travel?"
-                        })
-                        .build()
+                        }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 }
