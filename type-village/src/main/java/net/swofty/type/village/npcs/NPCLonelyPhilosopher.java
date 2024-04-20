@@ -1,6 +1,7 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUILonelyPhilosopher;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
@@ -43,24 +44,26 @@ public class NPCLonelyPhilosopher extends NPCDialogue {
     @Override
     public void onClick(PlayerClickNPCEvent e) {
         if (isInDialogue(e.player())) return;
+
         Rank rank = e.player().getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
         if (rank.isEqualOrHigherThan(Rank.MVP_PLUS)) {
-            setDialogue(e.player(), "mvp_plus").thenRun(() -> {
-
+            setDialogue(e.player(), "open_shop").thenRun(() -> {
+                new GUILonelyPhilosopher().open(e.player());
             });
-        } else {
-            setDialogue(e.player(), "no_mvp_plus");
+            return;
         }
+
+        setDialogue(e.player(), "hello");
     }
 
     @Override
     public NPCDialogue.DialogueSet[] getDialogueSets() {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
-                        .key("no_mvp_plus").lines(new String[]{
+                        .key("hello").lines(new String[]{
                                 "§fI'm sorry, I have nothing for you."
                         })
-                        .key("mvp_plus").lines(new String[]{
+                        .key("open_shop").lines(new String[]{
                                 "§fTo fast travel or not to fast travel?"
                         })
                         .build()
