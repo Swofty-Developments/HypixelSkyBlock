@@ -62,6 +62,7 @@ import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.miscellaneous.*;
+import net.swofty.types.generic.item.items.miscellaneous.bartender.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
@@ -397,6 +398,22 @@ public enum ItemType {
     HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD, Rarity.LEGENDARY, HighClassArchfiendDice.class),
     WILSON_ENGINEERING_PLANS(Material.PAPER, Rarity.LEGENDARY, WilsonEngineeringPlans.class),
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
+
+    /**
+     * BartenderItem
+     */
+
+    CHEAP_COFFEE(Material.PLAYER_HEAD, Rarity.COMMON, CheapCoffee.class),
+    TEPID_GREEN_TEA(Material.PLAYER_HEAD, Rarity.COMMON, TepidGreenTea.class),
+    PULPOUS_ORANGE_JUICE(Material.PLAYER_HEAD, Rarity.COMMON, PulpousOrangeJuice.class),
+    BITTER_ICE_TEA(Material.PLAYER_HEAD, Rarity.COMMON, BitterIceTea.class),
+    KNOCKOFF_COLA(Material.PLAYER_HEAD, Rarity.COMMON, KnockoffCola.class),
+    DECENT_COFFEE(Material.PLAYER_HEAD, Rarity.UNCOMMON, DecentCoffee.class),
+    WOLF_FUR_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, WolfFurMixin.class),
+    ZOMBIE_BRAIN_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, ZombieBrainMixin.class),
+    SPIDER_EGG_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, SpiderEggMixin.class),
+    END_PORTAL_FUMES(Material.PLAYER_HEAD, Rarity.RARE, EndPortalFumes.class),
+    GABAGOEY_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, GabagoeyMixin.class),
 
     /**
      * DungeonItem
