@@ -39,7 +39,9 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§5Travel Scroll To Hub Castle", Material.MAP, 1,
-                        "§7Consume this item to add its destination to your fast travel options.",
+                        "§7Consume this item to add its",
+                        "§7destination to your fast travel",
+                        "§7options.",
                         "",
                         "§7Requires §bMVP§c+ §7to consume!",
                         "",
@@ -49,7 +51,7 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
                         "§5§lEPIC TRAVEL SCROLL",
                         "",
                         "§7Cost",
-                        "§6§l150,000 Coins");
+                        "§6150,000 Coins");
             }
         });
         updateItemStacks(getInventory(), getPlayer());

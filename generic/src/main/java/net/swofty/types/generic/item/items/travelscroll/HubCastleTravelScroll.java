@@ -20,7 +20,9 @@ public class HubCastleTravelScroll implements CustomSkyBlockItem, TravelScrollIt
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Consume this item to add its destination to your fast travel options.",
+                "§7Consume this item to add its",
+                "§7destination to your fast travel",
+                "§7options.",
                 "",
                 "§7Requires §bMVP§c+ §7to consume!",
                 "",
