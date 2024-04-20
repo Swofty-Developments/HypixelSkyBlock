@@ -131,7 +131,7 @@ public enum ItemType {
     FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
     LAVA_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, LavaTalisman.class),
     POTATO_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PotatoTalisman.class),
-    POWER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PowerTalisman.class),
+    TALISMAN_OF_POWER(Material.PLAYER_HEAD, Rarity.COMMON, TalismanOfPower.class),
     BAT_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, BatTalisman.class),
     FIRE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FireTalisman.class),
     AUTO_RECOMBOBULATOR(Material.PLAYER_HEAD, Rarity.LEGENDARY, AutoRecombobulator.class),

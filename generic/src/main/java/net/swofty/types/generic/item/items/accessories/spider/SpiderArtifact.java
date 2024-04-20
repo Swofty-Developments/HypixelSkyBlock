@@ -38,6 +38,6 @@ public class SpiderArtifact extends SkyBlockValueEvent implements Talisman {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "3e5474d4-4365-3ea7-b4bc-b4edc54da341";
+        return "8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8";
     }
 }

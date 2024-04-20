@@ -26,7 +26,7 @@ public class PotatoTalisman implements Talisman , NotFinishedYet {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "2fc11c51-700f-35d7-8e19-71d8549daef9";
+        return "318476e3cf0d5fc8ab1761065cf0e372b11004ed4c97156396e17c869b4aa389";
     }
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

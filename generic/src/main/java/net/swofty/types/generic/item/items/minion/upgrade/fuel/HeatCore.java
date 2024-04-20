@@ -26,6 +26,6 @@ public class HeatCore implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return null;
+        return "59358703ab7727df3324336969e81d6f92b7aa79edb966c0be91ab161bad1f01";
     }
 }
