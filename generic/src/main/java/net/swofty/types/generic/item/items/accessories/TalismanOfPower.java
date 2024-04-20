@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PowerTalisman implements Talisman , NotFinishedYet {
+public class TalismanOfPower implements Talisman , NotFinishedYet {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Allows you to harness the power",
@@ -19,6 +19,6 @@ public class PowerTalisman implements Talisman , NotFinishedYet {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "8b89456a-6cf8-3879-b987-fb9e662db718";
+        return "c6736fd95d3a6a4aaac46709a07aec7f1c38f0a3aae573e6f483388819412b65";
     }
 }

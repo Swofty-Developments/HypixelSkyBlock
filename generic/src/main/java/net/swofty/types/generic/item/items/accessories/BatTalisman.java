@@ -17,7 +17,7 @@ public class BatTalisman implements Talisman {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "2f912e26-6ec8-33a2-96df-ba182c3ea100";
+        return "9e99deef919db66ac2bd28d6302756ccd57c7f8b12b9dca8f41c3e0a04ac1cc";
     }
 
     @Override
