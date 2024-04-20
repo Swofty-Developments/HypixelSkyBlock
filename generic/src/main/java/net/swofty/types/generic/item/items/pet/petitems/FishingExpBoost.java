@@ -24,7 +24,7 @@ public class FishingExpBoost implements CustomSkyBlockItem, Enchanted, PetItem, 
                 "§7ways but pets can only hold 1 item at",
                 "§7a time so choose wisely!",
                 "",
-                "§7Gives §a+20% §7 pet exp for Fishing.",
+                "§7Gives §a+20% §7pet exp for Fishing.",
                 "",
                 "§eRight-click on your summoned pet to",
                 "§egive it this item!"));

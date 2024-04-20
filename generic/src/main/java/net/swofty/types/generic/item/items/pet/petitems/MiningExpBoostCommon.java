@@ -21,7 +21,7 @@ public class MiningExpBoostCommon implements CustomSkyBlockItem, Enchanted, PetI
                 "§7ways but pets can only hold 1 item at",
                 "§7a time so choose wisely!",
                 "",
-                "§7Gives §a+20% §7 pet exp for Mining.",
+                "§7Gives §a+20% §7pet exp for Mining.",
                 "",
                 "§eRight-click on your summoned pet to",
                 "§egive it this item!"));
