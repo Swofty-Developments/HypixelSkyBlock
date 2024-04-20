@@ -9,10 +9,20 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class TepidGreenTea implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
+    }
+
+    @Override
+    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return new ArrayList<>(Arrays.asList(
+                "§7Use it in place of an", "Awkward Potion for certain", "potions", "", "§7Buffs the §a❈ Defense§7 value of", "potions by §a+10%§7."
+        ));
     }
 
     @Override
