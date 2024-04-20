@@ -157,7 +157,7 @@ public class ItemLore {
             ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
             if (runeData != null && runeData.hasRune()) {
                 RuneItem runeItem = runeData.getAsRuneItem();
-                addLoreLine(runeItem.getDisplayName(item));
+                addLoreLine(runeItem.getDisplayName(runeData.getRuneType(), runeData.getLevel()));
                 addLoreLine(null);
             }
 

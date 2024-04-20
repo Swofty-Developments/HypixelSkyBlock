@@ -128,12 +128,14 @@ public class SkyBlockItem {
     @Override
     public SkyBlockItem clone() {
         SkyBlockItem item = new SkyBlockItem(getMaterial());
+        List<ItemAttribute> attributesForClone = new ArrayList<>();
         item.clazz = clazz;
         item.amount = amount;
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
             attribute.setValue(getAttribute(attribute.getKey()).getValue());
-            attributes.add(attribute);
+            attributesForClone.add(attribute);
         });
+        item.attributes = attributesForClone;
         return item;
     }
 

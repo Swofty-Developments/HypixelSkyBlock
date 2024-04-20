@@ -9,7 +9,8 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-public interface RuneItem extends ExtraRarityDisplay, ExtraUnderNameDisplays, SkullHead, CustomDisplayName {
+public interface RuneItem extends ExtraRarityDisplay, ExtraUnderNameDisplays, SkullHead, CustomDisplayName,
+                                  Unstackable {
     int getRequiredRuneLevel();
     @NonNull String getColor();
     RuneApplicableTo getRuneApplicableTo();
@@ -19,6 +20,12 @@ public interface RuneItem extends ExtraRarityDisplay, ExtraUnderNameDisplays, Sk
         return getColor() + "◆ " + StringUtility.toNormalCase(type.toString())
                 + " " +
                 StringUtility.getAsRomanNumeral(item.getAttributeHandler().getRuneLevel());
+    }
+
+    default String getDisplayName(ItemType type, int runeLevel) {
+        return getColor() + "◆ " + StringUtility.toNormalCase(type.toString())
+                + " " +
+                StringUtility.getAsRomanNumeral(runeLevel);
     }
 
     default List<String> getExtraUnderNameDisplays() {

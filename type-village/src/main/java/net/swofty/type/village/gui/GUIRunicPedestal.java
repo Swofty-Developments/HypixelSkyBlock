@@ -354,7 +354,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
             SkyBlockItem toReturn = item.clone();
             ItemAttributeRuneInfusedWith.RuneData runeData = toReturn.getAttributeHandler().getRuneData();
-            runeData.setRuneType(runeItem.getAttributeHandler().getRuneData().getRuneType());
+            runeData.setRuneType(runeItem.getAttributeHandler().getItemTypeAsType());
             runeData.setLevel(runeItem.getAttributeHandler().getRuneLevel());
             toReturn.getAttributeHandler().setRuneData(runeData);
             return toReturn;
@@ -418,10 +418,13 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
     public CompletableFuture<Boolean> startFusingAnimation() {
         fusingAnimation = new CompletableFuture<>();
         Thread.startVirtualThread(() -> {
-            // Incrementally change the colors of the slots from purple to pink over 1.5 seconds
+            // Incrementally change the colors of the slots from purple to pink and back multiple times over the duration
             int duration = 1500; // Duration in milliseconds
-            int interval = 50; // Interval between each color update in milliseconds
+            int interval = 30; // Interval between each color update in milliseconds
+            int cycles = 5; // Number of times to transition from purple to pink and back
+
             int totalSteps = duration / interval;
+            int stepsPerCycle = totalSteps / cycles;
 
             Material[] colors = {
                     Material.PURPLE_STAINED_GLASS_PANE,
@@ -430,9 +433,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             };
 
             for (int currentStep = 0; currentStep < totalSteps; currentStep++) {
-                double progress = (double) currentStep / (totalSteps - 1);
-                int colorIndex = (int) Math.floor(progress * (colors.length - 1));
-
+                int colorIndex = getColorIndex(currentStep, stepsPerCycle, colors);
                 setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
                 setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
 
@@ -448,6 +449,21 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             fusingAnimation.complete(false);
         });
         return fusingAnimation;
+    }
+
+    private static int getColorIndex(int currentStep, int stepsPerCycle, Material[] colors) {
+        int cycleIndex = currentStep / stepsPerCycle;
+        double progress = (double) (currentStep % stepsPerCycle) / (stepsPerCycle - 1);
+
+        int colorIndex;
+        if (cycleIndex % 2 == 0) {
+            // Purple to pink
+            colorIndex = (int) Math.floor(progress * (colors.length - 1));
+        } else {
+            // Pink to purple
+            colorIndex = (int) Math.floor((1 - progress) * (colors.length - 1));
+        }
+        return colorIndex;
     }
 
     private void setGlassPanes(int[] slots, Material material) {

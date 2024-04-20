@@ -43,7 +43,9 @@ public class ItemAttributeHandler {
     }
 
     public int getRuneLevel() {
-        if (!(item.getGenericInstance() instanceof RuneItem)) throw new RuntimeException("Item is not a rune item");
+        if (!(item.getGenericInstance() instanceof RuneItem)) {
+            throw new RuntimeException("Item is not a rune item " + getItemType());
+        }
         return ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).getValue();
     }
 
