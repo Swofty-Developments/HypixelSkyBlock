@@ -31,7 +31,7 @@ import java.util.Map;
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private final ItemType itemType;
     public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getKey() + " -> " + itemType.getDisplayName(),
+        super(BazaarCategories.getFromItem(itemType).getKey() + " -> " + itemType.getDisplayName(null),
                 InventoryType.CHEST_4_ROW);
 
         this.itemType = itemType;
@@ -98,7 +98,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
+                lore.add("§8" + itemType.getDisplayName(null));
                 lore.add(" ");
 
                 if (!item.getSellOrders().isEmpty()) {
@@ -126,7 +126,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
+                lore.add("§8" + itemType.getDisplayName(null));
                 lore.add(" ");
 
                 int amountInInventory = player.getAllOfTypeInInventory(itemType).size();
@@ -164,7 +164,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
                 if (itemInInventory.isEmpty()) {
-                    player.sendMessage("§cYou don't have any §e" + itemType.getDisplayName() + "§c in your inventory!");
+                    player.sendMessage("§cYou don't have any §e" + itemType.getDisplayName(null) + "§c in your inventory!");
                     return;
                 }
 
@@ -198,7 +198,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                             bazaar.callEndpoint(new ProtocolBazaarAttemptSellOrder(), requestParam).thenAccept(response -> {
                                 if (response.get("success").equals(true)) {
-                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemType.getDisplayName() + "§a for §e" + price + " coins each!");
+                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemType.getDisplayName(null) + "§a for §e" + price + " coins each!");
                                 } else {
                                     player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
                                     player.sendMessage("§c[Bazaar] §cYou cannot place orders on items you already have orders on!");
@@ -210,7 +210,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
+                lore.add("§8" + itemType.getDisplayName(null));
                 lore.add(" ");
                 lore.add("§6Top Offers:");
 

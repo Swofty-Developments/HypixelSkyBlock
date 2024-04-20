@@ -46,7 +46,7 @@ public class SetItemTypeCommand extends SkyBlockCommand {
                 item.getAttributeHandler().getSandboxData().setMaterial(newType);
             });
 
-            player.sendMessage("§aUpdated the type of the item in your hand to §e" + newType.getDisplayName() + "§a.");
+            player.sendMessage("§aUpdated the type of the item in your hand to §e" + newType.getDisplayName(itemInHand) + "§a.");
         }, material);
     }
 }

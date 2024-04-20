@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class GUISkills extends SkyBlockInventoryGUI {
     private final int[] displaySlots = {
             20, 21, 22, 23, 24,
-            31
+            30, 32
     };
 
     public GUISkills() {

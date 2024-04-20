@@ -36,7 +36,7 @@ public class HorsemanCandle implements CustomSkyBlockItem, SkullHead, CustomDisp
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Horseman's Candle";
     }
 }

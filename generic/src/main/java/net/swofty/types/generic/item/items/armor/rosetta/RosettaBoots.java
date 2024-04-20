@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 public class RosettaBoots implements CustomSkyBlockItem, CustomDisplayName, StandardItem {
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Rosetta's Boots";
     }
 

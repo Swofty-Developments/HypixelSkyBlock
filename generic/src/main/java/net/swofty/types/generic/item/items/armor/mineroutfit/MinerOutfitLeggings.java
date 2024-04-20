@@ -29,7 +29,7 @@ public class MinerOutfitLeggings implements CustomSkyBlockItem, CustomDisplayNam
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Miner's Outfit Leggings";
     }
 }

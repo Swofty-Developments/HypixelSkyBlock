@@ -66,7 +66,7 @@ public class SkyBlockItem {
         setAmount(amount);
     }
 
-    public Object getAttribute(String key) {
+    public ItemAttribute getAttribute(String key) {
         return attributes.stream().filter(attribute -> attribute.getKey().equals(key)).findFirst().orElse(null);
     }
 
@@ -123,6 +123,20 @@ public class SkyBlockItem {
         } catch (Exception e) {}
 
         return null;
+    }
+
+    @Override
+    public SkyBlockItem clone() {
+        SkyBlockItem item = new SkyBlockItem(getMaterial());
+        List<ItemAttribute> attributesForClone = new ArrayList<>();
+        item.clazz = clazz;
+        item.amount = amount;
+        ItemAttribute.getPossibleAttributes().forEach(attribute -> {
+            attribute.setValue(getAttribute(attribute.getKey()).getValue());
+            attributesForClone.add(attribute);
+        });
+        item.attributes = attributesForClone;
+        return item;
     }
 
     public Material getMaterial() {

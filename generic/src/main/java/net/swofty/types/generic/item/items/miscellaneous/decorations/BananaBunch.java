@@ -23,7 +23,7 @@ public class BananaBunch implements CustomSkyBlockItem, DecorationHead, ExtraUnd
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Banana Bunch";
     }
 }

@@ -38,19 +38,6 @@ public enum ItemStatistic {
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
 
-    // Wisdom Stats
-    ALCHEMY_WISDOM("Alchemy Wisdom", "§a", "§3", false, "☯"),
-    CARPENTRY_WISDOM("Carpentry Wisdom", "§a", "§3", false, "☯"),
-    COMBAT_WISDOM("Combat Wisdom", "§a", "§3", false, "☯"),
-    ENCHANTING_WISDOM("Enchanting Wisdom", "§a", "§3", false, "☯"),
-    FARMING_WISDOM("Farming Wisdom", "§a", "§3", false, "☯"),
-    FISHING_WISDOM("Fishing Wisdom", "§a", "§3", false, "☯"),
-    FORAGING_WISDOM("Foraging Wisdom", "§a", "§3", false, "☯"),
-    MINING_WISDOM("Mining Wisdom", "§a", "§3", false, "☯"),
-    RUNECRAFTING_WISDOM("Runecrafting Wisdom", "§a", "§3", false, "☯"),
-    SOCIAL_WISDOM("Social Wisdom", "§a", "§3", false, "☯"),
-    TAMING_WISDOM("Taming Wisdom", "§a", "§3", false, "☯"),
-
     // Misc Stats
     SPEED("Speed", "§a", "§f",
             true, "✦", 100D, 0D),

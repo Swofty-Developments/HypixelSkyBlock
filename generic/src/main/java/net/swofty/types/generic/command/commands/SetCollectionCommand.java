@@ -28,7 +28,9 @@ public class SetCollectionCommand extends SkyBlockCommand {
             int amount = context.get(amountArgument);
 
             player.getCollection().set(type, amount);
-            player.sendMessage("§aUpdated your §e" + CollectionCategories.getCategory(type).getName() + " §acategory for the §c" + type.getDisplayName() + " §acollection to §e" + amount + "§a.");
+            player.sendMessage("§aUpdated your §e" + CollectionCategories.getCategory(type).getName()
+                    + " §acategory for the §c" + type.getDisplayName(null)
+                    + " §acollection to §e" + amount + "§a.");
         }, itemType, amountArgument);
     }
 }

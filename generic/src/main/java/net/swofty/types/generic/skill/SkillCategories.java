@@ -1,5 +1,6 @@
 package net.swofty.types.generic.skill;
 
+import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.skill.skills.*;
@@ -7,21 +8,19 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.StringUtility;
 
 public enum SkillCategories {
-    COMBAT(CombatSkill.class, ItemStatistic.COMBAT_WISDOM),
-    FARMING(FarmingSkill.class, ItemStatistic.FARMING_WISDOM),
-    FISHING(FishingSkill.class, ItemStatistic.FISHING_WISDOM),
-    MINING(MiningSkill.class, ItemStatistic.MINING_WISDOM),
-    FORAGING(ForagingSkill.class, ItemStatistic.FORAGING_WISDOM),
-    ENCHANTING(EnchantingSkill.class, ItemStatistic.ENCHANTING_WISDOM),
+    COMBAT(CombatSkill.class),
+    FARMING(FarmingSkill.class),
+    FISHING(FishingSkill.class),
+    MINING(MiningSkill.class),
+    FORAGING(ForagingSkill.class),
+    ENCHANTING(EnchantingSkill.class),
+    RUNECRAFTING(RunecraftingSkill.class),
     ;
 
     private final Class<? extends SkillCategory> clazz;
-    @Getter
-    private final ItemStatistic wisdom;
 
-    SkillCategories(Class<? extends SkillCategory> clazz, ItemStatistic wisdom) {
+    SkillCategories(Class<? extends SkillCategory> clazz) {
         this.clazz = clazz;
-        this.wisdom = wisdom;
     }
 
     @Override

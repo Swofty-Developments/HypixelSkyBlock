@@ -193,7 +193,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
                             ((SkullHead) item.getGenericInstance()).getSkullTexture(player, item), slot,
                             item.getAttributeHandler().getRarity().getColor() +
-                                    item.getAttributeHandler().getItemTypeAsType().getDisplayName(),
+                                    item.getAttributeHandler().getItemTypeAsType().getDisplayName(item),
                             "§7This backpack has §a" + (((Backpack) item.getGenericInstance()).getRows() * 9) + " §7slots.",
                             " ",
                             "§eLeft-click to open!",

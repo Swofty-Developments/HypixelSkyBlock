@@ -24,8 +24,12 @@ import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
+import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
@@ -33,6 +37,7 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -52,6 +57,34 @@ public class PlayerStatistics {
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
+    }
+
+    public @Nullable SkyBlockItem getItemWithRune(ItemType runeType) {
+        List<SkyBlockItem> piecesToCheck = getPossibleRuneItems();
+
+        for (SkyBlockItem item : piecesToCheck) {
+            if (item == null) continue;
+            ItemAttributeRuneInfusedWith.RuneData runeData = item.getAttributeHandler().getRuneData();
+            if (!runeData.hasRune()) continue;
+            if (runeData.getRuneType() == runeType) continue;
+
+            return item;
+        }
+
+        return null;
+    }
+
+    private List<SkyBlockItem> getPossibleRuneItems() {
+        ArrayList<SkyBlockItem> piecesToCheck = new ArrayList<>();
+        PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
+
+        piecesToCheck.add(cache.get(PlayerItemOrigin.MAIN_HAND));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.HELMET));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.CHESTPLATE));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.LEGGINGS));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.BOOTS));
+
+        return piecesToCheck;
     }
 
     public ItemStatistics allArmorStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
@@ -157,6 +190,11 @@ public class PlayerStatistics {
         return spare;
     }
 
+    public long getInvulnerabilityTime() {
+        double bonusAttackSpeed = allStatistics().getOverall(ItemStatistic.BONUS_ATTACK_SPEED);
+        return (long) (10 / (1 + (bonusAttackSpeed / 100)));
+    }
+
 
     public ItemStatistics allStatistics() {
         return allStatistics(null, null);
@@ -212,6 +250,7 @@ public class PlayerStatistics {
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
         statistics = getEnchantStatistics(item, statistics, causer, enemy);
+        statistics = getHotPotatoBookStatistics(item, statistics);
 
         return statistics;
     }
@@ -220,6 +259,18 @@ public class PlayerStatistics {
         if (item.getAttributeHandler().getReforge() != null) {
             statistics = item.getAttributeHandler().getReforge().getAfterCalculation(statistics,
                     item.getAttributeHandler().getRarity().ordinal() + 1);
+        }
+        return statistics;
+    }
+
+    private ItemStatistics getHotPotatoBookStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
+        if (hotPotatoBookData.hasPotatoBook()) {
+            ItemStatistics.ItemStatisticsBuilder toAdd = ItemStatistics.builder();
+            HotPotatoable.PotatoType potatoType = hotPotatoBookData.getPotatoType();
+
+            potatoType.stats.forEach(toAdd::withAdditive);
+            statistics = ItemStatistics.add(statistics, toAdd.build());
         }
         return statistics;
     }

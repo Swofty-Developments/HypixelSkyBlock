@@ -23,7 +23,7 @@ public class Onion implements CustomSkyBlockItem, DecorationHead, ExtraUnderName
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Onion";
     }
 }

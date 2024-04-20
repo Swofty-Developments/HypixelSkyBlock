@@ -47,8 +47,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
     private final int resultSlot = 13;
 
     public GUIAnvil() {
-        super( "Anvil",
-                InventoryType.CHEST_6_ROW);
+        super("Anvil", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -209,7 +208,8 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         boolean isUpgradeItemValid = !(upgradeItem.isAir() || upgradeItem.isNA());
         boolean isSacrificeItemValid = !(sacrificeItem.isAir() || sacrificeItem.isNA());
 
-        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.getGenericInstance() instanceof AnvilCombinable) && ((AnvilCombinable) sacrificeItem.getGenericInstance()).canApply(getPlayer(), upgradeItem);
+        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.getGenericInstance() instanceof AnvilCombinable) &&
+                ((AnvilCombinable) sacrificeItem.getGenericInstance()).canApply(getPlayer(), upgradeItem, sacrificeItem);
 
         updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
         updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
@@ -248,7 +248,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
 
         SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
 
-        ((AnvilCombinable) sacrificeItem.getGenericInstance()).apply(result);
+        ((AnvilCombinable) sacrificeItem.getGenericInstance()).apply(result, sacrificeItem);
 
         set(new GUIItem(13) {
             @Override
@@ -257,7 +257,11 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
             }
         });
 
-        int levelCost = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels();
+        int levelCost = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels(
+                upgradeItem,
+                sacrificeItem,
+                getPlayer()
+        );
         List<String> lore = new ArrayList<String>();
         lore.add("§7Combine the items in the slots to the");
         lore.add("§7left and right below.");
@@ -265,7 +269,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         {
             lore.add("");
             lore.add("§7Cost");
-            lore.add("§7" + levelCost + " Exp Levels");
+            lore.add("§9" + levelCost + " Exp Levels");
         }
 
         lore.add("");
@@ -289,14 +293,17 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
 
     public void craftResult(SkyBlockPlayer player){
         SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
-        int requiredLevels = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels();
-        if(player.getLevel() < requiredLevels){
+        int requiredLevels = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels(
+                new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot)),
+                sacrificeItem,
+                player
+        );
+        if (player.getLevel() < requiredLevels){
             player.sendMessage("§cYou don't have enough Experience Levels!");
             return;
         }
 
         player.setLevel(player.getLevel() - requiredLevels);
-
         SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(resultSlot));
 
         updateItemToUpgrade(null);
@@ -305,7 +312,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         set(new GUIItem(22) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "Claim the result item above!");
+                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "§7Claim the result item above!");
             }
         });
 

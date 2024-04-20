@@ -21,7 +21,7 @@ public class ItemShopPrice implements ShopPrice {
 
     @Override
     public List<String> getGUIDisplay() {
-        return List.of("§6" + type.rarity.getColor() + type.getDisplayName() + " §8x" + amount);
+        return List.of("§6" + type.rarity.getColor() + type.getDisplayName(null) + " §8x" + amount);
     }
 
     @Override

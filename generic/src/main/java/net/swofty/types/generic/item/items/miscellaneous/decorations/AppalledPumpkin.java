@@ -23,7 +23,7 @@ public class AppalledPumpkin implements CustomSkyBlockItem, DecorationHead, Extr
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Appalled Pumpkin";
     }
 }

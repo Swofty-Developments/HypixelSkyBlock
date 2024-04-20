@@ -31,7 +31,7 @@ public class MinerOutfitHelmet implements CustomSkyBlockItem, CustomDisplayName,
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Miner's Outfit Helmet";
     }
 }

@@ -438,7 +438,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                                     int amount = player.getCollection().get(collection.type());
                                     return new SkyBlockRecipe.CraftingResult(
                                             amount >= reward.requirement(),
-                                            new String[]{"§7You must have §c" + collection.type().getDisplayName()
+                                            new String[]{"§7You must have §c" + collection.type().getDisplayName(null)
                                                     + " Collection "
                                                     + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
                                     );

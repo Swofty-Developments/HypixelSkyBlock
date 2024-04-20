@@ -49,6 +49,7 @@ import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
@@ -310,6 +311,10 @@ public class SkyBlockPlayer extends Player {
         return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
     }
 
+    public int getRuneLevel() {
+        return RunecraftingSkill.getUnlockedRune(this);
+    }
+
     public boolean isWearingItem(SkyBlockItem item) {
         SkyBlockItem[] armor = getArmor();
 
@@ -384,7 +389,8 @@ public class SkyBlockPlayer extends Player {
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
-    public void addAndUpdateItem(SkyBlockItem item) {
+    public void addAndUpdateItem(@Nullable SkyBlockItem item) {
+        if (item == null) return;
         if (item.isNA()) return;
         ItemStack toAdd = PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build();
         this.getInventory().addItemStack(toAdd);

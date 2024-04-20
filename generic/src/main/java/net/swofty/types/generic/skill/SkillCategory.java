@@ -5,6 +5,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -73,6 +74,9 @@ public abstract class SkillCategory {
                                 statistic.getSymbol() + (((MultiplicativePercentageStatisticReward) unlock).amountAdded() * 100) + "%"
                                 + " " + statistic.getDisplayName());
                     }
+                    case RUNE -> {
+                        lore.add("§7  Access to Level §d" + ((RunecraftingSkill.RuneReward) unlock).getRuneLevel() + " §7Runes");
+                    }
                 }
             });
 
@@ -90,7 +94,8 @@ public abstract class SkillCategory {
             COINS,
             XP,
             STATS_ADDITIVE,
-            STATS_MULTIPLICATIVE
+            STATS_MULTIPLICATIVE,
+            RUNE
         }
     }
 

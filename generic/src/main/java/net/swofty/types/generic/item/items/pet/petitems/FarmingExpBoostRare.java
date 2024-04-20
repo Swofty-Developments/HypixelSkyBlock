@@ -28,7 +28,7 @@ public class FarmingExpBoostRare implements CustomSkyBlockItem, Enchanted, PetIt
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Farming Exp Boost";
     }
 }

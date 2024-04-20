@@ -4,6 +4,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public class SandboxItem implements CustomSkyBlockItem {
 
     @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
+    public ItemStatistics getStatistics(@Nullable SkyBlockItem instance) {
         if (instance == null) return ItemStatistics.empty();
         return instance.getAttributeHandler().getSandboxData().getStatistics();
     }

@@ -37,7 +37,7 @@ public class BlastOLantern implements CustomSkyBlockItem, SkullHead, Sellable, C
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Blast O'Lantern";
     }
 

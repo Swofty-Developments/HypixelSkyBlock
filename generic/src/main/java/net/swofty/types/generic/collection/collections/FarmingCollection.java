@@ -898,6 +898,18 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('P', new MaterialQuantifiable(ItemType.PAPER, 1));
+                                ingredientMap.put('E', new MaterialQuantifiable(ItemType.ENCHANTED_BAKED_POTATO, 1));
+                                List<String> pattern = List.of(
+                                        "PP",
+                                        "PE");
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.HOT_POTATO_BOOK), ingredientMap, pattern);
+                            }
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override

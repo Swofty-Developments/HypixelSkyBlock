@@ -47,6 +47,7 @@ import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
 import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
+import net.swofty.types.generic.item.items.enchantment.HotPotatoBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -62,9 +63,11 @@ import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.miscellaneous.*;
+import net.swofty.types.generic.item.items.miscellaneous.bartender.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
+import net.swofty.types.generic.item.items.runes.BloodRune;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.jerrysworkshop.GlacialFragment;
 import net.swofty.types.generic.item.items.jerrysworkshop.GreenGift;
@@ -85,6 +88,7 @@ import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
+import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
@@ -96,6 +100,7 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
@@ -131,6 +136,11 @@ public enum ItemType {
     TREASURE_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, TreasureTalisman.class),
     SPIDER_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, SpiderTalisman.class),
     SPIDER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC, SpiderArtifact.class),
+
+    /**
+     * Runes
+     */
+    BLOOD_RUNE(Material.PLAYER_HEAD, Rarity.COMMON, BloodRune.class),
 
     /**
      * Minions
@@ -173,7 +183,6 @@ public enum ItemType {
     /**
      * Minion Fuels
      */
-
     ENCHANTED_LAVA_BUCKET(Material.LAVA_BUCKET, Rarity.RARE, EnchantedLavaBucket.class),
     MAGMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, MagmaBucket.class),
     PLASMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, PlasmaBucket.class),
@@ -399,6 +408,22 @@ public enum ItemType {
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
 
     /**
+     * BartenderItem
+     */
+
+    CHEAP_COFFEE(Material.PLAYER_HEAD, Rarity.COMMON, CheapCoffee.class),
+    TEPID_GREEN_TEA(Material.PLAYER_HEAD, Rarity.COMMON, TepidGreenTea.class),
+    PULPOUS_ORANGE_JUICE(Material.PLAYER_HEAD, Rarity.COMMON, PulpousOrangeJuice.class),
+    BITTER_ICE_TEA(Material.PLAYER_HEAD, Rarity.COMMON, BitterIceTea.class),
+    KNOCKOFF_COLA(Material.PLAYER_HEAD, Rarity.COMMON, KnockoffCola.class),
+    DECENT_COFFEE(Material.PLAYER_HEAD, Rarity.UNCOMMON, DecentCoffee.class),
+    WOLF_FUR_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, WolfFurMixin.class),
+    ZOMBIE_BRAIN_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, ZombieBrainMixin.class),
+    SPIDER_EGG_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, SpiderEggMixin.class),
+    END_PORTAL_FUMES(Material.PLAYER_HEAD, Rarity.RARE, EndPortalFumes.class),
+    GABAGOEY_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, GabagoeyMixin.class),
+
+    /**
      * DungeonItem
      */
     ANCIENT_ROSE(Material.POPPY, Rarity.RARE, AncientRose.class),
@@ -620,6 +645,11 @@ public enum ItemType {
     SORROW(Material.GHAST_TEAR, Rarity.RARE, Sorrow.class),
     PLASMA(Material.PLAYER_HEAD, Rarity.RARE, Plasma.class),
     VOLTA(Material.PLAYER_HEAD, Rarity.RARE, Volta.class),
+
+    /**
+     * Travel Scrolls
+     */
+    HUB_CASTLE_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubCastleTravelScroll.class),
 
     /**
      * Crimson Isles
@@ -912,11 +942,11 @@ public enum ItemType {
     }
 
     @SneakyThrows
-    public String getDisplayName() {
+    public String getDisplayName(@Nullable SkyBlockItem item) {
         if (clazz == null)
             return StringUtility.toNormalCase(this.name());
         if (clazz.newInstance() instanceof CustomDisplayName name)
-            return name.getDisplayName();
+            return name.getDisplayName(item);
         return StringUtility.toNormalCase(this.name());
     }
 

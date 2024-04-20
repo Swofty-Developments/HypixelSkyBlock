@@ -38,7 +38,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     }
 
     public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI, int recipeIndex) {
-        super(item.getAttributeHandler().getItemTypeAsType().getDisplayName() + " Recipe", InventoryType.CHEST_6_ROW);
+        super(item.getAttributeHandler().getItemTypeAsType().getDisplayName(item) + " Recipe", InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.previousGUI = previousGUI;

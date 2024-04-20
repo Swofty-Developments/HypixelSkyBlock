@@ -28,7 +28,7 @@ public class MiningExpBoostRare implements CustomSkyBlockItem, Enchanted, PetIte
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Mining Exp Boost";
     }
 }

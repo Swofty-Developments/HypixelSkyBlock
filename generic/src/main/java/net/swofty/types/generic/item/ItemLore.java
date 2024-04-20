@@ -9,6 +9,8 @@ import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
@@ -21,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ItemLore {
@@ -51,7 +54,7 @@ public class ItemLore {
 
         if (clazz != null) {
             CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
-            displayName = handler.getItemTypeAsType().getDisplayName();
+            displayName = handler.getItemTypeAsType().getDisplayName(item);
 
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
@@ -61,8 +64,8 @@ public class ItemLore {
                 return;
             }
 
-            if (item.getGenericInstance() instanceof ExtraUnderNameDisplay underNameDisplay) {
-                addLoreLine("§8" + underNameDisplay.getExtraUnderNameDisplay());
+            if (item.getGenericInstance() instanceof ExtraUnderNameDisplays underNameDisplay) {
+                underNameDisplay.getExtraUnderNameDisplays().forEach(line -> addLoreLine("§8" + line));
                 addLoreLine(null);
             }
 
@@ -151,6 +154,13 @@ public class ItemLore {
 
                     if (enchantmentCount != 0) addLoreLine(null);
                 }
+            }
+
+            ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
+            if (runeData != null && runeData.hasRune()) {
+                RuneItem runeItem = runeData.getAsRuneItem();
+                addLoreLine(runeItem.getDisplayName(runeData.getRuneType(), runeData.getLevel()));
+                addLoreLine(null);
             }
 
             // Handle Custom Item Lore
@@ -243,8 +253,9 @@ public class ItemLore {
 
     private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
                                            ReforgeType.Reforge reforge, Rarity rarity) {
+        SkyBlockItem item = new SkyBlockItem(stack);
         double reforgeValue = 0;
-        double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, new SkyBlockItem(stack));
+        double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
         if (reforge != null) {
             overallValue += reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1)
                     .getOverall(statistic);
@@ -252,6 +263,17 @@ public class ItemLore {
                     .getOverall(statistic) - overallValue;
         }
         overallValue += gemstoneValue;
+
+        double hpbValue = 0;
+        ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
+        if (hotPotatoBookData.hasPotatoBook()) {
+            for (Map.Entry<ItemStatistic, Double> entry : hotPotatoBookData.getPotatoType().stats.entrySet()) {
+                ItemStatistic stat = entry.getKey();
+                Double value = entry.getValue();
+                if (stat == statistic) hpbValue += value;
+            }
+        }
+        overallValue += hpbValue;
 
         if (overallValue == 0) return false;
 
@@ -261,6 +283,8 @@ public class ItemLore {
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
                 color + prefix + Math.round(overallValue) + suffix;
 
+        if (hpbValue != 0)
+            line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
         if (reforgeValue != 0)
             line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
         if (gemstoneValue != 0)

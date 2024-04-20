@@ -28,7 +28,7 @@ public class ChestoBerry implements CustomSkyBlockItem, DecorationHead, ExtraUnd
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Chesto Berry";
     }
 }

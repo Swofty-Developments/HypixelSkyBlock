@@ -9,7 +9,7 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;
 
-public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforgable, Enchantable {
+public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforgable, Enchantable, Runeable {
     default String getExtraRarityDisplay() {
         return " BOW";
     }
@@ -20,6 +20,11 @@ public interface BowImpl extends ExtraRarityDisplay, QuiverDisplayOnHold, Reforg
 
     default boolean showEnchantLores() {
         return true;
+    }
+
+    @Override
+    default RuneItem.RuneApplicableTo getRuneApplicableTo() {
+        return RuneItem.RuneApplicableTo.BOWS;
     }
 
     default List<EnchantItemGroups> getEnchantItemGroups() {
