@@ -23,7 +23,7 @@ public class Bush implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameD
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Bush";
     }
 }

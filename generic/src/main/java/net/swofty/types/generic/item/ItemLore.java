@@ -9,6 +9,7 @@ import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
@@ -51,7 +52,7 @@ public class ItemLore {
 
         if (clazz != null) {
             CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
-            displayName = handler.getItemTypeAsType().getDisplayName();
+            displayName = handler.getItemTypeAsType().getDisplayName(item);
 
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
@@ -61,8 +62,8 @@ public class ItemLore {
                 return;
             }
 
-            if (item.getGenericInstance() instanceof ExtraUnderNameDisplay underNameDisplay) {
-                addLoreLine("§8" + underNameDisplay.getExtraUnderNameDisplay());
+            if (item.getGenericInstance() instanceof ExtraUnderNameDisplays underNameDisplay) {
+                underNameDisplay.getExtraUnderNameDisplays().forEach(line -> addLoreLine("§8" + line));
                 addLoreLine(null);
             }
 
@@ -151,6 +152,13 @@ public class ItemLore {
 
                     if (enchantmentCount != 0) addLoreLine(null);
                 }
+            }
+
+            ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
+            if (runeData != null && runeData.hasRune()) {
+                RuneItem runeItem = runeData.getAsRuneItem();
+                addLoreLine(runeItem.getDisplayName(item));
+                addLoreLine(null);
             }
 
             // Handle Custom Item Lore

@@ -23,7 +23,7 @@ public class LilacFruit implements CustomSkyBlockItem, DecorationHead, ExtraUnde
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Lilac Fruit";
     }
 }

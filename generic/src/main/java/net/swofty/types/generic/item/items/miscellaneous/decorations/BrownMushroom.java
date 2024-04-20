@@ -23,7 +23,7 @@ public class BrownMushroom implements CustomSkyBlockItem, DecorationHead, ExtraU
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Brown Mushroom";
     }
 }

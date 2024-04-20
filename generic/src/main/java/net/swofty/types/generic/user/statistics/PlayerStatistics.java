@@ -24,7 +24,9 @@ import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
+import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
@@ -33,6 +35,7 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -52,6 +55,34 @@ public class PlayerStatistics {
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
+    }
+
+    public @Nullable SkyBlockItem getItemWithRune(ItemType runeType) {
+        List<SkyBlockItem> piecesToCheck = getPossibleRuneItems();
+
+        for (SkyBlockItem item : piecesToCheck) {
+            if (item == null) continue;
+            ItemAttributeRuneInfusedWith.RuneData runeData = item.getAttributeHandler().getRuneData();
+            if (!runeData.hasRune()) continue;
+            if (runeData.getRuneType() == runeType) continue;
+
+            return item;
+        }
+
+        return null;
+    }
+
+    private List<SkyBlockItem> getPossibleRuneItems() {
+        ArrayList<SkyBlockItem> piecesToCheck = new ArrayList<>();
+        PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
+
+        piecesToCheck.add(cache.get(PlayerItemOrigin.MAIN_HAND));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.HELMET));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.CHESTPLATE));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.LEGGINGS));
+        piecesToCheck.add(cache.get(PlayerItemOrigin.BOOTS));
+
+        return piecesToCheck;
     }
 
     public ItemStatistics allArmorStatistics(SkyBlockPlayer causer, LivingEntity enemy) {

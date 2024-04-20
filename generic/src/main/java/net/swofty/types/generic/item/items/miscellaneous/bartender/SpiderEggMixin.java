@@ -36,7 +36,7 @@ public class SpiderEggMixin implements CustomSkyBlockItem, DecorationHead, Extra
     }
 
     @Override
-    public String getDisplayName() {
-        return "Spider Egg Mixin";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

@@ -42,6 +42,24 @@ public class ItemAttributeHandler {
         ((ItemAttributeSandboxItem) item.getAttribute("sandboxdata")).setValue(data);
     }
 
+    public int getRuneLevel() {
+        if (!(item.getGenericInstance() instanceof RuneItem)) throw new RuntimeException("Item is not a rune item");
+        return ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).getValue();
+    }
+
+    public void setRuneLevel(int level) {
+        if (!(item.getGenericInstance() instanceof RuneItem)) throw new RuntimeException("Item is not a rune item");
+        ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).setValue(level);
+    }
+
+    public ItemAttributeRuneInfusedWith.RuneData getRuneData() {
+        return ((ItemAttributeRuneInfusedWith) item.getAttribute("rune_infused_with")).getValue();
+    }
+
+    public void setRuneData(ItemAttributeRuneInfusedWith.RuneData data) {
+        ((ItemAttributeRuneInfusedWith) item.getAttribute("rune_infused_with")).setValue(data);
+    }
+
     public boolean isPet() {
         return item.getGenericInstance() instanceof Pet;
     }

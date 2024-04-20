@@ -126,8 +126,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        double wisdom = player.getStatistics().allStatistics().getOverall(getSkillCategory().getWisdom());
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP() * (1 + wisdom / 100));
+        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
 
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;

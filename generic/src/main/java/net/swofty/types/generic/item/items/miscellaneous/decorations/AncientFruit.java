@@ -23,7 +23,7 @@ public class AncientFruit implements CustomSkyBlockItem , DecorationHead, ExtraU
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Ancient Fruit";
     }
 

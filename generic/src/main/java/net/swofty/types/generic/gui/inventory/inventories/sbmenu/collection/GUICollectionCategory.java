@@ -68,7 +68,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
 
     @Override
     public boolean shouldFilterFromSearch(String query, CollectionCategory.ItemCollection item) {
-        String itemName = item.type().getDisplayName();
+        String itemName = item.type().getDisplayName(null);
         return !itemName.toLowerCase().contains(query.toLowerCase());
     }
 
@@ -120,7 +120,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§c" + item.type().getDisplayName(), Material.GRAY_DYE, 1,
+                            "§c" + item.type().getDisplayName(null), Material.GRAY_DYE, 1,
                             "§7Find this item to add it to your",
                             "§7collection and unlock collection",
                             "§7rewards!");
@@ -137,7 +137,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(List.of(
-                        "§7View all your " + item.type().getDisplayName() + " Collection",
+                        "§7View all your " + item.type().getDisplayName(null) + " Collection",
                         "§7progress and rewards!",
                         " "
                 ));
@@ -147,7 +147,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
                 lore.add(" ");
                 lore.add("§eClick to view!");
 
-                return ItemStackCreator.getStack("§e" + item.type().getDisplayName(), item.type().material, 1, lore);
+                return ItemStackCreator.getStack("§e" + item.type().getDisplayName(null), item.type().material, 1, lore);
             }
         };
     }

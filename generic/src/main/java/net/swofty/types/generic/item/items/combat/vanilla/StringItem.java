@@ -17,7 +17,7 @@ public class StringItem implements CustomSkyBlockItem, Sellable, CustomDisplayNa
         return 3;
     }
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "String";
     }
 }

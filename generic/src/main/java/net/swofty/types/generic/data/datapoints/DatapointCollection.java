@@ -124,7 +124,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             }
 
             String collectedPercentage = String.format("%.2f", (collected / (double) required) * 100);
-            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
+            lore.add("§7Progress to " + collection.type().getDisplayName(null) + " " +
                     StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
                     ": §e" + collectedPercentage + "§6%");
 
@@ -144,7 +144,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             if (reward.unlocks().length > 0) {
                 lore.add(" ");
                 reward.getDisplay(lore,
-                        collection.type().getDisplayName() + " "
+                        collection.type().getDisplayName(null) + " "
                                 + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
             }
 
@@ -156,7 +156,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             int collected = get(collection.type());
 
             String collectedPercentage = String.format("%.2f", Math.min(((collected / (double) reward.requirement()) * 100), 100));
-            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
+            lore.add("§7Progress to " + collection.type().getDisplayName(null) + " " +
                     StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
                     ": §e" + collectedPercentage + "§6%");
 
@@ -177,7 +177,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             if (reward.unlocks().length > 0) {
                 lore.add(" ");
                 reward.getDisplay(lore,
-                        collection.type().getDisplayName() + " "
+                        collection.type().getDisplayName(null) + " "
                                 + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
             }
 

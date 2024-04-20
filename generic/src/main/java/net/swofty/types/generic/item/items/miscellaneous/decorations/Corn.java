@@ -23,7 +23,7 @@ public class Corn implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameD
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Corn";
     }
 }

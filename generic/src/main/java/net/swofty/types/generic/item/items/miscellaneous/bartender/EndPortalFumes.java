@@ -36,7 +36,7 @@ public class EndPortalFumes implements CustomSkyBlockItem, DecorationHead, Extra
     }
 
     @Override
-    public String getDisplayName() {
-        return "End Portal Fumes";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

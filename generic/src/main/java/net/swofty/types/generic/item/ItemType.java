@@ -66,6 +66,7 @@ import net.swofty.types.generic.item.items.miscellaneous.bartender.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
+import net.swofty.types.generic.item.items.runes.BloodRune;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.jerrysworkshop.GlacialFragment;
 import net.swofty.types.generic.item.items.jerrysworkshop.GreenGift;
@@ -133,6 +134,11 @@ public enum ItemType {
     TREASURE_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, TreasureTalisman.class),
     SPIDER_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, SpiderTalisman.class),
     SPIDER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC, SpiderArtifact.class),
+
+    /**
+     * Runes
+     */
+    BLOOD_RUNE(Material.PLAYER_HEAD, Rarity.COMMON, BloodRune.class),
 
     /**
      * Minions
@@ -935,11 +941,11 @@ public enum ItemType {
     }
 
     @SneakyThrows
-    public String getDisplayName() {
+    public String getDisplayName(@Nullable SkyBlockItem item) {
         if (clazz == null)
             return StringUtility.toNormalCase(this.name());
         if (clazz.newInstance() instanceof CustomDisplayName name)
-            return name.getDisplayName();
+            return name.getDisplayName(item);
         return StringUtility.toNormalCase(this.name());
     }
 

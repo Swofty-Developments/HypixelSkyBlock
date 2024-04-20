@@ -36,7 +36,7 @@ public class WolfFurMixin implements CustomSkyBlockItem, DecorationHead, ExtraUn
     }
 
     @Override
-    public String getDisplayName() {
-        return "Wolf Fur Mixin";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

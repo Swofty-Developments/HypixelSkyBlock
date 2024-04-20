@@ -36,7 +36,7 @@ public class GabagoeyMixin implements CustomSkyBlockItem, DecorationHead, ExtraU
     }
 
     @Override
-    public String getDisplayName() {
-        return "Gabagoey Mixin";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

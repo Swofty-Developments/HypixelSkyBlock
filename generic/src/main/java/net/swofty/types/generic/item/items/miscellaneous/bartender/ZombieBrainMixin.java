@@ -35,7 +35,7 @@ public class ZombieBrainMixin implements CustomSkyBlockItem, DecorationHead, Ext
     }
 
     @Override
-    public String getDisplayName() {
-        return "Zombie Brain Mixin";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

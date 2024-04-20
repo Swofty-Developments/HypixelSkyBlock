@@ -33,7 +33,7 @@ public class TepidGreenTea implements CustomSkyBlockItem, DecorationHead, ExtraU
     }
 
     @Override
-    public String getDisplayName() {
-        return "Tepid Green Tea";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

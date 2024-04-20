@@ -23,7 +23,7 @@ public class Lettuce implements CustomSkyBlockItem, DecorationHead, ExtraUnderNa
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Lettuce";
     }
 }

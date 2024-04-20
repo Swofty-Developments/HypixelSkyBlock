@@ -128,7 +128,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                     baseService.callEndpoint(new ProtocolBazaarGetItem(), values).thenAccept(response -> {
                         BazaarItem bazaarItem = (BazaarItem) response.get("item");
 
-                        lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
+                        lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName(null)
                                 + " §c" + StringUtility.shortenNumber(bazaarItem.getSellStatistics().getMeanOrder()) +
                                 " §8| §a" + StringUtility.shortenNumber(bazaarItem.getBuyStatistics().getMeanOrder()));
                         future.complete(null);

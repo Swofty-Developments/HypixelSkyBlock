@@ -34,7 +34,7 @@ public class BitterIceTea implements CustomSkyBlockItem, DecorationHead, ExtraUn
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(@Nullable SkyBlockItem item) {
         return "Bitter Iced Tea";
     }
 }

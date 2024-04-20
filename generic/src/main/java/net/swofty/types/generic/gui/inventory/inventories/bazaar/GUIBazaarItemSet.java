@@ -117,7 +117,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                         lore.add("§eClick to view details!");
 
                         return ItemStackCreator.getStack(
-                                itemType.rarity.getColor() + itemType.getDisplayName(),
+                                itemType.rarity.getColor() + itemType.getDisplayName(null),
                                 itemType.material, 1, lore);
                     }
                 });

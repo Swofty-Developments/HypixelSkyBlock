@@ -33,7 +33,7 @@ public class Bobomb implements CustomSkyBlockItem, SkullHead, CustomDisplayName,
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Bob-omb";
     }
 }

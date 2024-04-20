@@ -23,7 +23,7 @@ public class Beetroot implements CustomSkyBlockItem, DecorationHead, ExtraUnderN
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Beetroot";
     }
 }

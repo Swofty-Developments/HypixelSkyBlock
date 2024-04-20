@@ -23,7 +23,7 @@ public class Lemon implements CustomSkyBlockItem, DecorationHead, ExtraUnderName
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Lemon";
     }
 }

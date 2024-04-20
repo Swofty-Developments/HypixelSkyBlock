@@ -40,7 +40,7 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
     private final int placement;
 
     public GUICollectionReward(ItemType type, CollectionCategory.ItemCollectionReward reward) {
-        super(type.getDisplayName() + " "
+        super(type.getDisplayName(null) + " "
                 + StringUtility.getAsRomanNumeral(
                         CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
                 + " Rewards", InventoryType.CHEST_6_ROW);
@@ -61,13 +61,13 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(Arrays.asList(
-                        "§7View your " + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
+                        "§7View your " + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
                         " "
                 ));
 
                 player.getCollection().getDisplay(lore, category, reward);
 
-                return ItemStackCreator.getStack("§a" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement),
+                return ItemStackCreator.getStack("§a" + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(placement),
                         item.material, 1, lore);
             }
         });

@@ -23,7 +23,7 @@ public class Kiwi implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameD
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Kiwi";
     }
 }

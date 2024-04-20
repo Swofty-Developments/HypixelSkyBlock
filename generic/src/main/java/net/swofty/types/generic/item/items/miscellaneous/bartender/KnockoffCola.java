@@ -35,7 +35,7 @@ public class KnockoffCola implements CustomSkyBlockItem, DecorationHead, ExtraUn
     }
 
     @Override
-    public String getDisplayName() {
-        return "KnockOff™ Cola";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

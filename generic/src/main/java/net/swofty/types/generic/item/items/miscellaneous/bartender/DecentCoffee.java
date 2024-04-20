@@ -33,7 +33,7 @@ public class DecentCoffee implements CustomSkyBlockItem, DecorationHead, ExtraUn
     }
 
     @Override
-    public String getDisplayName() {
-        return "Decent Coffee";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

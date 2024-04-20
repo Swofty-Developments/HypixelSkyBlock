@@ -34,7 +34,7 @@ public class PulpousOrangeJuice implements CustomSkyBlockItem, DecorationHead, E
     }
 
     @Override
-    public String getDisplayName() {
-        return "Pulpous Orange Juice";
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Bitter Iced Tea";
     }
 }

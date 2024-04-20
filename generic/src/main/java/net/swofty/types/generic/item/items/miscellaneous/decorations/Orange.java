@@ -23,7 +23,7 @@ public class Orange implements CustomSkyBlockItem, DecorationHead, ExtraUnderNam
     }
 
     @Override
-    public String getDisplayName() {
+    public String getDisplayName(SkyBlockItem item) {
         return "Orange";
     }
 }

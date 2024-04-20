@@ -109,7 +109,7 @@ public class MinionSkinExtension extends MinionExtension {
                                     "§7here to change the appearance of",
                                     "§7your minion.",
                                     " ",
-                                    "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
+                                    "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
                                     " ",
                                     "§eClick to remove."
                     ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
