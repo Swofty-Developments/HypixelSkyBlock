@@ -41,7 +41,7 @@ public abstract class SkyBlockCommand {
     public static class MinestomCommand extends Command {
 
         public MinestomCommand(SkyBlockCommand command) {
-            super(command.getName(), command.getParams().aliases().split(" ").length == 0 ? null : command.getParams().aliases().split(" "));
+            super(command.getName(), command.getParams().aliases().isEmpty() ? null : command.getParams().aliases().split(" ").length == 0 ? null : command.getParams().aliases().split(" "));
 
             setDefaultExecutor((sender, context) -> {
                 sender.sendMessage("§cUsage: " + command.getParams().usage());
