@@ -6,7 +6,6 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -52,7 +51,7 @@ public class BeePet implements Pet, NotFinishedYet {
                         "§7For each player within §a25 §7 blocks:",
                         " §7Gain §b+" + hiveIntelligence.getForRarity(rarity) + "✎ Intelligence",
                         " §7Gain §c+" + hiveStrength.getForRarity(rarity) + "❁ Strength",
-                        " §7Gain §e+" + hiveDefense.getForRarity(rarity) + "❈ Defense",
+                        " §7Gain §a+" + hiveDefense.getForRarity(rarity) + "❈ Defense",
                         "§8Max 15 players"
                 );
             }
