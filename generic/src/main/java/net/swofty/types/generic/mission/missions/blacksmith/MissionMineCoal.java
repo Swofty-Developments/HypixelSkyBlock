@@ -31,11 +31,11 @@ public class MissionMineCoal extends SkyBlockProgressMission {
         CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
         MissionData data = event.getPlayer().getMissionData();
 
-        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
+        if (!data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
             return;
         }
 
-        if (event.getMaterial().equals(Material.COAL_ORE)) {
+        if (event.getMaterial().equals(Material.COAL)) {
             MissionData.ActiveMission mission = data.getMission(this.getClass()).getKey();
             mission.setMissionProgress(mission.getMissionProgress() + 1);
             mission.checkIfMissionEnded(event.getPlayer());
