@@ -48,8 +48,9 @@ public class NPCBobbyJoe extends NPCDialogue {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Darn it! where did I leave my belongings? Those §dFairies §fmust be upto no good.",
-                                "WELCOME! Plenty of room here for all of your needs!"
+                                "WELCOME! Plenty of room here for all of your needs!",
+                                "Have you been to the §2Wilderness §f? I hear there is a creepy bar there.",
+                                "Darn it, where did I leave my belongings? Those §dFairies §fmust be up to no good."
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }
