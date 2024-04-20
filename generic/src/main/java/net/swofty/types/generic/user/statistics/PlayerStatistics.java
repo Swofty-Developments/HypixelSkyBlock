@@ -188,6 +188,11 @@ public class PlayerStatistics {
         return spare;
     }
 
+    public long getInvulnerabilityTime() {
+        double bonusAttackSpeed = allStatistics().getOverall(ItemStatistic.BONUS_ATTACK_SPEED);
+        return (long) (10 / (1 + (bonusAttackSpeed / 100)));
+    }
+
 
     public ItemStatistics allStatistics() {
         return allStatistics(null, null);

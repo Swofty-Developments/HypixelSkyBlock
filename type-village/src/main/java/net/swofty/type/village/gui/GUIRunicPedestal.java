@@ -362,16 +362,19 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
         @Override
         public boolean isValidType(SkyBlockItem itemOnLeft, SkyBlockItem itemOnRight) {
-            if (!(itemOnLeft.getGenericInstance() instanceof RuneItem) && !(itemOnLeft.getGenericInstance() instanceof Runeable)) {
+            if (!(itemOnLeft.getGenericInstance() instanceof RuneItem) && !(itemOnLeft.getGenericInstance() instanceof Runeable))
                 return false;
-            }
-            if (!(itemOnRight.getGenericInstance() instanceof RuneItem) && !(itemOnRight.getGenericInstance() instanceof Runeable)) {
+            if (!(itemOnRight.getGenericInstance() instanceof RuneItem) && !(itemOnRight.getGenericInstance() instanceof Runeable))
                 return false;
-            }
-            if (itemOnLeft.getGenericInstance() instanceof RuneItem && itemOnRight.getGenericInstance() instanceof RuneItem) {
+            if (itemOnLeft.getGenericInstance() instanceof RuneItem && itemOnRight.getGenericInstance() instanceof RuneItem)
                 return false;
-            }
-            return !(itemOnLeft.getGenericInstance() instanceof Runeable) || !(itemOnRight.getGenericInstance() instanceof Runeable);
+            if (itemOnLeft.getGenericInstance() instanceof Runeable && itemOnRight.getGenericInstance() instanceof Runeable)
+                return false;
+
+            SkyBlockItem runableItem = itemOnLeft.getGenericInstance() instanceof Runeable ? itemOnLeft : itemOnRight;
+            ItemAttributeRuneInfusedWith.RuneData runeData = runableItem.getAttributeHandler().getRuneData();
+
+            return !runeData.hasRune();
         }
 
         @Override
@@ -383,12 +386,12 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             Rarity rarity = appliedRune.rarity;
 
             sendSuccessMessage(player, "Applying " + StringUtility.toNormalCase(appliedRune.name()) +
-                    "(" + rarity.getDisplayCapitalized() + ")");
+                    " (" + rarity.getDisplay() + "§d)");
         }
     }
 
     private static void sendSuccessMessage(SkyBlockPlayer player, String action) {
-        player.sendMessage("§5-§d15 §5Runecrafting XP §7- §5" + action);
+        player.sendMessage("§d-§515 §dRunecrafting XP §7- §d" + action);
     }
 
     @Override
@@ -433,9 +436,24 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             };
 
             for (int currentStep = 0; currentStep < totalSteps; currentStep++) {
-                int colorIndex = getColorIndex(currentStep, stepsPerCycle, colors);
-                setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
-                setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
+                int cycleIndex = currentStep / stepsPerCycle;
+                double progress = (double) (currentStep % stepsPerCycle) / (stepsPerCycle - 1);
+
+                if (cycleIndex % 2 == 0) {
+                    // Purple to pink
+                    int colorIndex = (int) Math.floor(progress * (colors.length - 1));
+                    setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
+                    setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
+                    setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
+                    setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
+                } else {
+                    // Pink to purple
+                    int colorIndex = (int) Math.floor((1 - progress) * (colors.length - 1));
+                    setGlassPanes(BOTTOM_SLOTS, colors[colorIndex]);
+                    setGlassPanes(CONNECTOR_RUNIC_SLOTS, colors[colorIndex]);
+                    setGlassPanes(LEFT_RUNIC_SLOTS, colors[colorIndex]);
+                    setGlassPanes(RIGHT_RUNIC_SLOTS, colors[colorIndex]);
+                }
 
                 try {
                     Thread.sleep(interval);
@@ -449,21 +467,6 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             fusingAnimation.complete(false);
         });
         return fusingAnimation;
-    }
-
-    private static int getColorIndex(int currentStep, int stepsPerCycle, Material[] colors) {
-        int cycleIndex = currentStep / stepsPerCycle;
-        double progress = (double) (currentStep % stepsPerCycle) / (stepsPerCycle - 1);
-
-        int colorIndex;
-        if (cycleIndex % 2 == 0) {
-            // Purple to pink
-            colorIndex = (int) Math.floor(progress * (colors.length - 1));
-        } else {
-            // Pink to purple
-            colorIndex = (int) Math.floor((1 - progress) * (colors.length - 1));
-        }
-        return colorIndex;
     }
 
     private void setGlassPanes(int[] slots, Material material) {

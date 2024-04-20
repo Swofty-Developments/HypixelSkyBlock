@@ -42,6 +42,10 @@ public class MathUtility {
         MinecraftServer.getSchedulerManager().scheduleTask(runnable, TaskSchedule.tick(ticks), TaskSchedule.stop());
     }
 
+    public static long ticksToMilliseconds(long ticks) {
+        return ticks * 50;
+    }
+
     public static List<Pos> getNearbyBlocks(Instance instance, Pos pos, int range, Block block) {
         List<Pos> blocks = new ArrayList<>();
         for (int x = pos.blockX() - range; x <= pos.blockX() + range; x++) {

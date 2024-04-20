@@ -11,15 +11,14 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-@EventParameters(description = "For damage indicators",
-        node = EventNodes.ALL,
-        requireDataLoaded = false)
+@EventParameters(description = "For damage indicators", node = EventNodes.ALL, requireDataLoaded = false)
 public class PlayerActionArrowDamageMob extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {
@@ -45,14 +44,13 @@ public class PlayerActionArrowDamageMob extends SkyBlockEvent {
         else return;
 
         SkyBlockItem arrowItem = arrow.getArrowItem();
-
         ItemStatistics entityStats = mob.getStatistics();
         ItemStatistics playerStats = shooter.getStatistics().allStatistics();
+
         // Add the arrow's statistics to the player's statistics
         ItemStatistics.add(playerStats, arrowItem.getAttributeHandler().getStatistics());
 
         Map.Entry<Double, Boolean> hit = PlayerStatistics.runPrimaryDamageFormula(playerStats, entityStats);
-
         double damage = hit.getKey();
         boolean critical = hit.getValue();
 
@@ -63,5 +61,20 @@ public class PlayerActionArrowDamageMob extends SkyBlockEvent {
                 .display(collidedWith.getInstance());
 
         collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
+
+        double ferocity = shooter.getStatistics().allStatistics().getOverall(ItemStatistic.FEROCITY);
+
+        int extraAttacks = (int) (ferocity / 100);
+        double extraAttackChance = (ferocity % 100) / 100.0;
+
+        // Extra attacks that are guaranteed because ferocity overflowed 100
+        for (int i = 0; i < extraAttacks; i++) {
+            collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
+        }
+
+        // Extra attacks that have a chance to occur based on the remaining ferocity
+        if (Math.random() < extraAttackChance) {
+            collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
+        }
     }
 }
