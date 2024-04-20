@@ -26,8 +26,10 @@ public class SpiderSword extends SkyBlockValueEvent implements CustomSkyBlockIte
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "Deals §a+100% §7damage to Cave Spiders,",
-                "Spiders, and Sliverfish."
+                "Deals §a+100% §7damage to Silverfish,",
+                "Spiders, and Cave Spiders.",
+                "",
+                "§4This item is Arachnal Ж!"
         ));
     }
 

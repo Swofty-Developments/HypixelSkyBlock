@@ -28,7 +28,8 @@ public class UndeadSword extends SkyBlockValueEvent implements CustomSkyBlockIte
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
                 "Deals §a+100% §7damage to Zombies,",
-                "Skeletons, Zombie Pigmen, and Withers."
+                "Skeletons, Zombie Pigmen, and",
+                "Withers."
         ));
     }
 
