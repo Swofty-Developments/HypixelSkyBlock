@@ -7,11 +7,13 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.types.generic.item.impl.DefaultSoulbound;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.Arrays;
 
@@ -77,7 +79,9 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                 }
 
                 player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
-                    item.getAttributeHandler().getStatistics().addAdditive(stat, amt);
+                    ItemAttributeSandboxItem.SandboxData data = item.getAttributeHandler().getSandboxData();
+                    data.setStatistics(ItemStatistics.builder().withAdditive(stat, amt).build());
+                    item.getAttributeHandler().setSandboxData(data);
                 });
 
                 player.sendMessage("§aUpdated the " + stat.getDisplayName() + " of the item in your hand to §e" + amt + "§a.");
