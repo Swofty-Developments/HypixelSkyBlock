@@ -30,14 +30,14 @@ public class MithrilInfusion implements CustomSkyBlockItem, SkullHead, AnvilComb
     }
 
     @Override
-    public void apply(SkyBlockItem item) {
-        item.getAttributeHandler().setMithrilInfused(true);
+    public void apply(SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem) {
+        upgradeItem.getAttributeHandler().setMithrilInfused(true);
     }
 
     @Override
-    public boolean canApply(SkyBlockPlayer player, SkyBlockItem item) {
-        if(!(item.getGenericInstance() instanceof Minion))
+    public boolean canApply(SkyBlockPlayer player, SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem) {
+        if(!(upgradeItem.getGenericInstance() instanceof Minion))
             return false;
-        return !item.getAttributeHandler().isMithrilInfused();
+        return !upgradeItem.getAttributeHandler().isMithrilInfused();
     }
 }

@@ -47,6 +47,7 @@ import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
 import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
+import net.swofty.types.generic.item.items.enchantment.HotPotatoBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -99,6 +100,7 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
@@ -181,7 +183,6 @@ public enum ItemType {
     /**
      * Minion Fuels
      */
-
     ENCHANTED_LAVA_BUCKET(Material.LAVA_BUCKET, Rarity.RARE, EnchantedLavaBucket.class),
     MAGMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, MagmaBucket.class),
     PLASMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, PlasmaBucket.class),

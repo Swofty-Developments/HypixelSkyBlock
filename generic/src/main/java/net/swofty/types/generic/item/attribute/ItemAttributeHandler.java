@@ -54,6 +54,14 @@ public class ItemAttributeHandler {
         ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).setValue(level);
     }
 
+    public ItemAttributeHotPotatoBookData.HotPotatoBookData getHotPotatoBookData() {
+        return ((ItemAttributeHotPotatoBookData) item.getAttribute("hot_potato_book_data")).getValue();
+    }
+
+    public void setHotPotatoBookData(ItemAttributeHotPotatoBookData.HotPotatoBookData data) {
+        item.getAttribute("hot_potato_book_data").setValue(data);
+    }
+
     public ItemAttributeRuneInfusedWith.RuneData getRuneData() {
         return ((ItemAttributeRuneInfusedWith) item.getAttribute("rune_infused_with")).getValue();
     }

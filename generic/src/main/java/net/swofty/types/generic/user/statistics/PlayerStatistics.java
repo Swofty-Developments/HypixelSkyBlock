@@ -26,8 +26,10 @@ import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
+import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
@@ -248,6 +250,7 @@ public class PlayerStatistics {
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);
         statistics = getEnchantStatistics(item, statistics, causer, enemy);
+        statistics = getHotPotatoBookStatistics(item, statistics);
 
         return statistics;
     }
@@ -256,6 +259,18 @@ public class PlayerStatistics {
         if (item.getAttributeHandler().getReforge() != null) {
             statistics = item.getAttributeHandler().getReforge().getAfterCalculation(statistics,
                     item.getAttributeHandler().getRarity().ordinal() + 1);
+        }
+        return statistics;
+    }
+
+    private ItemStatistics getHotPotatoBookStatistics(SkyBlockItem item, ItemStatistics statistics) {
+        ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
+        if (hotPotatoBookData.hasPotatoBook()) {
+            ItemStatistics.ItemStatisticsBuilder toAdd = ItemStatistics.builder();
+            HotPotatoable.PotatoType potatoType = hotPotatoBookData.getPotatoType();
+
+            potatoType.stats.forEach(toAdd::withAdditive);
+            statistics = ItemStatistics.add(statistics, toAdd.build());
         }
         return statistics;
     }
