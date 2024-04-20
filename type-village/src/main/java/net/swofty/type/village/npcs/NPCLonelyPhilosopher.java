@@ -1,10 +1,17 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUILonelyPhilosopher;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointRank;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.types.generic.user.categories.Rank;
 
-public class NPCLonelyPhilosopher extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCLonelyPhilosopher extends NPCDialogue {
 
     public NPCLonelyPhilosopher() {
         super(new NPCParameters() {
@@ -37,7 +44,30 @@ public class NPCLonelyPhilosopher extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+
+        Rank rank = e.player().getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+        if (rank.isEqualOrHigherThan(Rank.MVP_PLUS)) {
+            setDialogue(e.player(), "open_shop").thenRun(() -> {
+                new GUILonelyPhilosopher().open(e.player());
+            });
+            return;
+        }
+
+        setDialogue(e.player(), "hello");
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "§fI'm sorry, I have nothing for you."
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
+                        .key("open_shop").lines(new String[]{
+                                "§fTo fast travel or not to fast travel?"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }

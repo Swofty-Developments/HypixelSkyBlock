@@ -15,7 +15,9 @@ public enum Rank {
     JRHELPER("§9[JR HELPER] ", true , NamedTextColor.BLUE),
     BT("§d[BT] ", false, NamedTextColor.LIGHT_PURPLE),
     YOUTUBE("§c[§fYOUTUBE§c] ", false, NamedTextColor.RED),
+    MVP_PLUS("§b[MVP§c+§b] ", false, NamedTextColor.AQUA),
     MVP("§b[MVP] ", false, NamedTextColor.AQUA),
+    VIP_PLUS("§a[VIP§6+§a] ", false, NamedTextColor.GREEN),
     VIP("§a[VIP] ", false, NamedTextColor.GREEN),
     DEFAULT("§7 ", false, NamedTextColor.GRAY),
     ;
