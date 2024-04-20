@@ -30,7 +30,8 @@ public abstract class SkyBlockNPC {
 
     public SkyBlockNPC(NPCParameters defaultParams) {
         this.parameters = defaultParams;
-        this.name = getClass().getSimpleName().replace("NPC", "");
+        String className = getClass().getSimpleName().replace("NPC", "");
+        this.name = className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
     }
 
     public void register() {

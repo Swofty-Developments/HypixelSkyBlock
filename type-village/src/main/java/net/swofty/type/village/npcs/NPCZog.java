@@ -1,6 +1,7 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopZog;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 
@@ -10,7 +11,7 @@ public class NPCZog extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Zog", "§e§lCLICK"};
+                return new String[]{"Zog", "§e§lCLICK"};
             }
 
             @Override
@@ -37,7 +38,7 @@ public class NPCZog extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        new GUIShopZog().open(e.player());
     }
 
 }

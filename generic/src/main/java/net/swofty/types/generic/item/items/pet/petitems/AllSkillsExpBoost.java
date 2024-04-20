@@ -21,7 +21,7 @@ public class AllSkillsExpBoost implements CustomSkyBlockItem, PetItem, Enchanted
                 "§7ways but pets can only hold 1 item at",
                 "§7a time so choose wisely!",
                 "",
-                "§7Gives §a+10% §7 pet exp for all skills.",
+                "§7Gives §a+10% §7pet exp for all skills.",
                 "",
                 "§eRight-click on your summoned pet to",
                 "§egive it this item!"));

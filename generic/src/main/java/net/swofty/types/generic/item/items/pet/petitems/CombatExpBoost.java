@@ -24,7 +24,7 @@ public class CombatExpBoost implements CustomSkyBlockItem, Enchanted, PetItem, N
                 "§7ways but pets can only hold 1 item at",
                 "§7a time so choose wisely!",
                 "",
-                "§7Gives §a+20% §7 pet exp for Combat.",
+                "§7Gives §a+20% §7pet exp for Combat.",
                 "",
                 "§eRight-click on your summoned pet to",
                 "§egive it this item!"));
