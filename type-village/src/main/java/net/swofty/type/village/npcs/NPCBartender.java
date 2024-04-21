@@ -66,20 +66,20 @@ public class NPCBartender extends NPCDialogue {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Bartender§f: Welcome to the Bar, friend!",
-                                "§e[NPC] Bartender§f: These are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
-                                "§e[NPC] Bartender§f: Could you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
+                                "Welcome to the Bar, friend!",
+                                "These are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
+                                "Could you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
                         }).build(),
                 DialogueSet.builder()
                         .key("quest-talk").lines(new String[]{
-                                "§e[NPC] Bartender§f: Clear out some more of those Zombies and I'll pay you greatly for it!"
+                                "Clear out some more of those Zombies and I'll pay you greatly for it!"
                         }).build(),
                 DialogueSet.builder()
                         .key("quest-complete").lines(new String[]{
-                                "§e[NPC] Bartender§f: Words cannot describe how thankful I am!",
-                                "§e[NPC] Bartender§f: That whole area is very dangerous, but can be quite rewarding for a warrior such as yourself.",
-                                "§e[NPC] Bartender§f: If you're up for the challenge, both the §cGraveyard§f and the §cSpider's Den §fbeyond it are great training grounds for improving your §aCombat Skill§f.",
-                                "§e[NPC] Bartender§f: For now, here's a reward for helping me out!"
+                                "Words cannot describe how thankful I am!",
+                                "That whole area is very dangerous, but can be quite rewarding for a warrior such as yourself.",
+                                "If you're up for the challenge, both the §cGraveyard§f and the §cSpider's Den §fbeyond it are great training grounds for improving your §aCombat Skill§f.",
+                                "For now, here's a reward for helping me out!"
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }

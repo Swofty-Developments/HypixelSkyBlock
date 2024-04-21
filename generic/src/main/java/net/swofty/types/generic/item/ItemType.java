@@ -34,6 +34,7 @@ import net.swofty.types.generic.item.items.armor.rosetta.*;
 import net.swofty.types.generic.item.items.armor.squire.*;
 import net.swofty.types.generic.item.items.armor.starlight.*;
 import net.swofty.types.generic.item.items.backpacks.*;
+import net.swofty.types.generic.item.items.brewing.*;
 import net.swofty.types.generic.item.items.combat.*;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.DaedalusAxe;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.SwordOfRevelations;
@@ -72,7 +73,6 @@ import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.miscellaneous.*;
-import net.swofty.types.generic.item.items.miscellaneous.bartender.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
@@ -417,7 +417,7 @@ public enum ItemType {
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
 
     /**
-     * BartenderItem
+     * BrewingItem
      */
 
     CHEAP_COFFEE(Material.PLAYER_HEAD, Rarity.COMMON, CheapCoffee.class),
@@ -431,6 +431,7 @@ public enum ItemType {
     SPIDER_EGG_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, SpiderEggMixin.class),
     END_PORTAL_FUMES(Material.PLAYER_HEAD, Rarity.RARE, EndPortalFumes.class),
     GABAGOEY_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, GabagoeyMixin.class),
+    BLACK_COFFEE(Material.PLAYER_HEAD, Rarity.RARE, BlackCoffee.class),
 
     /**
      * DungeonItem
