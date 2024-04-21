@@ -70,8 +70,6 @@ public class NPCLumberJack extends NPCDialogue {
             return;
         }
 
-
-        new GUIReforge().open(e.player());
     }
 
     @Override
