@@ -14,8 +14,6 @@ import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.enchantment.EnchantmentType;
@@ -266,7 +264,7 @@ public class PlayerStatistics {
     private ItemStatistics getHotPotatoBookStatistics(SkyBlockItem item, ItemStatistics statistics) {
         ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
         if (hotPotatoBookData.hasPotatoBook()) {
-            ItemStatistics.ItemStatisticsBuilder toAdd = ItemStatistics.builder();
+            ItemStatistics.Builder toAdd = ItemStatistics.builder();
             HotPotatoable.PotatoType potatoType = hotPotatoBookData.getPotatoType();
 
             potatoType.stats.forEach(toAdd::withAdditive);

@@ -5,6 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.utils.location.RelativeVec;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.region.RegionType;
@@ -62,7 +63,8 @@ public class RegionCommand extends SkyBlockCommand {
             new SkyBlockRegion(regionId,
                     new Pos(vectorPosition1.x(), vectorPosition1.y(), vectorPosition1.z()),
                     new Pos(vectorPosition2.x(), vectorPosition2.y(), vectorPosition2.z()),
-                    regionType).save();
+                    regionType,
+                    SkyBlockConst.getTypeLoader().getType()).save();
         }, addRegion);
     }
 }

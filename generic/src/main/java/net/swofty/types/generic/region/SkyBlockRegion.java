@@ -6,6 +6,8 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
+import net.swofty.commons.ServerType;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.mongodb.RegionDatabase;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -14,26 +16,25 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 @Getter
+@Setter
 public class SkyBlockRegion {
     private static final Map<String, SkyBlockRegion> REGION_CACHE = new HashMap<>();
 
     private final String name;
     private final RegionDatabase regionDatabase;
 
-    @Setter
     private Pos firstLocation;
-    @Setter
     private Pos secondLocation;
-    @Setter
     private RegionType type;
+    private ServerType serverType;
 
-    public SkyBlockRegion(String name, Pos firstLocation, Pos secondLocation, RegionType type) {
+    public SkyBlockRegion(String name, Pos firstLocation, Pos secondLocation, RegionType type, ServerType serverType) {
         this.name = name.toLowerCase();
         this.firstLocation = firstLocation;
         this.secondLocation = secondLocation;
         this.type = type;
         this.regionDatabase = new RegionDatabase(name);
-        REGION_CACHE.put(this.name, this);
+        this.serverType = serverType;
     }
 
     public void save() {
@@ -41,11 +42,14 @@ public class SkyBlockRegion {
         regionDatabase.insertOrUpdate("y1", firstLocation.blockY());
         regionDatabase.insertOrUpdate("z1", firstLocation.blockZ());
 
-        regionDatabase.insertOrUpdate("x2", secondLocation.blockZ());
+        regionDatabase.insertOrUpdate("x2", secondLocation.blockX());
         regionDatabase.insertOrUpdate("y2", secondLocation.blockY());
         regionDatabase.insertOrUpdate("z2", secondLocation.blockZ());
 
         regionDatabase.insertOrUpdate("type", type.name());
+        regionDatabase.insertOrUpdate("serverType", serverType.name());
+
+        REGION_CACHE.put(name, this);
     }
 
     public Pos getRandomPosition() {
@@ -173,10 +177,18 @@ public class SkyBlockRegion {
             if (region.getType() == null || region.getType() == RegionType.PRIVATE_ISLAND) {
                 region.delete();
             } else {
+                ServerType typeOfRegion = region.getServerType();
+                if (typeOfRegion != SkyBlockConst.getTypeLoader().getType())
+                    continue;
+
                 REGION_CACHE.put(region.getName(), region);
             }
         }
-        REGION_CACHE.put("island", new SkyBlockRegion("island", new Pos(0, 0, 0), new Pos(0, 0, 0), RegionType.PRIVATE_ISLAND));
+        REGION_CACHE.put("island", new SkyBlockRegion("island",
+                new Pos(0, 0, 0),
+                new Pos(0, 0, 0),
+                RegionType.PRIVATE_ISLAND,
+                ServerType.ISLAND));
     }
 
     public static SkyBlockRegion getIslandRegion() {

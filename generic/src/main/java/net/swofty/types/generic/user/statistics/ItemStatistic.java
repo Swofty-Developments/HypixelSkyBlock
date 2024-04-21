@@ -89,7 +89,7 @@ public enum ItemStatistic {
 
 
     public static ItemStatistics getOfAllBaseValues() {
-        ItemStatistics.ItemStatisticsBuilder builder = ItemStatistics.builder();
+        ItemStatistics.Builder builder = ItemStatistics.builder();
         for (ItemStatistic stat : ItemStatistic.values()) {
             builder.withAdditive(stat, stat.baseAdditiveValue);
             builder.withMultiplicative(stat, stat.baseMultiplicativeValue);

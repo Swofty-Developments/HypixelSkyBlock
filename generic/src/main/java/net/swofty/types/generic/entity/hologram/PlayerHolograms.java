@@ -9,6 +9,7 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.*;
@@ -17,7 +18,7 @@ public enum PlayerHolograms {
     ;
 
     private static final HashMap<SkyBlockPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();
-    public static final Map<ExternalPlayerHologram, List<HologramEntity>> externalPlayerHolograms = new HashMap<>();
+    public static final ConcurrentHashMap<ExternalPlayerHologram, List<HologramEntity>> externalPlayerHolograms = new ConcurrentHashMap<>();
 
     private final Pos pos;
     private final Function<SkyBlockPlayer, String[]> displayFunction;
