@@ -6,6 +6,9 @@ import net.swofty.types.generic.mission.missions.*;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.types.generic.mission.missions.farmer.MissionCollectWheat;
+import net.swofty.types.generic.mission.missions.farmer.MissionTalkToFarmer;
+import net.swofty.types.generic.mission.missions.farmer.MissionTalkToFarmerAgain;
 import net.swofty.types.generic.mission.missions.lumber.MissionBreakOaklog;
 import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjack;
 import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
@@ -20,7 +23,8 @@ public enum MissionSet {
     AUCTIONEER(MissionTalkToAuctionMaster.class),
     TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class),
     TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class),
-    TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class)
+    TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class),
+    FIRSTHARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

@@ -1,10 +1,21 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.gui.inventory.inventories.GUIReforge;
+import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.missions.farmer.MissionCollectWheat;
+import net.swofty.types.generic.mission.missions.farmer.MissionTalkToFarmer;
+import net.swofty.types.generic.mission.missions.farmer.MissionTalkToFarmerAgain;
+import net.swofty.types.generic.mission.missions.lumber.MissionBreakOaklog;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjack;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
 
-public class NPCFarmer extends SkyBlockNPC {
+import java.util.List;
+
+public class NPCFarmer extends NPCDialogue {
 
     public NPCFarmer() {
         super(new NPCParameters() {
@@ -37,7 +48,42 @@ public class NPCFarmer extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        MissionData data = e.player().getMissionData();
+
+        if (data.isCurrentlyActive(MissionTalkToFarmer.class)) {
+            setDialogue(e.player(), "initial-hello").thenRun(() -> {
+                data.endMission(MissionTalkToFarmer.class);
+            });
+            return;
+        }
+        if (!data.hasCompleted(MissionCollectWheat.class)) {
+            e.player().sendMessage("§e[NPC] Farmer§f: My cow is getting worse! Hurry with that Wheat!");
+            return;
+        }
+        if (!data.hasCompleted(MissionTalkToFarmerAgain.class)) {
+            setDialogue(e.player(), "spoke-again").thenRun(() -> {
+                data.endMission(MissionTalkToFarmerAgain.class);
+            });
+        }
+
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return List.of(
+                DialogueSet.builder()
+                        .key("initial-hello").lines(new String[]{
+                                "§e[NPC] Farmer§f: Howdy, friend!",
+                                "§e[NPC] Farmer§f: My cow is sick, she needs some food to replenish her strength.",
+                                "§e[NPC] Farmer§f: Could you gather some Wheat from my farm and bring it back to me so that I can feed her? Poor thing."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("spoke-again").lines(new String[]{
+                                "§e[NPC] Farmer§f: Thank you so much!",
+                                "§e[NPC] Farmer§f: My Farm is yours to harvest! Wheat is a valuable resource to collect, you can unlock many cool things by collecting it."
+                        }).build()
+        ).stream().toArray(DialogueSet[]::new);
     }
 
 }
