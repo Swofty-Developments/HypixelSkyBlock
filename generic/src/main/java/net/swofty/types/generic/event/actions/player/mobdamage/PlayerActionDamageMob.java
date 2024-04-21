@@ -1,5 +1,7 @@
 package net.swofty.types.generic.event.actions.player.mobdamage;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
@@ -58,6 +60,12 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
                 .pos(targetEntity.getPosition())
                 .critical(critical)
                 .display(targetEntity.getInstance());
+
+        if(mob.getEntityType() == EntityType.ZOMBIE){
+            player.playSound(Sound.sound(Key.key("entity.zombie.hurt"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+        }else if(mob.getEntityType() == EntityType.WOLF){
+            player.playSound(Sound.sound(Key.key("entity.wolf.hurt"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+        }
 
         targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
     }

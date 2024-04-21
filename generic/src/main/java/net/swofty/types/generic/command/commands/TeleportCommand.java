@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "tp",
         description = "teleports to a player",
-        usage = "/teleport",
+        usage = "/teleport <player>",
         permission = Rank.HELPER,
         allowsConsole = false)
 public class TeleportCommand extends SkyBlockCommand {
@@ -20,6 +20,7 @@ public class TeleportCommand extends SkyBlockCommand {
     public void run(MinestomCommand command) {
         ArgumentEntity entityArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true);
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             final Player target = context.get(entityArgument).findFirstPlayer(sender);
 
@@ -28,6 +29,6 @@ public class TeleportCommand extends SkyBlockCommand {
                 return;
             }
             player.teleport(target.getPosition());
-        });
+        }, entityArgument);
     }
 }

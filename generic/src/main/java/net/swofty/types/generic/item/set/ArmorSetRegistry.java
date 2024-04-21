@@ -5,10 +5,14 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.sets.LeafletSet;
 import net.swofty.types.generic.item.set.sets.MinerOutfitSet;
+import net.swofty.types.generic.item.set.sets.StrongDragonSet;
+import net.swofty.types.generic.item.set.sets.YoungDragonSet;
 
 @Getter
 public enum ArmorSetRegistry {
     LEAFLET(LeafletSet.class, ItemType.LEAFLET_SANDALS, ItemType.LEAFLET_PANTS, ItemType.LEAFLET_TUNIC, ItemType.LEAFLET_HAT),
+    STRONG_DRAGON(StrongDragonSet.class, ItemType.STRONG_DRAGON_BOOTS, ItemType.STRONG_DRAGON_LEGGINGS, ItemType.STRONG_DRAGON_CHESTPLATE, ItemType.STRONG_DRAGON_HELMET),
+    YOUNG_DRAGON(YoungDragonSet.class, ItemType.YOUNG_DRAGON_BOOTS, ItemType.YOUNG_DRAGON_LEGGINGS, ItemType.YOUNG_DRAGON_CHESTPLATE, ItemType.YOUNG_DRAGON_HELMET),
     MINOR_OUTFIT(MinerOutfitSet.class, ItemType.MINERS_OUTFIT_BOOTS, ItemType.MINERS_OUTFIT_LEGGINGS, ItemType.MINERS_OUTFIT_CHESTPLATE, ItemType.MINERS_OUTFIT_HELMET),
     ;
 

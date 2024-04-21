@@ -346,6 +346,8 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         + StringUtility.commaify(sellPrice) + " Coin" + (sellPrice != 1 ? "s" : "") + "§a!"
         );
 
+        getPlayer().playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1f, 2f), Sound.Emitter.self());
+
         getPlayer().getInventory().setItemStack(e.getSlot(), ItemStack.AIR);
         updateThis(getPlayer());
     }

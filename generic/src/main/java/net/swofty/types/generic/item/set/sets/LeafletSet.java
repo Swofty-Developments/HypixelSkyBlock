@@ -7,6 +7,9 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
@@ -15,6 +18,7 @@ public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
 
     @Override
     public void run(ValueUpdateEvent event) {
+
         float value = (float) event.getValue();
 
         if (!isWearingSet(event.getPlayer())) return;
@@ -34,7 +38,9 @@ public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     }
 
     @Override
-    public String getDescription() {
-        return "§7While in a Forest zone you regain §c55.0 Health §7every second.";
+    public List<String> getDescription() {
+        return Arrays.asList(
+                "§7While in a Forest zone you regain",
+                "§c55.0 Health §7every second.");
     }
 }

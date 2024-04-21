@@ -568,7 +568,7 @@ public class SkyBlockPlayer extends Player {
         DatapointDouble coins = getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
         coins.setValue(coins.getValue() / 2);
 
-        playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
+        playSound(Sound.sound(Key.key("entity.zombie.attack_iron_door"), Sound.Source.PLAYER, 1f, 2f), Sound.Emitter.self());
 
         sendMessage("§cYou died and lost " + StringUtility.decimalify(coins.getValue()) + " coins!");
 

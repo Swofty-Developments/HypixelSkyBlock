@@ -69,7 +69,7 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
         return ItemStatistics.builder()
                 .withAdditive(ItemStatistic.HEALTH, 120D)
                 .withAdditive(ItemStatistic.DAMAGE, 24D)
-                .withAdditive(ItemStatistic.SPEED, 100D)
+                .withAdditive(ItemStatistic.SPEED, 150D)
                 .build();
     }
 
@@ -79,8 +79,10 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
             @Override
             public @NonNull List<LootRecord> getLootTable() {
                 return List.of(
-                        new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20)
-                );
+                        new LootRecord(ItemType.ROTTEN_FLESH, 1, 100),
+                        new LootRecord(ItemType.POISONOUS_POTATO, 1, 2),
+                        new LootRecord(ItemType.POTATO, 1, 1),
+                        new LootRecord(ItemType.CARROT, 1, 1));
             }
 
             @Override
@@ -98,6 +100,11 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     @Override
     public long damageCooldown() {
         return 500;
+    }
+
+    @Override
+    public Double getCoins() {
+        return 1D;
     }
 
     @Override

@@ -47,6 +47,15 @@ import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
 import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
+import net.swofty.types.generic.item.items.end.armor.strongdragon.StrongDragonBoots;
+import net.swofty.types.generic.item.items.end.armor.strongdragon.StrongDragonChestplate;
+import net.swofty.types.generic.item.items.end.armor.strongdragon.StrongDragonHelmet;
+import net.swofty.types.generic.item.items.end.armor.strongdragon.StrongDragonLeggings;
+import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonBoots;
+import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonChestplate;
+import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonHelmet;
+import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonLeggings;
+import net.swofty.types.generic.item.items.end.fragments.*;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -791,6 +800,26 @@ public enum ItemType {
     DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.UNCOMMON, DiamondLeggings.class),
     DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, DiamondBoots.class),
     APPLE(Material.APPLE, Rarity.COMMON),
+
+    /**
+     * The End Items
+     */
+    STRONG_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, StrongDragonFragment.class),
+    SUPERIOR_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, SuperiorDragonFragment.class),
+    UNSTABLE_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, UnstableDragonFragment.class),
+    WISE_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, WiseDragonFragment.class),
+    YOUNG_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, YoungDragonFragment.class),
+    PROTECTOR_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, ProtectorDragonFragment.class),
+    OLD_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, OldDragonFragment.class),
+    HOLY_DRAGON_FRAGMENT(Material.PLAYER_HEAD, Rarity.EPIC, HolyDragonFragment.class),
+    STRONG_DRAGON_HELMET(Material.PLAYER_HEAD, Rarity.LEGENDARY, StrongDragonHelmet.class),
+    STRONG_DRAGON_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, StrongDragonChestplate.class),
+    STRONG_DRAGON_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, StrongDragonLeggings.class),
+    STRONG_DRAGON_BOOTS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, StrongDragonBoots.class),
+    YOUNG_DRAGON_HELMET(Material.PLAYER_HEAD, Rarity.LEGENDARY, YoungDragonHelmet.class),
+    YOUNG_DRAGON_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, YoungDragonChestplate.class),
+    YOUNG_DRAGON_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, YoungDragonLeggings.class),
+    YOUNG_DRAGON_BOOTS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, YoungDragonBoots.class),
 
 
     /**

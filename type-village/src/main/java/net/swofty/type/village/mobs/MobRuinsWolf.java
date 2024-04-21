@@ -79,7 +79,7 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
             @Override
             public @NonNull List<LootRecord> getLootTable() {
                 return List.of(
-                        new LootRecord(ItemType.BONE, makeAmountBetween(1, 3), 20)
+                        new LootRecord(ItemType.BONE, 1, 100)
                 );
             }
 
@@ -101,6 +101,11 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
+    public Double getCoins() {
+        return 1D;
+    }
+
+    @Override
     public List<Populator> getPopulators() {
         return Arrays.asList(
                 new Populator(RegionType.RUINS, 20)
@@ -109,6 +114,6 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
 
     @Override
     public long getSkillXP() {
-        return 10;
+        return 15;
     }
 }

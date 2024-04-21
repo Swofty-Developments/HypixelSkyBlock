@@ -21,17 +21,8 @@
         <option value="$PROJECT_DIR$/dungeons/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/bungee/pom.xml" />
-        <option value="$PROJECT_DIR$/profiler/pom.xml" />
-        <option value="$PROJECT_DIR$/proxy/module/pom.xml" />
-        <option value="$PROJECT_DIR$/proxy/pom.xml" />
-      </set>
-    </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

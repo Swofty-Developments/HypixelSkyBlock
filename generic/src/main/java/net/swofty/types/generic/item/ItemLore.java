@@ -198,8 +198,9 @@ public class ItemLore {
                 }
 
                 addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/4)");
-                for (String line : StringUtility.splitByWordAndLength(armorSet.getDescription(), 36))
-                    addLoreLine("§7" + line);
+                for(String line : armorSet.getDescription()){
+                    addLoreLine(line);
+                }
                 addLoreLine(null);
             }
 

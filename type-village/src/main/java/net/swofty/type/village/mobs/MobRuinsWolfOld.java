@@ -67,7 +67,7 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
                 .withAdditive(ItemStatistic.HEALTH, 15000D)
-                .withAdditive(ItemStatistic.DAMAGE, 800D)
+                .withAdditive(ItemStatistic.DAMAGE, 720D)
                 .withAdditive(ItemStatistic.SPEED, 100D)
                 .build();
     }
@@ -97,6 +97,11 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     @Override
     public long damageCooldown() {
         return 500;
+    }
+
+    @Override
+    public Double getCoins() {
+        return 40D;
     }
 
     @Override

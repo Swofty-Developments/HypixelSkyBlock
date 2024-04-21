@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -33,6 +34,11 @@ public class StringUtility {
             }
         }
         return "Just now";
+    }
+
+    public static List<String> splitStringByNewLine(String input){
+        String[] lines = input.split("\\n");
+        return new ArrayList<>(Arrays.asList(lines));
     }
 
     public static String formatTimeWentBy(long millis) {

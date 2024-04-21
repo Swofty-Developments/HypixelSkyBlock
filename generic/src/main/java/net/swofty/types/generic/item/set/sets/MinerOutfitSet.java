@@ -9,6 +9,9 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MinerOutfitSet implements ArmorSet, SetEvents {
 
     @Override
@@ -17,8 +20,10 @@ public class MinerOutfitSet implements ArmorSet, SetEvents {
     }
 
     @Override
-    public String getDescription() {
-        return "§7Grants the wearer with §apermanent Haste II §7while worn.";
+    public List<String> getDescription() {
+        return Arrays.asList(
+                "§7Grants the wearer with §apermanent",
+                "§7Haste II §7while worn.");
     }
 
     @Override

@@ -18,7 +18,7 @@ public class SpeedTalisman implements Talisman, ConstantStatistics {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7");
+        return List.of();
     }
 
     @Override

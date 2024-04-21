@@ -2,6 +2,8 @@ package net.swofty.types.generic.entity.mob;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.attribute.Attribute;
 import net.minestom.server.coordinate.Point;
@@ -15,6 +17,8 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -29,6 +33,8 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
+import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,6 +80,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     public abstract String getDisplayName();
     public abstract Integer getLevel();
+    public abstract Double getCoins();
     public abstract List<GoalSelector> getGoalSelectors();
     public abstract List<TargetSelector> getTargetSelectors();
     public abstract ItemStatistics getBaseStatistics();
@@ -126,11 +133,18 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
+        if(getEntityType() == EntityType.ZOMBIE){
+            player.playSound(Sound.sound(Key.key("entity.zombie.death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+        }else if(getEntityType() == EntityType.WOLF){
+            player.playSound(Sound.sound(Key.key("entity.wolf.death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+        }
+
         player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
 
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
+        if (getCoins() == null) return;
 
         Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
             .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
@@ -144,6 +158,13 @@ public abstract class SkyBlockMob extends EntityCreature {
             DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
             droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }
+
+        DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
+        coins.setValue(coins.getValue() + getCoins());
+        player.setDisplayReplacement(StatisticDisplayReplacement.builder()
+                .ticksToLast(20)
+                .display(StringUtility.commaify(getCoins()))
+                .build(), StatisticDisplayReplacement.DisplayType.COINS);
     }
 
     public static void runRegionPopulators(Scheduler scheduler) {

@@ -68,7 +68,7 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
                 .withAdditive(ItemStatistic.HEALTH, 100D)
-                .withAdditive(ItemStatistic.DAMAGE, 5D)
+                .withAdditive(ItemStatistic.DAMAGE, 20D)
                 .withAdditive(ItemStatistic.SPEED, 100D)
                 .build();
     }
@@ -78,7 +78,11 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
         return new SkyBlockLootTable() {
             @Override
             public @NonNull List<LootRecord> getLootTable() {
-                return List.of(new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20));
+                return List.of(
+                        new LootRecord(ItemType.ROTTEN_FLESH, 1, 100),
+                        new LootRecord(ItemType.POISONOUS_POTATO, 1, 2),
+                        new LootRecord(ItemType.POTATO, 1, 1),
+                        new LootRecord(ItemType.CARROT, 1, 1));
             }
 
             @Override
@@ -101,6 +105,11 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
     @Override
     public long getSkillXP() {
         return 6;
+    }
+
+    @Override
+    public Double getCoins() {
+        return 1D;
     }
 
     @Override

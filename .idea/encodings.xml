@@ -1,101 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/bungee/api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/bootstrap/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/bootstrap/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/chat/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/chat/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/config/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/config/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/event/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/event/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/log/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/log/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-alert/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-alert/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-find/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-find/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-kick/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-kick/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-list/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-list/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-send/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-send/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/cmd-server/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/reconnect-yaml/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/reconnect-yaml/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/module/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/native/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/native/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/protocol/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/protocol/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/proxy/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/proxy/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/query/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/query/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/slf4j/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/slf4j/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/bungee/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commons/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commons/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dungeons/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dungeons/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/generic/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/generic/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/loader/commons-skyblock/src/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loader/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/loader/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/packer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/packer/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/profiler/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/profiler/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/proxy-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/proxy-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/bootstrap/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/bootstrap/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/chat/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/chat/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/config/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/config/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/event/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/event/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/log/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/log/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-alert/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-alert/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-find/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-find/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-kick/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-kick/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-list/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-list/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-send/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-send/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/cmd-server/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/reconnect-yaml/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/reconnect-yaml/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/module/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/native/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/native/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/protocol/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/protocol/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/proxy/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/proxy/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/query/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/query/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/slf4j/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/slf4j/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/proxy/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-auctionhouse/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-auctionhouse/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-bazaar/src/main/java" charset="UTF-8" />

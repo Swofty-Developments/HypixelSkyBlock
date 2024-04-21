@@ -18,16 +18,16 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 100D)
-                .withAdditive(ItemStatistic.HEALTH, 20D)
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
-                .withAdditive(ItemStatistic.SPEED, 50D)
+                .withAdditive(ItemStatistic.DAMAGE, 260D)
+                .withAdditive(ItemStatistic.STRENGTH, 150D)
+                .withAdditive(ItemStatistic.INTELLIGENCE, 350D)
+                .withAdditive(ItemStatistic.FEROCITY, 30D)
                 .build();
     }
 
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return new ArrayList<>(Arrays.asList("This item literally comes", "out of your mum and", "says §aHELLO §7lmao."));
+        return new ArrayList<>(Arrays.asList("§7Deals +§a50% §7damage to", "§7Withers. Grants §c+1 ❁ Damage", "§7and §a+2 §b✎ Intelligence", "§7per §cCatacombs §7level.", "", "§7Your Catacombs level: §c0"));
     }
 
     @Override

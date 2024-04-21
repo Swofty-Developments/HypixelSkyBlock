@@ -48,7 +48,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                             StringUtility.toNormalCase(statistic.name()) + " §f" +
-                            value + statistic.getSuffix());
+                            Math.round(value) + statistic.getSuffix());
                 });
 
                 lore.add("§e ");
