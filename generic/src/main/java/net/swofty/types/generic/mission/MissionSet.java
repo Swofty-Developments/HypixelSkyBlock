@@ -6,6 +6,9 @@ import net.swofty.types.generic.mission.missions.*;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.types.generic.mission.missions.lumber.MissionBreakOaklog;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjack;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +19,8 @@ public enum MissionSet {
     LIBRARY_CARD(MissionTalkToLibrarian.class),
     AUCTIONEER(MissionTalkToAuctionMaster.class),
     TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class),
-    TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class)
+    TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class),
+    TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;
