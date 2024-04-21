@@ -29,7 +29,7 @@ public class ActionPlayerFall extends SkyBlockEvent {
         Pos newPosition = playerEvent.getNewPosition();
         Pos currentPosition = player.getPosition();
 
-        if (player.isFlying() || player.isCreative()) {
+        if (player.isFlying() || player.isCreative() || player.isInLaunchpad()) {
             fallHeight.put(player, currentPosition.blockY());
             return;
         }
