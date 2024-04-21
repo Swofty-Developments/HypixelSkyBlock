@@ -7,6 +7,7 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.event.actions.player.ActionPlayerStrayTooFar;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -71,6 +72,7 @@ public class ActionPlayerClearCache extends SkyBlockEvent {
         CustomEventCaller.clearCache(player);
         NPCDialogue.remove(player);
         PlayerHolograms.remove(player);
+        ActionPlayerStrayTooFar.startedStray.remove(player.getUuid());
 
         // Remove external player holograms associated with the player
         PlayerHolograms.externalPlayerHolograms.entrySet().removeIf(entry -> {

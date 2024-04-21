@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 @Getter
 public enum LaunchPads {
-    VILLAGE_TO_FARMING(getSlimeBlocksNear(new Pos(79, 71, -185)), ServerType.ISLAND,
+    VILLAGE_TO_FARMING(getSlimeBlocksNear(new Pos(79, 71, -185)), ServerType.VILLAGE,
             new Pos(116.5, 74, -210.5), (player) -> {
                 player.sendTo(ServerType.FARMING_ISLANDS);
             }, (player) -> player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5,
@@ -45,6 +45,18 @@ public enum LaunchPads {
                             .build();
                 }
     }),
+    FARMING_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.FARMING_ISLANDS,
+            new Pos(74, 72, -180), (player) -> {
+                player.sendTo(ServerType.VILLAGE);
+            }, (player) -> true,
+            "",
+            (player) -> {
+                return PlayerHolograms.ExternalPlayerHologram.builder()
+                        .pos(new Pos(111.5, 71.7, -202.5))
+                        .player(player)
+                        .text(new String[]{"§bTravel To:", "§aThe Village"})
+                        .build();
+            });
     ;
 
     private static final List<LaunchPads> launchPads = new ArrayList<>();
@@ -71,12 +83,11 @@ public enum LaunchPads {
 
     public static void register(Scheduler scheduler) {
         launchPads.addAll(Arrays.asList(LaunchPads.values()));
+        launchPads.removeIf(launchPad -> launchPad.serverType != SkyBlockConst.getTypeLoader().getType());
         Map<UUID, PlayerHolograms.ExternalPlayerHologram> hologramMap = new HashMap<>();
 
         scheduler.scheduleTask(() -> {
             for (LaunchPads launchPad : launchPads) {
-                if (launchPad.serverType != SkyBlockConst.getTypeLoader().getType()) continue;
-
                 List<UUID> updated = new ArrayList<>();
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     if (hologramMap.containsKey(player.getUuid()))
@@ -94,8 +105,6 @@ public enum LaunchPads {
 
         scheduler.scheduleTask(() -> {
             for (LaunchPads launchPad : launchPads) {
-                if (launchPad.serverType != SkyBlockConst.getTypeLoader().getType()) continue;
-
                 for (Pos slimeBlock : launchPad.getSlimeBlocks()) {
                     SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                         if (slimeBlock.distance(player.getPosition()) <= 15) {

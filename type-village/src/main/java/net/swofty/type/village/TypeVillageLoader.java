@@ -102,7 +102,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
         return new LoaderValues(
                 (type) -> switch (type) {
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
-                    case FARMING_ISLANDS -> new Pos(-37.5, 70, -129.5, 0, 0);
+                    case FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
                 }, // Spawn position
                 true // Announce death messages
         );

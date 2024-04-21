@@ -6,6 +6,7 @@ import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.ServerType;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import org.bson.Document;
@@ -94,11 +95,13 @@ public record RegionDatabase(String id) implements MongoDB {
             int x2 = doc.getInteger("x2");
             int y2 = doc.getInteger("y2");
             int z2 = doc.getInteger("z2");
+            ServerType serverType = ServerType.valueOf(doc.getOrDefault("serverType", ServerType.VILLAGE.name()).toString());
             SkyBlockRegion region = new SkyBlockRegion(
                     name,
                     new Pos(x1, y1, z1),
                     new Pos(x2, y2, z2),
-                    type);
+                    type,
+                    serverType);
             regions.add(region);
         }
         return regions;

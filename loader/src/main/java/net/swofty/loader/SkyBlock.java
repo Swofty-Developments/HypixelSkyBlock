@@ -147,7 +147,6 @@ public class SkyBlock {
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
 
-
             RedisMessage.sendMessageToProxy(
                     "server-name", "",
                     SkyBlockConst::setServerName);

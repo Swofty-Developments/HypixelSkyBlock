@@ -1,6 +1,5 @@
 package net.swofty.types.generic.user.statistics;
 
-import com.mongodb.annotations.Immutable;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,8 +19,8 @@ public class ItemStatistics {
     }
 
     // Static method to create the builder
-    public static ItemStatisticsBuilder builder() {
-        return new ItemStatisticsBuilder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static ItemStatistics empty() { return ItemStatistics.builder().build(); }
@@ -58,7 +57,7 @@ public class ItemStatistics {
     }
 
     public static ItemStatistics fromString(String string) {
-        ItemStatisticsBuilder builder = ItemStatistics.builder();
+        Builder builder = ItemStatistics.builder();
 
         String[] statPairs = string.split(";");
         for (String statPair : statPairs) {
@@ -84,22 +83,22 @@ public class ItemStatistics {
     }
 
     // Builder class
-    public static class ItemStatisticsBuilder {
+    public static class Builder {
         private final Map<ItemStatistic, Double> statisticsAdditive = new EnumMap<>(ItemStatistic.class);
         private final Map<ItemStatistic, Double> statisticsMultiplicative = new EnumMap<>(ItemStatistic.class);
 
-        public ItemStatisticsBuilder withAdditive(ItemStatistic stat, Double value) {
+        public Builder withAdditive(ItemStatistic stat, Double value) {
             this.statisticsAdditive.put(stat, value);
             return this;
         }
 
-        public ItemStatisticsBuilder withMultiplicative(ItemStatistic stat, Double multiplicationValue) {
+        public Builder withMultiplicative(ItemStatistic stat, Double multiplicationValue) {
             if (multiplicationValue < 1) multiplicationValue = 1.0;
             this.statisticsMultiplicative.put(stat, 1 - multiplicationValue);
             return this;
         }
 
-        public ItemStatisticsBuilder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
+        public Builder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
             if (multiplicationValuePercentage < 0) multiplicationValuePercentage = 0.0;
             this.statisticsMultiplicative.put(stat, 1 - (multiplicationValuePercentage / 100));
             return this;
