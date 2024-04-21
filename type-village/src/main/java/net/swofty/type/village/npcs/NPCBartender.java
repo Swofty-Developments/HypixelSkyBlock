@@ -4,8 +4,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopBartender;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.missions.MissionKillZombies;
+import net.swofty.types.generic.mission.missions.MissionTalkToBartender;
 
 import java.util.stream.Stream;
 
@@ -42,13 +42,22 @@ public class NPCBartender extends NPCDialogue {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class)) {
-            setDialogue(e.player(), "quest-talk");
+        if (!e.player().getMissionData().hasCompleted(MissionKillZombies.class)) {
+            if (isInDialogue(e.player())) return;
+            if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class))
+                setDialogue(e.player(), "quest-talk");
+            else
+                setDialogue(e.player(), "quest-hello").thenRun(() -> {
+                    e.player().getMissionData().startMission(MissionKillZombies.class);
+                });
             return;
         }
-        setDialogue(e.player(), "quest-hello");
-        MissionData data = e.player().getMissionData();
-        data.startMission(MissionKillZombies.class);
+        if (!e.player().getMissionData().hasCompleted(MissionTalkToBartender.class)) {
+            if (isInDialogue(e.player())) return;
+            setDialogue(e.player(), "quest-complete").thenRun(() -> {
+                e.player().getMissionData().endMission(MissionTalkToBartender.class);
+            });
+        }
         new GUIShopBartender().open(e.player());
     }
 
@@ -57,13 +66,20 @@ public class NPCBartender extends NPCDialogue {
         return Stream.of(
                 DialogueSet.builder()
                         .key("quest-hello").lines(new String[]{
-                                "§e[NPC] Bartender: §fWelcome to the Bar, friend!",
-                                "§e[NPC] Bartender: §fThese are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
-                                "§e[NPC] Bartender: §fCould you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
+                                "§e[NPC] Bartender§f: Welcome to the Bar, friend!",
+                                "§e[NPC] Bartender§f: These are trying times, indeed. The §cGraveyard §fis overflowing with monsters! Anyone who comes in is spooked off by the grunts of zombies in the distance.",
+                                "§e[NPC] Bartender§f: Could you give me a hand? If you help clear out some of these monsters, I'll pay you for it."
                         }).build(),
                 DialogueSet.builder()
                         .key("quest-talk").lines(new String[]{
-                                "§e[NPC] Bartender: §fClear out some more of those Zombies and I'll pay you greatly for it!"
+                                "§e[NPC] Bartender§f: Clear out some more of those Zombies and I'll pay you greatly for it!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("quest-complete").lines(new String[]{
+                                "§e[NPC] Bartender§f: Words cannot describe how thankful I am!",
+                                "§e[NPC] Bartender§f: That whole area is very dangerous, but can be quite rewarding for a warrior such as yourself.",
+                                "§e[NPC] Bartender§f: If you're up for the challenge, both the §cGraveyard§f and the §cSpider's Den §fbeyond it are great training grounds for improving your §aCombat Skill§f.",
+                                "§e[NPC] Bartender§f: For now, here's a reward for helping me out!"
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }

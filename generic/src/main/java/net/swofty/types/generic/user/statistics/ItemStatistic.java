@@ -2,8 +2,6 @@ package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
 import lombok.NonNull;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -18,8 +16,8 @@ public enum ItemStatistic {
             true, "☣", 30D, 0D),
     CRIT_DAMAGE("Crit Damage", "§c", "§9",
             true, "☠", 50D, 0D),
-    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", false, "⚔"),
-    ABILITY_DAMAGE("Ability Damage", "§c", "§c", false, "๑"),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", true, "⚔"),
+    ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑"),
     TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
     FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
     HEALTH_REGEN("Health Regen", "§a", "§c",
@@ -39,13 +37,12 @@ public enum ItemStatistic {
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
 
     // Misc Stats
-    SPEED("Speed", "§a", "§f",
-            true, "✦", 100D, 0D),
-    MAGIC_FIND("Magic Find", "§a", "§b", true, "✯"),
+    SPEED("Speed", "§a", "§f", false, "✦", 100D, 0D),
+    MAGIC_FIND("Magic Find", "§a", "§b", false, "✯"),
     PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
     SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 0D),
     FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
-    BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", false, "ൠ"),
+    BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",
