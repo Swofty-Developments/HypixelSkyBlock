@@ -1,5 +1,7 @@
 package net.swofty.types.generic.event.actions.player.mobdamage;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
@@ -49,6 +51,8 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
             mob = skyBlockMob;
         else return;
         LivingEntity targetLivingEntity = (LivingEntity) targetEntity;
+
+        player.playSound(Sound.sound(Key.key("entity." + mob.getEntityType().name().toLowerCase().replace("minecraft:", "") + ".hurt"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 
         ItemStatistics entityStats = mob.getStatistics();
         Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, targetLivingEntity);
