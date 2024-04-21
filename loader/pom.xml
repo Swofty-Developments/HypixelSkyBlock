@@ -56,6 +56,11 @@
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
+            <artifactId>type.farmingislands</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.swofty</groupId>
             <artifactId>generic</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

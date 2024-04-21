@@ -12,6 +12,9 @@ public class BalanceConfigurations {
             ServerType.VILLAGE, List.of(
                     new LowestPlayerCount()
             ),
+            ServerType.FARMING_ISLANDS, List.of(
+                    new LowestPlayerCount()
+            ),
             ServerType.ISLAND, List.of(
                     new IslandCheck(),
                     new LowestPlayerCount()

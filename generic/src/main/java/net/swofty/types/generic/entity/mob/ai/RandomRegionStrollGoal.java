@@ -79,7 +79,7 @@ public class RandomRegionStrollGoal extends GoalSelector {
 
                 if (entityCreature.getInstance() != null) {
                     if (!entityCreature.getInstance().isChunkLoaded(new Pos(entityX, y, entityZ)))
-                        entityCreature.getInstance().loadChunk(new Pos(entityX, y, entityZ));
+                        entityCreature.getInstance().loadChunk(new Pos(entityX, y, entityZ)).join();
                     Block block = entityCreature.getInstance().getBlock(entityX, y, entityZ);
 
                     if (!block.isAir()) continue;

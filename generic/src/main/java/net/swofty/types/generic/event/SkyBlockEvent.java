@@ -64,7 +64,15 @@ public abstract class SkyBlockEvent {
 
     public static void register(GlobalEventHandler eventHandler) {
         cachedCustomEvents.forEach(skyBlockEvent -> {
-            customEventNode.addListener(skyBlockEvent.getEvent(), skyBlockEvent::run);
+            try {
+                customEventNode.addListener(skyBlockEvent.getEvent(), skyBlockEvent::run);
+            } catch (Exception e) {
+                if (skyBlockEvent instanceof SkyBlockMission mission) {
+                    if (mission.hasNoEvent()) return;
+                }
+                Logger.error("Error occurred while registering custom event " + skyBlockEvent.getClass().getSimpleName());
+                e.printStackTrace();
+            }
         });
 
         cachedEvents.forEach((eventNode, skyBlockEvents) -> {

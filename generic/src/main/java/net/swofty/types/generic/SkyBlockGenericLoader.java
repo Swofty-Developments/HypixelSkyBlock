@@ -73,6 +73,7 @@ import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
+import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.StringUtility;
 import org.reflections.Reflections;
@@ -109,6 +110,13 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockConst.setEmptyInstance(instanceManager.createSharedInstance(instanceManager.createInstanceContainer()));
         SkyBlockConst.getEmptyInstance().setBlock(0, 99, 0, Block.BEDROCK);
         SkyBlockConst.setEventHandler(MinecraftServer.getGlobalEventHandler());
+
+        /**
+         * Setup launchpads
+         */
+        if (mainInstance != null) {
+            LaunchPads.register(MinecraftServer.getSchedulerManager());
+        }
 
         /**
          * Register database
@@ -460,6 +468,9 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
+            });
+            Thread.ofVirtual().start(() -> {
+                new ProxyPlayer(uuid).getOriginServer().thenAccept(player::setOriginServer);
             });
 
             if (RedisAuthenticate.toAuthenticate.contains(uuid)) {

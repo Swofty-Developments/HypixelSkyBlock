@@ -29,6 +29,6 @@ public class ActionChunkUnload extends SkyBlockEvent {
 
         if (SkyBlockConst.isIslandServer()) return;
 
-        instance.loadChunk(chunkX, chunkZ);
+        instance.loadChunk(chunkX, chunkZ).join();
     }
 }

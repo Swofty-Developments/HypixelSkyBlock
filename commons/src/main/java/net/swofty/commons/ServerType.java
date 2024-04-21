@@ -5,6 +5,7 @@ import lombok.Getter;
 public enum ServerType {
     ISLAND,
     VILLAGE,
+    FARMING_ISLANDS
     ;
 
     public static boolean isServerType(String type) {

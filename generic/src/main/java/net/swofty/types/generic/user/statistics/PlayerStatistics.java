@@ -305,7 +305,7 @@ public class PlayerStatistics {
 
             temporaryConditionalStatistics.removeIf(temporaryStatistic -> !temporaryStatistic.getExpiry().apply(player));
             for (TemporaryConditionalStatistic temporaryStatistic : temporaryConditionalStatistics) {
-                statistics = ItemStatistics.add(statistics, temporaryStatistic.getStatistics());
+                statistics = ItemStatistics.add(statistics, temporaryStatistic.getStatistics().apply(player));
             }
 
             return statistics;

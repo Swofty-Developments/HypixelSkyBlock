@@ -100,7 +100,10 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                new Pos(-2.5, 72.5, -69.5, 180, 0), // Spawn position
+                (type) -> switch (type) {
+                    default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
+                    case FARMING_ISLANDS -> new Pos(-37.5, 70, -129.5, 0, 0);
+                }, // Spawn position
                 true // Announce death messages
         );
     }

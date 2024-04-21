@@ -1,9 +1,8 @@
-package net.swofty.types.generic.event.actions.player;
+package net.swofty.types.generic.event.actions.player.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.commons.ServerType;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
@@ -12,7 +11,6 @@ import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -26,7 +24,7 @@ import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
 @EventParameters(description = "Runs on player quit",
         node = EventNodes.PLAYER,
         requireDataLoaded = false)
-public class ActionPlayerQuit extends SkyBlockEvent {
+public class ActionPlayerClearCache extends SkyBlockEvent {
 
     @Override
     public Class<? extends Event> getEvent() {
@@ -73,5 +71,15 @@ public class ActionPlayerQuit extends SkyBlockEvent {
         CustomEventCaller.clearCache(player);
         NPCDialogue.remove(player);
         PlayerHolograms.remove(player);
+
+        // Remove external player holograms associated with the player
+        PlayerHolograms.externalPlayerHolograms.entrySet().removeIf(entry -> {
+            PlayerHolograms.ExternalPlayerHologram hologram = entry.getKey();
+            if (hologram.getPlayer().equals(player)) {
+                PlayerHolograms.removeExternalPlayerHologram(hologram);
+                return true;
+            }
+            return false;
+        });
     }
 }

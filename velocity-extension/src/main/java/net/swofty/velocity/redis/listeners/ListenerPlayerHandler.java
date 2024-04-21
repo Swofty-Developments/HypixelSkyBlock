@@ -40,6 +40,7 @@ public class ListenerPlayerHandler extends RedisListener {
                 if (!GameManager.hasType(type) || TransferHandler.playersInLimbo.contains(player)) {
                     return "true";
                 }
+                TransferHandler.originCache.put(player.getUniqueId(), type);
 
                 new Thread(() -> {
                     List<GameManager.GameServer> gameServers = GameManager.getFromType(type);
@@ -69,6 +70,9 @@ public class ListenerPlayerHandler extends RedisListener {
             }
             case "version" -> {
                 return String.valueOf(Via.getAPI().getPlayerVersion(player.getUniqueId()));
+            }
+            case "originServer" -> {
+                return TransferHandler.originCache.getOrDefault(player.getUniqueId(), ServerType.ISLAND).name();
             }
             case "event" -> {
                 String event = json.getString("event");

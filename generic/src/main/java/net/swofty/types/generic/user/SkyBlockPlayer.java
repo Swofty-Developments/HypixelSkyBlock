@@ -80,6 +80,10 @@ public class SkyBlockPlayer extends Player {
     public boolean bypassBuild = false;
     @Setter
     public boolean isBankDelayed = false;
+    @Setter
+    private boolean inLaunchpad = false;
+    @Setter
+    private ServerType originServer = ServerType.VILLAGE;
 
     private StatisticDisplayReplacement manaDisplayReplacement = null;
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
@@ -485,21 +489,19 @@ public class SkyBlockPlayer extends Player {
         ProxyPlayer player = asProxyPlayer();
 
         if (type == SkyBlockConst.getTypeLoader().getType() && !force) {
-            this.teleport(SkyBlockConst.getTypeLoader().getLoaderValues().spawnPosition());
+            this.teleport(SkyBlockConst.getTypeLoader().getLoaderValues().spawnPosition().apply(originServer));
             return;
         }
 
         SkyBlockConst.getTypeLoader().getTablistManager().nullifyCache(this);
 
-        showTitle(Title.title(
+        /*showTitle(Title.title(
                 Component.text(SkyBlockTexture.FULL_SCREEN_BLACK.toString()),
                 Component.empty(),
                 Title.Times.times(Duration.ofSeconds(1), Duration.ofMillis(300), Duration.ZERO)
-        ));
+        ));*/
 
-        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-            player.transferTo(type);
-        }, TaskSchedule.tick(20), TaskSchedule.stop());
+        player.transferTo(type);
     }
 
     public double getTimeToMine(SkyBlockItem item, Block b) {

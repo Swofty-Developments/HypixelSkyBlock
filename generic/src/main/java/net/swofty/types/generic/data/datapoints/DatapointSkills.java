@@ -2,6 +2,8 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -114,6 +116,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                     getCumulative(category) + (getRaw(category) - value) + (value - getRaw(category))
             ));
             skills.put(category, value);
+            player.playSound(Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 2f), Sound.Emitter.self());
         }
 
         public static PlayerSkills getDefault() {

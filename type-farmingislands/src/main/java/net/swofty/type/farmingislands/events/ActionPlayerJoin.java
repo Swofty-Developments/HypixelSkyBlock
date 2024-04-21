@@ -1,4 +1,4 @@
-package net.swofty.type.village.events;
+package net.swofty.type.farmingislands.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
@@ -9,11 +9,10 @@ import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Sending a player to the hub",
+@EventParameters(description = "Sending a player to the farming islands",
         node = EventNodes.PLAYER,
         requireDataLoaded = false)
 public class ActionPlayerJoin extends SkyBlockEvent {
-
     @Override
     public Class<? extends Event> getEvent() {
         return AsyncPlayerConfigurationEvent.class;

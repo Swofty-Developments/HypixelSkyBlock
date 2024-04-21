@@ -18,6 +18,7 @@ import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public interface SkyBlockTypeLoader {
 
@@ -47,5 +48,5 @@ public interface SkyBlockTypeLoader {
 
     @Nullable CustomWorlds getMainInstance();
 
-    record LoaderValues(Pos spawnPosition, boolean announceDeathMessages) { }
+    record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) { }
 }
