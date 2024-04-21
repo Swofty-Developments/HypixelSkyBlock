@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopBartender;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.missions.MissionKillZombies;
 
 import java.util.stream.Stream;
@@ -42,13 +41,16 @@ public class NPCBartender extends NPCDialogue {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class)) {
-            setDialogue(e.player(), "quest-talk");
+        if (!e.player().getMissionData().hasCompleted(MissionKillZombies.class)) {
+            if (isInDialogue(e.player())) return;
+            if (e.player().getMissionData().isCurrentlyActive(MissionKillZombies.class))
+                setDialogue(e.player(), "quest-talk");
+            else
+                setDialogue(e.player(), "quest-hello").thenRun(() -> {
+                    e.player().getMissionData().startMission(MissionKillZombies.class);
+                });
             return;
         }
-        setDialogue(e.player(), "quest-hello");
-        MissionData data = e.player().getMissionData();
-        data.startMission(MissionKillZombies.class);
         new GUIShopBartender().open(e.player());
     }
 
