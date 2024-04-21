@@ -21,5 +21,7 @@ public class GUIShopAdventurer extends SkyBlockShopGUI {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GUNPOWDER), 1, new CoinShopPrice(10)));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ZOMBIE_TALISMAN), 1, new CoinShopPrice(500)));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.SKELETON_TALISMAN), 1, new CoinShopPrice(500)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.VILLAGE_AFFINITY_TALISMAN), 1, new CoinShopPrice(2500)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.MINE_AFFINITY_TALISMAN), 1, new CoinShopPrice(2500)));
     }
 }

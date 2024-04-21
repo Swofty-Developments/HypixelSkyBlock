@@ -16,22 +16,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@EventParameters(description = "Farming talisman ability",
+@EventParameters(description = "Mine Affinity Talisman ability",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)
-public class FarmingTalisman extends SkyBlockEvent implements Talisman {
+public class MineAffinityTalisman extends SkyBlockEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc";
+        return "d9563fdc4acab6db324b21bc43b238fe465e530a6327e7eef11d2d0c4ea";
     }
 
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Increases your §f✦ Speed §7by",
                 "§a+10 §7while held in the",
-                "§bFarm§7, §bThe Barn§7,",
-                "§eMushroom Dessert§7, and",
-                "§bGarden§7."
+                "§bMine§7, §6Gold Mine§7, §bDeep",
+                "§bCaverns§7, §2Dwarven Mines§7, and",
+                "§5Crystal Hollows§7."
         );
     }
 
@@ -45,9 +45,10 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
 
-        if (event.getTo() == null || !event.getTo().equals(RegionType.FARM) &&
-                !event.getTo().equals(RegionType.THE_BARN) &&
-                !event.getTo().equals(RegionType.MUSHROOM_DESERT) ||
+        if (event.getTo() == null || !event.getTo().equals(RegionType.COAL_MINE) &&
+                !event.getTo().equals(RegionType.GOLD_MINE) &&
+                !event.getTo().equals(RegionType.DEEP_CAVERN) &&
+                !event.getTo().equals(RegionType.DWARVEN_MINES) ||
                 player.getRegion() == null
         ) return;
         String region = player.getRegion().getName();

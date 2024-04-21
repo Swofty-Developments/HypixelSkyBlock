@@ -16,25 +16,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@EventParameters(description = "Farming talisman ability",
+@EventParameters(description = "Village Affinity Talisman ability",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)
-public class FarmingTalisman extends SkyBlockEvent implements Talisman {
-    @Override
-    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc";
-    }
-
-    @Override
-    public List<String> getTalismanDisplay() {
-        return List.of("§7Increases your §f✦ Speed §7by",
-                "§a+10 §7while held in the",
-                "§bFarm§7, §bThe Barn§7,",
-                "§eMushroom Dessert§7, and",
-                "§bGarden§7."
-        );
-    }
-
+public class VillageAffinityTalisman extends SkyBlockEvent implements Talisman {
     @Override
     public Class<? extends Event> getEvent() {
         return PlayerRegionChangeEvent.class;
@@ -45,10 +30,7 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
 
-        if (event.getTo() == null || !event.getTo().equals(RegionType.FARM) &&
-                !event.getTo().equals(RegionType.THE_BARN) &&
-                !event.getTo().equals(RegionType.MUSHROOM_DESERT) ||
-                player.getRegion() == null
+        if (event.getTo() == null || !event.getTo().equals(RegionType.VILLAGE) || player.getRegion() == null
         ) return;
         String region = player.getRegion().getName();
 
@@ -58,5 +40,18 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
                     return newPlayer.getRegion() != null && newPlayer.getRegion().getName().equals(region);
                 })
                 .build());
+    }
+
+    @Override
+    public List<String> getTalismanDisplay() {
+        return List.of("§7Increases your §f✦ Speed §7by",
+                "§a+10 §7while held in the",
+                "§bVillage§7."
+        );
+    }
+
+    @Override
+    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return "9c11d6c79b8a1f18902d783cdda4bdfb9d47337b73791028a126a6e6cf101def";
     }
 }
