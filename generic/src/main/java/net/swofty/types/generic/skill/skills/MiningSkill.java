@@ -70,17 +70,6 @@ public class MiningSkill extends SkillCategory {
                             public Double amountAdded() {
                                 return 4D;
                             }
-                        },
-                        new AdditiveStatisticReward() {
-                            @Override
-                            public ItemStatistic getStatistic() {
-                                return ItemStatistic.MINING_FORTUNE;
-                            }
-
-                            @Override
-                            public Double amountAdded() {
-                                return 4D;
-                            }
                         }
                 ),
                 new SkillReward(2, 125,

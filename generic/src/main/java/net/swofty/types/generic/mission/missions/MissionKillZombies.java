@@ -48,15 +48,16 @@ public class MissionKillZombies extends SkyBlockProgressMission {
 
     @Override
     public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+        mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        //TODO move bartender to the bar
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Combat XP"))).forEach(player::sendMessage);
         player.getSkills().setRaw(player, SkillCategories.COMBAT, player.getSkills().getRaw(SkillCategories.COMBAT) + 100);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
+        player.getMissionData().startMission(MissionTalkToBartender.class);
     }
 
     @Override

@@ -15,7 +15,8 @@ public enum MissionSet {
     SAVING_UP(MissionTalkToBanker.class, MissionDepositCoinsInBank.class),
     LIBRARY_CARD(MissionTalkToLibrarian.class),
     AUCTIONEER(MissionTalkToAuctionMaster.class),
-    TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class)
+    TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class),
+    TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class)
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;
