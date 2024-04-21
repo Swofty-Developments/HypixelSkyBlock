@@ -3,10 +3,11 @@ package net.swofty.types.generic.item.impl;
 import lombok.Getter;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface StandardItem extends ExtraRarityDisplay, Reforgable, Enchantable, Runeable {
+public interface StandardItem extends ExtraRarityDisplay, Reforgable, Enchantable, Runeable, HotPotatoable {
     @Override
     default String getExtraRarityDisplay() {
         return " " + getStandardItemType().getRarityDisplay();
@@ -30,6 +31,15 @@ public interface StandardItem extends ExtraRarityDisplay, Reforgable, Enchantabl
     @Override
     default RuneItem.RuneApplicableTo getRuneApplicableTo() {
         return getStandardItemType().getRuneApplicableTo();
+    }
+
+    @Override
+    default @Nullable PotatoType getHotPotatoType() {
+        return switch (getStandardItemType()) {
+            case SWORD -> PotatoType.WEAPONS;
+            case HELMET, CHESTPLATE, LEGGINGS, BOOTS -> PotatoType.ARMOR;
+            case HOE, PICKAXE -> null;
+        };
     }
 
     StandardItemType getStandardItemType();

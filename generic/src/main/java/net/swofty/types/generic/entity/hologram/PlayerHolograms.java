@@ -1,5 +1,7 @@
 package net.swofty.types.generic.entity.hologram;
 
+import lombok.Builder;
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -15,6 +17,7 @@ public enum PlayerHolograms {
     ;
 
     private static final HashMap<SkyBlockPlayer, List<Map.Entry<PlayerHolograms, HologramEntity>>> entities = new HashMap<>();
+    public static final Map<ExternalPlayerHologram, List<HologramEntity>> externalPlayerHolograms = new HashMap<>();
 
     private final Pos pos;
     private final Function<SkyBlockPlayer, String[]> displayFunction;
@@ -99,6 +102,31 @@ public enum PlayerHolograms {
         });
     }
 
+    public static void addExternalPlayerHologram(ExternalPlayerHologram hologram) {
+        List<HologramEntity> entities = new ArrayList<>();
+        double startY = hologram.text.length * 0.3 - 0.3;
+        for (int i = 0; i < hologram.text.length; i++) {
+            HologramEntity entity = new HologramEntity(hologram.text[i]);
+            entity.setInstance(SkyBlockConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
+            entity.addViewer(hologram.player);
+            entities.add(entity);
+        }
+
+        externalPlayerHolograms.put(hologram, entities);
+    }
+
+    public static void removeExternalPlayerHologram(ExternalPlayerHologram hologram) {
+        List<HologramEntity> entities = externalPlayerHolograms.get(hologram);
+        if (entities == null) return;
+
+        for (HologramEntity entity : entities) {
+            entity.removeViewer(hologram.player);
+            entity.remove();
+        }
+
+        externalPlayerHolograms.remove(hologram);
+    }
+
     public static void remove(SkyBlockPlayer skyBlockPlayer) {
         List<Map.Entry<PlayerHolograms, HologramEntity>> hologramEntries = entities.remove(skyBlockPlayer);
         if (hologramEntries != null) {
@@ -107,5 +135,13 @@ public enum PlayerHolograms {
                 entry.getValue().remove();
             }
         }
+    }
+
+    @Builder
+    @Getter
+    public static class ExternalPlayerHologram {
+        private final SkyBlockPlayer player;
+        private final Pos pos;
+        private final String[] text;
     }
 }

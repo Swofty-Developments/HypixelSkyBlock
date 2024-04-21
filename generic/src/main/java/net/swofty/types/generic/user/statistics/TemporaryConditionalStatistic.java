@@ -9,10 +9,10 @@ import java.util.function.Function;
 @Getter
 @Setter
 public class TemporaryConditionalStatistic {
-    private ItemStatistics statistics;
+    private Function<SkyBlockPlayer, ItemStatistics>  statistics;
     private Function<SkyBlockPlayer, Boolean> expiry;
 
-    public TemporaryConditionalStatistic(ItemStatistics statistics, Function<SkyBlockPlayer, Boolean> expiry) {
+    public TemporaryConditionalStatistic(Function<SkyBlockPlayer, ItemStatistics>  statistics, Function<SkyBlockPlayer, Boolean> expiry) {
         this.statistics = statistics;
         this.expiry = expiry;
     }
@@ -22,11 +22,10 @@ public class TemporaryConditionalStatistic {
     }
 
     public static class Builder {
-        private ItemStatistics statistics;
-        private Double value;
+        private Function<SkyBlockPlayer, ItemStatistics>  statistics;
         private Function<SkyBlockPlayer, Boolean> expiry;
 
-        public Builder withStatistics(ItemStatistics statistics) {
+        public Builder withStatistics(Function<SkyBlockPlayer, ItemStatistics> statistics) {
             this.statistics = statistics;
             return this;
         }

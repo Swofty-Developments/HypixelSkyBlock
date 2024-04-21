@@ -1,10 +1,14 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
 
-public class NPCNicole extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCNicole extends NPCDialogue {
 
     public NPCNicole() {
         super(new NPCParameters() {
@@ -37,7 +41,35 @@ public class NPCNicole extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        ItemType itemType = new SkyBlockItem(e.player().getItemInMainHand()).getAttributeHandler().getItemTypeAsType();
+        // check if the item is cheap coffee ItemType
+        if (itemType == ItemType.CHEAP_COFFEE || itemType == ItemType.DECENT_COFFEE || itemType == ItemType.BLACK_COFFEE) {
+            setDialogue(e.player(), "coffee-hello");
+        } else {
+            setDialogue(e.player(), "hello");
+        }
     }
 
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Books are mesmerizing.",
+                                "Their words offer permanence.",
+                                "Permanence is knowledge.",
+                                "Knowledge transcends time and space.",
+                                "Space is only a construct...",
+                                "§cWhew! §fI need some coffee!"
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
+                        .key("coffee-hello").lines(new String[]{
+                                "Thank you!",
+                                "§dElise §freally wanted this but she is shy.",
+                                "I'm selecting books for her.",
+                                "Anything to do with the §4Calamity §for the §dRiftway §fat the top of the mountain."
+                        }).build()
+        ).toArray(DialogueSet[]::new);
+    }
 }

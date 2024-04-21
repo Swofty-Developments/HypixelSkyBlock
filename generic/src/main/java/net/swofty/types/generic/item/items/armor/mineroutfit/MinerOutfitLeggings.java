@@ -10,7 +10,9 @@ public class MinerOutfitLeggings implements CustomSkyBlockItem, CustomDisplayNam
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.DEFENSE, 30D).build();
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.DEFENSE, 30D)
+                .build();
     }
 
     @Override

@@ -19,7 +19,7 @@ public enum Rank {
     MVP("§b[MVP] ", false, NamedTextColor.AQUA),
     VIP_PLUS("§a[VIP§6+§a] ", false, NamedTextColor.GREEN),
     VIP("§a[VIP] ", false, NamedTextColor.GREEN),
-    DEFAULT("§7 ", false, NamedTextColor.GRAY),
+    DEFAULT("§7", false, NamedTextColor.GRAY),
     ;
 
     private final String prefix;

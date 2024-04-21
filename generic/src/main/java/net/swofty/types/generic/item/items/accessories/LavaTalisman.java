@@ -20,6 +20,6 @@ public class LavaTalisman implements Talisman, NotFinishedYet {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "1c73b35c-ecd3-3f79-a79a-c68e72841b56";
+        return "c078f3f24b1760f9d4abb0851eb8f6c7dfff8855708e6049d15dc02042ba8436";
     }
 }

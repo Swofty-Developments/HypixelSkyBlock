@@ -11,6 +11,15 @@ import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
 import net.swofty.types.generic.item.items.armor.celeste.*;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoPants;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoPants;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoJacket;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoOxfords;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoPants;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitBoots;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitChestplate;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitHelmet;
@@ -25,6 +34,7 @@ import net.swofty.types.generic.item.items.armor.rosetta.*;
 import net.swofty.types.generic.item.items.armor.squire.*;
 import net.swofty.types.generic.item.items.armor.starlight.*;
 import net.swofty.types.generic.item.items.backpacks.*;
+import net.swofty.types.generic.item.items.brewing.*;
 import net.swofty.types.generic.item.items.combat.*;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.DaedalusAxe;
 import net.swofty.types.generic.item.items.combat.mythological.craftable.SwordOfRevelations;
@@ -56,6 +66,7 @@ import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonChes
 import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonHelmet;
 import net.swofty.types.generic.item.items.end.armor.youngdragon.YoungDragonLeggings;
 import net.swofty.types.generic.item.items.end.fragments.*;
+import net.swofty.types.generic.item.items.enchantment.HotPotatoBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -71,7 +82,6 @@ import net.swofty.types.generic.item.items.minion.upgrade.shipping.BudgetHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.shipping.EnchantedHopper;
 import net.swofty.types.generic.item.items.minion.upgrade.skin.BeeMinionSkin;
 import net.swofty.types.generic.item.items.miscellaneous.*;
-import net.swofty.types.generic.item.items.miscellaneous.bartender.*;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.pet.petitems.*;
@@ -108,6 +118,7 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
@@ -129,7 +140,7 @@ public enum ItemType {
     FARMING_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FarmingTalisman.class),
     LAVA_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, LavaTalisman.class),
     POTATO_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PotatoTalisman.class),
-    POWER_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, PowerTalisman.class),
+    TALISMAN_OF_POWER(Material.PLAYER_HEAD, Rarity.COMMON, TalismanOfPower.class),
     BAT_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, BatTalisman.class),
     FIRE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, FireTalisman.class),
     AUTO_RECOMBOBULATOR(Material.PLAYER_HEAD, Rarity.LEGENDARY, AutoRecombobulator.class),
@@ -190,7 +201,6 @@ public enum ItemType {
     /**
      * Minion Fuels
      */
-
     ENCHANTED_LAVA_BUCKET(Material.LAVA_BUCKET, Rarity.RARE, EnchantedLavaBucket.class),
     MAGMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, MagmaBucket.class),
     PLASMA_BUCKET(Material.LAVA_BUCKET, Rarity.LEGENDARY, PlasmaBucket.class),
@@ -416,7 +426,7 @@ public enum ItemType {
     SUBZERO_INVERTER(Material.PLAYER_HEAD, Rarity.LEGENDARY, SubzeroInverter.class),
 
     /**
-     * BartenderItem
+     * BrewingItem
      */
 
     CHEAP_COFFEE(Material.PLAYER_HEAD, Rarity.COMMON, CheapCoffee.class),
@@ -430,6 +440,7 @@ public enum ItemType {
     SPIDER_EGG_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, SpiderEggMixin.class),
     END_PORTAL_FUMES(Material.PLAYER_HEAD, Rarity.RARE, EndPortalFumes.class),
     GABAGOEY_MIXIN(Material.PLAYER_HEAD, Rarity.RARE, GabagoeyMixin.class),
+    BLACK_COFFEE(Material.PLAYER_HEAD, Rarity.RARE, BlackCoffee.class),
 
     /**
      * DungeonItem
@@ -503,6 +514,16 @@ public enum ItemType {
     STARLIGHT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.RARE, StarlightChestplate.class),
     STARLIGHT_LEGGINGS(Material.GOLDEN_LEGGINGS, Rarity.RARE, StarlightLeggings.class),
     STARLIGHT_BOOTS(Material.LEATHER_BOOTS, Rarity.RARE, StarlightBoots.class),
+    CHEAP_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.EPIC, CheapTuxedoJacket.class),
+    CHEAP_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.EPIC, CheapTuxedoPants.class),
+    CHEAP_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.EPIC, CheapTuxedoOxfords.class),
+    FANCY_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, FancyTuxedoJacket.class),
+    FANCY_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, FancyTuxedoPants.class),
+    FANCY_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, FancyTuxedoOxfords.class),
+    ELEGANT_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.MYTHIC, ElegantTuxedoJacket.class),
+    ELEGANT_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.MYTHIC, ElegantTuxedoPants.class),
+    ELEGANT_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.MYTHIC, ElegantTuxedoOxfords.class),
+
 
     /**
      * Pickaxes

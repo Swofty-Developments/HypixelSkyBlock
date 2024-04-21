@@ -7,6 +7,7 @@ import net.swofty.types.generic.item.set.sets.LeafletSet;
 import net.swofty.types.generic.item.set.sets.MinerOutfitSet;
 import net.swofty.types.generic.item.set.sets.StrongDragonSet;
 import net.swofty.types.generic.item.set.sets.YoungDragonSet;
+import net.swofty.types.generic.item.set.sets.*;
 
 @Getter
 public enum ArmorSetRegistry {
@@ -14,6 +15,9 @@ public enum ArmorSetRegistry {
     STRONG_DRAGON(StrongDragonSet.class, ItemType.STRONG_DRAGON_BOOTS, ItemType.STRONG_DRAGON_LEGGINGS, ItemType.STRONG_DRAGON_CHESTPLATE, ItemType.STRONG_DRAGON_HELMET),
     YOUNG_DRAGON(YoungDragonSet.class, ItemType.YOUNG_DRAGON_BOOTS, ItemType.YOUNG_DRAGON_LEGGINGS, ItemType.YOUNG_DRAGON_CHESTPLATE, ItemType.YOUNG_DRAGON_HELMET),
     MINOR_OUTFIT(MinerOutfitSet.class, ItemType.MINERS_OUTFIT_BOOTS, ItemType.MINERS_OUTFIT_LEGGINGS, ItemType.MINERS_OUTFIT_CHESTPLATE, ItemType.MINERS_OUTFIT_HELMET),
+    CHEAP_TUXEDO(CheapTuxedoSet.class, ItemType.CHEAP_TUXEDO_OXFORDS, ItemType.CHEAP_TUXEDO_PANTS, ItemType.CHEAP_TUXEDO_JACKET, null),
+    FANCY_TUXEDO(FancyTuxedoSet.class, ItemType.FANCY_TUXEDO_OXFORDS, ItemType.FANCY_TUXEDO_PANTS, ItemType.FANCY_TUXEDO_JACKET, null),
+    ELEGANT_TUXEDO(ElegantTuxedoSet.class, ItemType.ELEGANT_TUXEDO_OXFORDS, ItemType.ELEGANT_TUXEDO_PANTS, ItemType.ELEGANT_TUXEDO_JACKET, null)
     ;
 
     private final Class<? extends ArmorSet> clazz;

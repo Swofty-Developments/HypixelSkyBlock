@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.miscellaneous.bartender;
+package net.swofty.types.generic.item.items.brewing;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class EndPortalFumes implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName, NotFinishedYet {
+public class SpiderEggMixin implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -18,16 +18,25 @@ public class EndPortalFumes implements CustomSkyBlockItem, DecorationHead, Extra
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Mixins provide a buff that can be", "§7added to §cGod Potions§7 in a brewing",
-                "§7stand and lasts for the full duration.", "", "§7⸎ Soulflow conversions provide",
-                "§7+30% more ʬ Overflow", "", "§7Duration: §a36h", "+§a36h§7 Default", "", "§7The duration of Mixins can be stacked!",
-                "", "§eRight-click to consume!", "§8(Requires active Booster Cookie)", "", "§c☠§7 Requires §dEnderman Slayer 8§7."
+                "§7Mixins provide a buff that can be",
+                "§7added to §cGod Potions§7 in a brewing",
+                "§7stand and lasts for the full duration.",
+                "",
+                "§7Gain §a5%§7 dodge chance!",
+                "", "§7Duration: §a36h",
+                "+§a36h§7 Default",
+                "",
+                "§7The duration of Mixins can be stacked!",
+                "§eRight-click to consume!",
+                "§8(Requires active Booster Cookie)",
+                "",
+                "§c☠§7 Requires §dSpider Slayer 8§7."
         ));
     }
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "12ccb84f9c0cbb2eb7b9abbb7a4fc7b3186150d5e7db01852ac6d495de17e812";
+        return "a5ac5e39ea511af1e7ab1c5956d1615f7ebb6f226a4ed3394c6a0b4c6a6d106f";
     }
 
     @Override
@@ -37,6 +46,6 @@ public class EndPortalFumes implements CustomSkyBlockItem, DecorationHead, Extra
 
     @Override
     public String getDisplayName(@Nullable SkyBlockItem item) {
-        return "Bitter Iced Tea";
+        return "Spider Egg Mixin";
     }
 }

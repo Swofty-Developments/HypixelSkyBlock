@@ -23,13 +23,13 @@ public class ActionPlayerJoin extends SkyBlockEvent {
     @Override
     public void run(Event event) {
         AsyncPlayerConfigurationEvent playerLoginEvent = (AsyncPlayerConfigurationEvent) event;
-
         final SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
 
         playerLoginEvent.setSpawningInstance(SkyBlockConst.getInstanceContainer());
-
-        player.setRespawnPoint(SkyBlockConst.getTypeLoader().getLoaderValues().spawnPosition());
-
-
+        player.setRespawnPoint(SkyBlockConst.getTypeLoader()
+                .getLoaderValues()
+                .spawnPosition()
+                .apply(player.getOriginServer())
+        );
     }
 }

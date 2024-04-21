@@ -50,7 +50,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                new Pos(0, 100 ,0), // Spawn position
+                (type) -> new Pos(0, 100 ,0), // Spawn position
                 true // Announce death messages
         );
     }

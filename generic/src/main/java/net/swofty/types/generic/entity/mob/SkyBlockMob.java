@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.attribute.Attribute;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -104,20 +105,18 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         setHasBeenDamaged(true);
 
-        Point sourcePoint = damage.getSourcePosition();
+        Entity sourcePoint = damage.getSource();
         if (sourcePoint != null) {
-            double x = sourcePoint.x() - getPosition().x();
-            double z = sourcePoint.z() - getPosition().z();
-            double distance = Math.sqrt(x * x + z * z);
-            double knockback = -3;
-            setVelocity(new Vec(x / distance * knockback, 1, z / distance * knockback));
+            takeKnockback(0.4f,
+                    Math.sin(sourcePoint.getPosition().yaw() * Math.PI / 180),
+                    -Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
         }
 
         this.setCustomName(Component.text(
-            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                + " §a" + Math.round(getHealth())
-                + "§f/§a"
-                + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
+                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                        + " §a" + Math.round(getHealth())
+                        + "§f/§a"
+                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
         ));
 
         return toReturn;

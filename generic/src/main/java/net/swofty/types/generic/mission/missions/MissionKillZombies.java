@@ -5,15 +5,14 @@ import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @EventParameters(description = "Kill Zombies mission",
         node = EventNodes.CUSTOM,
@@ -49,12 +48,16 @@ public class MissionKillZombies extends SkyBlockProgressMission {
 
     @Override
     public Map<String, Object> onStart(SkyBlockPlayer player, MissionData.ActiveMission mission) {
+        mission.getNewObjectiveText().forEach(player::sendMessage);
         return new HashMap<>();
     }
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        //TODO move bartender to the bar
+        mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Combat XP"))).forEach(player::sendMessage);
+        player.getSkills().setRaw(player, SkillCategories.COMBAT, player.getSkills().getRaw(SkillCategories.COMBAT) + 100);
+        player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
+        player.getMissionData().startMission(MissionTalkToBartender.class);
     }
 
     @Override
@@ -63,7 +66,12 @@ public class MissionKillZombies extends SkyBlockProgressMission {
     }
 
     @Override
+    public Double getAttachedSkyBlockXP() {
+        return 5D;
+    }
+
+    @Override
     public int getMaxProgress() {
-        return 12;
+        return 10;
     }
 }

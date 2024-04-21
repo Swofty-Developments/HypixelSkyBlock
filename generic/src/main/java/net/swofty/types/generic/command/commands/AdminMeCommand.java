@@ -36,28 +36,31 @@ public class AdminMeCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            UUID realUUID = player.getUuid();
-            UUID crackedUUID = UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{player.getName()}").getBytes(StandardCharsets.UTF_8));
+            sender.sendMessage("§8Running checks...");
+            Thread.startVirtualThread(() -> {
+                SkyBlockPlayer player = (SkyBlockPlayer) sender;
+                UUID realUUID = player.getUuid();
+                UUID crackedUUID = UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{player.getName()}").getBytes(StandardCharsets.UTF_8));
 
-            List<UUID> adminUUIDs = new ArrayList<>();
-            ADMIN_LIST.forEach(admin -> adminUUIDs.add(UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{admin}").getBytes(StandardCharsets.UTF_8))));
-            ADMIN_LIST.forEach(admin -> {
-                try {
-                    adminUUIDs.add(MojangUtils.getUUID(admin));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                List<UUID> adminUUIDs = new ArrayList<>();
+                ADMIN_LIST.forEach(admin -> adminUUIDs.add(UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{admin}").getBytes(StandardCharsets.UTF_8))));
+                ADMIN_LIST.forEach(admin -> {
+                    try {
+                        adminUUIDs.add(MojangUtils.getUUID(admin));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                if (!adminUUIDs.contains(realUUID) && !adminUUIDs.contains(crackedUUID)) {
+                    sender.sendMessage("§cYou are not allowed to use this command.");
+                    return;
                 }
+
+                player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).setValue(Rank.ADMIN);
+
+                sender.sendMessage("§aSuccessfully set rank to §c[ADMIN]§a.");
             });
-
-            if (!adminUUIDs.contains(realUUID) && !adminUUIDs.contains(crackedUUID)) {
-                sender.sendMessage("§cYou are not allowed to use this command.");
-                return;
-            }
-
-            player.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).setValue(Rank.ADMIN);
-
-            sender.sendMessage("§aSuccessfully set rank to §c[ADMIN]§a.");
         });
     }
 }

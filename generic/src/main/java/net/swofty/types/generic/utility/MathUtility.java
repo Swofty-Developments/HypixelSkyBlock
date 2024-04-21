@@ -42,6 +42,34 @@ public class MathUtility {
         MinecraftServer.getSchedulerManager().scheduleTask(runnable, TaskSchedule.tick(ticks), TaskSchedule.stop());
     }
 
+    public static long ticksToMilliseconds(long ticks) {
+        return ticks * 50;
+    }
+
+    public static List<Pos> bezierCurve(Pos start, Pos end, int segments) {
+        Pos loc = new Pos((start.x() + end.x()) / 2.0, (start.y() + end.y()) / 2.0, (start.z() + end.z()) / 2);
+        List<Pos> curve = actualCurve(segments, start, new Pos(loc).add(0, 50, 0), end);
+        return curve;
+    }
+
+    public static List<Pos> actualCurve(int segmentCount, Pos p0, Pos p1, Pos p2) {
+        List<Pos> points = new ArrayList<>();
+        for (int i = 1; i < segmentCount; i++) {
+            float t = i / (float) segmentCount;
+            points.add(bezierPoint(t, p0, p1, p2));
+        }
+        return points;
+    }
+
+    public static Pos bezierPoint(float t, Pos p0, Pos p1, Pos p2) {
+        float a = (1 - t) * (1 - t);
+        float b = 2 * (1 - t) * t;
+        float c = t * t;
+
+        Pos p = new Pos(p0).mul(a).add(new Pos(p1).mul(b)).add(new Pos(p2).mul(c));
+        return p;
+    }
+
     public static List<Pos> getNearbyBlocks(Instance instance, Pos pos, int range, Block block) {
         List<Pos> blocks = new ArrayList<>();
         for (int x = pos.blockX() - range; x <= pos.blockX() + range; x++) {

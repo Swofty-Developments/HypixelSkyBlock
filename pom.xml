@@ -23,6 +23,7 @@
         <module>spark</module>
         <module>loader</module>
 
+        <module>type-farmingislands</module>
         <module>type-island</module>
         <module>type-village</module>
 
