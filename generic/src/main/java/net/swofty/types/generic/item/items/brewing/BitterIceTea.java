@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.miscellaneous.bartender;
+package net.swofty.types.generic.item.items.brewing;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -18,8 +18,12 @@ public class BitterIceTea implements CustomSkyBlockItem, DecorationHead, ExtraUn
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Use this item in place of an", "§7Awkward Potion for certain", "§7potions.",
-                "", "§7Buffs the §b✎ Mana§7 and §bExperience", "§7values of potions by §a+20%§7."
+                "§7Use this item in place of an",
+                "§7Awkward Potion for certain",
+                "§7potions.",
+                "",
+                "§7Buffs the §b✎ Mana§7 and §bExperience",
+                "§7values of potions by §a+20%§7."
         ));
     }
 

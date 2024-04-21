@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.miscellaneous.bartender;
+package net.swofty.types.generic.item.items.brewing;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -18,10 +18,22 @@ public class GabagoeyMixin implements CustomSkyBlockItem, DecorationHead, ExtraU
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Mixins provide a buff that can be", "§7added to §cGod Potions§7 in a brewing",
-                "§7stand and lasts for the full duration.", "", "§7Increases your §f❂ True Defense§7 by",
-                "§a5%§7.", "", "§7Duration: §a36h", "+§a36h§7 Default", "", "§7The duration of Mixins can be stacked!",
-                "", "§eRight-click to consume!", "§8(Requires active Booster Cookie)", "", "§c☠§7 Requires §dBlaze Slayer 8§7."
+                "§7Mixins provide a buff that can be",
+                "§7added to §cGod Potions§7 in a brewing",
+                "§7stand and lasts for the full duration.",
+                "",
+                "§7Increases your §f❂ True Defense§7 by",
+                "§a5%§7.",
+                "",
+                "§7Duration: §a36h",
+                "+§a36h§7 Default",
+                "",
+                "§7The duration of Mixins can be stacked!",
+                "",
+                "§eRight-click to consume!",
+                "§8(Requires active Booster Cookie)",
+                "",
+                "§c☠§7 Requires §dBlaze Slayer 8§7."
         ));
     }
 
@@ -37,6 +49,6 @@ public class GabagoeyMixin implements CustomSkyBlockItem, DecorationHead, ExtraU
 
     @Override
     public String getDisplayName(@Nullable SkyBlockItem item) {
-        return "Bitter Iced Tea";
+        return "Gabagoey Mixin";
     }
 }

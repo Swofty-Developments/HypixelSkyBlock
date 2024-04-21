@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.miscellaneous.bartender;
+package net.swofty.types.generic.item.items.brewing;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CheapCoffee implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName, NotFinishedYet {
+public class TepidGreenTea implements CustomSkyBlockItem, DecorationHead, ExtraUnderNameDisplay, CustomDisplayName, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -18,13 +18,18 @@ public class CheapCoffee implements CustomSkyBlockItem, DecorationHead, ExtraUnd
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(
-                "§7Use this item in place of an", "§7Awkward Potion for certain",
-                "§7potions.", "", "§7Adds §f+5✦ Speed§7 to potions with", "§7that stat."
+                "§7Use it in place of an",
+                "Awkward Potion for certain",
+                "potions",
+                "",
+                "§7Buffs the §a❈ Defense§7 value of",
+                "potions by §a+10%§7."
         ));
     }
+
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "194221a0de936bac5ce895f2acad19c64795c18ce5555b971594205bd3ec";
+        return "d2168dfc513c31b1e1c2d853e8169015381c8378eee224ae6dbb1e12485e9a98";
     }
 
     @Override
@@ -34,6 +39,6 @@ public class CheapCoffee implements CustomSkyBlockItem, DecorationHead, ExtraUnd
 
     @Override
     public String getDisplayName(@Nullable SkyBlockItem item) {
-        return "Bitter Iced Tea";
+        return "Tepid Green Tea";
     }
 }

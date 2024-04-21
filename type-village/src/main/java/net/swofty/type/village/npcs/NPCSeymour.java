@@ -48,7 +48,7 @@ public class NPCSeymour extends NPCDialogue {
         return new DialogueSet[] {
                 NPCDialogue.DialogueSet.builder()
                         .key("open-shop").lines(new String[]{
-                                "§e[NPC] Seymour§f: Looking to buy something fancy?",
+                                "Looking to buy something fancy?",
                         }).build(),
         };
     }
