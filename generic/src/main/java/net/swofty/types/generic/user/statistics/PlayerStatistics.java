@@ -29,6 +29,7 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfus
 import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
@@ -144,9 +145,13 @@ public class PlayerStatistics {
     public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
 
-        if (item.getGenericInstance() != null)
+        if (item.getGenericInstance() != null) {
             if (item.getGenericInstance() instanceof ConstantStatistics)
                 return ItemStatistics.empty();
+            if (item.getGenericInstance() instanceof StandardItem standardItem)
+                if (standardItem.getStandardItemType().isArmor())
+                    return ItemStatistics.empty();
+        }
 
         return ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                 calculateExtraItemStatisticsToAdd(
@@ -212,13 +217,16 @@ public class PlayerStatistics {
     }
 
     public void updateAccessoryStatistics() {
+        List<ItemType> usedAccessories = new ArrayList<>();
         ItemStatistics total = ItemStatistics.builder().build();
         for (ItemStack itemStack : player.getInventory().getItemStacks()) {
             if (SkyBlockItem.isSkyBlockItem(itemStack)) {
                 SkyBlockItem item = new SkyBlockItem(itemStack);
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
+                if (usedAccessories.contains(item.getAttributeHandler().getItemTypeAsType())) continue;
 
+                usedAccessories.add(item.getAttributeHandler().getItemTypeAsType());
                 total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                         calculateExtraItemStatisticsToAdd(
                             item,
@@ -231,7 +239,9 @@ public class PlayerStatistics {
             if (item == null) continue;
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
+            if (usedAccessories.contains(item.getAttributeHandler().getItemTypeAsType())) continue;
 
+            usedAccessories.add(item.getAttributeHandler().getItemTypeAsType());
             total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                     calculateExtraItemStatisticsToAdd(
                         item,
