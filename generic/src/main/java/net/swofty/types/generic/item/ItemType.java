@@ -66,6 +66,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.RookiePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.farming.WheatMinion;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
 import net.swofty.types.generic.item.items.minion.upgrade.fuel.*;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
@@ -177,6 +178,7 @@ public enum ItemType {
     SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
     GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
+    WHEAT_MINION(Material.PLAYER_HEAD, Rarity.RARE, WheatMinion.class),
 
     /**
     * Minion Upgrades

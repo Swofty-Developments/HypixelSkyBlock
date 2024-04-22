@@ -52,7 +52,7 @@ public class MissionCraftWheatMinion extends SkyBlockMission {
         ItemCraftEvent craftEvent = (ItemCraftEvent) event;
         ItemType type = craftEvent.getCraftedItem().getAttributeHandler().getItemTypeAsType();
 
-        if (type != ItemType.WHEAT) { // WHEAT MINION
+        if (type != ItemType.WHEAT_MINION) {
             return;
         }
         MissionData data = craftEvent.getPlayer().getMissionData();

@@ -48,22 +48,9 @@ public class MissionTalkToFarmhandAgain extends SkyBlockMission {
 
     @Override
     public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
+        return null;
     }
 
     @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent playerRegionChangeEvent = (PlayerRegionChangeEvent) event;
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
-
-        if (playerRegionChangeEvent.getTo() == null || !playerRegionChangeEvent.getTo().equals(RegionType.THE_BARN)) {
-            return;
-        }
-
-        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
-            return;
-        }
-
-        data.startMission(this.getClass());
-    }
+    public void run(Event tempEvent) {}
 }

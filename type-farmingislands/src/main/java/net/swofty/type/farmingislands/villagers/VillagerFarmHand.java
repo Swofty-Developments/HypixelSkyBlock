@@ -65,11 +65,11 @@ public class VillagerFarmHand extends NPCVillagerDialogue {
             });
             return;
         }
-        if (!data.hasCompleted(MissionCraftWheatMinion.class)) {
+        if (data.hasCompleted(MissionCraftWheatMinion.class)) {
             data.endMission(MissionCraftWheatMinion.class);
             return;
         }
-        if (!data.hasCompleted(MissionTalkToFarmhandAgain.class)) {
+        if (data.hasCompleted(MissionTalkToFarmhandAgain.class)) {
             setDialogue(e.player(), "spoke-again").thenRun(() -> {
                 data.endMission(MissionTalkToFarmhandAgain.class);
             });

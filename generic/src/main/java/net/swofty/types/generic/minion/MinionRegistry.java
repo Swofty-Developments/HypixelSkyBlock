@@ -2,6 +2,7 @@ package net.swofty.types.generic.minion;
 
 import lombok.Getter;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.minion.minions.farming.MinionWheat;
 import net.swofty.types.generic.minion.minions.foraging.*;
 import net.swofty.types.generic.minion.minions.mining.*;
 import net.swofty.types.generic.utility.StringUtility;
@@ -28,6 +29,7 @@ public enum MinionRegistry {
     JUNGLE(MinionJungle.class, ItemType.JUNGLE_MINION),
     OAK(MinionOak.class, ItemType.OAK_MINION),
     SPRUCE(MinionSpruce.class, ItemType.SPRUCE_MINION),
+    WHEAT(MinionWheat.class, ItemType.WHEAT_MINION)
     ;
 
     private final Class<? extends SkyBlockMinion> minionClass;
