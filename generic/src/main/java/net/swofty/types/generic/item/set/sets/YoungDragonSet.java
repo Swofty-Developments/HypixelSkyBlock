@@ -1,8 +1,5 @@
 package net.swofty.types.generic.item.set.sets;
 
-import net.swofty.types.generic.event.value.SkyBlockValueEvent;
-import net.swofty.types.generic.event.value.ValueUpdateEvent;
-import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -17,7 +14,7 @@ import java.util.UUID;
 
 public class YoungDragonSet implements ArmorSet, SetEvents {
 
-    private static List<UUID> wearing = new ArrayList<>();
+    private static final List<UUID> wearing = new ArrayList<>();
 
     @Override
     public String getName() {
@@ -35,11 +32,17 @@ public class YoungDragonSet implements ArmorSet, SetEvents {
     @Override
     public void setPutOn(SkyBlockPlayer player) {
         wearing.add(player.getUuid());
+        double maxHealth = player.getMaxHealth();
 
         player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
-                .withExpiry((updatedPlayer) -> player.getHealth() > player.getMaxHealth()/2)
-                .withStatistics(ItemStatistics.builder()
-                        .withMultiplicativePercentage(ItemStatistic.SPEED, 70D).build()).build());
+                .withExpiry((newPlayer) -> wearing.contains(newPlayer.getUuid()))
+                .withStatistics((updatedPlayer) -> {
+                    ItemStatistics.Builder toReturn = ItemStatistics.builder();
+                    if(updatedPlayer.getHealth() > maxHealth / 2) {
+                        toReturn.withMultiplicativePercentage(ItemStatistic.SPEED, 70D);
+                    }
+                    return toReturn.build();
+                }).build());
     }
 
     @Override

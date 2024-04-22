@@ -154,7 +154,7 @@ public class SkyBlock {
         });
         new Thread(() -> {
             try {
-                Thread.sleep(100);
+                Thread.sleep(3500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -207,7 +207,7 @@ public class SkyBlock {
             } catch (Exception e) {
                 MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(3500);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }

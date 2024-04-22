@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
@@ -6,7 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Fixed compilation error">
+      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/BatArtifact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/BatRing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/DevourRing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/SpeedArtifact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/SpeedRing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configuration/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/resources.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/data/mongodb/CrystalDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/data/mongodb/CrystalDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/entity/mob/SkyBlockMob.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/entity/mob/SkyBlockMob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/mobdamage/PlayerActionDamageMob.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/mobdamage/PlayerActionDamageMob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/weapon/Hyperion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/weapon/Hyperion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/CheapTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/CheapTuxedoSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/ElegantTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/ElegantTuxedoSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/FancyTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/FancyTuxedoSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/YoungDragonSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/YoungDragonSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,24 +38,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-    &quot;history&quot;: [
-    {
-    &quot;state&quot;: &quot;OPEN&quot;
-    }
-    ],
-    &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;
-    }
-    }</component>
   <component name="GithubProjectSettings">
     <option name="branchProtectionPatterns">
       <list>
@@ -56,33 +62,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/jdks/jdk-17.0.2+8/lib/src.zip!/java.base/java/lang/Object.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/lang/Integer.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/security/AccessController.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/util/concurrent/CompletableFuture.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.jdks/openjdk-21.0.1/lib/src.zip!/java.base/java/util/stream/Stream.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/entity/Entity.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/entity/Player.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/inventory/AbstractInventory.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/item/ItemStack.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/item/attribute/ItemAttribute.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/1.19-6c1946c489-1/Minestom-1.19-6c1946c489-1.jar!/net/minestom/server/network/packet/server/play/PlayerInfoPacket.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/Minestom/Minestom/4b31570c9d/Minestom-4b31570c9d-sources.jar!/net/minestom/server/entity/Entity.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/5347c0b11f/minestom-ce-5347c0b11f.jar!/net/minestom/server/entity/Entity.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/5347c0b11f/minestom-ce-5347c0b11f.jar!/net/minestom/server/entity/EntitySpawnType.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/5347c0b11f/minestom-ce-5347c0b11f.jar!/net/minestom/server/network/packet/server/play/PlayerInfoUpdatePacket.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/8a9029c80c/minestom-ce-8a9029c80c-sources.jar!/net/minestom/server/entity/metadata/other/ArmorStandMeta.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/8a9029c80c/minestom-ce-8a9029c80c-sources.jar!/net/minestom/server/entity/pathfinding/Navigator.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/github/hollow-cube/minestom-ce/8a9029c80c/minestom-ce-8a9029c80c.jar!/net/minestom/server/network/packet/server/play/PlayerInfoUpdatePacket.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/viaversion/viaversion/4.9.3-SNAPSHOT/viaversion-4.9.3-20240127.195414-36.jar!/com/viaversion/viaversion/api/protocol/version/ProtocolVersion.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/viaversion/viaversion/4.9.3-SNAPSHOT/viaversion-4.9.3-20240127.195414-36.jar!/com/viaversion/viaversion/connection/UserConnectionImpl.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/com/viaversion/viaversion/4.9.3-SNAPSHOT/viaversion-4.9.3-20240127.195414-36.jar!/com/viaversion/viaversion/protocol/ProtocolPipelineImpl.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$MAVEN_REPOSITORY$/dev/hollowcube/polar/1.7.2/polar-1.7.2.jar!/net/hollowcube/polar/PolarReader.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/net/kyori/adventure-api/4.11.0/adventure-api-4.11.0-sources.jar!/net/kyori/adventure/text/Component.java" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/net/raphimc/ViaLoader/2.2.12/ViaLoader-2.2.12.jar!/net/raphimc/vialoader/netty/VLLegacyPipeline.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/net/raphimc/ViaLoader/2.2.12/ViaLoader-2.2.12.jar!/net/raphimc/vialoader/netty/VLPipeline.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/net/raphimc/ViaLoader/2.2.12/ViaLoader-2.2.12.jar!/net/raphimc/vialoader/netty/ViaCodec.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/net/raphimc/ViaLoader/2.2.12/ViaLoader-2.2.12.jar!/net/raphimc/vialoader/netty/ViaDecoder.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$PROJECT_DIR$/velocity-extension/velocity-proxy-3.3.0-SNAPSHOT-all.jar!/com/velocitypowered/proxy/connection/MinecraftConnection.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$PROJECT_DIR$/velocity-extension/velocity-proxy-3.3.0-SNAPSHOT-all.jar!/com/velocitypowered/proxy/connection/client/ConnectedPlayer.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$PROJECT_DIR$/velocity-extension/velocity-proxy-3.3.0-SNAPSHOT-all.jar!/com/velocitypowered/proxy/network/Connections.class" root0="SKIP_INSPECTION" />
@@ -101,8 +81,9 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-    &quot;associatedIndex&quot;: 8
-    }</component>
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2ZO39acjvIUm3Qg9FOcRCbk61Bj" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -110,56 +91,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
-    &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Application.AuctionService.executor&quot;: &quot;Run&quot;,
-    &quot;Application.BazaarService.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DungeonsTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SkyBlock (Island).executor&quot;: &quot;Run&quot;,
+  &quot;keyToString&quot;: {
     &quot;Application.SkyBlock (Village).executor&quot;: &quot;Run&quot;,
-    &quot;Batch.Move Proxy.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Run Passthrough.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Run Proxy.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestDungeons.test.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Build Proxy.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.commons [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.dungeons [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.dungeons [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.generic [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.generic [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.generic [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.generic [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.skyblock [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.skyblock [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.skyblock [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: &quot;corretto-1.8&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockFixed/configuration/songs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Swofty/IdeaProjects/HypixelSkyBlockFixed/profiler/src/main/java/net/swofty/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-    },
-    &quot;keyToStringList&quot;: {
-    &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
-    &quot;17=C:\\Users\\Swofty\\.gradle\\jdks\\jdk-17.0.2+8&quot;
-    ]
-    }
-    }</component>
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\configuration\songs" />
@@ -173,7 +110,12 @@
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlock\proxy\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SkyBlock (Island)">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn package -DskipTests" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.SkyBlock (Village)">
     <configuration name="AuctionService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="net.swofty.service.auction.AuctionService" />
       <module name="service.auction" />
@@ -314,7 +256,6 @@
       <item itemvalue="Application.DungeonsTest" />
       <item itemvalue="Application.AuctionService" />
       <item itemvalue="Application.SkyBlockPacker" />
-      <item itemvalue="Batch.Move Proxy" />
       <item itemvalue="JAR Application.Run Passthrough" />
       <item itemvalue="JAR Application.Run Proxy" />
       <item itemvalue="JUnit.TestDungeons.test" />
@@ -329,14 +270,6 @@
         <item itemvalue="Application.SkyBlockPacker" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
-        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -872,7 +805,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Adding wilderness song" />
     <MESSAGE value="Fully implemented the Pet GUI" />
     <MESSAGE value="Fixed variety of bugs" />
     <MESSAGE value="Fixed pets in Bea not properly displaying level 100" />
@@ -897,7 +829,8 @@
     <MESSAGE value="Minor fixes" />
     <MESSAGE value="Lots of various bug fixes" />
     <MESSAGE value="Fixed compilation error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed compilation error" />
+    <MESSAGE value="update 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

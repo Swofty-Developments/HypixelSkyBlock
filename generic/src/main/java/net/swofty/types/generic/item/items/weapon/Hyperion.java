@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem,
-        DefaultCraftable, GemstoneItem, NotFinishedYet {
+        DefaultCraftable, GemstoneItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
