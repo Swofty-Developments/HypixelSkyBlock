@@ -62,6 +62,7 @@ import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
 import net.swofty.types.generic.redis.RedisAuthenticate;
+import net.swofty.types.generic.redis.RedisOriginServer;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.server.attribute.SkyBlockServerAttributes;
@@ -470,10 +471,10 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
             });
-            Thread.ofVirtual().start(() -> {
-                new ProxyPlayer(uuid).getOriginServer().thenAccept(player::setOriginServer);
-            });
 
+            if (RedisOriginServer.origin.containsKey(uuid)) {
+                player.setOriginServer(RedisOriginServer.origin.get(uuid));
+            }
             if (RedisAuthenticate.toAuthenticate.contains(uuid)) {
                 player.setHasAuthenticated(false);
             }
