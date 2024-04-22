@@ -37,7 +37,7 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(40, new GUISkills()));
+        set(GUIClickableItem.getGoBackItem(48, new GUISkills()));
 
         DatapointSkills.PlayerSkills skills = e.player().getSkills();
         int level = skills.getCurrentLevel(category);
@@ -79,7 +79,7 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aNext Page", Material.EMERALD_BLOCK, 1, "§7Click to view the next page of rewards.");
+                    return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1, "§7Click to view the next page of rewards.");
                 }
             });
         }
@@ -93,7 +93,7 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aPrevious Page", Material.RED_CONCRETE, 1, "§7Click to view the previous page of rewards.");
+                    return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1, "§7Click to view the previous page of rewards.");
                 }
             });
         }

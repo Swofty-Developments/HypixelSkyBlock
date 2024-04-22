@@ -159,6 +159,8 @@ public enum ItemType {
     TREASURE_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, TreasureTalisman.class),
     SPIDER_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON, SpiderTalisman.class),
     SPIDER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC, SpiderArtifact.class),
+    MINE_AFFINITY_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, MineAffinityTalisman.class),
+    VILLAGE_AFFINITY_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, VillageAffinityTalisman.class),
 
     /**
      * Runes

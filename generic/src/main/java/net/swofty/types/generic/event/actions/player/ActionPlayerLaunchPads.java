@@ -39,7 +39,12 @@ public class ActionPlayerLaunchPads extends SkyBlockEvent {
         PlayerMoveEvent event = (PlayerMoveEvent) tempEvent;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        LaunchPads pad = LaunchPads.getLaunchPadInRange(player.getPosition(), 2);
+        LaunchPads pad;
+        try {
+            pad = LaunchPads.getLaunchPadInRange(player.getPosition(), 2);
+        } catch (ExceptionInInitializerError err) {
+            return;
+        }
         if (pad == null) return;
         if (player.isInLaunchpad()) return;
         player.setInLaunchpad(true);

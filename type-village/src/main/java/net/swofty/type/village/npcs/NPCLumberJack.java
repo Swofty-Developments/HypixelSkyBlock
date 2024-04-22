@@ -1,10 +1,23 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
+import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.types.generic.gui.inventory.inventories.GUIReforge;
+import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
+import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
+import net.swofty.types.generic.mission.missions.lumber.MissionBreakOaklog;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjack;
+import net.swofty.types.generic.mission.missions.lumber.MissionTalkToLumberjackAgain;
 
-public class NPCLumberJack extends SkyBlockNPC {
+import java.util.List;
+
+public class NPCLumberJack extends NPCDialogue {
 
     public NPCLumberJack() {
         super(new NPCParameters() {
@@ -37,7 +50,46 @@ public class NPCLumberJack extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        MissionData data = e.player().getMissionData();
+
+        if (data.isCurrentlyActive(MissionTalkToLumberjack.class)) {
+            setDialogue(e.player(), "initial-hello").thenRun(() -> {
+                data.endMission(MissionTalkToLumberjack.class);
+            });
+            return;
+        }
+        if (!data.hasCompleted(MissionBreakOaklog.class)) {
+            e.player().sendMessage("§e[NPC] Lumber Jack§f: Bring me some Logs. You can chop them down in this Forest!");
+            return;
+        }
+        if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
+            setDialogue(e.player(), "spoke-again").thenRun(() -> {
+                data.endMission(MissionTalkToLumberjackAgain.class);
+            });
+            return;
+        }
+
+    }
+
+    @Override
+    public DialogueSet[] getDialogueSets() {
+        return List.of(
+                DialogueSet.builder()
+                        .key("initial-hello").lines(new String[]{
+                                "§e[NPC] Lumber Jack§f: Timber!",
+                                "§e[NPC] Lumber Jack§f: My woodcutting assistant has fallen quite ill! Do you think you could take over for him?",
+                                "§e[NPC] Lumber Jack§f: I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!",
+                                "§e[NPC] Lumber Jack§f: I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("spoke-again").lines(new String[]{
+                                "§e[NPC] Lumber Jack§f: Thank you! Take this §aSweet Axe§f, it's so sweet that it drops apples from logs sometimes!",
+                                "§e[NPC] Lumber Jack§f: You've got the knack for wood. Could you get some Birch Planks from §aBirch Park§f?",
+                                "§e[NPC] Lumber Jack§f: My associate will be there waiting for you. He will reward you in §6Coins if you're up to the task!",
+                                "§e[NPC] Lumber Jack§f: However, this time I will reforge any item for the low price of Coal §8x10!"
+                        }).build()
+        ).stream().toArray(DialogueSet[]::new);
     }
 
 }

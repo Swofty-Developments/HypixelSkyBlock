@@ -52,6 +52,8 @@ public class PlayerActionDamageMob extends SkyBlockEvent {
         else return;
         LivingEntity targetLivingEntity = (LivingEntity) targetEntity;
 
+        player.playSound(Sound.sound(Key.key("entity." + mob.getEntityType().name().toLowerCase().replace("minecraft:", "") + ".hurt"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
+
         ItemStatistics entityStats = mob.getStatistics();
         Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, targetLivingEntity);
 

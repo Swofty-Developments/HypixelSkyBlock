@@ -18,6 +18,7 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.event.WindowStateListener;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -143,6 +144,7 @@ public enum LaunchPads {
 
     private static List<Pos> getSlimeBlocksNear(Pos pos) {
         Instance instance = SkyBlockConst.getInstanceContainer();
+        if (instance == null) return new ArrayList<>();
         List<Pos> toReturn = new ArrayList<>();
 
         for (int x = -5; x <= 5; x++) {
