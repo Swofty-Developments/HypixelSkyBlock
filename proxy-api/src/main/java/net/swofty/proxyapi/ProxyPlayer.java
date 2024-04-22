@@ -115,20 +115,6 @@ public class ProxyPlayer {
         return future;
     }
 
-    public CompletableFuture<ServerType> getOriginServer() {
-        CompletableFuture<ServerType> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("actions", "originServer");
-
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
-            future.complete(ServerType.valueOf(s));
-        });
-
-        return future;
-    }
-
     public void refreshCoopData(String datapoint) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());

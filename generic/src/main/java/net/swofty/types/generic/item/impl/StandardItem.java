@@ -66,5 +66,9 @@ public interface StandardItem extends ExtraRarityDisplay, Reforgable, Enchantabl
             this.enchantItemGroups = enchantItemGroups;
             this.runeApplicableTo = runeApplicableTo;
         }
+
+        public boolean isArmor() {
+            return this == HELMET || this == CHESTPLATE || this == LEGGINGS || this == BOOTS;
+        }
     }
 }
