@@ -89,7 +89,10 @@ public class TypeFarmingIslandsLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<SkyBlockVillagerNPC> getVillagerNPCs() {
-        return new ArrayList<>();
+        return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.farmingislands.villagers",
+                SkyBlockVillagerNPC.class
+        ).toList());
     }
 
     @Override
