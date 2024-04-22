@@ -3,6 +3,9 @@ package net.swofty.types.generic.mission;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.mission.missions.*;
+import net.swofty.types.generic.mission.missions.barn.MissionCraftWheatMinion;
+import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmHand;
+import net.swofty.types.generic.mission.missions.barn.MissionTalkToFarmhandAgain;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
@@ -24,7 +27,8 @@ public enum MissionSet {
     TIME_TO_MINE(MissionTalkToBlacksmith.class, MissionMineCoal.class, MissionTalkToBlacksmithAgain.class),
     TIME_TO_STRIKE(MissionKillZombies.class, MissionTalkToBartender.class),
     TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class),
-    FIRSTHARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class)
+    FIRST_HARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class),
+    BACK_AT_THE_BARNYARD(MissionTalkToFarmHand.class, MissionCraftWheatMinion.class, MissionTalkToFarmhandAgain.class),
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;
