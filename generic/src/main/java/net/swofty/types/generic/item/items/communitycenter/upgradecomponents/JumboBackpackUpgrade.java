@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.backpacks;
+package net.swofty.types.generic.item.items.communitycenter.upgradecomponents;
 
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.item.ItemType;

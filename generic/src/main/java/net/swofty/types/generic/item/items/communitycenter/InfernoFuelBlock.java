@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.minion.upgrade.fuel;
+package net.swofty.types.generic.item.items.communitycenter;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -10,15 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class HeatCore implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
-    @Override
-    public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return List.of("§7Craft with §5Enchanted Lava",
-                "§5Buckets§7 to upgrade the minion",
-                "§7speed bonus to §a30%§7 and",
-                "§7§a30%§7.");
-    }
-
+public class InfernoFuelBlock implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -26,6 +18,16 @@ public class HeatCore implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "59358703ab7727df3324336969e81d6f92b7aa79edb966c0be91ab161bad1f01";
+        return "28a1884ee3f8a6e66692a91ed763cb78d9f2017706d8b42a9263b417b2d715d2";
+    }
+
+    @Override
+    public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
+        return List.of(
+                "§7Reacts with gabagool in the",
+                "§7crafting of Inferno minion",
+                "§7fuels.",
+                "",
+                "§eRight-click to view recipes!");
     }
 }
