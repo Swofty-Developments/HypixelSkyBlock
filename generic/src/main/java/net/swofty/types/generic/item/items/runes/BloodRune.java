@@ -56,7 +56,7 @@ public class BloodRune extends SkyBlockEvent implements CustomSkyBlockItem, Rune
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "82871af1401470b0023cb1c3e71478e74215629dec906452b66c61b5b8dfecff";
+        return "e02677053dc54245dac4b399d14aae21ee71a010bd9c336c8ecee1a0dbe8f58b";
     }
 
     @Override
