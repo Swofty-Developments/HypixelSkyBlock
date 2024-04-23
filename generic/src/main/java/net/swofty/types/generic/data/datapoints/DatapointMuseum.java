@@ -42,14 +42,19 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
         public JSONObject serialize() {
             JSONObject json = new JSONObject();
-            json.put("currentlyViewing", currentlyViewing.toString());
+            if (currentlyViewing != null)
+                json.put("currentlyViewing", currentlyViewing.toString());
+            else json.put("currentlyViewing", JSONObject.NULL);
             json.put("hasBoughtAppraisalService", hasBoughtAppraisalService);
             return json;
         }
 
         public static MuseumData deserialize(JSONObject json) {
             MuseumData data = new MuseumData();
-            data.currentlyViewing = UUID.fromString(json.getString("currentlyViewing"));
+            if (json.isNull("currentlyViewing"))
+                data.currentlyViewing = null;
+            else
+                data.currentlyViewing = UUID.fromString(json.getString("currentlyViewing"));
             data.hasBoughtAppraisalService = json.getBoolean("hasBoughtAppraisalService");
             return data;
         }

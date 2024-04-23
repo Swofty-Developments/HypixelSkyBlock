@@ -151,10 +151,15 @@ public class DataHandler {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = uuid;
         for (Data data : Data.values()) {
-            dataHandler.datapoints.put(
-                    data.getKey(),
-                    data.getDefaultDatapoint().deepClone().setUser(dataHandler).setData(data)
-            );
+            try {
+                dataHandler.datapoints.put(
+                        data.getKey(),
+                        data.getDefaultDatapoint().deepClone().setUser(dataHandler).setData(data)
+                );
+            } catch (Exception e) {
+                Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid.toString() + " - This must be fixed");
+                e.printStackTrace();
+            }
         }
         return dataHandler;
     }
