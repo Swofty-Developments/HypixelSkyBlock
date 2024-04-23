@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.miscellaneous;
+package net.swofty.types.generic.item.items.communitycenter;
 
 import net.swofty.types.generic.gui.inventory.inventories.GUIBoosterCookie;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -30,7 +30,9 @@ public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchante
                 "§6/ah§7, §6/bazaar§7, §a/bank§7, §f/anvil§7, §d/etable §7and §e/quiver",
                 "§7▸ Sell items directly to the trades and cookie menu",
                 "§7▸ AFK §aimmunity §7on your island",
-                "§7▸ Toggle specific §dpotion effects"
+                "§7▸ Toggle specific §dpotion effects",
+                "§8‣ §7Link your items in chat using §e/show",
+                "§8‣ §7Insta-sell your Material stash to the §6Bazaar"
         ));
     }
 
