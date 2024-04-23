@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="update 3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="update 4" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -376,14 +374,6 @@
       <workItem from="1712122156636" duration="12157000" />
       <workItem from="1712199270434" duration="9789000" />
       <workItem from="1712290123850" duration="5135000" />
-    </task>
-    <task id="LOCAL-00127" summary="Removed redundant imports across the codebase">
-      <option name="closed" value="true" />
-      <created>1710048012677</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1710048012677</updated>
     </task>
     <task id="LOCAL-00128" summary="Added audio engine along with /playsong">
       <option name="closed" value="true" />
@@ -769,7 +759,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713774006983</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="update 4">
+      <option name="closed" value="true" />
+      <created>1713877588002</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877588002</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -789,7 +787,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fixed variety of bugs" />
     <MESSAGE value="Fixed pets in Bea not properly displaying level 100" />
     <MESSAGE value="Fixed bugs in relation to Tablist cache" />
     <MESSAGE value="Bows are now functional, with Quiver support" />
@@ -814,7 +811,8 @@
     <MESSAGE value="Fixed compilation error" />
     <MESSAGE value="update 2" />
     <MESSAGE value="update 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 3" />
+    <MESSAGE value="update 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 4" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
