@@ -41,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.4.1</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.108.Final</version>
+            <version>4.1.109.Final</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
