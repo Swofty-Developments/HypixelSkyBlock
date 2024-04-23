@@ -4,17 +4,20 @@ import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.LeatherColour;
+import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class SquireBoots implements CustomSkyBlockItem, LeatherColour, StandardItem {
+public class SquireBoots implements CustomSkyBlockItem, LeatherColour, StandardItem, Sellable {
     @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 20D)
-                .withAdditive(ItemStatistic.DEFENSE, 20D)
-                .build();
+    public Color getLeatherColour() {
+        return new Color(84, 84, 84);
+    }
+
+    @Override
+    public double getSellValue() {
+        return 2000;
     }
 
     @Override
@@ -23,7 +26,10 @@ public class SquireBoots implements CustomSkyBlockItem, LeatherColour, StandardI
     }
 
     @Override
-    public Color getLeatherColour() {
-        return new Color(84, 84, 84);
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.HEALTH, 20D)
+                .withAdditive(ItemStatistic.DEFENSE, 20D)
+                .build();
     }
 }
