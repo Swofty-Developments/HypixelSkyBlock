@@ -54,13 +54,16 @@ public class GUIChest extends SkyBlockInventoryGUI {
         chest.playAnimation(chest.getInstance(), chest.getPosition(), BlockChest.ChestAnimation.CLOSE);
     }
 
+    /*
+    * Not supported yet.
+    * cause item to disappear
+     */
     @Override
     public boolean allowHotkeying() {
-        return true;
+        return false;
     }
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
-        if (e.getClickType() == ClickType.START_SHIFT_CLICK) chest.update();
     }
 }
