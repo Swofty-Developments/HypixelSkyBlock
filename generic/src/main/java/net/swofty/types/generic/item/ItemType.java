@@ -7,6 +7,7 @@ import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.*;
+import net.swofty.types.generic.item.items.accessories.abicases.*;
 import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
@@ -54,6 +55,14 @@ import net.swofty.types.generic.item.items.combat.slayer.zombie.craftable.*;
 import net.swofty.types.generic.item.items.combat.slayer.zombie.drops.*;
 import net.swofty.types.generic.item.items.combat.vanilla.*;
 import net.swofty.types.generic.item.items.combat.vanilla.StringItem;
+import net.swofty.types.generic.item.items.communitycenter.*;
+import net.swofty.types.generic.item.items.communitycenter.AbiphoneContactsTrio;
+import net.swofty.types.generic.item.items.communitycenter.enrichments.*;
+import net.swofty.types.generic.item.items.communitycenter.katitems.KatBouquet;
+import net.swofty.types.generic.item.items.communitycenter.katitems.KatFlower;
+import net.swofty.types.generic.item.items.communitycenter.sacks.*;
+import net.swofty.types.generic.item.items.communitycenter.stackingenchants.*;
+import net.swofty.types.generic.item.items.communitycenter.upgradecomponents.*;
 import net.swofty.types.generic.item.items.crimson.*;
 import net.swofty.types.generic.item.items.dungeon.misc.AncientRose;
 import net.swofty.types.generic.item.items.dungeon.misc.ArchitectsFirstDraft;
@@ -61,7 +70,6 @@ import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
 import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
-import net.swofty.types.generic.item.items.enchantment.HotPotatoBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -119,14 +127,6 @@ public enum ItemType {
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
 
     /**
-     * Miscellaneous
-     */
-    BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
-    GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
-    KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
-    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
-
-    /**
      * Accessories
      */
     ZOMBIE_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, ZombieTalisman.class),
@@ -154,6 +154,61 @@ public enum ItemType {
     SPIDER_ARTIFACT(Material.PLAYER_HEAD, Rarity.EPIC, SpiderArtifact.class),
     MINE_AFFINITY_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, MineAffinityTalisman.class),
     VILLAGE_AFFINITY_TALISMAN(Material.PLAYER_HEAD, Rarity.COMMON, VillageAffinityTalisman.class),
+    BITS_TALISMAN(Material.PLAYER_HEAD, Rarity.RARE, BitsTalisman.class),
+    ACTUALLY_BLUE_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, ActuallyBlueAbicase.class),
+    BLUE_BUT_GREEN_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, BlueButGreenAbicase.class),
+    BLUE_BUT_RED_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, BlueButRedAbicase.class),
+    BLUE_BUT_YELLOW_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, BlueButYellowAbicase.class),
+    LIGHTER_BLUE_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, LighterBlueAbicase.class),
+    REZAR_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, RezarAbicase.class),
+    SUMSUNG_G3_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, SumsungG3Abicase.class),
+    SUMSUNG_GG_ABICASE(Material.PLAYER_HEAD, Rarity.RARE, SumsungGGAbicase.class),
+
+    /**
+     * Community Shop Items
+     */
+    BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
+    GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
+    KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
+    KAT_BOUQUET(Material.ROSE_BUSH, Rarity.SPECIAL, KatBouquet.class),
+    HYPER_CATALYST_UPGRADER(Material.PLAYER_HEAD, Rarity.SPECIAL, HyperCatalystUpgrader.class),
+    ULTIMATE_CARROT_CANDY_UPGRADE(Material.PLAYER_HEAD, Rarity.SPECIAL, UltimateCarrotCandyUpgrade.class),
+    COLOSSAL_EXPERIENCE_BOTTLE_UPGRADE(Material.PLAYER_HEAD, Rarity.SPECIAL, ColossalExperienceBottleUpgrade.class),
+    MINION_STORAGE_EXPANDER(Material.PLAYER_HEAD, Rarity.SPECIAL, MinionStorageExpander.class),
+    MATRIARCHS_PERFUME(Material.RABBIT_STEW, Rarity.SPECIAL, MatriarchsPerfume.class),
+    HOLOGRAM(Material.PLAYER_HEAD, Rarity.LEGENDARY, Hologram.class),
+    DITTO_BLOB(Material.PLAYER_HEAD, Rarity.LEGENDARY, DittoBlob.class),
+    BUILDERS_WAND(Material.BLAZE_ROD, Rarity.LEGENDARY, BuildersWand.class),
+    BLOCK_ZAPPER(Material.FLINT, Rarity.EPIC, BlockZapper.class),
+    PORTALIZER(Material.PLAYER_HEAD, Rarity.SPECIAL, Portalizer.class),
+    AUTOPET_RULES_2_PACK(Material.PLAYER_HEAD, Rarity.SPECIAL, AutopetRules2Pack.class),
+    POCKET_SACK_IN_A_SACK(Material.PLAYER_HEAD, Rarity.SPECIAL, PocketSackInASack.class),
+    DUNGEON_SACK(Material.PLAYER_HEAD, Rarity.LEGENDARY, DungeonSack.class),
+    RUNE_SACK(Material.PLAYER_HEAD, Rarity.EPIC, RuneSack.class),
+    FLOWER_SACK(Material.PLAYER_HEAD, Rarity.EPIC, FlowerSack.class),
+    DWARVEN_SACK(Material.PLAYER_HEAD, Rarity.EPIC, DwarvenSack.class),
+    CRYSTAL_HOLLOWS_SACK(Material.PLAYER_HEAD, Rarity.EPIC, CrystalHollowsSack.class),
+    ABIPHONE_CONTACTS_TRIO(Material.COMPARATOR, Rarity.SPECIAL, AbiphoneContactsTrio.class),
+    PURE_WHITE_DYE(Material.BONE_MEAL, Rarity.EPIC, PureWhiteDye.class),
+    PURE_BLACK_DYE(Material.INK_SAC, Rarity.EPIC, PureBlackDye.class),
+    ACCESSORY_ENRICHMENT_SWAPPER(Material.COMPARATOR, Rarity.SPECIAL, AccessoryEnrichmentSwapper.class),
+    ATTACK_SPEED_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, AttackSpeedEnrichment.class),
+    CRITICAL_CHANCE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, CriticalChanceEnrichment.class),
+    CRITICAL_DAMAGE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, CriticalDamageEnrichment.class),
+    DEFENSE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, DefenseEnrichment.class),
+    FEROCITY_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, FerocityEnrichment.class),
+    HEALTH_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, HealthEnrichment.class),
+    INTELLIGENCE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, IntelligenceEnrichment.class),
+    MAGIC_FIND_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, MagicFindEnrichment.class),
+    SEA_CREATURE_CHANCE_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, SeaCreatureChanceEnrichment.class),
+    SPEED_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, SpeedEnrichment.class),
+    STRENGTH_ENRICHMENT(Material.PLAYER_HEAD, Rarity.SPECIAL, StrengthEnrichment.class),
+    CHAMPION(Material.ENCHANTED_BOOK, Rarity.COMMON, Champion.class),
+    COMPACT(Material.ENCHANTED_BOOK, Rarity.COMMON, Compact.class),
+    CULTIVATING(Material.ENCHANTED_BOOK, Rarity.COMMON, Cultivating.class),
+    EXPERTISE(Material.ENCHANTED_BOOK, Rarity.COMMON, Expertise.class),
+    HECATOMB(Material.ENCHANTED_BOOK, Rarity.COMMON, Hecatomb.class),
+    INFERNO_FUE_BLOCK(Material.PLAYER_HEAD, Rarity.RARE, InfernoFuelBlock.class),
 
     /**
      * Runes
