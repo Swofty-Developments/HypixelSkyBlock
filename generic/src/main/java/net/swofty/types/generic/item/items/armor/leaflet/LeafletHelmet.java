@@ -1,16 +1,23 @@
-package net.swofty.types.generic.item.items.armor.squire;
+package net.swofty.types.generic.item.items.armor.leaflet;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
-public class SquireHelmet implements CustomSkyBlockItem, StandardItem, Sellable {
+public class LeafletHelmet implements CustomSkyBlockItem, StandardItem, Sellable, CustomDisplayName {
+    @Override
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Leaflet Hat";
+    }
+
     @Override
     public double getSellValue() {
-        return 2500;
+        return 2;
     }
 
     @Override
@@ -20,9 +27,6 @@ public class SquireHelmet implements CustomSkyBlockItem, StandardItem, Sellable 
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 25D)
-                .withAdditive(ItemStatistic.DEFENSE, 25D)
-                .build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 20D).build();
     }
 }

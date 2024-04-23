@@ -7,20 +7,11 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 
-
-public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable , NotFinishedYet {
-
-    @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 40D)
-                .withAdditive(ItemStatistic.FARMING_FORTUNE, 5D)
-                .build();
-    }
+public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, NotFinishedYet {
 
     @Override
     public Color getLeatherColour() {
-        return new Color(0xFFFF00);
+        return new Color(255, 255, 0);
     }
 
     @Override
@@ -31,5 +22,13 @@ public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, Lea
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.CHESTPLATE;
+    }
+
+    @Override
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.DEFENSE, 40D)
+                .withAdditive(ItemStatistic.FARMING_FORTUNE, 5D)
+                .build();
     }
 }

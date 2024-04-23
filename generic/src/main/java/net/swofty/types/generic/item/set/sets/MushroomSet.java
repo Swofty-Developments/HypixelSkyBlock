@@ -6,25 +6,28 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class MinerOutfitSet implements ArmorSet, SetEvents {
-
+public class MushroomSet implements ArmorSet, SetEvents {
     @Override
     public String getName() {
-        return "Haste";
+        return "Night Affinity";
     }
 
     @Override
     public String getDescription() {
-        return "§7Grants the wearer with §apermanent Haste II §7while worn.";
+        return """
+                §7Grants the wearer with §aNight
+                §aVision §7while worn. During the night,
+                the stats of the armor pieces are
+                §atrippled§7.""";
     }
 
     @Override
     public void setPutOn(SkyBlockPlayer player) {
-        player.addEffect(new Potion(PotionEffect.HASTE, (byte) 2, -1));
+        player.addEffect(new Potion(PotionEffect.NIGHT_VISION, (byte) 1, -1));
     }
 
     @Override
     public void setTakeOff(SkyBlockPlayer player) {
-        player.removeEffect(PotionEffect.HASTE);
+        player.removeEffect(PotionEffect.NIGHT_VISION);
     }
 }

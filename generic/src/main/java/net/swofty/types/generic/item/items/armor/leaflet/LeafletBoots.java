@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.armor.mineroutfit;
+package net.swofty.types.generic.item.items.armor.leaflet;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -6,32 +6,29 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class MinerOutfitLeggings implements CustomSkyBlockItem, CustomDisplayName, StandardItem, LeatherColour, Sellable {
-
+public class LeafletBoots implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, CustomDisplayName {
     @Override
     public String getDisplayName(SkyBlockItem item) {
-        return "Miner's Outfit Leggings";
+        return "Leaflet Sandals";
     }
 
     @Override
     public Color getLeatherColour() {
-        return new Color(122, 121, 100);
+        return new Color(77, 204, 77);
     }
 
     @Override
     public double getSellValue() {
-        return 560;
+        return 2;
     }
 
     @Override
     public StandardItemType getStandardItemType() {
-        return StandardItemType.LEGGINGS;
+        return StandardItemType.BOOTS;
     }
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
-                .build();
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 15D).build();
     }
 }

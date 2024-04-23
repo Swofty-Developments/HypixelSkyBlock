@@ -5,25 +5,31 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import org.jetbrains.annotations.Nullable;
 
-public class LeafletTunic implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable {
+public class LeafletChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, CustomDisplayName {
     @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 35D).build();
+    public String getDisplayName(@Nullable SkyBlockItem item) {
+        return "Leaflet Tunic";
     }
 
     @Override
     public Color getLeatherColour() {
-        return new Color(0x2DE35E);
+        return new Color(77, 204, 77);
     }
 
     @Override
     public double getSellValue() {
-        return 10;
+        return 4;
     }
 
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.CHESTPLATE;
+    }
+
+    @Override
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
+        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 35D).build();
     }
 }

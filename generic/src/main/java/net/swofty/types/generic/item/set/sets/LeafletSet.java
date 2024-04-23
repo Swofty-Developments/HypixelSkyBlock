@@ -9,6 +9,16 @@ import net.swofty.types.generic.region.SkyBlockRegion;
 
 public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
+    public String getName() {
+        return "Energy of the Forest";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§7While in a Forest zone you regain §c55.0 Health §7every second.";
+    }
+
+    @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return RegenerationValueUpdateEvent.class;
     }
@@ -26,15 +36,5 @@ public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
         }
 
         event.setValue(value + 55);
-    }
-
-    @Override
-    public String getName() {
-        return "Energy of the Forest";
-    }
-
-    @Override
-    public String getDescription() {
-        return "§7While in a Forest zone you regain §c55.0 Health §7every second.";
     }
 }
