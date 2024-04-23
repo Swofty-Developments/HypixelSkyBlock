@@ -48,7 +48,7 @@ public class VillagerLeo extends NPCVillagerDialogue {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemType.LEAFLET_TUNIC, null).open(e.player());
+                        new GUIRecipe(ItemType.LEAFLET_CHESTPLATE, null).open(e.player());
                     });
                     return;
                 }
