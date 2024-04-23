@@ -12,13 +12,22 @@ import java.util.List;
 
 public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
+    public String getName() {
+        return "Energy of the Forest";
+    }
+
+    @Override
+    public String getDescription() {
+        return "§7While in a Forest zone you regain §c55.0 Health §7every second.";
+    }
+
+    @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return RegenerationValueUpdateEvent.class;
     }
 
     @Override
     public void run(ValueUpdateEvent event) {
-
         float value = (float) event.getValue();
 
         if (!isWearingSet(event.getPlayer())) return;
@@ -30,17 +39,5 @@ public class LeafletSet extends SkyBlockValueEvent implements ArmorSet {
         }
 
         event.setValue(value + 55);
-    }
-
-    @Override
-    public String getName() {
-        return "Energy of the Forest";
-    }
-
-    @Override
-    public List<String> getDescription() {
-        return Arrays.asList(
-                "§7While in a Forest zone you regain",
-                "§c55.0 Health §7every second.");
     }
 }

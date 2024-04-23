@@ -68,7 +68,7 @@ public class ForagingCollection extends CollectionCategory {
                                         "AAA",
                                         "A A");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_HAT), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_HELMET), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
@@ -81,7 +81,7 @@ public class ForagingCollection extends CollectionCategory {
                                         "L L",
                                         "L L");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_PANTS), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_LEGGINGS), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
@@ -93,7 +93,7 @@ public class ForagingCollection extends CollectionCategory {
                                         "L L",
                                         "L L");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_SANDALS), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_BOOTS), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
@@ -106,7 +106,7 @@ public class ForagingCollection extends CollectionCategory {
                                         "LLL",
                                         "LLL");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_TUNIC), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FORAGING, new SkyBlockItem(ItemType.LEAFLET_CHESTPLATE), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(500, new UnlockXP() {

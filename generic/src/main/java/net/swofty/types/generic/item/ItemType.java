@@ -11,25 +11,29 @@ import net.swofty.types.generic.item.items.accessories.dungeon.*;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
 import net.swofty.types.generic.item.items.armor.celeste.*;
-import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoJacket;
-import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoOxfords;
-import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoPants;
-import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoJacket;
-import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoOxfords;
-import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoPants;
-import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoJacket;
-import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoOxfords;
-import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoPants;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoChestplate;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoBoots;
+import net.swofty.types.generic.item.items.armor.cheaptuxedo.CheapTuxedoLeggings;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoChestplate;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoBoots;
+import net.swofty.types.generic.item.items.armor.eleganttuxedo.ElegantTuxedoLeggings;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoChestplate;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoBoots;
+import net.swofty.types.generic.item.items.armor.fancytuxedo.FancyTuxedoLeggings;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitBoots;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitChestplate;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitHelmet;
 import net.swofty.types.generic.item.items.armor.farmsuit.FarmSuitLeggings;
-import net.swofty.types.generic.item.items.armor.leaflet.LeafletHat;
-import net.swofty.types.generic.item.items.armor.leaflet.LeafletPants;
-import net.swofty.types.generic.item.items.armor.leaflet.LeafletSandals;
-import net.swofty.types.generic.item.items.armor.leaflet.LeafletTunic;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletHelmet;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletLeggings;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletBoots;
+import net.swofty.types.generic.item.items.armor.leaflet.LeafletChestplate;
 import net.swofty.types.generic.item.items.armor.mercenary.*;
 import net.swofty.types.generic.item.items.armor.mineroutfit.*;
+import net.swofty.types.generic.item.items.armor.mushroom.MushroomBoots;
+import net.swofty.types.generic.item.items.armor.mushroom.MushroomChestplate;
+import net.swofty.types.generic.item.items.armor.mushroom.MushroomHelmet;
+import net.swofty.types.generic.item.items.armor.mushroom.MushroomLeggings;
 import net.swofty.types.generic.item.items.armor.rosetta.*;
 import net.swofty.types.generic.item.items.armor.squire.*;
 import net.swofty.types.generic.item.items.armor.starlight.*;
@@ -75,6 +79,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.RookiePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.farming.WheatMinion;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
 import net.swofty.types.generic.item.items.minion.upgrade.fuel.*;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
@@ -118,15 +123,17 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
-    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
-    DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
-    AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
+
+    /**
+     * Miscellaneous
+     */
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
     GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
     KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
 
     /**
      * Accessories
@@ -191,6 +198,7 @@ public enum ItemType {
     SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
     GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
+    WHEAT_MINION(Material.PLAYER_HEAD, Rarity.RARE, WheatMinion.class),
 
     /**
     * Minion Upgrades
@@ -489,10 +497,10 @@ public enum ItemType {
     /**
      * Armor Sets
      */
-    LEAFLET_HAT(Material.OAK_LEAVES, Rarity.COMMON, LeafletHat.class),
-    LEAFLET_TUNIC(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeafletTunic.class),
-    LEAFLET_PANTS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeafletPants.class),
-    LEAFLET_SANDALS(Material.LEATHER_BOOTS, Rarity.COMMON, LeafletSandals.class),
+    LEAFLET_HELMET(Material.OAK_LEAVES, Rarity.COMMON, LeafletHelmet.class),
+    LEAFLET_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, LeafletChestplate.class),
+    LEAFLET_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, LeafletLeggings.class),
+    LEAFLET_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, LeafletBoots.class),
     MINERS_OUTFIT_HELMET(Material.LEATHER_HELMET, Rarity.UNCOMMON, MinerOutfitHelmet.class),
     MINERS_OUTFIT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.UNCOMMON, MinerOutfitChestplate.class),
     MINERS_OUTFIT_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.UNCOMMON, MinerOutfitLeggings.class),
@@ -521,15 +529,19 @@ public enum ItemType {
     STARLIGHT_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.RARE, StarlightChestplate.class),
     STARLIGHT_LEGGINGS(Material.GOLDEN_LEGGINGS, Rarity.RARE, StarlightLeggings.class),
     STARLIGHT_BOOTS(Material.LEATHER_BOOTS, Rarity.RARE, StarlightBoots.class),
-    CHEAP_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.EPIC, CheapTuxedoJacket.class),
-    CHEAP_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.EPIC, CheapTuxedoPants.class),
-    CHEAP_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.EPIC, CheapTuxedoOxfords.class),
-    FANCY_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, FancyTuxedoJacket.class),
-    FANCY_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, FancyTuxedoPants.class),
-    FANCY_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, FancyTuxedoOxfords.class),
-    ELEGANT_TUXEDO_JACKET(Material.LEATHER_CHESTPLATE, Rarity.MYTHIC, ElegantTuxedoJacket.class),
-    ELEGANT_TUXEDO_PANTS(Material.LEATHER_LEGGINGS, Rarity.MYTHIC, ElegantTuxedoPants.class),
-    ELEGANT_TUXEDO_OXFORDS(Material.LEATHER_BOOTS, Rarity.MYTHIC, ElegantTuxedoOxfords.class),
+    CHEAP_TUXEDO_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.EPIC, CheapTuxedoChestplate.class),
+    CHEAP_TUXEDO_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.EPIC, CheapTuxedoLeggings.class),
+    CHEAP_TUXEDO_BOOTS(Material.LEATHER_BOOTS, Rarity.EPIC, CheapTuxedoBoots.class),
+    FANCY_TUXEDO_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, FancyTuxedoChestplate.class),
+    FANCY_TUXEDO_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, FancyTuxedoLeggings.class),
+    FANCY_TUXEDO_BOOTS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, FancyTuxedoBoots.class),
+    ELEGANT_TUXEDO_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.LEGENDARY, ElegantTuxedoChestplate.class),
+    ELEGANT_TUXEDO_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.LEGENDARY, ElegantTuxedoLeggings.class),
+    ELEGANT_TUXEDO_BOOTS(Material.LEATHER_BOOTS, Rarity.LEGENDARY, ElegantTuxedoBoots.class),
+    MUSHROOM_HELMET(Material.LEATHER_HELMET, Rarity.COMMON, MushroomHelmet.class),
+    MUSHROOM_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, MushroomChestplate.class),
+    MUSHROOM_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, MushroomLeggings.class),
+    MUSHROOM_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, MushroomBoots.class),
 
 
     /**
@@ -695,6 +707,8 @@ public enum ItemType {
     /**
      * Vanilla Items
      */
+    AIR(Material.AIR, Rarity.COMMON),
+    DIRT(Material.DIRT, Rarity.COMMON),
     CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON , CraftingTable.class),
     ANVIL(Material.ANVIL, Rarity.COMMON, Anvil.class),
     OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON , OakPlanks.class),

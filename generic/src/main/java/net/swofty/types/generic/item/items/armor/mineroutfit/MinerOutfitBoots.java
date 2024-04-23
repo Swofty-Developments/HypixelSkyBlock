@@ -8,20 +8,18 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 public class MinerOutfitBoots implements CustomSkyBlockItem, CustomDisplayName, StandardItem, LeatherColour, Sellable {
     @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 15D)
-                .build();
+    public String getDisplayName(SkyBlockItem item) {
+        return "Miner's Outfit Boots";
     }
 
     @Override
     public Color getLeatherColour() {
-        return new Color(128, 128, 128);
+        return new Color(122, 121, 100);
     }
 
     @Override
     public double getSellValue() {
-        return 19200;
+        return 320;
     }
 
     @Override
@@ -30,7 +28,9 @@ public class MinerOutfitBoots implements CustomSkyBlockItem, CustomDisplayName, 
     }
 
     @Override
-    public String getDisplayName(SkyBlockItem item) {
-        return "Miner's Outfit Boots";
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
+        return ItemStatistics.builder()
+                .withAdditive(ItemStatistic.DEFENSE, 15D)
+                .build();
     }
 }

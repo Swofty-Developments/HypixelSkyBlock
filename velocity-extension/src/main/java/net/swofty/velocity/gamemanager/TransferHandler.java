@@ -5,6 +5,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
+import net.swofty.velocity.redis.RedisMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,11 +14,11 @@ import java.util.UUID;
 
 public record TransferHandler(Player player) {
     public static ArrayList<Player> playersInLimbo = new ArrayList<>();
-    public static Map<UUID, ServerType> originCache = new HashMap<>();
 
     public void transferTo(RegisteredServer server) {
         new Thread(() -> {
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+
             player.createConnectionRequest(limboServer).connectWithIndication();
             playersInLimbo.add(player);
 

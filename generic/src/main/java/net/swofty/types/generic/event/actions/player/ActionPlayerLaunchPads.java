@@ -91,7 +91,7 @@ public class ActionPlayerLaunchPads extends SkyBlockEvent {
         for (Pos pos : curve) {
             Vec toGoTo = pos.asVec();
             Vec direction = toGoTo.sub(player.getPosition().asVec()).normalize();
-            armorStand.setVelocity(direction.mul(50));
+            armorStand.setVelocity(direction.mul(50, 5, 50));
             try {
                 Thread.sleep(timeToSleep);
             } catch (InterruptedException e) {
