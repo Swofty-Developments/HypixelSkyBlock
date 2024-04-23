@@ -1,10 +1,10 @@
 package net.swofty.types.generic.block;
 
-import net.swofty.types.generic.block.blocks.Chest;
+import net.swofty.types.generic.block.blocks.BlockChest;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
 
 public enum BlockType {
-    CHEST(Chest.class),
+    CHEST(BlockChest.class),
     ;
 
     public final Class<? extends CustomSkyBlockBlock> clazz;
