@@ -1,15 +1,11 @@
 package net.swofty.types.generic.event.actions.player;
 
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
-import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.gui.inventory.inventories.GUIAnvil;
-import net.swofty.types.generic.gui.inventory.inventories.GUIChest;
-import net.swofty.types.generic.item.ChestImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 @EventParameters(description = "Handles clicking on the Anvil",
