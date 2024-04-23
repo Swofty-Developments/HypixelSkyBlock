@@ -81,7 +81,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     public abstract String getDisplayName();
     public abstract Integer getLevel();
-    public abstract Double getCoins();
+    public abstract double getCoins();
     public abstract List<GoalSelector> getGoalSelectors();
     public abstract List<TargetSelector> getTargetSelectors();
     public abstract ItemStatistics getBaseStatistics();
@@ -140,7 +140,6 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
-        if (getCoins() == null) return;
 
         Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
             .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
@@ -157,7 +156,8 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
         coins.setValue(coins.getValue() + getCoins());
-        player.setDisplayReplacement(StatisticDisplayReplacement.builder()
+        if(getCoins() > 0)
+            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
                 .ticksToLast(20)
                 .display(StringUtility.commaify(getCoins()))
                 .build(), StatisticDisplayReplacement.DisplayType.COINS);

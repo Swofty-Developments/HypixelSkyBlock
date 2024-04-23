@@ -78,7 +78,7 @@ public class MobSheep extends SkyBlockMob {
     }
 
     @Override
-    public Double getCoins() {
+    public double getCoins() {
         return 1D;
     }
 

@@ -1,8 +1,6 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.event.Event;
-import net.minestom.server.potion.Potion;
-import net.minestom.server.potion.PotionEffect;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -10,7 +8,6 @@ import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -46,5 +43,4 @@ public class DevourRing extends SkyBlockEvent implements Talisman {
     public Class<? extends Event> getEvent() {
         return PlayerKilledSkyBlockMobEvent.class;
     }
-
 }

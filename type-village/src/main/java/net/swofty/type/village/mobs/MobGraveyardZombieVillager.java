@@ -103,7 +103,7 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     }
 
     @Override
-    public Double getCoins() {
+    public double getCoins() {
         return 1D;
     }
 

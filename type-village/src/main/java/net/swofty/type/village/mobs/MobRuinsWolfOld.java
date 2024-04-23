@@ -100,7 +100,7 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public Double getCoins() {
+    public double getCoins() {
         return 40D;
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class BatArtifact implements Talisman {
     @Override
     public List<String> getTalismanDisplay() {
-        return null;
+        return List.of();
     }
 
     @Override

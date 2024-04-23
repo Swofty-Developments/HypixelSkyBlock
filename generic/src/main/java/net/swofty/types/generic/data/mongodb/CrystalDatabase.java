@@ -86,9 +86,9 @@ public class CrystalDatabase {
         for (Document doc : collection.find()) {
             Integer id = doc.getInteger("_id");
             String url = doc.getString("url");
-            Integer x = doc.getInteger("x");
-            Integer y = doc.getInteger("y");
-            Integer z = doc.getInteger("z");
+            Double x = doc.getDouble("x");
+            Double y = doc.getDouble("y");
+            Double z = doc.getDouble("z");
             // Manually handle DB migrations
             ItemType itemType;
             try {
