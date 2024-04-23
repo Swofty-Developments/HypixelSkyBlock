@@ -316,6 +316,11 @@ public class DataHandler {
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
+        MUSEUM_DATA("museum_data", false, false, false, DatapointMuseum.class, new DatapointMuseum("museum_data"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            DatapointMuseum.MuseumData data = (DatapointMuseum.MuseumData) datapoint.getValue();
+            data.setCurrentlyViewing(player.getUuid());
+        }),
         ;
 
         @Getter

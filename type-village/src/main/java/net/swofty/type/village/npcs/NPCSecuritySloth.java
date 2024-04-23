@@ -5,6 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
@@ -13,22 +14,22 @@ public class NPCSecuritySloth extends NPCDialogue {
     public NPCSecuritySloth() {
         super(new NPCParameters() {
             @Override
-            public String[] holograms() {
+            public String[] holograms(SkyBlockPlayer player) {
                 return new String[]{"§a§lSTAY SAFE!", "§cSecurity Sloth", "§e§lCLICK"};
             }
 
             @Override
-            public String signature() {
+            public String signature(SkyBlockPlayer player) {
                 return "X/tHnZt+iPtRGOCFm9cKVU2akoCqYJmo6k/xkmAJOr/TMmOJ4geo+ix3srms8kaqGX3lwMMzlEMq5qud8uj11sMtV7X4RZO+ivm2uFPVRbG6LeN8mYMXHf96RfL8ix0jqgk7Yyz5tsSwMzZaasAetkcxCSVPToNMHvVGxywCm35Ga3e8RVFx1OHhJ5zsoZ+IiEmtSE3fBx1N6cTWCyRxH3gHXjWJK3mBisY/0s/x3p26+e7k0w27zyh6Sxd0FIc1QUOKsF3DejLt2nEUmM9T7tZweM1hJ7+XKWL8DxprFqFLzrLFG4HjV/UQqsXuZYeu99fqunxv7o8uemOsp+A1V+X+XRQ6u9SbsmzVlwjAkNPhjANsQE75ctRVR/ox4W1VT/HYTRooA9GB/IXA6WiL79XpGarppcP74M/LF/LGouTZRib078I7tDfWwLTEgPqngecY8VxmXZP2L7nV+XUYTtvrWpKZRl1wkbv2+228gqevAWvimY2OTn9O2SMX8blYE4Xpspn6fRcCUa0kQz8CeuOX2YsRiTDFBFPLMGkhK06Kng+IupQu6hHilQmbwUlPZMDD8yOijSOFf50ykN7TuV8y1m2Fux98nRVpGidLvneQtEqrYAjMoeYg8wZSOkdQMGdWGjffdJURQjnLBxAtDRf2DCjVarjMbmOUzaNZTTM=";
             }
 
             @Override
-            public String texture() {
+            public String texture(SkyBlockPlayer player) {
                 return "ewogICJ0aW1lc3RhbXAiIDogMTY4OTg4MDUyOTE2NywKICAicHJvZmlsZUlkIiA6ICI1ZWQ4OTJiN2UyZGU0ZjYyYjIyNmFjNjQwZDA0YmJiOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJmcm9zdGVkc3Vuc2hpbmUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmRjZjQzMTJlNzUyNWNhZTAzOTUzODQwZThmOGVhYWIzY2E0NjcxNjU3ZWNkZjIxMTRhMDU3ZDQwMTI1NWY0YyIKICAgIH0KICB9Cn0=";
             }
 
             @Override
-            public Pos position() {
+            public Pos position(SkyBlockPlayer player) {
                 return new Pos(2.5, 70, -75.5, 0, 0);
             }
 
@@ -49,7 +50,7 @@ public class NPCSecuritySloth extends NPCDialogue {
     }
 
     @Override
-    public DialogueSet[] getDialogueSets() {
+    public DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
                         .key("hello").lines(new String[]{
