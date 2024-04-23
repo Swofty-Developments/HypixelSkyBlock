@@ -27,9 +27,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 3000000) {
                     return;
                 }
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_JACKET);
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_OXFORDS);
-                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_PANTS);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 3000000);
             }
@@ -61,9 +61,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 20000000) {
                     return;
                 }
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_JACKET);
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_OXFORDS);
-                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_PANTS);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 20000000);
             }
@@ -95,9 +95,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 74999999) {
                     return;
                 }
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_JACKET);
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_OXFORDS);
-                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_PANTS);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 74999999);
             }
