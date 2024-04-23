@@ -5,6 +5,7 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.block.blocks.BlockChest;
@@ -60,5 +61,6 @@ public class GUIChest extends SkyBlockInventoryGUI {
 
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
+        if (e.getClickType() == ClickType.START_SHIFT_CLICK) chest.update();
     }
 }

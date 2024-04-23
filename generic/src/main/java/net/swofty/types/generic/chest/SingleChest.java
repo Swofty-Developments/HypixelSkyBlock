@@ -59,6 +59,11 @@ public class SingleChest implements Chest {
     }
 
     @Override
+    public void update() {
+        save();
+    }
+
+    @Override
     public void setItem(int slot, ItemStack stack) {
         items[slot] = stack;
         save();
