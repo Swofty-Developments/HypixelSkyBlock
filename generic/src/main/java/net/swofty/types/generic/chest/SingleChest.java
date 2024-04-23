@@ -19,7 +19,7 @@ public class SingleChest implements Chest {
 
     private ItemStack[] items;
 
-    public SingleChest(Instance instance , Point position){
+    public SingleChest(Instance instance, Point position) {
         this.instance = instance;
         this.position = position;
         this.items = new ItemStack[InventoryType.CHEST_3_ROW.getSize()];
@@ -44,9 +44,9 @@ public class SingleChest implements Chest {
     public void load() {
         List<ItemStack> itemsList = instance.getBlock(position).getTag(ITEMS_TAG);
 
-        if (itemsList == null){
+        if (itemsList == null) {
             ItemStack[] newItems = new ItemStack[InventoryType.CHEST_3_ROW.getSize()];
-            Arrays.fill(newItems , ItemStack.AIR);
+            Arrays.fill(newItems, ItemStack.AIR);
             this.items = newItems;
         } else {
             this.items = itemsList.toArray(ItemStack[]::new);

@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DoubleChest implements Chest{
+public class DoubleChest implements Chest {
 
     private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("items").list();
     private final Instance instance;
@@ -24,7 +24,7 @@ public class DoubleChest implements Chest{
     @Getter
     private final ItemStack[] rightItems;
 
-    public DoubleChest(Instance instance , Point leftPosition , Point rightPosition){
+    public DoubleChest(Instance instance, Point leftPosition, Point rightPosition) {
         this.instance = instance;
         this.leftPosition = leftPosition;
         this.rightPosition = rightPosition;
@@ -52,13 +52,13 @@ public class DoubleChest implements Chest{
         return BlockChest.ChestType.DOUBLE;
     }
 
-    private ItemStack[] loadItems(Point position){
+    private ItemStack[] loadItems(Point position) {
         ItemStack[] itemStacks;
         List<ItemStack> itemsList = instance.getBlock(position).getTag(ITEMS_TAG);
-        if (itemsList == null){
+        if (itemsList == null) {
             itemStacks = new ItemStack[InventoryType.CHEST_3_ROW.getSize()];
-            Arrays.fill(itemStacks , ItemStack.AIR);
-        }else{
+            Arrays.fill(itemStacks, ItemStack.AIR);
+        } else {
             itemStacks = itemsList.toArray(ItemStack[]::new);
         }
         return itemStacks;
@@ -66,8 +66,8 @@ public class DoubleChest implements Chest{
     }
 
 
-    private void save(Point position , ItemStack[] itemStacks){
-        instance.setBlock(position , instance.getBlock(position).withTag(ITEMS_TAG , List.of(itemStacks)));
+    private void save(Point position, ItemStack[] itemStacks) {
+        instance.setBlock(position, instance.getBlock(position).withTag(ITEMS_TAG, List.of(itemStacks)));
 
     }
 
@@ -75,10 +75,10 @@ public class DoubleChest implements Chest{
     public void setItem(int slot, ItemStack stack) {
         if (slot < leftItems.length) {
             leftItems[slot] = stack;
-            save(leftPosition , leftItems);
+            save(leftPosition, leftItems);
         } else {
             rightItems[slot - leftItems.length] = stack;
-            save(rightPosition , rightItems);
+            save(rightPosition, rightItems);
         }
     }
 
@@ -86,18 +86,18 @@ public class DoubleChest implements Chest{
     public void removeItem(int slot) {
         if (slot < leftItems.length) {
             leftItems[slot] = ItemStack.AIR;
-            save(leftPosition , leftItems);
+            save(leftPosition, leftItems);
         } else {
             rightItems[slot - leftItems.length] = ItemStack.AIR;
-            save(rightPosition , rightItems);
+            save(rightPosition, rightItems);
         }
     }
 
     @Override
     public ItemStack getItem(int slot) {
-        if (slot < leftItems.length){
+        if (slot < leftItems.length) {
             return leftItems[slot];
-        }else{
+        } else {
             return rightItems[slot - leftItems.length];
         }
     }
@@ -110,7 +110,7 @@ public class DoubleChest implements Chest{
         return stacks;
     }
 
-    public List<ItemStack> getItems(Point point){
+    public List<ItemStack> getItems(Point point) {
         return List.of(loadItems(point));
     }
 

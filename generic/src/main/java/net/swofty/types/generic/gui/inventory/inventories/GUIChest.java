@@ -59,5 +59,6 @@ public class GUIChest extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {}
+    public void onBottomClick(InventoryPreClickEvent e) {
+    }
 }
