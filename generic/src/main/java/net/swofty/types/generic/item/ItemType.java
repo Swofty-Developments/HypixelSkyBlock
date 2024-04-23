@@ -70,6 +70,7 @@ import net.swofty.types.generic.item.items.foraging.*;
 import net.swofty.types.generic.item.items.foraging.vanilla.*;
 import net.swofty.types.generic.item.items.mining.RookiePickaxe;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
+import net.swofty.types.generic.item.items.minion.farming.WheatMinion;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
 import net.swofty.types.generic.item.items.minion.upgrade.fuel.*;
 import net.swofty.types.generic.item.items.minion.upgrade.upgrade.*;
@@ -113,15 +114,17 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
-    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
-    DIRT(Material.DIRT, Rarity.COMMON),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
-    AIR(Material.AIR, Rarity.COMMON),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
+
+    /**
+     * Miscellaneous
+     */
     BOOSTER_COOKIE(Material.COOKIE, Rarity.LEGENDARY, BoosterCookie.class),
     GOD_POTION(Material.PLAYER_HEAD, Rarity.SPECIAL, GodPotion.class),
     KAT_FLOWER(Material.POPPY, Rarity.SPECIAL, KatFlower.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
 
     /**
      * Accessories
@@ -181,6 +184,7 @@ public enum ItemType {
     SAND_MINION(Material.PLAYER_HEAD, Rarity.RARE, SandMinion.class),
     GRAVEL_MINION(Material.PLAYER_HEAD, Rarity.RARE, GravelMinion.class),
     SPRUCE_MINION(Material.PLAYER_HEAD, Rarity.RARE, SpruceMinion.class),
+    WHEAT_MINION(Material.PLAYER_HEAD, Rarity.RARE, WheatMinion.class),
 
     /**
     * Minion Upgrades
@@ -689,6 +693,8 @@ public enum ItemType {
     /**
      * Vanilla Items
      */
+    AIR(Material.AIR, Rarity.COMMON),
+    DIRT(Material.DIRT, Rarity.COMMON),
     CRAFTING_TABLE(Material.CRAFTING_TABLE, Rarity.COMMON , CraftingTable.class),
     ANVIL(Material.ANVIL, Rarity.COMMON, Anvil.class),
     OAK_LEAVES(Material.OAK_LEAVES, Rarity.COMMON , OakPlanks.class),

@@ -1,31 +1,31 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.minestom.server.entity.EntityType;
+import net.swofty.types.generic.entity.animalnpc.NPCAnimalParameters;
+import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 
-public class NPCShania extends SkyBlockNPC { //a speaking cow
-
+public class NPCShania extends SkyBlockAnimalNPC {
     public NPCShania() {
-        super(new NPCParameters() {
+        super(new NPCAnimalParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§9Shania", "§e§lCLICK"};
+                return new String[]{"Shania", "§e§lCLICK"};
             }
 
             @Override
-            public String signature() {
-                return "";
+            public int hologramYOffset() {
+                return 75;
             }
 
             @Override
-            public String texture() {
-                return "";
+            public EntityType entityType() {
+                return EntityType.COW;
             }
 
             @Override
             public Pos position() {
-                return new Pos(48.5, 72, -159.5, 90, 0);
+                return new Pos(48, 72, -159);
             }
 
             @Override
@@ -36,8 +36,7 @@ public class NPCShania extends SkyBlockNPC { //a speaking cow
     }
 
     @Override
-    public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+    public void onClick(PlayerClickAnimalNPCEvent e) {
+        e.player().sendMessage("§e[NPC] Shania§f: Moooooo!");
     }
-
 }
