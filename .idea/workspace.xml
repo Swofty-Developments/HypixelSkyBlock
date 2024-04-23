@@ -4,25 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="Fixed compilation error">
-      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/BatArtifact.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/BatRing.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/DevourRing.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/SpeedArtifact.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/accessories/SpeedRing.java" afterDir="false" />
+    <list default="true" id="ce8b87cb-093b-449a-b828-07c843dabdc4" name="Changes" comment="update 3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/configuration/resources.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/data/mongodb/CrystalDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/data/mongodb/CrystalDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/entity/mob/SkyBlockMob.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/entity/mob/SkyBlockMob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/fall/ActionPlayerFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/fall/ActionPlayerFall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/mobdamage/PlayerActionDamageMob.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/event/actions/player/mobdamage/PlayerActionDamageMob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/ItemType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/weapon/Hyperion.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/items/weapon/Hyperion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/CheapTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/CheapTuxedoSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/ElegantTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/ElegantTuxedoSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/FancyTuxedoSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/FancyTuxedoSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/YoungDragonSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/generic/src/main/java/net/swofty/types/generic/item/set/sets/YoungDragonSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/loader/src/main/java/net/swofty/loader/SkyBlock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,13 +73,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.SkyBlock (Village).executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SkyBlock (Village).executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Swofty\IdeaProjects\HypixelSkyBlockFixed\configuration\songs" />
@@ -392,14 +376,6 @@
       <workItem from="1712122156636" duration="12157000" />
       <workItem from="1712199270434" duration="9789000" />
       <workItem from="1712290123850" duration="5135000" />
-    </task>
-    <task id="LOCAL-00126" summary="More performance fixes">
-      <option name="closed" value="true" />
-      <created>1710039397714</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1710039397714</updated>
     </task>
     <task id="LOCAL-00127" summary="Removed redundant imports across the codebase">
       <option name="closed" value="true" />
@@ -785,7 +761,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712299954950</updated>
     </task>
-    <option name="localTasksCounter" value="175" />
+    <task id="LOCAL-00175" summary="update 3">
+      <option name="closed" value="true" />
+      <created>1713774006983</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1713774006983</updated>
+    </task>
+    <option name="localTasksCounter" value="176" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -805,7 +789,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fully implemented the Pet GUI" />
     <MESSAGE value="Fixed variety of bugs" />
     <MESSAGE value="Fixed pets in Bea not properly displaying level 100" />
     <MESSAGE value="Fixed bugs in relation to Tablist cache" />
@@ -830,7 +813,8 @@
     <MESSAGE value="Lots of various bug fixes" />
     <MESSAGE value="Fixed compilation error" />
     <MESSAGE value="update 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 2" />
+    <MESSAGE value="update 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 3" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
