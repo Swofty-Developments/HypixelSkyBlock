@@ -70,6 +70,7 @@ import net.swofty.types.generic.item.items.dungeon.misc.KismetFeather;
 import net.swofty.types.generic.item.items.dungeon.misc.NecronHandle;
 import net.swofty.types.generic.item.items.enchanted.*;
 import net.swofty.types.generic.item.items.enchantment.EnchantedBook;
+import net.swofty.types.generic.item.items.enchantment.HotPotatoBook;
 import net.swofty.types.generic.item.items.farming.*;
 import net.swofty.types.generic.item.items.farming.vanilla.*;
 import net.swofty.types.generic.item.items.fishing.festival.*;
@@ -125,6 +126,7 @@ public enum ItemType {
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
+    HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
 
     /**
      * Accessories
