@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Getter
 public class NPCEntityImpl extends Entity {
     @Getter
     private ArrayList<SkyBlockPlayer> inRangeOf = new ArrayList<>();
@@ -24,14 +25,16 @@ public class NPCEntityImpl extends Entity {
 
     private final String skinTexture;
     private final String skinSignature;
+    private final String[] holograms;
 
-    public NPCEntityImpl(@NotNull String bottomDisplay, @Nullable String skinTexture, @Nullable String skinSignature) {
+    public NPCEntityImpl(@NotNull String bottomDisplay, @Nullable String skinTexture, @Nullable String skinSignature, @NotNull String[] holograms) {
         super(EntityType.PLAYER);
         this.username = bottomDisplay;
 
         this.skinTexture = skinTexture;
         this.skinSignature = skinSignature;
         this.uuid = UUID.randomUUID();
+        this.holograms = holograms;
 
         setNoGravity(true);
     }
@@ -82,15 +85,6 @@ public class NPCEntityImpl extends Entity {
 
         player.sendPacket(new PlayerInfoRemovePacket(getUuid()));
 
-        packetsSent.remove(player);
-    }
-
-    /**
-     * Clears the cache for a player, is only run on quit, {@see QuitAction.java}
-     * @param player The player to clear the cache for
-     */
-    public void clearCache(SkyBlockPlayer player) {
-        inRangeOf.remove(player);
         packetsSent.remove(player);
     }
 }

@@ -114,6 +114,10 @@ public class SkyBlockPlayer extends Player {
         return DataHandler.getUser(this.uuid);
     }
 
+    public DatapointMuseum.MuseumData getMuseumData() {
+        return getDataHandler().get(DataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+    }
+
     public DatapointToggles.Toggles getToggles() {
         return getDataHandler().get(DataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
     }
