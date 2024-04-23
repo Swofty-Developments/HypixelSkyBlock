@@ -5,6 +5,7 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.block.blocks.BlockChest;
@@ -53,9 +54,13 @@ public class GUIChest extends SkyBlockInventoryGUI {
         chest.playAnimation(chest.getInstance(), chest.getPosition(), BlockChest.ChestAnimation.CLOSE);
     }
 
+    /*
+    * Not supported yet.
+    * cause item to disappear
+     */
     @Override
     public boolean allowHotkeying() {
-        return true;
+        return false;
     }
 
     @Override

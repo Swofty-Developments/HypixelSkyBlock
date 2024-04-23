@@ -68,7 +68,12 @@ public class DoubleChest implements Chest {
 
     private void save(Point position, ItemStack[] itemStacks) {
         instance.setBlock(position, instance.getBlock(position).withTag(ITEMS_TAG, List.of(itemStacks)));
+    }
 
+    @Override
+    public void update() {
+        save(leftPosition , leftItems);
+        save(rightPosition , rightItems);
     }
 
     @Override

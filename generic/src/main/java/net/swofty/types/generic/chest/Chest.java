@@ -32,6 +32,8 @@ public interface Chest {
 
     InventoryType getSize();
 
+    void update();
+
     default void playAnimation(Instance instance, Point[] position, BlockChest.ChestAnimation animation) {
         Arrays.stream(position).forEach((pos) -> {
             BlockActionPacket actionPacket = new BlockActionPacket(pos, (byte) 1, animation == BlockChest.ChestAnimation.OPEN ? (byte) 1 : 0, instance.getBlock(pos));
