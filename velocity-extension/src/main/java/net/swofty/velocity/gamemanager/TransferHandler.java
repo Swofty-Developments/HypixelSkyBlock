@@ -15,7 +15,7 @@ import java.util.UUID;
 public record TransferHandler(Player player) {
     public static ArrayList<Player> playersInLimbo = new ArrayList<>();
 
-    public void transferTo(RegisteredServer server) {
+    public void transferTo(RegisteredServer currentServer, RegisteredServer toTransferTo) {
         new Thread(() -> {
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
 
@@ -36,7 +36,10 @@ public record TransferHandler(Player player) {
                 throw new RuntimeException(e);
             }
 
-            player.createConnectionRequest(server).connectWithIndication();
+            player.createConnectionRequest(toTransferTo).connectWithIndication();
+            RedisMessage.sendMessageToServer(UUID.fromString(currentServer.getServerInfo().getName()),
+                    "finished-transfer",
+                    player.getUniqueId().toString());
         }).start();
     }
 }

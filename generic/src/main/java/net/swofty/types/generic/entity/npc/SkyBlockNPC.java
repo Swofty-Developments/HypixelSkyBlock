@@ -57,85 +57,87 @@ public abstract class SkyBlockNPC {
     public static void updateForPlayer(SkyBlockPlayer player) {
         perPlayerNPCs.putIfAbsent(player.getUuid(), new PlayerNPCCache());
 
-        SkyBlockNPC.getNpcs().forEach((npc) -> {
-            boolean playerHasNPC = perPlayerNPCs.containsKey(player.getUuid()) && perPlayerNPCs.get(player.getUuid()).getEntityImpls().containsKey(npc);
+        Thread.startVirtualThread(() -> {
+            SkyBlockNPC.getNpcs().forEach((npc) -> {
+                boolean playerHasNPC = perPlayerNPCs.containsKey(player.getUuid()) && perPlayerNPCs.get(player.getUuid()).getEntityImpls().containsKey(npc);
 
-            if (!playerHasNPC) {
-                NPCEntityImpl entity = new NPCEntityImpl(
-                        npc.getParameters().holograms(player)[npc.getParameters().holograms(player).length - 1],
-                        npc.getParameters().texture(player),
-                        npc.getParameters().signature(player),
-                        npc.getParameters().holograms(player));
-                Pos position = npc.getParameters().position(player);
+                if (!playerHasNPC) {
+                    NPCEntityImpl entity = new NPCEntityImpl(
+                            npc.getParameters().holograms(player)[npc.getParameters().holograms(player).length - 1],
+                            npc.getParameters().texture(player),
+                            npc.getParameters().signature(player),
+                            npc.getParameters().holograms(player));
+                    Pos position = npc.getParameters().position(player);
 
-                PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-                        .pos(position.add(0, 1.1, 0))
-                        .text(Arrays.copyOfRange(npc.getParameters().holograms(player), 0, npc.getParameters().holograms(player).length - 1))
-                        .player(player)
-                        .build();
+                    PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
+                            .pos(position.add(0, 1.1, 0))
+                            .text(Arrays.copyOfRange(npc.getParameters().holograms(player), 0, npc.getParameters().holograms(player).length - 1))
+                            .player(player)
+                            .build();
 
-                entity.setAutoViewable(false);
-                entity.updateNewViewer(player);
+                    entity.setAutoViewable(false);
+                    entity.updateNewViewer(player);
 
-                PlayerHolograms.addExternalPlayerHologram(holo);
-                entity.setInstance(SkyBlockConst.getInstanceContainer(), position);
+                    PlayerHolograms.addExternalPlayerHologram(holo);
+                    entity.setInstance(SkyBlockConst.getInstanceContainer(), position);
+
+                    PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+                    cache.add(npc, holo, entity);
+                    return;
+                }
 
                 PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
-                cache.add(npc, holo, entity);
-                return;
-            }
+                NPCEntityImpl entity = cache.get(npc).getValue();
 
-            PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
-            NPCEntityImpl entity = cache.get(npc).getValue();
+                Pos npcPosition = npc.getParameters().position(player);
+                String npcTexture = npc.getParameters().texture(player);
+                String npcSignature = npc.getParameters().signature(player);
+                String[] npcHolograms = npc.getParameters().holograms(player);
 
-            Pos npcPosition = npc.getParameters().position(player);
-            String npcTexture = npc.getParameters().texture(player);
-            String npcSignature = npc.getParameters().signature(player);
-            String[] npcHolograms = npc.getParameters().holograms(player);
-
-            // If any of the parameters have changed, update the NPC
-            if (!Arrays.equals(entity.getHolograms(), npcHolograms) ||
-                    !entity.getSkinTexture().equals(npcTexture) ||
-                    !entity.getSkinSignature().equals(npcSignature) ||
-                    !entity.getPosition().equals(npcPosition)) {
-                entity.remove();
-                cache.remove(npc);
-                return;
-            }
-
-            Pos playerPosition = player.getPosition();
-            ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
-            double entityDistance = playerPosition.distance(npcPosition);
-            boolean isLookingNPC = npc.getParameters().looking();
-
-            if (entityDistance <= SPAWN_DISTANCE) {
-                if (!inRange.contains(player)) {
-                    inRange.add(player);
-                    entity.updateNewViewer(player);
+                // If any of the parameters have changed, update the NPC
+                if (!Arrays.equals(entity.getHolograms(), npcHolograms) ||
+                        !entity.getSkinTexture().equals(npcTexture) ||
+                        !entity.getSkinSignature().equals(npcSignature) ||
+                        !entity.getPosition().equals(npcPosition)) {
+                    entity.remove();
+                    cache.remove(npc);
+                    return;
                 }
 
-                if (isLookingNPC && entityDistance <= LOOK_DISTANCE) {
-                    double diffX = playerPosition.x() - npcPosition.x();
-                    double diffZ = playerPosition.z() - npcPosition.z();
-                    double theta = Math.atan2(diffZ, diffX);
-                    double yaw = MathUtility.normalizeAngle(Math.toDegrees(theta) + 90, 360.0);
+                Pos playerPosition = player.getPosition();
+                ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
+                double entityDistance = playerPosition.distance(npcPosition);
+                boolean isLookingNPC = npc.getParameters().looking();
 
-                    player.sendPackets(
-                            new EntityRotationPacket(entity.getEntityId(), (float) yaw, npcPosition.pitch(), true),
-                            new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
-                    );
-                }
-            } else {
-                if (inRange.contains(player)) {
-                    inRange.remove(player);
-                    entity.updateOldViewer(player);
+                if (entityDistance <= SPAWN_DISTANCE) {
+                    if (!inRange.contains(player)) {
+                        inRange.add(player);
+                        entity.updateNewViewer(player);
+                    }
 
-                    player.sendPackets(
-                            new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-                            new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-                    );
+                    if (isLookingNPC && entityDistance <= LOOK_DISTANCE) {
+                        double diffX = playerPosition.x() - npcPosition.x();
+                        double diffZ = playerPosition.z() - npcPosition.z();
+                        double theta = Math.atan2(diffZ, diffX);
+                        double yaw = MathUtility.normalizeAngle(Math.toDegrees(theta) + 90, 360.0);
+
+                        player.sendPackets(
+                                new EntityRotationPacket(entity.getEntityId(), (float) yaw, npcPosition.pitch(), true),
+                                new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
+                        );
+                    }
+                } else {
+                    if (inRange.contains(player)) {
+                        inRange.remove(player);
+                        entity.updateOldViewer(player);
+
+                        player.sendPackets(
+                                new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
+                                new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
+                        );
+                    }
                 }
-            }
+            });
         });
     }
 

@@ -63,8 +63,25 @@ public class ListenerPlayerHandler extends RedisListener {
                             "origin-server",
                             player.getUniqueId().toString() + ":" + playersCurrentServer.name());
 
-                    new TransferHandler(player).transferTo(toSendTo.server());
+                    new TransferHandler(player).transferTo(player.getCurrentServer().get().getServer(), toSendTo.server());
                 }).start();
+            }
+            case "teleport" -> {
+                UUID target = UUID.fromString(json.getString("uuid"));
+                Double x = json.getDouble("x");
+                Double y = json.getDouble("y");
+                Double z = json.getDouble("z");
+                Float yaw = json.getFloat("yaw");
+                Float pitch = json.getFloat("pitch");
+
+                Optional<Player> targetPlayer = SkyBlockVelocity.getServer().getPlayer(target);
+                if (targetPlayer.isEmpty()) {
+                    return "false";
+                }
+
+                return RedisMessage.sendMessageToServer(UUID.fromString(targetPlayer.get().getCurrentServer().get().getServer().getServerInfo().getName()),
+                        "teleport",
+                        json.toString()).join();
             }
             case "bank-hash" -> {
                 if (potentialServer.isEmpty()) {

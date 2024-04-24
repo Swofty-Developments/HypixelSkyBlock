@@ -3,8 +3,10 @@ package net.swofty.types.generic.entity.npc;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.*;
 import net.minestom.server.event.entity.EntitySpawnEvent;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -35,6 +37,10 @@ public class NPCEntityImpl extends Entity {
         this.skinSignature = skinSignature;
         this.uuid = UUID.randomUUID();
         this.holograms = holograms;
+
+        if (holograms == null) {
+            throw new IllegalArgumentException("Holograms cannot be null");
+        }
 
         setNoGravity(true);
     }
@@ -86,5 +92,21 @@ public class NPCEntityImpl extends Entity {
         player.sendPacket(new PlayerInfoRemovePacket(getUuid()));
 
         packetsSent.remove(player);
+    }
+
+    @Override
+    public void tick(long time) {
+        Instance instance = getInstance();
+        Pos position = getPosition();
+
+        if (instance == null) {
+            return;
+        }
+
+        if (!instance.isChunkLoaded(position)) {
+            instance.loadChunk(position).join();
+        }
+
+        super.tick(time);
     }
 }

@@ -18,11 +18,16 @@ import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
 import net.swofty.proxyapi.redis.RedisMessage;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 @Getter
 public class ProxyPlayer {
+    public static Map<UUID, CompletableFuture<Void>> waitingForTransferComplete = new ConcurrentHashMap<>();
     private final UUID uuid;
 
     public ProxyPlayer(Player player) {
@@ -44,6 +49,20 @@ public class ProxyPlayer {
 
     public void sendMessage(String message) {
         sendMessage(Component.text(message));
+    }
+
+
+    public void teleport(Pos pos) {
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("actions", "teleport");
+        json.put("x", pos.x());
+        json.put("y", pos.y());
+        json.put("z", pos.z());
+        json.put("yaw", pos.yaw());
+        json.put("pitch", pos.pitch());
+
+        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
     }
 
     public CompletableFuture<Boolean> isOnline() {
@@ -81,6 +100,21 @@ public class ProxyPlayer {
         json.put("type", serverType.toString());
 
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+    }
+
+    public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("actions", "transfer");
+        json.put("type", serverType.toString());
+
+        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+
+        waitingForTransferComplete.put(uuid, future);
+
+        return future;
     }
 
     public CompletableFuture<UUID> getBankHash() {

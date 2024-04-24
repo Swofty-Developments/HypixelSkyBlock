@@ -5,12 +5,15 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ServerType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.fasttravel.GUIFastTravel;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog.GUIMissionLog;
@@ -20,6 +23,7 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStor
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
+import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.StringUtility;
@@ -234,6 +238,28 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7Opens the crafting grid.",
                         " ",
                         "§eClick to open!");
+            }
+        });
+        set(new GUIClickableItem(47) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
+                    player.closeInventory();
+                    player.sendTo(ServerType.ISLAND);
+                    return;
+                }
+
+                new GUIFastTravel().open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStackHead("§bFast Travel", "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011", 1,
+                        "§7Teleport to islands you've already",
+                        "§7visited.",
+                        " ",
+                        "§8Right-click to warp home!",
+                        "§eClick to pick location!");
             }
         });
 

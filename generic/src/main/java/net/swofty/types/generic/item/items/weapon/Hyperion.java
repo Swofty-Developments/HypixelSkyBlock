@@ -5,6 +5,7 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem,
-        DefaultCraftable, GemstoneItem, NotFinishedYet {
+        DefaultCraftable, GemstoneItem, NotFinishedYet, Museumable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
@@ -82,5 +83,10 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;
+    }
+
+    @Override
+    public MuseumableItemCategory getMuseumCategory() {
+        return MuseumableItemCategory.WEAPONS;
     }
 }

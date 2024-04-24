@@ -4,9 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;
+import net.swofty.types.generic.serializer.SkyBlockItemSerializer;
 import org.json.JSONObject;
 
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
     private static final Serializer<MuseumData> serializer = new Serializer<>() {
@@ -37,15 +41,28 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
     @Getter
     @Setter
     public static class MuseumData {
-        public UUID currentlyViewing;
-        public boolean hasBoughtAppraisalService = false;
+        private Map.Entry<UUID, UUID> currentlyViewing = new AbstractMap.SimpleEntry<>(UUID.randomUUID(), UUID.randomUUID());
+        private boolean hasBoughtAppraisalService = false;
+        private List<SkyBlockItem> currentlyInMuseum = new ArrayList<>();
+        private List<SkyBlockItem> previouslyInMuseum = new ArrayList<>();
 
         public JSONObject serialize() {
             JSONObject json = new JSONObject();
             if (currentlyViewing != null)
-                json.put("currentlyViewing", currentlyViewing.toString());
+                json.put("currentlyViewing", currentlyViewing.getKey() + "=" + currentlyViewing.getValue());
             else json.put("currentlyViewing", JSONObject.NULL);
             json.put("hasBoughtAppraisalService", hasBoughtAppraisalService);
+
+            List<String> currentlyInMuseum = getCurrentlyInMuseum().stream().map(item ->
+                    SkyBlockItemSerializer.serializeJSON(item).toString()
+            ).toList();
+            List<String> previouslyInMuseum = getPreviouslyInMuseum().stream().map(item ->
+                    SkyBlockItemSerializer.serializeJSON(item).toString()
+            ).toList();
+
+            json.put("currentlyInMuseum", currentlyInMuseum);
+            json.put("previouslyInMuseum", previouslyInMuseum);
+
             return json;
         }
 
@@ -54,8 +71,20 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
             if (json.isNull("currentlyViewing"))
                 data.currentlyViewing = null;
             else
-                data.currentlyViewing = UUID.fromString(json.getString("currentlyViewing"));
+                data.currentlyViewing = Map.entry(UUID.fromString(json.getString("currentlyViewing").split("=")[0]),
+                        UUID.fromString(json.getString("currentlyViewing").split("=")[1]));
             data.hasBoughtAppraisalService = json.getBoolean("hasBoughtAppraisalService");
+
+            List<SkyBlockItem> currentlyInMuseum = json.getJSONArray("currentlyInMuseum").toList().stream().map(item ->
+                    SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))
+            ).toList();
+            List<SkyBlockItem> previouslyInMuseum = json.getJSONArray("previouslyInMuseum").toList().stream().map(item ->
+                    SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))
+            ).toList();
+
+            data.currentlyInMuseum = currentlyInMuseum;
+            data.previouslyInMuseum = previouslyInMuseum;
+
             return data;
         }
     }
