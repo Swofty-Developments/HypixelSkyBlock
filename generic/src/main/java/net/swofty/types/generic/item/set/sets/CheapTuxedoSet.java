@@ -1,18 +1,39 @@
 package net.swofty.types.generic.item.set.sets;
 
+import net.swofty.types.generic.event.value.SkyBlockValueEvent;
+import net.swofty.types.generic.event.value.ValueUpdateEvent;
+import net.swofty.types.generic.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 
-public class CheapTuxedoSet implements ArmorSet {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class CheapTuxedoSet extends SkyBlockValueEvent implements ArmorSet {
     @Override
     public String getName() {
         return "Dashing";
     }
 
     @Override
-    public String getDescription() {
-        return """
-                §7Max health set to §c75♥§7.
-                §7Deal §c+50% §7damage!
-                §8Very stylish.""";
+    public ArrayList<String> getDescription() {
+        return new ArrayList<>(Arrays.asList(
+                "Max health set to §c75♥§7.",
+                "Deal §c+50% §7damage!",
+                "§8Very stylish."
+        ));
+    }
+
+    @Override
+    public Class<? extends ValueUpdateEvent> getValueEvent() {
+        return MaxHealthValueUpdateEvent.class;
+    }
+
+    @Override
+    public void run(ValueUpdateEvent tempEvent) {
+        MaxHealthValueUpdateEvent event = (MaxHealthValueUpdateEvent) tempEvent;
+
+        if (!isWearingSet(event.getPlayer())) return;
+
+        event.setValue(75D);
     }
 }
