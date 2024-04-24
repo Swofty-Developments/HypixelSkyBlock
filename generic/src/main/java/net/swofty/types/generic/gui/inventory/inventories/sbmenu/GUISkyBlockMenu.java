@@ -49,7 +49,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
                         "Crit Chance", "Crit Damage", "Swing Range"));
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.name())) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 decimalFormat.format(value) + statistic.getSuffix());

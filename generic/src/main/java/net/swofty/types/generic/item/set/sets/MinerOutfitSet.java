@@ -6,6 +6,9 @@ import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.impl.SetEvents;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MinerOutfitSet implements ArmorSet, SetEvents {
 
     @Override
@@ -14,13 +17,16 @@ public class MinerOutfitSet implements ArmorSet, SetEvents {
     }
 
     @Override
-    public String getDescription() {
-        return "§7Grants the wearer with §apermanent Haste II §7while worn.";
+    public ArrayList<String> getDescription() {
+        return new ArrayList<>(Arrays.asList(
+                "§7Grants the wearer with §apermanent",
+                "§aHaste II §7while worn."
+        ));
     }
 
     @Override
     public void setPutOn(SkyBlockPlayer player) {
-        player.addEffect(new Potion(PotionEffect.HASTE, (byte) 2, -1));
+        player.addEffect(new Potion(PotionEffect.HASTE, (byte) 1, -1));
     }
 
     @Override
