@@ -52,31 +52,33 @@ public class SkyBlockScoreboard {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
 
-                SwoftySidebar sidebar = new SwoftySidebar(Component.text(STR."  \{getSidebarName(skyblockName, false)}\{player.isCoop() ? " §b§lCO-OP  " : "  "}"));
+                SwoftySidebar sidebar = new SwoftySidebar(Component.text("  " + getSidebarName(skyblockName, false)
+                        + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
 
-                addLine(STR."§7\{new SimpleDateFormat("MM/dd/yy").format(new Date())} §8m\{SkyBlockConst.getServerName()}   ", sidebar);
+                addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8m" + SkyBlockConst.getServerName(), sidebar);
                 addLine("§7 ", sidebar);
-                addLine(STR."§f \{SkyBlockCalendar.getMonthName()} \{StringUtility.ntify(SkyBlockCalendar.getDay())}", sidebar);
-                addLine(STR."§7 \{SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed())}", sidebar);
+                addLine("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()), sidebar);
+                addLine("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()), sidebar);
                 try {
-                    addLine(STR."§7 ⏣ \{region.getType().getColor()}\{region.getType().getName()}", sidebar);
+                    addLine("§7 ⏣ " + region.getType().getColor() + region.getType().getName(), sidebar);
                 } catch (NullPointerException ignored) {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine(STR."§fPurse: §6\{StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue())}\{coinReplacement == null ? "" : STR." §e(+\{coinReplacement.getDisplay()})"}", sidebar);
-                addLine(STR."§fBits: §b\{StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue())}", sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()) +
+                        (coinReplacement == null ? "" : " §e(+" + coinReplacement.getDisplay() + ")"), sidebar);
+                addLine("§fBits: §b" + StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue()), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
                     MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
 
                     addLine("§fObjective", sidebar);
-                    addLine(STR."§e\{mission}", sidebar);
+                    addLine("§e" + mission, sidebar);
 
                     SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
                     if (progressMission != null)
-                        addLine(STR."§7 (§e\{mission.getMissionProgress()}§7/§a\{progressMission.getMaxProgress()}§7)", sidebar);
+                        addLine("§7 (" + mission.getMissionProgress() + "§7/" + progressMission.getMaxProgress() + "§7)", sidebar);
                     addLine("§7 ", sidebar);
                 }
 
