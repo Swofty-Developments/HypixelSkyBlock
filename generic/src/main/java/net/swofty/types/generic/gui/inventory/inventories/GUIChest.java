@@ -61,10 +61,6 @@ public class GUIChest extends SkyBlockInventoryGUI {
         IntStream.range(0, inventory.getItemStacks().length).forEach(i -> chest.setItem(i, inventory.getItemStack(i)));
     }
 
-    /*
-    * Not supported yet.
-    * cause item to disappear
-     */
     @Override
     public boolean allowHotkeying() {
         return true;
