@@ -17,7 +17,7 @@ public abstract class NPCDialogue extends SkyBlockNPC {
         super(parameters);
     }
 
-    public abstract DialogueSet[] getDialogueSets();
+    public abstract DialogueSet[] getDialogueSets(SkyBlockPlayer player);
 
     public Boolean isInDialogue(SkyBlockPlayer player) {
         Map.Entry<DialogueSet, CompletableFuture<String>> dialogueSet = dialogueSets.get(player);
@@ -27,7 +27,7 @@ public abstract class NPCDialogue extends SkyBlockNPC {
     public CompletableFuture<String> setDialogue(SkyBlockPlayer player, String key) {
         CompletableFuture<String> future = new CompletableFuture<>();
 
-        for (DialogueSet dialogueSet : getDialogueSets()) {
+        for (DialogueSet dialogueSet : getDialogueSets(player)) {
             if (dialogueSet.key().equals(key)) {
                 dialogueSets.put(player, Map.entry(dialogueSet, future));
                 handleLineSendingLoop(player, dialogueSet);
@@ -58,7 +58,7 @@ public abstract class NPCDialogue extends SkyBlockNPC {
     }
 
     public static void remove(SkyBlockPlayer player) {
-        for (SkyBlockNPC npc : getNpcs().keySet()) {
+        for (SkyBlockNPC npc : getNpcs()) {
             if (npc instanceof NPCDialogue dialogue) {
                 if (dialogue.isInDialogue(player)) {
                     dialogue.dialogueSets.get(player).getValue().complete(null);

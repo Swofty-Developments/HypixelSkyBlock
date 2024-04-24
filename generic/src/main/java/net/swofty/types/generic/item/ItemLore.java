@@ -191,17 +191,17 @@ public class ItemLore {
                 if (player != null && player.isWearingItem(item)) {
                     for (SkyBlockItem armorItem : player.getArmor()) {
                         if (armorItem == null) continue;
-                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()) == null)
+                        ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType());
+                        if (armorSetRegistry == null)
                             continue;
-                        if (ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType()).getClazz() == armorSet.getClass()) {
+                        if (armorSetRegistry.getClazz() == armorSet.getClass()) {
                             wearingAmount++;
                         }
                     }
                 }
-
-                addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/4)");
-                for (String line : StringUtility.splitByWordAndLength(armorSet.getDescription(), 36))
-                    addLoreLine("§7" + line);
+                int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
+                addLoreLine("§6Full Set Bonus: " + armorSet.getName() + " (" + wearingAmount + "/" + totalPieces + ")");
+                armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
                 addLoreLine(null);
             }
 
