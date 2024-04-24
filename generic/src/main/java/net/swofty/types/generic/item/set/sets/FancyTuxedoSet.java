@@ -34,6 +34,6 @@ public class FancyTuxedoSet extends SkyBlockValueEvent implements ArmorSet {
 
         if (!isWearingSet(event.getPlayer())) return;
 
-        event.setValue(150D);
+        event.setValue(150F);
     }
 }

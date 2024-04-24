@@ -587,10 +587,10 @@ public class SkyBlockPlayer extends Player {
     @Override
     public float getMaxHealth() {
         PlayerStatistics statistics = this.getStatistics();
-        Double maxHealth = statistics.allStatistics().getOverall(ItemStatistic.HEALTH);
+        float maxHealth = statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
         MaxHealthValueUpdateEvent event = new MaxHealthValueUpdateEvent(this, maxHealth);
         SkyBlockValueEvent.callValueUpdateEvent(event);
-        return (float) Math.min((Double) event.getValue(), maxHealth);
+        return Math.min((float) event.getValue(), maxHealth);
     }
 
     @Override
