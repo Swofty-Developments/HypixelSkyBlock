@@ -52,7 +52,8 @@ public class SkyBlockScoreboard {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
 
-                SwoftySidebar sidebar = new SwoftySidebar(Component.text(STR."  \{getSidebarName(skyblockName, false)}\{player.isCoop() ? " §b§lCO-OP  " : "  "}"));
+                SwoftySidebar sidebar = new SwoftySidebar(Component.text("  " + getSidebarName(skyblockName, false)
+                        + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8m" + SkyBlockConst.getServerName(), sidebar);
                 addLine("§7 ", sidebar);

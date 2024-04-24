@@ -4,6 +4,7 @@ package net.swofty.types.generic.gui.inventory.inventories;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
@@ -14,6 +15,9 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class GUIChest extends SkyBlockInventoryGUI {
 
@@ -52,6 +56,9 @@ public class GUIChest extends SkyBlockInventoryGUI {
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         e.getPlayer().playSound(Sound.sound(SoundEvent.BLOCK_CHEST_CLOSE, Sound.Source.RECORD, 1f, 1f));
         chest.playAnimation(chest.getInstance(), chest.getPosition(), BlockChest.ChestAnimation.CLOSE);
+
+        Inventory inventory = e.getInventory();
+        IntStream.range(0, inventory.getItemStacks().length).forEach(i -> chest.setItem(i, inventory.getItemStack(i)));
     }
 
     /*
@@ -60,7 +67,7 @@ public class GUIChest extends SkyBlockInventoryGUI {
      */
     @Override
     public boolean allowHotkeying() {
-        return false;
+        return true;
     }
 
     @Override
