@@ -5,20 +5,17 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
-import net.minestom.server.scoreboard.Team;
-import net.swofty.commons.ServerType;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.datapoints.DatapointString;
+import net.swofty.types.generic.data.datapoints.DatapointStringList;
 import net.swofty.types.generic.data.datapoints.DatapointUUID;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.categories.Rank;
@@ -26,9 +23,10 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.MathUtility;
-import org.tinylog.Logger;
+import net.swofty.types.generic.warps.TravelScrollIslands;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 
 @EventParameters(description = "Join miscellaneous stuff with data being loaded",
@@ -83,6 +81,13 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
                 if (!player.isOnline()) return;
                 player.getPetData().updatePetEntityImpl(player);
             }, 20);
+
+            TravelScrollIslands island = TravelScrollIslands.getFromType(SkyBlockConst.getTypeLoader().getType());
+            if (island != null) {
+                List<String> visitedIslands = player.getDataHandler().get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).getValue();
+                visitedIslands.add(island.getInternalName());
+                player.getDataHandler().get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
+            }
 
             if (SkyBlockConst.isIslandServer()) return;
             PlayerHolograms.spawnAll(player);

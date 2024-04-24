@@ -47,6 +47,7 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
+import net.swofty.types.generic.item.impl.Museumable;
 import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
@@ -58,6 +59,7 @@ import net.swofty.types.generic.levels.unlocks.CustomLevelUnlock;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
+import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
@@ -460,6 +462,20 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 });
                 recipes.forEach(SkyBlockRecipe::init);
             });
+        });
+
+        /**
+         * Register Museum items
+         */
+        Arrays.stream(ItemType.values()).forEach(itemType -> {
+            try {
+                if (itemType.clazz == null) return;
+                if (itemType.clazz.newInstance() instanceof Museumable museumable) {
+                    MuseumableItemCategory.addItem(museumable.getMuseumCategory(), itemType);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         /**

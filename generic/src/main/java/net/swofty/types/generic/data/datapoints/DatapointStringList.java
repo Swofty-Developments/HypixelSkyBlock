@@ -36,27 +36,4 @@ public class DatapointStringList extends Datapoint<List<String>> {
     public DatapointStringList(String key) {
         this(key, new ArrayList<>());
     }
-
-    public void add(String value) {
-        List<String> current = getValue();
-        current.add(value);
-        setValue(current);
-    }
-
-    public void remove(String value) {
-        List<String> current = getValue();
-        current.remove(value);
-        setValue(current);
-    }
-
-    public boolean has(String value) {
-        return getValue().contains(value);
-    }
-
-    public boolean hasOrAdd(String value) {
-        if (has(value))
-            return false;
-        add(value);
-        return true;
-    }
 }

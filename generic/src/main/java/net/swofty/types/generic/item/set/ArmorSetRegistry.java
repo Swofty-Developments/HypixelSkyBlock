@@ -12,8 +12,7 @@ public enum ArmorSetRegistry {
     CHEAP_TUXEDO(CheapTuxedoSet.class, ItemType.CHEAP_TUXEDO_BOOTS, ItemType.CHEAP_TUXEDO_LEGGINGS, ItemType.CHEAP_TUXEDO_CHESTPLATE, null),
     FANCY_TUXEDO(FancyTuxedoSet.class, ItemType.FANCY_TUXEDO_BOOTS, ItemType.FANCY_TUXEDO_LEGGINGS, ItemType.FANCY_TUXEDO_CHESTPLATE, null),
     ELEGANT_TUXEDO(ElegantTuxedoSet.class, ItemType.ELEGANT_TUXEDO_BOOTS, ItemType.ELEGANT_TUXEDO_LEGGINGS, ItemType.ELEGANT_TUXEDO_CHESTPLATE, null),
-    MUSHROOM(MushroomSet.class, ItemType.MUSHROOM_BOOTS, ItemType.MUSHROOM_LEGGINGS, ItemType.MUSHROOM_CHESTPLATE, ItemType.MUSHROOM_HELMET)
-    ;
+    MUSHROOM(MushroomSet.class, ItemType.MUSHROOM_BOOTS, ItemType.MUSHROOM_LEGGINGS, ItemType.MUSHROOM_CHESTPLATE, ItemType.MUSHROOM_HELMET);
 
     private final Class<? extends ArmorSet> clazz;
     private final ItemType boots;
@@ -51,12 +50,21 @@ public enum ArmorSetRegistry {
         return null;
     }
 
+    public static int getPieceCount(ArmorSetRegistry armorSetRegistry) {
+        int count = 0;
+        if (armorSetRegistry.getBoots() != null) count++;
+        if (armorSetRegistry.getLeggings() != null) count++;
+        if (armorSetRegistry.getChestplate() != null) count++;
+        if (armorSetRegistry.getHelmet() != null) count++;
+        return count;
+    }
+
     public static ArmorSetRegistry getArmorSet(ItemType boots, ItemType leggings, ItemType chestplate, ItemType helmet) {
         for (ArmorSetRegistry armorSetRegistry : values()) {
-            if (armorSetRegistry.getBoots() == boots
-                    && armorSetRegistry.getLeggings() == leggings
-                    && armorSetRegistry.getChestplate() == chestplate
-                    && armorSetRegistry.getHelmet() == helmet) {
+            if ((armorSetRegistry.getBoots() == null || armorSetRegistry.getBoots() == boots)
+                    && (armorSetRegistry.getLeggings() == null || armorSetRegistry.getLeggings() == leggings)
+                    && (armorSetRegistry.getChestplate() == null || armorSetRegistry.getChestplate() == chestplate)
+                    && (armorSetRegistry.getHelmet() == null || armorSetRegistry.getHelmet() == helmet)) {
                 return armorSetRegistry;
             }
         }

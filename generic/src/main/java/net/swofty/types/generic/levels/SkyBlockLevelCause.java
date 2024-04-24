@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.causes.*;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.museum.MuseumRewards;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
 import org.jetbrains.annotations.Nullable;
@@ -64,6 +65,11 @@ public class SkyBlockLevelCause {
         for (String missionID : MissionData.getAllMissionIDs()) {
             CAUSES.put("mission-" + missionID, new MissionLevelCause(missionID));
         }
+
+        // Register all Museum rewards
+        for (MuseumRewards reward : MuseumRewards.values()) {
+            CAUSES.put("museum-" + reward.name(), new MuseumLevelCause(reward));
+        }
     }
 
     public static Map<String, SkyBlockLevelCauseAbstr> getCauses() {
@@ -94,6 +100,17 @@ public class SkyBlockLevelCause {
             if (cause instanceof MissionLevelCause missionCause) {
                 if (missionCause.getMissionKey().equals(missionKey)) {
                     return missionCause;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static MuseumLevelCause getMuseumCause(MuseumRewards reward) {
+        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
+            if (cause instanceof MuseumLevelCause museumCause) {
+                if (museumCause.getReward() == reward) {
+                    return museumCause;
                 }
             }
         }

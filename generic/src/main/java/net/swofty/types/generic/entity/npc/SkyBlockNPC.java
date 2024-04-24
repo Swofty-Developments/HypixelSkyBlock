@@ -5,21 +5,20 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.entity.hologram.ServerHolograms;
+import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class SkyBlockNPC {
     private static final int SPAWN_DISTANCE = 48;
     private static final int LOOK_DISTANCE = 16;
 
     @Getter
-    private static Map<SkyBlockNPC, NPCEntityImpl> npcs = new HashMap();
+    private static List<SkyBlockNPC> npcs = new ArrayList<>();
+    @Getter
+    private static Map<UUID, PlayerNPCCache> perPlayerNPCs = new HashMap<>();
 
     @Getter
     private final NPCParameters parameters;
@@ -35,81 +34,135 @@ public abstract class SkyBlockNPC {
     }
 
     public void register() {
-        String[] holograms = parameters.holograms();
-
-        ServerHolograms.addExternalHologram(ServerHolograms.ExternalHologram.builder()
-                .pos(new Pos(parameters.position().x(), parameters.position().y() + 1.1, parameters.position().z()))
-                .text(Arrays.copyOfRange(holograms, 0, holograms.length - 1))
-                .instance(SkyBlockConst.getInstanceContainer())
-                .build());
-
-        NPCEntityImpl entity = new NPCEntityImpl(
-                holograms[holograms.length - 1],
-                getParameters().texture(),
-                getParameters().signature());
-        entity.setInstance(SkyBlockConst.getInstanceContainer(), getParameters().position());
-
-        npcs.put(this, entity);
+        npcs.add(this);
     }
 
     public void sendMessage(SkyBlockPlayer player, String message) {
         player.sendMessage("§e[NPC] " + getName() + ": §f" + message);
     }
 
-    public static SkyBlockNPC getFromImpl(NPCEntityImpl impl) {
-        for (SkyBlockNPC npc : npcs.keySet()) {
-            if (npcs.get(npc) == impl) return npc;
+    public static SkyBlockNPC getFromImpl(SkyBlockPlayer player, NPCEntityImpl impl) {
+        Map<SkyBlockNPC, NPCEntityImpl> npcs = perPlayerNPCs.get(player.getUuid()).getEntityImpls();
+        if (npcs == null) return null;
+
+        for (Map.Entry<SkyBlockNPC, NPCEntityImpl> entry : npcs.entrySet()) {
+            if (entry.getValue().equals(impl)) {
+                return entry.getKey();
+            }
         }
+
         return null;
     }
 
     public static void updateForPlayer(SkyBlockPlayer player) {
-        SkyBlockNPC.getNpcs().forEach((npc, entity) -> {
-            if (entity.getInstance() != SkyBlockConst.getInstanceContainer()) return;
+        perPlayerNPCs.putIfAbsent(player.getUuid(), new PlayerNPCCache());
 
-            Pos npcPosition = entity.getPosition();
-            Pos requestedPosition = npc.getParameters().positionPerPlayer().apply(player);
-            if (!npcPosition.equals(requestedPosition)) {
-                entity.setInstance(SkyBlockConst.getInstanceContainer(), requestedPosition);
-                npcPosition = requestedPosition;
-            }
+        Thread.startVirtualThread(() -> {
+            SkyBlockNPC.getNpcs().forEach((npc) -> {
+                boolean playerHasNPC = perPlayerNPCs.containsKey(player.getUuid()) && perPlayerNPCs.get(player.getUuid()).getEntityImpls().containsKey(npc);
 
-            Pos playerPosition = player.getPosition();
-            ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
-            double entityDistance = entity.getDistance(playerPosition);
-            boolean isLookingNPC = npc.getParameters().looking();
+                if (!playerHasNPC) {
+                    NPCEntityImpl entity = new NPCEntityImpl(
+                            npc.getParameters().holograms(player)[npc.getParameters().holograms(player).length - 1],
+                            npc.getParameters().texture(player),
+                            npc.getParameters().signature(player),
+                            npc.getParameters().holograms(player));
+                    Pos position = npc.getParameters().position(player);
 
-            if (entityDistance <= SPAWN_DISTANCE) {
-                if (!inRange.contains(player)) {
-                    inRange.add(player);
+                    PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
+                            .pos(position.add(0, 1.1, 0))
+                            .text(Arrays.copyOfRange(npc.getParameters().holograms(player), 0, npc.getParameters().holograms(player).length - 1))
+                            .player(player)
+                            .build();
+
+                    entity.setAutoViewable(false);
                     entity.updateNewViewer(player);
+
+                    PlayerHolograms.addExternalPlayerHologram(holo);
+                    entity.setInstance(SkyBlockConst.getInstanceContainer(), position);
+
+                    PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+                    cache.add(npc, holo, entity);
+                    return;
                 }
 
-                if (isLookingNPC && entityDistance <= LOOK_DISTANCE) {
-                    double diffX = playerPosition.x() - npcPosition.x();
-                    double diffZ = playerPosition.z() - npcPosition.z();
-                    double theta = Math.atan2(diffZ, diffX);
-                    double yaw = MathUtility.normalizeAngle(Math.toDegrees(theta) + 90, 360.0);
+                PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+                NPCEntityImpl entity = cache.get(npc).getValue();
 
-                    player.sendPackets(
-                            new EntityRotationPacket(entity.getEntityId(), (float) yaw, npcPosition.pitch(), true),
-                            new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
-                    );
-                }
-            } else {
-                if (inRange.contains(player)) {
-                    inRange.remove(player);
-                    entity.updateOldViewer(player);
+                Pos npcPosition = npc.getParameters().position(player);
+                String npcTexture = npc.getParameters().texture(player);
+                String npcSignature = npc.getParameters().signature(player);
+                String[] npcHolograms = npc.getParameters().holograms(player);
 
-                    player.sendPackets(
-                            new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
-                            new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
-                    );
+                // If any of the parameters have changed, update the NPC
+                if (!Arrays.equals(entity.getHolograms(), npcHolograms) ||
+                        !entity.getSkinTexture().equals(npcTexture) ||
+                        !entity.getSkinSignature().equals(npcSignature) ||
+                        !entity.getPosition().equals(npcPosition)) {
+                    entity.remove();
+                    cache.remove(npc);
+                    return;
                 }
-            }
+
+                Pos playerPosition = player.getPosition();
+                ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
+                double entityDistance = playerPosition.distance(npcPosition);
+                boolean isLookingNPC = npc.getParameters().looking();
+
+                if (entityDistance <= SPAWN_DISTANCE) {
+                    if (!inRange.contains(player)) {
+                        inRange.add(player);
+                        entity.updateNewViewer(player);
+                    }
+
+                    if (isLookingNPC && entityDistance <= LOOK_DISTANCE) {
+                        double diffX = playerPosition.x() - npcPosition.x();
+                        double diffZ = playerPosition.z() - npcPosition.z();
+                        double theta = Math.atan2(diffZ, diffX);
+                        double yaw = MathUtility.normalizeAngle(Math.toDegrees(theta) + 90, 360.0);
+
+                        player.sendPackets(
+                                new EntityRotationPacket(entity.getEntityId(), (float) yaw, npcPosition.pitch(), true),
+                                new EntityHeadLookPacket(entity.getEntityId(), (float) yaw)
+                        );
+                    }
+                } else {
+                    if (inRange.contains(player)) {
+                        inRange.remove(player);
+                        entity.updateOldViewer(player);
+
+                        player.sendPackets(
+                                new EntityRotationPacket(entity.getEntityId(), npcPosition.yaw(), npcPosition.pitch(), true),
+                                new EntityHeadLookPacket(entity.getEntityId(), npcPosition.yaw())
+                        );
+                    }
+                }
+            });
         });
     }
 
     public record PlayerClickNPCEvent(SkyBlockPlayer player, int entityId, SkyBlockNPC npc) {
+    }
+
+    public static class PlayerNPCCache {
+        private final Map<SkyBlockNPC, Map.Entry<PlayerHolograms.ExternalPlayerHologram, NPCEntityImpl>> npcs = new HashMap<>();
+
+        public void add(SkyBlockNPC npc, PlayerHolograms.ExternalPlayerHologram hologram, NPCEntityImpl entity) {
+            npcs.put(npc, Map.entry(hologram, entity));
+        }
+
+        public void remove(SkyBlockNPC npc) {
+            npcs.remove(npc);
+        }
+
+        public Map<SkyBlockNPC, NPCEntityImpl> getEntityImpls() {
+            Map<SkyBlockNPC, NPCEntityImpl> entityImpls = new HashMap<>();
+            npcs.forEach((npc, entry) -> entityImpls.put(npc, entry.getValue()));
+            return entityImpls;
+        }
+
+        public Map.Entry<PlayerHolograms.ExternalPlayerHologram, NPCEntityImpl> get(SkyBlockNPC npc) {
+            return npcs.get(npc);
+        }
     }
 }

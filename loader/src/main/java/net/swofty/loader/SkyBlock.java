@@ -108,6 +108,8 @@ public class SkyBlock {
         proxyAPI.registerProxyToClient("bank-hash", RedisBankHash.class);
         proxyAPI.registerProxyToClient("authenticate", RedisAuthenticate.class);
         proxyAPI.registerProxyToClient("origin-server", RedisOriginServer.class);
+        proxyAPI.registerProxyToClient("finished-transfer", RedisTransferredFromThisServer.class);
+        proxyAPI.registerProxyToClient("teleport", RedisTeleport.class);
         proxyAPI.start();
 
         VelocityProxy.enable(Configuration.get("velocity-secret"));

@@ -3,8 +3,10 @@ package net.swofty.types.generic.entity.npc;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.*;
 import net.minestom.server.event.entity.EntitySpawnEvent;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Getter
 public class NPCEntityImpl extends Entity {
     @Getter
     private ArrayList<SkyBlockPlayer> inRangeOf = new ArrayList<>();
@@ -24,14 +27,20 @@ public class NPCEntityImpl extends Entity {
 
     private final String skinTexture;
     private final String skinSignature;
+    private final String[] holograms;
 
-    public NPCEntityImpl(@NotNull String bottomDisplay, @Nullable String skinTexture, @Nullable String skinSignature) {
+    public NPCEntityImpl(@NotNull String bottomDisplay, @Nullable String skinTexture, @Nullable String skinSignature, @NotNull String[] holograms) {
         super(EntityType.PLAYER);
         this.username = bottomDisplay;
 
         this.skinTexture = skinTexture;
         this.skinSignature = skinSignature;
         this.uuid = UUID.randomUUID();
+        this.holograms = holograms;
+
+        if (holograms == null) {
+            throw new IllegalArgumentException("Holograms cannot be null");
+        }
 
         setNoGravity(true);
     }
@@ -85,12 +94,19 @@ public class NPCEntityImpl extends Entity {
         packetsSent.remove(player);
     }
 
-    /**
-     * Clears the cache for a player, is only run on quit, {@see QuitAction.java}
-     * @param player The player to clear the cache for
-     */
-    public void clearCache(SkyBlockPlayer player) {
-        inRangeOf.remove(player);
-        packetsSent.remove(player);
+    @Override
+    public void tick(long time) {
+        Instance instance = getInstance();
+        Pos position = getPosition();
+
+        if (instance == null) {
+            return;
+        }
+
+        if (!instance.isChunkLoaded(position)) {
+            instance.loadChunk(position).join();
+        }
+
+        super.tick(time);
     }
 }

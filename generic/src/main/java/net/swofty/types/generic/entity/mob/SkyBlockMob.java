@@ -7,6 +7,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.attribute.Attribute;
 import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
@@ -14,6 +15,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -180,5 +182,25 @@ public abstract class SkyBlockMob extends EntityCreature {
 
             return TaskSchedule.seconds(5);
         });
+    }
+
+    @Override
+    public void tick(long time) {
+        Instance instance = getInstance();
+        Pos position = getPosition();
+
+        if (instance == null) {
+            return;
+        }
+
+        if (!instance.isChunkLoaded(position)) {
+            instance.loadChunk(position).join();
+        }
+
+        try {
+            super.tick(time);
+        } catch (Exception e) {
+            // Suppress odd warnings
+        }
     }
 }

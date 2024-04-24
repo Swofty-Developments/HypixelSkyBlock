@@ -2,12 +2,9 @@ package net.swofty.types.generic.user;
 
 import com.mongodb.client.model.Filters;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -20,35 +17,35 @@ import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
-import net.swofty.packer.SkyBlockTexture;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.data.mongodb.CoopDatabase;
-import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.item.impl.ArrowImpl;
-import net.swofty.types.generic.item.impl.Talisman;
-import net.swofty.types.generic.levels.CustomLevelAward;
-import net.swofty.types.generic.levels.SkyBlockEmblems;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
-import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
-import net.swofty.types.generic.region.SkyBlockRegion;
-import net.swofty.types.generic.region.mining.MineableBlock;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.*;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
+import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
+import net.swofty.types.generic.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
+import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.ArrowImpl;
+import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.levels.CustomLevelAward;
+import net.swofty.types.generic.levels.SkyBlockEmblems;
+import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
+import net.swofty.types.generic.region.SkyBlockRegion;
+import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
@@ -59,11 +56,12 @@ import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -114,6 +112,10 @@ public class SkyBlockPlayer extends Player {
         return DataHandler.getUser(this.uuid);
     }
 
+    public DatapointMuseum.MuseumData getMuseumData() {
+        return getDataHandler().get(DataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+    }
+
     public DatapointToggles.Toggles getToggles() {
         return getDataHandler().get(DataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
     }
@@ -126,7 +128,9 @@ public class SkyBlockPlayer extends Player {
         return new AntiCheatHandler(this);
     }
 
-    public FairySoulHandler getFairySoulHandler() { return new FairySoulHandler(this); }
+    public FairySoulHandler getFairySoulHandler() {
+        return new FairySoulHandler(this);
+    }
 
     public LogHandler getLogHandler() {
         return new LogHandler(this);
@@ -310,8 +314,6 @@ public class SkyBlockPlayer extends Player {
         ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getItemTypeAsType();
         ItemType boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getItemTypeAsType();
 
-        if (helmet == null || chestplate == null || leggings == null || boots == null) return null;
-
         return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
     }
 
@@ -417,7 +419,7 @@ public class SkyBlockPlayer extends Player {
             int currentAmount = entry.getValue();
 
             ItemStack item = getInventory().getItemStack(slot)
-                            .consume(amount);
+                    .consume(amount);
 
             getInventory().setItemStack(slot, item);
             amount -= Math.min(amount, currentAmount);
@@ -587,7 +589,10 @@ public class SkyBlockPlayer extends Player {
     @Override
     public float getMaxHealth() {
         PlayerStatistics statistics = this.getStatistics();
-        return statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
+        float maxHealth = statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
+        MaxHealthValueUpdateEvent event = new MaxHealthValueUpdateEvent(this, maxHealth);
+        SkyBlockValueEvent.callValueUpdateEvent(event);
+        return Math.min((float) event.getValue(), maxHealth);
     }
 
     @Override

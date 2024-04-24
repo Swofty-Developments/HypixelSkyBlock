@@ -13,6 +13,8 @@ import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.*;
+import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -30,6 +32,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.tinylog.Logger;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +55,29 @@ public class DataHandler {
             return null;
         }
         return userCache.get(uuid);
+    }
+
+    public static DataHandler getSelectedOfOfflinePlayer(UUID uuid) throws RuntimeException {
+        if (userCache.containsKey(uuid))
+            return userCache.get(uuid);
+
+        PlayerProfiles playerProfiles = new UserDatabase(uuid).getProfiles();
+        UUID selectedProfile = playerProfiles.getCurrentlySelected();
+        if (selectedProfile == null)
+            throw new RuntimeException("No profile selected for user " + uuid.toString());
+
+        return fromDocument(ProfilesDatabase.fetchDocument(selectedProfile));
+    }
+
+    public static DataHandler getProfileOfOfflinePlayer(UUID uuid, UUID profileUUID) throws RuntimeException {
+        if (userCache.containsKey(uuid))
+            return userCache.get(uuid);
+
+        PlayerProfiles playerProfiles = new UserDatabase(uuid).getProfiles();
+        if (profileUUID == null)
+            throw new RuntimeException("No profile selected for user " + uuid.toString());
+
+        return fromDocument(ProfilesDatabase.fetchDocument(profileUUID));
     }
 
     public static DataHandler getUser(Player player) {
@@ -151,10 +177,15 @@ public class DataHandler {
         DataHandler dataHandler = new DataHandler();
         dataHandler.uuid = uuid;
         for (Data data : Data.values()) {
-            dataHandler.datapoints.put(
-                    data.getKey(),
-                    data.getDefaultDatapoint().deepClone().setUser(dataHandler).setData(data)
-            );
+            try {
+                dataHandler.datapoints.put(
+                        data.getKey(),
+                        data.getDefaultDatapoint().deepClone().setUser(dataHandler).setData(data)
+                );
+            } catch (Exception e) {
+                Logger.error("Issue with datapoint " + data.getKey() + " for user " + uuid.toString() + " - This must be fixed");
+                e.printStackTrace();
+            }
         }
         return dataHandler;
     }
@@ -316,6 +347,21 @@ public class DataHandler {
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
+        MUSEUM_DATA("museum_data", false, false, false, DatapointMuseum.class, new DatapointMuseum("museum_data"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            DatapointMuseum.MuseumData data = (DatapointMuseum.MuseumData) datapoint.getValue();
+            data.setCurrentlyViewing(Map.entry(player.getUuid(), player.getProfiles().getCurrentlySelected()));
+        }),
+        SKIN_SIGNATURE("skin_signature", false, false, false, DatapointString.class, new DatapointString("skin_signature", "null"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            datapoint.setValue(player.getSkin().signature());
+        }),
+        SKIN_TEXTURE("skin_texture", false, false, false, DatapointString.class, new DatapointString("skin_texture", "null"), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            datapoint.setValue(player.getSkin().textures());
+        }),
+        VISITED_ISLANDS("visited_islands", false, false, false, DatapointStringList.class, new DatapointStringList("visited_islands")),
+        USED_SCROLLS("used_scrolls", false, false, false, DatapointStringList.class, new DatapointStringList("used_scrolls")),
         ;
 
         @Getter

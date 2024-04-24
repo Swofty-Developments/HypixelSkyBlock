@@ -4,27 +4,28 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopFishMerchant;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NPCFishMerchant extends SkyBlockNPC {
     public NPCFishMerchant() {
         super(new NPCParameters() {
             @Override
-            public String[] holograms() {
+            public String[] holograms(SkyBlockPlayer player) {
                 return new String[]{"§9Fish Merchant", "§e§lCLICK"};
             }
 
             @Override
-            public String signature() {
+            public String signature(SkyBlockPlayer player) {
                 return "piUjhfqpIwGQ/JbUxauA4SOGkH/2Li6Sb5y4ErzIob6Nv1Ai/BFyKac5aEroxh53M9a9Qdqz13tXnS03nlykCGXtlhFhJ/H/pEgIKGEFRvRmgF3L9R7u4ZYqZT7R89m6yruGCr+37ZUUk1rSF7idx7TtC0IFJt9k+QFOyQqtk2vjka8POPGQ2nXPqLnDaKi8TlAvlCIEWR3z0hSN4pLOupXFMF99a49GX0CWj7ewB6vJl+sEinNSYyviYPK7ncVYfJcn4gSN9EtsI1PQzAT2Tb3/EntzoBk88RLxpJNKjcySTzs2yALlRyUAtsn4QkOyoIBOkSEhixDY7BHd46ALllo5HwdzKjExc5JK6HUL/KdsRXIfK3ZEJ8QodhJUiwn7JkiMtMmLTpebIZwVWDQIB+1fz9KQ7bUq01OkQx4bGeIfg6H0nMRY/gPAVWSvAZbJwZkeJ811RbNbgHozfuvo2/Bq74KTiobxkD+M4MbfXfTi1XjawDZg+W/Jzb313cDL1EbgyU+DIDQUA4aPtoVcGFu3l9BoM8Yb+mD0XiMxwxw9cJGLS6f+xg5sG4IgK5RMpYjMuq9Mrt2ebu7nxx5JqjygJcxqy1/YQt4k4BL/D0tfZbmSjsQ45RZ7uMjP0FtALhFusLfykALCP78hYm8q4to8pDmIhvdrjssUVu0C9Uk=";
             }
 
             @Override
-            public String texture() {
+            public String texture(SkyBlockPlayer player) {
                 return "eyJ0aW1lc3RhbXAiOjE1NTkxMzU3NjQ4NDMsInByb2ZpbGVJZCI6IjkxZjA0ZmU5MGYzNjQzYjU4ZjIwZTMzNzVmODZkMzllIiwicHJvZmlsZU5hbWUiOiJTdG9ybVN0b3JteSIsInNpZ25hdHVyZVJlcXVpcmVkIjp0cnVlLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTJjNGVlMDQ3OWI5MDFmMTc3YzI4Njg5NWRhMzEwYTgwNmRmZTg5N2M5YTg2NzhiOWRlODhhYmJiMWJmZjRiMSJ9fX0=";
             }
 
             @Override
-            public Pos position() {
+            public Pos position(SkyBlockPlayer player) {
                 return new Pos(52.5, 68, -82.5, 90, 0);
             }
 

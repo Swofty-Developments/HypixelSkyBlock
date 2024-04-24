@@ -47,9 +47,7 @@ public class ActionPlayerClearCache extends SkyBlockEvent {
         SkyBlockScoreboard.removeCache(player);
         ActionPlayerFall.fallHeight.remove(player);
         player.getPetData().updatePetEntityImpl(null);
-        SkyBlockNPC.getNpcs().forEach((npc, entity) -> {
-            entity.clearCache(player);
-        });
+        SkyBlockNPC.getPerPlayerNPCs().remove(player.getUuid());
         SkyBlockAnimalNPC.getAnimalNPCs().forEach((npc, entity) -> {
             entity.clearCache(player);
         });

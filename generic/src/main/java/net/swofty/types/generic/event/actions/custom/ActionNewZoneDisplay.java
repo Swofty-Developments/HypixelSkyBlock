@@ -48,7 +48,7 @@ public class ActionNewZoneDisplay extends SkyBlockEvent {
             return;
         }
 
-        discoveredZones.add(regionChangeEvent.getTo().getName());
+        discoveredZonesList.add(regionChangeEvent.getTo().getName());
         discoveredZones.setValue(discoveredZonesList);
 
         switch (regionChangeEvent.getTo()) {

@@ -6,27 +6,14 @@ import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.TravelScrollItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.types.generic.warps.TravelScrollType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class HubCastleTravelScroll implements CustomSkyBlockItem, TravelScrollItem, NotFinishedYet {
-
+public class HubCastleTravelScroll implements TravelScrollItem {
     @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.empty();
-    }
-
-    @Override
-    public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
-        return new ArrayList<>(Arrays.asList(
-                "§7Consume this item to add its",
-                "§7destination to your fast travel",
-                "§7options.",
-                "",
-                "§7Requires §bMVP§c+ §7to consume!",
-                "",
-                "§7Island: §aHub",
-                "§7Teleport: §eCastle"));
+    public TravelScrollType getTravelScrollType() {
+        return TravelScrollType.HUB_CASTLE;
     }
 }
