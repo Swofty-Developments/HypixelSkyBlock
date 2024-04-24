@@ -11,6 +11,7 @@ target/
 .idea/gradle.xml
 .idea/misc.xml
 .idea/libraries/
+pom.xml
 *.iws
 *.iml
 *.ipr
