@@ -20,7 +20,7 @@ public class CoinShopPrice implements ShopPrice {
 
     @Override
     public List<String> getGUIDisplay() {
-        return List.of("§6" + StringUtility.decimalify(amount) + " Coin" + (amount != 1 ? "s" : ""));
+        return List.of("§6" + StringUtility.decimalify(amount, 1) + " Coin" + (amount != 1 ? "s" : ""));
     }
 
     @Override

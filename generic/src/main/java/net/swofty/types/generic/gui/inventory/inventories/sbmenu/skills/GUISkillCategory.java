@@ -62,7 +62,7 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
                 lore.add("§8unlock Perks, statistic bonuses, and");
                 lore.add("§8more!");
 
-                return ItemStackCreator.getStack("§a" + category.toString() + " Skill",
+                return ItemStackCreator.getStack("§a" + category + " Skill",
                         category.asCategory().getDisplayIcon(), 1, lore);
             }
         });

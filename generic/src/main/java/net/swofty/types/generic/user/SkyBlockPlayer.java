@@ -1,6 +1,5 @@
 package net.swofty.types.generic.user;
 
-import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
@@ -24,8 +23,6 @@ import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
-import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
@@ -52,7 +49,6 @@ import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.types.generic.utility.StringUtility;
-import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,16 +56,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
 public class SkyBlockPlayer extends Player {
-    @Setter
-    private float mana = 100;
+    private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
+    @Getter
+    private final PlayerStatistics statistics = new PlayerStatistics(this);
     public float health = 100;
     public long joined;
     @Setter
@@ -79,27 +74,20 @@ public class SkyBlockPlayer extends Player {
     @Setter
     public boolean isBankDelayed = false;
     @Setter
+    private float mana = 100;
+    @Setter
     private boolean inLaunchpad = false;
     @Setter
     private ServerType originServer = ServerType.VILLAGE;
-
     private StatisticDisplayReplacement manaDisplayReplacement = null;
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     private StatisticDisplayReplacement coinsDisplayReplacement = null;
-
-    private final PlayerAbilityHandler abilityHandler = new PlayerAbilityHandler();
-
     @Setter
     private SkyBlockIsland skyBlockIsland;
-
     @Setter
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
-
     @Getter
     private PlayerHookManager hookManager;
-
-    @Getter
-    private final PlayerStatistics statistics = new PlayerStatistics(this);
 
     public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
         super(uuid, username, playerConnection);
@@ -292,8 +280,7 @@ public class SkyBlockPlayer extends Player {
             return;
         }
 
-        getInventory().setItemInHand(Hand.MAIN,
-                PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+        getInventory().setItemInHand(Hand.MAIN, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
     }
 
     public int getAmountInInventory(ItemType type) {
@@ -335,7 +322,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public SkyBlockItem[] getArmor() {
-        return new SkyBlockItem[]{
+        return new SkyBlockItem[] {
                 new SkyBlockItem(getInventory().getHelmet()),
                 new SkyBlockItem(getInventory().getChestplate()),
                 new SkyBlockItem(getInventory().getLeggings()),
@@ -390,8 +377,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public @Nullable SkyBlockRegion getRegion() {
-        if (isOnIsland())
-            return SkyBlockRegion.getIslandRegion();
+        if (isOnIsland()) return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
@@ -418,8 +404,7 @@ public class SkyBlockPlayer extends Player {
             int slot = entry.getKey();
             int currentAmount = entry.getValue();
 
-            ItemStack item = getInventory().getItemStack(slot)
-                    .consume(amount);
+            ItemStack item = getInventory().getItemStack(slot).consume(amount);
 
             getInventory().setItemStack(slot, item);
             amount -= Math.min(amount, currentAmount);
@@ -435,8 +420,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public String getShortenedDisplayName() {
-        return "§" + getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor().asHexString()
-                + this.getUsername();
+        return "§" + getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor().asHexString() + this.getUsername();
     }
 
     public float getMaxMana() {
@@ -459,9 +443,9 @@ public class SkyBlockPlayer extends Player {
     }
 
     public DatapointSkyBlockExperience.PlayerSkyBlockExperience getSkyBlockExperience() {
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience =
-                getDataHandler().get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class)
-                        .getValue();
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getDataHandler().get(DataHandler.Data.SKYBLOCK_EXPERIENCE,
+                DatapointSkyBlockExperience.class
+        ).getValue();
         experience.setAttachedPlayer(this);
         return experience;
     }
@@ -515,10 +499,7 @@ public class SkyBlockPlayer extends Player {
         if (block.getMiningPowerRequirement() > item.getAttributeHandler().getBreakingPower()) return -1;
         if (block.getStrength() > 0) {
             double time = Math.round(block.getStrength() * 30) / (Math.max(getMiningSpeed(), 1));
-            ValueUpdateEvent event = new MiningValueUpdateEvent(
-                    this,
-                    time,
-                    item);
+            ValueUpdateEvent event = new MiningValueUpdateEvent(this, time, item);
 
             SkyBlockValueEvent.callValueUpdateEvent(event);
             time = (double) event.getValue();
@@ -574,7 +555,7 @@ public class SkyBlockPlayer extends Player {
 
         playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-        sendMessage("§cYou died and lost " + StringUtility.decimalify(coins.getValue()) + " coins!");
+        sendMessage("§cYou died and lost " + StringUtility.decimalify(coins.getValue(), 1) + " coins!");
 
         if (!SkyBlockConst.getTypeLoader().getLoaderValues().announceDeathMessages()) return;
 
@@ -602,8 +583,7 @@ public class SkyBlockPlayer extends Player {
 
     @Override
     public void setHealth(float health) {
-        if ((System.currentTimeMillis() - joined) < 3000)
-            return;
+        if ((System.currentTimeMillis() - joined) < 3000) return;
         if (health < 0) {
             kill();
             return;
@@ -635,21 +615,9 @@ public class SkyBlockPlayer extends Player {
         if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
         } else {
-            PlayerProfiles profiles = new UserDatabase(uuid).getProfiles();
-            if (profiles.getProfiles().isEmpty()) {
-                Document document = ProfilesDatabase.collection.find(Filters.eq("_owner", uuid.toString())).first();
-                if (document == null)
-                    return "§7Unknown";
-                DataHandler handler = DataHandler.fromDocument(document);
-                return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
-                        handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
-            }
-
-            UUID selected = profiles.getProfiles().getFirst();
-
-            DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
-            return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
-                    handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
+            DataHandler profile = DataHandler.getSelectedOfOfflinePlayer(uuid);
+            return profile.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                    profile.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 }
