@@ -53,30 +53,21 @@ public abstract class SkillCategory {
 
             Arrays.stream(unlocks).forEach(unlock -> {
                 switch (unlock.type()) {
-                    case XP -> {
-                        lore.add("§7  §8+§b" + ((XPReward) unlock).getXP() + " SkyBlock XP");
-                    }
-                    case COINS -> {
-                        lore.add("§7  §8+§6" + ((CoinReward) unlock).getCoins() + " §7Coins");
-                    }
-                    case REGION_ACCESS -> {
-                        lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
-                    }
+                    case XP -> lore.add("§7  §8+§b" + ((XPReward) unlock).getXP() + " SkyBlock XP");
+                    case COINS -> lore.add("§7  §8+§6" + ((CoinReward) unlock).getCoins() + " §7Coins");
+                    case REGION_ACCESS -> lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
                     case STATS_ADDITIVE -> {
                         ItemStatistic statistic = ((AdditiveStatisticReward) unlock).getStatistic();
-                        lore.add("§7  §8+§b" + statistic.getDisplayColor() +
-                                statistic.getSymbol() + ((AdditiveStatisticReward) unlock).amountAdded() + statistic.getSuffix()
-                                + " " + statistic.getDisplayName());
+                        lore.add("§7  §8+§a" + StringUtility.decimalify(((AdditiveStatisticReward) unlock).amountAdded(), 1) +
+                                statistic.getSuffix() + " " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                statistic.getDisplayName());
                     }
                     case STATS_MULTIPLICATIVE -> {
                         ItemStatistic statistic = ((MultiplicativePercentageStatisticReward) unlock).getStatistic();
-                        lore.add("§7  §8+§b" + statistic.getDisplayColor() +
-                                statistic.getSymbol() + (((MultiplicativePercentageStatisticReward) unlock).amountAdded() * 100) + "%"
-                                + " " + statistic.getDisplayName());
+                        lore.add("§7  §8+§a" + StringUtility.decimalify(((MultiplicativePercentageStatisticReward) unlock).amountAdded() * 100, 1) +
+                                "% " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
                     }
-                    case RUNE -> {
-                        lore.add("§7  Access to Level §d" + ((RunecraftingSkill.RuneReward) unlock).getRuneLevel() + " §7Runes");
-                    }
+                    case RUNE -> lore.add("§7  Access to Level §d" + ((RunecraftingSkill.RuneReward) unlock).getRuneLevel() + " §7Runes");
                 }
             });
 
@@ -144,6 +135,7 @@ public abstract class SkillCategory {
         }
 
         public abstract ItemStatistic getStatistic();
+
         public abstract Double amountAdded();
     }
 
@@ -163,6 +155,7 @@ public abstract class SkillCategory {
         }
 
         public abstract ItemStatistic getStatistic();
+
         public abstract Double amountAdded();
     }
 

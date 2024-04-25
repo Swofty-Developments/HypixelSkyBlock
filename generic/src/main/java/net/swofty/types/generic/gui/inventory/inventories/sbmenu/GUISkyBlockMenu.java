@@ -23,12 +23,10 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStor
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
-import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,14 +47,14 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7View your equipment, stats, and more!", "§e "));
-                DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
                 List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
-                        "Crit Chance", "Crit Damage", "Swing Range"));
+                        "Crit Chance", "Crit Damage", "Swing Range"
+                ));
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                     if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
-                                decimalFormat.format(value) + statistic.getSuffix());
+                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
                     }
                 });
 
@@ -65,7 +63,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
                 return ItemStackCreator.getStackHead("§aYour SkyBlock Profile",
                         PlayerSkin.fromUuid(player.getUuid().toString()), 1,
-                        lore);
+                        lore
+                );
             }
         });
         set(new GUIClickableItem(22) {
@@ -90,7 +89,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7Progress to Level " + (nextLevel == null ? "§cMAX" : nextLevel),
                         player.getSkyBlockExperience().getNextLevelDisplay(),
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
         set(new GUIClickableItem(29) {
@@ -105,7 +105,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7Different bags allow you to store",
                         "§7many different items inside!",
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
         set(new GUIClickableItem(30) {
@@ -126,7 +127,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         " ",
                         "§7Selected pet: " + (player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName()),
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
 
@@ -166,7 +168,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7want to access at any time",
                         "§7from anywhere here.",
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
 
@@ -182,7 +185,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7View your active quests, progress",
                         "§7and rewards.",
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
 
@@ -198,7 +202,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7View your Skill progression and",
                         "§7rewards.",
                         " ",
-                        "§eClick to view!");
+                        "§eClick to view!"
+                );
             }
         });
 
@@ -237,7 +242,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, (short) 0, 1,
                         "§7Opens the crafting grid.",
                         " ",
-                        "§eClick to open!");
+                        "§eClick to open!"
+                );
             }
         });
         set(new GUIClickableItem(47) {
@@ -259,7 +265,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         "§7visited.",
                         " ",
                         "§8Right-click to warp home!",
-                        "§eClick to pick location!");
+                        "§eClick to pick location!"
+                );
             }
         });
 
@@ -280,7 +287,8 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                         " ",
                         "§7Profiles: §e" + player.getProfiles().getProfiles().size() + "§6/§e4",
                         " ",
-                        "§eClick to manage!");
+                        "§eClick to manage!"
+                );
             }
         });
     }

@@ -1,22 +1,18 @@
 package net.swofty.types.generic.gui.inventory.inventories.banker;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -65,7 +61,8 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                         "§7The banker rewards you every 31",
                         "§7hours with §binterest §7for the coins in your bank balance.",
                         "§7 ",
-                        "§7Interest is in: §b" + SkyBlockCalendar.getHoursUntilNextInterest() + "h");
+                        "§7Interest is in: §b" + SkyBlockCalendar.getHoursUntilNextInterest() + "h"
+                );
             }
         });
 
@@ -78,7 +75,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, (short) 0, 1,
-                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount()),
+                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
                         "§7Store coins in the bank to keep",
                         "§7them safe while you go on",
@@ -90,7 +87,8 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                         " ",
                         "§7Until interest: §b" + SkyBlockCalendar.getHoursUntilNextInterest() + "h",
                         " ",
-                        "§eClick to make a deposit!");
+                        "§eClick to make a deposit!"
+                );
             }
         });
 
@@ -103,13 +101,14 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aWithdraw Coins", Material.DISPENSER, (short) 0, 1,
-                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount()),
+                        "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
                         "§7Withdraw coins from the bank",
                         "§7to use them for trading or",
                         "§7other purposes!",
                         " ",
-                        "§eClick to make a withdrawal!");
+                        "§eClick to make a withdrawal!"
+                );
             }
         });
 
@@ -119,14 +118,13 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                 List<String> lore = new ArrayList<>();
                 List<DatapointBankData.Transaction> transactions = bankData.getTransactions();
 
-                if (transactions.isEmpty())
-                    lore.add("§cNo transactions yet!");
+                if (transactions.isEmpty()) lore.add("§cNo transactions yet!");
                 else {
                     for (int i = Math.min(transactions.size() - 1, 10); i >= 0; i--) {
                         DatapointBankData.Transaction transaction = transactions.get(i);
 
                         boolean isNegative = transaction.amount < 0;
-                        String amount = StringUtility.decimalify(Math.abs(transaction.amount));
+                        String amount = StringUtility.decimalify(Math.abs(transaction.amount), 1);
 
                         lore.add("§7" + (isNegative ? "§c-" : "§a+")
                                 + " §6" + amount + "§7, §e" + StringUtility.formatTimeAsAgo(transaction.timestamp)
@@ -135,7 +133,8 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
                 }
 
                 return ItemStackCreator.getStack("§aRecent Transactions",
-                        Material.FILLED_MAP, 1, lore);
+                        Material.FILLED_MAP, 1, lore
+                );
             }
         });
     }

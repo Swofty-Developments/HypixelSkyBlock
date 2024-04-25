@@ -45,11 +45,12 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins()),
+                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins(), 1),
                         " ",
-                        "§eClick to deposit coins!");
+                        "§eClick to deposit coins!"
+                );
             }
 
             @Override
@@ -66,11 +67,12 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
-                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins() / 2),
+                        "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins() / 2, 1),
                         " ",
-                        "§eClick to deposit coins!");
+                        "§eClick to deposit coins!"
+                );
             }
 
             @Override
@@ -108,11 +110,12 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         "§7Amount to deposit: §6Custom",
                         " ",
-                        "§eClick to deposit coins!");
+                        "§eClick to deposit coins!"
+                );
             }
         });
     }
@@ -135,7 +138,8 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
         }
         DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
         if (bankData.getAmount() + amount > bankData.getBalanceLimit()) {
-            player.sendMessage("§cYou cannot deposit that much, you would exceed your balance limit of §6" + StringUtility.commaify(bankData.getBalanceLimit()) + " coins§c!");
+            player.sendMessage("§cYou cannot deposit that much, you would exceed your balance limit of §6" + StringUtility.commaify(
+                    bankData.getBalanceLimit()) + " coins§c!");
             return;
         }
 
@@ -149,8 +153,8 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                     player.getUsername()
             ));
 
-            player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
-                    StringUtility.decimalify(bankData.getAmount())
+            player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
+                    StringUtility.decimalify(bankData.getAmount(), 1)
                     + " coins§a in your account.");
             return;
         }
@@ -195,8 +199,8 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                 ));
                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
-                player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
-                        StringUtility.decimalify(bankData.getAmount())
+                player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
+                        StringUtility.decimalify(bankData.getAmount(), 1)
                         + " coins§a in your account.");
                 player.setBankDelayed(false);
             }
