@@ -29,7 +29,6 @@ public class ActionPlayerClickedNPC extends SkyBlockEvent {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerEvent.getPlayer();
 
         if (playerEvent.getHand() != Player.Hand.MAIN) return;
-        if (SkyBlockConst.isIslandServer()) return;
 
         if (playerEvent.getTarget() instanceof NPCEntityImpl npcImpl) {
             SkyBlockNPC npc = SkyBlockNPC.getFromImpl(player, npcImpl);

@@ -76,13 +76,14 @@ public abstract class SkyBlockNPC {
                             .build();
 
                     entity.setAutoViewable(false);
-                    entity.updateNewViewer(player);
 
                     PlayerHolograms.addExternalPlayerHologram(holo);
                     entity.setInstance(SkyBlockConst.getInstanceContainer(), position);
+                    entity.addViewer(player);
 
                     PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
                     cache.add(npc, holo, entity);
+                    perPlayerNPCs.put(player.getUuid(), cache);
                     return;
                 }
 
@@ -105,7 +106,7 @@ public abstract class SkyBlockNPC {
                 }
 
                 Pos playerPosition = player.getPosition();
-                ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
+                List<SkyBlockPlayer> inRange = entity.getInRangeOf();
                 double entityDistance = playerPosition.distance(npcPosition);
                 boolean isLookingNPC = npc.getParameters().looking();
 

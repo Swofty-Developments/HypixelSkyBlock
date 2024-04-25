@@ -13,15 +13,12 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class NPCEntityImpl extends Entity {
     @Getter
-    private ArrayList<SkyBlockPlayer> inRangeOf = new ArrayList<>();
+    private List<SkyBlockPlayer> inRangeOf = Collections.synchronizedList(new ArrayList<>());
     private final ArrayList<Player> packetsSent = new ArrayList<>();
     private final String username;
 
