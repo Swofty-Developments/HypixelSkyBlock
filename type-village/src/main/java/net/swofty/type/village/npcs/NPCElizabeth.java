@@ -1,17 +1,22 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.elizabeth.GUIAccountAndProfileUpgrades;
+import net.swofty.type.village.gui.elizabeth.GUIBitsShop;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCElizabeth extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCElizabeth extends NPCDialogue {
 
     public NPCElizabeth() {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Elizabeth", "§e§lCLICK"};
+                return new String[]{"§dElizabeth", "§e§lCLICK"};
             }
 
             @Override
@@ -38,7 +43,24 @@ public class NPCElizabeth extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        if (isInDialogue(e.player())) return;
+        SkyBlockLevelRequirement lvl = e.player().getSkyBlockExperience().getLevel();
+        if (lvl.asInt() >= 3) {
+            new GUIBitsShop().open(e.player());
+            return;
+        }
+        setDialogue(e.player(), "hello");
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "§fHello! Welcome to §bSkyBlock§f!",
+                                "§fI have powerful items to offer, but only to experienced adventurers!",
+                                "§fUntil then, I suggest leveling up to SkyBlock Level 3!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }
