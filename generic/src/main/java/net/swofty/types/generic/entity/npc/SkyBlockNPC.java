@@ -106,7 +106,7 @@ public abstract class SkyBlockNPC {
                 }
 
                 Pos playerPosition = player.getPosition();
-                ArrayList<SkyBlockPlayer> inRange = entity.getInRangeOf();
+                List<SkyBlockPlayer> inRange = entity.getInRangeOf();
                 double entityDistance = playerPosition.distance(npcPosition);
                 boolean isLookingNPC = npc.getParameters().looking();
 
