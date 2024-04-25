@@ -50,6 +50,8 @@ import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Museumable;
 import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.set.ArmorSetRegistry;
+import net.swofty.types.generic.item.set.impl.MuseumableSet;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.levels.CustomLevelAward;
@@ -472,6 +474,18 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 if (itemType.clazz == null) return;
                 if (itemType.clazz.newInstance() instanceof Museumable museumable) {
                     MuseumableItemCategory.addItem(museumable.getMuseumCategory(), itemType);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Arrays.stream(ArmorSetRegistry.values()).forEach(armorSet -> {
+            try {
+                if (armorSet.getClazz().newInstance() instanceof MuseumableSet) {
+                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getHelmet());
+                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getChestplate());
+                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getLeggings());
+                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getBoots());
                 }
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);

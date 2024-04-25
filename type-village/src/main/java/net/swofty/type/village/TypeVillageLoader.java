@@ -18,6 +18,7 @@ import net.swofty.type.village.mobs.MobRuinsWolf;
 import net.swofty.type.village.mobs.MobRuinsWolfOld;
 import net.swofty.type.village.runes.RuneEntityImpl;
 import net.swofty.type.village.tab.VillageServerModule;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.bazaar.BazaarCategories;
@@ -26,6 +27,7 @@ import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
@@ -95,6 +97,14 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
         Map<String, Object> request = new HashMap<>();
         request.put("init-request", BazaarCategories.getInitializationRequest());
         bazaarService.callEndpoint(new ProtocolInitializeBazaarCheck(), request);
+
+        /**
+         * Register museum chunks
+         */
+        Logger.info("Registering museum chunks");
+        MuseumDisplays.getAllPositions().forEach(displayPosition -> {
+            SkyBlockConst.getInstanceContainer().loadChunk(displayPosition).join();
+        });
     }
 
     @Override

@@ -62,7 +62,7 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
 
         @Override
         public Pos position(SkyBlockPlayer player) {
-            return new Pos(-22.5, 68, 80.5, 90, 0);
+            return new Pos(-22.5, 67, 80.5, 90, 0);
         }
 
         @Override
