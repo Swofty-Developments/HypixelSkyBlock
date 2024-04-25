@@ -1,6 +1,5 @@
 package net.swofty.types.generic.user;
 
-import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
@@ -24,8 +23,6 @@ import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
-import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
@@ -52,7 +49,6 @@ import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.types.generic.utility.StringUtility;
-import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -98,27 +94,6 @@ public class SkyBlockPlayer extends Player {
 
         joined = System.currentTimeMillis();
         hookManager = new PlayerHookManager(this, new HashMap<>());
-    }
-
-    public static String getDisplayName(UUID uuid) {
-        if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
-            return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
-        } else {
-            PlayerProfiles profiles = new UserDatabase(uuid).getProfiles();
-            if (profiles.getProfiles().isEmpty()) {
-                Document document = ProfilesDatabase.collection.find(Filters.eq("_owner", uuid.toString())).first();
-                if (document == null) return "§7Unknown";
-                DataHandler handler = DataHandler.fromDocument(document);
-                return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() + handler.get(DataHandler.Data.IGN, DatapointString.class)
-                        .getValue();
-            }
-
-            UUID selected = profiles.getProfiles().getFirst();
-
-            DataHandler handler = DataHandler.fromDocument(new ProfilesDatabase(selected.toString()).getDocument());
-            return handler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
-                    handler.get(DataHandler.Data.IGN, DatapointString.class).getValue();
-        }
     }
 
     public DataHandler getDataHandler() {
@@ -633,6 +608,16 @@ public class SkyBlockPlayer extends Player {
 
             gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
+        }
+    }
+
+    public static String getDisplayName(UUID uuid) {
+        if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
+            return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();
+        } else {
+            DataHandler profile = DataHandler.getSelectedOfOfflinePlayer(uuid);
+            return profile.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                    profile.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 }
