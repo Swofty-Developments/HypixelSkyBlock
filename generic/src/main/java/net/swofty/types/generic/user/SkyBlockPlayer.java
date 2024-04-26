@@ -531,12 +531,26 @@ public class SkyBlockPlayer extends Player {
         getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
     }
 
-    public double getBits() {
+    public Integer getBits() {
         return getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).getValue();
     }
 
     public void setBits(int bits) {
         getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(bits);
+    }
+
+    public Integer getGems() {
+        return getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).getValue();
+    }
+
+    public void setGems(int gems) {
+        getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).setValue(gems);
+    }
+    public Boolean getPurchaseConfirmationBits() {
+        return getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).getValue();
+    }
+    public void setPurchaseConfirmationBits(boolean enabled) {
+        getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).setValue(enabled);
     }
 
     @Override
