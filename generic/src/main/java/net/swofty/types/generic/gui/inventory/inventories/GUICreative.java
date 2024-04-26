@@ -3,7 +3,6 @@ package net.swofty.types.generic.gui.inventory.inventories;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -17,7 +16,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -83,7 +82,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
         );
 
         boolean stackable = skyBlockItem.getGenericInstance() == null
-                || !(skyBlockItem.getGenericInstance() instanceof Unstackable);
+                || !(skyBlockItem.getGenericInstance() instanceof TrackedUniqueItem);
 
         return new GUIClickableItem(slot) {
             @Override

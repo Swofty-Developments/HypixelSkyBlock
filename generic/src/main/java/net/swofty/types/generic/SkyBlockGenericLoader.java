@@ -46,10 +46,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
-import net.swofty.types.generic.item.impl.DefaultCraftable;
-import net.swofty.types.generic.item.impl.Museumable;
-import net.swofty.types.generic.item.impl.ServerOrb;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.MuseumableSet;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
@@ -473,6 +470,9 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             try {
                 if (itemType.clazz == null) return;
                 if (itemType.clazz.newInstance() instanceof Museumable museumable) {
+                    if (!(itemType.clazz.newInstance() instanceof TrackedUniqueItem))
+                        Logger.error("Item " + itemType + " is not a tracked item, but is being registered as a museum item.");
+
                     MuseumableItemCategory.addItem(museumable.getMuseumCategory(), itemType);
                 }
             } catch (InstantiationException | IllegalAccessException e) {

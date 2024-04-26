@@ -34,6 +34,19 @@ public class StringUtility {
         return "Just now";
     }
 
+    public static String commaifyAndTh(double d) {
+        // "th" suffix for numbers ending in 11, 12, 13
+        return switch ((int) d % 100) {
+            case 11, 12, 13 -> INTEGER_FORMAT.format(d) + "th";
+            default -> switch ((int) d % 10) {
+                case 1 -> INTEGER_FORMAT.format(d) + "st";
+                case 2 -> INTEGER_FORMAT.format(d) + "nd";
+                case 3 -> INTEGER_FORMAT.format(d) + "rd";
+                default -> INTEGER_FORMAT.format(d) + "th";
+            };
+        };
+    }
+
     public static String formatTimeWentBy(long millis) {
         long timeDifference = System.currentTimeMillis() - millis;
         // Simplified the calculation logic by abstracting repetitive calculations
@@ -145,6 +158,13 @@ public class StringUtility {
     public static String getAuctionSetupFormattedTime(long millis) {
         return formatTimeLeft(millis).replaceAll(" ", "")
                 .replaceAll("s$", "");
+    }
+
+    public static String formatAsDate(long millis) {
+        // Month as display, Day, Year
+        return String.format("%s %d, %d", new String[]{"January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"}[(int) (TimeUnit.MILLISECONDS.toDays(millis) % 365 / 30)],
+                (int) (TimeUnit.MILLISECONDS.toDays(millis) % 30), (int) (TimeUnit.MILLISECONDS.toDays(millis) / 365));
     }
 
     public static String toNormalCase(String string) {

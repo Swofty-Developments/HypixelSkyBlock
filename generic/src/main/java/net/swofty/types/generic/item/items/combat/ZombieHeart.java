@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ZombieHeart implements CustomSkyBlockItem, NotFinishedYet, Sellable, SkullHead, Unstackable, StandardItem {
+public class ZombieHeart implements CustomSkyBlockItem, NotFinishedYet, Sellable, SkullHead, TrackedUniqueItem, StandardItem {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

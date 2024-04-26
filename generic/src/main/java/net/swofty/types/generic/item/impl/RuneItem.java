@@ -1,16 +1,14 @@
 package net.swofty.types.generic.item.impl;
 
 import lombok.NonNull;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneLevel;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
 public interface RuneItem extends ExtraRarityDisplay, ExtraUnderNameDisplays, SkullHead, CustomDisplayName,
-                                  Unstackable {
+        TrackedUniqueItem {
     int getRequiredRuneLevel();
     @NonNull String getColor();
     RuneApplicableTo getRuneApplicableTo();

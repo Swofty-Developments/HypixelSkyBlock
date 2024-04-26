@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ScorchedPowerCrystal implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, NotFinishedYet {
+public class ScorchedPowerCrystal implements CustomSkyBlockItem, SkullHead, Sellable, TrackedUniqueItem, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

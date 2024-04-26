@@ -19,22 +19,22 @@ public enum MuseumDisplays {
     ATRIUM_SLOTS(new ItemMuseumDisplay(),
             List.of("§7Atrium Slot #{number}", "§eCLICK TO EDIT"),
             List.of(MuseumableItemCategory.WEAPONS),
-            new Pos(-34.5, 66, 75.5),
-            new Pos(-33.5, 66, 73.5),
-            new Pos(-31.5, 66, 71.5),
-            new Pos(-29.5, 66, 69.5),
-            new Pos(-27.5, 66, 68.5),
-            new Pos(-17.5, 66, 68.5),
-            new Pos(-15.5, 66, 69.5),
-            new Pos(-13.5, 66, 71.5),
-            new Pos(-13.5, 66, 89.5),
-            new Pos(-15.5, 66, 91.5),
-            new Pos(-17.5, 66, 92.5),
-            new Pos(-27.5, 66, 92.5),
-            new Pos(-29.5, 66, 91.5),
-            new Pos(-31.5, 66, 89.5),
-            new Pos(-33.5, 66, 87.5),
-            new Pos(-34.5, 66, 89.5)),
+            new Pos(-34.5, 65, 75.5),
+            new Pos(-33.5, 65, 73.5),
+            new Pos(-31.5, 65, 71.5),
+            new Pos(-29.5, 65, 69.5),
+            new Pos(-27.5, 65, 68.5),
+            new Pos(-17.5, 65, 68.5),
+            new Pos(-15.5, 65, 69.5),
+            new Pos(-13.5, 65, 71.5),
+            new Pos(-13.5, 65, 89.5),
+            new Pos(-15.5, 65, 91.5),
+            new Pos(-17.5, 65, 92.5),
+            new Pos(-27.5, 65, 92.5),
+            new Pos(-29.5, 65, 91.5),
+            new Pos(-31.5, 65, 89.5),
+            new Pos(-33.5, 65, 87.5),
+            new Pos(-34.5, 65, 85.5)),
     ;
 
     private static final Map<UUID, Map<MuseumDisplayEntityImpl, PlayerHolograms.ExternalPlayerHologram>> displayEntities = new HashMap<>();
@@ -90,10 +90,6 @@ public enum MuseumDisplays {
         Map<MuseumDisplayEntityImpl, PlayerHolograms.ExternalPlayerHologram> newDisplayEntities = new HashMap<>();
 
         for (MuseumDisplays display : values()) {
-            if (museumDataViewing.getInDisplay(display).isEmpty()) {
-                continue;
-            }
-
             int totalPositions = display.positions.size();
             int[] handledPositions = new int[totalPositions];
             for (Map.Entry<SkyBlockItem, Integer> entry : museumDataViewing.getInDisplay(display).entrySet()) {

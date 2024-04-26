@@ -4,7 +4,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ExtraUnderNameDisplay;
 import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ManaDisintegrator implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, Unstackable {
+public class ManaDisintegrator implements CustomSkyBlockItem, SkullHead, ExtraUnderNameDisplay, TrackedUniqueItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

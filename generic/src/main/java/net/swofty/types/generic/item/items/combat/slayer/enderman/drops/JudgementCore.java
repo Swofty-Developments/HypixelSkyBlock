@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class JudgementCore implements CustomSkyBlockItem, SkullHead, Unstackable, RightClickRecipe {
+public class JudgementCore implements CustomSkyBlockItem, SkullHead, TrackedUniqueItem, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

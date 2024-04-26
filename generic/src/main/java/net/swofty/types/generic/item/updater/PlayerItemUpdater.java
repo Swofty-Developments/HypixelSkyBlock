@@ -20,7 +20,7 @@ import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
@@ -30,10 +30,15 @@ import java.util.concurrent.CompletableFuture;
 
 public class PlayerItemUpdater {
     public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack) {
-        return playerUpdateFull(player, stack).getValue();
+        return playerUpdateFull(player, stack, false).getValue();
     }
 
-    public static Map.Entry<SkyBlockItem, ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack) {
+    public static ItemStack.Builder playerUpdate(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
+        return playerUpdateFull(player, stack, isOwnedByPlayer).getValue();
+    }
+
+    public static Map.Entry<SkyBlockItem,
+            ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
         if (stack.hasTag(Tag.Boolean("Uneditable")) && stack.getTag(Tag.Boolean("Uneditable")))
             return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 
@@ -100,14 +105,20 @@ public class PlayerItemUpdater {
         }
 
         if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof Unstackable
-                && handler.getStackable().equals("none")) {
+                && item.getGenericInstance() instanceof TrackedUniqueItem
+                && handler.getUniqueTrackedID() == null
+                && isOwnedByPlayer) {
             UUID randomUUID = UUID.randomUUID();
 
-            handler.setStackable(randomUUID.toString());
+            handler.setUniqueTrackedID(randomUUID.toString(), player);
             toReturn.meta(meta -> {
-                meta.set(Tag.String("stackable"), randomUUID.toString());
+                meta.set(Tag.String("unique-tracked-id"), randomUUID.toString());
             });
+        } else if (item.getGenericInstance() != null
+                && item.getGenericInstance() instanceof TrackedUniqueItem
+                && handler.getUniqueTrackedID() != null
+                && isOwnedByPlayer) {
+            handler.setUniqueTrackedID(handler.getUniqueTrackedID(), player);
         }
 
         if (item.getGenericInstance() != null
@@ -170,7 +181,7 @@ public class PlayerItemUpdater {
                             return;
                         }
 
-                        Map.Entry<SkyBlockItem, ItemStack.Builder> builder = playerUpdateFull(player, item);
+                        Map.Entry<SkyBlockItem, ItemStack.Builder> builder = playerUpdateFull(player, item, true);
                         cache.put(origin, builder.getKey());
                         origin.setStack(player, builder.getValue().build());
                     });

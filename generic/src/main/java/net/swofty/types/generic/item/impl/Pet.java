@@ -19,7 +19,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Pet extends CustomSkyBlockItem, SkullHead, Unstackable, Interactable {
+public interface Pet extends CustomSkyBlockItem, SkullHead, TrackedUniqueItem, Interactable {
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
     ItemStatistics getBaseStatistics();

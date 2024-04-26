@@ -11,13 +11,15 @@ import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.attribute.attributes.*;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.StringUtility;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
@@ -26,8 +28,6 @@ public class SkyBlockItem {
     @Getter
     @Setter
     private int amount = 1;
-    @Getter
-    private long creationTime = System.currentTimeMillis();
 
     @SneakyThrows
     public SkyBlockItem(String itemType, int amount) {
@@ -101,10 +101,6 @@ public class SkyBlockItem {
             }
         });
 
-        if (item.hasTag(Tag.Long("creation_time")))
-            creationTime = item.getTag(Tag.Long("creation_time"));
-        else creationTime = System.currentTimeMillis();
-
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         String itemType = typeAttribute.getValue();
         try {
@@ -173,9 +169,6 @@ public class SkyBlockItem {
         for (ItemAttribute attribute : attributes) {
             itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
-
-        if (getGenericInstance() instanceof Unstackable)
-            itemStackBuilder.setTag(Tag.Long("creation_time"), creationTime);
 
         return itemStackBuilder.meta(meta -> meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES));
     }

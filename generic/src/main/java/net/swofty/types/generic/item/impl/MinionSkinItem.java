@@ -5,7 +5,7 @@ import net.minestom.server.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface MinionSkinItem extends ExtraRarityDisplay, Unstackable {
+public interface MinionSkinItem extends ExtraRarityDisplay, TrackedUniqueItem {
     @Override
     default String getExtraRarityDisplay() {
         return " COSMETIC";

@@ -5,13 +5,10 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HotPotatoBook implements AnvilCombinable, Enchanted, Sellable, Unstackable {
+public class HotPotatoBook implements AnvilCombinable, Enchanted, Sellable, TrackedUniqueItem {
     @Override
     public void apply(SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem) {
         HotPotatoable upgrade = (HotPotatoable) upgradeItem.getGenericInstance();

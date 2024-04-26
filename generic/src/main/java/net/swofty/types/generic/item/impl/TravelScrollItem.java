@@ -12,10 +12,9 @@ import net.swofty.types.generic.warps.TravelScrollIslands;
 import net.swofty.types.generic.warps.TravelScrollType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public interface TravelScrollItem extends CustomSkyBlockItem, ExtraRarityDisplay, Interactable, Unstackable {
+public interface TravelScrollItem extends CustomSkyBlockItem, ExtraRarityDisplay, Interactable, TrackedUniqueItem {
 
     @Override
     default String getExtraRarityDisplay() {

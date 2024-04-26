@@ -47,10 +47,30 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
         private boolean hasBoughtAppraisalService = false;
         private Map<SkyBlockItem, Map.Entry<MuseumDisplays, Integer>> currentlyInMuseum = new HashMap<>();
         private List<SkyBlockItem> previouslyInMuseum = new ArrayList<>();
+        private Map<UUID, Long> insertionTimes = new HashMap<>();
+        private Map<UUID, Double> calculatedPrices = new HashMap<>();
 
         public Map<SkyBlockItem, Integer> getInDisplay(MuseumDisplays display) {
+            // Note that the Map.Entry can be null, so we need to check for that
             return currentlyInMuseum.entrySet().stream().filter(entry -> entry.getValue().getKey().equals(display))
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getValue()));
+        }
+
+        public void removeFromDisplay(MuseumDisplays display, Integer slot) {
+            // Find the item in currentlyInMusuem, and then set its Map.Entry to null
+            currentlyInMuseum.entrySet().stream().filter(entry -> entry.getValue().getKey().equals(display) && entry.getValue().getValue().equals(slot))
+                    .findFirst().ifPresent(entry -> currentlyInMuseum.put(entry.getKey(), null));
+        }
+
+        public List<SkyBlockItem> getNotInDisplay() {
+            return currentlyInMuseum.entrySet().stream().filter(entry -> entry.getValue() == null)
+                    .map(Map.Entry::getKey).collect(Collectors.toList());
+        }
+
+        public void addToDisplay(SkyBlockItem item, MuseumDisplays display, Integer slot) {
+            currentlyInMuseum.put(item, Map.entry(display, slot));
+            UUID itemUUID = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+            insertionTimes.put(itemUUID, System.currentTimeMillis());
         }
 
         public JSONObject serialize() {
@@ -72,6 +92,8 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
             json.put("currentlyInMuseum", currentlyInMuseum);
             json.put("previouslyInMuseum", previouslyInMuseum);
+            json.put("insertionTimes", new JSONObject(insertionTimes).toString());
+            json.put("calculatedPrices", new JSONObject(calculatedPrices).toString());
 
             return json;
         }
@@ -99,6 +121,12 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
             data.currentlyInMuseum = currentlyInMuseum.stream().collect(Collectors.toMap(item -> item, item -> Map.entry(MuseumDisplays.ATRIUM_SLOTS, 0)));
             data.previouslyInMuseum = previouslyInMuseum;
+            data.insertionTimes = new JSONObject(json.getString("insertionTimes"))
+                    .toMap().entrySet().stream().map(entry -> Map.entry(UUID.fromString(entry.getKey()), (Long) entry.getValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            data.calculatedPrices = new JSONObject(json.getString("calculatedPrices"))
+                    .toMap().entrySet().stream().map(entry -> Map.entry(UUID.fromString(entry.getKey()), (Double) entry.getValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
             return data;
         }

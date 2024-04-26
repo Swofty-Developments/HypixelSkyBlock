@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Unstackable, StandardItem,
+public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, TrackedUniqueItem, StandardItem,
         DefaultCraftable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

@@ -110,15 +110,11 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ItemStack stack = e.getClickedItem();
-
-
                 if (stack.isAir()) return;
 
                 updateFromItem(null);
 
                 player.addAndUpdateItem(stack);
-
-
             }
         });
 

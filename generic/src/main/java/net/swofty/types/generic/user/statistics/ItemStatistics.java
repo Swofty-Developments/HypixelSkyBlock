@@ -9,11 +9,13 @@ import java.util.Map;
 
 @Getter
 public class ItemStatistics {
+    private final Map<ItemStatistic, Double> statisticsBase;
     private final Map<ItemStatistic, Double> statisticsAdditive;
     private final Map<ItemStatistic, Double> statisticsMultiplicative;
 
     // Private constructor used by the builder
-    private ItemStatistics(Map<ItemStatistic, Double> statisticsAdditive, Map<ItemStatistic, Double> statisticsMultiplicative) {
+    private ItemStatistics(Map<ItemStatistic, Double> statisticsBase, Map<ItemStatistic, Double> statisticsAdditive, Map<ItemStatistic, Double> statisticsMultiplicative) {
+        this.statisticsBase = statisticsBase;
         this.statisticsAdditive = statisticsAdditive;
         this.statisticsMultiplicative = statisticsMultiplicative;
     }
@@ -27,7 +29,9 @@ public class ItemStatistics {
 
     @Override
     public @NonNull ItemStatistics clone() {
-        return new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
+        return new ItemStatistics(new EnumMap<>(this.statisticsBase),
+                new EnumMap<>(this.statisticsAdditive),
+                new EnumMap<>(this.statisticsMultiplicative));
     }
 
     @Override
@@ -84,10 +88,17 @@ public class ItemStatistics {
 
     // Builder class
     public static class Builder {
+        private final Map<ItemStatistic, Double> statisticsBase = new EnumMap<>(ItemStatistic.class);
         private final Map<ItemStatistic, Double> statisticsAdditive = new EnumMap<>(ItemStatistic.class);
         private final Map<ItemStatistic, Double> statisticsMultiplicative = new EnumMap<>(ItemStatistic.class);
 
         public Builder withAdditive(ItemStatistic stat, Double value) {
+            return withAdditive(stat, value, false);
+        }
+
+        public Builder withAdditive(ItemStatistic stat, Double value, boolean strictlyAdditive) {
+            if (!strictlyAdditive)
+                this.statisticsBase.put(stat, value);
             this.statisticsAdditive.put(stat, value);
             return this;
         }
@@ -105,12 +116,15 @@ public class ItemStatistics {
         }
 
         public ItemStatistics build() {
-            return new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
+            return new ItemStatistics(new EnumMap<>(this.statisticsBase),
+                    new EnumMap<>(this.statisticsAdditive),
+                    new EnumMap<>(this.statisticsMultiplicative));
         }
     }
 
     public ItemStatistics addAdditive(ItemStatistic stat, Double value) {
         ItemStatistics result = this.clone();
+        result.statisticsBase.put(stat, this.getAdditive(stat) + value);
         result.statisticsAdditive.put(stat, this.getAdditive(stat) + value);
         return result;
     }
@@ -140,9 +154,20 @@ public class ItemStatistics {
         return value;
     }
 
+    public @NonNull Double getBase(@Nullable ItemStatistic stat) {
+        if (stat == null) return 0D;
+        return this.statisticsBase.getOrDefault(stat, 0D);
+    }
+
     public @NonNull Double getAdditive(@Nullable ItemStatistic stat) {
         if (stat == null) return 0D;
         return this.statisticsAdditive.getOrDefault(stat, 0D);
+    }
+
+    public @NonNull Double getAdditiveMinusBase(@Nullable ItemStatistic stat) {
+        if (stat == null) return 0D;
+        return this.statisticsAdditive.getOrDefault(stat, 0D) -
+                this.statisticsBase.getOrDefault(stat, 0D);
     }
 
     public @NonNull Double getMultiplicative(@Nullable ItemStatistic stat) {
@@ -156,9 +181,12 @@ public class ItemStatistics {
     }
 
     public static ItemStatistics add(ItemStatistics first, ItemStatistics other) {
-        ItemStatistics result = new ItemStatistics(new EnumMap<>(first.statisticsAdditive), new EnumMap<>(first.statisticsMultiplicative));
+        ItemStatistics result = new ItemStatistics(new EnumMap<>(first.statisticsBase),
+                new EnumMap<>(first.statisticsAdditive),
+                new EnumMap<>(first.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
+            result.statisticsBase.put(stat, first.getBase(stat) + other.getBase(stat));
             result.statisticsAdditive.put(stat, first.getAdditive(stat) + other.getAdditive(stat));
             result.statisticsMultiplicative.put(stat, first.statisticsMultiplicative.getOrDefault(stat, 0D)
                     + other.statisticsMultiplicative.getOrDefault(stat, 0D));
@@ -168,9 +196,10 @@ public class ItemStatistics {
     }
 
     public static ItemStatistics multiply(ItemStatistics statistics, double multiplier) {
-        ItemStatistics result = new ItemStatistics(new EnumMap<>(statistics.statisticsAdditive), new EnumMap<>(statistics.statisticsMultiplicative));
+        ItemStatistics result = new ItemStatistics(new EnumMap<>(statistics.statisticsBase), new EnumMap<>(statistics.statisticsAdditive), new EnumMap<>(statistics.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
+            result.statisticsBase.put(stat, statistics.statisticsBase.getOrDefault(stat, 0D) * multiplier);
             result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 0D) * multiplier);
             result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 0D) * multiplier);
         }
@@ -179,9 +208,12 @@ public class ItemStatistics {
     }
 
     public ItemStatistics sub(ItemStatistics other) {
-        ItemStatistics result = new ItemStatistics(new EnumMap<>(this.statisticsAdditive), new EnumMap<>(this.statisticsMultiplicative));
+        ItemStatistics result = new ItemStatistics(new EnumMap<>(this.statisticsBase),
+                new EnumMap<>(this.statisticsAdditive),
+                new EnumMap<>(this.statisticsMultiplicative));
 
         for (ItemStatistic stat : ItemStatistic.values()) {
+            result.statisticsBase.put(stat, this.getBase(stat) - other.getBase(stat));
             result.statisticsAdditive.put(stat, this.getAdditive(stat) - other.getAdditive(stat));
             result.statisticsMultiplicative.put(stat, this.getMultiplicative(stat) - other.getMultiplicative(stat));
         }
