@@ -21,12 +21,12 @@ import java.util.ArrayList;
 public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
 
     public GUIBitsAbiphone() {
-        super("Bits Shop - Abiphone", InventoryType.CHEST_5_ROW);
+        super("Bits Shop - Abiphone", InventoryType.CHEST_4_ROW);
     }
 
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(40, new GUIBitsShop()));
+        set(GUIClickableItem.getGoBackItem(31, new GUIBitsShop()));
 
         set(new GUIClickableItem(12) {
             Integer price = 6450;
@@ -34,13 +34,15 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getBits() >= price) {
+                    SkyBlockItem skyBlockItem = new SkyBlockItem(item);
+                    ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
+                    SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
                     if (!player.getPurchaseConfirmationBits()) {
-                        player.addAndUpdateItem(item);
+                        player.addAndUpdateItem(finalItem);
                         Integer remainingBits = player.getBits() - price;
                         player.setBits(remainingBits);
-                        new GUIBitsShop().open(player);
                     } else {
-                        new GUIBitsConfirmBuy(item, price).open(player);
+                        new GUIBitsConfirmBuy(finalItem, price).open(player);
                     }
                 } else {
                     player.sendMessage("§cYou don't have enough Bits to buy that!");

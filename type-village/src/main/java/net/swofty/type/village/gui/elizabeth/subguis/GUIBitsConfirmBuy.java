@@ -17,9 +17,9 @@ import net.swofty.types.generic.utility.StringUtility;
 
 public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
 
-    ItemType item;
+    SkyBlockItem item;
     Integer price;
-    public GUIBitsConfirmBuy(ItemType item, Integer price) {
+    public GUIBitsConfirmBuy(SkyBlockItem item, Integer price) {
         super("Confirm", InventoryType.CHEST_3_ROW);
         this.item = item;
         this.price = price;
@@ -28,7 +28,6 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(new GUIClickableItem(11) {
-            SkyBlockItem skyBlockItem = new SkyBlockItem(item);
 
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -41,7 +40,7 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aConfirm", Material.LIME_TERRACOTTA, 1,
-                        "§7Buying: " + skyBlockItem.getDisplayName(),
+                        "§7Buying: " + item.getDisplayName(),
                         "§7Cost: §b" + StringUtility.commaify(price));
             }
         });
