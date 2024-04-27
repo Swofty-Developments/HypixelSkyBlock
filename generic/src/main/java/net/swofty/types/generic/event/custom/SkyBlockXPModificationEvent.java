@@ -1,11 +1,9 @@
 package net.swofty.types.generic.event.custom;
 
 import lombok.Getter;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class SkyBlockXPModificationEvent implements PlayerInstanceEvent {

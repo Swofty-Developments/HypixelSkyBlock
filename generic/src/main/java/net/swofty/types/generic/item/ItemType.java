@@ -112,6 +112,7 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
+import net.swofty.types.generic.item.items.travelscroll.HubCryptsTravelScroll;
 import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
@@ -693,7 +694,6 @@ public enum ItemType {
     PERFECT_JASPER_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectJasper.class),
     PERFECT_RUBY_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectRuby.class),
     PERFECT_JADE_GEM(Material.PLAYER_HEAD, Rarity.LEGENDARY, PerfectJade.class),
-
     HARD_STONE(Material.STONE, Rarity.COMMON, HardStone.class),
     MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON, Mithril.class),
     TITANIUM(Material.PLAYER_HEAD, Rarity.RARE, Titanium.class),
@@ -746,6 +746,7 @@ public enum ItemType {
      */
     HUB_CASTLE_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubCastleTravelScroll.class),
     HUB_MUSEUM_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubMuseumTravelScroll.class),
+    HUB_CRYPT_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubCryptsTravelScroll.class),
 
     /**
      * Crimson Isles

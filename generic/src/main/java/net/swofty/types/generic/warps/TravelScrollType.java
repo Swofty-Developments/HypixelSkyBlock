@@ -22,6 +22,12 @@ public enum TravelScrollType {
             new ScrollUnlockCustomRecipe("Unlock this scroll's recipe through Museum Rewards."),
             new Pos(-76.5, 76, 80, -90, 0),
             Rank.DEFAULT),
+    HUB_CRYPTS("crypts", "§bHub §7- §bCrypts",
+            "Spawn in the §6crypts §7below the §cgraveyard §7in the hub.",
+            "f4559d75464b2e40a518e4de8e6cf3085f0a3ca0b1b7012614c4cd96fed60378",
+            new ScrollUnlockCustomRecipe("Unlock this scroll's recipe through Recipe Unlock."),
+            new Pos(-190, 74, -89, -90, 0),
+            Rank.MVP_PLUS),
     ;
 
     private final @NotNull String internalName;

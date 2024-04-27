@@ -46,11 +46,17 @@ public class AccountInformationModule extends TablistModule {
         entries.add(new TablistEntry(" Strength: " + ItemStatistic.STRENGTH.getDisplayColor() +
                 ItemStatistic.STRENGTH.getSymbol() + playerStatistics.getOverall(ItemStatistic.STRENGTH),
                 TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Crit Chance: " + ItemStatistic.CRIT_CHANCE.getDisplayColor() +
+                ItemStatistic.CRIT_CHANCE.getSymbol() + playerStatistics.getOverall(ItemStatistic.CRIT_CHANCE),
+                TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Crit Damage: " + ItemStatistic.CRIT_DAMAGE.getDisplayColor() +
+                ItemStatistic.CRIT_DAMAGE.getSymbol() + playerStatistics.getOverall(ItemStatistic.CRIT_DAMAGE),
+                TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Attack Speed: " + ItemStatistic.BONUS_ATTACK_SPEED.getDisplayColor() +
+                ItemStatistic.BONUS_ATTACK_SPEED.getSymbol() + playerStatistics.getOverall(ItemStatistic.BONUS_ATTACK_SPEED),
+                TablistSkinRegistry.GRAY));
         entries.add(getGrayEntry());
-
-
         fillRestWithGray(entries);
-
         return entries;
     }
 }

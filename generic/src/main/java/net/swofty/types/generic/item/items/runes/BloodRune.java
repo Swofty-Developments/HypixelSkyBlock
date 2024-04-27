@@ -1,13 +1,11 @@
 package net.swofty.types.generic.item.items.runes;
 
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.event.Event;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.actions.player.mobdamage.PlayerActionDamageMob;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
