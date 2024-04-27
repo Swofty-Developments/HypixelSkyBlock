@@ -1,6 +1,5 @@
 package net.swofty.types.generic.warps.unlocks;
 
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.utility.StringUtility;
 import net.swofty.types.generic.warps.ScrollUnlockReason;
 
