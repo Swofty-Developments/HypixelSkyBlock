@@ -7,6 +7,9 @@ import java.util.List;
 
 public enum MuseumRewards {
     REWARD_1(RewardType.MINOR, 1, new MuseumXPReward(4)),
+    REWARD_2(RewardType.MINOR, 2, new MuseumXPReward(4)),
+    REWARD_3(RewardType.MINOR, 3, new MuseumXPReward(4)),
+    REWARD_4(RewardType.MINOR, 4, new MuseumXPReward(4)),
     ;
 
     private final RewardType type;

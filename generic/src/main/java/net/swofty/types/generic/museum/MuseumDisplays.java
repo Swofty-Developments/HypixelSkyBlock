@@ -17,36 +17,42 @@ import java.util.*;
 @Getter
 public enum MuseumDisplays {
     ATRIUM_SLOTS(new ItemMuseumDisplay(),
-            List.of("§7Atrium Slot #{number}", "§eCLICK TO EDIT"),
-            List.of(MuseumableItemCategory.WEAPONS),
-            new Pos(-34.5, 65, 75.5),
-            new Pos(-33.5, 65, 73.5),
-            new Pos(-31.5, 65, 71.5),
-            new Pos(-29.5, 65, 69.5),
-            new Pos(-27.5, 65, 68.5),
-            new Pos(-17.5, 65, 68.5),
-            new Pos(-15.5, 65, 69.5),
-            new Pos(-13.5, 65, 71.5),
-            new Pos(-13.5, 65, 89.5),
-            new Pos(-15.5, 65, 91.5),
-            new Pos(-17.5, 65, 92.5),
-            new Pos(-27.5, 65, 92.5),
-            new Pos(-29.5, 65, 91.5),
-            new Pos(-31.5, 65, 89.5),
-            new Pos(-33.5, 65, 87.5),
+            List.of(MuseumableItemCategory.WEAPONS, MuseumableItemCategory.RARITIES),
+            new Pos(-34.5, 65, 75.5), new Pos(-33.5, 65, 73.5), new Pos(-31.5, 65, 71.5),
+            new Pos(-29.5, 65, 69.5), new Pos(-27.5, 65, 68.5), new Pos(-17.5, 65, 68.5),
+            new Pos(-15.5, 65, 69.5), new Pos(-13.5, 65, 71.5), new Pos(-13.5, 65, 89.5),
+            new Pos(-15.5, 65, 91.5), new Pos(-17.5, 65, 92.5), new Pos(-27.5, 65, 92.5),
+            new Pos(-29.5, 65, 91.5), new Pos(-31.5, 65, 89.5), new Pos(-33.5, 65, 87.5),
             new Pos(-34.5, 65, 85.5)),
+    RARITIES_SLOTS(new ItemMuseumDisplay(),
+            List.of(MuseumableItemCategory.RARITIES),
+            new Pos(-22.5, 55, 128.5), new Pos(-19.5, 55, 125.5), new Pos(-25.5, 55, 125.5),
+            new Pos(-18.5, 52, 115.5), new Pos(-15.5, 52, 116.5), new Pos(-13.5, 52, 118.5),
+            new Pos(-12.5, 52, 121.5), new Pos(-9.5, 52, 125.5), new Pos(-12.5, 52, 129.5),
+            new Pos(-13.5, 52, 132.5), new Pos(-15.5, 52, 134.5), new Pos(-18.5, 52, 135.5),
+            new Pos(-22.5, 52, 138.5), new Pos(-26.5, 52, 135.5), new Pos(-29.5, 52, 134.5),
+            new Pos(-31.5, 52, 132.5), new Pos(-32.5, 52, 129.5), new Pos(-35.5, 52, 125.5),
+            new Pos(-31.5, 52, 118.5), new Pos(-29.5, 52, 116.5), new Pos(-26.5, 52, 115.5)),
+    WEAPONS_WING_SLOTS(new ItemMuseumDisplay(),
+            List.of(MuseumableItemCategory.WEAPONS),
+            new Pos(-27.5, 53, 45.5), new Pos(-30.5, 53, 44.5), new Pos(-32.5, 53, 41.5),
+            new Pos(-33.5, 53, 38.5), new Pos(-32.5, 53, 35.5), new Pos(-30.5, 53, 32.5),
+            new Pos(-27.5, 53, 31.5), new Pos(-17.5, 53, 31.5), new Pos(-14.5, 53, 32.5),
+            new Pos(-12.5, 53, 35.5), new Pos(-11.5, 53, 38.5), new Pos(-12.5, 53, 41.5),
+            new Pos(-14.5, 53, 44.5), new Pos(-17.5, 53, 45.5), new Pos(-33.5, 53, 23.5),
+            new Pos(-27.5, 53, 16.5), new Pos(-22.5, 53, 14.5), new Pos(-17.5, 53, 16.5),
+            new Pos(-13.5, 53, 19.5), new Pos(-11.5, 53, 23.5)
+    ),
     ;
 
     private static final Map<UUID, Map<MuseumDisplayEntityImpl, PlayerHolograms.ExternalPlayerHologram>> displayEntities = new HashMap<>();
 
     private final MuseumDisplay displayHandler;
-    private final List<String> hologramDisplay;
     private final List<MuseumableItemCategory> allowedItemCategories;
     private final List<Pos> positions;
 
-    MuseumDisplays(MuseumDisplay displayHandler, List<String> hologramDisplay, List<MuseumableItemCategory> allowedItemCategories, Pos... positions) {
+    MuseumDisplays(MuseumDisplay displayHandler, List<MuseumableItemCategory> allowedItemCategories, Pos... positions) {
         this.displayHandler = displayHandler;
-        this.hologramDisplay = hologramDisplay;
         this.allowedItemCategories = allowedItemCategories;
         this.positions = List.of(positions);
     }
@@ -111,5 +117,7 @@ public enum MuseumDisplays {
                 }
             }
         }
+
+        displayEntities.put(player.getUuid(), newDisplayEntities);
     }
 }

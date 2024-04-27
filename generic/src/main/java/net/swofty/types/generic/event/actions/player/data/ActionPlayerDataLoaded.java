@@ -85,8 +85,10 @@ public class ActionPlayerDataLoaded extends SkyBlockEvent {
             TravelScrollIslands island = TravelScrollIslands.getFromType(SkyBlockConst.getTypeLoader().getType());
             if (island != null) {
                 List<String> visitedIslands = player.getDataHandler().get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).getValue();
-                visitedIslands.add(island.getInternalName());
-                player.getDataHandler().get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
+                if (!visitedIslands.contains(island.getInternalName())) {
+                    visitedIslands.add(island.getInternalName());
+                    player.getDataHandler().get(DataHandler.Data.VISITED_ISLANDS, DatapointStringList.class).setValue(visitedIslands);
+                }
             }
 
             if (SkyBlockConst.isIslandServer()) return;

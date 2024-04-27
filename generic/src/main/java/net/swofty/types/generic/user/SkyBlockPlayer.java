@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -252,6 +253,10 @@ public class SkyBlockPlayer extends Player {
         return Stream.concat(inInventory.stream(), inAccessoryBag.stream()).collect(Collectors.toList());
     }
 
+    public void setMuseumData(DatapointMuseum.MuseumData data) {
+        getDataHandler().get(DataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).setValue(data);
+    }
+
     public SkyBlockItem[] getAllInventoryItems() {
         return Stream.of(getInventory().getItemStacks())
                 .map(SkyBlockItem::new)
@@ -420,7 +425,9 @@ public class SkyBlockPlayer extends Player {
     }
 
     public String getShortenedDisplayName() {
-        return "§" + getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor().asHexString() + this.getUsername();
+        return StringUtility.getTextFromComponent(Component.text(this.getUsername(),
+                getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
+        );
     }
 
     public float getMaxMana() {

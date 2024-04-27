@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumEmptyDisplay;
 import net.swofty.types.generic.gui.inventory.inventories.museum.GUIMuseumNonEmptyDisplay;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplayEntityImpl;
@@ -29,7 +30,8 @@ public class ActionPlayerClickMuseumDisplay extends SkyBlockEvent {
             boolean isEmpty = museumDisplayEntity.isEmpty();
 
             if (isEmpty) {
-
+                new GUIMuseumEmptyDisplay(museumDisplayEntity.getDisplay(),
+                        museumDisplayEntity.getPositionInMuseum()).open(player);
             } else {
                 ItemDisplayMeta itemDisplayMeta = (ItemDisplayMeta) museumDisplayEntity.getEntityMeta();
                 SkyBlockItem item = new SkyBlockItem(itemDisplayMeta.getItemStack());

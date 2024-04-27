@@ -233,7 +233,7 @@ public class ItemLore {
             }
 
             ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
-            if (bound != null) addLoreLine("8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
+            if (bound != null) addLoreLine("§8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
 
             if (item.getGenericInstance() instanceof ArrowImpl) {
                 addLoreLine("§8Stats added when shot!");

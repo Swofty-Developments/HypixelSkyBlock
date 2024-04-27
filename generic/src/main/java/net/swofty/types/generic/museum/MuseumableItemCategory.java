@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
 public enum MuseumableItemCategory {
     WEAPONS("Weapons", Material.DIAMOND_SWORD, "§6"),
     ARMOR_SETS("Armor Sets", Material.CHAINMAIL_CHESTPLATE, "§9"),
+    RARITIES("Rarities", Material.EMERALD_BLOCK, "§5")
     ;
 
     private final static Map<MuseumableItemCategory, List<ItemType>> ITEMS = new HashMap<>();
@@ -26,6 +28,36 @@ public enum MuseumableItemCategory {
         this.category = category;
         this.material = material;
         this.color = color;
+    }
+
+    public List<ItemType> getItems() {
+        return ITEMS.getOrDefault(this, new ArrayList<>());
+    }
+
+    @Override
+    public String toString() {
+        return StringUtility.toNormalCase(name().replace("_", " "));
+    }
+
+    public boolean contains(ItemType item) {
+        return ITEMS.getOrDefault(this, new ArrayList<>()).contains(item);
+    }
+
+    public static MuseumableItemCategory getFromItem(ItemType item) {
+        for (MuseumableItemCategory category : ITEMS.keySet()) {
+            if (ITEMS.getOrDefault(category, new ArrayList<>()).contains(item)) {
+                return category;
+            }
+        }
+        return null;
+    }
+
+    public static Integer getMuseumableItemCategorySize(MuseumableItemCategory category) {
+        return ITEMS.getOrDefault(category, new ArrayList<>()).size();
+    }
+
+    public static Integer getMuseumableItemCategorySize() {
+        return ITEMS.size();
     }
 
     public static Map<MuseumableItemCategory, List<SkyBlockItem>> sortAsMuseumItems(List<SkyBlockItem> items) {

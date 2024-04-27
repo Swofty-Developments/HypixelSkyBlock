@@ -1,6 +1,7 @@
 package net.swofty.types.generic.user.categories;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.types.generic.utility.StringUtility;
 

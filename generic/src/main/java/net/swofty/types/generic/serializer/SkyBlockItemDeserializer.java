@@ -62,11 +62,13 @@ public class SkyBlockItemDeserializer extends JsonDeserializer<SkyBlockItem> {
                 continue;
             }
 
-            String value = object.getString(key);
-            ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
-            if (attribute != null) {
-                attribute.setValue(attribute.loadFromString(value));
-            }
+            try {
+                String value = object.getString(key);
+                ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
+                if (attribute != null) {
+                    attribute.setValue(attribute.loadFromString(value));
+                }
+            } catch (Exception e) {}
         }
 
         item.setAmount(object.getInt("amount"));

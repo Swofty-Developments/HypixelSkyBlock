@@ -4,6 +4,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
+import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplay;
@@ -48,13 +49,15 @@ public class ItemMuseumDisplay extends MuseumDisplay {
                     .text(new String[]{item.getDisplayName()})
                     .pos(pos.add(0, 1, 0))
                     .build();
+            PlayerHolograms.addExternalPlayerHologram(hologram);
 
-            entity = new MuseumDisplayEntityImpl(EntityType.ITEM_DISPLAY, category, position, false);
-            ItemDisplayMeta itemDisplayMeta = (ItemDisplayMeta) entity.getEntityMeta();
-            itemDisplayMeta.setItemStack(item.getItemStack());
+            entity = new MuseumDisplayEntityImpl(EntityType.ITEM, category, position, false);
+            ItemEntityMeta itemDisplayMeta = (ItemEntityMeta) entity.getEntityMeta();
+            itemDisplayMeta.setItem(item.getItemStack());
 
             entity.setAutoViewable(false);
             entity.setNoGravity(true);
+            entity.setInvisible(false);
             entity.setInstance(player.getInstance(), pos);
             entity.addViewer(player);
         }
