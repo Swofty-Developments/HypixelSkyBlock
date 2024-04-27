@@ -70,14 +70,14 @@ public class NPCFarmer extends NPCDialogue {
         return List.of(
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
-                                "§e[NPC] Farmer§f: Howdy, friend!",
-                                "§e[NPC] Farmer§f: My cow is sick, she needs some food to replenish her strength.",
-                                "§e[NPC] Farmer§f: Could you gather some Wheat from my farm and bring it back to me so that I can feed her? Poor thing."
+                                "Howdy, friend!",
+                                "My cow is sick, she needs some food to replenish her strength.",
+                                "Could you gather some Wheat from my farm and bring it back to me so that I can feed her? Poor thing."
                         }).build(),
                 DialogueSet.builder()
                         .key("spoke-again").lines(new String[]{
-                                "§e[NPC] Farmer§f: Thank you so much!",
-                                "§e[NPC] Farmer§f: My Farm is yours to harvest! Wheat is a valuable resource to collect, you can unlock many cool things by collecting it."
+                                "hank you so much!",
+                                "My Farm is yours to harvest! Wheat is a valuable resource to collect, you can unlock many cool things by collecting it."
                         }).build()
         ).stream().toArray(DialogueSet[]::new);
     }
