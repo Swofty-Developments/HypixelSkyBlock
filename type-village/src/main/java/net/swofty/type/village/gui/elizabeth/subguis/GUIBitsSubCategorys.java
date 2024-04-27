@@ -6,11 +6,9 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.village.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -18,7 +16,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,13 +45,13 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
 
         int index = 0;
         for (int slot : displaySlots) {
-            if (index >= 0 && index < items.length) {
+            if (index < items.length) {
                 Set<Map.Entry<ItemType, Map.Entry<Integer, Integer>>> entrySet = items[index].entrySet();
                 for (Map.Entry<ItemType, Map.Entry<Integer, Integer>> entry : entrySet) {
                     ItemType item = entry.getKey();
-                    Map.Entry integers = entry.getValue();
-                    Integer price = (Integer) integers.getKey();
-                    Integer amount = (Integer) integers.getValue();
+                    Map.Entry<Integer, Integer> integers = entry.getValue();
+                    Integer price = integers.getKey();
+                    Integer amount = integers.getValue();
                     set(new GUIClickableItem(slot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
