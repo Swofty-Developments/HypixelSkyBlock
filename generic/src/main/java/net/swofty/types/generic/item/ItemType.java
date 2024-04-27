@@ -112,6 +112,7 @@ import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieTalisman;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
+import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
@@ -744,6 +745,7 @@ public enum ItemType {
      * Travel Scrolls
      */
     HUB_CASTLE_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubCastleTravelScroll.class),
+    HUB_MUSEUM_TRAVEL_SCROLL(Material.MAP, Rarity.EPIC, HubMuseumTravelScroll.class),
 
     /**
      * Crimson Isles

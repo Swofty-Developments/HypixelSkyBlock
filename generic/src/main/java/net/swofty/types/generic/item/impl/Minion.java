@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Unstackable, DefaultCraftable {
+public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, TrackedUniqueItem, DefaultCraftable {
     MinionRegistry getMinionRegistry();
 
     ItemType getBaseCraftMaterial();

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TransmissionTuner implements CustomSkyBlockItem, SkullHead, Sellable, ExtraUnderNameDisplay, Unstackable {
+public class TransmissionTuner implements CustomSkyBlockItem, SkullHead, Sellable, ExtraUnderNameDisplay, TrackedUniqueItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

@@ -50,34 +50,34 @@ public class NPCArthur extends NPCDialogue {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-1").lines(new String[]{
-                                "§e[NPC] Arthur§f: Fuel makes your Minion work harder for a limited time",
-                                "§e[NPC] Arthur§f: There are multiple types of Fuel, like Coal, Enchanted Bread and many more!"
+                                "Fuel makes your Minion work harder for a limited time",
+                                "There are multiple types of Fuel, like Coal, Enchanted Bread and many more!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-2").lines(new String[]{
-                                "§e[NPC] Arthur§f: If you place your Minions poorly, they will complain!",
-                                "§e[NPC] Arthur§f: Open their Menu and look for their Perfect Layout!"
+                                "If you place your Minions poorly, they will complain!",
+                                "Open their Menu and look for their Perfect Layout!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-3").lines(new String[]{
-                                "§e[NPC] Arthur§f: Once you unlock a Minion, you also unlock all their Level up recipes!"
+                                "Once you unlock a Minion, you also unlock all their Level up recipes!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-4").lines(new String[]{
-                                "§e[NPC] Arthur§f: Use a §aBudget Hopper§f to make your Minions automatically sell their work once full!"
+                                "Use a §aBudget Hopper§f to make your Minions automatically sell their work once full!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-5").lines(new String[]{
-                                "§e[NPC] Arthur§f: My favorite Minion Upgrade is the §aCompactor§f, sooooo useful!",
-                                "§e[NPC] Arthur§f: I have one in my Minion, look!"
+                                "My favorite Minion Upgrade is the §aCompactor§f, sooooo useful!",
+                                "I have one in my Minion, look!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-6").lines(new String[]{
-                                "§e[NPC] Arthur§f: People always empty the storage of my Minion when I'm not looking!"
+                                "People always empty the storage of my Minion when I'm not looking!"
                         }).build(),
                 NPCDialogue.DialogueSet.builder()
                         .key("dialogue-7").lines(new String[]{
-                                "§e[NPC] Arthur§f: Minions always have 4 Upgrade Slots where you can place Fuel or else"
+                                "Minions always have 4 Upgrade Slots where you can place Fuel or else"
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
     }

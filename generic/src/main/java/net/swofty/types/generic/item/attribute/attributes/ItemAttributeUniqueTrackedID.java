@@ -4,10 +4,10 @@ import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 
-public class ItemAttributeStackable extends ItemAttribute<String> {
+public class ItemAttributeUniqueTrackedID extends ItemAttribute<String> {
     @Override
     public String getKey() {
-        return "stackable";
+        return "unique-tracked-id";
     }
 
     @Override

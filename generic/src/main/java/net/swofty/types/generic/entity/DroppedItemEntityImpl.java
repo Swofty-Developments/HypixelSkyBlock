@@ -38,7 +38,6 @@ public class DroppedItemEntityImpl extends Entity {
         setAutoViewable(false);
 
         this.scheduleRemove(Duration.ofSeconds(60));
-        this.addViewer(player);
 
         droppedItems.computeIfPresent(player, (key, value) -> {
             if (value.size() > 50) {

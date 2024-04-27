@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.GUIBestiary;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -43,6 +44,34 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
         int level = skills.getCurrentLevel(category);
         Integer nextLevel = skills.getNextLevel(category);
 
+        if (category == SkillCategories.COMBAT) {
+            set(new GUIClickableItem(39) {
+                @Override
+                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                    new GUIBestiary().open(player);
+                }
+
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1,
+                            "§7The Bestiary is a compendium of",
+                            "§7mobs in SkyBlock. It contains detailed",
+                            "§7information on loot drops, your mob",
+                            "§7stats, and more!",
+                            " ",
+                            "§7Kill mobs within §aFamilies §7to progress",
+                            "§7and earn §arewards§7, including §b✯ Magic",
+                            "§bFind §7bonuses towards mobs in the",
+                            "§7Family.",
+                            " ",
+                            "§c§lHERE PROGRESS BAR",
+                            " ",
+                            "§eClick to view!"
+                            );
+                }
+            });
+        }
+
         set(new GUIItem(0) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -62,7 +91,7 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
                 lore.add("§8unlock Perks, statistic bonuses, and");
                 lore.add("§8more!");
 
-                return ItemStackCreator.getStack("§a" + category.toString() + " Skill",
+                return ItemStackCreator.getStack("§a" + category + " Skill",
                         category.asCategory().getDisplayIcon(), 1, lore);
             }
         });

@@ -102,6 +102,8 @@
     <file url="file://$PROJECT_DIR$/service-bazaar/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-generic/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-generic/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-item-tracker/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-item-tracker/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-protocol/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-protocol/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spark/src/main/java" charset="UTF-8" />

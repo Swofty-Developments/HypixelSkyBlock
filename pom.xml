@@ -29,6 +29,7 @@
 
         <module>service-auctionhouse</module>
         <module>service-bazaar</module>
+        <module>service-item-tracker</module>
     </modules>
 
     <properties>

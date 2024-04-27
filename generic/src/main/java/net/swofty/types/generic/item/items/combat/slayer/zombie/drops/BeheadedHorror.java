@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, Unstackable, RightClickRecipe {
+public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, TrackedUniqueItem, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

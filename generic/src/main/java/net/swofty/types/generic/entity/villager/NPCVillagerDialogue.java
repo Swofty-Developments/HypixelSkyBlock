@@ -46,6 +46,7 @@ public abstract class NPCVillagerDialogue extends SkyBlockVillagerNPC {
         System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
 
         if (newLines.length == 0) {
+            if (dialogueSets.get(player) == null) return;
             dialogueSets.get(player).getValue().complete(dialogueSet.key());
             dialogueSets.remove(player);
             return;

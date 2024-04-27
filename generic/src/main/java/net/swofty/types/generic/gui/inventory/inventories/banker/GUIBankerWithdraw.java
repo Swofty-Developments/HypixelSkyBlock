@@ -14,7 +14,6 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.types.generic.mission.missions.MissionDepositCoinsInBank;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -47,13 +46,14 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                bankBalance
+                                bankBalance, 1
                         ),
                         "§7Amount to withdraw: §6" + StringUtility.decimalify(
-                                bankBalance
+                                bankBalance, 1
                         ),
                         " ",
-                        "§eClick to withdraw coins!");
+                        "§eClick to withdraw coins!"
+                );
             }
 
             @Override
@@ -70,13 +70,14 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                bankBalance
+                                bankBalance, 1
                         ),
                         "§7Amount to withdraw: §6" + StringUtility.decimalify(
-                                bankBalance / 2
+                                bankBalance / 2, 1
                         ),
                         " ",
-                        "§eClick to withdraw coins!");
+                        "§eClick to withdraw coins!"
+                );
             }
 
             @Override
@@ -98,14 +99,11 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 return ItemStackCreator.getStack("§a20% of the account", Material.DISPENSER, 1,
                         "§8Bank withdrawal",
                         " ",
-                        "§7Current balance: §6" + StringUtility.decimalify(
-                                bankBalance
-                        ),
-                        "§7Amount to withdraw: §6" + StringUtility.decimalify(
-                                bankBalance / 5
-                        ),
+                        "§7Current balance: §6" + StringUtility.decimalify(bankBalance, 1),
+                        "§7Amount to withdraw: §6" + StringUtility.decimalify(bankBalance / 5, 1),
                         " ",
-                        "§eClick to withdraw coins!");
+                        "§eClick to withdraw coins!"
+                );
             }
         });
 
@@ -137,10 +135,11 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                         "§8Bank withdrawal",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount()
+                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         " ",
-                        "§eClick to withdraw coins!");
+                        "§eClick to withdraw coins!"
+                );
             }
         });
     }
@@ -174,8 +173,8 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             ));
 
             player.setCoins(player.getCoins() + amount);
-            player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
-                    StringUtility.decimalify(bankData.getAmount())
+            player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
+                    StringUtility.decimalify(bankData.getAmount(), 1)
                     + " coins§a in your account.");
             return;
         }
@@ -197,7 +196,6 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                     if (bankHash != null && !bankHash.equals(this.bankHash)) {
                         allow.set(false);
                     }
-                    return;
                 }));
             }
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
@@ -217,8 +215,8 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                 player.setCoins(player.getCoins() + amount);
                 player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
-                player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount) + " coins§a! You now have §6" +
-                        StringUtility.decimalify(bankData.getAmount())
+                player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
+                        StringUtility.decimalify(bankData.getAmount(), 1)
                         + " coins§a in your account.");
                 player.setBankDelayed(false);
             }

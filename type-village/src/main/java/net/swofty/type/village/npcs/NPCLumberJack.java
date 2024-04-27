@@ -71,17 +71,17 @@ public class NPCLumberJack extends NPCDialogue {
         return List.of(
                 DialogueSet.builder()
                         .key("initial-hello").lines(new String[]{
-                                "§e[NPC] Lumber Jack§f: Timber!",
-                                "§e[NPC] Lumber Jack§f: My woodcutting assistant has fallen quite ill! Do you think you could take over for him?",
-                                "§e[NPC] Lumber Jack§f: I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!",
-                                "§e[NPC] Lumber Jack§f: I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!"
+                                "Timber!",
+                                "My woodcutting assistant has fallen quite ill! Do you think you could take over for him?",
+                                "I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!",
+                                "I just need you to chop down some Logs. If you do, I'll even give you his old axe as a reward!"
                         }).build(),
                 DialogueSet.builder()
                         .key("spoke-again").lines(new String[]{
-                                "§e[NPC] Lumber Jack§f: Thank you! Take this §aSweet Axe§f, it's so sweet that it drops apples from logs sometimes!",
-                                "§e[NPC] Lumber Jack§f: You've got the knack for wood. Could you get some Birch Planks from §aBirch Park§f?",
-                                "§e[NPC] Lumber Jack§f: My associate will be there waiting for you. He will reward you in §6Coins if you're up to the task!",
-                                "§e[NPC] Lumber Jack§f: However, this time I will reforge any item for the low price of Coal §8x10!"
+                                "Thank you! Take this §aSweet Axe§f, it's so sweet that it drops apples from logs sometimes!",
+                                "You've got the knack for wood. Could you get some Birch Planks from §aBirch Park§f?",
+                                "My associate will be there waiting for you. He will reward you in §6Coins if you're up to the task!",
+                                "However, this time I will reforge any item for the low price of Coal §8x10!"
                         }).build()
         ).stream().toArray(DialogueSet[]::new);
     }

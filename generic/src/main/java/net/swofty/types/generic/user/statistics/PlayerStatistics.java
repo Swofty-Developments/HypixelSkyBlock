@@ -338,11 +338,11 @@ public class PlayerStatistics {
 
     public static Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics originStatistics, ItemStatistics enemyStatistics) {
         boolean isCrit = false;
-        double critChance = originStatistics.getOverall(ItemStatistic.CRIT_CHANCE);
+        double critChance = originStatistics.getBase(ItemStatistic.CRIT_CHANCE);
         if (Math.random() <= (critChance / 100))
             isCrit = true;
 
-        double baseDamage = originStatistics.getOverall(ItemStatistic.DAMAGE);
+        double baseDamage = originStatistics.getAdditive(ItemStatistic.DAMAGE);
         double strength = originStatistics.getOverall(ItemStatistic.STRENGTH);
         double critDamage = originStatistics.getOverall(ItemStatistic.CRIT_DAMAGE);
 
@@ -350,7 +350,7 @@ public class PlayerStatistics {
         double strengthDamage = (1 + (strength / 100));
         double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;
 
-        double baseDamageAdditiveMultiplier = 1 + (originStatistics.getAdditive(ItemStatistic.DAMAGE) / 100);
+        double baseDamageAdditiveMultiplier = 1 + (originStatistics.getAdditiveMinusBase(ItemStatistic.DAMAGE) / 100);
         double baseDamageMultiplicativeMultiplier = (originStatistics.getMultiplicative(ItemStatistic.DAMAGE));
 
         double damage = initialDamage * strengthDamage * criticalDamage * baseDamageAdditiveMultiplier * baseDamageMultiplicativeMultiplier;

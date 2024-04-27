@@ -36,6 +36,10 @@ public class ItemLore {
         this.stack = stack;
     }
 
+    public static String getBaseName(ItemStack stack) {
+        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
+    }
+
     @SneakyThrows
     public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
@@ -76,19 +80,26 @@ public class ItemLore {
             }
 
             boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.getOverall(ItemStatistic.HEALTH),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.getOverall(ItemStatistic.DAMAGE),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.getOverall(ItemStatistic.DEFENSE),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.getOverall(ItemStatistic.STRENGTH),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.getOverall(ItemStatistic.INTELLIGENCE),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.getOverall(ItemStatistic.MINING_SPEED),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
             boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.getOverall(ItemStatistic.SPEED),
-                    handler.getReforge(), rarity);
+                    handler.getReforge(), rarity
+            );
 
             if (item.getGenericInstance() instanceof ShortBowImpl) {
                 addLoreLine("§7Shot Cooldown: §a" + ((ShortBowImpl) item.getGenericInstance()).getCooldown() + "s");
@@ -125,8 +136,7 @@ public class ItemLore {
                     gemstoneLore.append(gemRarity.bracketColor + "[" + gemstoneSlot.symbol + gemRarity.bracketColor + "] ");
                 }
 
-                if (!gemstoneLore.toString().trim().isEmpty())
-                    addLoreLine(gemstoneLore.toString());
+                if (!gemstoneLore.toString().trim().isEmpty()) {addLoreLine(gemstoneLore.toString());}
             }
 
             if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
@@ -141,7 +151,8 @@ public class ItemLore {
                                     " " + StringUtility.getAsRomanNumeral(enchantment.level()));
                             StringUtility.splitByWordAndLength(
                                     enchantment.type().getDescription(enchantment.level(), player),
-                                    34).forEach(string -> addLoreLine("§7" + string));
+                                    34
+                            ).forEach(string -> addLoreLine("§7" + string));
                         });
 
                     } else {
@@ -173,12 +184,11 @@ public class ItemLore {
             if (item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
                 addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
                         ability.getAbilityActivation().getDisplay());
-                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34))
-                    addLoreLine("§7" + line);
-                if (ability.getManaCost() > 0)
-                    addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
-                if (ability.getAbilityCooldownTicks() > 20)
-                    addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getAbilityCooldownTicks() / 20) + "s");
+                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34)) addLoreLine("§7" + line);
+                if (ability.getManaCost() > 0) addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
+                if (ability.getAbilityCooldownTicks() > 20) {
+                    addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getAbilityCooldownTicks() / 20, 1) + "s");
+                }
 
                 addLoreLine(null);
             }
@@ -192,8 +202,7 @@ public class ItemLore {
                     for (SkyBlockItem armorItem : player.getArmor()) {
                         if (armorItem == null) continue;
                         ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType());
-                        if (armorSetRegistry == null)
-                            continue;
+                        if (armorSetRegistry == null) continue;
                         if (armorSetRegistry.getClazz() == armorSet.getClass()) {
                             wearingAmount++;
                         }
@@ -210,13 +219,13 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
-            if (item.getGenericInstance() instanceof ExtraRarityDisplay)
+            if (item.getGenericInstance() instanceof ExtraRarityDisplay) {
                 displayRarity = displayRarity + ((ExtraRarityDisplay) item.getGenericInstance()).getExtraRarityDisplay();
+            }
 
             if (item.getGenericInstance() instanceof Reforgable) {
                 addLoreLine("§8This item can be reforged!");
-                if (handler.getReforge() != null)
-                    displayName = handler.getReforge().prefix() + " " + displayName;
+                if (handler.getReforge() != null) displayName = handler.getReforge().prefix() + " " + displayName;
             }
 
             if (item.getGenericInstance() instanceof ArrowImpl) {
@@ -224,8 +233,7 @@ public class ItemLore {
             }
 
             ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
-            if (bound != null)
-                addLoreLine("8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
+            if (bound != null) addLoreLine("§8* " + (bound.isCoopAllowed() ? "Co-op " : "") + "Soulbound *");
 
             if (item.getGenericInstance() instanceof ArrowImpl) {
                 addLoreLine("§8Stats added when shot!");
@@ -237,8 +245,7 @@ public class ItemLore {
             }
         }
 
-        if (recombobulated)
-            displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
+        if (recombobulated) displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
 
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
@@ -247,12 +254,8 @@ public class ItemLore {
                         .decoration(TextDecoration.ITALIC, false));
     }
 
-    public static String getBaseName(ItemStack stack) {
-        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
-    }
-
     private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
-                                           ReforgeType.Reforge reforge, Rarity rarity) {
+            ReforgeType.Reforge reforge, Rarity rarity) {
         SkyBlockItem item = new SkyBlockItem(stack);
         double reforgeValue = 0;
         double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
@@ -283,12 +286,9 @@ public class ItemLore {
         String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
                 color + prefix + Math.round(overallValue) + suffix;
 
-        if (hpbValue != 0)
-            line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
-        if (reforgeValue != 0)
-            line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
-        if (gemstoneValue != 0)
-            line += " §d(" + (Math.round(gemstoneValue) >= 1 ? "+" : "") + Math.round(gemstoneValue) + ")";
+        if (hpbValue != 0) line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
+        if (reforgeValue != 0) line += " §9(" + (Math.round(reforgeValue) > 0 ? "+" : "") + Math.round(reforgeValue) + ")";
+        if (gemstoneValue != 0) line += " §d(" + (Math.round(gemstoneValue) >= 1 ? "+" : "") + Math.round(gemstoneValue) + ")";
 
         addLoreLine(line);
         return true;

@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, Unstackable, NotFinishedYet {
+public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, TrackedUniqueItem, NotFinishedYet {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

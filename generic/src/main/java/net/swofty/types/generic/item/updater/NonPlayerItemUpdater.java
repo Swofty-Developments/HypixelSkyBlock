@@ -15,7 +15,7 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.Unstackable;
+import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
 
@@ -56,9 +56,9 @@ public class NonPlayerItemUpdater {
                     meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
                 });
 
-            if (item.getGenericInstance() instanceof Unstackable)
+            if (item.getGenericInstance() instanceof TrackedUniqueItem)
                 stack.meta(meta -> {
-                    meta.set(Tag.UUID("stackable"), UUID.randomUUID());
+                    meta.set(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
                 });
 
             if (item.getGenericInstance() instanceof SkullHead skullHead) {

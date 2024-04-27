@@ -1,6 +1,8 @@
 package net.swofty.types.generic.item.attribute;
 
 import net.minestom.server.color.Color;
+import net.swofty.commons.ServiceType;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.ItemType;
@@ -10,9 +12,13 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.*;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.minion.MinionRegistry;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
+import net.swofty.types.generic.protocol.itemtracker.ProtocolUpdateTrackedItem;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class ItemAttributeHandler {
@@ -166,12 +172,25 @@ public class ItemAttributeHandler {
         return ((ItemAttributeRarity) item.getAttribute("rarity")).getValue();
     }
 
-    public String getStackable() {
-        return ((ItemAttributeStackable) item.getAttribute("stackable")).getValue();
+    public @Nullable String getUniqueTrackedID() {
+        String value = ((ItemAttributeUniqueTrackedID) item.getAttribute("unique-tracked-id")).getValue();
+        if (value.equals("none")) return null;
+        return value;
     }
 
-    public void setStackable(String stackableID) {
-        ((ItemAttributeStackable) item.getAttribute("stackable")).setValue(stackableID);
+    public void setUniqueTrackedID(String uniqueTrackedID, SkyBlockPlayer player) {
+        item.getAttribute("unique-tracked-id").setValue(uniqueTrackedID);
+
+        ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
+        Thread.startVirtualThread(() -> {
+            if (!itemTracker.isOnline(new ProtocolPingSpecification()).join()) return;
+
+            itemTracker.callEndpoint(new ProtocolUpdateTrackedItem(), Map.of(
+                    "item-uuid", uniqueTrackedID,
+                    "attached-player-uuid", player.getUuid(),
+                    "attached-player-profile", player.getProfiles().getCurrentlySelected(),
+                    "item-type", item.getAttributeHandler().getItemType())).join();
+        });
     }
 
     public void setRarity(Rarity rarity) {

@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.TemporaryStatistic;
 
 import java.util.ArrayList;
 
-public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem {
+public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, TrackedUniqueItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()

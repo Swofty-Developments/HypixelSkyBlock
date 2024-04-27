@@ -2,6 +2,7 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.Event;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
@@ -101,7 +102,10 @@ public class ActionPlayerInventoryClick extends SkyBlockEvent {
                 }
 
                 if (item instanceof GUIQueryItem query) {
-                    gui.onClose(null, SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
+                    gui.onClose(new InventoryCloseEvent(
+                            player.getOpenInventory(),
+                            player
+                    ), SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
 
                     new SkyBlockSignGUI(player).open(query.lines()).thenAccept(string -> {
                         SkyBlockInventoryGUI nextGui = query.onQueryFinish(string, player);

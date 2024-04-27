@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WardenHeart implements CustomSkyBlockItem, SkullHead, Unstackable, RightClickRecipe {
+public class WardenHeart implements CustomSkyBlockItem, SkullHead, TrackedUniqueItem, RightClickRecipe {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

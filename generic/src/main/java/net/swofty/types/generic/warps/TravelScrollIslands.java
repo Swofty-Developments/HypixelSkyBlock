@@ -16,7 +16,7 @@ public enum TravelScrollIslands {
             "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011",
             (unused) -> "Your very own chunk of SkyBlock. Nice housing for your minions.", ServerType.ISLAND),
     SKYBLOCK_HUB("hub", "§bSkyBlock Hub", "9c465a5d348c53d473f8115ed8923be416f35149f73ebaf5f2b05e13401e814f", (unused) -> "Where everything happens and anything is possible.",
-            ServerType.VILLAGE, List.of(TravelScrollType.HUB_CASTLE)),
+            ServerType.VILLAGE, List.of(TravelScrollType.HUB_CASTLE, TravelScrollType.HUB_MUSEUM)),
     ;
 
     private final String internalName;

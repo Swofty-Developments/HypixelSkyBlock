@@ -8,6 +8,7 @@ import net.minestom.server.item.Material;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,6 @@ public class StringUtility {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
     };
     private static final DecimalFormat INTEGER_FORMAT = new DecimalFormat("#,###");
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###.#");
     private static final Pattern COLOR_PATTERN = Pattern.compile("§[0-9a-fk-or]");
 
     public static String formatTimeAsAgo(long millis) {
@@ -33,6 +33,19 @@ public class StringUtility {
             }
         }
         return "Just now";
+    }
+
+    public static String commaifyAndTh(double d) {
+        // "th" suffix for numbers ending in 11, 12, 13
+        return switch ((int) d % 100) {
+            case 11, 12, 13 -> INTEGER_FORMAT.format(d) + "th";
+            default -> switch ((int) d % 10) {
+                case 1 -> INTEGER_FORMAT.format(d) + "st";
+                case 2 -> INTEGER_FORMAT.format(d) + "nd";
+                case 3 -> INTEGER_FORMAT.format(d) + "rd";
+                default -> INTEGER_FORMAT.format(d) + "th";
+            };
+        };
     }
 
     public static String formatTimeWentBy(long millis) {
@@ -74,14 +87,7 @@ public class StringUtility {
     }
 
     public static double roundTo(double d, int decimalPlaces) {
-        if (decimalPlaces < 1)
-            throw new IllegalArgumentException();
-        StringBuilder builder = new StringBuilder()
-                .append("#.");
-        builder.append("#".repeat(decimalPlaces));
-        DecimalFormat df = new DecimalFormat(builder.toString());
-        df.setRoundingMode(RoundingMode.CEILING);
-        return Double.parseDouble(df.format(d));
+        return Math.round(d * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     }
 
     public static String stripColor(String s) {
@@ -121,10 +127,6 @@ public class StringUtility {
         return INTEGER_FORMAT.format(i);
     }
 
-    public static String decimalify(int i) {
-        return DECIMAL_FORMAT.format(i);
-    }
-
     public static Material getMaterialFromBlock(Block block) {
         return Material.fromNamespaceId(block.namespace());
     }
@@ -159,6 +161,12 @@ public class StringUtility {
                 .replaceAll("s$", "");
     }
 
+    public static String formatAsDate(long millis) {
+        // Month as display, Day, Year
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+        return sdf.format(millis);
+    }
+
     public static String toNormalCase(String string) {
         if (Acronym.isAcronym(string)) return string.toUpperCase();
         string = string.replaceAll("_", " ");
@@ -189,8 +197,13 @@ public class StringUtility {
         return d < 1 ? "0" : INTEGER_FORMAT.format(d);
     }
 
-    public static String decimalify(double d) {
-        return d < 1 ? "0" : DECIMAL_FORMAT.format(d);
+    public static String decimalify(double d, int decimalPlaces) {
+        if (decimalPlaces < 1)
+            throw new IllegalArgumentException();
+        String builder = "#." + "#".repeat(decimalPlaces);
+        DecimalFormat df = new DecimalFormat(builder);
+        df.setRoundingMode(RoundingMode.CEILING);
+        return df.format(d);
     }
 
     public static List<String> splitByWordAndLength(String string, int splitLength) {
@@ -230,10 +243,6 @@ public class StringUtility {
 
     public static String commaify(long l) {
         return INTEGER_FORMAT.format(l);
-    }
-
-    public static String decimalify(long l) {
-        return DECIMAL_FORMAT.format(l);
     }
 
     public static String limitStringLength(String s, int charLimit) {

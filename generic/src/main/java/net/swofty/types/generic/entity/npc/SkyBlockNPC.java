@@ -10,6 +10,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class SkyBlockNPC {
     private static final int SPAWN_DISTANCE = 48;
@@ -37,8 +38,8 @@ public abstract class SkyBlockNPC {
         npcs.add(this);
     }
 
-    public void sendMessage(SkyBlockPlayer player, String message) {
-        player.sendMessage("§e[NPC] " + getName() + ": §f" + message);
+    public void sendNPCMessage(SkyBlockPlayer player, String message) {
+        player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
     }
 
     public static SkyBlockNPC getFromImpl(SkyBlockPlayer player, NPCEntityImpl impl) {
@@ -89,6 +90,7 @@ public abstract class SkyBlockNPC {
 
                 PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
                 NPCEntityImpl entity = cache.get(npc).getValue();
+                PlayerHolograms.ExternalPlayerHologram holo = cache.get(npc).getKey();
 
                 Pos npcPosition = npc.getParameters().position(player);
                 String npcTexture = npc.getParameters().texture(player);
@@ -101,6 +103,7 @@ public abstract class SkyBlockNPC {
                         !entity.getSkinSignature().equals(npcSignature) ||
                         !entity.getPosition().equals(npcPosition)) {
                     entity.remove();
+                    PlayerHolograms.removeExternalPlayerHologram(holo);
                     cache.remove(npc);
                     return;
                 }
@@ -146,7 +149,7 @@ public abstract class SkyBlockNPC {
     }
 
     public static class PlayerNPCCache {
-        private final Map<SkyBlockNPC, Map.Entry<PlayerHolograms.ExternalPlayerHologram, NPCEntityImpl>> npcs = new HashMap<>();
+        private final Map<SkyBlockNPC, Map.Entry<PlayerHolograms.ExternalPlayerHologram, NPCEntityImpl>> npcs = new ConcurrentHashMap<>();
 
         public void add(SkyBlockNPC npc, PlayerHolograms.ExternalPlayerHologram hologram, NPCEntityImpl entity) {
             npcs.put(npc, Map.entry(hologram, entity));
