@@ -976,7 +976,7 @@ public enum ItemType {
     ENCHANTED_PORK(Material.PORKCHOP, Rarity.UNCOMMON, EnchantedPork.class),
     ENCHANTED_GRILLED_PORK(Material.COOKED_PORKCHOP, Rarity.RARE, EnchantedGrilledPork.class),
     ENCHANTED_HARD_STONE(Material.STONE, Rarity.UNCOMMON, EnchantedHardstone.class),
-    ENCHANTED_HAY_BAL(Material.HAY_BLOCK, Rarity.UNCOMMON, EnchantedHayBale.class),
+    ENCHANTED_HAY_BALE(Material.HAY_BLOCK, Rarity.UNCOMMON, EnchantedHayBale.class),
     ENCHANTED_ANCIENT_CLAW(Material.FLINT, Rarity.EPIC, EnchantedAncientClaw.class),
     ENCHANTED_COAL_BLOCK(Material.COAL_BLOCK, Rarity.RARE, EnchantedCoalBlock.class),
     ENCHANTED_BONE_BLOCK(Material.BONE_BLOCK, Rarity.RARE, EnchantedBoneBlock.class),

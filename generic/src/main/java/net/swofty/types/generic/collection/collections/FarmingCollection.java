@@ -134,15 +134,15 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
                                         new SkyBlockItem(ItemType.TIGHTLY_TIED_HAY_BALE), 1)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16)
-                                        .add(ItemType.ENCHANTED_HAY_BAL, 16);
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16)
+                                        .add(ItemType.ENCHANTED_HAY_BALE, 16);
                             }
                         }, new UnlockXP() {
                             @Override
