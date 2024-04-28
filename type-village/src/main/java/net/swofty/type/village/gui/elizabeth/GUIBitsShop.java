@@ -1,6 +1,5 @@
 package net.swofty.type.village.gui.elizabeth;
 
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
