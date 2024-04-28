@@ -342,7 +342,7 @@ public class PlayerStatistics {
         if (Math.random() <= (critChance / 100))
             isCrit = true;
 
-        double baseDamage = originStatistics.getAdditive(ItemStatistic.DAMAGE);
+        double baseDamage = originStatistics.getBase(ItemStatistic.DAMAGE);
         double strength = originStatistics.getOverall(ItemStatistic.STRENGTH);
         double critDamage = originStatistics.getOverall(ItemStatistic.CRIT_DAMAGE);
 

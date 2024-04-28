@@ -46,7 +46,7 @@ public enum ItemStatistic {
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",
-            5D, 0D),
+            0D, 0D),
     ;
 
     private final @NonNull String displayName;
