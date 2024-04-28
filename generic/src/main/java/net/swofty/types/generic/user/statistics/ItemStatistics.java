@@ -103,6 +103,12 @@ public class ItemStatistics {
             return this;
         }
 
+        public Builder withAdditivePercentage(ItemStatistic stat, Double valuePercentage) {
+            if (valuePercentage < 0) valuePercentage = 1D;
+            this.statisticsAdditive.put(stat, 1 + (valuePercentage / 100));
+            return this;
+        }
+
         public Builder withMultiplicative(ItemStatistic stat, Double multiplicationValue) {
             if (multiplicationValue < 0) multiplicationValue = 0.01;
             this.statisticsMultiplicative.put(stat, multiplicationValue);
@@ -111,7 +117,7 @@ public class ItemStatistics {
 
         public Builder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
             if (multiplicationValuePercentage < 0) multiplicationValuePercentage = 1D;
-            this.statisticsMultiplicative.put(stat, (multiplicationValuePercentage / 100));
+            this.statisticsMultiplicative.put(stat, 1 + (multiplicationValuePercentage / 100));
             return this;
         }
 

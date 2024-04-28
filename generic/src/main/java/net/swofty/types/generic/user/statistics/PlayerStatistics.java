@@ -30,6 +30,8 @@ import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.impl.StandardItem;
+import net.swofty.types.generic.item.set.ArmorSetRegistry;
+import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
@@ -38,6 +40,7 @@ import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class PlayerStatistics {
@@ -106,6 +109,15 @@ public class PlayerStatistics {
                     causer,
                     enemy
             )));
+        }
+        if (player.getArmorSet() != null) {
+            ArmorSetRegistry armorSetRegistry = player.getArmorSet();
+            try {
+                Constructor<? extends ArmorSet> constructor = armorSetRegistry.getClazz().getConstructor();
+                ArmorSet armorSet = constructor.newInstance();
+                total = ItemStatistics.add(total, armorSet.getStatistics());
+            } catch (Exception _) {
+            }
         }
         return total;
     }
