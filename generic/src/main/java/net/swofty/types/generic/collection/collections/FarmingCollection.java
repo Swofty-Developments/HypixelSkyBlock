@@ -627,7 +627,94 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "   "
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_HELMET), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "   "
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_CHESTPLATE), ingredientMap,
+                                        pattern
+                                );
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "   "
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_HELMET), ingredientMap,
+                                        pattern
+                                );
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "A A",
+                                        "AAA",
+                                        "AAA"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_CHESTPLATE), ingredientMap,
+                                        pattern
+                                );
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "A A"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_LEGGINGS), ingredientMap,
+                                        pattern
+                                );
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                List<String> pattern = List.of(
+                                        "   ",
+                                        "A A",
+                                        "A A"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.MUSHROOM_BOOTS), ingredientMap, pattern);
+                            }
+                        }
+                        ),
                         new ItemCollectionReward(1000, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -930,7 +1017,62 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "   "
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.PUMPKIN_HELMET), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                List<String> pattern = List.of(
+                                        "A A",
+                                        "AAA",
+                                        "AAA"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.PUMPKIN_CHESTPLATE), ingredientMap,
+                                        pattern
+                                );
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                List<String> pattern = List.of(
+                                        "AAA",
+                                        "A A",
+                                        "A A"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.PUMPKIN_LEGGINGS), ingredientMap, pattern);
+                            }
+                        }, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                List<String> pattern = List.of(
+                                        "   ",
+                                        "A A",
+                                        "A A"
+                                );
+
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.PUMPKIN_BOOTS), ingredientMap, pattern);
+                            }
+                        }
+                        ),
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {

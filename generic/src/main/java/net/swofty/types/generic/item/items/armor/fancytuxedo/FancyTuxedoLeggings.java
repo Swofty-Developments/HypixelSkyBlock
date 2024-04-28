@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class FancyTuxedoLeggings implements CustomSkyBlockItem, StandardItem, LeatherColour, NotFinishedYet, CustomDisplayName {
+public class FancyTuxedoLeggings implements CustomSkyBlockItem, StandardItem, LeatherColour, CustomDisplayName {
 
     @Override
     public String getDisplayName(SkyBlockItem item) {

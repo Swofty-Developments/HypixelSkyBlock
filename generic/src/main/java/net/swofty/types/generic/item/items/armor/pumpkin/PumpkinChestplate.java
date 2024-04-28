@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.armor.fancytuxedo;
+package net.swofty.types.generic.item.items.armor.pumpkin;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -6,16 +6,15 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, CustomDisplayName {
-
+public class PumpkinChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, NotFinishedYet {
     @Override
-    public String getDisplayName(SkyBlockItem item) {
-        return "Fancy Tuxedo Jacket";
+    public Color getLeatherColour() {
+        return new Color(237, 170, 54);
     }
 
     @Override
-    public Color getLeatherColour() {
-        return new Color(51, 42, 42);
+    public double getSellValue() {
+        return 16;
     }
 
     @Override
@@ -26,8 +25,8 @@ public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.CRIT_DAMAGE, 80D)
-                .withBase(ItemStatistic.INTELLIGENCE, 150D)
+                .withBase(ItemStatistic.DEFENSE, 14D)
+                .withBase(ItemStatistic.HEALTH, 14D)
                 .build();
     }
 }

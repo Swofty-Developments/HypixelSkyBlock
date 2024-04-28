@@ -35,6 +35,10 @@ import net.swofty.types.generic.item.items.armor.mushroom.MushroomBoots;
 import net.swofty.types.generic.item.items.armor.mushroom.MushroomChestplate;
 import net.swofty.types.generic.item.items.armor.mushroom.MushroomHelmet;
 import net.swofty.types.generic.item.items.armor.mushroom.MushroomLeggings;
+import net.swofty.types.generic.item.items.armor.pumpkin.PumpkinBoots;
+import net.swofty.types.generic.item.items.armor.pumpkin.PumpkinChestplate;
+import net.swofty.types.generic.item.items.armor.pumpkin.PumpkinHelmet;
+import net.swofty.types.generic.item.items.armor.pumpkin.PumpkinLeggings;
 import net.swofty.types.generic.item.items.armor.rosetta.*;
 import net.swofty.types.generic.item.items.armor.squire.*;
 import net.swofty.types.generic.item.items.armor.starlight.*;
@@ -590,6 +594,10 @@ public enum ItemType {
     MUSHROOM_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, MushroomChestplate.class),
     MUSHROOM_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, MushroomLeggings.class),
     MUSHROOM_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, MushroomBoots.class),
+    PUMPKIN_HELMET(Material.LEATHER_HELMET, Rarity.COMMON, PumpkinHelmet.class),
+    PUMPKIN_CHESTPLATE(Material.LEATHER_CHESTPLATE, Rarity.COMMON, PumpkinChestplate.class),
+    PUMPKIN_LEGGINGS(Material.LEATHER_LEGGINGS, Rarity.COMMON, PumpkinLeggings.class),
+    PUMPKIN_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON, PumpkinBoots.class),
 
 
     /**
