@@ -30,8 +30,8 @@ public class SwordOfRevelations implements CustomSkyBlockItem, DefaultCraftable,
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 180D)
-                .withAdditive(ItemStatistic.STRENGTH, 50D)
+                .withBase(ItemStatistic.DAMAGE, 180D)
+                .withBase(ItemStatistic.STRENGTH, 50D)
                 .build();
     }
 

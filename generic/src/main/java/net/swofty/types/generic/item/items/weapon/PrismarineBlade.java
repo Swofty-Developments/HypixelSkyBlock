@@ -9,8 +9,8 @@ public class PrismarineBlade implements CustomSkyBlockItem, StandardItem, Sellab
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 50D)
-                .withAdditive(ItemStatistic.STRENGTH, 25D)
+                .withBase(ItemStatistic.DAMAGE, 50D)
+                .withBase(ItemStatistic.STRENGTH, 25D)
                 .build();
     }
 

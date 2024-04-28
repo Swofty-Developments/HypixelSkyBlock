@@ -118,16 +118,16 @@ public class BeePet implements Pet, NotFinishedYet {
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.STRENGTH, 5D)
+                .withBase(ItemStatistic.STRENGTH, 5D)
                 .build();
     }
 
     @Override
     public ItemStatistics getPerLevelStatistics(Rarity rarity) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.SPEED, 0.1)
-                .withAdditive(ItemStatistic.STRENGTH, 0.25)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 0.5)
+                .withBase(ItemStatistic.SPEED, 0.1)
+                .withBase(ItemStatistic.STRENGTH, 0.25)
+                .withBase(ItemStatistic.INTELLIGENCE, 0.5)
                 .build();
     }
 

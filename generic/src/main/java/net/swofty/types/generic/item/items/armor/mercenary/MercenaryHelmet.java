@@ -21,8 +21,8 @@ public class MercenaryHelmet implements CustomSkyBlockItem, StandardItem, Sellab
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 40D)
-                .withAdditive(ItemStatistic.DEFENSE, 40D)
+                .withBase(ItemStatistic.HEALTH, 40D)
+                .withBase(ItemStatistic.DEFENSE, 40D)
                 .build();
     }
 }

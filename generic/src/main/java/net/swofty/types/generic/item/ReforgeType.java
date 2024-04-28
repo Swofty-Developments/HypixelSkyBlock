@@ -5,21 +5,18 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Getter
 public enum ReforgeType {
     SWORDS(List.of(
             new Reforge("Epic", (originalStatistics, level) -> {
-                return originalStatistics.addAdditive(ItemStatistic.STRENGTH, (double) (10 + (level * 5)));
+                return originalStatistics.addBase(ItemStatistic.STRENGTH, (double) (10 + (level * 5)));
             })
     )),
     BOWS(List.of(
             new Reforge("Grand", (originalStatistics, level) -> {
-                return originalStatistics.addAdditive(ItemStatistic.STRENGTH, (double) (25 + (level * 7)));
+                return originalStatistics.addBase(ItemStatistic.STRENGTH, (double) (25 + (level * 7)));
             })
     )),
     ARMOR(List.of()),
@@ -27,12 +24,12 @@ public enum ReforgeType {
     FISHING_RODS(List.of()),
     PICKAXES(List.of(
             new Reforge("Unyielding", (originalStatistics, level) -> {
-                return originalStatistics.addAdditive(ItemStatistic.SPEED, level * 1.15)
-                        .addAdditive(ItemStatistic.MINING_SPEED, level.doubleValue());
+                return originalStatistics.addBase(ItemStatistic.SPEED, level * 1.15)
+                        .addBase(ItemStatistic.MINING_SPEED, level.doubleValue());
             }),
             new Reforge("Excellent", (originalStatistics, level) -> {
-                return originalStatistics.addAdditive(ItemStatistic.SPEED, level * 1.1)
-                        .addAdditive(ItemStatistic.MINING_SPEED, level.doubleValue() * 4);
+                return originalStatistics.addBase(ItemStatistic.SPEED, level * 1.1)
+                        .addBase(ItemStatistic.MINING_SPEED, level.doubleValue() * 4);
             })
     )),
     AXES(List.of()),

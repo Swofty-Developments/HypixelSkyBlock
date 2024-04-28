@@ -21,8 +21,8 @@ public class MercenaryChestplate implements CustomSkyBlockItem, StandardItem, Se
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 70D)
-                .withAdditive(ItemStatistic.DEFENSE, 70D)
+                .withBase(ItemStatistic.HEALTH, 70D)
+                .withBase(ItemStatistic.DEFENSE, 70D)
                 .build();
     }
 }

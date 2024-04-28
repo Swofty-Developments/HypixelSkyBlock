@@ -21,8 +21,8 @@ public class SquireLeggings implements CustomSkyBlockItem, StandardItem, Sellabl
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 30D)
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
+                .withBase(ItemStatistic.HEALTH, 30D)
+                .withBase(ItemStatistic.DEFENSE, 30D)
                 .build();
     }
 }

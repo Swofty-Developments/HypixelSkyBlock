@@ -48,7 +48,7 @@ public class CombatSkill extends SkillCategory {
                                 return 100;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -59,7 +59,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -84,7 +84,7 @@ public class CombatSkill extends SkillCategory {
                                 return 250;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -95,7 +95,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -120,7 +120,7 @@ public class CombatSkill extends SkillCategory {
                                 return 500;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -131,7 +131,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -156,7 +156,7 @@ public class CombatSkill extends SkillCategory {
                                 return 750;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -167,7 +167,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -192,7 +192,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -203,7 +203,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -228,7 +228,7 @@ public class CombatSkill extends SkillCategory {
                                 return 2000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -239,7 +239,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -264,7 +264,7 @@ public class CombatSkill extends SkillCategory {
                                 return 3000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -275,7 +275,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -300,7 +300,7 @@ public class CombatSkill extends SkillCategory {
                                 return 4000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -311,7 +311,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -336,7 +336,7 @@ public class CombatSkill extends SkillCategory {
                                 return 5000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -347,7 +347,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -372,7 +372,7 @@ public class CombatSkill extends SkillCategory {
                                 return 7500;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -383,7 +383,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -408,7 +408,7 @@ public class CombatSkill extends SkillCategory {
                                 return 10000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -419,7 +419,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -450,7 +450,7 @@ public class CombatSkill extends SkillCategory {
                                 return 15000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -461,7 +461,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -486,7 +486,7 @@ public class CombatSkill extends SkillCategory {
                                 return 20000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -497,7 +497,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -522,7 +522,7 @@ public class CombatSkill extends SkillCategory {
                                 return 25000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -533,7 +533,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -558,7 +558,7 @@ public class CombatSkill extends SkillCategory {
                                 return 30000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -569,7 +569,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -594,7 +594,7 @@ public class CombatSkill extends SkillCategory {
                                 return 40000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -605,7 +605,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -630,7 +630,7 @@ public class CombatSkill extends SkillCategory {
                                 return 50000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -641,7 +641,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -666,7 +666,7 @@ public class CombatSkill extends SkillCategory {
                                 return 65000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -677,7 +677,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -702,7 +702,7 @@ public class CombatSkill extends SkillCategory {
                                 return 80000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -713,7 +713,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -738,7 +738,7 @@ public class CombatSkill extends SkillCategory {
                                 return 100000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -749,7 +749,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -774,7 +774,7 @@ public class CombatSkill extends SkillCategory {
                                 return 125000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -785,7 +785,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -810,7 +810,7 @@ public class CombatSkill extends SkillCategory {
                                 return 150000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -821,7 +821,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -846,7 +846,7 @@ public class CombatSkill extends SkillCategory {
                                 return 175000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -857,7 +857,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -882,7 +882,7 @@ public class CombatSkill extends SkillCategory {
                                 return 200000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -893,7 +893,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -918,7 +918,7 @@ public class CombatSkill extends SkillCategory {
                                 return 225000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -929,7 +929,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -954,7 +954,7 @@ public class CombatSkill extends SkillCategory {
                                 return 250000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -965,7 +965,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -990,7 +990,7 @@ public class CombatSkill extends SkillCategory {
                                 return 275000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1001,7 +1001,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1026,7 +1026,7 @@ public class CombatSkill extends SkillCategory {
                                 return 300000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1037,7 +1037,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1062,7 +1062,7 @@ public class CombatSkill extends SkillCategory {
                                 return 325000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1073,7 +1073,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1098,7 +1098,7 @@ public class CombatSkill extends SkillCategory {
                                 return 350000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1109,7 +1109,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1134,7 +1134,7 @@ public class CombatSkill extends SkillCategory {
                                 return 375000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1145,7 +1145,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1170,7 +1170,7 @@ public class CombatSkill extends SkillCategory {
                                 return 400000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1181,7 +1181,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1206,7 +1206,7 @@ public class CombatSkill extends SkillCategory {
                                 return 425000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1217,7 +1217,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1242,7 +1242,7 @@ public class CombatSkill extends SkillCategory {
                                 return 450000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1253,7 +1253,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1278,7 +1278,7 @@ public class CombatSkill extends SkillCategory {
                                 return 475000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1289,7 +1289,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1314,7 +1314,7 @@ public class CombatSkill extends SkillCategory {
                                 return 500000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1325,7 +1325,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1350,7 +1350,7 @@ public class CombatSkill extends SkillCategory {
                                 return 550000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1361,7 +1361,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1386,7 +1386,7 @@ public class CombatSkill extends SkillCategory {
                                 return 600000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1397,7 +1397,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1422,7 +1422,7 @@ public class CombatSkill extends SkillCategory {
                                 return 650000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1433,7 +1433,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1458,7 +1458,7 @@ public class CombatSkill extends SkillCategory {
                                 return 700000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1469,7 +1469,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1494,7 +1494,7 @@ public class CombatSkill extends SkillCategory {
                                 return 750000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1505,7 +1505,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1530,7 +1530,7 @@ public class CombatSkill extends SkillCategory {
                                 return 800000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1541,7 +1541,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1566,7 +1566,7 @@ public class CombatSkill extends SkillCategory {
                                 return 850000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1577,7 +1577,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1602,7 +1602,7 @@ public class CombatSkill extends SkillCategory {
                                 return 900000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1613,7 +1613,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1638,7 +1638,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1649,7 +1649,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1674,7 +1674,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1685,7 +1685,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1710,7 +1710,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1721,7 +1721,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1746,7 +1746,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1757,7 +1757,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1782,7 +1782,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1793,7 +1793,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1818,7 +1818,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1829,7 +1829,7 @@ public class CombatSkill extends SkillCategory {
                                 return 0.5D;
                             }
                         },
-                        new MultiplicativePercentageStatisticReward() {
+                        new AdditivePercentageStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.DAMAGE;
@@ -1854,7 +1854,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1879,7 +1879,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1904,7 +1904,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1929,7 +1929,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1954,7 +1954,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -1979,7 +1979,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -2004,7 +2004,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -2029,7 +2029,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -2054,7 +2054,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;
@@ -2079,7 +2079,7 @@ public class CombatSkill extends SkillCategory {
                                 return 1000000;
                             }
                         },
-                        new AdditiveStatisticReward() {
+                        new BaseStatisticReward() {
                             @Override
                             public ItemStatistic getStatistic() {
                                 return ItemStatistic.CRIT_CHANCE;

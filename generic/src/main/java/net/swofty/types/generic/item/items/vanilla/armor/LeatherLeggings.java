@@ -19,7 +19,7 @@ public class LeatherLeggings implements CustomSkyBlockItem, StandardItem, Defaul
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 10D)
+                .withBase(ItemStatistic.DEFENSE, 10D)
                 .build();
     }
 

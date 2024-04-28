@@ -34,9 +34,9 @@ public class RevenantFalchion extends SkyBlockValueEvent implements CustomSkyBlo
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 90D)
-                .withAdditive(ItemStatistic.STRENGTH, 50D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 100D)
+                .withBase(ItemStatistic.DAMAGE, 90D)
+                .withBase(ItemStatistic.STRENGTH, 50D)
+                .withBase(ItemStatistic.INTELLIGENCE, 100D)
                 .build();
     }
 

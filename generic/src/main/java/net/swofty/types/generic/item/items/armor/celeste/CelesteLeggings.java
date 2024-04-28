@@ -28,9 +28,9 @@ public class CelesteLeggings implements CustomSkyBlockItem, StandardItem, Leathe
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 15D)
-                .withAdditive(ItemStatistic.DEFENSE, 15D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 40D)
+                .withBase(ItemStatistic.HEALTH, 15D)
+                .withBase(ItemStatistic.DEFENSE, 15D)
+                .withBase(ItemStatistic.INTELLIGENCE, 40D)
                 .build();
     }
 }

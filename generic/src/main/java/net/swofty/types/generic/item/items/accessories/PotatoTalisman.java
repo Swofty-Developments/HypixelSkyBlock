@@ -31,7 +31,7 @@ public class PotatoTalisman implements Talisman , NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.SPEED, 1D)
+                .withBase(ItemStatistic.SPEED, 1D)
                 .build();
     }
 }

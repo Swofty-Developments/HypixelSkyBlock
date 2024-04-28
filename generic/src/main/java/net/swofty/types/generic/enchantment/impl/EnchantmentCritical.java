@@ -41,7 +41,7 @@ public class EnchantmentCritical implements Ench, EnchFromTable {
     @Override
     public ItemStatistics getStatistics(int level) {
         double increase = increases[level - 1];
-        return ItemStatistics.builder().withAdditive(ItemStatistic.CRIT_DAMAGE, increase).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.CRIT_DAMAGE, increase).build();
     }
 
     @Override

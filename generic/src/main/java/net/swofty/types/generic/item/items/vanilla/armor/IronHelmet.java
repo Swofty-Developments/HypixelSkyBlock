@@ -19,8 +19,8 @@ public class IronHelmet implements CustomSkyBlockItem, StandardItem, DefaultCraf
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 15D)
-                .withAdditive(ItemStatistic.DEFENSE, 10D)
+                .withBase(ItemStatistic.HEALTH, 15D)
+                .withBase(ItemStatistic.DEFENSE, 10D)
                 .build();
     }
 

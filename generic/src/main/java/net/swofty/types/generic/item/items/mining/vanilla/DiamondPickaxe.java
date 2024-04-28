@@ -16,9 +16,9 @@ public class DiamondPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultC
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.MINING_SPEED, 230D)
-                .withAdditive(ItemStatistic.BREAKING_POWER, 4D)
-                .withAdditive(ItemStatistic.DAMAGE, 30D)
+                .withBase(ItemStatistic.MINING_SPEED, 230D)
+                .withBase(ItemStatistic.BREAKING_POWER, 4D)
+                .withBase(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
 

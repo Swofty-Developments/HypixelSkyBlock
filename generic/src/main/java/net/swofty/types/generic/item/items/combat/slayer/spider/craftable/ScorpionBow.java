@@ -30,8 +30,8 @@ public class ScorpionBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 110D)
-                .withAdditive(ItemStatistic.STRENGTH, 10D)
+                .withBase(ItemStatistic.DAMAGE, 110D)
+                .withBase(ItemStatistic.STRENGTH, 10D)
                 .build();
     }
 

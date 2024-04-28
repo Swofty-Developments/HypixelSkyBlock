@@ -11,7 +11,7 @@ public class HunterKnife implements CustomSkyBlockItem, StandardItem, DefaultSou
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 50D)
+                .withBase(ItemStatistic.DAMAGE, 50D)
                 .build();
     }
 

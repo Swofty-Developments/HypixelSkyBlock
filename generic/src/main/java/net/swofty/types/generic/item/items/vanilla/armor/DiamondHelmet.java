@@ -19,7 +19,7 @@ public class DiamondHelmet implements CustomSkyBlockItem, StandardItem, DefaultC
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 15D)
+                .withBase(ItemStatistic.DEFENSE, 15D)
                 .build();
     }
 

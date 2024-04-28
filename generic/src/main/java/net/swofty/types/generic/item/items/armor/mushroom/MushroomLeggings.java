@@ -25,8 +25,8 @@ public class MushroomLeggings implements CustomSkyBlockItem, NotFinishedYet, Sel
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 10D)
-                .withAdditive(ItemStatistic.DEFENSE, 5D)
+                .withBase(ItemStatistic.HEALTH, 10D)
+                .withBase(ItemStatistic.DEFENSE, 5D)
                 .build();
     }
 }

@@ -16,7 +16,7 @@ public class DiamondSword implements CustomSkyBlockItem, StandardItem, DefaultCr
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 35D)
+                .withBase(ItemStatistic.DAMAGE, 35D)
                 .build();
     }
 

@@ -28,8 +28,8 @@ public class CelesteHelmet implements CustomSkyBlockItem, StandardItem, LeatherC
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 10D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 30D)
+                .withBase(ItemStatistic.DEFENSE, 10D)
+                .withBase(ItemStatistic.INTELLIGENCE, 30D)
                 .build();
     }
 }

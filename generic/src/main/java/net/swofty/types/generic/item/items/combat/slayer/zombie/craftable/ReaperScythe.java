@@ -30,8 +30,8 @@ public class ReaperScythe implements CustomSkyBlockItem, DefaultCraftable, Stand
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 333D)
-                .withAdditive(ItemStatistic.SPEED, 10D)
+                .withBase(ItemStatistic.DAMAGE, 333D)
+                .withBase(ItemStatistic.SPEED, 10D)
                 .build();
     }
 

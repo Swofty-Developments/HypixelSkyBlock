@@ -26,8 +26,8 @@ public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 80D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 150D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 80D)
+                .withBase(ItemStatistic.INTELLIGENCE, 150D)
                 .build();
     }
 }

@@ -26,9 +26,9 @@ public class FancyTuxedoBoots implements CustomSkyBlockItem, StandardItem, Leath
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 35D)
-                .withAdditive(ItemStatistic.SPEED, 10D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 75D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 35D)
+                .withBase(ItemStatistic.SPEED, 10D)
+                .withBase(ItemStatistic.INTELLIGENCE, 75D)
                 .build();
     }
 }

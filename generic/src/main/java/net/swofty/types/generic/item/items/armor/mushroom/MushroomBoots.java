@@ -25,7 +25,7 @@ public class MushroomBoots implements CustomSkyBlockItem, NotFinishedYet, Sellab
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 15D)
+                .withBase(ItemStatistic.HEALTH, 15D)
                 .build();
     }
 }

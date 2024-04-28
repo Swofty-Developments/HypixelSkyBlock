@@ -19,7 +19,7 @@ public class LeatherBoots implements CustomSkyBlockItem, StandardItem, DefaultCr
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 5D)
+                .withBase(ItemStatistic.DEFENSE, 5D)
                 .build();
     }
 

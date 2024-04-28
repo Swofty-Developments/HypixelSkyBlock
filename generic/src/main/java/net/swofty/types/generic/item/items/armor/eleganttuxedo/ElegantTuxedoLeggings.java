@@ -26,8 +26,8 @@ public class ElegantTuxedoLeggings implements CustomSkyBlockItem, StandardItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 50D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 100D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 50D)
+                .withBase(ItemStatistic.INTELLIGENCE, 100D)
                 .build();
     }
 }

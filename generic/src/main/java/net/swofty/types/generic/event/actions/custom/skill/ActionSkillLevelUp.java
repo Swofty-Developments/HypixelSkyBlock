@@ -55,14 +55,14 @@ public class ActionSkillLevelUp extends SkyBlockEvent {
                 switch (unlock.type()) {
                     case XP -> player.sendMessage("    §8+§b" + ((SkillCategory.XPReward) unlock).getXP() + " SkyBlock XP");
                     case COINS -> player.sendMessage("    §8+§6" + ((SkillCategory.CoinReward) unlock).getCoins() + " §7Coins");
-                    case STATS_ADDITIVE -> {
-                        ItemStatistic statistic = ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic();
-                        player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.AdditiveStatisticReward) unlock).amountAdded(), 1)
+                    case STATS_BASE -> {
+                        ItemStatistic statistic = ((SkillCategory.BaseStatisticReward) unlock).getStatistic();
+                        player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.BaseStatisticReward) unlock).amountAdded(), 1)
                                 + statistic.getSuffix() + " " + statistic.getDisplayColor() + statistic.getSymbol() +  " " + statistic.getDisplayName());
                     }
-                    case STATS_MULTIPLICATIVE -> {
-                        ItemStatistic statistic = ((SkillCategory.AdditiveStatisticReward) unlock).getStatistic();
-                        player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.AdditiveStatisticReward) unlock).amountAdded(), 1) +
+                    case STATS_ADDITIVE_PERCENTAGE -> {
+                        ItemStatistic statistic = ((SkillCategory.BaseStatisticReward) unlock).getStatistic();
+                        player.sendMessage("    §8+§a" + StringUtility.decimalify(((SkillCategory.BaseStatisticReward) unlock).amountAdded(), 1) +
                                 "% " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
                     }
                     case REGION_ACCESS -> player.sendMessage("    §8+§aAccess to " + ((SkillCategory.RegionReward) unlock).getRegion());

@@ -46,7 +46,7 @@ public enum ItemStatistic {
 
     // Other Stats
     DAMAGE("Damage", "§c", "§c", false, "❁",
-            0D, 0D),
+            5D, 0D),
     ;
 
     private final @NonNull String displayName;
@@ -91,7 +91,7 @@ public enum ItemStatistic {
     public static ItemStatistics getOfAllBaseValues() {
         ItemStatistics.Builder builder = ItemStatistics.builder();
         for (ItemStatistic stat : ItemStatistic.values()) {
-            builder.withAdditive(stat, stat.baseAdditiveValue);
+            builder.withBase(stat, stat.baseAdditiveValue);
             builder.withMultiplicative(stat, stat.baseMultiplicativeValue);
         }
         return builder.build();

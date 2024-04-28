@@ -13,9 +13,9 @@ public class CrownOfGreed implements CustomSkyBlockItem, StandardItem, Sellable,
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 130D)
-                .withAdditive(ItemStatistic.DEFENSE, 90D)
-                .withAdditive(ItemStatistic.MAGIC_FIND, 4D)
+                .withBase(ItemStatistic.HEALTH, 130D)
+                .withBase(ItemStatistic.DEFENSE, 90D)
+                .withBase(ItemStatistic.MAGIC_FIND, 4D)
                 .build();
     }
 

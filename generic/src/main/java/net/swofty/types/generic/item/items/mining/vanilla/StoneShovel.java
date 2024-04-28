@@ -16,7 +16,7 @@ public class StoneShovel implements CustomSkyBlockItem, ShovelImpl, DefaultCraft
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 20D)
+                .withBase(ItemStatistic.DAMAGE, 20D)
                 .build();
     }
 

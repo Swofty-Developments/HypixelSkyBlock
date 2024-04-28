@@ -21,8 +21,8 @@ public class SquireHelmet implements CustomSkyBlockItem, StandardItem, Sellable 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 25D)
-                .withAdditive(ItemStatistic.DEFENSE, 25D)
+                .withBase(ItemStatistic.HEALTH, 25D)
+                .withBase(ItemStatistic.DEFENSE, 25D)
                 .build();
     }
 }

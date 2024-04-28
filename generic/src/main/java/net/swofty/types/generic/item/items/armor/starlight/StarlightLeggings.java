@@ -21,9 +21,9 @@ public class StarlightLeggings implements CustomSkyBlockItem, StandardItem, Sell
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 30D)
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 50D)
+                .withBase(ItemStatistic.HEALTH, 30D)
+                .withBase(ItemStatistic.DEFENSE, 30D)
+                .withBase(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 }

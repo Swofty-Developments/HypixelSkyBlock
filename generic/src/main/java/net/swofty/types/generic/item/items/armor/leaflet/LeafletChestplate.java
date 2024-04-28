@@ -30,6 +30,6 @@ public class LeafletChestplate implements CustomSkyBlockItem, StandardItem, Leat
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 35D).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.HEALTH, 35D).build();
     }
 }

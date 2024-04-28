@@ -16,7 +16,7 @@ public class IronSword implements CustomSkyBlockItem, StandardItem, DefaultCraft
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 30D)
+                .withBase(ItemStatistic.DAMAGE, 30D)
                 .build();
     }
 

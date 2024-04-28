@@ -16,9 +16,9 @@ public class IronPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCraf
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.MINING_SPEED, 160D)
-                .withAdditive(ItemStatistic.DAMAGE, 24D)
-                .withAdditive(ItemStatistic.BREAKING_POWER, 3D)
+                .withBase(ItemStatistic.MINING_SPEED, 160D)
+                .withBase(ItemStatistic.DAMAGE, 24D)
+                .withBase(ItemStatistic.BREAKING_POWER, 3D)
                 .build();
     }
 

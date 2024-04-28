@@ -27,8 +27,8 @@ public class FarmSuitChestplate implements CustomSkyBlockItem, StandardItem, Lea
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 40D)
-                .withAdditive(ItemStatistic.FARMING_FORTUNE, 5D)
+                .withBase(ItemStatistic.DEFENSE, 40D)
+                .withBase(ItemStatistic.FARMING_FORTUNE, 5D)
                 .build();
     }
 }

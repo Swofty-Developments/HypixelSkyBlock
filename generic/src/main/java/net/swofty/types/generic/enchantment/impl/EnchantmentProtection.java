@@ -66,7 +66,7 @@ public class EnchantmentProtection implements Ench, EnchFromTable {
     @Override
     public ItemStatistics getStatistics(int level) {
         int increase = level * 4;
-        return ItemStatistics.builder().withAdditive(ItemStatistic.DEFENSE, (double) increase).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.DEFENSE, (double) increase).build();
     }
 
     @Override
