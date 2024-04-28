@@ -17,9 +17,9 @@ public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Tracked
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 50D)
-                .withAdditive(ItemStatistic.DEFENSE, 10D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 50D)
+                .withBase(ItemStatistic.HEALTH, 50D)
+                .withBase(ItemStatistic.DEFENSE, 10D)
+                .withBase(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 

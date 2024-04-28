@@ -28,8 +28,8 @@ public class SquireBoots implements CustomSkyBlockItem, LeatherColour, StandardI
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 20D)
-                .withAdditive(ItemStatistic.DEFENSE, 20D)
+                .withBase(ItemStatistic.HEALTH, 20D)
+                .withBase(ItemStatistic.DEFENSE, 20D)
                 .build();
     }
 }

@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.mining;
 
-import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.PickaxeImpl;
@@ -10,16 +9,14 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RookiePickaxe implements CustomSkyBlockItem, PickaxeImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-            .withAdditive(ItemStatistic.MINING_SPEED, 150D)
-            .withAdditive(ItemStatistic.BREAKING_POWER, 2D)
-            .withAdditive(ItemStatistic.DAMAGE, 15D)
+            .withBase(ItemStatistic.MINING_SPEED, 150D)
+            .withBase(ItemStatistic.BREAKING_POWER, 2D)
+            .withBase(ItemStatistic.DAMAGE, 15D)
             .build();
     }
 

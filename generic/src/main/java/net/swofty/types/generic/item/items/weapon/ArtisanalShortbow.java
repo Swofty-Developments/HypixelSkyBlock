@@ -3,7 +3,6 @@ package net.swofty.types.generic.item.items.weapon;
 import net.minestom.server.coordinate.Vec;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.BowImpl;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ShortBowImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -37,7 +36,7 @@ public class ArtisanalShortbow implements CustomSkyBlockItem, ShortBowImpl {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 40D)
+                .withBase(ItemStatistic.DAMAGE, 40D)
                 .build();
     }
 

@@ -28,9 +28,9 @@ public class CelesteChestplate implements CustomSkyBlockItem, StandardItem, Leat
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 20D)
-                .withAdditive(ItemStatistic.DEFENSE, 20D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 60D)
+                .withBase(ItemStatistic.HEALTH, 20D)
+                .withBase(ItemStatistic.DEFENSE, 20D)
+                .withBase(ItemStatistic.INTELLIGENCE, 60D)
                 .build();
     }
 }

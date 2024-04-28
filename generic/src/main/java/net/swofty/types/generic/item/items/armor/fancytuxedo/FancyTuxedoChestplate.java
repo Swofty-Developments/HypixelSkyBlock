@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, NotFinishedYet, CustomDisplayName {
+public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, CustomDisplayName {
 
     @Override
     public String getDisplayName(SkyBlockItem item) {
@@ -26,8 +26,8 @@ public class FancyTuxedoChestplate implements CustomSkyBlockItem, StandardItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 80D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 150D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 80D)
+                .withBase(ItemStatistic.INTELLIGENCE, 150D)
                 .build();
     }
 }

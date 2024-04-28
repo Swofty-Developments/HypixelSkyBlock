@@ -30,6 +30,8 @@ import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.impl.StandardItem;
+import net.swofty.types.generic.item.set.ArmorSetRegistry;
+import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
@@ -38,6 +40,7 @@ import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class PlayerStatistics {
@@ -106,6 +109,15 @@ public class PlayerStatistics {
                     causer,
                     enemy
             )));
+        }
+        if (player.getArmorSet() != null) {
+            ArmorSetRegistry armorSetRegistry = player.getArmorSet();
+            try {
+                Constructor<? extends ArmorSet> constructor = armorSetRegistry.getClazz().getConstructor();
+                ArmorSet armorSet = constructor.newInstance();
+                total = ItemStatistics.add(total, armorSet.getStatistics());
+            } catch (Exception _) {
+            }
         }
         return total;
     }
@@ -177,7 +189,7 @@ public class PlayerStatistics {
         ItemStatistics spare = ItemStatistics.builder().build();
 
         int fairySouls = player.getFairySouls().getExchangedFairySouls().size();
-        spare = ItemStatistics.add(spare, ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
+        spare = ItemStatistics.add(spare, ItemStatistics.builder().withBase(ItemStatistic.HEALTH, (double) (fairySouls * 2)).build());
 
         DatapointSkills.PlayerSkills skills = player.getSkills();
         spare = ItemStatistics.add(spare, skills.getSkillStatistics());
@@ -277,7 +289,7 @@ public class PlayerStatistics {
             ItemStatistics.Builder toAdd = ItemStatistics.builder();
             HotPotatoable.PotatoType potatoType = hotPotatoBookData.getPotatoType();
 
-            potatoType.stats.forEach(toAdd::withAdditive);
+            potatoType.stats.forEach(toAdd::withBase);
             statistics = ItemStatistics.add(statistics, toAdd.build());
         }
         return statistics;
@@ -324,7 +336,7 @@ public class PlayerStatistics {
         for (ItemStatistic statistic : ItemStatistic.values()) {
             int extra = Gemstone.getExtraStatisticFromGemstone(statistic, item);
             if (extra != 0) {
-                statistics = statistics.addAdditive(statistic, (double) extra);
+                statistics = statistics.addBase(statistic, (double) extra);
             }
         }
         return statistics;
@@ -342,18 +354,14 @@ public class PlayerStatistics {
         if (Math.random() <= (critChance / 100))
             isCrit = true;
 
-        double baseDamage = originStatistics.getBase(ItemStatistic.DAMAGE);
+        double baseDamage = originStatistics.getOverall(ItemStatistic.DAMAGE);
         double strength = originStatistics.getOverall(ItemStatistic.STRENGTH);
         double critDamage = originStatistics.getOverall(ItemStatistic.CRIT_DAMAGE);
 
-        double initialDamage = (5 + baseDamage);
         double strengthDamage = (1 + (strength / 100));
         double criticalDamage = isCrit ? 1 + (critDamage / 100) : 1;
 
-        double baseDamageAdditiveMultiplier = 1 + (originStatistics.getAdditiveMinusBase(ItemStatistic.DAMAGE) / 100);
-        double baseDamageMultiplicativeMultiplier = (originStatistics.getMultiplicative(ItemStatistic.DAMAGE));
-
-        double damage = initialDamage * strengthDamage * criticalDamage * baseDamageAdditiveMultiplier * baseDamageMultiplicativeMultiplier;
+        double damage = baseDamage * strengthDamage * criticalDamage;
         if (enemyStatistics.getOverall(ItemStatistic.DEFENSE) > 0)
             damage = damage * (1 - (enemyStatistics.getOverall(ItemStatistic.DEFENSE) / (enemyStatistics.getOverall(ItemStatistic.DEFENSE) + 100)));
         return new AbstractMap.SimpleEntry<>(damage, isCrit);

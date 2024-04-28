@@ -73,7 +73,7 @@ public class ItemStatistics {
                     for (String value : values) {
                         if (value.startsWith("A")) {
                             double additiveValue = Double.parseDouble(value.substring(1));
-                            builder.withAdditive(stat, additiveValue);
+                            builder.withBase(stat, additiveValue);
                         } else if (value.startsWith("M")) {
                             double multiplicativeValue = Double.parseDouble(value.substring(1));
                             builder.withMultiplicativePercentage(stat, multiplicativeValue);
@@ -92,25 +92,32 @@ public class ItemStatistics {
         private final Map<ItemStatistic, Double> statisticsAdditive = new EnumMap<>(ItemStatistic.class);
         private final Map<ItemStatistic, Double> statisticsMultiplicative = new EnumMap<>(ItemStatistic.class);
 
-        public Builder withAdditive(ItemStatistic stat, Double value) {
-            return withAdditive(stat, value, false);
+        public Builder withBase(ItemStatistic stat, Double value) {
+            this.statisticsBase.put(stat, value);
+            return this;
         }
 
-        public Builder withAdditive(ItemStatistic stat, Double value, boolean strictlyAdditive) {
-            if (!strictlyAdditive) this.statisticsBase.put(stat, value);
+        public Builder withAdditive(ItemStatistic stat, Double value) {
+            if (value < 0) value = 0.01D;
             this.statisticsAdditive.put(stat, value);
             return this;
         }
 
+        public Builder withAdditivePercentage(ItemStatistic stat, Double valuePercentage) {
+            if (valuePercentage < 0) valuePercentage = 1D;
+            this.statisticsAdditive.put(stat, 1 + (valuePercentage / 100));
+            return this;
+        }
+
         public Builder withMultiplicative(ItemStatistic stat, Double multiplicationValue) {
-            if (multiplicationValue < 1) multiplicationValue = 1.0;
-            this.statisticsMultiplicative.put(stat, 1 - multiplicationValue);
+            if (multiplicationValue < 0) multiplicationValue = 0.01;
+            this.statisticsMultiplicative.put(stat, multiplicationValue);
             return this;
         }
 
         public Builder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
-            if (multiplicationValuePercentage < 0) multiplicationValuePercentage = 0.0;
-            this.statisticsMultiplicative.put(stat, 1 - (multiplicationValuePercentage / 100));
+            if (multiplicationValuePercentage < 0) multiplicationValuePercentage = 1D;
+            this.statisticsMultiplicative.put(stat, 1 + (multiplicationValuePercentage / 100));
             return this;
         }
 
@@ -121,9 +128,14 @@ public class ItemStatistics {
         }
     }
 
+    public ItemStatistics addBase(ItemStatistic stat, Double value) {
+        ItemStatistics result = this.clone();
+        result.statisticsBase.put(stat, this.getBase(stat) + value);
+        return result;
+    }
+
     public ItemStatistics addAdditive(ItemStatistic stat, Double value) {
         ItemStatistics result = this.clone();
-        result.statisticsBase.put(stat, this.getAdditive(stat) + value);
         result.statisticsAdditive.put(stat, this.getAdditive(stat) + value);
         return result;
     }
@@ -145,11 +157,8 @@ public class ItemStatistics {
     public @NonNull Double getOverall(@Nullable ItemStatistic stat) {
         if (stat == null) return 0D;
         Double value = 0D;
-        if (this.statisticsAdditive.containsKey(stat)) {
-            value += this.statisticsAdditive.get(stat);
-        }
-        value *= getMultiplicative(stat);
-
+        if (this.statisticsBase.containsKey(stat)) value += this.statisticsBase.get(stat);
+        value *= this.statisticsAdditive.getOrDefault(stat, 1D);
         return value;
     }
 
@@ -159,23 +168,17 @@ public class ItemStatistics {
     }
 
     public @NonNull Double getAdditive(@Nullable ItemStatistic stat) {
-        if (stat == null) return 0D;
-        return this.statisticsAdditive.getOrDefault(stat, 0D);
-    }
-
-    public @NonNull Double getAdditiveMinusBase(@Nullable ItemStatistic stat) {
-        if (stat == null) return 0D;
-        return this.statisticsAdditive.getOrDefault(stat, 0D) -
-                this.statisticsBase.getOrDefault(stat, 0D);
+        if (stat == null) return 1D;
+        return this.statisticsAdditive.getOrDefault(stat, 1D);
     }
 
     public @NonNull Double getMultiplicative(@Nullable ItemStatistic stat) {
         if (stat == null) return 1D;
-        return 1 + this.statisticsMultiplicative.getOrDefault(stat, 0D);
+        return this.statisticsMultiplicative.getOrDefault(stat, 1D);
     }
 
     public @NonNull Double getMultiplicativeAsPercentage(@Nullable ItemStatistic stat) {
-        if (stat == null) return 0D;
+        if (stat == null) return 100D;
         return this.statisticsMultiplicative.getOrDefault(stat, 1D) * 100;
     }
 
@@ -186,9 +189,9 @@ public class ItemStatistics {
 
         for (ItemStatistic stat : ItemStatistic.values()) {
             result.statisticsBase.put(stat, first.getBase(stat) + other.getBase(stat));
-            result.statisticsAdditive.put(stat, first.getAdditive(stat) + other.getAdditive(stat));
-            result.statisticsMultiplicative.put(stat, first.statisticsMultiplicative.getOrDefault(stat, 0D)
-                    + other.statisticsMultiplicative.getOrDefault(stat, 0D));
+            result.statisticsAdditive.put(stat, first.getAdditive(stat) + other.getAdditive(stat) - 1);
+            result.statisticsMultiplicative.put(stat, first.statisticsMultiplicative.getOrDefault(stat, 1D)
+                    * other.statisticsMultiplicative.getOrDefault(stat, 1D));
         }
 
         return result;
@@ -199,8 +202,8 @@ public class ItemStatistics {
 
         for (ItemStatistic stat : ItemStatistic.values()) {
             result.statisticsBase.put(stat, statistics.statisticsBase.getOrDefault(stat, 0D) * multiplier);
-            result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 0D) * multiplier);
-            result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 0D) * multiplier);
+            result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 1D) * multiplier);
+            result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 1D) * multiplier);
         }
 
         return result;
@@ -213,8 +216,8 @@ public class ItemStatistics {
 
         for (ItemStatistic stat : ItemStatistic.values()) {
             result.statisticsBase.put(stat, this.getBase(stat) - other.getBase(stat));
-            result.statisticsAdditive.put(stat, this.getAdditive(stat) - other.getAdditive(stat));
-            result.statisticsMultiplicative.put(stat, this.getMultiplicative(stat) - other.getMultiplicative(stat));
+            result.statisticsAdditive.put(stat, this.getAdditive(stat) - other.getAdditive(stat) + 1);
+            result.statisticsMultiplicative.put(stat, this.getMultiplicative(stat) / other.getMultiplicative(stat));
         }
 
         return result;

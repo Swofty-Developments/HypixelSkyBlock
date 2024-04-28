@@ -16,7 +16,7 @@ public class WoodenAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable,
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 10D)
+                .withBase(ItemStatistic.DAMAGE, 10D)
                 .build();
     }
 

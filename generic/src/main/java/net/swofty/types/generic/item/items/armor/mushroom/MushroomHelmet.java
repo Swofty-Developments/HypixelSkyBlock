@@ -25,7 +25,7 @@ public class MushroomHelmet implements CustomSkyBlockItem, NotFinishedYet, Sella
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 20D)
+                .withBase(ItemStatistic.HEALTH, 20D)
                 .build();
     }
 }

@@ -1,14 +1,12 @@
 package net.swofty.types.generic.item.items.foraging;
 
 import net.minestom.server.event.Event;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -29,7 +27,7 @@ public class SweetAxe extends SkyBlockEvent implements CustomSkyBlockItem, Refor
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 25D)
+                .withBase(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 

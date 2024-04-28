@@ -53,7 +53,7 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         String region = player.getRegion().getName();
 
         player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
-                .withStatistics((z) -> ItemStatistics.builder().withAdditive(ItemStatistic.SPEED, 10D).build())
+                .withStatistics((z) -> ItemStatistics.builder().withBase(ItemStatistic.SPEED, 10D).build())
                 .withExpiry(newPlayer -> {
                     return newPlayer.getRegion() != null && newPlayer.getRegion().getName().equals(region);
                 })

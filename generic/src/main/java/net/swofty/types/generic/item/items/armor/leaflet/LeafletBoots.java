@@ -29,6 +29,6 @@ public class LeafletBoots implements CustomSkyBlockItem, StandardItem, LeatherCo
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 15D).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.HEALTH, 15D).build();
     }
 }

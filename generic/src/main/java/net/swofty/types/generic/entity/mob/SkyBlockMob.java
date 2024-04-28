@@ -6,9 +6,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.attribute.Attribute;
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -90,7 +88,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
         ItemStatistics toSubtract = ItemStatistics.builder()
-            .withAdditive(ItemStatistic.HEALTH, (double) getHealth())
+            .withBase(ItemStatistic.HEALTH, (double) getHealth())
             .build();
 
         return statistics.sub(toSubtract);

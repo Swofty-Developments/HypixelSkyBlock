@@ -21,7 +21,6 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,9 +66,9 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 250D)
-                .withAdditive(ItemStatistic.DAMAGE, 90D)
-                .withAdditive(ItemStatistic.SPEED, 100D)
+                .withBase(ItemStatistic.HEALTH, 250D)
+                .withBase(ItemStatistic.DAMAGE, 90D)
+                .withBase(ItemStatistic.SPEED, 100D)
                 .build();
     }
 

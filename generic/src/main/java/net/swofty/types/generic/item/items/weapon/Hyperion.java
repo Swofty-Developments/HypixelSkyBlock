@@ -19,10 +19,10 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 100D)
-                .withAdditive(ItemStatistic.HEALTH, 20D)
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
-                .withAdditive(ItemStatistic.SPEED, 50D)
+                .withBase(ItemStatistic.DAMAGE, 100D)
+                .withBase(ItemStatistic.HEALTH, 20D)
+                .withBase(ItemStatistic.DEFENSE, 30D)
+                .withBase(ItemStatistic.SPEED, 50D)
                 .build();
     }
 

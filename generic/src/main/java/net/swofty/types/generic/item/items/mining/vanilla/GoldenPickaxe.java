@@ -16,9 +16,9 @@ public class GoldenPickaxe implements CustomSkyBlockItem, PickaxeImpl, DefaultCr
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.MINING_SPEED, 250D)
-                .withAdditive(ItemStatistic.DAMAGE, 15D)
-                .withAdditive(ItemStatistic.BREAKING_POWER, 1D)
+                .withBase(ItemStatistic.MINING_SPEED, 250D)
+                .withBase(ItemStatistic.DAMAGE, 15D)
+                .withBase(ItemStatistic.BREAKING_POWER, 1D)
                 .build();
     }
 

@@ -4,6 +4,8 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,5 +36,12 @@ public class PumpkinSet extends SkyBlockValueEvent implements ArmorSet {
         if (!isWearingSet(event.getPlayer())) return;
 
         event.setValue(value * 0.9);
+    }
+
+    @Override
+    public ItemStatistics getStatistics() {
+        return ItemStatistics.builder()
+                .withAdditivePercentage(ItemStatistic.DAMAGE, 10D)
+                .build();
     }
 }

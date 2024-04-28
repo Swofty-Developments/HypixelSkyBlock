@@ -16,7 +16,7 @@ public class EfficientAxe implements CustomSkyBlockItem, Reforgable, NotFinished
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 25D)
+                .withBase(ItemStatistic.DAMAGE, 25D)
                 .build();
     }
 

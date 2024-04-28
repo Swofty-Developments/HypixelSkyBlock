@@ -31,7 +31,7 @@ public class MinerOutfitChestplate implements CustomSkyBlockItem, CustomDisplayN
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 40D)
+                .withBase(ItemStatistic.DEFENSE, 40D)
                 .build();
     }
 }

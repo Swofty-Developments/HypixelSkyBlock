@@ -7,7 +7,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class CheapTuxedoChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, NotFinishedYet, CustomDisplayName {
+public class CheapTuxedoChestplate implements CustomSkyBlockItem, StandardItem, LeatherColour, CustomDisplayName {
     @Override
     public String getDisplayName(@Nullable SkyBlockItem item) {
         return "Cheap Tuxedo Jacket";
@@ -26,8 +26,8 @@ public class CheapTuxedoChestplate implements CustomSkyBlockItem, StandardItem, 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 50D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 50D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 50D)
+                .withBase(ItemStatistic.INTELLIGENCE, 50D)
                 .build();
     }
 }

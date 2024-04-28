@@ -38,7 +38,7 @@ public class EnchantmentGrowth implements Ench, EnchFromTable {
     @Override
     public ItemStatistics getStatistics(int level) {
         double increase = increases[level - 1];
-        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, increase).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.HEALTH, increase).build();
     }
 
     @Override

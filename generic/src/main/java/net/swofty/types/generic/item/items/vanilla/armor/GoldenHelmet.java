@@ -19,7 +19,7 @@ public class GoldenHelmet implements CustomSkyBlockItem, StandardItem, DefaultCr
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 10D)
+                .withBase(ItemStatistic.DEFENSE, 10D)
                 .build();
     }
 

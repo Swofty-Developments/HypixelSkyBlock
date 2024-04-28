@@ -30,6 +30,6 @@ public class LeafletLeggings implements CustomSkyBlockItem, StandardItem, Leathe
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.builder().withAdditive(ItemStatistic.HEALTH, 20D).build();
+        return ItemStatistics.builder().withBase(ItemStatistic.HEALTH, 20D).build();
     }
 }

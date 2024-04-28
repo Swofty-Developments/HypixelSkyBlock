@@ -10,8 +10,8 @@ public class MercenaryAxe implements CustomSkyBlockItem, StandardItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 70D)
-                .withAdditive(ItemStatistic.STRENGTH, 20D)
+                .withBase(ItemStatistic.DAMAGE, 70D)
+                .withBase(ItemStatistic.STRENGTH, 20D)
                 .build();
     }
 

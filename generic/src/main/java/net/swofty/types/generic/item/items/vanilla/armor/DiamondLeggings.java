@@ -19,7 +19,7 @@ public class DiamondLeggings implements CustomSkyBlockItem, StandardItem, Defaul
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DEFENSE, 30D)
+                .withBase(ItemStatistic.DEFENSE, 30D)
                 .build();
     }
 

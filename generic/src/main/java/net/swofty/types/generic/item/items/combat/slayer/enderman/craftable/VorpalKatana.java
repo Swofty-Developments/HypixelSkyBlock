@@ -32,10 +32,10 @@ public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, Stand
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.DAMAGE, 155D)
-                .withAdditive(ItemStatistic.STRENGTH, 80D)
-                .withAdditive(ItemStatistic.CRIT_DAMAGE, 25D)
-                .withAdditive(ItemStatistic.INTELLIGENCE, 200D)
+                .withBase(ItemStatistic.DAMAGE, 155D)
+                .withBase(ItemStatistic.STRENGTH, 80D)
+                .withBase(ItemStatistic.CRIT_DAMAGE, 25D)
+                .withBase(ItemStatistic.INTELLIGENCE, 200D)
                 .build();
     }
 

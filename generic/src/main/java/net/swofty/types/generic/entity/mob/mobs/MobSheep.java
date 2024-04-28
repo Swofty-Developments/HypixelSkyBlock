@@ -1,7 +1,6 @@
 package net.swofty.types.generic.entity.mob.mobs;
 
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.ai.EntityAIGroup;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -42,8 +41,8 @@ public class MobSheep extends SkyBlockMob {
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .withAdditive(ItemStatistic.HEALTH, 100D)
-                .withAdditive(ItemStatistic.SPEED, 70D)
+                .withBase(ItemStatistic.HEALTH, 100D)
+                .withBase(ItemStatistic.SPEED, 70D)
                 .build();
     }
 

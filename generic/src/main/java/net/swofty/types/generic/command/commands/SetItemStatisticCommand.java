@@ -15,8 +15,6 @@ import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-import java.util.Arrays;
-
 @CommandParameters(aliases = "updateitemstatistic",
         description = "Updates the statistic of a player's Sandbox item",
         usage = "/setitemstatistic <statistic> <amount>",
@@ -80,7 +78,7 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
 
                 player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                     ItemAttributeSandboxItem.SandboxData data = item.getAttributeHandler().getSandboxData();
-                    data.setStatistics(ItemStatistics.builder().withAdditive(stat, amt).build());
+                    data.setStatistics(ItemStatistics.builder().withBase(stat, amt).build());
                     item.getAttributeHandler().setSandboxData(data);
                 });
 

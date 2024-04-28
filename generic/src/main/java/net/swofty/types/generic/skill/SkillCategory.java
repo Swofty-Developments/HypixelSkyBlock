@@ -56,15 +56,15 @@ public abstract class SkillCategory {
                     case XP -> lore.add("§7  §8+§b" + ((XPReward) unlock).getXP() + " SkyBlock XP");
                     case COINS -> lore.add("§7  §8+§6" + ((CoinReward) unlock).getCoins() + " §7Coins");
                     case REGION_ACCESS -> lore.add("§7  §8+§aAccess to " + ((RegionReward) unlock).getRegion());
-                    case STATS_ADDITIVE -> {
-                        ItemStatistic statistic = ((AdditiveStatisticReward) unlock).getStatistic();
-                        lore.add("§7  §8+§a" + StringUtility.decimalify(((AdditiveStatisticReward) unlock).amountAdded(), 1) +
+                    case STATS_BASE -> {
+                        ItemStatistic statistic = ((BaseStatisticReward) unlock).getStatistic();
+                        lore.add("§7  §8+§a" + StringUtility.decimalify(((BaseStatisticReward) unlock).amountAdded(), 1) +
                                 statistic.getSuffix() + " " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 statistic.getDisplayName());
                     }
-                    case STATS_MULTIPLICATIVE -> {
-                        ItemStatistic statistic = ((MultiplicativePercentageStatisticReward) unlock).getStatistic();
-                        lore.add("§7  §8+§a" + StringUtility.decimalify(((MultiplicativePercentageStatisticReward) unlock).amountAdded() * 100, 1) +
+                    case STATS_ADDITIVE_PERCENTAGE -> {
+                        ItemStatistic statistic = ((AdditivePercentageStatisticReward) unlock).getStatistic();
+                        lore.add("§7  §8+§a" + StringUtility.decimalify(((AdditivePercentageStatisticReward) unlock).amountAdded() * 100, 1) +
                                 "% " + statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName());
                     }
                     case RUNE -> lore.add("§7  Access to Level §d" + ((RunecraftingSkill.RuneReward) unlock).getRuneLevel() + " §7Runes");
@@ -84,8 +84,8 @@ public abstract class SkillCategory {
             REGION_ACCESS,
             COINS,
             XP,
-            STATS_ADDITIVE,
-            STATS_MULTIPLICATIVE,
+            STATS_BASE,
+            STATS_ADDITIVE_PERCENTAGE,
             RUNE
         }
     }
@@ -119,17 +119,17 @@ public abstract class SkillCategory {
         public abstract int getXP();
     }
 
-    public abstract static class AdditiveStatisticReward extends Reward {
+    public abstract static class BaseStatisticReward extends Reward {
         @Override
         public UnlockType type() {
-            return UnlockType.STATS_ADDITIVE;
+            return UnlockType.STATS_BASE;
         }
 
         @Override
         public void onUnlock(SkyBlockPlayer player) {
             DatapointSkills.PlayerSkills skills = player.getSkills();
             ItemStatistics statistics = ItemStatistics.builder()
-                    .withAdditive(getStatistic(), amountAdded())
+                    .withBase(getStatistic(), amountAdded())
                     .build();
             skills.setStatistics(ItemStatistics.add(skills.getSkillStatistics(), statistics));
         }
@@ -139,10 +139,10 @@ public abstract class SkillCategory {
         public abstract Double amountAdded();
     }
 
-    public abstract static class MultiplicativePercentageStatisticReward extends Reward {
+    public abstract static class AdditivePercentageStatisticReward extends Reward {
         @Override
         public UnlockType type() {
-            return UnlockType.STATS_MULTIPLICATIVE;
+            return UnlockType.STATS_ADDITIVE_PERCENTAGE;
         }
 
         @Override
