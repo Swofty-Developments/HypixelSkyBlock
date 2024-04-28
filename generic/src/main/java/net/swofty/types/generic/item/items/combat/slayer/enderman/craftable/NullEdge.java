@@ -25,7 +25,7 @@ public class NullEdge implements CustomSkyBlockItem, DefaultCraftable, Enchanted
                 "ABA",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.NULL_EDGE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.NULL_EDGE), ingredientMap, pattern);
     }
 
     @Override

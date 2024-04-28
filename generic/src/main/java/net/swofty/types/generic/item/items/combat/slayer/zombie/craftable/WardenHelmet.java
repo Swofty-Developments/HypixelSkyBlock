@@ -24,7 +24,7 @@ public class WardenHelmet implements CustomSkyBlockItem, SkullHead, DefaultCraft
                 "ABA",
                 "C C");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.WARDEN_HELMET), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.WARDEN_HELMET), ingredientMap, pattern);
     }
 
     @Override

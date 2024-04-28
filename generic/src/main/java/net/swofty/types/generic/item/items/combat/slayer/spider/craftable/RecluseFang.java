@@ -23,7 +23,7 @@ public class RecluseFang implements CustomSkyBlockItem, DefaultCraftable, Standa
                 "ABA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.RECLUSE_FANG), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.RECLUSE_FANG), ingredientMap, pattern);
     }
 
     @Override

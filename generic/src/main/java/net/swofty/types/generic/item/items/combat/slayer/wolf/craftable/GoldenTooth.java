@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class GoldenTooth implements CustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.SLAYER,
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER,
                 new SkyBlockItem(ItemType.GOLDEN_TOOTH), 1)
                 .add(ItemType.WOLF_TOOTH, 32)
                 .add(ItemType.WOLF_TOOTH, 32)

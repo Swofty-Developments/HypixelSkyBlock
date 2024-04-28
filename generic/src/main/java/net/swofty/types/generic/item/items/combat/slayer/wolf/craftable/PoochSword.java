@@ -24,7 +24,7 @@ public class PoochSword implements CustomSkyBlockItem, DefaultCraftable, Standar
                 " A ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.POOCH_SWORD), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER, new SkyBlockItem(ItemType.POOCH_SWORD), ingredientMap, pattern);
     }
 
     @Override

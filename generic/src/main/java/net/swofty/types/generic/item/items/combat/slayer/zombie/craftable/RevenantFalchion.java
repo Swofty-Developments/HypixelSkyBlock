@@ -28,7 +28,7 @@ public class RevenantFalchion extends SkyBlockValueEvent implements CustomSkyBlo
                 " B ",
                 " C ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REAPER_FALCHION), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REAPER_FALCHION), ingredientMap, pattern);
     }
 
     @Override

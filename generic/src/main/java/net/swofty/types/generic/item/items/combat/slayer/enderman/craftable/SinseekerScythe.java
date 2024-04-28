@@ -23,7 +23,7 @@ public class SinseekerScythe implements CustomSkyBlockItem, DefaultCraftable, St
                 "BCB",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.SINSEEKER_SCYTHE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.SINSEEKER_SCYTHE), ingredientMap, pattern);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, DefaultCraftable, S
                 "BCB",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.AXE_OF_THE_SHREDDED), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.AXE_OF_THE_SHREDDED), ingredientMap, pattern);
     }
 
     @Override

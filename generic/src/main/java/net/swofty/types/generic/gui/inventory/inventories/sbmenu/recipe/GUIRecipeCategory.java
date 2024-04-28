@@ -9,8 +9,10 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -28,10 +30,12 @@ import java.util.stream.Collectors;
 
 public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
     private final SkyBlockRecipe.RecipeType type;
+    private final SkyBlockInventoryGUI previousGUI;
 
-    protected GUIRecipeCategory(SkyBlockRecipe.RecipeType type) {
+    protected GUIRecipeCategory(SkyBlockRecipe.RecipeType type, SkyBlockInventoryGUI previousGUI) {
         super(InventoryType.CHEST_6_ROW);
         this.type = type;
+        this.previousGUI = previousGUI;
     }
 
     @Override
@@ -95,10 +99,59 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
 
     @Override
     protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getCloseItem(50));
-        set(createSearchItem(this, 48, query));
-        set(GUIClickableItem.getGoBackItem(49, new GUIRecipeBook()));
+        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
+        set(GUIClickableItem.getCloseItem(49));
+        set(createSearchItem(this, 50, query));
+        set(GUIClickableItem.getGoBackItem(48, previousGUI));
+
+        ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
+        allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
+        allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
+        set(new GUIItem(4) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+
+                ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
+                ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
+                allRecipes.forEach(recipe -> {
+                    if (recipe.getRecipeType() == type) {
+                        typeRecipes.add(recipe);
+                    }
+                });
+
+                ArrayList<String> lore = new ArrayList<>(Arrays.asList(
+                        "§7View all of the " + StringUtility.toNormalCase(type.name()) + " Recipes",
+                        "§7that you have unlocked!", " "));
+
+                typeRecipes.forEach(recipe -> {
+                    SkyBlockRecipe.CraftingResult result =
+                            (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(player);
+
+                    if (result.allowed()) {
+                        allowedRecipes.add(recipe);
+                    }
+                });
+
+                String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) typeRecipes.size()) * 100);
+                lore.add("§7Recipes Unlocked: §e" + unlockedPercentage + "§6%");
+
+                String baseLoadingBar = "─────────────────";
+                int maxBarLength = baseLoadingBar.length();
+                int completedLength = (int) ((allowedRecipes.size() / (double) typeRecipes.size()) * maxBarLength);
+
+                String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+                int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
+                String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
+                        completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                        maxBarLength
+                ));
+
+                lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
+
+                return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
+                        type.getMaterial(), (short) 0, 1, lore);
+            }
+        });
 
         if (page > 1) {
             set(createNavigationButton(this, 45, query, page, false));

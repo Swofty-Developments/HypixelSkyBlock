@@ -24,7 +24,7 @@ public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
                 "C B",
                 " AB");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.MOSQUITO_BOW), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.MOSQUITO_BOW), ingredientMap, pattern);
     }
 
     @Override

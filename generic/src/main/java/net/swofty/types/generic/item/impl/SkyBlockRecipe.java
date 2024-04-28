@@ -146,9 +146,14 @@ public abstract class SkyBlockRecipe<T> {
         ENCHANTING(Material.ENCHANTING_TABLE),
         ALCHEMY(Material.BREWING_STAND),
         CARPENTRY(Material.CRAFTING_TABLE),
-        SLAYER(Material.BOW),
         SPECIAL(Material.NETHER_STAR),
         MINION(Material.AIR),
+        SLAYER(Material.BOW),
+        REVENANT_HORROR(Material.ROTTEN_FLESH),
+        TARANTULA_BROODFATHER(Material.COBWEB),
+        SVEN_PACKMASTER(Material.MUTTON),
+        VOIDGLOOM_SERAPH(Material.ENDER_PEARL),
+        INFERNO_DEMONLORD(Material.BLAZE_POWDER),
         NONE(Material.AIR),
         ;
 

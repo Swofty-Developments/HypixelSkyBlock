@@ -24,7 +24,7 @@ public class TessellatedEnderPearl implements CustomSkyBlockItem, SkullHead, Def
                 "BBB",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.TESSELLATED_ENDER_PEARL), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.TESSELLATED_ENDER_PEARL), ingredientMap, pattern);
     }
 
     @Override

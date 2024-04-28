@@ -23,7 +23,7 @@ public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, Standar
                 " A ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.EDIBLE_MACE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER, new SkyBlockItem(ItemType.EDIBLE_MACE), ingredientMap, pattern);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, Sta
                 " B ",
                 " C ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REAPER_FALCHION), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REAPER_FALCHION), ingredientMap, pattern);
     }
 
     @Override

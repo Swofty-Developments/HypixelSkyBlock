@@ -23,7 +23,7 @@ public class GloomlockGrimoire implements CustomSkyBlockItem, DefaultCraftable, 
                 "CDC",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.GLOOMLOCK_GRIMOIRE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.GLOOMLOCK_GRIMOIRE), ingredientMap, pattern);
     }
 
     @Override

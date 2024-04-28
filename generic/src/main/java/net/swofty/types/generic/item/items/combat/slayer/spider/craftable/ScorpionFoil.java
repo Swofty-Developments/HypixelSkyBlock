@@ -23,7 +23,7 @@ public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, Stand
                 "ABA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.SCORPION_FOIL), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.SCORPION_FOIL), ingredientMap, pattern);
     }
 
     @Override

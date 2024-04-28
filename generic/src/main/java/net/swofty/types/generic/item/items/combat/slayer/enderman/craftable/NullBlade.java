@@ -23,7 +23,7 @@ public class NullBlade implements CustomSkyBlockItem, DefaultCraftable, Enchante
                 "CBC",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.NULL_BLADE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.NULL_BLADE), ingredientMap, pattern);
     }
 
     @Override

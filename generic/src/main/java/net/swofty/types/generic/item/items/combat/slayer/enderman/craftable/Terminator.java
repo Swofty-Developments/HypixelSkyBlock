@@ -25,7 +25,7 @@ public class Terminator implements CustomSkyBlockItem, DefaultCraftable, BowImpl
                 "BDE",
                 "ABC");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.TERMINATOR), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.TERMINATOR), ingredientMap, pattern);
     }
 
     @Override

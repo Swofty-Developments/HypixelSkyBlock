@@ -26,7 +26,7 @@ public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, Stand
                 " B ",
                 "CDC");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.VORPAL_KATANA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.VORPAL_KATANA), ingredientMap, pattern);
     }
 
     @Override

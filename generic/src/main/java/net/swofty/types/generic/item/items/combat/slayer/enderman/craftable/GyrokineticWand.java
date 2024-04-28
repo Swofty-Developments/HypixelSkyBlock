@@ -22,7 +22,7 @@ public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, En
                 "ACA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.GYROKINETIC_WAND), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.GYROKINETIC_WAND), ingredientMap, pattern);
     }
 
     @Override
