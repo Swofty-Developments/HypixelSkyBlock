@@ -97,8 +97,7 @@ public class ItemStatistics {
         }
 
         public Builder withAdditive(ItemStatistic stat, Double value, boolean strictlyAdditive) {
-            if (!strictlyAdditive)
-                this.statisticsBase.put(stat, value);
+            if (!strictlyAdditive) this.statisticsBase.put(stat, value);
             this.statisticsAdditive.put(stat, value);
             return this;
         }
