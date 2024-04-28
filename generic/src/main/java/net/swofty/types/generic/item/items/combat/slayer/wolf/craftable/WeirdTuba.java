@@ -22,7 +22,7 @@ public class WeirdTuba implements CustomSkyBlockItem, DefaultCraftable, NotFinis
                 "ABA",
                 " A ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.WEIRD_TUBA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER, new SkyBlockItem(ItemType.WEIRD_TUBA), ingredientMap, pattern);
     }
 
     @Override

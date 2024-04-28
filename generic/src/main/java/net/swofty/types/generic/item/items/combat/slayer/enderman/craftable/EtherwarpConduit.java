@@ -22,7 +22,7 @@ public class EtherwarpConduit implements CustomSkyBlockItem, DefaultCraftable, S
                 "ABA",
                 "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ETHERWARP_CONDUIT), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.ETHERWARP_CONDUIT), ingredientMap, pattern);
     }
 
     @Override

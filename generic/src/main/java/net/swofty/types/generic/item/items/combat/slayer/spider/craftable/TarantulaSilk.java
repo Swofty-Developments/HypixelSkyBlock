@@ -12,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class TarantulaSilk implements CustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.SLAYER,
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER,
                 new SkyBlockItem(ItemType.TARANTULA_SILK), 1)
                 .add(ItemType.TARANTULA_WEB, 32)
                 .add(ItemType.TARANTULA_WEB, 32)

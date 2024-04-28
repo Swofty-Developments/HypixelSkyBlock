@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 public class NullOvoid implements CustomSkyBlockItem, DefaultCraftable, Enchanted {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.SLAYER,
+        return new ShapelessRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH,
                 new SkyBlockItem(ItemType.NULL_OVOID), 1)
                 .add(ItemType.NULL_SPHERE, 32)
                 .add(ItemType.NULL_SPHERE, 32)

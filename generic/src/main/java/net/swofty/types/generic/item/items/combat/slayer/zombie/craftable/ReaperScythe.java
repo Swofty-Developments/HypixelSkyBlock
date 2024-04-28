@@ -24,7 +24,7 @@ public class ReaperScythe implements CustomSkyBlockItem, DefaultCraftable, Stand
                 "  C",
                 "  C");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REAPER_SCYTHE), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REAPER_SCYTHE), ingredientMap, pattern);
     }
 
     @Override

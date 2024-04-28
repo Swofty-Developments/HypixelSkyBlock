@@ -25,7 +25,7 @@ public class BraidedGriffinFeather implements CustomSkyBlockItem, DefaultCraftab
                 "BAB",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.BRAIDED_GRIFFIN_FEATHER), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.BRAIDED_GRIFFIN_FEATHER), ingredientMap, pattern);
     }
 
     @Override

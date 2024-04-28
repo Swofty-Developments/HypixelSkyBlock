@@ -23,7 +23,7 @@ public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, S
                 " A ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.VOIDWALKER_KATANA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.VOIDWALKER_KATANA), ingredientMap, pattern);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, TrackedUniqu
                 "ABA",
                 "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REVIVED_HEART), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REVIVED_HEART), ingredientMap, pattern);
     }
 
     @Override

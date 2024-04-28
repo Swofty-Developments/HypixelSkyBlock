@@ -48,7 +48,7 @@ public class CrystallizedHeart implements CustomSkyBlockItem, SkullHead, Tracked
                 "ABA",
                 "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.CRYSTALLIZED_HEART), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.CRYSTALLIZED_HEART), ingredientMap, pattern);
     }
 
     @Override

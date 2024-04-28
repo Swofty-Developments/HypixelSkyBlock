@@ -27,7 +27,7 @@ public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowIm
                 "C B",
                 " DB");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.JUJU_SHORTBOW), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.JUJU_SHORTBOW), ingredientMap, pattern);
     }
 
     @Override

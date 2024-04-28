@@ -25,7 +25,7 @@ public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, Sta
                 " B ",
                 " C ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.VOIDEDGE_KATANA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.VOIDEDGE_KATANA), ingredientMap, pattern);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ScorpionBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
                 "C B",
                 " AB");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.SCORPION_BOW), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.SCORPION_BOW), ingredientMap, pattern);
     }
 
     @Override

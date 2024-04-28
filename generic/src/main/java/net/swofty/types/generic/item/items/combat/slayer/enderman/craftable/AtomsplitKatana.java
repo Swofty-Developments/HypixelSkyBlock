@@ -24,7 +24,7 @@ public class AtomsplitKatana implements CustomSkyBlockItem, DefaultCraftable, St
                 " A ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ATOMSPLIT_KATANA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.ATOMSPLIT_KATANA), ingredientMap, pattern);
     }
 
     @Override

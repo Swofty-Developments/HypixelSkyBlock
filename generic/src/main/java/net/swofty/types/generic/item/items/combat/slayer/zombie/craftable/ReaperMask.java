@@ -28,7 +28,7 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftab
                 "BCD",
                 "A A");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.REAPER_MASK), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REAPER_MASK), ingredientMap, pattern);
     }
 
     @Override

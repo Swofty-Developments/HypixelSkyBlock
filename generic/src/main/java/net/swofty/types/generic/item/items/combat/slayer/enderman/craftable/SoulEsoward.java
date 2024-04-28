@@ -28,7 +28,7 @@ public class SoulEsoward implements CustomSkyBlockItem, DefaultCraftable, Enchan
                 "DEF",
                 "GHI");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.SOUL_ESOWARD), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.SOUL_ESOWARD), ingredientMap, pattern);
     }
 
     @Override
