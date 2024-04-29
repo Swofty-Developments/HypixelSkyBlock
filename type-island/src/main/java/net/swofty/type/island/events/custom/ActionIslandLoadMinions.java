@@ -1,24 +1,17 @@
 package net.swofty.type.island.events.custom;
 
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionFuelItem;
-import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
 
 import java.util.Map;

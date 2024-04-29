@@ -1,12 +1,9 @@
 package net.swofty.types.generic.skill.skills;
 
-import com.sun.jdi.IntegerType;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
 
 import java.util.List;
 

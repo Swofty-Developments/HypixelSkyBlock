@@ -1,6 +1,5 @@
 package net.swofty.types.generic.user.statistics;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
