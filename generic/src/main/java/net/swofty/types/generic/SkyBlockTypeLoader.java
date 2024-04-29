@@ -2,22 +2,18 @@ package net.swofty.types.generic;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.EntityType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.tab.TablistManager;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 public interface SkyBlockTypeLoader {

@@ -1,14 +1,9 @@
 package net.swofty.service.itemtracker.endpoints;
 
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionsFilter;
-import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.itemtracker.TrackedItemsDatabase;
-import net.swofty.types.generic.auction.AuctionItem;
-import org.bson.Document;
 
 import java.util.*;
 

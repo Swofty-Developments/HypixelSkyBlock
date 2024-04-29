@@ -2,7 +2,6 @@ package net.swofty.types.generic.museum.rewards;
 
 import lombok.Getter;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.museum.MuseumReward;
 import net.swofty.types.generic.museum.MuseumRewards;
 import net.swofty.types.generic.user.SkyBlockPlayer;
