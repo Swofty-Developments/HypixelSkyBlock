@@ -22,7 +22,6 @@ import net.swofty.types.generic.chest.SingleChest;
 import net.swofty.types.generic.gui.inventory.inventories.GUIChest;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, BlockBreakable {

@@ -2,7 +2,6 @@ package net.swofty.type.village.runes;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
@@ -10,7 +9,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import org.jetbrains.annotations.NotNull;
 
 public class RuneEntityImpl extends LivingEntity {
     public RuneEntityImpl(Pos position, boolean isHead) {

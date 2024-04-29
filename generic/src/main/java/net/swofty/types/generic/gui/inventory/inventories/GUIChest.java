@@ -5,8 +5,6 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.block.blocks.BlockChest;
@@ -16,7 +14,6 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class GUIChest extends SkyBlockInventoryGUI {

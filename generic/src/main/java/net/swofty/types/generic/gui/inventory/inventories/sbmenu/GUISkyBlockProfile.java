@@ -16,6 +16,10 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
+import net.swofty.types.generic.utility.StringUtility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
@@ -164,12 +168,24 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                PlayerStatistics statistics = player.getStatistics();
+                List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. "));
+                List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Strength", "Intelligence",
+                        "Crit Chance", "Crit Damage", "Ferocity", "Bonus Attack Speed", "Ability Damage", "Health Regen", "Vitality",
+                        "Mending", "True Defense", "Swing Range"
+                ));
+                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    }
+                });
+
+                lore.add("");
+                lore.add("§eClick for details!");
                 return ItemStackCreator.getStack("§cCombat Stats", Material.DIAMOND_SWORD, 1,
-                        "§7Gives you a better chance at",
-                        "§7fighting strong monsters.",
-                        "",
-                        "",
-                        "§eClick for details!"
+                        lore
                 );
             }
         });
@@ -180,13 +196,23 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                final PlayerStatistics statistics = player.getStatistics();
+                PlayerStatistics statistics = player.getStatistics();
+                List<String> lore = new ArrayList<>(List.of("§7Lets you collect and harvest better", "§7items, or more of them. "));
+                List<String> stats = new ArrayList<>(List.of("Mining Speed", "Breaking Power", "Pristine", "Foraging Fortune",
+                        "Farming Fortune", "Mining Fortune"
+                ));
+                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    }
+                });
+
+                lore.add("");
+                lore.add("§eClick for details!");
                 return ItemStackCreator.getStack("§eGathering Stats", Material.IRON_PICKAXE, 1,
-                        "§7Lets you collect and harvest better",
-                        "§7items, or more of them.",
-                        "",
-                        "",
-                        "§eClick for details!"
+                        lore
                 );
             }
         });
@@ -198,11 +224,21 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                PlayerStatistics statistics = player.getStatistics();
+                List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills "));
+                List<String> stats = new ArrayList<>(List.of()); // WISDOM STATS
+                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    }
+                });
+
+                lore.add("");
+                lore.add("§eClick for details!");
                 return ItemStackCreator.getStack("§3Wisdom Stats", Material.BOOK, 1,
-                        "§7Increases the §3XP §7you gain on your",
-                        "§7skills",
-                        "",
-                        "§eClick for details!"
+                        lore
                 );
             }
         });
@@ -214,13 +250,23 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                final PlayerStatistics statistics = player.getStatistics();
+                PlayerStatistics statistics = player.getStatistics();
+                List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! "));
+                List<String> stats = new ArrayList<>(List.of("Speed", "Sea Creature Chance", "Magic Find", "Pet Luck",
+                        "Fishing Speed", "Bonus Pest Chance"
+                ));
+                statistics.allStatistics().getOverall().forEach((statistic, value) -> {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                        lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
+                                StringUtility.toNormalCase(statistic.name()) + " §f" +
+                                StringUtility.decimalify(value, 2) + statistic.getSuffix());
+                    }
+                });
+
+                lore.add("");
+                lore.add("§eClick for details!");
                 return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1,
-                        "§7Augments various aspects of your",
-                        "§7gameplay!",
-                        "",
-                        "",
-                        "§eClick for details!"
+                        lore
                 );
             }
         });

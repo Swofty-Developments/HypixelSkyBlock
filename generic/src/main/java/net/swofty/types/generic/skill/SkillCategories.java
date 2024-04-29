@@ -1,10 +1,6 @@
 package net.swofty.types.generic.skill;
 
-import com.mongodb.lang.Nullable;
-import lombok.Getter;
-import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.skill.skills.*;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.StringUtility;
 
 public enum SkillCategories {

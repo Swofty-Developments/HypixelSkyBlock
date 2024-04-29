@@ -11,8 +11,6 @@ import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.utility.MathUtility;
 
-import java.util.logging.Logger;
-
 @EventParameters(description = "Handles placing the starting Cobblestone Minion",
         node = EventNodes.CUSTOM,
         requireDataLoaded = true)

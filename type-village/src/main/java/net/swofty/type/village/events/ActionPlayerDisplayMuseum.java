@@ -2,13 +2,10 @@ package net.swofty.type.village.events;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
-import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.museum.MuseumDisplay;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

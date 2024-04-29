@@ -6,9 +6,6 @@ import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.block.attribute.BlockAttributeHandler;
 import net.swofty.types.generic.block.attribute.attributes.BlockAttributeType;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
-import net.swofty.types.generic.item.attribute.ItemAttribute;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeType;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 
 import java.util.ArrayList;
 import java.util.List;
