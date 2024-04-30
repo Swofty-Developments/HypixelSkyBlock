@@ -17,7 +17,7 @@ public class NPCFarmer extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Farmer", "§e§lCLICK"};
+                return new String[]{"Farmer", "§e§lCLICK"};
             }
 
             @Override

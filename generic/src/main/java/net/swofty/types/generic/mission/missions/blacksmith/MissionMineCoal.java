@@ -62,6 +62,7 @@ public class MissionMineCoal extends SkyBlockProgressMission {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§3100 §7Mining Experience", "§b5 SkyBlock XP"))).forEach(player::sendMessage);
         player.getSkills().setRaw(player, SkillCategories.MINING, player.getSkills().getRaw(SkillCategories.MINING) + 100);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
+        player.getMissionData().startMission(MissionTalkToBlacksmithAgain.class);
     }
 
     @Override
