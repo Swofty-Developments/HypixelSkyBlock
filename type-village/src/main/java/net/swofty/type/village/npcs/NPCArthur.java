@@ -13,7 +13,7 @@ public class NPCArthur extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Arthur", "§e§lCLICK"};
+                return new String[]{"Arthur", "§e§lCLICK"};
             }
 
             @Override
