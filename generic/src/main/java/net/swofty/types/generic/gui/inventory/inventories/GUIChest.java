@@ -9,9 +9,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.block.blocks.BlockChest;
 import net.swofty.types.generic.chest.Chest;
+import net.swofty.types.generic.chest.ChestAnimationType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.stream.IntStream;
@@ -27,18 +29,11 @@ public class GUIChest extends SkyBlockInventoryGUI {
 
     @Override
     public void setItems(InventoryGUIOpenEvent e) {
-        for (int counter = 0; counter < chest.getItems().size(); counter++) {
-            int finalCounter = counter;
-            set(new GUIClickableItem(finalCounter) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    ItemStack stack = e.getCursorItem();
-                    chest.setItem(finalCounter, stack);
-                }
-
+        IntStream.range(0 , chest.getItems().size()).forEach(index->{
+            set(new GUIItem(index) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getFromStack(chest.getItem(finalCounter));
+                    return ItemStackCreator.getFromStack(chest.getItem(index));
                 }
 
                 @Override
@@ -46,13 +41,14 @@ public class GUIChest extends SkyBlockInventoryGUI {
                     return true;
                 }
             });
-        }
+        });
+
     }
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
         e.getPlayer().playSound(Sound.sound(SoundEvent.BLOCK_CHEST_CLOSE, Sound.Source.RECORD, 1f, 1f));
-        chest.playAnimation(chest.getInstance(), chest.getPosition(), BlockChest.ChestAnimation.CLOSE);
+        ChestAnimationType.CLOSE.play(chest.getInstance(), chest.getPosition());
 
         Inventory inventory = e.getInventory();
         IntStream.range(0, inventory.getItemStacks().length).forEach(i -> chest.setItem(i, inventory.getItemStack(i)));

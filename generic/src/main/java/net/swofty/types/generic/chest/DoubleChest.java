@@ -48,8 +48,8 @@ public class DoubleChest implements Chest {
     }
 
     @Override
-    public BlockChest.ChestType getType() {
-        return BlockChest.ChestType.DOUBLE;
+    public ChestType getType() {
+        return ChestType.DOUBLE;
     }
 
     private ItemStack[] loadItems(Point position) {
