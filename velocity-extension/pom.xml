@@ -101,17 +101,17 @@
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viabackwards-common</artifactId>
-            <version>4.10.0-24w09a-SNAPSHOT</version>
+            <version>4.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viarewind-common</artifactId>
-            <version>3.0.7-24w09a-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.viaversion</groupId>
             <artifactId>viaversion</artifactId>
-            <version>4.10.0-24w09a-SNAPSHOT</version>
+            <version>4.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
