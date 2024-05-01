@@ -27,6 +27,9 @@ public class SingleChest implements Chest {
     }
 
     @Override
+    public String getName() {return "Chest";}
+
+    @Override
     public Instance getInstance() {
         return instance;
     }
@@ -37,8 +40,8 @@ public class SingleChest implements Chest {
     }
 
     @Override
-    public BlockChest.ChestType getType() {
-        return BlockChest.ChestType.SINGLE;
+    public ChestType getType() {
+        return ChestType.SINGLE;
     }
 
     public void load() {

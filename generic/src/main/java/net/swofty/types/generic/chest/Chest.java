@@ -12,15 +12,13 @@ import java.util.List;
 
 public interface Chest {
 
-    default String getName() {
-        return "Chest";
-    }
+    String getName();
 
     Instance getInstance();
 
     Point[] getPosition();
 
-    BlockChest.ChestType getType();
+    ChestType getType();
 
     void setItem(int slot, ItemStack stack);
 
@@ -33,12 +31,5 @@ public interface Chest {
     InventoryType getSize();
 
     void update();
-
-    default void playAnimation(Instance instance, Point[] position, BlockChest.ChestAnimation animation) {
-        Arrays.stream(position).forEach((pos) -> {
-            BlockActionPacket actionPacket = new BlockActionPacket(pos, (byte) 1, animation == BlockChest.ChestAnimation.OPEN ? (byte) 1 : 0, instance.getBlock(pos));
-            instance.getPlayers().forEach(player -> player.sendPacket(actionPacket));
-        });
-    }
 
 }
