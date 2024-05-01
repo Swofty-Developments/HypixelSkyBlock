@@ -6,13 +6,8 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles clicking on the recipe table",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionCraftingTableClick extends SkyBlockEvent {
 
     @Override

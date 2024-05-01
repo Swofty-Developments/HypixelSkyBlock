@@ -3,7 +3,7 @@ package net.swofty.types.generic.mission.missions;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.mission.MissionData;
@@ -14,18 +14,9 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
 
-@EventParameters(description = "Kill Zombies mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class MissionKillZombies extends SkyBlockProgressMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerKilledSkyBlockMobEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        PlayerKilledSkyBlockMobEvent event = (PlayerKilledSkyBlockMobEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onKilledZombie(PlayerKilledSkyBlockMobEvent event) {
         if (event.getKilledMob().getEntityType() != EntityType.ZOMBIE) return;
 
         MissionData data = event.getPlayer().getMissionData();

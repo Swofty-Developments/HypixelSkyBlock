@@ -5,15 +5,10 @@ import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.chest.ChestBuilder;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.utility.MathUtility;
 
-@EventParameters(description = "Handles creating starter chest on the players Island",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionCreateStarterChest extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

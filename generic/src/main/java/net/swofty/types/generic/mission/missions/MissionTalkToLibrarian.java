@@ -1,10 +1,10 @@
 package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -14,18 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Talk to Librarian mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class MissionTalkToLibrarian extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onRegionChange(PlayerRegionChangeEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
         if (data.isCurrentlyActive("speak_to_librarian") || data.hasCompleted("speak_to_librarian")) {

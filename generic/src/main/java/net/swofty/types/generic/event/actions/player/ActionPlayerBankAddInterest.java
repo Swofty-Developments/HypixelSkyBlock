@@ -7,15 +7,10 @@ import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
-@EventParameters(description = "Runs on player join",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerBankAddInterest extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

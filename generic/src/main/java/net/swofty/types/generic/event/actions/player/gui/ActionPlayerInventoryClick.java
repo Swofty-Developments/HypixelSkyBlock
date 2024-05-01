@@ -5,24 +5,17 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
-import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Interactable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.StringUtility;
 
-@EventParameters(description = "Handles when a player clicks on an InventoryGUI",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerInventoryClick extends SkyBlockEvent {
 
     @Override

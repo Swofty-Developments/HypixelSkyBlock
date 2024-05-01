@@ -6,13 +6,8 @@ import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.inventories.GUIEnchantmentTable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles clicking on the enchantment table",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionEnchantmentTableClick extends SkyBlockEvent {
 
     @Override

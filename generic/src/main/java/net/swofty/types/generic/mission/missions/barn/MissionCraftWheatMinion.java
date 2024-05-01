@@ -2,7 +2,7 @@ package net.swofty.types.generic.mission.missions.barn;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
@@ -13,10 +13,23 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Craft Wheat Minion",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionCraftWheatMinion extends SkyBlockMission {
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onCraftEvent(ItemCraftEvent event) {
+        MissionData data = event.getPlayer().getMissionData();
+
+        if (data.isCurrentlyActive(MissionCraftWheatMinion.class) || data.hasCompleted(MissionCraftWheatMinion.class)) {
+            return;
+        }
+
+        if (event.getCraftedItem().getAttributeHandler().getItemTypeAsType() != ItemType.WHEAT_MINION) {
+            return;
+        }
+
+        data.setSkyBlockPlayer(event.getPlayer());
+        data.startMission(MissionCraftWheatMinion.class);
+    }
+
     @Override
     public String getID() {
         return "craft_minion";
@@ -40,25 +53,5 @@ public class MissionCraftWheatMinion extends SkyBlockMission {
     @Override
     public Set<RegionType> getValidRegions() {
         return Set.of(RegionType.THE_BARN);
-    }
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return ItemCraftEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        ItemCraftEvent craftEvent = (ItemCraftEvent) event;
-        ItemType type = craftEvent.getCraftedItem().getAttributeHandler().getItemTypeAsType();
-
-        if (type != ItemType.WHEAT_MINION) {
-            return;
-        }
-        MissionData data = craftEvent.getPlayer().getMissionData();
-
-        if (data.isCurrentlyActive(MissionCraftWheatMinion.class)) {
-            data.endMission(MissionCraftWheatMinion.class);
-        }
     }
 }

@@ -4,14 +4,9 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Sending a player to the hub",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionPlayerJoin extends SkyBlockEvent {
 
     @Override

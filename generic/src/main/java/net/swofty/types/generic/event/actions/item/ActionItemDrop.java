@@ -6,16 +6,10 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles item ability use for right clicks",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionItemDrop extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

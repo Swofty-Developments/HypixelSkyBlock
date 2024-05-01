@@ -3,15 +3,10 @@ package net.swofty.types.generic.event.actions.custom.collection;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 
-@EventParameters(description = "Handles the adding of SkyBlock XP in relation to collections",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionCollectionSkyBlockLevel extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

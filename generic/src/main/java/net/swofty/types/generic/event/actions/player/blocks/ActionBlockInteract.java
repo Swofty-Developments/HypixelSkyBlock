@@ -4,13 +4,8 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.block.impl.BlockInteractable;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles clicking on blocks",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionBlockInteract extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

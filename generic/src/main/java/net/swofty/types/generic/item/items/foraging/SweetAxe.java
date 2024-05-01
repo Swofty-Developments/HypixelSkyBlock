@@ -3,8 +3,6 @@ package net.swofty.types.generic.item.items.foraging;
 import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.item.ReforgeType;
@@ -20,9 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-@EventParameters(description = "drops apple",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class SweetAxe extends SkyBlockEvent implements CustomSkyBlockItem, Reforgable, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

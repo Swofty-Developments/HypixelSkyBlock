@@ -2,7 +2,7 @@ package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -14,30 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Talk to Auction Master mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToAuctionMaster extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
-
-        if (regionChangeEvent.getTo() == null || !regionChangeEvent.getTo().equals(RegionType.AUCTION_HOUSE)) {
-            return;
-        }
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onRegionChange(PlayerRegionChangeEvent event) {
+        MissionData data = event.getPlayer().getMissionData();
 
         if (data.isCurrentlyActive("talk_to_auction_master") || data.hasCompleted("talk_to_auction_master")) {
             return;
         }
 
+        data.setSkyBlockPlayer(event.getPlayer());
         data.startMission(MissionTalkToAuctionMaster.class);
     }
+
 
     @Override
     public String getID() {

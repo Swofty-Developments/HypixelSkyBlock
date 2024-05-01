@@ -2,14 +2,11 @@ package net.swofty.types.generic.mission.missions.blacksmith;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -17,21 +14,12 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
 
-@EventParameters(description = "Mine coal mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionMineCoal extends SkyBlockProgressMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return CustomBlockBreakEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onBlockBreak(CustomBlockBreakEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (!data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
+        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
             return;
         }
 

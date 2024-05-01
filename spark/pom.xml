@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
-            <artifactId>generic</artifactId>
+            <artifactId>type-generic</artifactId>
             <version>3.0</version>
         </dependency>
     </dependencies>

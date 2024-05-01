@@ -15,8 +15,6 @@ import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEve
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.DamageIndicator;
 import net.swofty.types.generic.utility.MathUtility;
@@ -26,9 +24,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-@EventParameters(description = "For damage indicators",
-        node = EventNodes.ALL,
-        requireDataLoaded = false)
 public class PlayerActionDamageMob extends SkyBlockEvent {
     private static final Random random = new Random();
     private static final Map<UUID, Long> COOLDOWN = new HashMap<>();

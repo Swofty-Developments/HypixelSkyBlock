@@ -3,10 +3,10 @@ package net.swofty.types.generic.mission.missions;
 import net.minestom.server.event.Event;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -16,27 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Break log mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionBreakLog extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return CustomBlockBreakEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
-        Material material = event.getMaterial();
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onBlockBreak(CustomBlockBreakEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (!SkyBlockConst.isIslandServer()) return;
+        if (data.isCurrentlyActive(MissionBreakLog.class) || data.hasCompleted(MissionBreakLog.class)) return;
 
-        if (data.isCurrentlyActive("break_log")
-                && (material == Material.OAK_LOG || material == Material.OAK_WOOD)) {
-            data.endMission("break_log");
-        }
+        data.setSkyBlockPlayer(event.getPlayer());
+        data.startMission(MissionBreakLog.class);
     }
 
     @Override

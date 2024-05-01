@@ -6,15 +6,12 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.metadata.EntityMeta;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.LaunchPads;
@@ -22,10 +19,6 @@ import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.List;
 
-@EventParameters(description = "Handles player movement on launch pads",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true,
-        isAsync = true)
 public class ActionPlayerLaunchPads extends SkyBlockEvent {
     private static final int SEGMENTS = 30;
 

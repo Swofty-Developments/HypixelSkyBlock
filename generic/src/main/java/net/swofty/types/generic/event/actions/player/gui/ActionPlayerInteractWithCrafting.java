@@ -7,13 +7,8 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles opening the recipe menu when interacting with the vanilla one",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

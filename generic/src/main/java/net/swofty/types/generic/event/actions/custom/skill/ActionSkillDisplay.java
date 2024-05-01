@@ -1,16 +1,10 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.utility.MathUtility;
 
-@EventParameters(description = "Handles the displays when updating skills",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionSkillDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

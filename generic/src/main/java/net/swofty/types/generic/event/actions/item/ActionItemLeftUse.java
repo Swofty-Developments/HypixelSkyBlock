@@ -7,13 +7,8 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Interactable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles item interactable use for left clicks",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionItemLeftUse extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

@@ -8,13 +8,10 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.region.SkyBlockRegion;
-import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.utility.MathUtility;
@@ -24,10 +21,6 @@ import org.tinylog.Logger;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@EventParameters(description = "Load player data on join",
-        node = EventNodes.PLAYER_DATA,
-        requireDataLoaded = false,
-        isAsync = true)
 public class ActionPlayerDataSpawn extends SkyBlockEvent {
 
     @Override
@@ -53,13 +46,12 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
         DataHandler handler = player.getDataHandler();
 
         if (profiles.getProfiles().size() >= 2) {
-            UUID finalProfileId1 = profiles.getCurrentlySelected();
-            Document previousProfile = ProfilesDatabase.collection
-                    .find(Filters.eq("_owner", playerUuid.toString())).into(new ArrayList<>())
-                    .stream().filter(document -> !document.get("_id").equals(finalProfileId1.toString()))
-                    .findFirst().get();
-
             try {
+                UUID finalProfileId1 = profiles.getCurrentlySelected();
+                Document previousProfile = ProfilesDatabase.collection
+                        .find(Filters.eq("_owner", playerUuid.toString())).into(new ArrayList<>())
+                        .stream().filter(document -> !document.get("_id").equals(finalProfileId1.toString()))
+                        .findFirst().get();
                 DataHandler previousHandler = DataHandler.fromDocument(previousProfile);
                 previousHandler.getPersistentValues().forEach((key, value) -> {
                     handler.getDatapoint(key).setValue(value);

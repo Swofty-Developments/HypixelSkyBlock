@@ -1,8 +1,6 @@
 package net.swofty.types.generic.event.actions.custom.levels;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
@@ -13,9 +11,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;
 
-@EventParameters(description = "Handles the displays when changing SkyBlock XP",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionChangeSkyBlockXP extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

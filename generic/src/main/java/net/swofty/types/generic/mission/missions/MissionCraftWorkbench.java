@@ -2,11 +2,10 @@ package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
@@ -17,31 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Craft workbench mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionCraftWorkbench extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return ItemCraftEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        ItemCraftEvent event = (ItemCraftEvent) tempEvent;
-        ItemType type = event.getCraftedItem().getAttributeHandler().getItemTypeAsType();
-
-        if (!SkyBlockConst.isIslandServer()) return;
-
-        if (type != ItemType.CRAFTING_TABLE) {
-            return;
-        }
-
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onCraftEvent(ItemCraftEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (data.isCurrentlyActive(MissionCraftWorkbench.class)) {
-            data.endMission(MissionCraftWorkbench.class);
-        }
+        if (data.isCurrentlyActive(MissionCraftWorkbench.class) || data.hasCompleted(MissionCraftWorkbench.class)) return;
+
+        data.setSkyBlockPlayer(event.getPlayer());
+        data.startMission(MissionCraftWorkbench.class);
     }
 
     @Override

@@ -4,14 +4,9 @@ import net.minestom.server.event.Event;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.region.RegionType;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 
-@EventParameters(description = "Handles the the starting of the talk to villagers mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionStartHubMission extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

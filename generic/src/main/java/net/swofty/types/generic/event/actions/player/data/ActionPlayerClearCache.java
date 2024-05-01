@@ -17,14 +17,9 @@ import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.SkyBlockScoreboard;
 import net.swofty.types.generic.user.categories.CustomGroups;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
 
-@EventParameters(description = "Runs on player quit",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionPlayerClearCache extends SkyBlockEvent {
 
     @Override

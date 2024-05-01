@@ -5,10 +5,9 @@ import net.minestom.server.event.Event;
 import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.JerryClickedEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -18,18 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Talk to Jerry mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkJerry extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return JerryClickedEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        JerryClickedEvent event = (JerryClickedEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onJerryClicked(JerryClickedEvent event) {
         MissionData data = event.getPlayer().getMissionData();
         SkyBlockPlayer player = event.getPlayer();
 

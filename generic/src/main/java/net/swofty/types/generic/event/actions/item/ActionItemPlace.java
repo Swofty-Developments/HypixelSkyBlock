@@ -5,8 +5,6 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.block.SkyBlockBlock;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -14,9 +12,6 @@ import net.swofty.types.generic.item.impl.PlaceEvent;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Handles item placeable",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionItemPlace extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

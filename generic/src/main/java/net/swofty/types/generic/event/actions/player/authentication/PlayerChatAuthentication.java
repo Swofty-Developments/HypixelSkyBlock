@@ -4,8 +4,6 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.mongodb.AuthenticationDatabase;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -13,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@EventParameters(description = "Handles player chat authentication",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class PlayerChatAuthentication extends SkyBlockEvent {
     private static Map<UUID, Long> cooldowns = new HashMap<>();
 

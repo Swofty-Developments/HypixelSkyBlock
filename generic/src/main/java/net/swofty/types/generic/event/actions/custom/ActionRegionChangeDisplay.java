@@ -3,14 +3,9 @@ package net.swofty.types.generic.event.actions.custom;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 
-@EventParameters(description = "Handles the display of changing regions",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionRegionChangeDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

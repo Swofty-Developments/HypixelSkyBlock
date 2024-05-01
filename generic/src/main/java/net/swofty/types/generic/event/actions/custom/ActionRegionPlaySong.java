@@ -2,8 +2,6 @@ package net.swofty.types.generic.event.actions.custom;
 
 import net.minestom.server.event.Event;
 import net.swofty.commons.Songs;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.noteblock.SkyBlockSong;
@@ -15,10 +13,6 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-@EventParameters(description = "Plays songs in their respective regions.",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false,
-        isAsync = true)
 public class ActionRegionPlaySong extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

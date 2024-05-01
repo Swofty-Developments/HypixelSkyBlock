@@ -11,15 +11,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.*;
 
 public class MissionDepositCoinsInBank extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return null;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-
-    }
 
     @Override
     public String getID() {
@@ -29,11 +20,6 @@ public class MissionDepositCoinsInBank extends SkyBlockMission {
     @Override
     public String getName() {
         return "Deposit coins in the Bank";
-    }
-
-    @Override
-    public boolean hasNoEvent() {
-        return true;
     }
 
     @Override

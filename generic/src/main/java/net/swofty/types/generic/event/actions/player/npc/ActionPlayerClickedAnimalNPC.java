@@ -6,16 +6,9 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.animalnpc.NPCAnimalEntityImpl;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.npc.NPCEntityImpl;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Checks to see if a player clicks on an Animal NPC",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerClickedAnimalNPC extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

@@ -5,13 +5,8 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles when a player closes an InventoryGUI",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerInventoryClose extends SkyBlockEvent {
 
     @Override

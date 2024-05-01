@@ -5,8 +5,6 @@ import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
@@ -17,9 +15,6 @@ import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-@EventParameters(description = "For damage indicators",
-        node = EventNodes.ENTITY,
-        requireDataLoaded = false)
 public class PlayerActionDamagedAttacked extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

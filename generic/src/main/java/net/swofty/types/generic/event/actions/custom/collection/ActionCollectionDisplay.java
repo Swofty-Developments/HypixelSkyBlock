@@ -8,16 +8,11 @@ import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 
 import java.util.Arrays;
 
-@EventParameters(description = "Handles the displays when updating collections",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionCollectionDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

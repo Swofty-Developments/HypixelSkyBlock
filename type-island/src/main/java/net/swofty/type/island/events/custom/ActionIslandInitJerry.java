@@ -2,15 +2,10 @@ package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.utility.JerryInformation;
 
-@EventParameters(description = "Handles creating Jerry on the players Island",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionIslandInitJerry extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

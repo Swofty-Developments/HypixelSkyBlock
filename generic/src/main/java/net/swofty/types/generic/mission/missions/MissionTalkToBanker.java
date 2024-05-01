@@ -1,10 +1,10 @@
 package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -14,28 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Talk to Banker mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToBanker extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
-
-        if (regionChangeEvent.getTo() == null || !regionChangeEvent.getTo().equals(RegionType.BANK)) {
-            return;
-        }
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onRegionChange(PlayerRegionChangeEvent event) {
+        MissionData data = event.getPlayer().getMissionData();
 
         if (data.isCurrentlyActive("talk_to_banker") || data.hasCompleted("talk_to_banker")) {
             return;
         }
 
+        data.setSkyBlockPlayer(event.getPlayer());
         data.startMission(MissionTalkToBanker.class);
     }
 

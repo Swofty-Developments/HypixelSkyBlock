@@ -9,14 +9,9 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 
-@EventParameters(description = "Handles item drops on the Island",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionIslandItemDrop extends SkyBlockEvent {
 
     @Override

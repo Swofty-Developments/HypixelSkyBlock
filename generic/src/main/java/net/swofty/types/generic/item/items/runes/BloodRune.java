@@ -3,8 +3,6 @@ package net.swofty.types.generic.item.items.runes;
 import net.minestom.server.event.Event;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
@@ -19,10 +17,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-@EventParameters(description = "Handles the blood rune effect when killing mobs",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false,
-        isAsync = true)
 public class BloodRune extends SkyBlockEvent implements CustomSkyBlockItem, RuneItem {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {

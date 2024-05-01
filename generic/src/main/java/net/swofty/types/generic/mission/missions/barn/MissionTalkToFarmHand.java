@@ -2,22 +2,34 @@ package net.swofty.types.generic.mission.missions.barn;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
-import net.swofty.types.generic.mission.missions.MissionCraftWoodenPickaxe;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
 
-@EventParameters(description = "Talk to FarmHand",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToFarmHand extends SkyBlockMission {
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onRegionChange(PlayerRegionChangeEvent event) {
+        MissionData data = event.getPlayer().getMissionData();
+
+        if (event.getTo() == null || !event.getTo().equals(RegionType.THE_BARN)) {
+            return;
+        }
+
+        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
+            return;
+        }
+
+        data.setSkyBlockPlayer(event.getPlayer());
+        data.startMission(this.getClass());
+    }
+
     @Override
     public String getID() {
         return "talk_to_farmhand";
@@ -44,26 +56,5 @@ public class MissionTalkToFarmHand extends SkyBlockMission {
     @Override
     public Set<RegionType> getValidRegions() {
         return Set.of(RegionType.THE_BARN);
-    }
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
-
-        if (regionChangeEvent.getTo() == null || !regionChangeEvent.getTo().equals(RegionType.THE_BARN)) {
-            return;
-        }
-
-        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
-            return;
-        }
-
-        data.startMission(this.getClass());
     }
 }

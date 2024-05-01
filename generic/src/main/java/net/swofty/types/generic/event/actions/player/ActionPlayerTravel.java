@@ -10,8 +10,6 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.mission.missions.MissionUseTeleporter;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
 import java.time.Duration;
@@ -19,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@EventParameters(description = "Handles travelling between the Island and Hub world",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerTravel extends SkyBlockEvent {
     public static List<UUID> delay = new ArrayList<>();
 

@@ -5,13 +5,8 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Protects the hub from being placed in",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionRegionBlockPlace extends SkyBlockEvent {
 
     @Override

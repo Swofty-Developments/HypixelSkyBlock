@@ -2,11 +2,10 @@ package net.swofty.types.generic.mission.missions.lumber;
 
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
-import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -14,21 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@EventParameters(description = "Talk to lumberjack mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToLumberjack extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onRegionChange(PlayerRegionChangeEvent event) {
+        MissionData data = event.getPlayer().getMissionData();
 
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
-
-        if (regionChangeEvent.getTo() == null || !regionChangeEvent.getTo().equals(RegionType.FOREST)) {
+        if (event.getTo() == null || !event.getTo().equals(RegionType.FOREST)) {
             return;
         }
 
@@ -36,6 +26,7 @@ public class MissionTalkToLumberjack extends SkyBlockMission {
             return;
         }
 
+        data.setSkyBlockPlayer(event.getPlayer());
         data.startMission(this.getClass());
     }
 

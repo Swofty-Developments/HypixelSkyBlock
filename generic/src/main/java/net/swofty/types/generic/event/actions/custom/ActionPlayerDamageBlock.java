@@ -12,8 +12,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.BreakingTask;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerDamageSkyBlockBlockEvent;
 
@@ -21,9 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@EventParameters(description = "Damage block",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionPlayerDamageBlock extends SkyBlockEvent {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
 

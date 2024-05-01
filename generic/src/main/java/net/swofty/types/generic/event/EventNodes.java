@@ -19,9 +19,9 @@ public enum EventNodes {
 
     ;
 
-    public final EventNode<? extends Event> type;
+    public final EventNode<? extends Event> eventNode;
 
-    <E extends Event> EventNodes(EventNode<E> type) {
-        this.type = type;
+    <E extends Event> EventNodes(EventNode<E> eventNode) {
+        this.eventNode = eventNode;
     }
 }

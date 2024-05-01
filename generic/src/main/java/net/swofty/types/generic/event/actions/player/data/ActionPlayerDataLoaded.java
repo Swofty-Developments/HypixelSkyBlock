@@ -19,8 +19,6 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.warps.TravelScrollIslands;
@@ -29,9 +27,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
-@EventParameters(description = "Join miscellaneous stuff with data being loaded",
-        node = EventNodes.PLAYER_DATA,
-        requireDataLoaded = true)
 public class ActionPlayerDataLoaded extends SkyBlockEvent {
 
     @Override

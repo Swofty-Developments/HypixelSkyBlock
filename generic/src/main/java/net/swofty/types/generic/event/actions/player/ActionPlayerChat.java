@@ -8,8 +8,6 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -17,9 +15,6 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-@EventParameters(description = "Handles chat stuff",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionPlayerChat extends SkyBlockEvent {
 
     @Override

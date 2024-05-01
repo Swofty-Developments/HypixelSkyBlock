@@ -18,11 +18,6 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
     }
 
     @Override
-    public boolean hasNoEvent() {
-        return true;
-    }
-
-    @Override
     public String getName() {
         return "Talk to the Lumber Jack";
     }
@@ -42,12 +37,4 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
     public Set<RegionType> getValidRegions() {
         return Set.of(RegionType.FOREST);
     }
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return null;
-    }
-
-    @Override
-    public void run(Event tempEvent) {}
 }

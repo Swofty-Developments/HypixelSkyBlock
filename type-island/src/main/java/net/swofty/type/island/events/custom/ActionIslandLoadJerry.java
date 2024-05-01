@@ -7,15 +7,10 @@ import net.minestom.server.event.Event;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.utility.JerryInformation;
 import net.swofty.types.generic.utility.MathUtility;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import org.bson.Document;
 
-@EventParameters(description = "Handles loading Jerry on the players Island",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionIslandLoadJerry extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

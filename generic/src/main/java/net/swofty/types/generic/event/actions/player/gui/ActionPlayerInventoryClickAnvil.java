@@ -8,13 +8,8 @@ import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles when a player clicks on an AnvilGUI",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerInventoryClickAnvil extends SkyBlockEvent {
 
     @Override

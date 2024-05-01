@@ -6,14 +6,9 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.island.gui.GUIJerry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.JerryClickedEvent;
 
-@EventParameters(description = "Checks to see if a player clicks on Jerry",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerClickedJerryNPC extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

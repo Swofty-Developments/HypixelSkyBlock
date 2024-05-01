@@ -5,15 +5,10 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
 import java.util.HashMap;
 
-@EventParameters(description = "For the purpose of simulating fall damage",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerFall extends SkyBlockEvent {
     public static HashMap<SkyBlockPlayer, Integer> fallHeight = new HashMap<>();
 

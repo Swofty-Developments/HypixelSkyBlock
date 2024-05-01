@@ -1,8 +1,6 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -16,9 +14,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@EventParameters(description = "Farming talisman ability",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class FarmingTalisman extends SkyBlockEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {

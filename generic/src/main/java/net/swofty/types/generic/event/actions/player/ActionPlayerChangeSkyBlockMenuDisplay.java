@@ -7,8 +7,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.datapoints.DatapointQuiver;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemType;
@@ -22,11 +20,6 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-@EventParameters(description = "Switches the display of the quiver on hold",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false,
-        isAsync = true
-)
 public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

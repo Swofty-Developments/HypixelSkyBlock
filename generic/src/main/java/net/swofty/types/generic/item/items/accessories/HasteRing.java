@@ -3,8 +3,6 @@ package net.swofty.types.generic.item.items.accessories;
 import net.minestom.server.event.Event;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -14,9 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@EventParameters(description = "break block get haste effect",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class HasteRing extends SkyBlockEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {

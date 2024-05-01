@@ -6,8 +6,6 @@ import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;
@@ -21,10 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@EventParameters(description = "Handles the Scavenger enchantment",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false,
-        isAsync = true)
 public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFromTable {
     @Override
     public String getDescription(int level) {

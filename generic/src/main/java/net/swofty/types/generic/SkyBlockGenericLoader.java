@@ -43,6 +43,8 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
@@ -345,58 +347,35 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register events
          */
-        loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
-        loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
-        loopThroughPackage("net.swofty.types.generic.event.actions", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
-        loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockEvent.class).forEach(SkyBlockEvent::cacheEvent);
-        typeLoader.getTraditionalEvents().forEach(SkyBlockEvent::cacheEvent);
-        typeLoader.getCustomEvents().forEach(SkyBlockEvent::cacheEvent);
+        loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.types.generic.event.actions", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        typeLoader.getTraditionalEvents().forEach(SkyBlockEventHandler::registerEventMethods);
+        typeLoader.getCustomEvents().forEach(SkyBlockEventHandler::registerEventMethods);
 
         // Register missions
         loopThroughPackage("net.swofty.types.generic.mission.missions", SkyBlockMission.class)
                 .forEach((event) -> {
-                    try {
-                        event.cacheEvent();
-                        MissionData.registerMission(event.getClass());
-                    } catch (Exception e) {
-                    }
+                    MissionData.registerMission(event.getClass());
                 });
         loopThroughPackage("net.swofty.types.generic.mission.missions", MissionRepeater.class)
                 .forEach((event) -> {
-                    try {
-                        event.getTask(MinecraftServer.getSchedulerManager());
-                    } catch (Exception e) {
-                    }
+                    event.getTask(MinecraftServer.getSchedulerManager());
                 });
         loopThroughPackage("net.swofty.types.generic.item.set.sets", SetRepeatable.class)
                 .forEach((event) -> {
-                    try {
-                        event.getTask(MinecraftServer.getSchedulerManager());
-                    } catch (Exception e) {
-                    }
+                    event.getTask(MinecraftServer.getSchedulerManager());
                 });
-        CustomEventCaller.start();
-        SkyBlockEvent.register(SkyBlockConst.getEventHandler());
-
         loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockValueEvent.class)
-                .forEach((event) -> {
-                    try {
-                        event.cacheEvent();
-                    } catch (Exception e) {}
-                });
+                .forEach(SkyBlockValueEvent::cacheEvent);
         loopThroughPackage("net.swofty.types.generic.item.set.sets", SkyBlockValueEvent.class)
-                .forEach((event) -> {
-                    try {
-                        event.cacheEvent();
-                    } catch (Exception e) {}
-                });
+                .forEach(SkyBlockValueEvent::cacheEvent);
         loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockValueEvent.class)
-                .forEach((event) -> {
-                    try {
-                        event.cacheEvent();
-                    } catch (Exception e) {}
-                });
+                .forEach(SkyBlockValueEvent::cacheEvent);
         SkyBlockValueEvent.register();
+        CustomEventCaller.start();
+        SkyBlockEventHandler.register(SkyBlockConst.getEventHandler());
 
         /**
          * Cache custom collections

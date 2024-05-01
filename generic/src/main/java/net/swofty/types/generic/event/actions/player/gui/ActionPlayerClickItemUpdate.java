@@ -5,13 +5,8 @@ import net.minestom.server.event.inventory.PlayerInventoryItemChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Updates an item when a player clicks it in their inventory",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerClickItemUpdate extends SkyBlockEvent {
 
     @Override

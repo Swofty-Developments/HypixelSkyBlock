@@ -5,13 +5,8 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles seeing if NPCs are in range of a player",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerMoveNPC extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

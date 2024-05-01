@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>net.swofty</groupId>
-            <artifactId>generic</artifactId>
+            <artifactId>type-generic</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

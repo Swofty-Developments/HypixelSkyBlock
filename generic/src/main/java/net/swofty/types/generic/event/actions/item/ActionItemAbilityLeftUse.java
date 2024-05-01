@@ -9,13 +9,8 @@ import net.swofty.types.generic.item.impl.CustomSkyBlockAbility;
 import net.swofty.types.generic.user.PlayerAbilityHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-@EventParameters(description = "Handles item ability use for left clicks",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionItemAbilityLeftUse extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

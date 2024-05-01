@@ -3,20 +3,11 @@ package net.swofty.types.generic.event.actions.player.npc;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.npc.NPCEntityImpl;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-@EventParameters(description = "Checks to see if a player clicks on an NPC",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerClickedNPC extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

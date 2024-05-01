@@ -9,7 +9,7 @@
         <version>3.0</version>
     </parent>
 
-    <artifactId>generic</artifactId>
+    <artifactId>type-generic</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

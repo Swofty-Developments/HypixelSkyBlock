@@ -1,8 +1,6 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -10,9 +8,6 @@ import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Handles giving pets XP when a player levels up a skill.",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionSkillPetLevel extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

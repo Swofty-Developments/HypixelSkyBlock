@@ -1,8 +1,6 @@
 package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;
@@ -10,23 +8,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
 
-@EventParameters(description = "Talk to bartender mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToBartender extends SkyBlockMission {
-    @Override
-    public boolean hasNoEvent() {
-        return true;
-    }
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return null;
-    }
-
-    @Override
-    public void run(Event event) {
-    }
 
     @Override
     public String getID() {

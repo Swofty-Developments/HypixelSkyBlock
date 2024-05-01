@@ -3,8 +3,6 @@ package net.swofty.types.generic.event.actions.player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -13,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@EventParameters(description = "Checks to see if a player strays too far and teleports them back if they do.",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerStrayTooFar extends SkyBlockEvent {
     public static Map<UUID, Long> startedStray = new HashMap<>();
 

@@ -1,8 +1,6 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.item.ItemType;
@@ -16,9 +14,6 @@ import org.bson.Document;
 
 import java.util.Map;
 
-@EventParameters(description = "Handles loading Minions on the players Island",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionIslandLoadMinions extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

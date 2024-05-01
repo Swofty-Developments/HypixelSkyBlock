@@ -10,10 +10,10 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.custom.VillagerSpokenToEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
@@ -21,9 +21,6 @@ import net.swofty.types.generic.mission.SkyBlockProgressMission;
 
 import java.util.*;
 
-@EventParameters(description = "Talk to Villagers mission",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class MissionTalkToVillagers extends SkyBlockProgressMission implements MissionRepeater {
     private static final List<String> villagers = List.of(
             "Andrew",
@@ -40,15 +37,8 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
             "Liam"
     );
 
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return VillagerSpokenToEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        VillagerSpokenToEvent event = (VillagerSpokenToEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    public void onVillagerSpokenTo(VillagerSpokenToEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
         if (!data.isCurrentlyActive(MissionTalkToVillagers.class) &&

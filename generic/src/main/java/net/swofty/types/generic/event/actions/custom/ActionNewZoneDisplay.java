@@ -7,22 +7,14 @@ import net.kyori.adventure.title.Title;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointStringList;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 
-@EventParameters(description = "Handles the New Zone messages in regions",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = false)
 public class ActionNewZoneDisplay extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

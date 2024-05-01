@@ -4,14 +4,9 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.entity.MinionEntityImpl;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-@EventParameters(description = "Handles when a minion is clicked",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = false)
 public class ActionPlayerClickMinion extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

@@ -1,16 +1,10 @@
 package net.swofty.types.generic.event.actions.custom;
 
 import net.minestom.server.event.Event;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CalenderHourlyUpdateEvent;
 
-@EventParameters(description = "Updates hourly from the calender",
-        node = EventNodes.CUSTOM,
-        requireDataLoaded = true)
 public class ActionChangeTimeCalender extends SkyBlockEvent {
 
     @Override

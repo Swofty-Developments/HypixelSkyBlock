@@ -1,8 +1,6 @@
 package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
@@ -10,8 +8,6 @@ import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.EventParameters;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -19,9 +15,6 @@ import net.swofty.types.generic.user.categories.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 
-@EventParameters(description = "Runs on player join",
-        node = EventNodes.PLAYER,
-        requireDataLoaded = true)
 public class ActionPlayerRemoveTab extends SkyBlockEvent {
     @Override
     public Class<? extends Event> getEvent() {

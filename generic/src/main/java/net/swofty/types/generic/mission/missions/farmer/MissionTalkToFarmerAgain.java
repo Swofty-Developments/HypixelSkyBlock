@@ -18,11 +18,6 @@ public class MissionTalkToFarmerAgain extends SkyBlockMission {
     }
 
     @Override
-    public boolean hasNoEvent() {
-        return true;
-    }
-
-    @Override
     public String getName() {
         return "Talk to the Farmer";
     }
@@ -41,12 +36,4 @@ public class MissionTalkToFarmerAgain extends SkyBlockMission {
     public Set<RegionType> getValidRegions() {
         return Set.of(RegionType.FARM);
     }
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return null;
-    }
-
-    @Override
-    public void run(Event tempEvent) {}
 }
