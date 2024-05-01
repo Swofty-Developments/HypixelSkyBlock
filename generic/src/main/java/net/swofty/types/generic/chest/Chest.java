@@ -31,4 +31,5 @@ public interface Chest {
     InventoryType getSize();
 
     void update();
+
 }
