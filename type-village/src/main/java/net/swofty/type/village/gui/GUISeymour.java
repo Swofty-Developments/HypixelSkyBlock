@@ -1,10 +1,14 @@
 package net.swofty.type.village.gui;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.color.Color;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemHideFlag;
+import net.minestom.server.item.ItemMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.metadata.LeatherArmorMeta;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -18,7 +22,7 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(21));
+        set(GUIClickableItem.getCloseItem(31));
 
         set(new GUIClickableItem(11) {
             @Override
@@ -36,21 +40,29 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStack.builder(Material.LEATHER_CHESTPLATE)
-                        .displayName(Component.text("§5Cheap Tuxedo"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§8Complete suit"))
-                        .lore(Component.text("§7Crit Damage: §c+100%"))
-                        .lore(Component.text("§7Intelligence: §a+100"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§6Full Set Bonus: Dashing §7(0/3)"))
-                        .lore(Component.text("§7Max Health set to §c75♥§7."))
-                        .lore(Component.text("§7Deal §c+50% §7damage!"))
-                        .lore(Component.text("§8Very stylish."))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§7Cost: §63,000,000 Coins"))
-                        .lore(Component.text(""))
-                        .lore(Component.text(player.getCoins() >= 3000000 ? "§eClick to purchase" : "§cCan't afford this!"));
+                ItemStack.Builder builder = ItemStackCreator.getStack("§5Cheap Tuxedo", Material.LEATHER_CHESTPLATE, 1,
+                        "",
+                        "§8Complete suit",
+                        "§7Crit Damage: §c+100%",
+                        "§7Intelligence: §a+100",
+                        "",
+                        "§6Full Set Bonus: Dashing §7(0/3)",
+                        "§7Max Health set to §c75♥§7.",
+                        "§7Deal §c+50% §7damage!",
+                        "§8Very stylish.",
+                        "",
+                        "§7Cost: §63,000,000 Coins",
+                        "",
+                        player.getCoins() >= 3000000 ? "§eClick to purchase" : "§cCan't afford this!"
+                );
+
+                builder.meta(meta -> {
+                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
+                    leatherMeta.color(new Color(56, 56, 56));
+                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
+                            ItemHideFlag.HIDE_ATTRIBUTES);
+                });
+                return builder;
             }
         });
 
@@ -70,21 +82,30 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStack.builder(Material.LEATHER_CHESTPLATE)
-                        .displayName(Component.text("§5Fancy Tuxedo"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§8Complete suit"))
-                        .lore(Component.text("§7Crit Damage: §c+150%"))
-                        .lore(Component.text("§7Intelligence: §a+300"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§6Full Set Bonus: Dashing §7(0/3)"))
-                        .lore(Component.text("§7Max Health set to §c150♥§7."))
-                        .lore(Component.text("§7Deal §c+100% §7damage!"))
-                        .lore(Component.text("§8Very stylish."))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§7Cost: §620,000,000 Coins"))
-                        .lore(Component.text(""))
-                        .lore(Component.text(player.getCoins() >= 20000000 ? "§eClick to purchase" : "§cCan't afford this!"));
+                ItemStack.Builder builder = ItemStackCreator.getStack("§6Fancy Tuxedo", Material.LEATHER_CHESTPLATE, 1,
+                        "",
+                        "§8Complete suit",
+                        "§7Crit Damage: §c+150%",
+                        "§7Intelligence: §a+300",
+                        "",
+                        "§6Full Set Bonus: Dashing §7(0/3)",
+                        "§7Max Health set to §c150♥§7.",
+                        "§7Deal §c+100% §7damage!",
+                        "§8Very stylish.",
+                        "",
+                        "§7Cost: §620,000,000 Coins",
+                        "",
+                        player.getCoins() >= 20000000 ? "§eClick to purchase" : "§cCan't afford this!"
+                );
+
+                builder.meta(meta -> {
+                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
+                    leatherMeta.color(new Color(51, 42, 42));
+                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
+                            ItemHideFlag.HIDE_ATTRIBUTES
+                    );
+                });
+                return builder;
             }
         });
 
@@ -104,21 +125,29 @@ public class GUISeymour extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStack.builder(Material.LEATHER_CHESTPLATE)
-                        .displayName(Component.text("§5Elegant Tuxedo"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§8Complete suit"))
-                        .lore(Component.text("§7Crit Damage: §c+200%"))
-                        .lore(Component.text("§7Intelligence: §a+500"))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§6Full Set Bonus: Dashing §7(0/3)"))
-                        .lore(Component.text("§7Max Health set to §250♥§7."))
-                        .lore(Component.text("§7Deal §c+150% §7damage!"))
-                        .lore(Component.text("§8Very stylish."))
-                        .lore(Component.text(""))
-                        .lore(Component.text("§7Cost: §674,999,999 Coins"))
-                        .lore(Component.text(""))
-                        .lore(Component.text(player.getCoins() >= 74999999 ? "§eClick to purchase" : "§cCan't afford this!"));
+                ItemStack.Builder builder = ItemStackCreator.getStack("§6Elegant Tuxedo", Material.LEATHER_CHESTPLATE, 1,
+                        "",
+                        "§8Complete suit",
+                        "§7Crit Damage: §c+200%",
+                        "§7Intelligence: §a+500",
+                        "",
+                        "§6Full Set Bonus: Dashing §7(0/3)",
+                        "§7Max Health set to §c1250♥§7.",
+                        "§7Deal §c+150% §7damage!",
+                        "§8Very stylish.",
+                        "",
+                        "§7Cost: §674,999,999 Coins",
+                        "",
+                        player.getCoins() >= 74999999 ? "§eClick to purchase" : "§cCan't afford this!"
+                );
+
+                builder.meta(meta -> {
+                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
+                    leatherMeta.color(new Color(25, 25, 25));
+                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
+                            ItemHideFlag.HIDE_ATTRIBUTES);
+                });
+                return builder;
             }
         });
         updateItemStacks(getInventory(), getPlayer());

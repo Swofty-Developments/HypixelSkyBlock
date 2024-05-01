@@ -176,13 +176,12 @@ public class PlayerStatistics {
     public ItemStatistics petStatistics() {
         SkyBlockItem pet = player.getPetData().getEnabledPet();
         if (pet == null) return ItemStatistics.empty();
-
+        ItemStatistics baseStatistics = ((Pet) pet.getGenericInstance()).getBaseStatistics();
         ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics(
                 pet.getAttributeHandler().getRarity()
         );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
-
-        return ItemStatistics.multiply(perLevelStatistics, level);
+        return ItemStatistics.add(baseStatistics, ItemStatistics.multiply(perLevelStatistics, level));
     }
 
     public ItemStatistics spareStatistics() {
