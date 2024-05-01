@@ -158,7 +158,7 @@ public class ItemStatistics {
         if (stat == null) return 0D;
         Double value = 0D;
         if (this.statisticsBase.containsKey(stat)) value += this.statisticsBase.get(stat);
-        value *= this.statisticsAdditive.getOrDefault(stat, 1D);
+        value *= getAdditive(stat);
         return value;
     }
 
@@ -169,17 +169,17 @@ public class ItemStatistics {
 
     public @NonNull Double getAdditive(@Nullable ItemStatistic stat) {
         if (stat == null) return 1D;
-        return this.statisticsAdditive.getOrDefault(stat, 1D);
+        return this.statisticsAdditive.getOrDefault(stat, 0D) + 1;
     }
 
     public @NonNull Double getMultiplicative(@Nullable ItemStatistic stat) {
         if (stat == null) return 1D;
-        return this.statisticsMultiplicative.getOrDefault(stat, 1D);
+        return this.statisticsMultiplicative.getOrDefault(stat, 0D) + 1;
     }
 
     public @NonNull Double getMultiplicativeAsPercentage(@Nullable ItemStatistic stat) {
         if (stat == null) return 100D;
-        return this.statisticsMultiplicative.getOrDefault(stat, 1D) * 100;
+        return this.statisticsMultiplicative.getOrDefault(stat, 0D) * 100 + 100;
     }
 
     public static ItemStatistics add(ItemStatistics first, ItemStatistics other) {
@@ -189,7 +189,8 @@ public class ItemStatistics {
 
         for (ItemStatistic stat : ItemStatistic.values()) {
             result.statisticsBase.put(stat, first.getBase(stat) + other.getBase(stat));
-            result.statisticsAdditive.put(stat, first.getAdditive(stat) + other.getAdditive(stat) - 1);
+            result.statisticsAdditive.put(stat, first.statisticsAdditive.getOrDefault(stat, 0D)
+                    + other.statisticsAdditive.getOrDefault(stat, 0D));
             result.statisticsMultiplicative.put(stat, first.statisticsMultiplicative.getOrDefault(stat, 1D)
                     * other.statisticsMultiplicative.getOrDefault(stat, 1D));
         }
@@ -202,8 +203,8 @@ public class ItemStatistics {
 
         for (ItemStatistic stat : ItemStatistic.values()) {
             result.statisticsBase.put(stat, statistics.statisticsBase.getOrDefault(stat, 0D) * multiplier);
-            result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 1D) * multiplier);
-            result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 1D) * multiplier);
+            result.statisticsAdditive.put(stat, statistics.statisticsAdditive.getOrDefault(stat, 0D) * multiplier);
+            result.statisticsMultiplicative.put(stat, statistics.statisticsMultiplicative.getOrDefault(stat, 0D) * multiplier);
         }
 
         return result;
