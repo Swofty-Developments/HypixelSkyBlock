@@ -3,16 +3,14 @@ package net.swofty.type.island.events.traditional;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.SharedInstance;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionPlayerTeleport extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
+public class ActionPlayerTeleport implements SkyBlockEventClass {
 
-    @Override
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
     public void run(Event tempEvent) {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();

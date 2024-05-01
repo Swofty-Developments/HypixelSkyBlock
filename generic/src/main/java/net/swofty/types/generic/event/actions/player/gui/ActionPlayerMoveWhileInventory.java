@@ -2,24 +2,20 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionPlayerMoveWhileInventory extends SkyBlockEvent {
+public class ActionPlayerMoveWhileInventory implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerMoveEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerMoveEvent playerMoveEvent = (PlayerMoveEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerMoveEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerMoveEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.getOpenInventory() != null) {
-            // player.closeInventory();
-            // player.sendMessage("§cYou cannot open an inventory while moving!");
+             player.closeInventory();
+             player.sendMessage("§cYou cannot open an inventory while moving!");
         }
     }
 }

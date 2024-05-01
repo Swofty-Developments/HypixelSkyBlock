@@ -9,6 +9,9 @@ import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
@@ -17,17 +20,13 @@ import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.utility.MathUtility;
 
-public class ActionCollectionAdd extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return CustomBlockBreakEvent.class;
-    }
+public class ActionCollectionAdd implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
+
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(CustomBlockBreakEvent event) {
         if (SkyBlockConst.isIslandServer()) return;
 
-        CustomBlockBreakEvent event = (CustomBlockBreakEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
         ItemType type = ItemType.fromMaterial(event.getMaterial());
 
@@ -35,7 +34,7 @@ public class ActionCollectionAdd extends SkyBlockEvent {
         int oldAmount = player.getCollection().get(type);
         player.getCollection().increase(type);
 
-        SkyBlockEvent.callSkyBlockEvent(new CollectionUpdateEvent(player, type, oldAmount));
+        SkyBlockEventHandler.callSkyBlockEvent(new CollectionUpdateEvent(player, type, oldAmount));
 
         player.getDataHandler().get(DataHandler.Data.COLLECTION, DatapointCollection.class).setValue(
                 player.getCollection()
@@ -46,7 +45,7 @@ public class ActionCollectionAdd extends SkyBlockEvent {
 
             coop.getOnlineMembers().forEach(member -> {
                 if (member.getUuid().equals(player.getUuid())) return;
-                SkyBlockEvent.callSkyBlockEvent(new CollectionUpdateEvent(member, type, oldAmount));
+                SkyBlockEventHandler.callSkyBlockEvent(new CollectionUpdateEvent(member, type, oldAmount));
             });
 
             coop.members().removeIf(

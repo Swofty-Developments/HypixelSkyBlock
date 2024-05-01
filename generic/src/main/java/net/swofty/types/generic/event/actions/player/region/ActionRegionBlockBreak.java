@@ -8,6 +8,9 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
@@ -17,24 +20,18 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 
-public class ActionRegionBlockBreak extends SkyBlockEvent {
+public class ActionRegionBlockBreak implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockBreakEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    public void run(PlayerBlockBreakEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.isBypassBuild() || SkyBlockConst.isIslandServer()) {
             return;
         }
 
-        playerBreakEvent.setCancelled(true);
-        SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(playerBreakEvent.getBlockPosition());
+        event.setCancelled(true);
+        SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
         if (region == null) {
             return;
@@ -42,15 +39,15 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
 
         RegionType type = region.getType();
 
-        Block block = playerBreakEvent.getBlock();
+        Block block = event.getBlock();
         Material material = Material.fromNamespaceId(block.name());
         SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-        if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), playerBreakEvent.getBlockPosition()).contains(material)) {
+        if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
             return;
         }
 
-        mining.addToQueue(player, Pos.fromPoint(playerBreakEvent.getBlockPosition()), (SharedInstance) player.getInstance());
+        mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
 
         SkyBlockItem item;
         if (ItemDropChanger.get(material) != null) {
@@ -59,15 +56,15 @@ public class ActionRegionBlockBreak extends SkyBlockEvent {
             item = new SkyBlockItem(material);
         }
 
-        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
-                player, item.getMaterial(), playerBreakEvent.getBlockPosition()
+        SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
+                player, item.getMaterial(), event.getBlockPosition()
         ));
 
         /**
          * Handle block dropping
          */
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
-        Pos pos = Pos.fromPoint(playerBreakEvent.getBlockPosition());
+        Pos pos = Pos.fromPoint(event.getBlockPosition());
         // Move the dropped item to the center of the block
         pos = pos.add(0.5, 0.5, 0.5);
         // Move block closer to player by 0.5 blocks

@@ -8,7 +8,10 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -21,16 +24,10 @@ import org.tinylog.Logger;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class ActionPlayerDataSpawn extends SkyBlockEvent {
+public class ActionPlayerDataSpawn implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = false)
+    public void run(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!player.hasAuthenticated) {
@@ -93,7 +90,7 @@ public class ActionPlayerDataSpawn extends SkyBlockEvent {
         MathUtility.delay(() -> {
             SkyBlockRegion playerRegion = player.getRegion();
             if (playerRegion != null)
-                SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChangeEvent(
+                SkyBlockEventHandler.callSkyBlockEvent(new PlayerRegionChangeEvent(
                         player,
                         null,
                         playerRegion.getType()

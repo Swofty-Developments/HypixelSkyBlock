@@ -6,22 +6,20 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 
-public class ActionIslandItemDrop extends SkyBlockEvent {
+public class ActionIslandItemDrop implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockBreakEvent.class;
-    }
 
-    @Override
-    public void run(Event event) {
-        PlayerBlockBreakEvent playerBreakEvent = (PlayerBlockBreakEvent) event;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    public void run(PlayerBlockBreakEvent playerBreakEvent) {
         final SkyBlockPlayer player = (SkyBlockPlayer) playerBreakEvent.getPlayer();
 
         Block block = playerBreakEvent.getBlock();
@@ -36,7 +34,7 @@ public class ActionIslandItemDrop extends SkyBlockEvent {
             item = new SkyBlockItem(material);
         }
 
-        SkyBlockEvent.callSkyBlockEvent(new CustomBlockBreakEvent(
+        SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
                 player, item.getMaterial(), playerBreakEvent.getBlockPosition()
         ));
 

@@ -26,7 +26,7 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.tab.TablistManager;
@@ -133,10 +133,10 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEvent> getTraditionalEvents() {
+    public List<SkyBlockEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.village.events",
-                SkyBlockEvent.class
+                SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
 
@@ -151,7 +151,7 @@ public class TypeVillageLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEvent> getCustomEvents() {
+    public List<SkyBlockEventClass> getCustomEvents() {
         return new ArrayList<>();
     }
 

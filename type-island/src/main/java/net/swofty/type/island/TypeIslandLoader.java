@@ -14,7 +14,7 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.minion.MinionHandler;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
@@ -71,10 +71,10 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEvent> getTraditionalEvents() {
+    public List<SkyBlockEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.island.events.traditional",
-                SkyBlockEvent.class
+                SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
 
@@ -84,10 +84,10 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<SkyBlockEvent> getCustomEvents() {
+    public List<SkyBlockEventClass> getCustomEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.island.events.custom",
-                SkyBlockEvent.class
+                SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
 

@@ -2,26 +2,22 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.PlayerInventoryItemChangeEvent;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionPlayerClickItemUpdate extends SkyBlockEvent {
+public class ActionPlayerClickItemUpdate implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerInventoryItemChangeEvent.class;
-    }
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerInventoryItemChangeEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-    @Override
-    public void run(Event event) {
-        PlayerInventoryItemChangeEvent inventoryClick = (PlayerInventoryItemChangeEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) inventoryClick.getPlayer();
-
-        if (!SkyBlockItem.isSkyBlockItem(inventoryClick.getNewItem())) {
-            player.getInventory().setItemStack(inventoryClick.getSlot(), PlayerItemUpdater.playerUpdate(
-                    player, inventoryClick.getNewItem()).build());
+        if (!SkyBlockItem.isSkyBlockItem(event.getNewItem())) {
+            player.getInventory().setItemStack(event.getSlot(), PlayerItemUpdater.playerUpdate(
+                    player, event.getNewItem()).build());
         }
     }
 }

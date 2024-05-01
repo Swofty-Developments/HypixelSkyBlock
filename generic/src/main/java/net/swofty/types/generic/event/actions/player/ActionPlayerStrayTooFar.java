@@ -3,7 +3,9 @@ package net.swofty.types.generic.event.actions.player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -11,17 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ActionPlayerStrayTooFar extends SkyBlockEvent {
+public class ActionPlayerStrayTooFar implements SkyBlockEventClass {
     public static Map<UUID, Long> startedStray = new HashMap<>();
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerMoveEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerMoveEvent event = (PlayerMoveEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = player.getRegion();
 

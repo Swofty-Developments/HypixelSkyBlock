@@ -4,6 +4,7 @@ import net.minestom.server.event.Event;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.lang.reflect.InvocationTargetException;
@@ -42,7 +43,7 @@ public class RedisRunEvent implements ProxyToClient {
             e.printStackTrace();
         }
 
-        SkyBlockEvent.callSkyBlockEvent(event);
+        SkyBlockEventHandler.callSkyBlockEvent(event);
 
         return "ok";
     }

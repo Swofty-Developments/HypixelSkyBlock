@@ -9,7 +9,6 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.tab.TablistManager;
 import org.jetbrains.annotations.Nullable;
@@ -29,8 +28,8 @@ public interface SkyBlockTypeLoader {
 
     TablistManager getTablistManager();
 
-    List<Class<? extends SkyBlockEventClass>> getTraditionalEvents();
-    List<Class<? extends SkyBlockEventClass>> getCustomEvents();
+    List<SkyBlockEventClass> getTraditionalEvents();
+    List<SkyBlockEventClass> getCustomEvents();
 
     List<MobRegistry> getMobs();
 

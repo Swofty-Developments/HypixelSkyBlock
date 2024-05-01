@@ -4,24 +4,20 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.mongodb.AuthenticationDatabase;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerChatAuthentication extends SkyBlockEvent {
+public class PlayerChatAuthentication implements SkyBlockEventClass {
     private static Map<UUID, Long> cooldowns = new HashMap<>();
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerChatEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        PlayerChatEvent event = (PlayerChatEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    public void run(PlayerChatEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (player.hasAuthenticated) return;
 

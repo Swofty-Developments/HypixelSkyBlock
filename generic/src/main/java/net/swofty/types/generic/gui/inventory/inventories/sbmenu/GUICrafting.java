@@ -10,6 +10,7 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
@@ -68,8 +69,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
     public void onBottomClick(InventoryPreClickEvent e) {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
         if (clickedItem.isNA() || clickedItem.getMaterial().equals(Material.AIR)) return;
-
-
     }
 
     @Override
@@ -126,7 +125,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                         player,
                         finalRecipe.getResult().getItemStack()).amount(amount).build();
                 e.setClickedItem(craftedItem);
-                SkyBlockEvent.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
+                SkyBlockEventHandler.callSkyBlockEvent(new ItemCraftEvent(player, new SkyBlockItem(craftedItem), finalRecipe));
 
                 SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {

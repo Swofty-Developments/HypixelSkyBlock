@@ -3,17 +3,16 @@ package net.swofty.type.village.events;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.inventories.museum.GUIYourMuseum;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionPlayerClicksMuseumNPCDisplay extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockInteractEvent.class;
-    }
+public class ActionPlayerClicksMuseumNPCDisplay implements SkyBlockEventClass {
 
-    @Override
+
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
     public void run(Event tempEvent) {
         PlayerBlockInteractEvent event = (PlayerBlockInteractEvent) tempEvent;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();

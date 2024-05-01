@@ -8,6 +8,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.BreakingTask;
@@ -19,26 +21,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ActionPlayerDamageBlock extends SkyBlockEvent {
+public class ActionPlayerDamageBlock implements SkyBlockEventClass {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerDamageSkyBlockBlockEvent.class;
-    }
 
-    @Override
-    public void run(Event event) {
-        PlayerDamageSkyBlockBlockEvent e = (PlayerDamageSkyBlockBlockEvent) event;
-        SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
-        SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(e.getBlockPosition());
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerDamageSkyBlockBlockEvent event) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
-        if (e.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING
+        if (event.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING
                 || region == null
                 || region.getType().getMiningHandler() == null
-                || Material.fromNamespaceId(player.getInstance().getBlock(e.getBlockPosition()).namespace()) == null
-                || !region.getType().getMiningHandler().getMineableBlocks(player.getInstance(), e.getBlockPosition()).contains(
-                Material.fromNamespaceId(player.getInstance().getBlock(e.getBlockPosition()).namespace()))
+                || Material.fromNamespaceId(player.getInstance().getBlock(event.getBlockPosition()).namespace()) == null
+                || !region.getType().getMiningHandler().getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(
+                Material.fromNamespaceId(player.getInstance().getBlock(event.getBlockPosition()).namespace()))
                 || player.getGameMode().equals(GameMode.CREATIVE)) {
             // Cancel the task if the player is no longer breaking the block or changed block
 
@@ -49,7 +46,7 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
 
             MinecraftServer.getSchedulerManager().scheduleTask(() -> {
                 BlockBreakAnimationPacket breakAnim = new BlockBreakAnimationPacket(player.getEntityId(),
-                        e.getBlockPosition(),
+                        event.getBlockPosition(),
                         (byte) -1);
                 player.sendPacket(breakAnim);
             }, TaskSchedule.tick(2), TaskSchedule.stop());
@@ -68,8 +65,8 @@ public class ActionPlayerDamageBlock extends SkyBlockEvent {
         BreakingTask task = new BreakingTask(
                 player,
                 new BreakingTask.PositionedBlock(
-                        player.getInstance().getBlock(e.getBlockPosition()),
-                        Pos.fromPoint(e.getBlockPosition())),
+                        player.getInstance().getBlock(event.getBlockPosition()),
+                        Pos.fromPoint(event.getBlockPosition())),
                 item);
         MinecraftServer.getSchedulerManager().submitTask(task::run);
         CLICKING.put(player.getUuid(), task);

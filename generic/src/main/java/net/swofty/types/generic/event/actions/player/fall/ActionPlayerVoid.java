@@ -5,26 +5,22 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionPlayerVoid extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerMoveEvent.class;
-    }
+public class ActionPlayerVoid implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event event) {
-        PlayerMoveEvent playerEvent = (PlayerMoveEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerMoveEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.getPosition().y() <= -1) {
             player.damage(DamageType.OUT_OF_WORLD, 1000000000);
 
             if (player.getGameMode() == GameMode.CREATIVE)
                 player.sendTo(SkyBlockConst.getTypeLoader().getType());
-                return;
         }
     }
 }

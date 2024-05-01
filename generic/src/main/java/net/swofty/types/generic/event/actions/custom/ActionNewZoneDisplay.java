@@ -7,7 +7,9 @@ import net.kyori.adventure.title.Title;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointStringList;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -15,18 +17,14 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.time.Duration;
 import java.util.List;
 
-public class ActionNewZoneDisplay extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
+public class ActionNewZoneDisplay implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        SkyBlockPlayer player = regionChangeEvent.getPlayer();
 
-        if (regionChangeEvent.getTo() == null || regionChangeEvent.getTo().equals(regionChangeEvent.getFrom())) {
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerRegionChangeEvent event) {
+        SkyBlockPlayer player = event.getPlayer();
+
+        if (event.getTo() == null || event.getTo().equals(event.getFrom())) {
             return;
         }
 
@@ -36,14 +34,14 @@ public class ActionNewZoneDisplay extends SkyBlockEvent {
         );
         List<String> discoveredZonesList = discoveredZones.getValue();
 
-        if (discoveredZonesList.contains(regionChangeEvent.getTo().getName())) {
+        if (discoveredZonesList.contains(event.getTo().getName())) {
             return;
         }
 
-        discoveredZonesList.add(regionChangeEvent.getTo().getName());
+        discoveredZonesList.add(event.getTo().getName());
         discoveredZones.setValue(discoveredZonesList);
 
-        switch (regionChangeEvent.getTo()) {
+        switch (event.getTo()) {
             case VILLAGE -> {
                 onNewZone(player, RegionType.VILLAGE,
                         "Purchase items at the Market.",

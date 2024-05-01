@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
@@ -110,7 +111,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
             double newXP = getTotalXP();
 
             if (getAttachedPlayer() != null)
-                SkyBlockEvent.callSkyBlockEvent(new SkyBlockXPModificationEvent(
+                SkyBlockEventHandler.callSkyBlockEvent(new SkyBlockXPModificationEvent(
                         getAttachedPlayer(), cause, oldXP, newXP));
         }
 

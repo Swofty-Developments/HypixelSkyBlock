@@ -1,7 +1,9 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
@@ -14,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MineAffinityTalisman extends SkyBlockEvent implements Talisman {
+public class MineAffinityTalisman implements Talisman, SkyBlockEventClass {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "d9563fdc4acab6db324b21bc43b238fe465e530a6327e7eef11d2d0c4ea";
@@ -30,14 +32,9 @@ public class MineAffinityTalisman extends SkyBlockEvent implements Talisman {
         );
     }
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 
         if (event.getTo() == null || !event.getTo().equals(RegionType.COAL_MINE) &&

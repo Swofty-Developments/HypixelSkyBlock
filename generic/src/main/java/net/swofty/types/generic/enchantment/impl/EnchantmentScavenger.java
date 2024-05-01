@@ -6,7 +6,9 @@ import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFromTable {
+public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventClass {
     @Override
     public String getDescription(int level) {
         return "§7Scavenges §6+" + MathUtility.formatDecimals(0.3 + ((level - 1) * 0.3)) + " Coins §7per monster level on kill.";
@@ -69,14 +71,9 @@ public class EnchantmentScavenger extends SkyBlockEvent implements Ench, EnchFro
         return 3;
     }
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerKilledSkyBlockMobEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerKilledSkyBlockMobEvent event = (PlayerKilledSkyBlockMobEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerKilledSkyBlockMobEvent event) {
         PlayerEnchantmentHandler enchantmentHandler = event.getPlayer().getEnchantmentHandler();
 
         PlayerEnchantmentHandler.EnchantmentHandlerResponse response = enchantmentHandler.getItemWithHighestLevelOf(

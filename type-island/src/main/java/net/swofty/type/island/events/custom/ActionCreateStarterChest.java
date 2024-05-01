@@ -5,19 +5,16 @@ import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.chest.ChestBuilder;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.utility.MathUtility;
 
-public class ActionCreateStarterChest extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return IslandFirstCreatedEvent.class;
-    }
+public class ActionCreateStarterChest implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        IslandFirstCreatedEvent event = (IslandFirstCreatedEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(IslandFirstCreatedEvent event) {
         MathUtility.delay(()->{
             new ChestBuilder(event.getIsland().getIslandInstance(), new Pos(3 , 93 , 30))
                     .setItem(0 , ItemStack.of(Material.DIRT , 5))

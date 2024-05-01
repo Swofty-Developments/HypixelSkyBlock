@@ -5,22 +5,19 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.utility.JerryInformation;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import org.bson.Document;
 
-public class ActionIslandLoadJerry extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return IslandFetchedFromDatabaseEvent.class;
-    }
+public class ActionIslandLoadJerry implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        IslandFetchedFromDatabaseEvent event = (IslandFetchedFromDatabaseEvent) tempEvent;
 
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    public void run(IslandFetchedFromDatabaseEvent event) {
         Document document = event.getIsland().getDatabase().getDocument();
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();
 

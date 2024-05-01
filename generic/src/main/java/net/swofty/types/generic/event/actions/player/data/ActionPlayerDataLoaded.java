@@ -16,6 +16,8 @@ import net.swofty.types.generic.data.datapoints.DatapointStringList;
 import net.swofty.types.generic.data.datapoints.DatapointUUID;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.user.categories.Rank;
@@ -27,21 +29,15 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
-public class ActionPlayerDataLoaded extends SkyBlockEvent {
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
+public class ActionPlayerDataLoaded implements SkyBlockEventClass {
 
     @SneakyThrows
-    @Override
-    public void run(Event event) {
-        PlayerSpawnEvent playerLoginEvent = (PlayerSpawnEvent) event;
-        SkyBlockPlayer player = (SkyBlockPlayer) playerLoginEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = true)
+    public void run(PlayerSpawnEvent event) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!player.hasAuthenticated) return;
-        if (!playerLoginEvent.isFirstSpawn()) return;
+        if (!event.isFirstSpawn()) return;
 
         Thread.startVirtualThread(() -> {
             player.showTitle(Title.title(

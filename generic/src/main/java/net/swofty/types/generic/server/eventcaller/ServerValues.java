@@ -4,6 +4,7 @@ import kotlin.jvm.functions.Function0;
 import lombok.Getter;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.CalenderHourlyUpdateEvent;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class ServerValues {
     @Getter
     public enum Value {
         CALENDER_HOUR(Integer.class, SkyBlockCalendar::getHour, (hour) -> {
-            SkyBlockEvent.callSkyBlockEvent(new CalenderHourlyUpdateEvent((Integer) hour));
+            SkyBlockEventHandler.callSkyBlockEvent(new CalenderHourlyUpdateEvent((Integer) hour));
         }),
         ;
 

@@ -7,6 +7,8 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.actions.player.ActionPlayerStrayTooFar;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
@@ -20,19 +22,12 @@ import net.swofty.types.generic.user.categories.CustomGroups;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
 
-public class ActionPlayerClearCache extends SkyBlockEvent {
-
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerDisconnectEvent.class;
-    }
+public class ActionPlayerClearCache implements SkyBlockEventClass {
 
     @SneakyThrows
-    @Override
-    public void run(Event event) {
-        PlayerDisconnectEvent playerDisconnectEvent = (PlayerDisconnectEvent) event;
-
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    public void run(PlayerDisconnectEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!player.hasAuthenticated) return;
 
         /*

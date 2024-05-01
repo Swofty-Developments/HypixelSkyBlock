@@ -1,23 +1,19 @@
 package net.swofty.types.generic.event.actions.custom;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 
-public class ActionChangeMiningRegion extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
+public class ActionChangeMiningRegion implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
-        SkyBlockPlayer player = regionChangeEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerRegionChangeEvent event) {
+        SkyBlockPlayer player = event.getPlayer();
 
         if (SkyBlockConst.isIslandServer()) return;
 

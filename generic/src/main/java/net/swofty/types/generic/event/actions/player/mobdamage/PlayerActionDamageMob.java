@@ -10,6 +10,8 @@ import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -24,16 +26,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-public class PlayerActionDamageMob extends SkyBlockEvent {
+public class PlayerActionDamageMob implements SkyBlockEventClass {
     private static final Random random = new Random();
     private static final Map<UUID, Long> COOLDOWN = new HashMap<>();
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return EntityAttackEvent.class;
-    }
 
-    @Override
+
+    @SkyBlockEvent(node = EventNodes.ALL , requireDataLoaded = false)
     public void run(Event tempEvent) {
         EntityAttackEvent event = (EntityAttackEvent) tempEvent;
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;

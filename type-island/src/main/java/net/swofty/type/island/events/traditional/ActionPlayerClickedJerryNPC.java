@@ -5,19 +5,17 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.island.gui.GUIJerry;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.JerryClickedEvent;
 
-public class ActionPlayerClickedJerryNPC extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerEntityInteractEvent.class;
-    }
+public class ActionPlayerClickedJerryNPC implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerEntityInteractEvent event = (PlayerEntityInteractEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerEntityInteractEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (event.getHand() != Player.Hand.MAIN) return;
@@ -25,7 +23,7 @@ public class ActionPlayerClickedJerryNPC extends SkyBlockEvent {
         if (event.getTarget().getEntityType() != EntityType.VILLAGER) return;
 
         JerryClickedEvent jerryClickedEvent = new JerryClickedEvent(player);
-        SkyBlockEvent.callSkyBlockEvent(jerryClickedEvent);
+        SkyBlockEventHandler.callSkyBlockEvent(jerryClickedEvent);
 
         if (jerryClickedEvent.isCancelled()) return;
 

@@ -17,6 +17,7 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
@@ -84,6 +85,7 @@ import org.reflections.Reflections;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;

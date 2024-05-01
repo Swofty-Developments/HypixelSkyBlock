@@ -3,20 +3,17 @@ package net.swofty.types.generic.event.actions.custom.collection;
 import net.minestom.server.event.Event;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 
-public class ActionCollectionSkyBlockLevel extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return CollectionUpdateEvent.class;
-    }
+public class ActionCollectionSkyBlockLevel implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        CollectionUpdateEvent event = (CollectionUpdateEvent) tempEvent;
 
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(CollectionUpdateEvent event) {
         if (CollectionCategories.getCategory(event.getItemType()) == null) return;
 
         CollectionCategory.ItemCollection collection = CollectionCategories.getCategory(event.getItemType()).getCollection(event.getItemType());

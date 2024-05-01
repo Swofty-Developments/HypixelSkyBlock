@@ -3,7 +3,9 @@ package net.swofty.types.generic.item.items.runes;
 import net.minestom.server.event.Event;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -17,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodRune extends SkyBlockEvent implements CustomSkyBlockItem, RuneItem {
+public class BloodRune implements CustomSkyBlockItem, RuneItem, SkyBlockEventClass {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -51,14 +53,9 @@ public class BloodRune extends SkyBlockEvent implements CustomSkyBlockItem, Rune
         return "e02677053dc54245dac4b399d14aae21ee71a010bd9c336c8ecee1a0dbe8f58b";
     }
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerKilledSkyBlockMobEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerKilledSkyBlockMobEvent event = (PlayerKilledSkyBlockMobEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerKilledSkyBlockMobEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 
         SkyBlockItem runedItem = player.getStatistics().getItemWithRune(ItemType.BLOOD_RUNE);

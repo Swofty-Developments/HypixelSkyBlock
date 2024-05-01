@@ -3,18 +3,15 @@ package net.swofty.types.generic.event.actions.player.data;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.MinecraftVersion;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionPlayerWarnCrossVersion extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
+public class ActionPlayerWarnCrossVersion implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerSpawnEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!player.getVersion().isMoreRecentThan(MinecraftVersion.MINECRAFT_1_20_2)) {

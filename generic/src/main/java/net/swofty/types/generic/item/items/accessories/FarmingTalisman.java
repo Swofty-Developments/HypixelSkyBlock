@@ -1,7 +1,10 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Talisman;
@@ -14,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FarmingTalisman extends SkyBlockEvent implements Talisman {
+public class FarmingTalisman implements Talisman, SkyBlockEventClass {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc";
@@ -30,14 +33,9 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
         );
     }
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 
         if (event.getTo() == null || !event.getTo().equals(RegionType.FARM) &&
@@ -49,9 +47,7 @@ public class FarmingTalisman extends SkyBlockEvent implements Talisman {
 
         player.getStatistics().boostStatistic(TemporaryConditionalStatistic.builder()
                 .withStatistics((z) -> ItemStatistics.builder().withBase(ItemStatistic.SPEED, 10D).build())
-                .withExpiry(newPlayer -> {
-                    return newPlayer.getRegion() != null && newPlayer.getRegion().getName().equals(region);
-                })
+                .withExpiry(newPlayer -> newPlayer.getRegion() != null && newPlayer.getRegion().getName().equals(region))
                 .build());
     }
 }

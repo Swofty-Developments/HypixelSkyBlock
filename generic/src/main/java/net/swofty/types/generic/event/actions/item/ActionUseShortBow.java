@@ -2,20 +2,17 @@ package net.swofty.types.generic.event.actions.item;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerItemAnimationEvent;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.BowImpl;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionUseShortBow extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerItemAnimationEvent.class;
-    }
+public class ActionUseShortBow implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        final PlayerItemAnimationEvent event = (PlayerItemAnimationEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerItemAnimationEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         PlayerItemAnimationEvent.ItemAnimationType type = event.getItemAnimationType();
 

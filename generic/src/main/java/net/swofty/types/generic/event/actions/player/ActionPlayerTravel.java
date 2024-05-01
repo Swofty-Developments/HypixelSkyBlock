@@ -6,6 +6,8 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.ServerType;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.mission.missions.MissionUseTeleporter;
@@ -17,18 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ActionPlayerTravel extends SkyBlockEvent {
+public class ActionPlayerTravel implements SkyBlockEventClass {
     public static List<UUID> delay = new ArrayList<>();
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerMoveEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerMoveEvent playerMoveEvent = (PlayerMoveEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerMoveEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerMoveEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (delay.contains(player.getUuid())) return;
 

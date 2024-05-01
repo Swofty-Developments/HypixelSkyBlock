@@ -1,29 +1,26 @@
 package net.swofty.types.generic.event.actions.player.region;
 
 import net.minestom.server.event.Event;
+import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionRegionBlockPlace extends SkyBlockEvent {
+public class ActionRegionBlockPlace implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockPlaceEvent.class;
-    }
-
-    @Override
-    public void run(Event event) {
-        PlayerBlockPlaceEvent playerBlockPlace = (PlayerBlockPlaceEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerBlockPlace.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    public void run(PlayerBlockBreakEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
             return;
         }
 
-        playerBlockPlace.setCancelled(true);
+        event.setCancelled(true);
     }
 }
 

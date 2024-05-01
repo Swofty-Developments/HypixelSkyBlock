@@ -5,6 +5,8 @@ import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
@@ -12,16 +14,13 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 
 import java.util.Arrays;
+import java.util.Collection;
 
-public class ActionCollectionDisplay extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return CollectionUpdateEvent.class;
-    }
+public class ActionCollectionDisplay implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        CollectionUpdateEvent event = (CollectionUpdateEvent) tempEvent;
+
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(CollectionUpdateEvent event) {
 
         if (event.getOldValue() == 0) {
             event.getPlayer().sendMessage(Component.text("  §6§lCOLLECTION UNLOCKED §e" + event.getItemType().getDisplayName(null))
