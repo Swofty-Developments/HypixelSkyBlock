@@ -17,11 +17,10 @@ public class MissionTalkToBlacksmith extends SkyBlockMission {
 
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
-    public void run(Event event) {
-        PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
+    public void run(PlayerRegionChangeEvent event) {
         MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
 
-        if (regionChangeEvent.getTo() == null || !regionChangeEvent.getTo().equals(RegionType.BLACKSMITH)) {
+        if (event.getTo() == null || !event.getTo().equals(RegionType.BLACKSMITH)) {
             return;
         }
 
