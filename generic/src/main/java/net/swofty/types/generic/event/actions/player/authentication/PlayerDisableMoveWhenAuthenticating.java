@@ -10,8 +10,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public class PlayerDisableMoveWhenAuthenticating implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
-    public void run(Event tempEvent) {
-        PlayerMoveEvent event = (PlayerMoveEvent) tempEvent;
+    public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (player.hasAuthenticated) return;
 

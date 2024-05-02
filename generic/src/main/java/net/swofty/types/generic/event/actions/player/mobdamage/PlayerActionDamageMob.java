@@ -33,8 +33,7 @@ public class PlayerActionDamageMob implements SkyBlockEventClass {
 
 
     @SkyBlockEvent(node = EventNodes.ALL , requireDataLoaded = false)
-    public void run(Event tempEvent) {
-        EntityAttackEvent event = (EntityAttackEvent) tempEvent;
+    public void run(EntityAttackEvent event) {
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
         if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getEntity();
