@@ -8,22 +8,19 @@ import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ActionPlayerRemoveTab extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
+public class ActionPlayerRemoveTab implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerSpawnEvent event) {
         Player player = event.getPlayer();
 
         SkyBlockGenericLoader.getLoadedPlayers().forEach(player2 -> {

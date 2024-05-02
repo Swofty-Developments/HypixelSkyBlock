@@ -64,12 +64,14 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
                 profiles.addProfile(profileId);
                 ProfilesDatabase.collection.insertOne(document);
 
-                player.getHookManager().registerHook(new ActionPlayerDataSave(), (nil) -> {
-                    profiles.setCurrentlySelected(profileId);
+                // todo - fix it
 
-                    UserDatabase database = new UserDatabase(player.getUuid());
-                    database.saveProfiles(profiles);
-                }, false);
+//                player.getHookManager().registerHook(new ActionPlayerDataSave(), (nil) -> {
+//                profiles.setCurrentlySelected(profileId);
+//
+//                    UserDatabase database = new UserDatabase(player.getUuid());
+//                    database.saveProfiles(profiles);
+//                }, false);
 
                 player.sendTo(ServerType.ISLAND, true);
             }

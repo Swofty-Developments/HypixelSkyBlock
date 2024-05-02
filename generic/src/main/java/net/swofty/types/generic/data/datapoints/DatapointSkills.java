@@ -7,6 +7,7 @@ import net.kyori.adventure.sound.Sound;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
@@ -107,7 +108,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         }
 
         public void setRaw(SkyBlockPlayer player, SkillCategories category, Double value) {
-            SkyBlockEvent.callSkyBlockEvent(new SkillUpdateEvent(
+            SkyBlockEventHandler.callSkyBlockEvent(new SkillUpdateEvent(
                     player,
                     category,
                     getRaw(category),

@@ -1,20 +1,17 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 
-public class ActionSkillDisplay extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return SkillUpdateEvent.class;
-    }
+public class ActionSkillDisplay implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
 
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(SkillUpdateEvent event) {
         double oldValue = event.getOldValueRaw();
         double newValue = event.getNewValueRaw();
         double difference = newValue - oldValue;

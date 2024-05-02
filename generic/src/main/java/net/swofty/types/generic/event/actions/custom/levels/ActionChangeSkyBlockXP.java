@@ -1,7 +1,8 @@
 package net.swofty.types.generic.event.actions.custom.levels;
 
-import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
@@ -11,15 +12,11 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class ActionChangeSkyBlockXP extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return SkyBlockXPModificationEvent.class;
-    }
+public class ActionChangeSkyBlockXP implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        SkyBlockXPModificationEvent event = (SkyBlockXPModificationEvent) tempEvent;
+
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(SkyBlockXPModificationEvent event) {
         if (event.getNewXP() <= event.getOldXP()) return;
         SkyBlockPlayer player = event.getPlayer();
 

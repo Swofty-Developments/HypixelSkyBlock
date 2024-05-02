@@ -4,20 +4,17 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUICrafting;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionPlayerInteractWithCrafting extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return InventoryPreClickEvent.class;
-    }
+public class ActionPlayerInteractWithCrafting implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        InventoryPreClickEvent event = (InventoryPreClickEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(InventoryPreClickEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (event.getInventory() != null) return;

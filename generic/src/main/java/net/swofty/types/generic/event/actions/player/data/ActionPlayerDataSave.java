@@ -10,6 +10,8 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.MathUtility;
@@ -18,18 +20,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
-public class ActionPlayerDataSave extends SkyBlockEvent {
+public class ActionPlayerDataSave implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerDisconnectEvent.class;
-    }
 
     @SneakyThrows
-    @Override
-    public void run(Event event) {
-        PlayerDisconnectEvent playerDisconnectEvent = (PlayerDisconnectEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) playerDisconnectEvent.getPlayer();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerDisconnectEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID uuid = player.getUuid();
 
         if (!player.hasAuthenticated) return;

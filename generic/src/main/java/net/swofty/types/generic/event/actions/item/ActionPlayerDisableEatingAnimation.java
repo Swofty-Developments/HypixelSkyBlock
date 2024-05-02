@@ -2,17 +2,15 @@ package net.swofty.types.generic.event.actions.item;
 
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerItemAnimationEvent;
+import net.minestom.server.event.player.PlayerUseItemEvent;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 
-public class ActionPlayerDisableEatingAnimation extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerItemAnimationEvent.class;
-    }
+public class ActionPlayerDisableEatingAnimation implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        final PlayerItemAnimationEvent event = (PlayerItemAnimationEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerItemAnimationEvent event) {
         event.setCancelled(true);
     }
 }

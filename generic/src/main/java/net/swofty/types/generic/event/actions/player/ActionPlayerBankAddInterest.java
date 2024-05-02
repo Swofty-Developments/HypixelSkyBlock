@@ -7,19 +7,17 @@ import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
-public class ActionPlayerBankAddInterest extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerSpawnEvent.class;
-    }
+public class ActionPlayerBankAddInterest implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerSpawnEvent event) {
         if (event.isFirstSpawn()) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

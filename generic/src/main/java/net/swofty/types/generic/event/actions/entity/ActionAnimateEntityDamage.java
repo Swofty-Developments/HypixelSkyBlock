@@ -3,17 +3,14 @@ package net.swofty.types.generic.event.actions.entity;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.minestom.server.network.packet.server.play.DamageEventPacket;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 
-public class ActionAnimateEntityDamage extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return EntityDamageEvent.class;
-    }
+public class ActionAnimateEntityDamage implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        EntityDamageEvent event = (EntityDamageEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.ENTITY , requireDataLoaded = false)
+    public void run(EntityDamageEvent event) {
         event.setAnimation(true);
         event.setCancelled(false);
 

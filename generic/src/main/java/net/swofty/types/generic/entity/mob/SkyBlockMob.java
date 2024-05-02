@@ -21,6 +21,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -125,7 +126,7 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) getLastDamageSource().getAttacker();
 
-        SkyBlockEvent.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
+        SkyBlockEventHandler.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
         player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
         player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());

@@ -1,6 +1,8 @@
 package net.swofty.types.generic.mission.missions.blacksmith;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -12,12 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class MissionTalkToBlacksmith extends SkyBlockMission {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
 
-    @Override
+
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(Event event) {
         PlayerRegionChangeEvent regionChangeEvent = (PlayerRegionChangeEvent) event;
         MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();

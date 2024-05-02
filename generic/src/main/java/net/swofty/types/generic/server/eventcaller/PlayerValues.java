@@ -2,6 +2,7 @@ package net.swofty.types.generic.server.eventcaller;
 
 import lombok.Getter;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.SetEvents;
@@ -45,7 +46,7 @@ public class PlayerValues {
             if (player.getRegion() == null) return null;
             return player.getRegion().getType();
         }, (player, regionTypes) -> {
-            SkyBlockEvent.callSkyBlockEvent(new PlayerRegionChangeEvent(
+            SkyBlockEventHandler.callSkyBlockEvent(new PlayerRegionChangeEvent(
                     player,
                     (RegionType) regionTypes.getKey(),
                     (RegionType) regionTypes.getValue()));

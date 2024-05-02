@@ -6,19 +6,16 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionItemDrop extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return ItemDropEvent.class;
-    }
+public class ActionItemDrop implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        ItemDropEvent event = (ItemDropEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(ItemDropEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (new SkyBlockItem(event.getItemStack()).getAttributeHandler().getItemType().toLowerCase().contains("menu")) {

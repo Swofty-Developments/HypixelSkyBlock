@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockAbility;
 import net.swofty.types.generic.user.PlayerAbilityHandler;
@@ -11,19 +13,14 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionItemAbilityRightUse extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerUseItemEvent.class;
-    }
+public class ActionItemAbilityRightUse implements SkyBlockEventClass {
 
     @SneakyThrows
-    @Override
-    public void run(Event event) {
-        PlayerUseItemEvent playerUseItemEvent = (PlayerUseItemEvent) event;
-        ItemStack itemStack = playerUseItemEvent.getItemStack();
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerUseItemEvent event) {
+        ItemStack itemStack = event.getItemStack();
         SkyBlockItem item = new SkyBlockItem(itemStack);
-        SkyBlockPlayer player = (SkyBlockPlayer) playerUseItemEvent.getPlayer();
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (item.getGenericInstance() != null && item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
             if (ability.getAbilityActivation() == CustomSkyBlockAbility.AbilityActivation.RIGHT_CLICK) {

@@ -1,20 +1,16 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
 import net.swofty.types.generic.utility.JerryInformation;
 
-public class ActionIslandSaveJerry extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return IslandSavedIntoDatabaseEvent.class;
-    }
+public class ActionIslandSaveJerry implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        IslandSavedIntoDatabaseEvent event = (IslandSavedIntoDatabaseEvent) tempEvent;
-
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
+    public void run(IslandSavedIntoDatabaseEvent event) {
         JerryInformation jerryInformation = event.getIsland().getJerryInformation();
 
         event.getIsland().getDatabase().insertOrUpdate("jerry_position_x", jerryInformation.getJerryPosition().x());

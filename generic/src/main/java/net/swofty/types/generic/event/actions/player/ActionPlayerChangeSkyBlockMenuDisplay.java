@@ -7,7 +7,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.datapoints.DatapointQuiver;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -20,15 +22,10 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-public class ActionPlayerChangeSkyBlockMenuDisplay extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerChangeHeldSlotEvent.class;
-    }
+public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        final PlayerChangeHeldSlotEvent event = (PlayerChangeHeldSlotEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerChangeHeldSlotEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         runCheck(player);
     }

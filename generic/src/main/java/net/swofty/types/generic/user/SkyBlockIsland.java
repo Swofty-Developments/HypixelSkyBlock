@@ -17,6 +17,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.IslandDatabase;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
 import net.swofty.types.generic.event.custom.IslandSavedIntoDatabaseEvent;
@@ -102,7 +103,7 @@ public class SkyBlockIsland {
                     throw new RuntimeException(e);
                 }
 
-                SkyBlockEvent.callSkyBlockEvent(new IslandFirstCreatedEvent(
+                SkyBlockEventHandler.callSkyBlockEvent(new IslandFirstCreatedEvent(
                         this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
                 ));
             } else {
@@ -139,7 +140,7 @@ public class SkyBlockIsland {
 
             this.created = true;
 
-            SkyBlockEvent.callSkyBlockEvent(new IslandFetchedFromDatabaseEvent(
+            SkyBlockEventHandler.callSkyBlockEvent(new IslandFetchedFromDatabaseEvent(
                     this, coop != null, onlinePlayers, coop != null ? coop.memberProfiles() : List.of(islandID))
             );
 
@@ -153,7 +154,7 @@ public class SkyBlockIsland {
         if (islandInstance == null) return;
 
         if (islandInstance.getPlayers().isEmpty()) {
-            SkyBlockEvent.callSkyBlockEvent(new IslandSavedIntoDatabaseEvent(
+            SkyBlockEventHandler.callSkyBlockEvent(new IslandSavedIntoDatabaseEvent(
                     this, coop != null, coop != null ? coop.memberProfiles() : List.of(islandID)
             ));
 

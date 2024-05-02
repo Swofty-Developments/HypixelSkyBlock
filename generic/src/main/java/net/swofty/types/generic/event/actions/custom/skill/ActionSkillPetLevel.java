@@ -1,22 +1,19 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.minestom.server.event.Event;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionSkillPetLevel extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return SkillUpdateEvent.class;
-    }
+public class ActionSkillPetLevel implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        SkillUpdateEvent event = (SkillUpdateEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
         double xp = event.getNewValueRaw() - event.getOldValueRaw();
         if (xp <= 0) return;

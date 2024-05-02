@@ -4,17 +4,14 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.instance.InstanceChunkUnloadEvent;
 import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.SkyBlockConst;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 
-public class ActionChunkUnload extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return InstanceChunkUnloadEvent.class;
-    }
+public class ActionChunkUnload implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        InstanceChunkUnloadEvent event = (InstanceChunkUnloadEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.ENTITY , requireDataLoaded = false)
+    public void run(InstanceChunkUnloadEvent event) {
         Instance instance = event.getInstance();
         int chunkX = event.getChunkX();
         int chunkZ = event.getChunkZ();

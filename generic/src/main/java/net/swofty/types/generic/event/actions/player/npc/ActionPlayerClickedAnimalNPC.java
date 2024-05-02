@@ -6,18 +6,15 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.animalnpc.NPCAnimalEntityImpl;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionPlayerClickedAnimalNPC extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerEntityInteractEvent.class;
-    }
+public class ActionPlayerClickedAnimalNPC implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerEntityInteractEvent event = (PlayerEntityInteractEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerEntityInteractEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (event.getHand() != Player.Hand.MAIN) return;

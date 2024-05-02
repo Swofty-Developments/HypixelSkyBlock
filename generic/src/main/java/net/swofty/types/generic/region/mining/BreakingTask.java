@@ -9,6 +9,7 @@ import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -52,11 +53,11 @@ public class BreakingTask {
 
             this.counter = 0;
             MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-                SkyBlockEvent.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
+                SkyBlockEventHandler.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
                         ClientPlayerDiggingPacket.Status.CANCELLED_DIGGING));
-                SkyBlockEvent.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
+                SkyBlockEventHandler.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
                         ClientPlayerDiggingPacket.Status.STARTED_DIGGING));

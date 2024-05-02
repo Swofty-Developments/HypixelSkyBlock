@@ -5,6 +5,8 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -16,16 +18,10 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.StringUtility;
 
-public class ActionPlayerInventoryClick extends SkyBlockEvent {
+public class ActionPlayerInventoryClick implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return InventoryPreClickEvent.class;
-    }
-
-    @Override
-    public void run(Event tempEvent) {
-        InventoryPreClickEvent event = (InventoryPreClickEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(InventoryPreClickEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
         SkyBlockItem cursorItem = new SkyBlockItem(event.getCursorItem());

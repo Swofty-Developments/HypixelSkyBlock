@@ -4,29 +4,25 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.inventories.GUIEnchantmentTable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-public class ActionEnchantmentTableClick extends SkyBlockEvent {
+public class ActionEnchantmentTableClick implements SkyBlockEventClass {
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockInteractEvent.class;
-    }
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerBlockInteractEvent event) {
+        final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-    @Override
-    public void run(Event event) {
-        PlayerBlockInteractEvent interactEvent = (PlayerBlockInteractEvent) event;
-        final SkyBlockPlayer player = (SkyBlockPlayer) interactEvent.getPlayer();
-
-        if (Material.fromNamespaceId(interactEvent.getBlock().namespace()) != Material.ENCHANTING_TABLE) {
+        if (Material.fromNamespaceId(event.getBlock().namespace()) != Material.ENCHANTING_TABLE) {
             return;
         }
 
-        interactEvent.setBlockingItemUse(true);
+        event.setBlockingItemUse(true);
 
-        new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(interactEvent.getBlockPosition())).open(player);
+        new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(event.getBlockPosition())).open(player);
     }
 }
 

@@ -2,7 +2,9 @@ package net.swofty.types.generic.event.actions.custom;
 
 import net.minestom.server.event.Event;
 import net.swofty.commons.Songs;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.noteblock.SkyBlockSong;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
@@ -13,15 +15,10 @@ import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.List;
 
-public class ActionRegionPlaySong extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerRegionChangeEvent.class;
-    }
+public class ActionRegionPlaySong implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerRegionChangeEvent event = (PlayerRegionChangeEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockSongsHandler songHandler = player.getSongHandler();
 

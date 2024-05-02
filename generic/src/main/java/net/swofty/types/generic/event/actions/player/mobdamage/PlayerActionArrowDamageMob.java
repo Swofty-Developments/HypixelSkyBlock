@@ -6,7 +6,9 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
@@ -16,15 +18,10 @@ import net.swofty.types.generic.utility.DamageIndicator;
 
 import java.util.Map;
 
-public class PlayerActionArrowDamageMob extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return ProjectileCollideWithEntityEvent.class;
-    }
+public class PlayerActionArrowDamageMob implements SkyBlockEventClass {
 
-    @Override
-    public void run(Event tempEvent) {
-        ProjectileCollideWithEntityEvent event = (ProjectileCollideWithEntityEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.ALL , requireDataLoaded = false)
+    public void run(ProjectileCollideWithEntityEvent event) {
         ArrowEntityImpl arrow;
         if (event.getEntity() instanceof ArrowEntityImpl arrowEntity)
             arrow = arrowEntity;

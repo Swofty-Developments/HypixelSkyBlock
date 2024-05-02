@@ -12,24 +12,21 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.List;
 
-public class ActionPlayerLaunchPads extends SkyBlockEvent {
+public class ActionPlayerLaunchPads implements SkyBlockEventClass {
     private static final int SEGMENTS = 30;
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerMoveEvent.class;
-    }
 
-    @Override
-    public void run(Event tempEvent) {
-        PlayerMoveEvent event = (PlayerMoveEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         LaunchPads pad;

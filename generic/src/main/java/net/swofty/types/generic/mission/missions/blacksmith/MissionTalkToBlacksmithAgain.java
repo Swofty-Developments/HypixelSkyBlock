@@ -16,10 +16,6 @@ public class MissionTalkToBlacksmithAgain extends SkyBlockMission {
         return "talk_to_blacksmith_again";
     }
 
-    @Override
-    public boolean hasNoEvent() {
-        return true;
-    }
 
     @Override
     public String getName() {
@@ -42,11 +38,4 @@ public class MissionTalkToBlacksmithAgain extends SkyBlockMission {
         return Set.of(RegionType.BLACKSMITH, RegionType.COAL_MINE);
     }
 
-    @Override
-    public Class<? extends Event> getEvent() {
-        return null;
-    }
-
-    @Override
-    public void run(Event tempEvent) {}
 }

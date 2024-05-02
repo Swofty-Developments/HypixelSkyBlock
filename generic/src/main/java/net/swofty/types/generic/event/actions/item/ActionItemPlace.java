@@ -5,23 +5,20 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.block.SkyBlockBlock;
+import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.PlaceEvent;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class ActionItemPlace extends SkyBlockEvent {
-    @Override
-    public Class<? extends Event> getEvent() {
-        return PlayerBlockPlaceEvent.class;
-    }
+public class ActionItemPlace implements SkyBlockEventClass {
 
     @SneakyThrows
-    @Override
-    public void run(Event tempEvent) {
-        PlayerBlockPlaceEvent event = (PlayerBlockPlaceEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    public void run(PlayerBlockPlaceEvent event) {
         ItemStack itemStack = event.getPlayer().getItemInMainHand();
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
