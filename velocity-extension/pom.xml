@@ -80,7 +80,7 @@
             <artifactId>velocity-proxy</artifactId>
             <version>3.3.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/velocity-proxy-3.3.0-SNAPSHOT-all.jar</systemPath>
+            <systemPath>${project.basedir}/velocity-3.3.0-SNAPSHOT-388.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.Swofty-Developments</groupId>
