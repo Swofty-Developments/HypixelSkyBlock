@@ -6,6 +6,8 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.type.village.gui.elizabeth.CommunityShopItem;
+import net.swofty.type.village.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -16,6 +18,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,11 +30,11 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
             28, 29, 30, 31, 32, 33, 34
     };
 
-    Map<ItemType, Map.Entry<Integer, Integer>>[] items;
-    String guiName;
-    SkyBlockInventoryGUI previousGUI;
+    private final List<CommunityShopItem> items;
+    private final String guiName;
+    private final SkyBlockInventoryGUI previousGUI;
 
-    public GUIBitsSubCategorys(Map<ItemType, Map.Entry<Integer, Integer>>[] items, String guiName, SkyBlockInventoryGUI previousGUI) {
+    public GUIBitsSubCategorys(List<CommunityShopItem> items, String guiName, SkyBlockInventoryGUI previousGUI) {
         super("Bits Shop - " + guiName, InventoryType.CHEST_5_ROW);
         this.items = items;
         this.guiName = guiName;
@@ -41,17 +44,13 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(40, previousGUI));
-
-
         int index = 0;
         for (int slot : displaySlots) {
-            if (index < items.length) {
-                Set<Map.Entry<ItemType, Map.Entry<Integer, Integer>>> entrySet = items[index].entrySet();
-                for (Map.Entry<ItemType, Map.Entry<Integer, Integer>> entry : entrySet) {
-                    ItemType item = entry.getKey();
-                    Map.Entry<Integer, Integer> integers = entry.getValue();
-                    Integer price = integers.getKey();
-                    Integer amount = integers.getValue();
+            if (index < items.size()) {
+                items.forEach(shopItem -> {
+                    ItemType item = shopItem.getItemType();
+                    Integer price = shopItem.getPrice();
+                    Integer amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -62,7 +61,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                                 SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
                                 if (!player.getPurchaseConfirmationBits()) {
                                     player.addAndUpdateItem(finalItem);
-                                    Integer remainingBits = player.getBits() - price;
+                                    int remainingBits = player.getBits() - price;
                                     player.setBits(remainingBits);
                                     new GUIBitsSubCategorys(items, guiName, previousGUI).open(player);
                                 } else {
@@ -72,6 +71,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                                 player.sendMessage("§cYou don't have enough Bits to buy that!");
                             }
                         }
+
                         @Override
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
                             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
@@ -86,7 +86,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                             return ItemStackCreator.updateLore(itemStack, lore);
                         }
                     });
-                }
+                });
 
             }
             index++;
@@ -97,14 +97,6 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
     @Override
     public boolean allowHotkeying() {
         return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
     }
 
     @Override
