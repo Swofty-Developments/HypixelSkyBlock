@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionChangeMiningRegion implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 

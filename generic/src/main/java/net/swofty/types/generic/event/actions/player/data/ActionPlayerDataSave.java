@@ -23,7 +23,7 @@ public class ActionPlayerDataSave implements SkyBlockEventClass {
 
 
     @SneakyThrows
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false , isAsync = true)
     public void run(PlayerDisconnectEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID uuid = player.getUuid();

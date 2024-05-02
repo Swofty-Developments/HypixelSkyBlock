@@ -11,7 +11,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionSkillPetLevel implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
         double xp = event.getNewValueRaw() - event.getOldValueRaw();
