@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.event.EventNodes;

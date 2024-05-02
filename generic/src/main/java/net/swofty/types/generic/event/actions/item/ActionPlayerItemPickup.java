@@ -1,14 +1,12 @@
 package net.swofty.types.generic.event.actions.item;
 
-import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerItemAnimationEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.CollectItemPacket;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.SkyBlockEvent;
 
 public class ActionPlayerItemPickup implements SkyBlockEventClass {
 

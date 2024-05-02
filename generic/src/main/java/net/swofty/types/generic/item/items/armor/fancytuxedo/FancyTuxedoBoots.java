@@ -2,7 +2,10 @@ package net.swofty.types.generic.item.items.armor.fancytuxedo;
 
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.*;
+import net.swofty.types.generic.item.impl.CustomDisplayName;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.LeatherColour;
+import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;

@@ -2,11 +2,13 @@ package net.swofty.types.generic.entity.hologram;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public enum ServerHolograms {
     TO_ISLAND(new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),

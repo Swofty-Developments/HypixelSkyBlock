@@ -7,7 +7,9 @@ import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.protocol.ProtocolSpecification;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class RedisMessage {

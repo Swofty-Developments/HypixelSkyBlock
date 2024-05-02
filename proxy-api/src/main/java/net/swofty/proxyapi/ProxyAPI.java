@@ -1,11 +1,9 @@
 package net.swofty.proxyapi;
 
-import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.UUID;

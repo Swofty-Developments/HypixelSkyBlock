@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
     public void run(PlayerChangeHeldSlotEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         runCheck(player);

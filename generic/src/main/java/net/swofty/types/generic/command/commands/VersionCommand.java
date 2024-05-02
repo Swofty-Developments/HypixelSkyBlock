@@ -1,13 +1,8 @@
 package net.swofty.types.generic.command.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentEnum;
-import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.MinecraftVersion;
-import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollectionItem;
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 

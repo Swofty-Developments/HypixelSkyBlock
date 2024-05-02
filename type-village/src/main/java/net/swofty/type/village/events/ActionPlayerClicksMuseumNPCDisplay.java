@@ -12,9 +12,8 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public class ActionPlayerClicksMuseumNPCDisplay implements SkyBlockEventClass {
 
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
-    public void run(Event tempEvent) {
-        PlayerBlockInteractEvent event = (PlayerBlockInteractEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    public void run(PlayerBlockInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         Pos displayPosition = new Pos(-23, 67, 80);
 

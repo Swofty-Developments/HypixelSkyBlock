@@ -1,8 +1,6 @@
 package net.swofty.types.generic.minion.extension.extensions;
 
 import lombok.NonNull;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
@@ -14,18 +12,13 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionShippingItem;
-import net.swofty.types.generic.item.impl.MinionSkinItem;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
-import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class MinionShippingExtension extends MinionExtension {
     private double heldCoins = 0;

@@ -5,7 +5,6 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
-import net.swofty.types.generic.block.blocks.BlockChest;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,23 +1,20 @@
 package net.swofty.types.generic.event.actions.player.data;
 
-import com.mongodb.client.model.Filters;
 import lombok.SneakyThrows;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointUUID;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.SkyBlockIsland;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.user.PlayerProfiles;
 import org.bson.Document;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class ActionPlayerDataLoad implements SkyBlockEventClass {

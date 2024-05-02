@@ -5,7 +5,6 @@ import net.swofty.service.protocol.JacksonSerializer;
 import net.swofty.service.protocol.ProtocolSpecification;
 import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.serializer.AuctionItemSerializer;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

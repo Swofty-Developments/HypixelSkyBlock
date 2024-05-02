@@ -25,7 +25,7 @@ public class ActionPlayerLaunchPads implements SkyBlockEventClass {
     private static final int SEGMENTS = 30;
 
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
     public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

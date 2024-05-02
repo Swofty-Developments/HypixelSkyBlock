@@ -10,7 +10,6 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.mongodb.RegionDatabase;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
-import net.swofty.types.generic.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;

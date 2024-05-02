@@ -1,7 +1,10 @@
 package net.swofty.types.generic.data.datapoints;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;

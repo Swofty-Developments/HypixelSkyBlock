@@ -1,8 +1,6 @@
 package net.swofty.types.generic.event.actions.item;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerItemAnimationEvent;
-import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;

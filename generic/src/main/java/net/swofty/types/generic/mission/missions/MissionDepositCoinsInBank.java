@@ -1,6 +1,5 @@
 package net.swofty.types.generic.mission.missions;
 
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.mission.MissionData;

@@ -1,17 +1,11 @@
 package net.swofty.types.generic.serializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.SneakyThrows;
 import net.swofty.service.protocol.Serializer;
-import net.swofty.types.generic.auction.AuctionItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-
-import java.io.IOException;
 
 public class AuctionItemSerializer<T> implements Serializer<T> {
     private final ObjectMapper mapper;

@@ -1,6 +1,7 @@
 package net.swofty.types.generic.bazaar;
 
 import net.swofty.types.generic.item.ItemType;
+
 import java.util.List;
 
 public class BazaarItemSet {

@@ -32,7 +32,6 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.bson.Document;
 import org.tinylog.Logger;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

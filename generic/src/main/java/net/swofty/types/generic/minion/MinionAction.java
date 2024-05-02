@@ -1,6 +1,5 @@
 package net.swofty.types.generic.minion;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
@@ -12,7 +11,6 @@ import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.MinionExtensions;
 import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
-import net.swofty.types.generic.user.SkyBlockIsland;
 
 public abstract class MinionAction {
 

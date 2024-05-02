@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;

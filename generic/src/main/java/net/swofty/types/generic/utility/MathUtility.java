@@ -2,7 +2,6 @@ package net.swofty.types.generic.utility;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
@@ -10,8 +9,6 @@ import net.minestom.server.timer.TaskSchedule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 public class MathUtility {
     public static double normalizeAngle(double angle, double maximum) {

@@ -1,6 +1,5 @@
 package net.swofty.types.generic.mission.missions.lumber;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;

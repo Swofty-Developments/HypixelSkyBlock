@@ -1,14 +1,9 @@
 package net.swofty.types.generic.entity;
 
 import lombok.Getter;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
-import net.minestom.server.item.ItemMeta;
-import net.minestom.server.timer.ExecutionType;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;

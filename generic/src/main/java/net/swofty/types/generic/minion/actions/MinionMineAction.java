@@ -12,9 +12,7 @@ import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.utility.MathUtility;
 
-import java.io.Console;
 import java.util.List;
-import java.util.logging.Logger;
 
 @AllArgsConstructor
 @Getter

@@ -9,7 +9,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.List;
-import java.util.Locale;
 
 public class FlyCatcher implements CustomSkyBlockItem, MinionUpgradeItem, Enchanted, MinionUpgradeSpeedItem {
     @Override

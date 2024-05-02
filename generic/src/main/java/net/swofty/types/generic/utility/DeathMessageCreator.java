@@ -1,7 +1,6 @@
 package net.swofty.types.generic.utility;
 
 import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import org.tinylog.Logger;

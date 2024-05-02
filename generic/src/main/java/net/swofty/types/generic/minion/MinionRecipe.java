@@ -3,11 +3,9 @@ package net.swofty.types.generic.minion;
 import lombok.Getter;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Getter

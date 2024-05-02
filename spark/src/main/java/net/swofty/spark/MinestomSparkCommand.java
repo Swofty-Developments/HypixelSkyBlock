@@ -1,6 +1,5 @@
 package net.swofty.spark;
 
-import java.util.Arrays;
 import me.lucko.spark.common.SparkPlatform;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
@@ -12,6 +11,8 @@ import net.minestom.server.command.builder.suggestion.Suggestion;
 import net.minestom.server.command.builder.suggestion.SuggestionCallback;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
 
 /**
  * From <a href="https://github.com/lucko/spark/blob/891914f313ea5742e71b6a42135f5451e99ca516/spark-minestom/src/main/java/me/lucko/spark/minestom/MinestomSparkPlugin.java">lucko/spark</a>.

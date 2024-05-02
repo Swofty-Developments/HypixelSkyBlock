@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import org.jetbrains.annotations.Nullable;

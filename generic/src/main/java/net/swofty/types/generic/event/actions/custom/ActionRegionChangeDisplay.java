@@ -1,12 +1,11 @@
 package net.swofty.types.generic.event.actions.custom;
 
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 
 public class ActionRegionChangeDisplay implements SkyBlockEventClass {
 

@@ -1,10 +1,6 @@
 package net.swofty.types.generic.command.commands;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;

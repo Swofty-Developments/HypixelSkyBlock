@@ -1,7 +1,5 @@
 package net.swofty.types.generic.command.commands;
 
-import net.minestom.server.extras.MojangAuth;
-import net.minestom.server.permission.Permission;
 import net.minestom.server.utils.mojang.MojangUtils;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;

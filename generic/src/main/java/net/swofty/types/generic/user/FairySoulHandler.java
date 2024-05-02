@@ -1,8 +1,5 @@
 package net.swofty.types.generic.user;
 
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
-import net.swofty.types.generic.data.datapoints.DatapointIntegerList;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 import net.swofty.types.generic.user.fairysouls.FairySoulZone;

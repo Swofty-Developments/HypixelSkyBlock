@@ -1,7 +1,6 @@
 package net.swofty.types.generic.levels;
 
 import net.minestom.server.item.ItemStack;
-import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.List;

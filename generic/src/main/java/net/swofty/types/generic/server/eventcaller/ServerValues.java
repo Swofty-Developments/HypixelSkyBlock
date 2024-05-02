@@ -3,7 +3,6 @@ package net.swofty.types.generic.server.eventcaller;
 import kotlin.jvm.functions.Function0;
 import lombok.Getter;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.CalenderHourlyUpdateEvent;
 

@@ -1,7 +1,10 @@
 package net.swofty.types.generic.item.items.pet.petitems;
 
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.*;
+import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.PetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
