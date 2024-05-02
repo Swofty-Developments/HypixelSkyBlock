@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false , isAsync = true)
     public void run(PlayerChangeHeldSlotEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         runCheck(player);

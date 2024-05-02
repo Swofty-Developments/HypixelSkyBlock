@@ -13,6 +13,8 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointString;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
+import net.swofty.types.generic.data.mongodb.UserDatabase;
+import net.swofty.types.generic.event.actions.player.data.ActionPlayerDataSave;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -42,12 +44,12 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                 PlayerProfiles toSet = new PlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
 
-                // todo - fix it
-//                player.getHookManager().registerHook(new ActionPlayerDataSave(), (nil) -> {
-//                    UserDatabase database = new UserDatabase(player.getUuid());
-//                    toSet.setCurrentlySelected(profileUuid);
-//                    database.saveProfiles(toSet);
-//                }, false);
+
+                player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
+                    UserDatabase database = new UserDatabase(player.getUuid());
+                    toSet.setCurrentlySelected(profileUuid);
+                    database.saveProfiles(toSet);
+                }, false);
 
                 player.sendTo(ServerType.ISLAND, true);
             }

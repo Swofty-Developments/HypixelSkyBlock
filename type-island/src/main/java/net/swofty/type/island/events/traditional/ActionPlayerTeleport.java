@@ -10,9 +10,8 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerTeleport implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
-    public void run(Event tempEvent) {
-        PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    public void run(PlayerSpawnEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!event.isFirstSpawn()) return;

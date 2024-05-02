@@ -9,7 +9,7 @@ import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 
 public class ActionRegionChangeDisplay implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 

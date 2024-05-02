@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class ActionSkillLevelUp implements SkyBlockEventClass {
 
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = false)
     public void run(SkillUpdateEvent event) {
         if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 
