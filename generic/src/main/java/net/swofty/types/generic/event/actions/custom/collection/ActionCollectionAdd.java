@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
-import net.minestom.server.event.Event;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -10,14 +9,14 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
+import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
+import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
-import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.utility.MathUtility;
 
 public class ActionCollectionAdd implements SkyBlockEventClass {

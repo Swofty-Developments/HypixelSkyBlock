@@ -3,7 +3,6 @@ package net.swofty.types.generic.event.custom;
 import lombok.Getter;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

@@ -5,29 +5,17 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.collision.ShapeImpl;
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.projectile.ArrowMeta;
-import net.minestom.server.entity.metadata.projectile.ProjectileMeta;
-import net.minestom.server.event.entity.projectile.ProjectileCollideWithBlockEvent;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
-import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.network.packet.server.play.TeamsPacket;
-import net.minestom.server.scoreboard.Team;
-import net.minestom.server.scoreboard.TeamBuilder;
-import net.minestom.server.scoreboard.TeamManager;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collections;
 
 public class ArrowEntityImpl extends LivingEntity {
     private long cooldown = 0;

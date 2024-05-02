@@ -2,8 +2,6 @@ package net.swofty.types.generic.command.commands;
 
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;

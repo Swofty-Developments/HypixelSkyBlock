@@ -1,7 +1,6 @@
 package net.swofty.types.generic.serializer;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.StreamReadFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,7 +10,6 @@ import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.service.protocol.Serializer;
 import net.swofty.types.generic.data.datapoints.DatapointPetData;
-import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.HashMap;

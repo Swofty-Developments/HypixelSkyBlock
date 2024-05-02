@@ -1,6 +1,5 @@
 package net.swofty.types.generic.minion;
 
-import lombok.Getter;
 import net.minestom.server.color.Color;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;

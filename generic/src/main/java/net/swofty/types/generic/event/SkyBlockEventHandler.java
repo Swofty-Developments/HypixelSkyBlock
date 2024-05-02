@@ -58,7 +58,6 @@ public class SkyBlockEventHandler {
         cachedCustomEvents.forEach(skyBlockEvent -> {
             try {
                 Class<? extends Event> eventType = (Class<? extends Event>) skyBlockEvent.method.getParameterTypes()[0];
-
                 customEventNode.addListener(eventType, (event) -> {
                     try {
                         skyBlockEvent.method.invoke(skyBlockEvent.instance, event);

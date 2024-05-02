@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.data;
 
 import com.mongodb.client.model.Filters;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
@@ -15,8 +14,8 @@ import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.region.SkyBlockRegion;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.PlayerProfiles;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
 import org.tinylog.Logger;

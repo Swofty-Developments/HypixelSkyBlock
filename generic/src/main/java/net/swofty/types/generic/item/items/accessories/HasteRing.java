@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.accessories;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.types.generic.event.EventNodes;

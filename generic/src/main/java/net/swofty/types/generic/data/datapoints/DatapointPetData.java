@@ -6,18 +6,12 @@ import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.entity.PetEntityImpl;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.serializer.MissionDataSerializer;
 import net.swofty.types.generic.serializer.UserPetDataSerializer;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
     private static final UserPetDataSerializer serializer = new UserPetDataSerializer();

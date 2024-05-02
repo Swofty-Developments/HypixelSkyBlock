@@ -1,8 +1,5 @@
 package net.swofty.spark;
 
-import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.stream.Stream;
 import me.lucko.spark.common.SparkPlatform;
 import me.lucko.spark.common.SparkPlugin;
 import me.lucko.spark.common.command.sender.CommandSender;
@@ -19,6 +16,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.stream.Stream;
 
 public final class Spark implements SparkPlugin {
 

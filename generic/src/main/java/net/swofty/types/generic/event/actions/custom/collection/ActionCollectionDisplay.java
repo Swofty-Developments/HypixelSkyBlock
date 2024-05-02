@@ -1,20 +1,18 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
-import net.swofty.types.generic.event.SkyBlockEvent;
-import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class ActionCollectionDisplay implements SkyBlockEventClass {
 

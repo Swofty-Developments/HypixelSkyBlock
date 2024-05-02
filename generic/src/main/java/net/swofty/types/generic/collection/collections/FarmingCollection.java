@@ -10,7 +10,9 @@ import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
 import net.swofty.types.generic.item.items.enchanted.*;
-import net.swofty.types.generic.item.items.farming.*;
+import net.swofty.types.generic.item.items.farming.BoxOfSeeds;
+import net.swofty.types.generic.item.items.farming.MutantNetherWart;
+import net.swofty.types.generic.item.items.farming.PolishedPumpkin;
 
 import java.util.Arrays;
 import java.util.HashMap;

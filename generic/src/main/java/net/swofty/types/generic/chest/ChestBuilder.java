@@ -2,9 +2,7 @@ package net.swofty.types.generic.chest;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.utility.ChestUtility;

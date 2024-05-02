@@ -4,10 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.types.generic.data.mongodb.AuthenticationDatabase;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

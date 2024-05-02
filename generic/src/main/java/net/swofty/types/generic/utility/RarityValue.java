@@ -1,6 +1,5 @@
 package net.swofty.types.generic.utility;
 
-import lombok.Getter;
 import net.swofty.types.generic.item.Rarity;
 
 public record RarityValue<T>(T common, T uncommon, T rare, T epic, T legendary, T rest) {

@@ -8,7 +8,6 @@ import net.swofty.types.generic.user.statistics.ItemStatistic;
 
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Getter
 public enum LootAffector {

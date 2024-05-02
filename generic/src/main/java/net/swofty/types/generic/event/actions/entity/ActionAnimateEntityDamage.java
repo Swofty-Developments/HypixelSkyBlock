@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.entity;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.minestom.server.network.packet.server.play.DamageEventPacket;
 import net.swofty.types.generic.event.EventNodes;

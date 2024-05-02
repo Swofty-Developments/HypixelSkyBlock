@@ -3,7 +3,6 @@ package net.swofty.types.generic.protocol.bazaar;
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.service.protocol.JacksonSerializer;
 import net.swofty.service.protocol.ProtocolSpecification;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;

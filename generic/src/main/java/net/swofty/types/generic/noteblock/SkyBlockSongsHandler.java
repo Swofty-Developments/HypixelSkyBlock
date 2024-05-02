@@ -1,7 +1,6 @@
 package net.swofty.types.generic.noteblock;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;

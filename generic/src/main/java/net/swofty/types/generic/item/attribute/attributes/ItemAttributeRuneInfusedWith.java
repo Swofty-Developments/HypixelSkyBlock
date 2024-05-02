@@ -1,6 +1,8 @@
 package net.swofty.types.generic.item.attribute.attributes;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;

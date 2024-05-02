@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.impl;
 
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;

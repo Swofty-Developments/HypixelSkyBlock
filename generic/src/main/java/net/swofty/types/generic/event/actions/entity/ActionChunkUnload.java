@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.entity;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.instance.InstanceChunkUnloadEvent;
 import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.SkyBlockConst;

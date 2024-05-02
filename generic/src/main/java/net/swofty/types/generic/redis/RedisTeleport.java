@@ -1,14 +1,12 @@
 package net.swofty.types.generic.redis;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 public class RedisTeleport implements ProxyToClient {
     @Override

@@ -1,11 +1,11 @@
 {
   "mongodb": "mongodb://localhost",
   "redis-uri": "redis://localhost:6379",
-  "velocity-secret": "1LAGCe86cZvG",
+  "velocity-secret": "ixmSUgWOgvs7",
   "limbo-port": "65535",
   "pterodactyl-mode": false,
-  "spark": true,
-  "require-authentication": false,
+  "spark": false,
+  "require-authentication": true,
   "host-name": "0.0.0.0",
   "transfer-timeout": "800",
   "sandbox-mode": true

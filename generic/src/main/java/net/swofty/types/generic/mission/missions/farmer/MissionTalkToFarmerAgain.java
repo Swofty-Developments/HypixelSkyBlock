@@ -1,7 +1,5 @@
 package net.swofty.types.generic.mission.missions.farmer;
 
-import net.minestom.server.event.Event;
-import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;

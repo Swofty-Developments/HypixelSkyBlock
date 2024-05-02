@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.custom;
 
-import net.minestom.server.event.Event;
 import net.swofty.commons.Songs;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;

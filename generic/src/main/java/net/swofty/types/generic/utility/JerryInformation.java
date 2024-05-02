@@ -7,8 +7,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 
-import java.util.UUID;
-
 @AllArgsConstructor
 @Getter
 @Setter

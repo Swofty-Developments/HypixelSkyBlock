@@ -6,9 +6,6 @@ import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityRotationPacket;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
-import net.swofty.types.generic.entity.npc.NPCEntityImpl;
-import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 

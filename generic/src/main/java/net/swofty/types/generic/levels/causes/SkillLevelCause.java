@@ -1,14 +1,11 @@
 package net.swofty.types.generic.levels.causes;
 
 import lombok.Getter;
-import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.levels.abstr.CauseEmblem;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-
-import java.util.Arrays;
 
 @Getter
 public class SkillLevelCause extends SkyBlockLevelCauseAbstr implements CauseEmblem {

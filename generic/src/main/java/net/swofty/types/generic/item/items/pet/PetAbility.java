@@ -1,7 +1,6 @@
 package net.swofty.types.generic.item.items.pet;
 
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.skill.SkillCategory;
 
 import java.util.List;
 

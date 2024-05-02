@@ -12,7 +12,6 @@ import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.utility.groups.Groups;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

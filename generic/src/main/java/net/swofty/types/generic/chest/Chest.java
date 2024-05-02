@@ -4,10 +4,7 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.network.packet.server.play.BlockActionPacket;
-import net.swofty.types.generic.block.blocks.BlockChest;
 
-import java.util.Arrays;
 import java.util.List;
 
 public interface Chest {

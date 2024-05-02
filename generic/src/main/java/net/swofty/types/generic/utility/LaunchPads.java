@@ -18,7 +18,6 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.event.WindowStateListener;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;

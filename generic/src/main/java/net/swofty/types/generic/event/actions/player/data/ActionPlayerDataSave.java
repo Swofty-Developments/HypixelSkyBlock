@@ -3,7 +3,6 @@ package net.swofty.types.generic.event.actions.player.data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -11,9 +10,9 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.Arrays;

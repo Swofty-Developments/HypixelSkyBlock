@@ -6,7 +6,6 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.SkyBlockScoreboard;
 import net.swofty.types.generic.user.categories.Rank;
 
 @CommandParameters(aliases = "signgraphicaluserinterface",

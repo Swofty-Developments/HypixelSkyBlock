@@ -1,11 +1,8 @@
 package net.swofty.types.generic.user;
 
-import net.minestom.server.event.trait.PlayerEvent;
 import net.swofty.types.generic.event.SkyBlockEvent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 

@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.runes;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.event.EventNodes;

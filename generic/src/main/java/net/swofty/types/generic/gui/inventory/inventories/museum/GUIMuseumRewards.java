@@ -1,7 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.museum;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 

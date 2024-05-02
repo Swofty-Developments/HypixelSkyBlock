@@ -10,7 +10,6 @@ import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMithrilInfusion;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;

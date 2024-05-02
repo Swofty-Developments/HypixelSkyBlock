@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.items.foraging;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;

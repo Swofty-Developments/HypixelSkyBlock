@@ -1,6 +1,5 @@
 package net.swofty.types.generic.enchantment.impl;
 
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;

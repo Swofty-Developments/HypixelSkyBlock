@@ -7,7 +7,6 @@ import net.minestom.server.network.packet.server.play.BlockChangePacket;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.tinylog.Logger;
 
 public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
     @Override

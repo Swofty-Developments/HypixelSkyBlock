@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;

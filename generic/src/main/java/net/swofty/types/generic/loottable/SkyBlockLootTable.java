@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;

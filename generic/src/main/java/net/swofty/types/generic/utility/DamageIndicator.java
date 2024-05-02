@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.hologram.HologramEntity;
 
 public class DamageIndicator {

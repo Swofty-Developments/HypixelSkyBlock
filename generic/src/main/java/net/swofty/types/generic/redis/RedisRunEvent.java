@@ -3,7 +3,6 @@ package net.swofty.types.generic.redis;
 import net.minestom.server.event.Event;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

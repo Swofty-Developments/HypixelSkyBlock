@@ -3,7 +3,6 @@ package net.swofty.types.generic.packet.packets.client;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerDiggingPacket;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
