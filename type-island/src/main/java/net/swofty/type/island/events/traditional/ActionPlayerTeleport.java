@@ -10,7 +10,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerTeleport implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(Event tempEvent) {
         PlayerSpawnEvent event = (PlayerSpawnEvent) tempEvent;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
@@ -18,10 +18,8 @@ public class ActionPlayerTeleport implements SkyBlockEventClass {
         if (!event.isFirstSpawn()) return;
         if (!player.hasAuthenticated) return;
 
-        Thread.startVirtualThread(() -> {
-            SharedInstance instance = player.getSkyBlockIsland().getSharedInstance().join();
-            player.setInstance(instance, player.getRespawnPoint());
-            player.teleport(player.getRespawnPoint());
-        });
+        SharedInstance instance = player.getSkyBlockIsland().getSharedInstance().join();
+        player.setInstance(instance, player.getRespawnPoint());
+        player.teleport(player.getRespawnPoint());
     }
 }

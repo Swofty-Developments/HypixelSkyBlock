@@ -71,9 +71,11 @@ public class SkyBlockEventHandler {
             }
         });
 
+        eventHandler.addChild(customEventNode);
+
+        Map<EventNode<? extends Event>, List<EventMethodEntry>> eventNodes = new HashMap<>();
         cachedEvents.forEach((eventTypeUncasted, methodPair) -> {
             Class<? extends Event> eventType = (Class<? extends Event>) eventTypeUncasted;
-            Map<EventNode<? extends Event>, List<EventMethodEntry>> eventNodes = new HashMap<>();
 
             methodPair.forEach(eventMethod -> {
                 EventNodes paramNode = eventMethod.skyBlockEvent().node();
@@ -95,13 +97,13 @@ public class SkyBlockEventHandler {
                             if (SkyBlockConst.isIslandServer() &&
                                     !((SkyBlockPlayer) player).getSkyBlockIsland().getCreated()) return TaskSchedule.millis(2);
 
-                            runEvent(eventMethod.method, eventMethod.skyBlockEvent(), concreteEvent);
+                            runEvent(eventMethod.skyBlockEvent(), eventMethod.method, eventMethod.instance, concreteEvent);
                             return TaskSchedule.stop();
                         });
                     } else {
                         // Now run the event with the properly casted type
                         try {
-                            runEvent(eventMethod.method, eventMethod.skyBlockEvent(), concreteEvent);
+                            runEvent(eventMethod.skyBlockEvent(), eventMethod.method, eventMethod.instance, concreteEvent);
                         } catch (Exception ex) {
                             Logger.info("Exception occurred while running event " +
                                     eventMethod.method.getClass().getSimpleName() + " with event type " +
@@ -118,15 +120,15 @@ public class SkyBlockEventHandler {
                     eventNodes.get(paramNode.eventNode).add(eventMethod);
                 }
             });
-
-            for (EventNode<? extends Event> paramNode : eventNodes.keySet()) {
-                eventHandler.addChild(paramNode);
-            }
         });
+
+        for (EventNode<? extends Event> paramNode : eventNodes.keySet()) {
+            eventHandler.addChild(paramNode);
+        }
     }
 
     @SneakyThrows
-    private static void runEvent(Method method, SkyBlockEvent event, Event concreteEvent) {
+    private static void runEvent(SkyBlockEvent event, Method method, Object eventClassInstance, Event concreteEvent) {
         PlayerHookManager hookManager = null;
 
         if (concreteEvent instanceof PlayerEvent)
@@ -136,26 +138,26 @@ public class SkyBlockEventHandler {
 
         if (hookManager != null)
             hookManager.callAndClearHooks(
-                    event, true);
+                    eventClassInstance.getClass(), true);
 
         if (event.isAsync()) {
             PlayerHookManager finalHookManager = hookManager;
             Thread.startVirtualThread(() -> {
                 try {
-                    method.invoke(event, concreteEvent);
+                    method.invoke(eventClassInstance, concreteEvent);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     throw new RuntimeException(e);
                 }
                 if (finalHookManager != null)
                     finalHookManager.callAndClearHooks(
-                            event, false);
+                            eventClassInstance.getClass(), false);
             });
         } else {
-            method.invoke(event, concreteEvent);
+            method.invoke(eventClassInstance, concreteEvent);
 
             if (hookManager != null)
                 hookManager.callAndClearHooks(
-                        event, false);
+                        eventClassInstance.getClass(), false);
         }
     }
 

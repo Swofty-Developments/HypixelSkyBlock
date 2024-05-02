@@ -33,7 +33,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 
 ### Proxy Setup Guide
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
-2. Download the Velocity proxy from [here](https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/316/downloads/velocity-3.3.0-SNAPSHOT-316.jar)
+2. Download the Velocity proxy from [here](https://api.papermc.io/v2/projects/velocity/versions/3.3.0-SNAPSHOT/builds/388/downloads/velocity-3.3.0-SNAPSHOT-388.jar)
 3. Download `velocity.toml` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and move it to where you want your Proxy server to run.
 4. Move your Velocity proxy JAR into that folder aswell, and run the proxy using `java -jar velocity-3.3.0-SNAPSHOT-316.jar` as a command in that directory.
 5. Close this proxy once it has generated the `plugins` folder, just by pressing `CTRL + C` or closing the CMD Prompt.

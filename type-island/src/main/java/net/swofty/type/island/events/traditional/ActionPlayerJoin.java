@@ -12,7 +12,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerJoin implements SkyBlockEventClass {
 
-
     @SneakyThrows
     @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
     public void run(AsyncPlayerConfigurationEvent event) {

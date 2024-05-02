@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public record PlayerHookManager(SkyBlockPlayer player, Map<SkyBlockEvent, Map<Consumer<SkyBlockPlayer>, Boolean>> hooks) {
-    public void registerHook(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer, boolean before) {
+public record PlayerHookManager(SkyBlockPlayer player, Map<Class, Map<Consumer<SkyBlockPlayer>, Boolean>> hooks) {
+    public void registerHook(Class hook, Consumer<SkyBlockPlayer> consumer, boolean before) {
         if (hooks.containsKey(hook)) {
             hooks.get(hook).put(consumer, before);
         } else {
@@ -16,17 +16,17 @@ public record PlayerHookManager(SkyBlockPlayer player, Map<SkyBlockEvent, Map<Co
         }
     }
 
-    public void hookBefore(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer) {
+    public void hookBefore(Class hook, Consumer<SkyBlockPlayer> consumer) {
         registerHook(hook, consumer, false);
     }
 
-    public void hookAfter(SkyBlockEvent hook, Consumer<SkyBlockPlayer> consumer) {
+    public void hookAfter(Class hook, Consumer<SkyBlockPlayer> consumer) {
         registerHook(hook, consumer, true);
     }
 
-    public void callAndClearHooks(SkyBlockEvent hook, boolean before) {
+    public void callAndClearHooks(Class hook, boolean before) {
         hooks.forEach((skyBlockEvent, consumerMap) -> {
-            if (hook.getClass() == skyBlockEvent.getClass()) {
+            if (hook == skyBlockEvent) {
                 consumerMap.forEach((consumer, isBefore) -> {
                     if (isBefore == before) {
                         consumer.accept(player);
