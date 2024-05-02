@@ -10,7 +10,7 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 
 public class ActionChunkUnload implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.ENTITY , requireDataLoaded = false)
+    @SkyBlockEvent(node = EventNodes.ENTITY , requireDataLoaded = false , isAsync = true)
     public void run(InstanceChunkUnloadEvent event) {
         Instance instance = event.getInstance();
         int chunkX = event.getChunkX();

@@ -26,7 +26,7 @@ import java.util.UUID;
 
 public class ActionPlayerDataSpawn implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = false)
+    @SkyBlockEvent(node = EventNodes.PLAYER_DATA , requireDataLoaded = false , isAsync = true)
     public void run(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ActionRegionPlaySong implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true , isAsync = true)
     public void run(PlayerRegionChangeEvent event) {
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockSongsHandler songHandler = player.getSongHandler();
