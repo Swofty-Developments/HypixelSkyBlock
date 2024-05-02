@@ -1,13 +1,13 @@
 package net.swofty.velocity.packet;
 
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.proxy.protocol.packet.BossBar;
-import com.velocitypowered.proxy.protocol.packet.JoinGame;
-import com.velocitypowered.proxy.protocol.packet.KeepAlive;
-import com.velocitypowered.proxy.protocol.packet.Respawn;
-import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdate;
-import com.velocitypowered.proxy.protocol.packet.config.RegistrySync;
-import com.velocitypowered.proxy.protocol.packet.config.StartUpdate;
+import com.velocitypowered.proxy.protocol.packet.BossBarPacket;
+import com.velocitypowered.proxy.protocol.packet.JoinGamePacket;
+import com.velocitypowered.proxy.protocol.packet.KeepAlivePacket;
+import com.velocitypowered.proxy.protocol.packet.RespawnPacket;
+import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdatePacket;
+import com.velocitypowered.proxy.protocol.packet.config.RegistrySyncPacket;
+import com.velocitypowered.proxy.protocol.packet.config.StartUpdatePacket;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -15,7 +15,7 @@ import net.swofty.velocity.gamemanager.TransferHandler;
 
 public final class PlayerChannelHandler extends ChannelDuplexHandler {
     private final Player player;
-    private Respawn respawn = null;
+    private RespawnPacket respawn = null;
 
     public PlayerChannelHandler(final Player player) {
         this.player = player;
@@ -25,26 +25,26 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
     public void write(final ChannelHandlerContext ctx, final Object packet, final ChannelPromise promise) throws Exception {
         try {
             if (TransferHandler.playersInLimbo.contains(player)
-                    && packet.getClass() != Respawn.class
-                    && packet.getClass() != JoinGame.class
-                    && packet.getClass() != BossBar.class
-                    && packet.getClass() != StartUpdate.class
-                    && packet.getClass() != KeepAlive.class
-                    && packet.getClass() != RegistrySync.class
-                    && packet.getClass() != FinishedUpdate.class
+                    && packet.getClass() != RespawnPacket.class
+                    && packet.getClass() != JoinGamePacket.class
+                    && packet.getClass() != BossBarPacket.class
+                    && packet.getClass() != StartUpdatePacket.class
+                    && packet.getClass() != KeepAlivePacket.class
+                    && packet.getClass() != RegistrySyncPacket.class
+                    && packet.getClass() != FinishedUpdatePacket.class
             ) {
                 System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;
             }
-            if (respawn == null && packet.getClass() == Respawn.class) {
-                respawn = (Respawn) packet;
+            if (respawn == null && packet.getClass() == RespawnPacket.class) {
+                respawn = (RespawnPacket) packet;
             }
-            if (packet.getClass() != Respawn.class && TransferHandler.playersInLimbo.contains(player)) {
+            if (packet.getClass() != RespawnPacket.class && TransferHandler.playersInLimbo.contains(player)) {
                 if (respawn != null) {
                     write(ctx, respawn, ctx.newPromise());
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
 
 
         super.write(ctx, packet, promise);
