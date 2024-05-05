@@ -176,7 +176,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGEN, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
