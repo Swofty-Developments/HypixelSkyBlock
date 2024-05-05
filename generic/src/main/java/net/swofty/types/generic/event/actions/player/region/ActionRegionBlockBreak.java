@@ -63,6 +63,8 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         /**
          * Handle block dropping
          */
+        if (event.getResultBlock().name().equals("minecraft:air")) return;
+
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
         Pos pos = Pos.fromPoint(event.getBlockPosition());
         // Move the dropped item to the center of the block

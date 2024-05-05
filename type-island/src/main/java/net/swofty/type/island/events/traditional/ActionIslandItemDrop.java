@@ -41,6 +41,9 @@ public class ActionIslandItemDrop implements SkyBlockEventClass {
         /**
          * Handle block dropping
          */
+
+        if (playerBreakEvent.getResultBlock().name().equals("minecraft:air")) return;
+
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
         Pos pos = Pos.fromPoint(playerBreakEvent.getBlockPosition());
         // Move the dropped item to the center of the block

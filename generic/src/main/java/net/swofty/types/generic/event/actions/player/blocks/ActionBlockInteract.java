@@ -11,7 +11,7 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 public class ActionBlockInteract implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
-    public void run(PlayerBlockInteractEvent event) {
+    public void onInteract(PlayerBlockInteractEvent event) {
         if (SkyBlockBlock.isSkyBlockBlock(event.getBlock())) {
             SkyBlockBlock block = new SkyBlockBlock(event.getBlock());
             if (block.getGenericInstance() instanceof BlockInteractable interactable) {

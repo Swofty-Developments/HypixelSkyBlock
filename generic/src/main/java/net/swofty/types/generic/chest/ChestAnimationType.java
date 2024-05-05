@@ -15,7 +15,7 @@ public enum ChestAnimationType {
             BlockActionPacket actionPacket = new BlockActionPacket(
                     position,
                     (byte) 1,
-                    valueOf(name()) == ChestAnimationType.OPEN ? (byte) 1 : 0,
+                    this == ChestAnimationType.OPEN ? (byte) 1 : 0,
                     instance.getBlock(position)
             );
             instance.getPlayers().forEach(player -> player.sendPacket(actionPacket));

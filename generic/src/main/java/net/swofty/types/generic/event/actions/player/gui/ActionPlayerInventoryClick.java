@@ -19,7 +19,7 @@ import net.swofty.types.generic.utility.StringUtility;
 
 public class ActionPlayerInventoryClick implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
     public void run(InventoryPreClickEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
