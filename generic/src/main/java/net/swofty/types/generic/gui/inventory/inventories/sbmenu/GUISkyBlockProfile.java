@@ -203,7 +203,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         ItemStatistic.PRISTINE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.FARMING_FORTUNE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -229,7 +229,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                 List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills "));
                 List<ItemStatistic> stats = new ArrayList<>(List.of()); // WISDOM STATS
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -257,7 +257,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.FISHING_SPEED, ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE));
 
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) && stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -266,9 +266,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
 
                 lore.add("");
                 lore.add("§eClick for details!");
-                return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1,
-                        lore
-                );
+                return ItemStackCreator.getStack("§dMisc Stats", Material.CLOCK, 1, lore);
             }
         });
         updateItemStacks(getInventory(), getPlayer());
