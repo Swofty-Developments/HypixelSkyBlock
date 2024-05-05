@@ -21,7 +21,8 @@ public class GUIBiblio extends SkyBlockInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(new GUIClickableItem(10) {
+        set(GUIClickableItem.getCloseItem(31));
+        set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.sendMessage(Component.text("§7Click §e§lHERE §7to visit the §6Official SkyBlock Wiki§7!§r")
@@ -36,7 +37,7 @@ public class GUIBiblio extends SkyBlockInventoryGUI {
                         "§7search via an item ID.", "", "§eClick to visit the Wiki!");
             }
         });
-        set(new GUIClickableItem(12) {
+        set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
 
@@ -53,10 +54,11 @@ public class GUIBiblio extends SkyBlockInventoryGUI {
                         "§eSee more @ §fwiki.hypixel.net");
             }
         });
-        set(new GUIClickableItem(14) {
+        set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+                player.sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
             }
 
             @Override

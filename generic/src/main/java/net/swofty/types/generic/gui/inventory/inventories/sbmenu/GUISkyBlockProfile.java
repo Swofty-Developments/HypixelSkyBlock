@@ -14,6 +14,8 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.types.generic.user.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -169,12 +171,12 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Gives you a better chance at", "§7fighting strong monsters. "));
-                List<String> stats = new ArrayList<>(List.of("Health", "Defense", "Strength", "Intelligence",
-                        "Crit Chance", "Crit Damage", "Ferocity", "Bonus Attack Speed", "Ability Damage", "Health Regen", "Vitality",
-                        "Mending", "True Defense", "Swing Range"
-                ));
+                List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.HEALTH, ItemStatistic.DEFENSE, ItemStatistic.STRENGTH, ItemStatistic.INTELLIGENCE,
+                        ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.TRUE_DEFENSE,
+                        ItemStatistic.FEROCITY, ItemStatistic.HEALTH_REGEN, ItemStatistic.VITALITY, ItemStatistic.MENDING, ItemStatistic.SWING_RANGE));
+
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -197,11 +199,11 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Lets you collect and harvest better", "§7items, or more of them. "));
-                List<String> stats = new ArrayList<>(List.of("Mining Speed", "Breaking Power", "Pristine", "Foraging Fortune",
-                        "Farming Fortune", "Mining Fortune"
-                ));
+                List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE, ItemStatistic.BREAKING_POWER,
+                        ItemStatistic.PRISTINE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.FARMING_FORTUNE));
+
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -225,9 +227,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Increases the §3XP §7you gain on your", "§7skills "));
-                List<String> stats = new ArrayList<>(List.of()); // WISDOM STATS
+                List<ItemStatistic> stats = new ArrayList<>(List.of()); // WISDOM STATS
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());
@@ -251,11 +253,11 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 PlayerStatistics statistics = player.getStatistics();
                 List<String> lore = new ArrayList<>(List.of("§7Augments various aspects of your", "§7gameplay! "));
-                List<String> stats = new ArrayList<>(List.of("Speed", "Sea Creature Chance", "Magic Find", "Pet Luck",
-                        "Fishing Speed", "Bonus Pest Chance"
-                ));
+                List<ItemStatistic> stats = new ArrayList<>(List.of(ItemStatistic.SPEED, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK,
+                        ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.FISHING_SPEED, ItemStatistic.COLD_RESISTANCE, ItemStatistic.BONUS_PEST_CHANCE));
+
                 statistics.allStatistics().getOverall().forEach((statistic, value) -> {
-                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic.getDisplayName())) {
+                    if (!value.equals(statistic.getBaseAdditiveValue()) || stats.contains(statistic)) {
                         lore.add(" " + statistic.getDisplayColor() + statistic.getSymbol() + " " +
                                 StringUtility.toNormalCase(statistic.name()) + " §f" +
                                 StringUtility.decimalify(value, 2) + statistic.getSuffix());

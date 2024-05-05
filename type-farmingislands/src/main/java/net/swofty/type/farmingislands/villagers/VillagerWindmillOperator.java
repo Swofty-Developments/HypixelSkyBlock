@@ -1,23 +1,23 @@
-package net.swofty.type.village.villagers;
+package net.swofty.type.farmingislands.villagers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 
-public class VillagerPlumberJoe extends SkyBlockVillagerNPC {
-    public VillagerPlumberJoe() {
+public class VillagerWindmillOperator extends NPCVillagerDialogue {
+    public VillagerWindmillOperator() {
         super(new NPCVillagerParameters() {
             @Override
             public String[] holograms() {
-                return new String[]{"§fPlumber Joe", "&e&lCLICK"};
+                return new String[]{"Windmill Operator", "§e§lCLICK"};
             }
 
             @Override
             public Pos position() {
-                return new Pos(56, 70, -78, 180, 0);
+                return new Pos(98.5, 89, -282.5, 90, 0);
             }
 
             @Override
@@ -27,14 +27,19 @@ public class VillagerPlumberJoe extends SkyBlockVillagerNPC {
 
             @Override
             public VillagerMeta.Profession profession() {
-                return VillagerMeta.Profession.TOOLSMITH;
+                return VillagerMeta.Profession.NONE;
             }
         });
     }
 
     @Override
+    public DialogueSet[] getDialogueSets() {
+        return new DialogueSet[0];
+    }
+
+    @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
 }
