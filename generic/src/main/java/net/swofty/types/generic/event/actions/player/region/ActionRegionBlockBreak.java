@@ -41,7 +41,12 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             RegionType type = region.getType();
             SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-            if (mining != null && material != null && mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
+            if (mining != null && !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
+                event.setCancelled(true);
+                return;
+            }
+
+            if (mining != null && material != null) {
                 mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
             }
         } else {
