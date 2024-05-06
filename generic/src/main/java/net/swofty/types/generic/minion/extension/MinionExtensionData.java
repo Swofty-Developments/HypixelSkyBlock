@@ -7,6 +7,7 @@ import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionSkinExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionUpgradeExtension;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -45,6 +46,7 @@ public class MinionExtensionData {
                 .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .toArray(SkyBlockItem[]::new);
     }
+    @Nullable
     public SkyBlockItem getMinionSkin() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionSkinExtension)
@@ -52,6 +54,7 @@ public class MinionExtensionData {
                 .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .findFirst().orElse(null);
     }
+    @Nullable
     public SkyBlockItem getAutomatedShipping() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionShippingExtension)
@@ -59,6 +62,7 @@ public class MinionExtensionData {
                 .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .findFirst().orElse(null);
     }
+    @Nullable
     public SkyBlockItem getFuel() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionFuelExtension)
