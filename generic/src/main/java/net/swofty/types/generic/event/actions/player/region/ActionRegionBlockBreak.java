@@ -35,17 +35,18 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         Block block = event.getBlock();
         Material material = Material.fromNamespaceId(block.name());
 
-        if (region != null && !SkyBlockConst.isIslandServer()) {
+        if (SkyBlockConst.isIslandServer()) {
+            event.getInstance().setBlock(event.getBlockPosition(), Block.AIR);
+        } else if (region != null) {
             RegionType type = region.getType();
             SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-            if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
-                return;
+            if (mining != null && material != null && mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
+                mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
             }
-
-            mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
-        } else if (SkyBlockConst.isIslandServer()) {
-            event.getInstance().setBlock(event.getBlockPosition(), Block.AIR);
+        } else {
+            event.setCancelled(true);
+            return;
         }
 
         SkyBlockItem item;
