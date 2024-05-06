@@ -1,12 +1,13 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.type.village.gui.GUIShopFarmMerchant;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCFarmMerchant extends SkyBlockNPC {
+public class NPCFarmMerchant extends NPCDialogue {
 
     public NPCFarmMerchant() {
         super(new NPCParameters() {
@@ -39,7 +40,30 @@ public class NPCFarmMerchant extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopFarmMerchant().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FARM_MERCHANT);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FARM_MERCHANT, true);
+            });
+            return;
+        }
+
+        new GUIShopFarmMerchant().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "You can buy and sell harvested crops with me!",
+                                "Wheat, carrots, potatoes, and melon are my specialties!",
+                                "Click me again to open the Farmer Shop!"
+                        }).build(),
+        };
     }
 
 }

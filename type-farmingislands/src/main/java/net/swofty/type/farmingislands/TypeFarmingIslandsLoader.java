@@ -12,7 +12,6 @@ import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
@@ -85,7 +84,14 @@ public class TypeFarmingIslandsLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<SkyBlockNPC> getNPCs() {
-        return new ArrayList<>();
+        List<SkyBlockNPC> npcs = new ArrayList<>();
+
+        npcs.addAll(SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.type.farmingislands.npcs",
+                SkyBlockNPC.class
+        ).toList());
+
+        return npcs;
     }
 
     @Override

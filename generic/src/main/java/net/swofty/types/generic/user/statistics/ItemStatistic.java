@@ -42,6 +42,7 @@ public enum ItemStatistic {
     PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
     SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 1D),
     FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
+    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
     BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
 
     // Other Stats
