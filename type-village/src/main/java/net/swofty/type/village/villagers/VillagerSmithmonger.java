@@ -1,5 +1,7 @@
 package net.swofty.type.village.villagers;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
@@ -32,6 +34,7 @@ public class VillagerSmithmonger extends SkyBlockVillagerNPC {
 
     @Override
     public void onClick(PlayerClickVillagerNPCEvent e) {
-        e.player().sendMessage("§cThis Feature is not there yet. §aOpen a Pull request at https://github.com/Swofty-Developments/HypixelSkyBlock to get it added quickly!");
+        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
+                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
 }

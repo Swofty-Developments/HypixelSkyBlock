@@ -24,7 +24,7 @@ public class GUIShopFarmMerchant extends SkyBlockShopGUI {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BROWN_MUSHROOM), 1, new CoinShopPrice(25)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.SAND), 2, new CoinShopPrice(8)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.CACTUS), 1, new CoinShopPrice(15)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BONE_MEAL), 3, new CoinShopPrice(6)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.ENCHANTED_BONE_MEAL), 3, new CoinShopPrice(6)));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ROOKIE_HOE), 1, new CoinShopPrice(10)));
 
     }
