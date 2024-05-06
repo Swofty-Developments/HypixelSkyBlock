@@ -1,5 +1,6 @@
 package net.swofty.types.generic.mission.missions;
 
+import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
@@ -18,10 +19,12 @@ public class MissionCraftWoodenPickaxe extends SkyBlockMission {
     public void onCraftEvent(ItemCraftEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (data.isCurrentlyActive(MissionCraftWoodenPickaxe.class) || data.hasCompleted(MissionCraftWoodenPickaxe.class)) return;
+        if (!data.isCurrentlyActive(MissionCraftWoodenPickaxe.class) || data.hasCompleted(MissionCraftWoodenPickaxe.class)) return;
+
+        if (!event.getCraftedItem().getMaterial().equals(Material.WOODEN_PICKAXE)) return;
 
         data.setSkyBlockPlayer(event.getPlayer());
-        data.startMission(MissionCraftWoodenPickaxe.class);
+        data.endMission(MissionCraftWoodenPickaxe.class);
     }
 
     @Override

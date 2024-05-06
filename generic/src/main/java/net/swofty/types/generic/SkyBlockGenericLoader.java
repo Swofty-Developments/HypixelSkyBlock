@@ -350,6 +350,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.event.actions", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.types.generic.mission.missions", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         typeLoader.getTraditionalEvents().forEach(SkyBlockEventHandler::registerEventMethods);
         typeLoader.getCustomEvents().forEach(SkyBlockEventHandler::registerEventMethods);
 

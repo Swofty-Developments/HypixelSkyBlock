@@ -112,7 +112,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
                     getRaw(category),
                     getCumulative(category),
                     value,
-                    getCumulative(category) + (getRaw(category) - value) + (value - getRaw(category))
+                    getCumulative(category) + value - getRaw(category)
             ));
             skills.put(category, value);
             player.playSound(Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 2f), Sound.Emitter.self());

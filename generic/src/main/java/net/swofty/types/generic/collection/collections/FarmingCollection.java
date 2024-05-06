@@ -103,6 +103,7 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
                                 ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",
@@ -761,6 +762,7 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
                                 ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",
@@ -1119,6 +1121,7 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
                                 ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",

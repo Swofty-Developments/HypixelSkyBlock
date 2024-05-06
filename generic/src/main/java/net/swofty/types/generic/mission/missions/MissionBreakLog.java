@@ -1,5 +1,7 @@
 package net.swofty.types.generic.mission.missions;
 
+import net.minestom.server.event.player.PlayerSpawnEvent;
+import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
@@ -15,12 +17,23 @@ import java.util.Set;
 
 public class MissionBreakLog extends SkyBlockMission {
     @SkyBlockEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
-    public void onBlockBreak(CustomBlockBreakEvent event) {
+    public void endMission(CustomBlockBreakEvent event) {
         MissionData data = event.getPlayer().getMissionData();
+
+        if (!data.isCurrentlyActive(MissionBreakLog.class) || data.hasCompleted(MissionBreakLog.class)) return;
+
+        data.setSkyBlockPlayer(event.getPlayer());
+        data.endMission(MissionBreakLog.class);
+    }
+
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    public void startMission(PlayerSpawnEvent event) {
+        if (!event.isFirstSpawn()) return;
+        MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 
         if (data.isCurrentlyActive(MissionBreakLog.class) || data.hasCompleted(MissionBreakLog.class)) return;
 
-        data.setSkyBlockPlayer(event.getPlayer());
+        data.setSkyBlockPlayer(((SkyBlockPlayer) event.getPlayer()));
         data.startMission(MissionBreakLog.class);
     }
 

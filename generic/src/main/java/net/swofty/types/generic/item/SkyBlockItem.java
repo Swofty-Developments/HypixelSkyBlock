@@ -193,6 +193,7 @@ public class SkyBlockItem {
     public String toString() {
         return "SkyBlockItem{" +
                 "type=" + getMaterial().name() +
+                ", itemType=" + getAttributeHandler().getItemType() +
                 ", clazz=" + clazz +
                 ", amount=" + amount +
                 ", attributes=" + attributes.stream().map(attribute -> attribute.getKey() + "=" + attribute.getValue()).reduce((s, s2) -> s + ", " + s2).orElse("null") +

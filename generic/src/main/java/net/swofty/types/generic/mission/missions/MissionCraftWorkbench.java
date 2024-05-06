@@ -1,5 +1,6 @@
 package net.swofty.types.generic.mission.missions;
 
+import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
@@ -18,10 +19,12 @@ public class MissionCraftWorkbench extends SkyBlockMission {
     public void onCraftEvent(ItemCraftEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (data.isCurrentlyActive(MissionCraftWorkbench.class) || data.hasCompleted(MissionCraftWorkbench.class)) return;
+        if (!data.isCurrentlyActive(MissionCraftWorkbench.class) || data.hasCompleted(MissionCraftWorkbench.class)) return;
+
+        if (event.getCraftedItem().getMaterial() != Material.CRAFTING_TABLE) return;
 
         data.setSkyBlockPlayer(event.getPlayer());
-        data.startMission(MissionCraftWorkbench.class);
+        data.endMission(MissionCraftWorkbench.class);
     }
 
     @Override

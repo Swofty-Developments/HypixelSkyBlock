@@ -227,7 +227,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                                     return true;
                                 }
                             } catch (Exception e) {
-                                Logger.error("Error in recipe " + recipe.getResult().getMaterial() + " at row " + row + " col " + col);
+                                Logger.error("Error in recipe " + recipe.getResult().toString() + " at row " + row + " col " + col);
                             }
                         }
                     }

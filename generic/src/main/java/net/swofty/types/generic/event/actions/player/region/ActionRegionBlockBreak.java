@@ -26,28 +26,27 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
     public void run(PlayerBlockBreakEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (player.isBypassBuild() || SkyBlockConst.isIslandServer()) {
+        if (player.isBypassBuild())
             return;
-        }
 
         event.setCancelled(true);
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
-        if (region == null) {
-            return;
-        }
-
-        RegionType type = region.getType();
-
         Block block = event.getBlock();
         Material material = Material.fromNamespaceId(block.name());
-        SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-        if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
-            return;
+        if (region != null && !SkyBlockConst.isIslandServer()) {
+            RegionType type = region.getType();
+            SkyBlockMiningConfiguration mining = type.getMiningHandler();
+
+            if (mining == null || material == null || !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
+                return;
+            }
+
+            mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
+        } else if (SkyBlockConst.isIslandServer()) {
+            event.getInstance().setBlock(event.getBlockPosition(), Block.AIR);
         }
-
-        mining.addToQueue(player, Pos.fromPoint(event.getBlockPosition()), (SharedInstance) player.getInstance());
 
         SkyBlockItem item;
         if (ItemDropChanger.get(material) != null) {
@@ -63,8 +62,6 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         /**
          * Handle block dropping
          */
-        if (event.getResultBlock().name().equals("minecraft:air")) return;
-
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
         Pos pos = Pos.fromPoint(event.getBlockPosition());
         // Move the dropped item to the center of the block
@@ -75,10 +72,11 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         double y = playerPos.y() - pos.y();
         double z = playerPos.z() - pos.z();
         double distance = Math.sqrt(x * x + y * y + z * z);
-        double multiplier = 1.2 / distance;
+        double multiplier = 1.4 / distance;
         pos = pos.add(x * multiplier, y * multiplier * 3, z * multiplier);
 
         droppedItem.setInstance(player.getInstance(), pos);
+        droppedItem.addViewer(player);
     }
 }
 
