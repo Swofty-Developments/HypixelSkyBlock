@@ -2,12 +2,15 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.bazaar.BazaarCategories;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.GUIBazaar;
+import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCBazaarAgent extends SkyBlockNPC {
+import java.util.stream.Stream;
+
+public class NPCBazaarAgent extends NPCDialogue {
     public NPCBazaarAgent() {
         super(new NPCParameters() {
             @Override
@@ -39,6 +42,21 @@ public class NPCBazaarAgent extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIBazaar(BazaarCategories.FARMING).open(e.player());
+        if (isInDialogue(e.player())) return;
+        SkyBlockLevelRequirement lvl = e.player().getSkyBlockExperience().getLevel();
+        if (lvl.asInt() >= 7) {
+            new GUIBazaar(BazaarCategories.FARMING).open(e.player());
+            return;
+        }
+        setDialogue(e.player(), "hello");
+    }
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return Stream.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "§cYou need SkyBlock Level 7 to access this feature!"
+                        }).build()
+        ).toArray(NPCDialogue.DialogueSet[]::new);
     }
 }
