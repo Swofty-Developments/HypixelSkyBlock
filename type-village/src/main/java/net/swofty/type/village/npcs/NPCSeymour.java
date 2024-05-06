@@ -2,6 +2,7 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUISeymour;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -12,7 +13,7 @@ public class NPCSeymour extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Seymour", "§e§lCLICK"};
+                return new String[]{"Seymour", "§e§lCLICK"};
             }
 
             @Override
@@ -39,16 +40,25 @@ public class NPCSeymour extends NPCDialogue {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        if (isInDialogue(e.player())) return;
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_SEYMOUR);
 
-        setDialogue(e.player(), "open-shop").thenRun(() -> new GUISeymour().open(e.player()));
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_SEYMOUR, true);
+            });
+            return;
+        }
+
+        new GUISeymour().open(player);
     }
 
     @Override
     public DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
         return new DialogueSet[] {
                 NPCDialogue.DialogueSet.builder()
-                        .key("open-shop").lines(new String[]{
+                        .key("hello").lines(new String[]{
                                 "Looking to buy something fancy?",
                         }).build(),
         };

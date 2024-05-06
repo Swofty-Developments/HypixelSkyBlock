@@ -1,7 +1,6 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.village.gui.elizabeth.GUIAccountAndProfileUpgrades;
 import net.swofty.type.village.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;

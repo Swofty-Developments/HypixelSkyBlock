@@ -2,11 +2,12 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopMadRedstoneEngineer;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCMadRedstoneEngineer extends SkyBlockNPC {
+public class NPCMadRedstoneEngineer extends NPCDialogue {
 
     public NPCMadRedstoneEngineer() {
         super(new NPCParameters() {
@@ -39,7 +40,28 @@ public class NPCMadRedstoneEngineer extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopMadRedstoneEngineer().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MAD_REDSTONE_ENGINEER);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MAD_REDSTONE_ENGINEER, true);
+            });
+            return;
+        }
+
+        new GUIShopMadRedstoneEngineer().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Every problem in life can be solved with a little redstone."
+                        }).build(),
+        };
     }
 
 }

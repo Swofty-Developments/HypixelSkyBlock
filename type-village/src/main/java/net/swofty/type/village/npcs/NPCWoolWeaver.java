@@ -1,12 +1,14 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopWeaponsmith;
 import net.swofty.type.village.gui.GUIShopWoolWeaverVibrant;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCWoolWeaver extends SkyBlockNPC {
+public class NPCWoolWeaver extends NPCDialogue {
 
     public NPCWoolWeaver() {
         super(new NPCParameters() {
@@ -39,6 +41,28 @@ public class NPCWoolWeaver extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-            new GUIShopWoolWeaverVibrant().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_WOOL_WEAVER);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_WOOL_WEAVER, true);
+            });
+            return;
+        }
+
+        new GUIShopWoolWeaverVibrant().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "If wool shrinks when you wash it...",
+                                "...why don't sheep get smaller when it rains?"
+                        }).build(),
+        };
     }
 }

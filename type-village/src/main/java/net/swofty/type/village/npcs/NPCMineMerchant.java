@@ -2,11 +2,12 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopMineMerchant;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCMineMerchant extends SkyBlockNPC {
+public class NPCMineMerchant extends NPCDialogue {
     public NPCMineMerchant() {
         super(new NPCParameters() {
             @Override
@@ -38,6 +39,28 @@ public class NPCMineMerchant extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopMineMerchant().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MINE_MERCHANT);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_MINE_MERCHANT, true);
+            });
+            return;
+        }
+
+        new GUIShopMineMerchant().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "My specialities are ores, stone, and mining equipment.",
+                                "Click me again to open the Miner Shop!"
+                        }).build(),
+        };
     }
 }
