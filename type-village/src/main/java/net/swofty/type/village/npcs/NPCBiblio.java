@@ -12,7 +12,7 @@ public class NPCBiblio extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Biblio", "§e§lCLICK"};
+                return new String[]{"Biblio", "§e§lCLICK"};
             }
 
             @Override

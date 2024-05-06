@@ -2,11 +2,12 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopZog;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCZog extends SkyBlockNPC {
+public class NPCZog extends NPCDialogue {
 
     public NPCZog() {
         super(new NPCParameters() {
@@ -39,7 +40,29 @@ public class NPCZog extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopZog().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ZOG);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ZOG, true);
+            });
+            return;
+        }
+
+        new GUIShopZog().open(player);
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Hello! Have you heard of pet items?",
+                                "Pet items give your companions bonuses!",
+                                "I sell all kinds of them if you'd like to try one out!"
+                        }).build(),
+        };
+    }
 }

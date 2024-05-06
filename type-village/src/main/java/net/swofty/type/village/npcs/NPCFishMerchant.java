@@ -2,11 +2,12 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopFishMerchant;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCFishMerchant extends SkyBlockNPC {
+public class NPCFishMerchant extends NPCDialogue {
     public NPCFishMerchant() {
         super(new NPCParameters() {
             @Override
@@ -38,6 +39,29 @@ public class NPCFishMerchant extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopFishMerchant().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISH_MERCHANT);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISH_MERCHANT, true);
+            });
+            return;
+        }
+
+        new GUIShopFishMerchant().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "Fishing is my trade.",
+                                "I buy and sell any fish, rod, or treasure you can find!",
+                                "Click me again to open the Fisherman Shop!"
+                        }).build(),
+        };
     }
 }

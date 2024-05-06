@@ -17,7 +17,7 @@ public class NPCLumberJack extends NPCDialogue {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Lumber Jack", "§e§lCLICK"};
+                return new String[]{"Lumber Jack", "§e§lCLICK"};
             }
 
             @Override

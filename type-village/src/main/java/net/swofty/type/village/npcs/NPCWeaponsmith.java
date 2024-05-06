@@ -2,11 +2,12 @@ package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.village.gui.GUIShopWeaponsmith;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCWeaponsmith extends SkyBlockNPC {
+public class NPCWeaponsmith extends NPCDialogue {
     public NPCWeaponsmith() {
         super(new NPCParameters() {
             @Override
@@ -38,6 +39,28 @@ public class NPCWeaponsmith extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopWeaponsmith().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_WEAPONSMITH);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_WEAPONSMITH, true);
+            });
+            return;
+        }
+
+        new GUIShopWeaponsmith().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "You'll need some strong weapons to survive out in the wild! Lucky for you, I've got some!",
+                                "Click me again to open the Weaponsmith Shop!"
+                        }).build(),
+        };
     }
 }

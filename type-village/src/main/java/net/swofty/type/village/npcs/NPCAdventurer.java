@@ -1,12 +1,14 @@
 package net.swofty.type.village.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.village.gui.GUIShopFarmMerchant;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.type.village.gui.GUIShopAdventurer;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCAdventurer extends SkyBlockNPC {
+public class NPCAdventurer extends NPCDialogue {
     public NPCAdventurer() {
         super(new NPCParameters() {
             @Override
@@ -38,6 +40,30 @@ public class NPCAdventurer extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        new GUIShopAdventurer().open(e.player());
+        SkyBlockPlayer player = e.player();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ADVENTURER);
+
+        if (!hasSpokenBefore) {
+            setDialogue(player, "hello").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ADVENTURER, true);
+            });
+            return;
+        }
+
+        new GUIShopAdventurer().open(player);
+    }
+
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return new NPCDialogue.DialogueSet[] {
+                NPCDialogue.DialogueSet.builder()
+                        .key("hello").lines(new String[]{
+                                "I've seen it all - every island from here to the edge of the world!",
+                                "Over the years I've acquired a variety of Talismans and Artifact.",
+                                "For a price, you can have it all!",
+                                "Click me again to open the Adventurer Shop!"
+                        }).build(),
+        };
     }
 }

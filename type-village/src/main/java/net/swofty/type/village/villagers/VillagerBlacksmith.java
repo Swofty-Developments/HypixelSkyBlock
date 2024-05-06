@@ -10,7 +10,6 @@ import net.swofty.types.generic.mission.missions.blacksmith.MissionMineCoal;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmith;
 import net.swofty.types.generic.mission.missions.blacksmith.MissionTalkToBlacksmithAgain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class VillagerBlacksmith extends NPCVillagerDialogue {

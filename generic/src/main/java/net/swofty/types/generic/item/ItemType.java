@@ -407,7 +407,7 @@ public enum ItemType {
     SILVER_MAGMAFISH(Material.PLAYER_HEAD, Rarity.EPIC, SilverMagmafish.class),
     GOLD_MAGMAFISH(Material.PLAYER_HEAD, Rarity.LEGENDARY, GoldMagmafish.class),
     DIAMOND_MAGMAFISH(Material.PLAYER_HEAD, Rarity.MYTHIC, DiamondMagmafish.class),
-    FISHING_ROD(Material.FISHING_ROD, Rarity.COMMON),
+    FISHING_ROD(Material.FISHING_ROD, Rarity.COMMON, FishingRod.class),
 
     /**
      * Combat Props
