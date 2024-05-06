@@ -76,7 +76,7 @@ public class NPCFarmer extends NPCDialogue {
                         }).build(),
                 DialogueSet.builder()
                         .key("spoke-again").lines(new String[]{
-                                "hank you so much!",
+                                "Thank you so much!",
                                 "My Farm is yours to harvest! Wheat is a valuable resource to collect, you can unlock many cool things by collecting it."
                         }).build()
         ).stream().toArray(DialogueSet[]::new);
