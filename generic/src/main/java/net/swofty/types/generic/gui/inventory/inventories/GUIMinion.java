@@ -19,6 +19,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -76,6 +77,14 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                 minion.getItemsInMinion().forEach(item -> player.addAndUpdateItem(item.toSkyBlockItem()));
                 for (SkyBlockItem item : minion.getExtensionData().getMinionUpgrades()) {
                     player.addAndUpdateItem(item);
+                }
+                player.addAndUpdateItem(minion.getExtensionData().getMinionSkin());
+                player.addAndUpdateItem(minion.getExtensionData().getAutomatedShipping());
+                if (minion.getExtensionData().getFuel() != null) {
+                    long timeFuelLasts = ((MinionFuelItem)minion.getExtensionData().getFuel().getGenericInstance()).getFuelLastTimeInMS();
+                    if (timeFuelLasts == 0) {
+                        player.addAndUpdateItem(minion.getExtensionData().getFuel());
+                    }
                 }
                 minion.removeMinion();
                 player.getSkyBlockIsland().getMinionData().getMinions().remove(minion);

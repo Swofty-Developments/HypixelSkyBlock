@@ -3,7 +3,11 @@ package net.swofty.types.generic.minion.extension;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
+import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
+import net.swofty.types.generic.minion.extension.extensions.MinionSkinExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionUpgradeExtension;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -35,8 +39,36 @@ public class MinionExtensionData {
                 .filter(extension -> extension.getItemTypePassedIn() == type).count();
     }
 
-    public SkyBlockItem[] getMinionUpgrades(){
-        return extensionData.values().stream().filter(extension -> extension instanceof MinionUpgradeExtension).filter(extension -> extension.getItemTypePassedIn() != null).map(extension -> new SkyBlockItem(extension.getItemTypePassedIn())).toArray(SkyBlockItem[]::new);
+    public SkyBlockItem[] getMinionUpgrades() {
+        return extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionUpgradeExtension)
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
+                .toArray(SkyBlockItem[]::new);
+    }
+    @Nullable
+    public SkyBlockItem getMinionSkin() {
+        return extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionSkinExtension)
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
+                .findFirst().orElse(null);
+    }
+    @Nullable
+    public SkyBlockItem getAutomatedShipping() {
+        return extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionShippingExtension)
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
+                .findFirst().orElse(null);
+    }
+    @Nullable
+    public SkyBlockItem getFuel() {
+        return extensionData.values().stream()
+                .filter(extension -> extension instanceof MinionFuelExtension)
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
+                .findFirst().orElse(null);
     }
 
     @SneakyThrows
