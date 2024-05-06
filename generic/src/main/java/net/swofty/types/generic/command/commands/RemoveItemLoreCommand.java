@@ -10,7 +10,7 @@ import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "removelore",
+@CommandParameters(aliases = "rll",
         description = "Removes a line of lore from a sandbox item",
         usage = "/removeitemlore <line_number>",
         permission = Rank.DEFAULT,

@@ -11,7 +11,7 @@ import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "itemlore",
+@CommandParameters(aliases = "sll",
         description = "Updates the name of a player's item",
         usage = "/setitemlore <line_number> <lore>",
         permission = Rank.DEFAULT,
