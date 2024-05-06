@@ -4,12 +4,18 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.TransactionOption;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.items.communitycenter.BoosterCookie;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.Map;
 
 public class GUIBoosterCookie extends SkyBlockInventoryGUI {
     public GUIBoosterCookie() {
@@ -35,7 +41,8 @@ public class GUIBoosterCookie extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.setBits(4000);
+                player.setBits(player.getBits() + 4000);
+                player.getInventory().setItemStack(player.getAllOfTypeInInventory(ItemType.BOOSTER_COOKIE).entrySet().stream().findFirst().get().getKey(), ItemStack.AIR);
                 player.closeInventory();
             }
 
