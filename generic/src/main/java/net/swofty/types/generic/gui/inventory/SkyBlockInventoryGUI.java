@@ -27,6 +27,7 @@ public abstract class SkyBlockInventoryGUI {
     private Inventory inventory;
     private SkyBlockPlayer player;
     private boolean hasFinishedLoading = false;
+    private int itemInHand = 0;
 
     public SkyBlockInventoryGUI(String title, InventoryType size) {
         this.title = title;
@@ -264,6 +265,7 @@ public abstract class SkyBlockInventoryGUI {
      */
     public void open(SkyBlockPlayer player) {
         this.player = player;
+        this.itemInHand = player.getHeldSlot();
         this.inventory = new Inventory(size, getTitle());
 
         SkyBlockInventoryGUI previouslyOpen = GUI_MAP.get(player.getUuid());
@@ -296,6 +298,10 @@ public abstract class SkyBlockInventoryGUI {
             updateItemStacks(inventory, player);
             ActionPlayerChangeSkyBlockMenuDisplay.setMainMenu(player);
             onOpen(openEvent);
+            if (player.getHeldSlot() != itemInHand) {
+                player.sendMessage("§cYour item in hand cannot change in between opening GUIs");
+                return;
+            }
             hasFinishedLoading = true;
 
             if (this instanceof RefreshingGUI gui) {
