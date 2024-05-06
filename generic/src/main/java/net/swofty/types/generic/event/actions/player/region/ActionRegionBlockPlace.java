@@ -12,8 +12,8 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 
 public class ActionRegionBlockPlace implements SkyBlockEventClass {
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false)
-    public void run(PlayerBlockBreakEvent event) {
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    public void run(PlayerBlockPlaceEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
