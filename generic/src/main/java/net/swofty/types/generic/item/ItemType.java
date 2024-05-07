@@ -144,6 +144,17 @@ import net.swofty.types.generic.item.items.travelscroll.HubCryptsTravelScroll;
 import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.Anvil;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.Chest;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.CraftingTable;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.Ladder;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.Stick;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.acacia.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.birch.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.darkoak.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.jungle.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.oak.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.wood.spruce.*;
 import net.swofty.types.generic.item.items.vanilla.bow.Bow;
 import net.swofty.types.generic.item.items.vanilla.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
@@ -839,7 +850,6 @@ public enum ItemType {
     BIRCH_LOG(Material.BIRCH_LOG, Rarity.COMMON, Birch.class),
     DARK_OAK_LOG(Material.DARK_OAK_LOG, Rarity.COMMON, DarkOak.class),
     JUNGLE_LOG(Material.JUNGLE_LOG, Rarity.COMMON, Jungle.class),
-    OAK_PLANKS(Material.OAK_PLANKS, Rarity.COMMON),
     OBSIDIAN(Material.OBSIDIAN, Rarity.COMMON, Obsidian.class),
     PACKED_ICE(Material.PACKED_ICE, Rarity.COMMON),
     VINES(Material.VINE, Rarity.COMMON),
@@ -923,6 +933,55 @@ public enum ItemType {
     DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, DiamondBoots.class),
     APPLE(Material.APPLE, Rarity.COMMON),
     SLIME_BLOCK(Material.SLIME_BLOCK, Rarity.COMMON, SlimeBlock.class),
+    OAK_PLANKS(Material.OAK_PLANKS, Rarity.COMMON, OakPlanks.class),
+    OAK_SLAB(Material.OAK_SLAB, Rarity.COMMON, OakSlab.class),
+    OAK_STAIRS(Material.OAK_STAIRS, Rarity.COMMON, OakStairs.class),
+    OAK_FENCE(Material.OAK_FENCE, Rarity.COMMON, OakFence.class),
+    OAK_FENCE_GATE(Material.OAK_FENCE_GATE, Rarity.COMMON, OakFenceGate.class),
+    OAK_DOOR(Material.OAK_DOOR, Rarity.COMMON, OakDoor.class),
+    OAK_TRAPDOOR(Material.OAK_TRAPDOOR, Rarity.COMMON, OakTrapdoor.class),
+    OAK_PRESSURE_PLATE(Material.OAK_PRESSURE_PLATE, Rarity.COMMON, OakPressurePlate.class),
+    ACACIA_PLANKS(Material.ACACIA_PLANKS, Rarity.COMMON, AcaciaPlanks.class),
+    ACACIA_SLAB(Material.ACACIA_SLAB, Rarity.COMMON, AcaciaSlab.class),
+    ACACIA_STAIRS(Material.ACACIA_STAIRS, Rarity.COMMON, AcaciaStairs.class),
+    ACACIA_FENCE(Material.ACACIA_FENCE, Rarity.COMMON, AcaciaFence.class),
+    ACACIA_FENCE_GATE(Material.ACACIA_FENCE_GATE, Rarity.COMMON, AcaciaFenceGate.class),
+    ACACIA_DOOR(Material.ACACIA_DOOR, Rarity.COMMON, AcaciaDoor.class),
+    ACACIA_TRAPDOOR(Material.ACACIA_TRAPDOOR, Rarity.COMMON, AcaciaTrapdoor.class),
+    ACACIA_PRESSURE_PLATE(Material.ACACIA_PRESSURE_PLATE, Rarity.COMMON, AcaciaPressurePlate.class),
+    BIRCH_PLANKS(Material.BIRCH_PLANKS, Rarity.COMMON, BirchPlanks.class),
+    BIRCH_SLAB(Material.BIRCH_SLAB, Rarity.COMMON, BirchSlab.class),
+    BIRCH_STAIRS(Material.BIRCH_STAIRS, Rarity.COMMON, BirchStairs.class),
+    BIRCH_FENCE(Material.BIRCH_FENCE, Rarity.COMMON, BirchFence.class),
+    BIRCH_FENCE_GATE(Material.BIRCH_FENCE_GATE, Rarity.COMMON, BirchFenceGate.class),
+    BIRCH_DOOR(Material.BIRCH_DOOR, Rarity.COMMON, BirchDoor.class),
+    BIRCH_TRAPDOOR(Material.BIRCH_TRAPDOOR, Rarity.COMMON, BirchTrapdoor.class),
+    BIRCH_PRESSURE_PLATE(Material.BIRCH_PRESSURE_PLATE, Rarity.COMMON, BirchPressurePlate.class),
+    DARK_OAK_PLANKS(Material.DARK_OAK_PLANKS, Rarity.COMMON, DarkOakPlanks.class),
+    DARK_OAK_SLAB(Material.DARK_OAK_SLAB, Rarity.COMMON, DarkOakSlab.class),
+    DARK_OAK_STAIRS(Material.DARK_OAK_STAIRS, Rarity.COMMON, DarkOakStairs.class),
+    DARK_OAK_FENCE(Material.DARK_OAK_FENCE, Rarity.COMMON, DarkOakFence.class),
+    DARK_OAK_FENCE_GATE(Material.DARK_OAK_FENCE_GATE, Rarity.COMMON, DarkOakFenceGate.class),
+    DARK_OAK_DOOR(Material.DARK_OAK_DOOR, Rarity.COMMON, DarkOakDoor.class),
+    DARK_OAK_TRAPDOOR(Material.DARK_OAK_TRAPDOOR, Rarity.COMMON, DarkOakTrapdoor.class),
+    DARK_OAK_PRESSURE_PLATE(Material.DARK_OAK_PRESSURE_PLATE, Rarity.COMMON, DarkOakPressurePlate.class),
+    JUNGLE_PLANKS(Material.JUNGLE_PLANKS, Rarity.COMMON, JunglePlanks.class),
+    JUNGLE_SLAB(Material.JUNGLE_SLAB, Rarity.COMMON, JungleSlab.class),
+    JUNGLE_STAIRS(Material.JUNGLE_STAIRS, Rarity.COMMON, JungleStairs.class),
+    JUNGLE_FENCE(Material.JUNGLE_FENCE, Rarity.COMMON, JungleFence.class),
+    JUNGLE_FENCE_GATE(Material.JUNGLE_FENCE_GATE, Rarity.COMMON, JungleFenceGate.class),
+    JUNGLE_DOOR(Material.JUNGLE_DOOR, Rarity.COMMON, JungleDoor.class),
+    JUNGLE_TRAPDOOR(Material.JUNGLE_TRAPDOOR, Rarity.COMMON, JungleTrapdoor.class),
+    JUNGLE_PRESSURE_PLATE(Material.JUNGLE_PRESSURE_PLATE, Rarity.COMMON, JunglePressurePlate.class),
+    SPRUCE_PLANKS(Material.SPRUCE_PLANKS, Rarity.COMMON, SprucePlanks.class),
+    SPRUCE_SLAB(Material.SPRUCE_SLAB, Rarity.COMMON, SpruceSlab.class),
+    SPRUCE_STAIRS(Material.SPRUCE_STAIRS, Rarity.COMMON, SpruceStairs.class),
+    SPRUCE_FENCE(Material.SPRUCE_FENCE, Rarity.COMMON, SpruceFence.class),
+    SPRUCE_FENCE_GATE(Material.SPRUCE_FENCE_GATE, Rarity.COMMON, SpruceFenceGate.class),
+    SPRUCE_DOOR(Material.SPRUCE_DOOR, Rarity.COMMON, SpruceDoor.class),
+    SPRUCE_TRAPDOOR(Material.SPRUCE_TRAPDOOR, Rarity.COMMON, SpruceTrapdoor.class),
+    SPRUCE_PRESSURE_PLATE(Material.SPRUCE_PRESSURE_PLATE, Rarity.COMMON, SprucePressurePlate.class),
+    LADDER(Material.LADDER, Rarity.COMMON, Ladder.class),
 
 
     /**

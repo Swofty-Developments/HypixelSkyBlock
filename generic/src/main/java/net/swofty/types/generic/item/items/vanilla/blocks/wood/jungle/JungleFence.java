@@ -1,12 +1,12 @@
-package net.swofty.types.generic.item.items.vanilla;
+package net.swofty.types.generic.item.items.vanilla.blocks.wood.jungle;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
-import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
+import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
@@ -16,27 +16,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Anvil implements PlaceableCustomSkyBlockItem, DefaultCraftable, NotFinishedYet {
+public class JungleFence implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.JUNGLE_PLANKS, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
+        List<String> pattern = List.of(
+                "ABA",
+                "ABA");
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.JUNGLE_FENCE, 3), ingredientMap, pattern);
+    }
+
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
     }
 
     @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.IRON_BLOCK, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.IRON_INGOT, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
-        List<String> pattern = List.of(
-                "AAA",
-                " B ",
-                "BBB");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ANVIL), ingredientMap, pattern);
+    public @Nullable BlockType getAssociatedBlockType() {
+        return null;
     }
 
     @Override
-    public @Nullable BlockType getAssociatedBlockType() {
-        return null;
+    public double getSellValue() {
+        return 1;
     }
 }
