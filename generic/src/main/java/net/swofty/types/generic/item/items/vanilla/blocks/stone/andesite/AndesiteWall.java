@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.vanilla.blocks.wood.oak;
+package net.swofty.types.generic.item.items.vanilla.blocks.stone.andesite;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemType;
@@ -16,14 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OakSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
+public class AndesiteWall implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ANDESITE, 1));
         List<String> pattern = List.of(
+                "AAA",
                 "AAA");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.OAK_SLAB, 6), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ANDESITE_WALL, 6), ingredientMap, pattern);
     }
 
     @Override
@@ -38,6 +39,6 @@ public class OakSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable, S
 
     @Override
     public double getSellValue() {
-        return 0.5;
+        return 1;
     }
 }

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.vanilla.blocks.wood.oak;
+package net.swofty.types.generic.item.items.vanilla.blocks.stone.stonebricks;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemType;
@@ -16,16 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OakSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
-    @Override
-    public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_PLANKS, 1));
-        List<String> pattern = List.of(
-                "AAA");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.OAK_SLAB, 6), ingredientMap, pattern);
-    }
-
+public class StoneBricks implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
@@ -38,6 +29,16 @@ public class OakSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable, S
 
     @Override
     public double getSellValue() {
-        return 0.5;
+        return 1;
+    }
+
+    @Override
+    public SkyBlockRecipe<?> getRecipe() {
+        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.STONE, 1));
+        List<String> pattern = List.of(
+                "AA",
+                "AA");
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.STONE_BRICKS, 4), ingredientMap, pattern);
     }
 }

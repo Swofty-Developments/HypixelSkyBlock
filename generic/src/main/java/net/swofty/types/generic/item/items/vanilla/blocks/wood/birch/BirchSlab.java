@@ -23,7 +23,7 @@ public class BirchSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable,
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.BIRCH_PLANKS, 1));
         List<String> pattern = List.of(
                 "AAA");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.BIRCH_SLAB), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.BIRCH_SLAB, 6), ingredientMap, pattern);
     }
 
     @Override

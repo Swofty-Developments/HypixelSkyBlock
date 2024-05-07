@@ -145,6 +145,18 @@ import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.Anvil;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.andesite.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.Cobblestone;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.CobblestoneSlab;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.CobblestoneStairs;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.CobblestoneWall;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.diorite.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.granite.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.netherbricks.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.quartz.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.sandstone.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.stone.*;
+import net.swofty.types.generic.item.items.vanilla.blocks.stone.stonebricks.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.Chest;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.CraftingTable;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.Ladder;
@@ -817,7 +829,6 @@ public enum ItemType {
     CARROT(Material.CARROT, Rarity.COMMON, Carrot.class),
     CHARCOAL(Material.CHARCOAL, Rarity.COMMON),
     COAL(Material.COAL, Rarity.COMMON, Coal.class),
-    COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON, Cobblestone.class),
     COCOA_BEANS(Material.COCOA_BEANS, Rarity.COMMON, CocoaBean.class),
     DARK_OAK_WOOD(Material.DARK_OAK_WOOD, Rarity.COMMON, DarkOak.class),
     DIAMOND(Material.DIAMOND, Rarity.COMMON, Diamond.class),
@@ -881,6 +892,7 @@ public enum ItemType {
     RED_SAND(Material.RED_SAND, Rarity.COMMON, RedSand.class),
     QUARTZ(Material.QUARTZ, Rarity.COMMON, Quartz.class),
     NETHERRACK(Material.NETHERRACK, Rarity.COMMON, Netherrack.class),
+    NETHER_BRICK(Material.NETHER_BRICK, Rarity.COMMON),
     SAND(Material.SAND, Rarity.COMMON, Sand.class),
     CLAY_BALL(Material.CLAY_BALL, Rarity.COMMON, ClayBall.class),
     TROPICAL_FISH(Material.TROPICAL_FISH, Rarity.COMMON, TropicalFish.class),
@@ -906,7 +918,6 @@ public enum ItemType {
     WOOL(Material.WHITE_WOOL, Rarity.COMMON, Wool.class),
     COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON, CoalBlock.class),
     LAPIS_LAZULI_BLOCK(Material.LAPIS_BLOCK, Rarity.COMMON, LapisLazuliBlock.class),
-    QUARTZ_BLOCK(Material.QUARTZ_BLOCK, Rarity.COMMON, QuartzBlock.class),
     BROWN_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
     RED_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
     BLAZE_POWDER(Material.BLAZE_POWDER, Rarity.COMMON, BlazePowder.class),
@@ -982,6 +993,68 @@ public enum ItemType {
     SPRUCE_TRAPDOOR(Material.SPRUCE_TRAPDOOR, Rarity.COMMON, SpruceTrapdoor.class),
     SPRUCE_PRESSURE_PLATE(Material.SPRUCE_PRESSURE_PLATE, Rarity.COMMON, SprucePressurePlate.class),
     LADDER(Material.LADDER, Rarity.COMMON, Ladder.class),
+    STONE(Material.STONE, Rarity.COMMON, Stone.class),
+    STONE_SLAB(Material.STONE_SLAB, Rarity.COMMON, StoneSlab.class),
+    STONE_STAIRS(Material.STONE_STAIRS, Rarity.COMMON, StoneStairs.class),
+    SMOOTH_STONE(Material.SMOOTH_STONE, Rarity.COMMON, SmoothStone.class),
+    SMOOTH_STONE_SLAB(Material.SMOOTH_STONE_SLAB, Rarity.COMMON, SmoothStoneSlab.class),
+    GRANITE(Material.GRANITE, Rarity.COMMON, Granite.class),
+    GRANITE_SLAB(Material.GRANITE_SLAB, Rarity.COMMON, GraniteSlab.class),
+    GRANITE_STAIRS(Material.GRANITE_STAIRS, Rarity.COMMON, GraniteStairs.class),
+    GRANITE_WALL(Material.GRANITE_WALL, Rarity.COMMON, GraniteWall.class),
+    POLISHED_GRANITE(Material.POLISHED_GRANITE, Rarity.COMMON, PolishedGranite.class),
+    POLISHED_GRANITE_SLAB(Material.POLISHED_GRANITE_SLAB, Rarity.COMMON, PolishedGraniteSlab.class),
+    POLISHED_GRANITE_STAIRS(Material.POLISHED_GRANITE_STAIRS, Rarity.COMMON, PolishedGraniteStairs.class),
+    DIORITE(Material.DIORITE, Rarity.COMMON, Diorite.class),
+    DIORITE_SLAB(Material.DIORITE_SLAB, Rarity.COMMON, DioriteSlab.class),
+    DIORITE_STAIRS(Material.DIORITE_STAIRS, Rarity.COMMON, DioriteStairs.class),
+    DIORITE_WALL(Material.DIORITE_WALL, Rarity.COMMON, DioriteWall.class),
+    POLISHED_DIORITE(Material.POLISHED_DIORITE, Rarity.COMMON, PolishedDiorite.class),
+    POLISHED_DIORITE_SLAB(Material.POLISHED_DIORITE_SLAB, Rarity.COMMON, PolishedDioriteSlab.class),
+    POLISHED_DIORITE_STAIRS(Material.POLISHED_DIORITE_STAIRS, Rarity.COMMON, PolishedDioriteStairs.class),
+    ANDESITE(Material.ANDESITE, Rarity.COMMON, Andesite.class),
+    ANDESITE_SLAB(Material.ANDESITE_SLAB, Rarity.COMMON, AndesiteSlab.class),
+    ANDESITE_STAIRS(Material.ANDESITE_STAIRS, Rarity.COMMON, AndesiteStairs.class),
+    ANDESITE_WALL(Material.ANDESITE_WALL, Rarity.COMMON, AndesiteWall.class),
+    POLISHED_ANDESITE(Material.POLISHED_ANDESITE, Rarity.COMMON, PolishedAndesite.class),
+    POLISHED_ANDESITE_SLAB(Material.POLISHED_ANDESITE_SLAB, Rarity.COMMON, PolishedAndesiteSlab.class),
+    POLISHED_ANDESITE_STAIRS(Material.POLISHED_ANDESITE_STAIRS, Rarity.COMMON, PolishedAndesiteStairs.class),
+    COBBLESTONE(Material.COBBLESTONE, Rarity.COMMON, Cobblestone.class),
+    COBBLESTONE_SLAB(Material.COBBLESTONE_SLAB, Rarity.COMMON, CobblestoneSlab.class),
+    COBBLESTONE_STAIRS(Material.COBBLESTONE_STAIRS, Rarity.COMMON, CobblestoneStairs.class),
+    COBBLESTONE_WALL(Material.COBBLESTONE_WALL, Rarity.COMMON, CobblestoneWall.class),
+    SANDSTONE(Material.SANDSTONE, Rarity.COMMON, Sandstone.class),
+    SANDSTONE_SLAB(Material.SANDSTONE_SLAB, Rarity.COMMON, SandstoneSlab.class),
+    SANDSTONE_STAIRS(Material.SANDSTONE_STAIRS, Rarity.COMMON, SandstoneStairs.class),
+    SANDSTONE_WALL(Material.SANDSTONE_WALL, Rarity.COMMON, SandstoneWall.class),
+    CUT_SANDSTONE(Material.CUT_SANDSTONE, Rarity.COMMON, CutSandstone.class),
+    CUT_SANDSTONE_SLAB(Material.CUT_SANDSTONE_SLAB, Rarity.COMMON, CutSandstoneSlab.class),
+    CHISELED_SANDSTONE(Material.CHISELED_SANDSTONE, Rarity.COMMON, ChiseledSandstone.class),
+    RED_SANDSTONE(Material.RED_SANDSTONE, Rarity.COMMON, RedSandstone.class),
+    RED_SANDSTONE_SLAB(Material.RED_SANDSTONE_SLAB, Rarity.COMMON, RedSandstoneSlab.class),
+    RED_SANDSTONE_STAIRS(Material.RED_SANDSTONE_STAIRS, Rarity.COMMON, RedSandstoneStairs.class),
+    RED_SANDSTONE_WALL(Material.RED_SANDSTONE_WALL, Rarity.COMMON, RedSandstoneWall.class),
+    CUT_RED_SANDSTONE(Material.CUT_RED_SANDSTONE, Rarity.COMMON, CutRedSandstone.class),
+    CUT_RED_SANDSTONE_SLAB(Material.CUT_RED_SANDSTONE_SLAB, Rarity.COMMON, CutRedSandstoneSlab.class),
+    CHISELED_RED_SANDSTONE(Material.CHISELED_RED_SANDSTONE, Rarity.COMMON, ChiseledRedSandstone.class),
+    STONE_BRICKS(Material.STONE_BRICKS, Rarity.COMMON, StoneBricks.class),
+    STONE_BRICK_SLAB(Material.STONE_BRICK_SLAB, Rarity.COMMON, StoneBrickSlab.class),
+    STONE_BRICK_STAIRS(Material.STONE_BRICK_STAIRS, Rarity.COMMON, StoneBrickStairs.class),
+    STONE_BRICK_WALL(Material.STONE_BRICK_WALL, Rarity.COMMON, StoneBrickWall.class),
+    MOSSY_STONE_BRICKS(Material.MOSSY_STONE_BRICKS, Rarity.COMMON, MossyStoneBricks.class),
+    MOSSY_STONE_BRICK_SLAB(Material.MOSSY_STONE_BRICK_SLAB, Rarity.COMMON, MossyStoneBrickSlab.class),
+    MOSSY_STONE_BRICK_STAIRS(Material.MOSSY_STONE_BRICK_STAIRS, Rarity.COMMON, MossyStoneBrickStairs.class),
+    MOSSY_STONE_BRICK_WALL(Material.MOSSY_STONE_BRICK_WALL, Rarity.COMMON, MossyStoneBrickWall.class),
+    QUARTZ_BLOCK(Material.QUARTZ_BLOCK, Rarity.COMMON, QuartzBlock.class),
+    QUARTZ_SLAB(Material.QUARTZ_SLAB, Rarity.COMMON, QuartzSlab.class),
+    QUARTZ_STAIRS(Material.QUARTZ_STAIRS, Rarity.COMMON, QuartzStairs.class),
+    QUARTZ_PILLAR(Material.QUARTZ_PILLAR, Rarity.COMMON, QuartzPillar.class),
+    CHISELED_QUARTZ_BLOCK(Material.CHISELED_QUARTZ_BLOCK, Rarity.COMMON, ChiseledQuartzBlock.class),
+    NETHER_BRICKS(Material.NETHER_BRICKS, Rarity.COMMON, NetherBricks.class),
+    NETHER_BRICK_SLAB(Material.NETHER_BRICK_SLAB, Rarity.COMMON, NetherBrickSlab.class),
+    NETHER_BRICK_STAIRS(Material.NETHER_BRICK_STAIRS, Rarity.COMMON, NetherBrickStairs.class),
+    NETHER_BRICK_WALL(Material.NETHER_BRICK_WALL, Rarity.COMMON, NetherBrickWall.class),
+    NETHER_BRICK_FENCE(Material.NETHER_BRICK_FENCE, Rarity.COMMON, NetherBrickFence.class),
 
 
     /**

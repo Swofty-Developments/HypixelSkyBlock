@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.mining.vanilla;
+package net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.SkyBlockItem;

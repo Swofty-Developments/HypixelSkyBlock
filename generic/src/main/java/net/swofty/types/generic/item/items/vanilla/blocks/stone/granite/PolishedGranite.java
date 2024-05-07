@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.mining.vanilla;
+package net.swofty.types.generic.item.items.vanilla.blocks.stone.granite;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemType;
@@ -16,20 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuartzBlock implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable {
-    @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.empty();
-    }
-
+public class PolishedGranite implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.QUARTZ, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.GRANITE, 1));
         List<String> pattern = List.of(
                 "AA",
                 "AA");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.QUARTZ_BLOCK), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.POLISHED_GRANITE, 4), ingredientMap, pattern);
+    }
+
+    @Override
+    public ItemStatistics getStatistics(SkyBlockItem instance) {
+        return ItemStatistics.empty();
     }
 
     @Override
@@ -39,6 +39,6 @@ public class QuartzBlock implements PlaceableCustomSkyBlockItem, Sellable, Defau
 
     @Override
     public double getSellValue() {
-        return 16;
+        return 2;
     }
 }
