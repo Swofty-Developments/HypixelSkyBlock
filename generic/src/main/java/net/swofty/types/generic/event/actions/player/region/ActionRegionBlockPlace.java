@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.region;
 
-import net.minestom.server.event.Event;
-import net.minestom.server.event.player.PlayerBlockBreakEvent;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
@@ -16,10 +15,22 @@ public class ActionRegionBlockPlace implements SkyBlockEventClass {
     public void run(PlayerBlockPlaceEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (player.isBypassBuild() || SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
+        if (player.isBypassBuild()) {
             return;
         }
+        if (SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
+            Integer islandSizePlus = (int) Math.floor((double) 161/2);
+            Integer islandSizeMinus = -islandSizePlus;
+            Point position = event.getBlockPosition();
+            Integer x = position.blockX();
+            Integer z = position.blockZ();
 
+            if (x > islandSizePlus || x < islandSizeMinus || z > islandSizePlus || z < islandSizeMinus) {
+                event.setCancelled(true);
+                player.sendMessage("§cYou can't build any further in this direction!");
+            }
+            return;
+        }
         event.setCancelled(true);
     }
 }

@@ -922,6 +922,7 @@ public enum ItemType {
     DIAMOND_LEGGINGS(Material.DIAMOND_LEGGINGS, Rarity.UNCOMMON, DiamondLeggings.class),
     DIAMOND_BOOTS(Material.DIAMOND_BOOTS, Rarity.UNCOMMON, DiamondBoots.class),
     APPLE(Material.APPLE, Rarity.COMMON),
+    SLIME_BLOCK(Material.SLIME_BLOCK, Rarity.COMMON, SlimeBlock.class),
 
 
     /**
