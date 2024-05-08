@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
+import net.minestom.server.event.player.PlayerItemAnimationEvent;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -11,7 +12,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 
 import java.util.*;
 
-public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
+public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, StandardItem, DisableAnimationImpl , NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -49,5 +50,10 @@ public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, Standar
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;
+    }
+
+    @Override
+    public List<PlayerItemAnimationEvent.ItemAnimationType> getDisabledAnimations() {
+        return List.of(PlayerItemAnimationEvent.ItemAnimationType.EAT);
     }
 }
