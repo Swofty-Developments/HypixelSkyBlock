@@ -36,7 +36,7 @@ public class GreenStainedGlassPane implements PlaceableCustomSkyBlockItem, Sella
 
         Map<Character, MaterialQuantifiable> ingredientMap2 = new HashMap<>();
         ingredientMap2.put('A', new MaterialQuantifiable(ItemType.GLASS_PANE, 1));
-        ingredientMap2.put('B', new MaterialQuantifiable(ItemType.GREEN_DYE, 1));
+        ingredientMap2.put('B', new MaterialQuantifiable(ItemType.CACTUS_GREEN, 1));
         List<String> pattern2 = List.of(
                 "AAA",
                 "ABA",

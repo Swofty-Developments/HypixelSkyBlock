@@ -36,7 +36,7 @@ public class GreenWool implements PlaceableCustomSkyBlockItem, Sellable, Default
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.WHITE_WOOL, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.GREEN_DYE, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.CACTUS_GREEN, 1));
         List<String> pattern = List.of(
                 "AB");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.GREEN_WOOL), ingredientMap, pattern);

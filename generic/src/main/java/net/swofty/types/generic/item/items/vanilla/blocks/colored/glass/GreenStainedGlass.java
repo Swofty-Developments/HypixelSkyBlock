@@ -36,7 +36,7 @@ public class GreenStainedGlass implements PlaceableCustomSkyBlockItem, Sellable,
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemType.GLASS, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.GREEN_DYE, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.CACTUS_GREEN, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

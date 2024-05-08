@@ -142,8 +142,6 @@ import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
 import net.swofty.types.generic.item.items.travelscroll.HubCryptsTravelScroll;
 import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
-import net.swofty.types.generic.item.items.vanilla.*;
-import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.Anvil;
 import net.swofty.types.generic.item.items.vanilla.blocks.colored.carpet.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.colored.glass.*;
@@ -171,8 +169,11 @@ import net.swofty.types.generic.item.items.vanilla.blocks.wood.darkoak.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.jungle.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.oak.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.wood.spruce.*;
-import net.swofty.types.generic.item.items.vanilla.bow.Bow;
-import net.swofty.types.generic.item.items.vanilla.weapon.*;
+import net.swofty.types.generic.item.items.vanilla.items.FishingRod;
+import net.swofty.types.generic.item.items.vanilla.items.armor.*;
+import net.swofty.types.generic.item.items.vanilla.items.bow.Bow;
+import net.swofty.types.generic.item.items.vanilla.items.dyes.*;
+import net.swofty.types.generic.item.items.vanilla.items.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -1058,22 +1059,21 @@ public enum ItemType {
     NETHER_BRICK_STAIRS(Material.NETHER_BRICK_STAIRS, Rarity.COMMON, NetherBrickStairs.class),
     NETHER_BRICK_WALL(Material.NETHER_BRICK_WALL, Rarity.COMMON, NetherBrickWall.class),
     NETHER_BRICK_FENCE(Material.NETHER_BRICK_FENCE, Rarity.COMMON, NetherBrickFence.class),
-    WHITE_DYE(Material.WHITE_DYE, Rarity.COMMON),
-    ORANGE_DYE(Material.ORANGE_DYE, Rarity.COMMON),
-    MAGENTA_DYE(Material.MAGENTA_DYE, Rarity.COMMON),
-    LIGHT_BLUE_DYE(Material.LIGHT_BLUE_DYE, Rarity.COMMON),
-    YELLOW_DYE(Material.YELLOW_DYE, Rarity.COMMON),
-    LIME_DYE(Material.LIME_DYE, Rarity.COMMON),
-    PINK_DYE(Material.PINK_DYE, Rarity.COMMON),
-    GRAY_DYE(Material.GRAY_DYE, Rarity.COMMON),
-    LIGHT_GRAY_DYE(Material.LIGHT_GRAY_DYE, Rarity.COMMON),
-    CYAN_DYE(Material.CYAN_DYE, Rarity.COMMON),
-    PURPLE_DYE(Material.PURPLE_DYE, Rarity.COMMON),
-    BLUE_DYE(Material.BLUE_DYE, Rarity.COMMON),
-    BROWN_DYE(Material.BROWN_DYE, Rarity.COMMON),
-    GREEN_DYE(Material.GREEN_DYE, Rarity.COMMON),
-    RED_DYE(Material.RED_DYE, Rarity.COMMON),
-    BLACK_DYE(Material.BLACK_DYE, Rarity.COMMON),
+    WHITE_DYE(Material.WHITE_DYE, Rarity.COMMON, WhiteDye.class),
+    ORANGE_DYE(Material.ORANGE_DYE, Rarity.COMMON, OrangeDye.class),
+    MAGENTA_DYE(Material.MAGENTA_DYE, Rarity.COMMON, MagentaDye.class),
+    LIGHT_BLUE_DYE(Material.LIGHT_BLUE_DYE, Rarity.COMMON, LightBlueDye.class),
+    YELLOW_DYE(Material.YELLOW_DYE, Rarity.COMMON, YellowDye.class),
+    LIME_DYE(Material.LIME_DYE, Rarity.COMMON, LimeDye.class),
+    PINK_DYE(Material.PINK_DYE, Rarity.COMMON, PinkDye.class),
+    GRAY_DYE(Material.GRAY_DYE, Rarity.COMMON, GrayDye.class),
+    LIGHT_GRAY_DYE(Material.LIGHT_GRAY_DYE, Rarity.COMMON, LightGrayDye.class),
+    CYAN_DYE(Material.CYAN_DYE, Rarity.COMMON, CyanDye.class),
+    PURPLE_DYE(Material.PURPLE_DYE, Rarity.COMMON, PurpleDye.class),
+    BLUE_DYE(Material.BLUE_DYE, Rarity.COMMON, BlueDye.class),
+    BROWN_DYE(Material.BROWN_DYE, Rarity.COMMON, BrownDye.class),
+    RED_DYE(Material.RED_DYE, Rarity.COMMON, RedDye.class),
+    BLACK_DYE(Material.BLACK_DYE, Rarity.COMMON, BlackDye.class),
     WHITE_WOOL(Material.WHITE_WOOL, Rarity.COMMON, WhiteWool.class),
     ORANGE_WOOL(Material.ORANGE_WOOL, Rarity.COMMON, OrangeWool.class),
     MAGENTA_WOOL(Material.MAGENTA_WOOL, Rarity.COMMON, MagentaWool.class),
@@ -1140,6 +1140,25 @@ public enum ItemType {
     GREEN_STAINED_GLASS_PANE(Material.GREEN_STAINED_GLASS_PANE, Rarity.COMMON, GreenStainedGlassPane.class),
     RED_STAINED_GLASS_PANE(Material.RED_STAINED_GLASS_PANE, Rarity.COMMON, RedStainedGlassPane.class),
     BLACK_STAINED_GLASS_PANE(Material.BLACK_STAINED_GLASS_PANE, Rarity.COMMON, BlackStainedGlassPane.class),
+    WITHER_ROSE(Material.WITHER_ROSE, Rarity.COMMON),
+    CORNFLOWER(Material.CORNFLOWER, Rarity.COMMON),
+    LILY_OF_THE_VALLEY(Material.LILY_OF_THE_VALLEY, Rarity.COMMON),
+    SUNFLOWER(Material.SUNFLOWER, Rarity.COMMON),
+    BEETROOT(Material.BEETROOT, Rarity.COMMON),
+    RED_TULIP(Material.RED_TULIP, Rarity.COMMON),
+    ORANGE_TULIP(Material.ORANGE_TULIP, Rarity.COMMON),
+    PINK_TULIP(Material.PINK_TULIP, Rarity.COMMON),
+    WHITE_TULIP(Material.WHITE_TULIP, Rarity.COMMON),
+    ROSE_BUSH(Material.ROSE_BUSH, Rarity.COMMON),
+    TORCHFLOWER(Material.TORCHFLOWER, Rarity.COMMON),
+    PITCHER_PLANT(Material.PITCHER_PLANT, Rarity.COMMON),
+    BLUE_ORCHID(Material.BLUE_ORCHID, Rarity.COMMON),
+    PEONY(Material.PEONY, Rarity.COMMON),
+    PINK_PETALS(Material.PINK_PETALS, Rarity.COMMON),
+    LILAC(Material.LILAC, Rarity.COMMON),
+    ALLIUM(Material.ALLIUM, Rarity.COMMON),
+    AZURE_BLUET(Material.AZURE_BLUET, Rarity.COMMON),
+    OXEYE_DAISY(Material.OXEYE_DAISY, Rarity.COMMON),
 
 
     /**
