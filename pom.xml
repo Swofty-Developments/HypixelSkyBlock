@@ -23,9 +23,9 @@
         <module>spark</module>
         <module>loader</module>
 
-        <module>type-farmingislands</module>
+        <module>type-thefarmingislands</module>
         <module>type-island</module>
-        <module>type-village</module>
+        <module>type-hub</module>
 
         <module>service-auctionhouse</module>
         <module>service-bazaar</module>

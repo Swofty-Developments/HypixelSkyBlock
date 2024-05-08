@@ -3,10 +3,7 @@ package net.swofty.types.generic.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.types.generic.region.mining.configurations.MineCoalConfiguration;
-import net.swofty.types.generic.region.mining.configurations.MineLogsConfiguration;
-import net.swofty.types.generic.region.mining.configurations.MineWheatConfiguration;
-import net.swofty.types.generic.region.mining.configurations.WheatAndFlowersConfiguration;
+import net.swofty.types.generic.region.mining.configurations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,7 @@ public enum RegionType {
     BANK("Bank", "§6"),
     BLACKSMITH("Blacksmith"),
     LIBRARY("Library"),
-    THE_BARN("The Barn", "§b"),
+    THE_BARN("The Barn", "§b", MineWheatConfiguration.class),
     MUSHROOM_DESERT("Mushroom Desert"),
     GOLD_MINE("Gold Mine", "§6"),
     DEEP_CAVERN("Deep Caverns", "§b"),

@@ -24,9 +24,9 @@ import java.util.function.Function;
 
 @Getter
 public enum LaunchPads {
-    VILLAGE_TO_FARMING(getSlimeBlocksNear(new Pos(79, 71, -185)), ServerType.VILLAGE,
+    VILLAGE_TO_FARMING(getSlimeBlocksNear(new Pos(79, 71, -185)), ServerType.HUB,
             new Pos(116.5, 74, -210.5), (player) -> {
-                player.sendTo(ServerType.FARMING_ISLANDS);
+                player.sendTo(ServerType.THE_FARMING_ISLANDS);
             }, (player) -> player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 5,
             "§cYou must be at least Farming Level V to join this island!",
             (player) -> {
@@ -45,9 +45,9 @@ public enum LaunchPads {
                             .build();
                 }
     }),
-    FARMING_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.FARMING_ISLANDS,
+    FARMING_TO_VILLAGE(getSlimeBlocksNear(new Pos(111, 71, -202)), ServerType.THE_FARMING_ISLANDS,
             new Pos(74, 72, -180), (player) -> {
-                player.sendTo(ServerType.VILLAGE);
+                player.sendTo(ServerType.HUB);
             }, (player) -> true,
             "",
             (player) -> {

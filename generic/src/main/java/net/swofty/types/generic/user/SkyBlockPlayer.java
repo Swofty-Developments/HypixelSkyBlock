@@ -79,7 +79,7 @@ public class SkyBlockPlayer extends Player {
     @Setter
     private boolean inLaunchpad = false;
     @Setter
-    private ServerType originServer = ServerType.VILLAGE;
+    private ServerType originServer = ServerType.HUB;
     private StatisticDisplayReplacement manaDisplayReplacement = null;
     private StatisticDisplayReplacement defenseDisplayReplacement = null;
     private StatisticDisplayReplacement coinsDisplayReplacement = null;

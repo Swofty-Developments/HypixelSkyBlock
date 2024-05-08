@@ -110,12 +110,12 @@
     <file url="file://$PROJECT_DIR$/spark/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/type-farmingislands/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/type-farmingislands/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-hub/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-hub/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/type-island/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/type-island/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/type-village/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/type-village/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-thefarmingislands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/type-thefarmingislands/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/velocity-extension/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/velocity-extension/src/main/resources" charset="UTF-8" />
   </component>

@@ -51,12 +51,12 @@
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
-            <artifactId>type.village</artifactId>
+            <artifactId>type.hub</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.swofty</groupId>
-            <artifactId>type.farmingislands</artifactId>
+            <artifactId>type.thefarmingislands</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
