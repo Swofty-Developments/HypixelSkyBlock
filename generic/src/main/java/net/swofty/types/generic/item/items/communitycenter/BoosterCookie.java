@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.communitycenter;
 
+import net.minestom.server.event.player.PlayerItemAnimationEvent;
 import net.swofty.types.generic.gui.inventory.inventories.GUIBoosterCookie;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
@@ -9,7 +10,7 @@ import net.swofty.types.generic.user.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, TrackedUniqueItem, NotFinishedYet {
+public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchanted, TrackedUniqueItem, DisableAnimationImpl ,  NotFinishedYet {
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
@@ -39,5 +40,10 @@ public class BoosterCookie implements CustomSkyBlockItem, Interactable, Enchante
     @Override
     public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
         new GUIBoosterCookie().open(player);
+    }
+
+    @Override
+    public List<PlayerItemAnimationEvent.ItemAnimationType> getDisabledAnimations() {
+        return List.of(PlayerItemAnimationEvent.ItemAnimationType.EAT);
     }
 }
