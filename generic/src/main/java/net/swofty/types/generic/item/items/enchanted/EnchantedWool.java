@@ -14,6 +14,6 @@ public class EnchantedWool implements Enchanted, Sellable, DefaultCraftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.WOOL);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.WHITE_WOOL);
     }
 }

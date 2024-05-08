@@ -38,7 +38,7 @@ public class ActionPlayerTravel implements SkyBlockEventClass {
                 return;
             }
 
-            player.sendTo(ServerType.VILLAGE);
+            player.sendTo(ServerType.HUB);
             delay.add(player.getUuid());
 
             MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))

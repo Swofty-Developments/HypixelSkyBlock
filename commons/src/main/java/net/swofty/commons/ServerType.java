@@ -4,8 +4,8 @@ import lombok.Getter;
 @Getter
 public enum ServerType {
     ISLAND,
-    VILLAGE,
-    FARMING_ISLANDS;
+    HUB,
+    THE_FARMING_ISLANDS;
 
     public static boolean isServerType(String type) {
         for (ServerType a : values())

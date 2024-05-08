@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class BalanceConfigurations {
     public static Map<ServerType, List<BalanceConfiguration>> configurations = Map.of(
-            ServerType.VILLAGE, List.of(
+            ServerType.HUB, List.of(
                     new LowestPlayerCount()
             ),
-            ServerType.FARMING_ISLANDS, List.of(
+            ServerType.THE_FARMING_ISLANDS, List.of(
                     new LowestPlayerCount()
             ),
             ServerType.ISLAND, List.of(

@@ -145,6 +145,7 @@ import net.swofty.types.generic.item.items.travelscroll.HubMuseumTravelScroll;
 import net.swofty.types.generic.item.items.vanilla.*;
 import net.swofty.types.generic.item.items.vanilla.armor.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.Anvil;
+import net.swofty.types.generic.item.items.vanilla.blocks.colored.wool.WhiteWool;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.andesite.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.Cobblestone;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.CobblestoneSlab;
@@ -915,7 +916,6 @@ public enum ItemType {
     RABBIT_FOOT(Material.RABBIT_FOOT, Rarity.COMMON, RabbitFoot.class),
     RABBIT_HIDE(Material.RABBIT_HIDE, Rarity.COMMON, RabbitHide.class),
     BEEF(Material.BEEF, Rarity.COMMON, Beef.class),
-    WOOL(Material.WHITE_WOOL, Rarity.COMMON, Wool.class),
     COAL_BLOCK(Material.COAL_BLOCK, Rarity.COMMON, CoalBlock.class),
     LAPIS_LAZULI_BLOCK(Material.LAPIS_BLOCK, Rarity.COMMON, LapisLazuliBlock.class),
     BROWN_MUSHROOM_BLOCK(Material.BROWN_MUSHROOM_BLOCK, Rarity.COMMON),
@@ -1055,6 +1055,22 @@ public enum ItemType {
     NETHER_BRICK_STAIRS(Material.NETHER_BRICK_STAIRS, Rarity.COMMON, NetherBrickStairs.class),
     NETHER_BRICK_WALL(Material.NETHER_BRICK_WALL, Rarity.COMMON, NetherBrickWall.class),
     NETHER_BRICK_FENCE(Material.NETHER_BRICK_FENCE, Rarity.COMMON, NetherBrickFence.class),
+    WHITE_WOOL(Material.WHITE_WOOL, Rarity.COMMON, WhiteWool.class),
+    ORANGE_WOOL(Material.ORANGE_WOOL, Rarity.COMMON),
+    MAGENTA_WOOL(Material.MAGENTA_WOOL, Rarity.COMMON),
+    LIGHT_BLUE_WOOL(Material.LIGHT_BLUE_WOOL, Rarity.COMMON),
+    YELLOW_WOOL(Material.YELLOW_WOOL, Rarity.COMMON),
+    LIME_WOOL(Material.LIME_WOOL, Rarity.COMMON),
+    PINK_WOOL(Material.PINK_WOOL, Rarity.COMMON),
+    GRAY_WOOL(Material.GRAY_WOOL, Rarity.COMMON),
+    LIGHT_GRAY_WOOL(Material.LIGHT_GRAY_WOOL, Rarity.COMMON),
+    CYAN_WOOL(Material.CYAN_WOOL, Rarity.COMMON),
+    PURPLE_WOOL(Material.PURPLE_WOOL, Rarity.COMMON),
+    BLUE_WOOL(Material.BLUE_WOOL, Rarity.COMMON),
+    BROWN_WOOL(Material.BROWN_WOOL, Rarity.COMMON),
+    GREEN_WOOL(Material.GREEN_WOOL, Rarity.COMMON),
+    RED_WOOL(Material.RED_WOOL, Rarity.COMMON),
+    BLACK_WOOL(Material.BLACK_WOOL, Rarity.COMMON),
 
 
     /**
