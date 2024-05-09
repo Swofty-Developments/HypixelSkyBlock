@@ -11,6 +11,10 @@ public enum ItemDropChanger {
     COBBLESTONE(Material.COBBLESTONE, () -> new SkyBlockItem(ItemType.COBBLESTONE)),
     OAK_WOOD(Material.OAK_WOOD, () -> new SkyBlockItem(ItemType.OAK_LOG)),
     COAL_ORE(Material.COAL_ORE, () -> new SkyBlockItem(ItemType.COAL)),
+    REDSTONE_ORE(Material.REDSTONE_ORE, () -> new SkyBlockItem(ItemType.REDSTONE)),
+    DIAMOND_ORE(Material.DIAMOND_ORE, () -> new SkyBlockItem(ItemType.DIAMOND)),
+    CARVED_PUMPKIN(Material.CARVED_PUMPKIN, () -> new SkyBlockItem(ItemType.PUMPKIN)),
+    MELON(Material.MELON, () -> new SkyBlockItem(ItemType.MELON_SLICE)),
     GRASS_BLOCK(Material.GRASS_BLOCK, () -> new SkyBlockItem(ItemType.DIRT)),
     OAK_LEAVES(Material.OAK_LEAVES, () -> {
         if (Math.random() < 0.05) {
@@ -36,7 +40,6 @@ public enum ItemDropChanger {
                 return changer;
             }
         }
-
         return null;
     }
 }

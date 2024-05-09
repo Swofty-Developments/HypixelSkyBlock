@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.region;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
@@ -42,7 +41,7 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             RegionType type = region.getType();
             SkyBlockMiningConfiguration mining = type.getMiningHandler();
 
-            if (mining != null && !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
+            if (material != null && mining != null && !mining.getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(material)) {
                 event.setCancelled(true);
                 return;
             }
