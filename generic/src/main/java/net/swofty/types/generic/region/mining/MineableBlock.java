@@ -8,43 +8,43 @@ import net.swofty.types.generic.utility.MaterialQuantifiableRandom;
 
 @Getter
 public enum MineableBlock {
-    // Default minable blocks
-    STONE(Material.STONE, 15, 1, MiningLoot.Default()),
-    SAND(Material.SAND, 5, 1, MiningLoot.Default()),
-    NETHERRACK(Material.NETHERRACK, 4, 1, MiningLoot.Default()),
-    COBBLESTONE(Material.COBBLESTONE, 20, 1, MiningLoot.Default()),
-    ANDESITE(Material.ANDESITE, 15, 1, MiningLoot.Default()),
-    GRANITE(Material.GRANITE, 15, 1, MiningLoot.Default()),
-    DIORITE(Material.DIORITE, 15, 1, MiningLoot.Default()),
-    END_STONE(Material.END_STONE, 30, 1, MiningLoot.Default()),
-    OBSIDIAN(Material.END_STONE, 500, 4, MiningLoot.Default()),
-    ORE_IRON(Material.IRON_ORE, 30, 2, MiningLoot.Default()),
-    ORE_COAL(Material.COAL_ORE, 30, 1, MiningLoot.Default()),
-    ORE_GOLD(Material.GOLD_ORE, 30, 3, MiningLoot.Default()),
-    ORE_DIAMOND(Material.DIAMOND_ORE, 30, 3, MiningLoot.Default()),
-    ORE_REDSTONE(Material.REDSTONE_ORE, 30, 3, MiningLoot.Default()),
+    // default minable blocks
+    STONE(Material.STONE, 15, 1, MiningLoot.defaultLoot()),
+    SAND(Material.SAND, 5, 1, MiningLoot.defaultLoot()),
+    NETHERRACK(Material.NETHERRACK, 4, 1, MiningLoot.defaultLoot()),
+    COBBLESTONE(Material.COBBLESTONE, 20, 1, MiningLoot.defaultLoot()),
+    ANDESITE(Material.ANDESITE, 15, 1, MiningLoot.defaultLoot()),
+    GRANITE(Material.GRANITE, 15, 1, MiningLoot.defaultLoot()),
+    DIORITE(Material.DIORITE, 15, 1, MiningLoot.defaultLoot()),
+    END_STONE(Material.END_STONE, 30, 1, MiningLoot.defaultLoot()),
+    OBSIDIAN(Material.END_STONE, 500, 4, MiningLoot.defaultLoot()),
+    ORE_IRON(Material.IRON_ORE, 30, 2, MiningLoot.defaultLoot()),
+    ORE_COAL(Material.COAL_ORE, 30, 1, MiningLoot.defaultLoot()),
+    ORE_GOLD(Material.GOLD_ORE, 30, 3, MiningLoot.defaultLoot()),
+    ORE_DIAMOND(Material.DIAMOND_ORE, 30, 3, MiningLoot.defaultLoot()),
+    ORE_REDSTONE(Material.REDSTONE_ORE, 30, 3, MiningLoot.defaultLoot()),
 
     // Forest minable blocks
-    ACACIA_LOG(Material.ACACIA_LOG, 1, 0, MiningLoot.Default()),
-    BIRCH_LOG(Material.BIRCH_LOG, 1, 0, MiningLoot.Default()),
-    JUNGLE_LOG(Material.JUNGLE_LOG, 1, 0, MiningLoot.Default()),
-    SPRUCE_LOG(Material.SPRUCE_LOG, 1, 0, MiningLoot.Default()),
-    DARK_OAK_LOG(Material.DARK_OAK_LOG, 1, 0, MiningLoot.Default()),
-    MANGROVE_LOG(Material.MANGROVE_LOG, 1, 0, MiningLoot.Default()),
-    OAK_LOG(Material.OAK_LOG, 1, 0, MiningLoot.Default()),
+    ACACIA_LOG(Material.ACACIA_LOG, 1, 0, MiningLoot.defaultLoot()),
+    BIRCH_LOG(Material.BIRCH_LOG, 1, 0, MiningLoot.defaultLoot()),
+    JUNGLE_LOG(Material.JUNGLE_LOG, 1, 0, MiningLoot.defaultLoot()),
+    SPRUCE_LOG(Material.SPRUCE_LOG, 1, 0, MiningLoot.defaultLoot()),
+    DARK_OAK_LOG(Material.DARK_OAK_LOG, 1, 0, MiningLoot.defaultLoot()),
+    MANGROVE_LOG(Material.MANGROVE_LOG, 1, 0, MiningLoot.defaultLoot()),
+    OAK_LOG(Material.OAK_LOG, 1, 0, MiningLoot.defaultLoot()),
 
     // Farming minable blocks
-    PUMPKIN(Material.PUMPKIN, 1, 0, MiningLoot.Default()),
-    CARVED_PUMPKIN(Material.CARVED_PUMPKIN, 1, 0, MiningLoot.Default()),
-    MELON(Material.MELON, 1, 0, MiningLoot.Default()),
+    PUMPKIN(Material.PUMPKIN, 1, 0, MiningLoot.defaultLoot()),
+    CARVED_PUMPKIN(Material.CARVED_PUMPKIN, 1, 0, MiningLoot.defaultLoot()),
+    MELON(Material.MELON, 1, 0, MiningLoot.custom(Material.MELON, 3, 7)),
 
     // Dwarven mines minable blocks
-    MITHRIL_WEAK(Material.GRAY_WOOL, 500, 4, MiningLoot.None()),
-    MITHRIL_WEAK2(Material.CYAN_TERRACOTTA, 500, 4, MiningLoot.None()),
-    MITHRIL_MEDIUM(Material.PRISMARINE, 800, 4, MiningLoot.None()),
-    MITHRIL_STRONG(Material.LIGHT_BLUE_WOOL, 1500, 4, MiningLoot.None()),
-    TITANIUM(Material.DIORITE, 2500, 5, MiningLoot.None()),
-    DWARVEN_GOLD(Material.GOLD_BLOCK, 600, 3, MiningLoot.Custom(Material.GOLD_INGOT, 2, 4)),
+    MITHRIL_WEAK(Material.GRAY_WOOL, 500, 4, MiningLoot.none()),
+    MITHRIL_WEAK2(Material.CYAN_TERRACOTTA, 500, 4, MiningLoot.none()),
+    MITHRIL_MEDIUM(Material.PRISMARINE, 800, 4, MiningLoot.none()),
+    MITHRIL_STRONG(Material.LIGHT_BLUE_WOOL, 1500, 4, MiningLoot.none()),
+    TITANIUM(Material.DIORITE, 2500, 5, MiningLoot.none()),
+    DWARVEN_GOLD(Material.GOLD_BLOCK, 600, 3, MiningLoot.custom(Material.GOLD_INGOT, 2, 4)),
     ;
 
     private final Material material;

@@ -1,51 +1,28 @@
 package net.swofty.types.generic.region.mining;
 
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.utility.MaterialQuantifiableRandom;
 
 public record MiningLoot(String identifier, MaterialQuantifiableRandom material) {
-    public static MiningLoot Default() {
+    public static MiningLoot defaultLoot() {
         return new MiningLoot("default", null);
     }
 
-    public static MiningLoot Custom(Material mat, int bounds1, int bounds2) {
-        return new MiningLoot("custom", new MaterialQuantifiableRandom(new SkyBlockItem(BlockResults.getResultFor(mat)), bounds1, bounds2));
+    public static MiningLoot custom(Material mat, int bounds1, int bounds2) {
+        return new MiningLoot("custom", new MaterialQuantifiableRandom(ItemDropChanger.get(mat).getItemSupplier().get(), bounds1, bounds2));
     }
 
-    public static MiningLoot Custom(Material mat, int singleBounds) {
-        return Custom(mat, singleBounds, singleBounds);
+    public static MiningLoot custom(Material mat, int singleBounds) {
+        return custom(mat, singleBounds, singleBounds);
     }
 
-    public static MiningLoot Custom(Material mat) {
-        return Custom(mat, 1);
+    public static MiningLoot custom(Material mat) {
+        return custom(mat, 1);
     }
 
-    public static MiningLoot None() {
+    public static MiningLoot none() {
         return new MiningLoot("none", null);
-    }
-
-    enum BlockResults {
-        COAL_ORE(Material.COAL),
-        REDSTONE_ORE(Material.REDSTONE),
-        DIAMOND_ORE(Material.DIAMOND),
-        PUMPKIN(Material.PUMPKIN),
-        CARVED_PUMPKIN(Material.PUMPKIN),
-        MELON(Material.MELON_SLICE),
-        ;
-
-        private final Material result;
-
-        BlockResults(Material result) {
-            this.result = result;
-        }
-
-        public static Material getResultFor(Material material) {
-            for (BlockResults r : values())
-                if (r.name().equalsIgnoreCase(material.name()))
-                    return r.result;
-
-            return material;
-        }
     }
 }

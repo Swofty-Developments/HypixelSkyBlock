@@ -18,7 +18,7 @@ public class MissionMineCoal extends SkyBlockProgressMission {
     public void onBlockBreak(CustomBlockBreakEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 
-        if (data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
+        if (!data.isCurrentlyActive(this.getClass()) || data.hasCompleted(this.getClass())) {
             return;
         }
 

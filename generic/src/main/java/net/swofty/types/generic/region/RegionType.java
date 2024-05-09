@@ -27,7 +27,7 @@ public enum RegionType {
     BANK("Bank", "§6"),
     BLACKSMITH("Blacksmith"),
     LIBRARY("Library"),
-    THE_BARN("The Barn", "§b", MineWheatConfiguration.class),
+    THE_BARN("The Barn", "§b", BarnConfiguration.class),
     MUSHROOM_DESERT("Mushroom Desert"),
     GOLD_MINE("Gold Mine", "§6"),
     DEEP_CAVERN("Deep Caverns", "§b"),
