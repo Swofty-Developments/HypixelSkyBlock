@@ -11,7 +11,7 @@ public record MiningLoot(String identifier, MaterialQuantifiableRandom material)
     }
 
     public static MiningLoot custom(Material mat, int bounds1, int bounds2) {
-        return new MiningLoot("custom", new MaterialQuantifiableRandom(ItemDropChanger.get(mat).getItemSupplier().get(), bounds1, bounds2));
+        return new MiningLoot("custom", new MaterialQuantifiableRandom(new SkyBlockItem(mat), bounds1, bounds2));
     }
 
     public static MiningLoot custom(Material mat, int singleBounds) {

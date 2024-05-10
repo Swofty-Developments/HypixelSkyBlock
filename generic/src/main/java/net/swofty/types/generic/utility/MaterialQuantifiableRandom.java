@@ -30,7 +30,18 @@ public class MaterialQuantifiableRandom {
         return this;
     }
 
-    public int getAmount() {
-        return MathUtility.random(bounds1, bounds2);
+    public int getAmount(Double multiplicator) {
+        if (bounds1 == bounds2) {
+            Integer x = (int) Math.floor(bounds1*multiplicator);
+            Integer y = (int) (((bounds2*multiplicator)-x)*100);
+
+            if (MathUtility.random(0, 100) <= y) {
+                return (int) Math.ceil(bounds2*multiplicator);
+            } else {
+                return (int) Math.floor(bounds1*multiplicator);
+            }
+        } else {
+            return MathUtility.random((int) Math.floor(bounds1*multiplicator), (int) Math.ceil(bounds2*multiplicator));
+        }
     }
 }
