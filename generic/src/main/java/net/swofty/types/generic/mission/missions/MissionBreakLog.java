@@ -26,7 +26,7 @@ public class MissionBreakLog extends SkyBlockMission {
         data.endMission(MissionBreakLog.class);
     }
 
-    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void startMission(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
         MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
