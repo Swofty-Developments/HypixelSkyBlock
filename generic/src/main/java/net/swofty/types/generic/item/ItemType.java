@@ -155,7 +155,6 @@ import net.swofty.types.generic.item.items.vanilla.blocks.stone.cobblestone.Cobb
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.diorite.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.granite.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.netherbricks.*;
-import net.swofty.types.generic.item.items.vanilla.blocks.stone.quartz.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.sandstone.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.stone.*;
 import net.swofty.types.generic.item.items.vanilla.blocks.stone.stonebricks.*;
@@ -1049,11 +1048,6 @@ public enum ItemType {
     MOSSY_STONE_BRICK_SLAB(Material.MOSSY_STONE_BRICK_SLAB, Rarity.COMMON, MossyStoneBrickSlab.class),
     MOSSY_STONE_BRICK_STAIRS(Material.MOSSY_STONE_BRICK_STAIRS, Rarity.COMMON, MossyStoneBrickStairs.class),
     MOSSY_STONE_BRICK_WALL(Material.MOSSY_STONE_BRICK_WALL, Rarity.COMMON, MossyStoneBrickWall.class),
-    QUARTZ_BLOCK(Material.QUARTZ_BLOCK, Rarity.COMMON, QuartzBlock.class),
-    QUARTZ_SLAB(Material.QUARTZ_SLAB, Rarity.COMMON, QuartzSlab.class),
-    QUARTZ_STAIRS(Material.QUARTZ_STAIRS, Rarity.COMMON, QuartzStairs.class),
-    QUARTZ_PILLAR(Material.QUARTZ_PILLAR, Rarity.COMMON, QuartzPillar.class),
-    CHISELED_QUARTZ_BLOCK(Material.CHISELED_QUARTZ_BLOCK, Rarity.COMMON, ChiseledQuartzBlock.class),
     NETHER_BRICKS(Material.NETHER_BRICKS, Rarity.COMMON, NetherBricks.class),
     NETHER_BRICK_SLAB(Material.NETHER_BRICK_SLAB, Rarity.COMMON, NetherBrickSlab.class),
     NETHER_BRICK_STAIRS(Material.NETHER_BRICK_STAIRS, Rarity.COMMON, NetherBrickStairs.class),

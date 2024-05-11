@@ -31,8 +31,14 @@ public class RedisMessage {
             UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
             String rawMessage = split[1];
 
-            callbacks.get(request).complete(rawMessage);
-            callbacks.remove(request);
+            try {
+                callbacks.get(request).complete(rawMessage);
+                callbacks.remove(request);
+            } catch (Exception e) {
+                System.out.println("RedisMessage: Error while processing message");
+                System.out.println("Channel: " + event.channel);
+                System.out.println("Message: " + event.message);
+            }
         });
     }
 }
