@@ -253,7 +253,12 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
                     return true;
                 })
-                .findFirst()
+                .max(Comparator.comparing(recipe -> {
+                    int patternRows = recipe.getPattern().size();
+                    int patternCols = recipe.getPattern().getFirst().length();
+
+                    return patternRows * patternCols;
+                }))
                 .orElse(null);
     }
 
