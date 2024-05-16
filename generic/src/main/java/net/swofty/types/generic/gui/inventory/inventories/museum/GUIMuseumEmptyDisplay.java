@@ -16,6 +16,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
@@ -79,6 +80,12 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
+        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline(new ProtocolPingSpecification()).join()) {
+            player.sendMessage("§cThe item tracker is currently offline. Please try again later.");
+            player.closeInventory();
+            return;
+        }
+
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
         set(createSearchItem(this, 48, query));

@@ -1,6 +1,7 @@
 package net.swofty.types.generic.gui.inventory.inventories.museum;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -62,6 +63,19 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
             return;
         }
 
+        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType()) != null) {
+            UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
+            UUID previouslyInMuseumUUID = UUID.fromString(
+                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType())
+                            .getAttributeHandler().getUniqueTrackedID()
+            );
+
+            if (!trackedItemUUID.equals(previouslyInMuseumUUID)) {
+                player.sendMessage("§cYou can only re-add the item that was already in your Museum!");
+                return;
+            }
+        }
+
         if (category.contains(skyBlockItem.getAttributeHandler().getItemTypeAsType())) {
             skyBlockItem.getAttributeHandler().setSoulBound(true);
             data.add(skyBlockItem);
@@ -112,6 +126,9 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
 
         for (int i = 0; i < 36; i++) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(i));
+            if (item.getGenericInstance() == null) {
+                continue;
+            }
 
             if (category.contains(item.getAttributeHandler().getItemTypeAsType())) {
                 TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
@@ -128,7 +145,9 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 lore.add("§eClick to donate item!");
 
                 player.getInventory().setItemStack(i, ItemStackCreator.updateLore(toReturn, lore)
-                        .displayName(Component.text(item.getDisplayName()))
+                        .displayName(Component.text(item.getDisplayName()).decoration(
+                                TextDecoration.ITALIC, false
+                        ))
                         .build());
             }
         }
@@ -169,47 +188,11 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                UUID museumDisplayUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
-
                 if (!inMuseum) {
                     return ItemStackCreator.getStack("§c" + item.getDisplayName(null),
                             Material.GRAY_DYE, 1,
                             "§7Click on this item in your inventory to",
                             "§7add it to your §9Museum§7!");
-                }
-                if (hasTakenItOut) {
-                    UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
-                    TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                            .callEndpoint(new ProtocolGetTrackedItem(),
-                                    Map.of("item-uuid", trackedItemUUID))
-                            .join().get("tracked-item");
-
-                    List<String> lore = new ArrayList<>(skyBlockItem.getLore());
-                    lore.add("§8§m---------------------");
-                    lore.add("§7Item Donated");
-                    lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(trackedItemUUID)));
-                    lore.add(" ");
-                    lore.add("§7Item Created");
-                    lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));
-                    lore.add("§6  " + StringUtility.commaifyAndTh(trackedItem.getNumberMade()) + " §7created");
-                    lore.add(" ");
-                    lore.add("§7Item Clean Value");
-                    lore.add("§6" + StringUtility.commaify(new ItemPriceCalculator(skyBlockItem).calculateCleanPrice())
-                            + " Coins");
-                    lore.add(" ");
-                    lore.add("§7Item Value");
-                    if (data.getCalculatedPrices().containsKey(trackedItemUUID)) {
-                        lore.add("§6" + StringUtility.commaify(data.getCalculatedPrices().get(trackedItemUUID)) + " Coins");
-                    } else {
-                        lore.add("§cUncalculated");
-                    }
-                    lore.add("§8§m---------------------");
-                    lore.add("§7You have retrieved this from your");
-                    lore.add("§7Museum but can add it back at any");
-                    lore.add("§7time.");
-
-                    return ItemStackCreator.getStack("§a" + item.getDisplayName(null),
-                            Material.LIME_DYE, 1, lore);
                 }
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
@@ -240,17 +223,24 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 lore.add(" ");
                 lore.add("§7Display Slot");
                 if (data.getCurrentlyInMuseum().contains(skyBlockItem)
-                        && data.getMuseumDisplay().get(museumDisplayUUID) != null) {
-                    lore.add("§9" + data.getMuseumDisplay().get(museumDisplayUUID).getKey()
-                            + " Slot #" + (data.getMuseumDisplay().get(museumDisplayUUID).getValue() + 1));
+                        && data.getMuseumDisplay().get(trackedItemUUID) != null) {
+                    lore.add("§9" + data.getMuseumDisplay().get(trackedItemUUID).getKey()
+                            + " Slot #" + (data.getMuseumDisplay().get(trackedItemUUID).getValue() + 1));
                 } else {
                     lore.add("§cNot In Display");
                 }
-                lore.add(" ");
-                lore.add("§eClick to retrieve item!");
+                if (hasTakenItOut) {
+                    lore.add("§8§m---------------------");
+                    lore.add("§7You have retrieved this from your");
+                    lore.add("§7Museum but can add it back at any");
+                    lore.add("§7time.");
+                } else {
+                    lore.add(" ");
+                    lore.add("§eClick to retrieve item!");
+                }
 
                 return ItemStackCreator.getStack("§a" + item.getDisplayName(null),
-                       item.material, 1, lore);
+                       hasTakenItOut ? Material.LIME_DYE : item.material, 1, lore);
             }
         };
     }

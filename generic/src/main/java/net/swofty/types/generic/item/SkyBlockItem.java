@@ -173,6 +173,31 @@ public class SkyBlockItem {
         return itemStackBuilder.meta(meta -> meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES));
     }
 
+    public boolean isSimilar(SkyBlockItem item) {
+        boolean allAttributesMatch = true;
+
+        for (ItemAttribute attribute : attributes) {
+            // If both are null, skip
+            if (attribute.getValue() == null && item.getAttribute(attribute.getKey()).getValue() == null)
+                continue;
+
+            if (attribute.getValue() != null && item.getAttribute(attribute.getKey()).getValue() != null) {
+                if (!attribute.saveIntoString().equals(item.getAttribute(attribute.getKey()).saveIntoString())) {
+                    allAttributesMatch = false;
+                    break;
+                }
+            } else {
+                allAttributesMatch = false;
+                break;
+            }
+        }
+
+        boolean sameAmount = item.getAmount() == amount;
+        boolean sameMaterial = item.getMaterial() == getMaterial();
+
+        return allAttributesMatch && sameAmount && sameMaterial;
+    }
+
     public ItemAttributeHandler getAttributeHandler() {
         return new ItemAttributeHandler(this);
     }

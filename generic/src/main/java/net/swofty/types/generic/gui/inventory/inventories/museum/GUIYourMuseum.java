@@ -5,6 +5,8 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ServiceType;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -12,6 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.StringUtility;
 
@@ -33,6 +36,12 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline(new ProtocolPingSpecification()).join()) {
+            e.player().sendMessage("§cThe item tracker is currently offline. Please try again later.");
+            e.player().closeInventory();
+            return;
+        }
+
         DatapointMuseum.MuseumData data = e.player().getMuseumData();
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
@@ -49,13 +58,26 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
                         "§7Each time you donate an item to your",
                         "§7Museum, the §bCurator §7will reward you.",
                         " ",
-                        "§dSpecial Items §ddo nto count towards",
+                        "§dSpecial Items §ddo not count towards",
                         "§7your Museum rewards progress.",
                         " ",
                         "§7Currently, most rewards are §ccoming",
                         "§csoon§7, but you can view them anyway.",
                         " ",
                         "§eClick to view!");
+            }
+        });
+        set(new GUIItem(45) {
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStack("§aEdit NPC Tags", Material.NAME_TAG, 1,
+                        "§7Edit the tags that appear above",
+                        "§7your NPC. Show off your SkyBlock",
+                        "§7progress with tags showing your",
+                        "§7highest collection, best Skill, and",
+                        "§7more!",
+                        " ",
+                        "§cCOMING SOON");
             }
         });
         set(new GUIItem(4) {
@@ -110,7 +132,9 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIMuseumCategory(category).open(player);
+                    if (category == MuseumableItemCategory.ARMOR_SETS)
+                        new GUIMuseumArmorCategory().open(player);
+                    else new GUIMuseumCategory(category).open(player);
                 }
 
                 @Override

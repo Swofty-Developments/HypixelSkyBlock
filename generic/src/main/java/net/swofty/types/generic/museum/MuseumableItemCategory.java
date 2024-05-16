@@ -57,7 +57,7 @@ public enum MuseumableItemCategory {
     }
 
     public static Integer getMuseumableItemCategorySize() {
-        return ITEMS.size();
+        return ITEMS.values().stream().mapToInt(List::size).sum();
     }
 
     public static Map<MuseumableItemCategory, List<SkyBlockItem>> sortAsMuseumItems(List<SkyBlockItem> items) {

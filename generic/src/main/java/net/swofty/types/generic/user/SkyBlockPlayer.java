@@ -53,10 +53,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -195,6 +192,19 @@ public class SkyBlockPlayer extends Player {
 
         DatapointQuiver.PlayerQuiver quiver = getQuiver();
         return quiver.getFirstItemInQuiver();
+    }
+
+    public int getAmountOfEmptySlots() {
+        int amountOfEmptySlots = 0;
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            if (stack.material() == Material.AIR) amountOfEmptySlots++;
+        }
+        return amountOfEmptySlots;
+    }
+
+    public boolean hasEmptySlots(int amount) {
+        return getAmountOfEmptySlots() >= amount;
     }
 
     public @Nullable SkyBlockItem getAndConsumeArrow() {
@@ -401,19 +411,39 @@ public class SkyBlockPlayer extends Player {
         addAndUpdateItem(new SkyBlockItem(item));
     }
 
-    public void takeItem(ItemType type, int amount) {
+    public boolean takeItem(SkyBlockItem itemToTake) {
+        for (int i = 0; i < 36; i++) {
+            ItemStack stack = getInventory().getItemStack(i);
+            SkyBlockItem item = new SkyBlockItem(stack);
+            if (item.isSimilar(itemToTake)) {
+                getInventory().setItemStack(i, ItemStack.of(Material.AIR));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
+        List<SkyBlockItem> consumedItems = new ArrayList<>();
         Map<Integer, Integer> map = getAllOfTypeInInventory(type);
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (amount <= 0) return;
+            if (amount <= 0) break;
 
             int slot = entry.getKey();
             int currentAmount = entry.getValue();
 
+            SkyBlockItem skyBlockItem = new SkyBlockItem(getInventory().getItemStack(slot));
+            skyBlockItem.setAmount(Math.min(skyBlockItem.getAmount(), amount));
+
+            consumedItems.add(skyBlockItem);
             ItemStack item = getInventory().getItemStack(slot).consume(amount);
 
             getInventory().setItemStack(slot, item);
             amount -= Math.min(amount, currentAmount);
         }
+        if (amount > 0) throw new IllegalStateException("Not enough items to take!");
+        return consumedItems;
     }
 
     public DatapointQuiver.PlayerQuiver getQuiver() {

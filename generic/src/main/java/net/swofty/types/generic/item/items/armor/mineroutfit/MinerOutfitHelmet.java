@@ -6,7 +6,8 @@ import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.ItemStatistics;
 
-public class MinerOutfitHelmet implements CustomSkyBlockItem, CustomDisplayName, StandardItem, LeatherColour, Sellable {
+public class MinerOutfitHelmet implements CustomSkyBlockItem, CustomDisplayName, StandardItem,
+                                          LeatherColour, Sellable, ArmorItem  {
 
     @Override
     public String getDisplayName(SkyBlockItem item) {

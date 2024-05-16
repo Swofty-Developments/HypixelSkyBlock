@@ -69,6 +69,12 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
                     .findFirst().orElse(null);
         }
 
+        public @Nullable SkyBlockItem getTypePreviouslyInMuseum(ItemType type) {
+            return previouslyInMuseum.stream()
+                    .filter(item -> item.getAttributeHandler().getItemTypeAsType().equals(type))
+                    .findFirst().orElse(null);
+        }
+
         public List<SkyBlockItem> getInMuseumThatAreNotInDisplay() {
             return currentlyInMuseum.stream()
                     .filter(item -> !museumDisplay.containsKey(UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())))

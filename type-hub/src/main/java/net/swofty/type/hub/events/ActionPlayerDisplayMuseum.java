@@ -11,12 +11,13 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 public class ActionPlayerDisplayMuseum implements SkyBlockEventClass {
 
     @SneakyThrows
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true , isAsync = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
     public void run(PlayerSpawnEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
 
-        Thread.sleep(3000);
+        Thread.sleep(1000);
+        if (!player.isOnline()) return;
 
         MuseumDisplays.updateDisplay(player);
     }

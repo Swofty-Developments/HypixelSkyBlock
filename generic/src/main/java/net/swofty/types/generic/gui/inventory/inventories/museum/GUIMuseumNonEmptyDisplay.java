@@ -16,6 +16,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.museum.MuseumDisplays;
+import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
@@ -44,6 +45,12 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline(new ProtocolPingSpecification()).join()) {
+            e.player().sendMessage("§cThe item tracker is currently offline. Please try again later.");
+            e.player().closeInventory();
+            return;
+        }
+
         TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).callEndpoint(
                 new ProtocolGetTrackedItem(), Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))
         ).get().get("tracked-item");
