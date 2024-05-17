@@ -36,6 +36,13 @@ public enum MineableBlock {
 
     // Farming minable blocks
     WHEAT(Material.WHEAT, 0, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
+    SUGAR_CANE(Material.SUGAR_CANE, 0, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
+    CACTUS(Material.CACTUS, 0, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
+    BROWN_MUSHROOM(Material.BROWN_MUSHROOM, 0, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
+    RED_MUSHROOM(Material.RED_MUSHROOM, 0, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
+    POTATO(Material.POTATO, 0, 0, MiningLoot.custom(Material.POTATO, 2, 5), ItemStatistic.FARMING_FORTUNE),
+    CARROT(Material.CARROT, 0, 0, MiningLoot.custom(Material.CARROT, 2, 5), ItemStatistic.FARMING_FORTUNE),
+    NETHER_WART(Material.NETHER_WART, 0, 0, MiningLoot.custom(Material.NETHER_WART, 2, 4), ItemStatistic.FARMING_FORTUNE),
     PUMPKIN(Material.PUMPKIN, 1, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
     CARVED_PUMPKIN(Material.CARVED_PUMPKIN, 1, 0, MiningLoot.defaultLoot(), ItemStatistic.FARMING_FORTUNE),
     MELON(Material.MELON, 1, 0, MiningLoot.custom(Material.MELON_SLICE, 3, 7), ItemStatistic.FARMING_FORTUNE),
