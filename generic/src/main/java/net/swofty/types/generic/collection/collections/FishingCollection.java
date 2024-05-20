@@ -2,6 +2,7 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -97,11 +98,21 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS;
+                            }
                         }),
                         new ItemCollectionReward(200, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS_UPGRADE_1;
                             }
                         }),
                         new ItemCollectionReward(400, new UnlockXP() {
@@ -109,11 +120,21 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS_UPGRADE_2;
+                            }
                         }),
                         new ItemCollectionReward(800, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS_UPGRADE_3;
                             }
                         }),
                         new ItemCollectionReward(1600, new UnlockXP() {
@@ -121,11 +142,21 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS_UPGRADE_4;
+                            }
                         }),
                         new ItemCollectionReward(4000, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SACK_OF_SACKS_UPGRADE_5;
                             }
                         })
                 ),
@@ -570,6 +601,11 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FISHING_BAG;
+                            }
                         }),
                         new ItemCollectionReward(250, new UnlockXP() {
                             @Override
@@ -599,6 +635,11 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FISHING_BAG_UPGRADE_1;
+                            }
                         }),
                         new ItemCollectionReward(15000, new UnlockRecipe() {
                             @Override
@@ -616,17 +657,32 @@ public class FishingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FISHING_BAG_UPGRADE_2;
+                            }
                         }),
                         new ItemCollectionReward(45000, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FISHING_BAG_UPGRADE_3;
+                            }
                         }),
                         new ItemCollectionReward(60000, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FISHING_BAG_UPGRADE_4;
                             }
                         })
                 ),

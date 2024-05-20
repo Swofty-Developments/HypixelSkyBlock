@@ -28,7 +28,7 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
 
     @Override
     public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
-        Map<Integer, Integer> costs = new HashMap<>(Map.of(
+        HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 9,
                 2, 18,
                 3, 27,
@@ -36,12 +36,12 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
                 5, 45
         ));
 
-        if (player != null && player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
+        if (player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
             // Discount 25%
-            costs.replaceAll((k, v) -> (int) (v * 0.75));
+            levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
-        return new ApplyLevels(costs);
+        return new ApplyLevels(levels);
     }
 
     @Override

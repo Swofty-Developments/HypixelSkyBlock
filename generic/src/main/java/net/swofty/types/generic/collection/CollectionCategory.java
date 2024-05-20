@@ -12,6 +12,7 @@ import net.swofty.types.generic.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class CollectionCategory {
     public abstract Material getDisplayIcon();
@@ -51,12 +52,14 @@ public abstract class CollectionCategory {
                             lore.add("§7  §e" + recipe.getResult().getDisplayName() + " §7Recipes");
                         });
                     }
-                    case XP -> {
-                        lore.add("§7  §8+§b" + ((UnlockXP) unlock).xp() + " SkyBlock XP");
-                    }
                     case CUSTOM_AWARD -> {
                         lore.add("§7  " + ((UnlockCustomAward) unlock).getAward().getDisplay());
                     }
+                }
+            });
+            Arrays.stream(unlocks).forEach(unlock -> {
+                if (Objects.requireNonNull(unlock.type()) == Unlock.UnlockType.XP) {
+                    lore.add("§7  §8+§b" + ((UnlockXP) unlock).xp() + " SkyBlock XP");
                 }
             });
 
