@@ -135,6 +135,10 @@ import net.swofty.types.generic.item.items.miscellaneous.SkyBlockMenu;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Cactus;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.Melon;
 import net.swofty.types.generic.item.items.miscellaneous.decorations.*;
+import net.swofty.types.generic.item.items.miscellaneous.gifts.DeadBushofLove;
+import net.swofty.types.generic.item.items.miscellaneous.gifts.GameAnnihilator;
+import net.swofty.types.generic.item.items.miscellaneous.gifts.GameBreaker;
+import net.swofty.types.generic.item.items.miscellaneous.gifts.QualityMap;
 import net.swofty.types.generic.item.items.pet.BeePet;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.runes.BloodRune;
@@ -180,10 +184,18 @@ import org.jetbrains.annotations.Nullable;
 
 public enum ItemType {
     SANDBOX_ITEM(Material.BLAZE_POWDER, Rarity.COMMON, SandboxItem.class),
+
+    /**
+     * Miscellaneous
+     */
     ENCHANTED_BOOK(Material.ENCHANTED_BOOK, Rarity.UNCOMMON, EnchantedBook.class),
     SKYBLOCK_MENU(Material.NETHER_STAR, Rarity.COMMON, SkyBlockMenu.class),
     MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON, MoveJerry.class),
     HOT_POTATO_BOOK(Material.BOOK, Rarity.EPIC, HotPotatoBook.class),
+    GAME_BREAKER(Material.TNT, Rarity.SPECIAL, GameBreaker.class),
+    GAME_ANNIHILATOR(Material.PLAYER_HEAD, Rarity.SPECIAL, GameAnnihilator.class),
+    QUALITY_MAP(Material.MAP, Rarity.SPECIAL, QualityMap.class),
+    DEAD_BUSH_OF_LOVE(Material.DEAD_BUSH, Rarity.SPECIAL, DeadBushofLove.class),
 
     /**
      * Accessories
