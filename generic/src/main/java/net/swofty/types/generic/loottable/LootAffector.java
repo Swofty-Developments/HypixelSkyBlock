@@ -21,7 +21,7 @@ public enum LootAffector {
         Map<Integer, Integer> enchants = player.getStatistics().getAllOfEnchants(EnchantmentType.LUCK, true);
         int total = 0;
         for (int level : enchants.keySet()) {
-            total += EnchantmentLuck.increases[level - 1] * enchants.get(level);
+            total += EnchantmentLuck.MULTIPLIERS[level - 1] * enchants.get(level);
         }
         return original + (original * total * 0.01);
     })

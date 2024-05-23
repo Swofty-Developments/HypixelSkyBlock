@@ -198,6 +198,11 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.ENDER_SLAYER_DISCOUNT;
+                            }
                         }),
                         new ItemCollectionReward(2500, new UnlockXP() {
                             @Override
@@ -621,6 +626,11 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SMITE_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {

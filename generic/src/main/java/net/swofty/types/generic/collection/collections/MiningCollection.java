@@ -520,6 +520,11 @@ public class MiningCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.SHARPNESS_DISCOUNT;
+                            }
                         }),
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
@@ -536,6 +541,11 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.FIRST_STRIKE_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(10000, new UnlockXP() {
@@ -601,6 +611,11 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.CRITICAL_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(5000, new UnlockXP() {
@@ -1708,6 +1723,11 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.EFFICIENCY_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(1500, new UnlockRecipe() {

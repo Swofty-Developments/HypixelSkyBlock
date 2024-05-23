@@ -2,6 +2,7 @@ package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -497,6 +498,11 @@ public class ForagingCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.GROWTH_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(15000, new UnlockXP() {

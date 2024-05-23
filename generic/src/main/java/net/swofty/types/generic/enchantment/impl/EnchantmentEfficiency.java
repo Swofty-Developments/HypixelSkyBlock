@@ -1,5 +1,6 @@
 package net.swofty.types.generic.enchantment.impl;
 
+import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
@@ -24,13 +25,20 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
 
     @Override
     public ApplyLevels getLevelsToApply(@NotNull SkyBlockPlayer player) {
-        return new ApplyLevels(new HashMap<>(Map.of(
+        HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 9,
                 2, 13,
                 3, 18,
                 4, 23,
                 5, 27
-        )));
+        ));
+
+        if (player.hasCustomCollectionAward(CustomCollectionAward.EFFICIENCY_DISCOUNT)) {
+            // Discount 25%
+            levels.replaceAll((k, v) -> (int) (v * 0.75));
+        }
+
+        return new ApplyLevels(levels);
     }
 
     @Override
@@ -40,13 +48,20 @@ public class EnchantmentEfficiency extends SkyBlockValueEvent implements Ench, E
 
     @Override
     public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {
-        return new TableLevels(new HashMap<>(Map.of(
+        HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
                 1, 10,
                 2, 15,
                 3, 20,
                 4, 25,
                 5, 30
-        )));
+        ));
+
+        if (player.hasCustomCollectionAward(CustomCollectionAward.EFFICIENCY_DISCOUNT)) {
+            // Discount 25%
+            levels.replaceAll((k, v) -> (int) (v * 0.75));
+        }
+
+        return new TableLevels(levels);
     }
 
     @Override

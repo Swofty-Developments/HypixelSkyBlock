@@ -914,6 +914,11 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.POTION_BAG;
+                            }
                         }),
                         new ItemCollectionReward(250, new UnlockXP() {
                             @Override
@@ -937,6 +942,11 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.POTION_BAG_UPGRADE_1;
+                            }
                         }),
                         new ItemCollectionReward(5000, new UnlockXP() {
                             @Override
@@ -955,6 +965,11 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.POTION_BAG_UPGRADE_2;
+                            }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
                             @Override
@@ -966,6 +981,11 @@ public class FarmingCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.POTION_BAG_UPGRADE_3;
                             }
                         }),
                         new ItemCollectionReward(100000, new UnlockRecipe() {
@@ -982,6 +1002,11 @@ public class FarmingCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.POTION_BAG_UPGRADE_4;
                             }
                         })
                 ),
@@ -1408,6 +1433,11 @@ public class FarmingCollection extends CollectionCategory {
                             @Override
                             public int xp() {
                                 return 4;
+                            }
+                        }, new UnlockCustomAward() {
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.LUCK_DISCOUNT;
                             }
                         }),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
