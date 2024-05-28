@@ -148,7 +148,12 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             sender.sendMessage("§fUnknown command. Type \"/help\" for help. ('" + command + "')");
         });
         loopThroughPackage("net.swofty.types.generic.command.commands", SkyBlockCommand.class).forEach(command -> {
-            MinecraftServer.getCommandManager().register(command.getCommand());
+            try {
+                MinecraftServer.getCommandManager().register(command.getCommand());
+            } catch (Exception e) {
+                Logger.error("Failed to register command " + command.getCommand().getName());
+                e.printStackTrace();
+            }
         });
 
         /**

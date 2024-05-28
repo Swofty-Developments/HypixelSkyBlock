@@ -116,11 +116,7 @@ public class SkyBlock {
          * Start spark if enabled
          */
         if (ENABLE_SPARK) {
-            try {
-                Spark.enable(Files.createTempDirectory("spark"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            // Spark.enable(Files.createTempDirectory("spark"));
         }
 
         /**
