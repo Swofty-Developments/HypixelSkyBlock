@@ -1,6 +1,7 @@
 package net.swofty.types.generic.user;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -547,13 +548,8 @@ public class SkyBlockPlayer extends Player {
         return 0;
     }
 
-    public float getDefense() {
-        float defence = 0;
-
-        PlayerStatistics statistics = this.getStatistics();
-        defence += statistics.allStatistics().getOverall(ItemStatistic.DEFENSE);
-
-        return defence;
+    public @NonNull Double getDefense() {
+        return this.getStatistics().allStatistics().getOverall(ItemStatistic.DEFENSE);
     }
 
     public void playSuccessSound() {

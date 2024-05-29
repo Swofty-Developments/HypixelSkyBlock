@@ -12,7 +12,6 @@ public enum Rarity {
     EPIC("§5"),
     LEGENDARY("§6"),
     MYTHIC("§d"),
-    SUPREME("§4"),
     SPECIAL("§c", false),
     VERY_SPECIAL("§c", false),
     ADMIN("§4", false),
