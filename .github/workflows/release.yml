@@ -44,11 +44,11 @@ jobs:
           prerelease: false
           title: "Automatic Build"
           files: |
-            velocity-extension/build/libs/*-all.jar
-            proxy-api/build/libs/*-all.jar
-            loader/build/libs/*-all.jar
-            commons/build/libs/*-all.jar
-            packer/build/libs/*-all.jar
-            service-auctionhouse/build/libs/*-all.jar
-            service-bazaar/build/libs/*-all.jar
-            service-item-tracker/build/libs/*-all.jar
+            velocity.extension/build/libs/*.jar
+            proxy.api/build/libs/*.jar
+            loader/build/libs/*.jar
+            commons/build/libs/*.jar
+            packer/build/libs/*.jar
+            service.auctionhouse/build/libs/*.jar
+            service.bazaar/build/libs/*.jar
+            service.itemtracker/build/libs/*.jar
