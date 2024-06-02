@@ -18,10 +18,13 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Grant Gradlew Permissions
+        run: chmod +x gradlew
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build
+          arguments: shadowJar
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
