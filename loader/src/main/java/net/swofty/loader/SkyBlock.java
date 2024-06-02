@@ -14,7 +14,6 @@ import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.service.protocol.ProtocolSpecification;
-import net.swofty.spark.Spark;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -24,9 +23,7 @@ import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -10,29 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - uses: actions/checkout@v3
 
-    - name: Add Jar to GitHub releases
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.TOKEN_GITHUB }}"
-        automatic_release_tag: "latest"
-        prerelease: false
-        title: "Automatic Build"
-        files: |
-          velocity-extension/target/*.jar
-          proxy-api/target/*.jar
-          loader/target/*.jar
-          commons/target/*.jar
-          packer/target/*.jar
-          service-auctionhouse/target/*.jar
-          service-bazaar/target/*.jar
-          service-item-tracker/target/*.jar
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: shadowJar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Add Jar to GitHub releases
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.TOKEN_GITHUB }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Automatic Build"
+          files: |
+            velocity-extension/build/libs/*-all.jar
+            proxy-api/build/libs/*-all.jar
+            loader/build/libs/*-all.jar
+            commons/build/libs/*-all.jar
+            packer/build/libs/*-all.jar
+            service-auctionhouse/build/libs/*-all.jar
+            service-bazaar/build/libs/*-all.jar
+            service-item-tracker/build/libs/*-all.jar
