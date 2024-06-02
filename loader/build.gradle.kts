@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.util.*
 
 plugins {
     java
@@ -31,7 +32,7 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("com.github.Minestom:Minestom:5c23713c03") {
+    implementation("com.github.Minestom:Minestom:19bb74e942") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("dev.hollowcube:polar:1.7.2")
@@ -39,6 +40,7 @@ dependencies {
 
 application {
     mainClass.set("net.swofty.loader.SkyBlock")
+    applicationDefaultJvmArgs = listOf("--enable-preview", "-Duser.dir=${rootProject.projectDir}")
 }
 
 tasks {
@@ -46,5 +48,41 @@ tasks {
         archiveBaseName.set("SkyBlockCore")
         archiveClassifier.set("")
         archiveVersion.set("")
+    }
+}
+
+val serverType: String by project
+
+tasks.register<JavaExec>("runServer") {
+    group = "application"
+    description = "Runs the application with the specified server type"
+
+    dependsOn("build")
+
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    })
+
+    doFirst {
+        if (!project.hasProperty("serverType")) {
+            throw GradleException("Please provide a server type using -PserverType=<type>")
+        }
+    }
+    workingDir = rootProject.projectDir
+
+    mainClass.set("net.swofty.loader.SkyBlock")
+    classpath = sourceSets["main"].runtimeClasspath
+    jvmArgs("--enable-preview")
+    args(serverType)
+
+    doLast {
+        println("Application started with server type: $serverType")
+    }
+}
+
+tasks.named("runServer").configure {
+    mustRunAfter("build")
+    onlyIf {
+        project.gradle.startParameter.taskNames.contains("runServer")
     }
 }

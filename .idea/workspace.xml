@@ -5,17 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3abc7aeb-2330-4e18-8705-4e9982d9333f" name="Changes" comment="feat: migration to Gradle">
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.auctionhouse/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/service.auctionhouse/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.bazaar/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/service.bazaar/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.generic/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/service.generic/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service.itemtracker/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/service.itemtracker/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/commons/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/commons/src/main/java/net/swofty/commons/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loader/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/loader/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proxy.api/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/proxy.api/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/spark/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.generic/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.generic/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.generic/src/main/java/net/swofty/types/generic/region/mining/BreakingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/type.generic/src/main/java/net/swofty/types/generic/region/mining/BreakingTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.hub/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.hub/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.island/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.island/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.thefarmingislands/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/type.thefarmingislands/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +24,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="1028022" />
+    <option name="totalTimeSeconds" value="1031386" />
     <option name="gitIntegration" value="true" />
     <option name="naggedAbout" value="1" />
   </component>
@@ -39,6 +40,9 @@
           <activation />
         </task>
         <task path="$PROJECT_DIR$/velocity.extension">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/loader">
           <activation />
         </task>
         <projects_view>
@@ -114,6 +118,10 @@
     "Gradle.HypixelSkyBlockFixed:loader [:loader:SkyBlock.main()].executor": "Run",
     "Gradle.HypixelSkyBlockFixed:packer [jar].executor": "Run",
     "Gradle.HypixelSkyBlockFixed:packer [shadowJar].executor": "Run",
+    "Gradle.HypixelSkyBlockFixed:service.auctionhouse [:service.auctionhouse:AuctionService.main()].executor": "Run",
+    "Gradle.HypixelSkyBlockFixed:service.bazaar [:service.bazaar:BazaarService.main()].executor": "Run",
+    "Gradle.HypixelSkyBlockFixed:service.itemtracker [:service.itemtracker:ItemTrackerService.main()].executor": "Run",
+    "Gradle.SkyBlock (Hub).executor": "Run",
     "JAR Application.Run Proxy.executor": "Run",
     "Multirun.Run Proxy.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -132,37 +140,39 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SkyBlock (Island)">
-    <configuration name="SkyBlock (Farming)" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="net.swofty.loader.SkyBlock" />
-      <module name="HypixelSkyBlock.loader.main" />
-      <option name="PROGRAM_PARAMETERS" value="THE_FARMING_ISLANDS" />
-      <option name="VM_PARAMETERS" value="--enable-preview" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SkyBlock (Hub)" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="net.swofty.loader.SkyBlock" />
-      <module name="HypixelSkyBlock.loader.main" />
-      <option name="PROGRAM_PARAMETERS" value="HUB" />
-      <option name="VM_PARAMETERS" value="--enable-preview" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SkyBlock (Island)" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="net.swofty.loader.SkyBlock" />
-      <module name="HypixelSkyBlock.loader.main" />
-      <option name="PROGRAM_PARAMETERS" value="ISLAND" />
-      <option name="VM_PARAMETERS" value="--enable-preview" />
+  <component name="RunManager" selected="Gradle.SkyBlock (Hub)">
+    <configuration name="AuctionService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.service.auction.AuctionService" />
+      <module name="HypixelSkyBlock.service.auctionhouse.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="net.swofty.loader.*" />
+          <option name="PATTERN" value="net.swofty.service.auction.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BazaarService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.service.bazaar.BazaarService" />
+      <module name="HypixelSkyBlock.service.bazaar.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.swofty.service.bazaar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ItemTrackerService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.swofty.service.itemtracker.ItemTrackerService" />
+      <module name="HypixelSkyBlock.service.itemtracker.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.swofty.service.itemtracker.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -191,6 +201,28 @@
         <option name="taskNames">
           <list>
             <option value="shadowJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="SkyBlock (Hub)" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/loader" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-PserverType=HUB" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runServer" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -233,10 +265,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.SkyBlock (Hub)" />
-      <item itemvalue="Application.SkyBlock (Farming)" />
-      <item itemvalue="Application.SkyBlock (Island)" />
+      <item itemvalue="Application.AuctionService" />
+      <item itemvalue="Application.BazaarService" />
+      <item itemvalue="Application.ItemTrackerService" />
       <item itemvalue="Batch.Move Proxy" />
+      <item itemvalue="Gradle.SkyBlock (Hub)" />
       <item itemvalue="Gradle.Build Proxy" />
       <item itemvalue="JAR Application.Run Proxy" />
       <item itemvalue="JAR Application.Run Passthrough" />
@@ -244,8 +277,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AuctionService" />
+        <item itemvalue="Application.BazaarService" />
+        <item itemvalue="Application.ItemTrackerService" />
         <item itemvalue="Gradle.Build Proxy" />
-        <item itemvalue="Application.SkyBlock (Island)" />
       </list>
     </recent_temporary>
   </component>
@@ -265,7 +300,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1717297613247</updated>
-      <workItem from="1717297614444" duration="9527000" />
+      <workItem from="1717297614444" duration="14640000" />
     </task>
     <task id="LOCAL-00001" summary="feat: migration to Gradle">
       <option name="closed" value="true" />
@@ -283,7 +318,31 @@
       <option name="project" value="LOCAL" />
       <updated>1717307141208</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: migration to Gradle">
+      <option name="closed" value="true" />
+      <created>1717307394080</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717307394080</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: migration to Gradle">
+      <option name="closed" value="true" />
+      <created>1717307515712</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717307515712</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: migration to Gradle">
+      <option name="closed" value="true" />
+      <created>1717307590413</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717307590413</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

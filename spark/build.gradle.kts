@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:5c23713c03") {
+    implementation("com.github.Minestom:Minestom:19bb74e942") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation(files("dependencies/spark-1.10.1.10-minestom.jar"))

@@ -11,6 +11,7 @@ public class Configuration {
     public static String get(String key) {
         File file = new File("./configuration/resources.json");
         if (!file.exists()) {
+            System.out.println("File does not exist, returning null for key " + key + " in Configuration.get()");
             return "null";
         }
 

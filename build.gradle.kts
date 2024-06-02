@@ -33,6 +33,7 @@ subprojects {
             gradlePluginPortal()
 
             maven("https://repo.viaversion.com")
+            maven("https://jitpack.io")
         }
 
         dependencies {

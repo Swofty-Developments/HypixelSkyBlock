@@ -1,6 +1,7 @@
 package net.swofty.types.generic.region.mining;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
@@ -47,7 +48,7 @@ public class BreakingTask {
                     player,
                     block.block(),
                     block.block(),
-                    block.pos(),
+                    new BlockVec(block.pos()),
                     BlockFace.BOTTOM));
 
             this.counter = 0;
