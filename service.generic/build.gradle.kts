@@ -20,6 +20,7 @@ repositories {
 dependencies {
     implementation(project(":commons"))
     implementation(project(":type.generic"))
+    implementation(project(":service.protocol"))
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.2")
     implementation("net.kyori:adventure-api:4.17.0")
     implementation("net.kyori:adventure-text-serializer-gson:4.17.0")

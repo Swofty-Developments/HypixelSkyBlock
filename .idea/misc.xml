@@ -1,38 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="EntryPointsManager">
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="com.velocitypowered.api.event.Subscribe" />
-      <item index="1" class="java.lang.String" itemvalue="com.velocitypowered.api.plugin.Plugin" />
-    </list>
-    <writeAnnotations>
-      <writeAnnotation name="lombok.Getter" />
-    </writeAnnotations>
-  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
-    <option name="OTHER_OPTIONS" value="-encoding utf8 -docencoding utf8 -charset utf8" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-  <component name="MavenProjectsManager">
-    <option name="originalFiles">
-      <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/dungeons/pom.xml" />
-        <option value="$PROJECT_DIR$/type-farmingislands/pom.xml" />
-      </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/bungee/pom.xml" />
-        <option value="$PROJECT_DIR$/profiler/pom.xml" />
-        <option value="$PROJECT_DIR$/proxy/module/pom.xml" />
-        <option value="$PROJECT_DIR$/proxy/pom.xml" />
-      </set>
-    </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK" />
 </project>

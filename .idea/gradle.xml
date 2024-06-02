@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/commons" />
+            <option value="$PROJECT_DIR$/dungeons" />
+            <option value="$PROJECT_DIR$/loader" />
+            <option value="$PROJECT_DIR$/packer" />
+            <option value="$PROJECT_DIR$/proxy.api" />
+            <option value="$PROJECT_DIR$/service.auctionhouse" />
+            <option value="$PROJECT_DIR$/service.bazaar" />
+            <option value="$PROJECT_DIR$/service.generic" />
+            <option value="$PROJECT_DIR$/service.itemtracker" />
+            <option value="$PROJECT_DIR$/service.protocol" />
+            <option value="$PROJECT_DIR$/spark" />
+            <option value="$PROJECT_DIR$/type.generic" />
+            <option value="$PROJECT_DIR$/type.hub" />
+            <option value="$PROJECT_DIR$/type.island" />
+            <option value="$PROJECT_DIR$/type.thefarmingislands" />
+            <option value="$PROJECT_DIR$/velocity.extension" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
 </project>
