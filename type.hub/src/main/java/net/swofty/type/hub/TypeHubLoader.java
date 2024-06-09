@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
-import net.minestom.server.particle.data.DustParticleData;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
@@ -72,7 +71,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
             for (Pos pos : locationsToDisplayParticle) {
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     player.sendPacket(new ParticlePacket(
-                            Particle.DUST.id(),
+                            Particle.DUST.withColor(new Color(153, 0, 255)),
                             true,
                             (float) pos.x(),
                             (float) pos.y(),
@@ -81,8 +80,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
                             0,
                             0,
                             0,
-                            1,
-                            new DustParticleData(new Color(153, 0, 255), 1)
+                            1
                     ));
                 });
             }

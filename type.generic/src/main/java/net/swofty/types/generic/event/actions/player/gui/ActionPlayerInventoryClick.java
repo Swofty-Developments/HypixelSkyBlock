@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -44,8 +45,8 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
             return;
         }
 
-        Component displayNameCursor = event.getCursorItem().getDisplayName();
-        Component displayNameClicked = event.getClickedItem().getDisplayName();
+        Component displayNameCursor = event.getCursorItem().get(ItemComponent.CUSTOM_NAME);
+        Component displayNameClicked = event.getClickedItem().get(ItemComponent.CUSTOM_NAME);
         if ((displayNameCursor != null && StringUtility.getTextFromComponent(displayNameCursor).contains("Switch your held"))
         || (displayNameClicked != null && StringUtility.getTextFromComponent(displayNameClicked).contains("Switch your held"))) {
             event.setCancelled(true);

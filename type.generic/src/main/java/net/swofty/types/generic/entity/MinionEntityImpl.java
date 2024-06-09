@@ -5,9 +5,10 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionSkinItem;
@@ -68,18 +69,12 @@ public class MinionEntityImpl extends LivingEntity {
             setChestplate(skinItem.getChestplate());
         } else {
             setHelmet(ItemStackCreator.getStackHead(minionTier.texture()).build());
-            setBoots(ItemStack.builder(Material.LEATHER_BOOTS).meta(bootMeta -> {
-                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(bootMeta.tagHandler());
-                leatherMeta.color(minion.getBootColour());
-            }).build());
-            setLeggings(ItemStack.builder(Material.LEATHER_LEGGINGS).meta(leggingsMeta -> {
-                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(leggingsMeta.tagHandler());
-                leatherMeta.color(minion.getLeggingsColour());
-            }).build());
-            setChestplate(ItemStack.builder(Material.LEATHER_CHESTPLATE).meta(chestplateMeta -> {
-                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(chestplateMeta.tagHandler());
-                leatherMeta.color(minion.getChestplateColour());
-            }).build());
+            setBoots(ItemStack.builder(Material.LEATHER_BOOTS).set(ItemComponent.DYED_COLOR,
+                    new DyedItemColor(minion.getBootColour(), false)).build());
+            setLeggings(ItemStack.builder(Material.LEATHER_LEGGINGS).set(ItemComponent.DYED_COLOR,
+                    new DyedItemColor(minion.getLeggingsColour(), false)).build());
+            setChestplate(ItemStack.builder(Material.LEATHER_CHESTPLATE).set(ItemComponent.DYED_COLOR,
+                    new DyedItemColor(minion.getChestplateColour(), false)).build());
         }
 
         setItemInMainHand(ItemStack.builder(minionTier.heldItem()).build());

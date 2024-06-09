@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -152,7 +153,7 @@ public class MinionFuelExtension extends MinionExtension {
 
                 ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
 
-                List<Component> lore = new ArrayList<>(itemBuilder.build().getLore());
+                List<Component> lore = new ArrayList<>(itemBuilder.build().get(ItemComponent.LORE));
 
                 if(timeFuelLasts > 0) {
                     lore.add(Component.text(""));
@@ -167,7 +168,7 @@ public class MinionFuelExtension extends MinionExtension {
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
                 }
 
-                return itemBuilder.lore(lore);
+                return itemBuilder.set(ItemComponent.LORE, lore);
             }
         };
     }

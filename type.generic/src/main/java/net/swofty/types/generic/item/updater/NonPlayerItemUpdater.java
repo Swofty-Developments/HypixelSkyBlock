@@ -3,11 +3,12 @@ package net.swofty.types.generic.item.updater;
 import lombok.Getter;
 import net.minestom.server.color.Color;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.item.Enchantment;
-import net.minestom.server.item.ItemHideFlag;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.item.component.DyedItemColor;
+import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.utils.Unit;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -16,7 +17,6 @@ import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
-import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
 
 import java.util.Base64;
@@ -42,7 +42,7 @@ public class NonPlayerItemUpdater {
     }
 
     public ItemStack.Builder getUpdatedItem() {
-        if (stack.build().hasTag(Tag.Boolean("Uneditable")) && stack.build().getTag(Tag.Boolean("Uneditable"))) {
+        if (stack.build().hasTag(Tag.Boolean("uneditable")) && stack.build().getTag(Tag.Boolean("uneditable"))) {
             return stack;
         }
 
@@ -51,15 +51,10 @@ public class NonPlayerItemUpdater {
 
         if (item.getGenericInstance() != null) {
             if (item.getGenericInstance() instanceof Enchanted)
-                stack.meta(meta -> {
-                    meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
-                    meta.hideFlag(ItemHideFlag.HIDE_ENCHANTS);
-                });
+                stack.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
 
             if (item.getGenericInstance() instanceof TrackedUniqueItem)
-                stack.meta(meta -> {
-                    meta.set(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
-                });
+                stack.setTag(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
 
             if (item.getGenericInstance() instanceof SkullHead skullHead) {
                 JSONObject json = new JSONObject();
@@ -71,10 +66,7 @@ public class NonPlayerItemUpdater {
 
                 String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-                stack.meta(meta -> {
-                    meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
-                            "25", new PlayerSkin(texturesEncoded, null)));
-                });
+                stack.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
             }
 
             if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
@@ -99,13 +91,8 @@ public class NonPlayerItemUpdater {
 
         Color leatherColour = item.getAttributeHandler().getLeatherColour();
         if (leatherColour != null) {
-            stack.meta(meta -> {
-                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
-                leatherMeta.color(leatherColour);
-                meta.hideFlag(ItemHideFlag.HIDE_DYE,
-                        ItemHideFlag.HIDE_ATTRIBUTES,
-                        ItemHideFlag.HIDE_ENCHANTS);
-            });
+            stack.set(ItemComponent.DYED_COLOR, new DyedItemColor(leatherColour, false));
+            stack.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         }
 
         return stack;
@@ -115,7 +102,7 @@ public class NonPlayerItemUpdater {
         ItemLore lore = new ItemLore(stack.build());
         lore.updateLore(null);
 
-        return stack.lore(lore.getStack().getLore())
-                .displayName(lore.getStack().getDisplayName());
+        return stack.set(ItemComponent.LORE, lore.getStack().get(ItemComponent.LORE))
+                .set(ItemComponent.CUSTOM_NAME, lore.getStack().get(ItemComponent.CUSTOM_NAME));
     }
 }

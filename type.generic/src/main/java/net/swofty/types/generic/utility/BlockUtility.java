@@ -16,9 +16,10 @@ public class BlockUtility {
         json.put("textures", new JSONObject().put("SKIN",
                 new JSONObject().put("url", "http://textures.minecraft.net/texture/" + texture).put("metadata", new JSONObject().put("model", "slim"))));
 
+        /*
         String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
         block = block.withTag(ExtraItemTags.SKULL_OWNER , new ExtraItemTags.SkullOwner(null , "25" ,
-                new PlayerSkin(texturesEncoded , null)));
+                new PlayerSkin(texturesEncoded , null)));*/
         return block;
     }
 

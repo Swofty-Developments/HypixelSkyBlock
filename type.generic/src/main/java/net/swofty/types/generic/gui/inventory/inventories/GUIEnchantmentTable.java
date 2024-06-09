@@ -8,6 +8,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
@@ -59,7 +60,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§dBookshelf Power", Material.BOOKSHELF, (short) 0, 1,
+                        "§dBookshelf Power", Material.BOOKSHELF, 1,
                         "§7Stronger enchantments require",
                         "§7more bookshelf power which can",
                         "§7be increased by placing",
@@ -73,7 +74,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aEnchantments Guide", Material.BOOK, (short) 0, 1,
+                        "§aEnchantments Guide", Material.BOOK, 1,
                         "§7View a complete list of all",
                         "§7enchantments and their",
                         "§7requirements.",
@@ -85,7 +86,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aEnchant Item", Material.ENCHANTING_TABLE, (short) 0, 1,
+                        "§aEnchant Item", Material.ENCHANTING_TABLE, 1,
                         "§7Add and remove enchantments from",
                         "§7the time in the slot above!"
                 );
@@ -111,7 +112,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cEnchant Item", Material.GRAY_DYE, (short) 0, 1,
+                            "§cEnchant Item", Material.GRAY_DYE, 1,
                             "§7Place an item in the open slot",
                             "§7to enchant it!"
                     );
@@ -122,7 +123,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) return;
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) return;
 
                     SkyBlockItem item = new SkyBlockItem(stack);
                     updateFromItem(item, null);
@@ -147,7 +148,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ItemStack stack = e.getCursorItem();
 
-                if (stack.getDisplayName() == null) {
+                if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
                     updateFromItem(null, null);
                     return;
                 }
@@ -168,14 +169,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
         });
 
         ItemType type = item.getAttributeHandler().getItemTypeAsType();
-        if (item.getItemStack().getAmount() > 1 ||
+        if (item.getItemStack().amount() > 1 ||
                 type == null ||
                 !(type.clazz.newInstance() instanceof Enchantable)) {
             set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cInvalid Item!", Material.RED_DYE, (short) 0, 1,
+                            "§cInvalid Item!", Material.RED_DYE, 1,
                             "§7You cannot enchant stacked items!"
                     );
                 }
@@ -196,7 +197,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cCannot Enchant Item!", Material.RED_DYE, (short) 0, 1,
+                            "§cCannot Enchant Item!", Material.RED_DYE, 1,
                             "§7This item cannot be enchanted!"
                     );
                 }
@@ -250,7 +251,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                         return ItemStackCreator.getStack(
                                 "§a" + StringUtility.toNormalCase(enchantmentType.name()),
-                                Material.ENCHANTED_BOOK, (short) 0, 1,
+                                Material.ENCHANTED_BOOK, 1,
                                 lore
                         );
                     }
@@ -303,7 +304,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         lore.add("§cHigher level already present!");
                         return ItemStackCreator.getStack(
                                 "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
-                                Material.GRAY_DYE, (short) 0, 1,
+                                Material.GRAY_DYE, 1,
                                 lore
                         );
                     }
@@ -324,14 +325,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                     return ItemStackCreator.getStack(
                             "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
-                            Material.ENCHANTED_BOOK, (short) 0, 1,
+                            Material.ENCHANTED_BOOK, 1,
                             lore
                     );
                 }
 
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (e.getClickedItem().getMaterial() == Material.GRAY_DYE)
+                    if (e.getClickedItem().material() == Material.GRAY_DYE)
                         return;
 
                     // TODO if someone know how to get the itemstack name, do it

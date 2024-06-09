@@ -1,5 +1,9 @@
 package net.swofty.types.generic.gui;
 
+import net.kyori.adventure.nbt.ByteBinaryTag;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.nbt.ListBinaryTag;
+import net.kyori.adventure.nbt.StringBinaryTag;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
@@ -8,11 +12,6 @@ import net.minestom.server.network.packet.server.play.BlockEntityDataPacket;
 import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jglrxavpok.hephaistos.nbt.NBT;
-import org.jglrxavpok.hephaistos.nbt.NBTCompound;
-import org.jglrxavpok.hephaistos.nbt.NBTList;
-import org.jglrxavpok.hephaistos.nbt.NBTType;
-import org.jglrxavpok.hephaistos.nbt.mutable.MutableNBTCompound;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,29 +29,27 @@ public class SkyBlockSignGUI {
     public CompletableFuture<String> open(String[] text) {
         Pos pos = player.getPosition().add(0, 6, 0);
 
-        NBTCompound compound = new NBTCompound().withEntries(
-                NBT.Entry("is_waxed", NBT.Byte(0)),
-                NBT.Entry("back_text", NBT.Compound(new MutableNBTCompound()
-                        .set("has_glowing_text", NBT.Byte(0))
-                        .set("color", NBT.String("black"))
-                        .set("messages", new NBTList<>(NBTType.TAG_String, List.of(
-                                NBT.String("{\"text\":\"\"}"),
-                                NBT.String("{\"text\":\"\"}"),
-                                NBT.String("{\"text\":\"\"}"),
-                                NBT.String("{\"text\":\"\"}")
-                        )))
-                        .asMapView())),
-                NBT.Entry("front_text", NBT.Compound(new MutableNBTCompound()
-                        .set("has_glowing_text", NBT.Byte(0))
-                        .set("color", NBT.String("black"))
-                        .set("messages", new NBTList<>(NBTType.TAG_String, List.of(
-                                NBT.String("{\"text\":\"\"}"),
-                                NBT.String("{\"text\":\"^^^^^^^^\"}"),
-                                NBT.String("{\"text\":\"" + text[0] + "\"}"),
-                                NBT.String("{\"text\":\"" + text[1] + "\"}")
-                        )))
-                        .asMapView()))
-        );
+        CompoundBinaryTag compound = CompoundBinaryTag.builder()
+                .put("is_waxed", ByteBinaryTag.byteBinaryTag((byte) 0))
+                .put("back_text", CompoundBinaryTag.builder()
+                        .put("has_glowing_text", ByteBinaryTag.byteBinaryTag((byte) 0))
+                        .put("color", StringBinaryTag.stringBinaryTag("black"))
+                        .put("messages", ListBinaryTag.from(List.of(
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"\"}"))))
+                        .build())
+                .put("front_text", CompoundBinaryTag.builder()
+                        .put("has_glowing_text", ByteBinaryTag.byteBinaryTag((byte) 0))
+                        .put("color", StringBinaryTag.stringBinaryTag("black"))
+                        .put("messages", ListBinaryTag.from(List.of(
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"^^^^^^^^\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"" + text[0] + "\"}"),
+                                StringBinaryTag.stringBinaryTag("{\"text\":\"" + text[1] + "\"}")))
+                        ).build())
+                .build();
 
         player.sendPackets(
                 new BlockChangePacket(pos, Block.OAK_SIGN),

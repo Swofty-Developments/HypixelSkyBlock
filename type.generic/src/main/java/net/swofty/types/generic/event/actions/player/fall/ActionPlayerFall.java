@@ -1,6 +1,7 @@
 package net.swofty.types.generic.event.actions.player.fall;
 
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.event.EventNodes;
@@ -19,7 +20,7 @@ public class ActionPlayerFall implements SkyBlockEventClass {
         Pos newPosition = event.getNewPosition();
         Pos currentPosition = player.getPosition();
 
-        if (player.isFlying() || player.isCreative() || player.isInLaunchpad()) {
+        if (player.isFlying() || player.getGameMode().equals(GameMode.CREATIVE) || player.isInLaunchpad()) {
             fallHeight.put(player, currentPosition.blockY());
             return;
         }

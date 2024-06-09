@@ -1,5 +1,6 @@
 package net.swofty.types.generic.command.commands;
 
+import net.minestom.server.item.ItemComponent;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -28,7 +29,9 @@ public class MithrilInfuseCommand extends SkyBlockCommand {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                 try {
                     itemAttributeHandler.setMithrilInfused(true);
-                    player.sendMessage("§aMithril Infusion applied to " + player.getInventory().getItemInMainHand().getDisplayName().toString() + ".");
+                    player.sendMessage("§aMithril Infusion applied to " + player.getInventory().getItemInMainHand().get(
+                            ItemComponent.CUSTOM_NAME
+                    ).toString() + ".");
                 } catch (IllegalArgumentException e) {
                     player.sendMessage("§c" + e.getMessage());
                 }

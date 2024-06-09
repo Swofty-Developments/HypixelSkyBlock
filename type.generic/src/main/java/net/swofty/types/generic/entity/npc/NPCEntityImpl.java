@@ -26,12 +26,11 @@ public class NPCEntityImpl extends Entity {
     private final String[] holograms;
 
     public NPCEntityImpl(@NotNull String bottomDisplay, @Nullable String skinTexture, @Nullable String skinSignature, @NotNull String[] holograms) {
-        super(EntityType.PLAYER);
+        super(EntityType.PLAYER, UUID.randomUUID());
         this.username = bottomDisplay;
 
         this.skinTexture = skinTexture;
         this.skinSignature = skinSignature;
-        this.uuid = UUID.randomUUID();
         this.holograms = holograms;
 
         if (holograms == null) {
@@ -53,13 +52,13 @@ public class NPCEntityImpl extends Entity {
         player.sendPackets(
                 new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
                         new PlayerInfoUpdatePacket.Entry(
-                                uuid,
+                                getUuid(),
                                 username,
                                 properties,
                                 false,
                                 0,
                                 GameMode.CREATIVE,
-                                Component.text("§8[NPC] " + this.uuid.toString().substring(0, 8)),
+                                Component.text("§8[NPC] " + getUuid().toString().substring(0, 8)),
                                 null)),
                 new SpawnEntityPacket(this.getEntityId(), this.getUuid(), EntityType.PLAYER.id(),
                         getPosition(),
@@ -76,7 +75,7 @@ public class NPCEntityImpl extends Entity {
         packetsSent.add(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             if (packetsSent.contains(player)) {
-                player.sendPacket(new PlayerInfoRemovePacket(uuid));
+                player.sendPacket(new PlayerInfoRemovePacket(getUuid()));
             }
         }, TaskSchedule.tick(2), TaskSchedule.stop());
     }

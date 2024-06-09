@@ -29,7 +29,7 @@ public class GUIBoosterCookie extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE, (short) 0,1,
+                return ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE,1,
                         "§7I'm not hungry...");
             }
             @Override
@@ -48,7 +48,7 @@ public class GUIBoosterCookie extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE, (short) 0,1,
+                return ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE,1,
                         "§7Gain the §dCookie Buff§!",
                         " ",
                         "§7Duration: §b4 days§!",

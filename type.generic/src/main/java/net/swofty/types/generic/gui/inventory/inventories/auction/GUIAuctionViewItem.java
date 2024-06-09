@@ -6,6 +6,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -59,9 +60,10 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, item.getItem().getItemStack()).lore(item.getLore(player).stream().map(line -> {
-                    return Component.text(line).decoration(TextDecoration.ITALIC, false);
-                }).toList());
+                return ItemStackCreator.updateLore(
+                        PlayerItemUpdater.playerUpdate(player, item.getItem().getItemStack()),
+                        item.getLore(player)
+                );
             }
         });
 

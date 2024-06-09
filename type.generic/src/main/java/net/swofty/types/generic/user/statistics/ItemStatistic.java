@@ -87,8 +87,6 @@ public enum ItemStatistic {
         return isPercentage ? "" : "+";
     }
 
-
-
     public static ItemStatistics getOfAllBaseValues() {
         ItemStatistics.Builder builder = ItemStatistics.builder();
         for (ItemStatistic stat : ItemStatistic.values()) {

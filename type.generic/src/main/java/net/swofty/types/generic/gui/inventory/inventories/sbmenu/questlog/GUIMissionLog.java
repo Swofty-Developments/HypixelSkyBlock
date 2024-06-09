@@ -51,7 +51,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, (short) 0, 1, "§7View your active quests,", "§7progress, and rewards.");
+                return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, 1, "§7View your active quests,", "§7progress, and rewards.");
             }
         });
         set(new GUIClickableItem(10) {
@@ -79,7 +79,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, (short) 0, 1,
+                    return ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, 1,
                             "§7View quests you are currently",
                             "§7working towards.",
                             "§7 ",
@@ -95,7 +95,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, (short) 0, 1,
+                    return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, 1,
                             "§7Take a peek at the past and",
                             "§7browse quests you've,",
                             "§7already completed.",
@@ -186,7 +186,7 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
 
                     return ItemStackCreator.enchant(
                             ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(missionSet.name()),
-                                    Material.PAPER, (short) 0, 1,
+                                    Material.PAPER, 1,
                                     lore));
                 }
             });

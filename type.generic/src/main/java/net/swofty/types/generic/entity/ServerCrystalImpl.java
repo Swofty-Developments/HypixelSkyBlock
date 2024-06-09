@@ -81,7 +81,7 @@ public class ServerCrystalImpl extends LivingEntity {
             teleport(getPosition().add(0, yLevel, 0));
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 player.sendPacket(new ParticlePacket(
-                        Particle.HAPPY_VILLAGER.id(),
+                        Particle.HAPPY_VILLAGER,
                         false,
                         getPosition().x(),
                         getPosition().y(),
@@ -90,8 +90,7 @@ public class ServerCrystalImpl extends LivingEntity {
                         0.1f,
                         0.1f,
                         0f,
-                        3,
-                        null
+                        3
                 ));
             });
         }, TaskSchedule.tick(15), TaskSchedule.tick(3));
@@ -138,7 +137,7 @@ public class ServerCrystalImpl extends LivingEntity {
 
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     player.sendPacket(new ParticlePacket(
-                            38,
+                            Particle.CLOUD,
                             false,
                             pos.x(),
                             pos.y(),
@@ -147,8 +146,7 @@ public class ServerCrystalImpl extends LivingEntity {
                             0.1f,
                             0.1f,
                             0f,
-                            3,
-                            null
+                            3
                     ));
                 });
             }

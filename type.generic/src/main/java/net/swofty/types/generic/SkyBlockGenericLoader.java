@@ -11,9 +11,9 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
-import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
@@ -226,7 +226,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         SkyBlockRegion.cacheRegions();
         SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
-        MinecraftServer.getDimensionTypeManager().addDimension(
+        MinecraftServer.getDimensionTypeRegistry().register(
                 DimensionType.builder(NamespaceID.from("skyblock:island"))
                         .ambientLight(2)
                         .build());

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.collection;
 
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -88,7 +89,7 @@ public abstract class CollectionCategory {
         public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
             ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
             ArrayList<String> lore = new ArrayList<>(
-                    updatedItem.build().getLore().stream().map(StringUtility::getTextFromComponent).toList()
+                    updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
             );
             lore.add(" ");
             int others = getRecipes().size() - 1;

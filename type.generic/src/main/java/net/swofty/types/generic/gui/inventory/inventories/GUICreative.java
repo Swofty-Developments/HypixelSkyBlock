@@ -9,6 +9,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -109,9 +110,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 if (stackable)
                     lore.add("§bRight Click for §7x64 §eof this item.");
                 lore.add("§eLeft Click for §7x1 §eof this item.");
-                return itemStack.lore(lore.stream().map(line -> {
-                    return Component.text(line).decoration(TextDecoration.ITALIC, false);
-                }).toList());
+                return ItemStackCreator.updateLore(itemStack, lore);
             }
         };
     }

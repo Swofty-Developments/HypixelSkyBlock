@@ -57,7 +57,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
             @SneakyThrows
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSwitch to Profile", Material.GRASS_BLOCK, 1,
                         "§7Teleports you to your island on",
                         "§7another profile and loads your",
                         "§7inventory, skills, collections",
@@ -73,7 +73,7 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, (short) 0, 1,
+                return ItemStackCreator.getStack("§cDelete profile", Material.RED_STAINED_GLASS, 1,
                         "§7Clear this profile slot by",
                         "§7deleting the profile forever.",
                         "",

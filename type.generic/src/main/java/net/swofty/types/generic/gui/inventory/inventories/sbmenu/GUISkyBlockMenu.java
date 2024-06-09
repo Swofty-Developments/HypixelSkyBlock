@@ -152,7 +152,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
                 lore.add(" ");
                 lore.add("§eClick to view!");
-                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore);
+                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, 1, lore);
             }
         });
         set(new GUIClickableItem(25) {
@@ -181,7 +181,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aQuest Log", Material.WRITABLE_BOOK, 1,
                         "§7View your active quests, progress",
                         "§7and rewards.",
                         " ",
@@ -239,7 +239,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, (short) 0, 1,
+                return ItemStackCreator.getStack("§aCrafting Table", Material.CRAFTING_TABLE, 1,
                         "§7Opens the crafting grid.",
                         " ",
                         "§eClick to open!"
@@ -278,7 +278,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, (short) 0, 1,
+                return ItemStackCreator.getStack("§aProfile Management", Material.NAME_TAG, 1,
                         "§7You can have multiple SkyBlock",
                         "§7profiles at the same time.",
                         " ",

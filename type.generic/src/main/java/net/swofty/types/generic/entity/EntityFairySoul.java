@@ -5,10 +5,11 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.HeadProfile;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
-import net.swofty.types.generic.utility.ExtraItemTags;
 
 import java.util.UUID;
 
@@ -27,10 +28,9 @@ public class EntityFairySoul extends EntityCreature {
         meta.setHasNoGravity(true);
         meta.setNotifyAboutChanges(false);
 
-        setHelmet(ItemStack.builder(Material.PLAYER_HEAD).meta(iMeta -> {
-            iMeta.damage(3);
-            iMeta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(UUID.randomUUID(), null, new PlayerSkin(SKULL_TEXTURES, null)));
-        }).build());
+        setHelmet(ItemStack.builder(Material.PLAYER_HEAD)
+                .set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(SKULL_TEXTURES, null)))
+                .build());
     }
 
     /**

@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -105,16 +106,16 @@ public class MinionUpgradeExtension extends MinionExtension {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
-                    item = item.displayName(Component.text("§aUpgrade Slot").decoration(TextDecoration.ITALIC, false))
-                            .lore(Stream.of(
-                                    "§7You can improve your minion by",
-                                    "§7adding a minion upgrade item",
-                                    "§7here.",
-                                    " ",
-                                    "§7Current Upgrade: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
-                                    " ",
-                                    "§eClick to remove."
-                            ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
+                   item.set(ItemComponent.CUSTOM_NAME, Component.text("§aUpgrade Slot").decoration(TextDecoration.ITALIC, false));
+                    item = ItemStackCreator.updateLore(item, Stream.of(
+                            "§7You can improve your minion by",
+                            "§7adding a minion upgrade item",
+                            "§7here.",
+                            " ",
+                            "§7Current Upgrade: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
+                            " ",
+                            "§eClick to remove."
+                    ).toList());
 
                     return item;
                 }

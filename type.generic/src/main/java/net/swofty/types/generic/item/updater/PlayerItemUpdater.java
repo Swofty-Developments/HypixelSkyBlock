@@ -2,14 +2,15 @@ package net.swofty.types.generic.item.updater;
 
 import net.minestom.server.color.Color;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.item.Enchantment;
-import net.minestom.server.item.ItemHideFlag;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.item.component.DyedItemColor;
+import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.minestom.server.utils.Unit;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
@@ -22,7 +23,6 @@ import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.ExtraItemTags;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -39,10 +39,10 @@ public class PlayerItemUpdater {
 
     public static Map.Entry<SkyBlockItem,
             ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
-        if (stack.hasTag(Tag.Boolean("Uneditable")) && stack.getTag(Tag.Boolean("Uneditable")))
+        if (stack.hasTag(Tag.Boolean("uneditable")) && stack.getTag(Tag.Boolean("uneditable")))
             return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 
-        if (!SkyBlockItem.isSkyBlockItem(stack) || stack.getMaterial().equals(Material.AIR)) {
+        if (!SkyBlockItem.isSkyBlockItem(stack) || stack.material().equals(Material.AIR)) {
             /**
              * Item is not SkyBlock item, so we just instance it here
              */
@@ -53,14 +53,16 @@ public class PlayerItemUpdater {
             lore.updateLore(player);
             stack = lore.getStack();
 
-            return Map.entry(item, itemAsBuilder.lore(stack.getLore()).amount(stack.amount()));
+            return Map.entry(item, itemAsBuilder
+                            .set(ItemComponent.LORE, stack.get(ItemComponent.LORE))
+                            .amount(stack.amount()));
         }
 
         /**
          * Check for value updates
          */
         SkyBlockItem item = new SkyBlockItem(stack);
-        ItemStack.Builder toReturn = item.getItemStackBuilder().amount(stack.getAmount());
+        ItemStack.Builder toReturn = item.getItemStackBuilder().amount(stack.amount());
 
         /**
          * Update SkyBlock Item Instance
@@ -85,23 +87,14 @@ public class PlayerItemUpdater {
         stack = lore.getStack();
 
         if (handler.shouldBeEnchanted()) {
-            toReturn.meta(meta -> {
-                meta.enchantment(Enchantment.EFFICIENCY, (short) 1);
-                meta.hideFlag(ItemHideFlag.HIDE_DYE,
-                        ItemHideFlag.HIDE_ATTRIBUTES,
-                        ItemHideFlag.HIDE_ENCHANTS);
-            });
+            toReturn.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
+            toReturn.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         }
 
         Color leatherColour = handler.getLeatherColour();
         if (leatherColour != null) {
-            toReturn.meta(meta -> {
-                LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
-                leatherMeta.color(leatherColour);
-                meta.hideFlag(ItemHideFlag.HIDE_DYE,
-                        ItemHideFlag.HIDE_ATTRIBUTES,
-                        ItemHideFlag.HIDE_ENCHANTS);
-            });
+            toReturn.set(ItemComponent.DYED_COLOR, new DyedItemColor(
+                    new Color(leatherColour.red(), leatherColour.green(), leatherColour.blue()), false));
         }
 
         if (item.getGenericInstance() != null
@@ -111,9 +104,7 @@ public class PlayerItemUpdater {
             UUID randomUUID = UUID.randomUUID();
 
             handler.setUniqueTrackedID(randomUUID.toString(), player);
-            toReturn.meta(meta -> {
-                meta.set(Tag.String("unique-tracked-id"), randomUUID.toString());
-            });
+            toReturn.set(Tag.String("unique-tracked-id"), randomUUID.toString());
         } else if (item.getGenericInstance() != null
                 && item.getGenericInstance() instanceof TrackedUniqueItem
                 && handler.getUniqueTrackedID() != null
@@ -132,10 +123,7 @@ public class PlayerItemUpdater {
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-            toReturn.meta(meta -> {
-                meta.set(ExtraItemTags.SKULL_OWNER, new ExtraItemTags.SkullOwner(null,
-                        "25", new PlayerSkin(texturesEncoded, null)));
-            });
+            toReturn.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
         if (item.getGenericInstance() != null &&
@@ -160,8 +148,8 @@ public class PlayerItemUpdater {
 
         return Map.entry(item,
                 toReturn.amount(stack.amount())
-                        .lore(stack.getLore())
-                        .displayName(stack.getDisplayName()));
+                        .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))
+                        .set(ItemComponent.LORE, stack.get(ItemComponent.LORE)));
     }
 
     public static void updateLoop(Scheduler scheduler) {

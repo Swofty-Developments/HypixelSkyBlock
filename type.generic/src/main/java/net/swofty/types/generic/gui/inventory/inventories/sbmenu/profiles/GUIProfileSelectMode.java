@@ -26,7 +26,7 @@ public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, 1,
                         "§8SkyBlock Mode",
                         "",
                         "§7A SkyBlock adventure with the",
@@ -51,7 +51,7 @@ public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(15) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, (short) 0, 1,
+                return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, 1,
                         "§7Choose a SkyBlock mode with",
                         "§7special rules and unique",
                         "§7mechanics.",

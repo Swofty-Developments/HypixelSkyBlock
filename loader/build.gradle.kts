@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
     implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("com.github.Minestom:Minestom:19bb74e942") {
+    implementation("com.github.Minestom:Minestom:b3aa996e1d") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("dev.hollowcube:polar:1.7.2")

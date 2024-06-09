@@ -6,6 +6,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -94,7 +95,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
     protected boolean shouldFilterFromSearch(String query, SkyBlockRecipe item) {
         return !StringUtility.getTextFromComponent(new NonPlayerItemUpdater(
                 item.getResult()
-        ).getUpdatedItem().build().getDisplayName()).toLowerCase().contains(query.toLowerCase());
+        ).getUpdatedItem().build().get(ItemComponent.CUSTOM_NAME)).toLowerCase().contains(query.toLowerCase());
     }
 
     @Override
@@ -149,7 +150,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
 
                 return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                        type.getMaterial(), (short) 0, 1, lore);
+                        type.getMaterial(), 1, lore);
             }
         });
 
@@ -185,13 +186,13 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ArrayList<String> lore = new ArrayList<>(
-                            itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList()
+                            itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
                     );
 
                     lore.add("§e ");
                     lore.add("§eClick to view recipe!");
 
-                    return itemStack.lore(
+                    return itemStack.set(ItemComponent.LORE,
                             lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                                     .collect(Collectors.toList()));
                 }
@@ -209,7 +210,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                     // Add gray text to the start of each line
                     lore = lore.stream().map(line -> "§7" + line).toList();
 
-                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, (short) 0, 1, lore);
+                    return ItemStackCreator.getStack("§c???", Material.GRAY_DYE, 1, lore);
                 }
             };
         }

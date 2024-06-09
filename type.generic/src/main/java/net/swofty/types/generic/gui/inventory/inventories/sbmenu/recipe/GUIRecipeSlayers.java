@@ -98,7 +98,7 @@ public class GUIRecipeSlayers extends SkyBlockInventoryGUI {
                     lore.add("§eClick to view!");
 
                     return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            type.getMaterial(), (short) 0, 1, lore);
+                            type.getMaterial(), 1, lore);
                 }
             });
             set(new GUIItem(4) {
@@ -145,7 +145,7 @@ public class GUIRecipeSlayers extends SkyBlockInventoryGUI {
                     lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size());
 
                     return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            type.getMaterial(), (short) 0, 1, lore);
+                            type.getMaterial(), 1, lore);
                 }
             });
         }

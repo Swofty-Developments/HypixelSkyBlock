@@ -7,6 +7,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -54,7 +55,8 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         SkyBlockItem sbItem = item.getItem();
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(sbItem).getUpdatedItem();
 
-        List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+        List<String> lore = new ArrayList<>(itemStack.build()
+                .get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
 
         lore.add("");
         lore.add("§7Cost");
@@ -91,8 +93,9 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                String displayName = StringUtility.getTextFromComponent(itemStack.build().getDisplayName().append(Component.text(" §8x" + amount)));
-                return ItemStackCreator.getStack(displayName, itemStack.build().material(), 0, amount, lore);
+                String displayName = StringUtility.getTextFromComponent(itemStack.build().get(ItemComponent.CUSTOM_NAME)
+                        .append(Component.text(" §8x" + amount)));
+                return ItemStackCreator.getStack(displayName, itemStack.build().material(), amount, lore);
             }
         };
     }

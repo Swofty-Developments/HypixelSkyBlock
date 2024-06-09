@@ -2,6 +2,7 @@ package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
@@ -124,7 +125,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                     Pos villagerPosition = npc.getParameters().position();
 
                     player.sendPacket(new ParticlePacket(
-                            38,
+                            Particle.HAPPY_VILLAGER,
                             false,
                             villagerPosition.x(),
                             villagerPosition.y() + 3f,
@@ -133,8 +134,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                             0.1f,
                             0.1f,
                             0f,
-                            3,
-                            null
+                            3
                     ));
                 });
             });

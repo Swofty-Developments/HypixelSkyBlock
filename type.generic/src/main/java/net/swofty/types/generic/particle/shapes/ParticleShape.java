@@ -14,12 +14,12 @@ import java.util.List;
 public abstract class ParticleShape
 {
       private final List<ParticlePacket> packets;
-      private int particleID;
+      private Particle particle;
 
       public ParticleShape() {
             this.packets = new ArrayList<>();
             // Set a default value for it
-            this.particleID = Particle.SPLASH.id();
+            this.particle = Particle.SPLASH;
       }
 
       // Updated every tick
@@ -27,11 +27,11 @@ public abstract class ParticleShape
 
       /**
        * This method is only to be used by the {@link ParticleEngine}  class
-       * @param id the ID to be set
+       * @param particle the ID to be set
        */
       @Deprecated
-      public void setParticleID(int id) {
-            this.particleID = id;
+      public void setParticle(Particle particle) {
+            this.particle = particle;
       }
 
       /**
@@ -59,7 +59,7 @@ public abstract class ParticleShape
 
       protected ParticlePacket packet(Pos position, Vec offsets, float data, int count) {
             return new ParticlePacket(
-                    particleID,
+                    particle,
                     false, // Long distance must always be false to not cause lag
                     position.x(),
                     position.y(),
@@ -68,8 +68,7 @@ public abstract class ParticleShape
                     (float) offsets.y(),
                     (float) offsets.z(),
                     data,
-                    count,
-                    null
+                    count
             );
       }
 }

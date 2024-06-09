@@ -3,6 +3,7 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
@@ -27,7 +28,8 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
     public SkyBlockItem item;
 
     public GUIStorageBackpackPage(int page, SkyBlockItem item) {
-        super(StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item).getUpdatedItem().build().getDisplayName())
+        super(StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item).getUpdatedItem().build()
+                        .get(ItemComponent.CUSTOM_NAME))
                 + " (Slot #" + page + ")",
                 MathUtility.getFromSize(9 + ((Backpack) item.getGenericInstance()).getRows() * 9));
 

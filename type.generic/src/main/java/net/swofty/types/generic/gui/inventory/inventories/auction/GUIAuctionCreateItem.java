@@ -5,6 +5,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -63,14 +64,14 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                 List<String> lore = new ArrayList<>();
 
                 lore.add(" ");
-                lore.add(StringUtility.getTextFromComponent(itemStack.getDisplayName()));
-                itemStack.getLore().forEach(loreEntry -> {
+                lore.add(StringUtility.getTextFromComponent(itemStack.get(ItemComponent.CUSTOM_NAME)));
+                itemStack.get(ItemComponent.LORE).forEach(loreEntry -> {
                     lore.add(StringUtility.getTextFromComponent(loreEntry));
                 });
                 lore.add(" ");
                 lore.add("§eClick to pickup!");
 
-                return ItemStackCreator.getStack("§a§lAUCTION FOR ITEM:", itemStack.getMaterial(), itemStack.getAmount(), lore);
+                return ItemStackCreator.getStack("§a§lAUCTION FOR ITEM:", itemStack.material(), itemStack.amount(), lore);
             }
 
             @Override
@@ -165,7 +166,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
                     AuctionItem item = new AuctionItem(escrow.getItem(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
                             escrow.isBin(), escrow.getPrice());
-                    String itemName = StringUtility.getTextFromComponent(builtItem.getDisplayName());
+                    String itemName = StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME));
 
                     AuctionCategories category = AuctionCategories.TOOLS;
                     if (escrow.getItem().getGenericInstance() != null && escrow.getItem().getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
@@ -203,7 +204,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                             "§7house for other players to",
                             "§7purchase.",
                             " ",
-                            "§7Item: " + StringUtility.getTextFromComponent(builtItem.getDisplayName()),
+                            "§7Item: " + StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
                             "§7Auction Duration: §e" + StringUtility.getAuctionSetupFormattedTime(escrow.getDuration()),
                             "§7" + (escrow.isBin() ? "Item Price" : "Starting bid") + ": §e" + StringUtility.commaify(escrow.getPrice()) + " coins",
                             " ",

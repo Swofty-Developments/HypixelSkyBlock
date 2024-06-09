@@ -3,10 +3,11 @@ package net.swofty.types.generic.item;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import net.minestom.server.item.ItemHideFlag;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import net.minestom.server.utils.Unit;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRarity;
@@ -86,7 +87,7 @@ public class SkyBlockItem {
     }
 
     public SkyBlockItem(ItemStack item) {
-        amount = item.getAmount();
+        amount = item.amount();
         try {
             clazz = ItemType.valueOf(item.getTag(Tag.String("item_type"))).clazz.newInstance().getClass();
         } catch (IllegalArgumentException | InstantiationException | NullPointerException | IllegalAccessException e) {}
@@ -170,7 +171,8 @@ public class SkyBlockItem {
             itemStackBuilder.setTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
 
-        return itemStackBuilder.meta(meta -> meta.hideFlag(ItemHideFlag.HIDE_ATTRIBUTES));
+        itemStackBuilder.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        return itemStackBuilder;
     }
 
     public boolean isSimilar(SkyBlockItem item) {
@@ -226,11 +228,11 @@ public class SkyBlockItem {
     }
 
     public String getDisplayName() {
-        return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().getDisplayName());
+        return StringUtility.getTextFromComponent(new NonPlayerItemUpdater(this).getUpdatedItem().build().get(ItemComponent.CUSTOM_NAME));
     }
 
     public List<String> getLore() {
-        return new NonPlayerItemUpdater(this).getUpdatedItem().build().getLore().stream().map(
+        return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(ItemComponent.LORE).stream().map(
                 StringUtility::getTextFromComponent
         ).toList();
     }

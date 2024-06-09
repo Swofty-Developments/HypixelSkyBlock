@@ -7,6 +7,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.hub.gui.elizabeth.subguis.*;
@@ -181,7 +182,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     if (slot != 4) {
                         ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
                             lore.add("§eClick to view!");
@@ -191,7 +192,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                         return ItemStackCreator.updateLore(itemStack, lore);
                     } else {
                         ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§eClick to view!")) {
                             lore.removeLast();
                             lore.add("§aCurrently selected!");
@@ -246,7 +247,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
                         SkyBlockItem item = new SkyBlockItem(bitItems.item);
                         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         lore.add(" ");
                         lore.add("§7Cost");
                         lore.add("§b" + StringUtility.commaify(bitItems.price) + " Bits");
@@ -271,7 +272,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ItemStack.Builder itemstack = subCategorys.item;
-                    ArrayList<String> lore = new ArrayList<>(itemstack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
                         lore.add(" ");
                         lore.add("§eClick to browse!");

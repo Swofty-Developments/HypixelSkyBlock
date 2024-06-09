@@ -8,6 +8,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
@@ -96,7 +97,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public DataHandler getDataHandler() {
-        return DataHandler.getUser(this.uuid);
+        return DataHandler.getUser(this.getUuid());
     }
 
     public DatapointMuseum.MuseumData getMuseumData() {
@@ -614,13 +615,16 @@ public class SkyBlockPlayer extends Player {
         });
     }
 
-    @Override
     public float getMaxHealth() {
         PlayerStatistics statistics = this.getStatistics();
         float maxHealth = statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
         MaxHealthValueUpdateEvent event = new MaxHealthValueUpdateEvent(this, maxHealth);
         SkyBlockValueEvent.callValueUpdateEvent(event);
-        return Math.min((float) event.getValue(), maxHealth);
+
+        float health = (float) event.getValue();
+        getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+
+        return health;
     }
 
     @Override

@@ -88,7 +88,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSearch", Material.BIRCH_SIGN, (short) 0, 1, "§7Query: §e" +
+                return ItemStackCreator.getStack("§aSearch", Material.BIRCH_SIGN, 1, "§7Query: §e" +
                         (Objects.equals(search, "") ? "None" : search));
             }
         };

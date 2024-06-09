@@ -29,7 +29,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, (short) 0, 1,
+                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
                         "§7To Jerry the Assistant"
                 );
             }
@@ -44,7 +44,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.0.2", Material.BOOK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.0.2", Material.BOOK, 1,
                         "§76th April 2024",
                         "",
                         "§eClick to view!");
@@ -60,7 +60,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.0.3", Material.STICK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.0.3", Material.STICK, 1,
                         "§78th April 2024",
                         "",
                         "§eClick to view!");
@@ -76,7 +76,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.1.0", Material.BLAZE_POWDER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.0", Material.BLAZE_POWDER, 1,
                         "§79th April 2024",
                         "",
                         "§eClick to view!");
@@ -92,7 +92,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.1.1", Material.HOPPER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.1", Material.HOPPER, 1,
                         "§711th April 2024",
                         "",
                         "§eClick to view!");
@@ -108,7 +108,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.1.3", Material.GOLD_INGOT, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.3", Material.GOLD_INGOT, 1,
                         "§715th April 2024",
                         "",
                         "§eClick to view!");
@@ -124,7 +124,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.1.4", Material.DISPENSER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.4", Material.DISPENSER, 1,
                         "§718th April 2024",
                         "",
                         "§eClick to view!");
@@ -140,7 +140,7 @@ public class GUIPatchNotes extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aSkyBlock v1.1.5", Material.DIAMOND, (short) 0, 1,
+                return ItemStackCreator.getStack("§aSkyBlock v1.1.5", Material.DIAMOND, 1,
                         "§720th April 2024",
                         "",
                         "§eClick to view!");

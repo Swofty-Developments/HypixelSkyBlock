@@ -30,7 +30,7 @@ public class ChangeNBTCommand extends SkyBlockCommand {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemInHand(Player.Hand.MAIN));
 
-            ItemAttribute attribute = (ItemAttribute) item.getAttribute(key);
+            ItemAttribute attribute = item.getAttribute(key);
             attribute.setValue(attribute.loadFromString(value));
 
             player.getInventory().setItemInHand(Player.Hand.MAIN, item.getItemStack());

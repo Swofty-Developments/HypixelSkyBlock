@@ -1,6 +1,7 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
@@ -73,7 +74,7 @@ public class ActionCollectionDisplay implements SkyBlockEventClass {
                             ItemStack.Builder item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult().getItemStackBuilder();
                             item = new NonPlayerItemUpdater(item).getUpdatedItem();
 
-                            player.sendMessage("    §7" + StringUtility.getTextFromComponent(item.build().getMeta().getDisplayName()) + " §7Recipes");
+                            player.sendMessage("    §7" + StringUtility.getTextFromComponent(item.build().get(ItemComponent.CUSTOM_NAME)) + " §7Recipes");
                         }
                         case XP -> {
                             player.sendMessage("    §8+§b" + ((CollectionCategory.UnlockXP) unlock).xp() + " SkyBlock XP");

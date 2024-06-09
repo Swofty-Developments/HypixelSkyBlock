@@ -9,6 +9,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
@@ -213,7 +214,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                     SkyBlockItem skyBlockItem = (auctionItem.getItem());
                     ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
-                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.getDisplayName()),
+                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
                             skyBlockItem.getMaterial(), skyBlockItem.getAmount(), auctionItem.getLore());
                 }
             });

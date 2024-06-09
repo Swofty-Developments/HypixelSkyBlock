@@ -58,10 +58,10 @@ public class MaterialQuantifiable {
     }
 
     public static MaterialQuantifiable of(ItemStack stack) {
-        if (stack == null || stack.getMaterial() == Material.AIR)
-            return new MaterialQuantifiable(ItemType.AIR, (stack != null ? stack.getAmount() : 1));
+        if (stack == null || stack.material() == Material.AIR)
+            return new MaterialQuantifiable(ItemType.AIR, (stack != null ? stack.amount() : 1));
         SkyBlockItem found = new SkyBlockItem(stack);
-        return new MaterialQuantifiable(found.getAttributeHandler().getItemTypeAsType(), stack.getAmount());
+        return new MaterialQuantifiable(found.getAttributeHandler().getItemTypeAsType(), stack.amount());
     }
 
     public static MaterialQuantifiable[] of(ItemStack[] stacks) {

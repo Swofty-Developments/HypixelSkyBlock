@@ -101,7 +101,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, (short) 0, 1,
+                return ItemStackCreator.getStack("§aConfirm co-op", Material.GREEN_TERRACOTTA, 1,
                         "§7Ends the invitation so that you may",
                         "§bplay §7on this co-op profile.",
                         " ",
@@ -121,7 +121,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, (short) 0, 1,
+                return ItemStackCreator.getStack("§cCancel invite", Material.RED_TERRACOTTA, 1,
                         "§7Cancels the invite and removes",
                         "§7the co-op profile.",
                         " ",

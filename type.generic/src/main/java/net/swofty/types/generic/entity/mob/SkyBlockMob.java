@@ -5,13 +5,13 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.attribute.Attribute;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Scheduler;
@@ -52,8 +52,8 @@ public abstract class SkyBlockMob extends EntityCreature {
         super(entityType);
 
         this.setCustomNameVisible(true);
-        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
-        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
+        this.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
@@ -111,7 +111,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                 "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
                         + " §a" + Math.round(getHealth())
                         + "§f/§a"
-                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
+                        + Math.round(this.getAttributeValue(Attribute.GENERIC_MAX_HEALTH))
         ));
 
         return toReturn;

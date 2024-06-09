@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.impl;
 import com.mongodb.lang.Nullable;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.data.datapoints.DatapointPetData;
 import net.swofty.types.generic.item.ItemType;
 import net.swofty.types.generic.item.Rarity;
@@ -24,7 +25,7 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, TrackedUniqueItem, I
     String getPetName();
     ItemStatistics getBaseStatistics();
     ItemStatistics getPerLevelStatistics(Rarity rarity);
-    int particleId();
+    Particle particleId();
     SkillCategories getSkillCategory();
     default ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();

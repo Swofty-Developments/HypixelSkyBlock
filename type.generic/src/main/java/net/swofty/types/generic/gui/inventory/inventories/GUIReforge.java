@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
@@ -60,7 +61,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) {
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
                         updateFromItem(null);
                         return;
                     }
@@ -88,7 +89,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§eReforge Item", Material.ANVIL, (short) 0, 1,
+                            "§eReforge Item", Material.ANVIL, 1,
                             "§7Place an item above to reforge it!",
                             "§7Reforging items adds a random",
                             "§7modifier to the item that grants stat",
@@ -124,7 +125,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, (short) 0, 1,
+                            "§cError!", Material.BARRIER, 1,
                             "§7You cannot reforge this item!"
                     );
                 }
@@ -171,7 +172,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§eReforge Item", Material.ANVIL, (short) 0, 1,
+                        "§eReforge Item", Material.ANVIL, 1,
                         "§7Reforges the above item, giving it a",
                         "§7random stat modifier that boosts its",
                         "§7stats.",

@@ -7,10 +7,12 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.SharedInstance;
+import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.NamespaceID;
+import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -74,10 +76,10 @@ public class SkyBlockIsland {
                 future.complete(islandInstance);
                 return;
             }
-
-            InstanceContainer temporaryInstance = manager.createInstanceContainer(MinecraftServer.getDimensionTypeManager().getDimension(
-                    NamespaceID.from("skyblock:island")
-            ));
+            DynamicRegistry.Key<DimensionType> dimensionTypeKey = MinecraftServer.getDimensionTypeRegistry().getKey(
+                    MinecraftServer.getDimensionTypeRegistry().getId(NamespaceID.from("skyblock:island"))
+            );
+            InstanceContainer temporaryInstance = manager.createInstanceContainer(dimensionTypeKey);
             islandInstance = manager.createSharedInstance(temporaryInstance);
 
             List<SkyBlockPlayer> onlinePlayers;

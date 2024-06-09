@@ -1,9 +1,10 @@
 package net.swofty.types.generic.item.items.minion.upgrade.skin;
 
 import net.minestom.server.color.Color;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -32,26 +33,24 @@ public class BeeMinionSkin implements CustomSkyBlockItem, MinionSkinItem, SkullH
 
     @Override
     public ItemStack getChestplate() {
-        return ItemStack.builder(Material.LEATHER_CHESTPLATE).meta(bootMeta -> {
-            LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(bootMeta.tagHandler());
-            leatherMeta.color(new Color(196, 170, 39));
-        }).build();
+        return ItemStack.builder(Material.LEATHER_CHESTPLATE).set(
+                ItemComponent.DYED_COLOR,
+                new DyedItemColor(new Color(196, 170, 39), false)
+        ).build();
     }
 
     @Override
     public ItemStack getLeggings() {
-        return ItemStack.builder(Material.LEATHER_LEGGINGS).meta(bootMeta -> {
-            LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(bootMeta.tagHandler());
-            leatherMeta.color(new Color(196, 170, 39));
-        }).build();
+        return ItemStack.builder(Material.LEATHER_LEGGINGS)
+                .set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(196, 170, 39)))
+                .build();
     }
 
     @Override
     public ItemStack getBoots() {
-        return ItemStack.builder(Material.LEATHER_BOOTS).meta(bootMeta -> {
-            LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(bootMeta.tagHandler());
-            leatherMeta.color(new Color(196, 170, 39));
-        }).build();
+        return ItemStack.builder(Material.LEATHER_BOOTS)
+                .set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(196, 170, 39)))
+                .build();
     }
 
     @Override

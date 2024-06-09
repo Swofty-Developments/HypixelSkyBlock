@@ -37,7 +37,7 @@ public class GUIProfileCreate extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, (short) 0, 1,
+                return ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
                         "§7You are creating a new SkyBlock",
                         "§7profile.",
                         "",

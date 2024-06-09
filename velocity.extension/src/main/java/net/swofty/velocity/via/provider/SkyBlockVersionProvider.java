@@ -3,7 +3,7 @@ package net.swofty.velocity.via.provider;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-import com.viaversion.viaversion.protocols.base.BaseVersionProvider;
+import com.viaversion.viaversion.protocol.version.BaseVersionProvider;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 
@@ -15,7 +15,7 @@ public class SkyBlockVersionProvider extends BaseVersionProvider {
 
     @Override
     public ProtocolVersion getClosestServerProtocol(UserConnection user) throws Exception {
-        return user.isClientSide() ? ProtocolVersion.v1_20_3 : getFrontProtocol(user);
+        return user.isClientSide() ? ProtocolVersion.v1_20_5 : getFrontProtocol(user);
     }
 
     private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {

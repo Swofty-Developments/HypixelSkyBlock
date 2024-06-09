@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -100,16 +101,16 @@ public class MinionSkinExtension extends MinionExtension {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
-                    item = item.displayName(Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false))
-                            .lore(Stream.of(
-                                    "§7You can insert a Minion Skin",
-                                    "§7here to change the appearance of",
-                                    "§7your minion.",
-                                    " ",
-                                    "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
-                                    " ",
-                                    "§eClick to remove."
-                    ).map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false)).toList());
+                    item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
+                    item = ItemStackCreator.updateLore(item, Stream.of(
+                            "§7You can insert a Minion Skin",
+                            "§7here to change the appearance of",
+                            "§7your minion.",
+                            " ",
+                            "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
+                            " ",
+                            "§eClick to remove."
+                    ).toList());
 
                     return item;
                 }

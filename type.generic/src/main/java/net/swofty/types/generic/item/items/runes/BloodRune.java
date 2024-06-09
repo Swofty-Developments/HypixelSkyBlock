@@ -62,8 +62,8 @@ public class BloodRune implements CustomSkyBlockItem, RuneItem, SkyBlockEventCla
         int level = runedItem.getAttributeHandler().getRuneData().getLevel();
         int amountOfParticles = level * 3;
 
-        player.sendPacket(new ParticlePacket(Particle.DRIPPING_LAVA.id(), true,
+        player.sendPacket(new ParticlePacket(Particle.DRIPPING_LAVA, true,
                 event.getKilledMob().getPosition().x(), event.getKilledMob().getPosition().y(), event.getKilledMob().getPosition().z(),
-                0, 0, 0, 0, amountOfParticles, null));
+                0, 0, 0, 0, amountOfParticles));
     }
 }

@@ -6,6 +6,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -155,10 +156,10 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                             ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
                             if (ingredient.getGenericInstance() instanceof DefaultCraftable) {
-                                ArrayList<Component> lore = new ArrayList<>(builder.build().getLore());
+                                ArrayList<Component> lore = new ArrayList<>(builder.build().get(ItemComponent.LORE));
                                 lore.add(Component.text(" "));
                                 lore.add(Component.text("§eClick to view recipe!"));
-                                builder.lore(lore);
+                                builder.set(ItemComponent.LORE, lore);
                             }
 
                             if (ingredient.getAttributeHandler().shouldBeEnchanted())

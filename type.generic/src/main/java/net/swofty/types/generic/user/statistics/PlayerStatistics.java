@@ -6,9 +6,9 @@ import lombok.Setter;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.attribute.Attribute;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
@@ -445,7 +445,7 @@ public class PlayerStatistics {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
                     double speed = player.getStatistics().allStatistics().getOverall(ItemStatistic.SPEED);
-                    player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
+                    player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
                 });
             });
             return TaskSchedule.tick(4);

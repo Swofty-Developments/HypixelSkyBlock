@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -214,7 +215,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
         boolean isPetEnabled = player.getPetData().getEnabledPet() == item;
 
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
-        List<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+        List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
         if (isPetEnabled) {
             ItemStackCreator.enchant(itemStack);
 
@@ -222,26 +223,15 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
             lore.add("§aCurrently Active!");
             lore.add("§eClick to deselect!");
 
-            itemStack.lore(lore.stream().map(loreLine -> {
-                return Component.text().content(loreLine).style(
-                        Style.style()
-                                .decoration(TextDecoration.ITALIC, false)
-                                .build())
-                        .build();
-            }).toList());
+            itemStack = ItemStackCreator.updateLore(itemStack, lore);
         } else {
             lore.add(" ");
             lore.add(convertToItem ? "§eClick to pick up!" : "§eClick to summon!");
 
-            itemStack.lore(lore.stream().map(loreLine -> {
-                return Component.text().content(loreLine).style(
-                                Style.style()
-                                        .decoration(TextDecoration.ITALIC, false)
-                                        .build())
-                        .build();
-            }).toList());
+            itemStack = ItemStackCreator.updateLore(itemStack, lore);
         }
 
+        ItemStack.Builder finalItemStack = itemStack;
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -279,7 +269,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return itemStack;
+                return finalItemStack;
             }
         };
     }

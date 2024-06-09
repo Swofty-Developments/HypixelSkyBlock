@@ -7,6 +7,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
-    private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, (short) 0, 1, "§7Add the items for a valid", "§7recipe in the crafting grid", "§7to the left!");
+    private static final ItemStack.Builder RECIPE_REQUIRED = ItemStackCreator.getStack("§cRecipe Required", Material.BARRIER, 1, "§7Add the items for a valid", "§7recipe in the crafting grid", "§7to the left!");
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
 
@@ -91,7 +92,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
         if (!result.allowed()) {
             set(RESULT_SLOT, ItemStackCreator.getStack(result.errorMessage()[0],
                     Material.BEDROCK,
-                    (short) 0,
                     1,
                     Arrays.copyOfRange(result.errorMessage(), 1, result.errorMessage().length)));
             return;
@@ -128,7 +128,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                 SkyBlockItem[] toReplace = finalRecipe.consume(getCurrentRecipeAsItems(inventory));
                 for (int i = 0; i < CRAFT_SLOTS.length; i++) {
-                    if (toReplace[i] == null || toReplace[i].getItemStack().getMaterial() == Material.BEDROCK) {
+                    if (toReplace[i] == null || toReplace[i].getItemStack().material() == Material.BEDROCK) {
                         inventory.setItemStack(CRAFT_SLOTS[i], ItemStack.builder(Material.AIR).build());
                     } else {
                         inventory.setItemStack(CRAFT_SLOTS[i], PlayerItemUpdater.playerUpdate(
@@ -161,10 +161,10 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                 ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, finalRecipe.getResult().getItemStack()).amount(amount);
 
                 ArrayList<String> lore = new ArrayList<>();
-                builder.build().getLore().stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
+                builder.build().get(ItemComponent.LORE).stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
                 lore.add("§8§m------------------");
                 lore.add("§7This is the item you are crafting.");
-                builder.lore(lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+                builder.set(ItemComponent.LORE, lore.stream().map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()));
 
                 return builder;

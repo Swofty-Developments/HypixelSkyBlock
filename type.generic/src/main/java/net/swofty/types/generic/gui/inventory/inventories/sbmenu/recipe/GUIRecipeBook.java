@@ -54,7 +54,7 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
 
                 SkyBlockRecipe.getMissionDisplay(lore, player.getUuid());
 
-                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, (short) 0, 1, lore.toArray(new String[0]));
+                return ItemStackCreator.getStack("§aRecipe Book", Material.BOOK, 1, lore.toArray(new String[0]));
             }
         });
 
@@ -110,7 +110,7 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                     lore.add("§eClick to view!");
 
                     return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                            type.getMaterial(), (short) 0, 1, lore);
+                            type.getMaterial(), 1, lore);
                 }
             });
         }
@@ -172,7 +172,7 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                 lore.add("§eClick to view!");
 
                 ItemStack.Builder itemStack = ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
-                        type.getMaterial(), (short) 0, 1, lore);
+                        type.getMaterial(), 1, lore);
 
                 return itemStack;
             }

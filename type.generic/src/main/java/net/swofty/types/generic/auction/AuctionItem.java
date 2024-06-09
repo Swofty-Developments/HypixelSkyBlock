@@ -3,6 +3,7 @@ package net.swofty.types.generic.auction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import net.minestom.server.item.ItemComponent;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -55,11 +56,11 @@ public class AuctionItem {
         List<String> toReturn = new ArrayList<>();
 
         if (player == null) {
-            new NonPlayerItemUpdater(item).getUpdatedItem().build().getLore().forEach(loreEntry -> {
+            new NonPlayerItemUpdater(item).getUpdatedItem().build().get(ItemComponent.LORE).forEach(loreEntry -> {
                 toReturn.add(StringUtility.getTextFromComponent(loreEntry));
             });
         } else {
-            PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build().getLore().forEach(loreEntry -> {
+            PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build().get(ItemComponent.LORE).forEach(loreEntry -> {
                 toReturn.add(StringUtility.getTextFromComponent(loreEntry));
             });
         }

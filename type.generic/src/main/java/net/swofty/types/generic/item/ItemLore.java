@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
@@ -62,8 +63,8 @@ public class ItemLore {
 
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
-                this.stack = stack.withLore(loreLines)
-                        .withDisplayName(Component.text(skyBlockItem.getAbsoluteName(player, item))
+                this.stack = stack.with(ItemComponent.LORE, loreLines)
+                        .with(ItemComponent.CUSTOM_NAME, Component.text(skyBlockItem.getAbsoluteName(player, item))
                                 .decoration(TextDecoration.ITALIC, false));
                 return;
             }
@@ -249,8 +250,8 @@ public class ItemLore {
 
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
-        this.stack = stack.withLore(loreLines)
-                .withDisplayName(Component.text(displayName)
+        this.stack = stack.with(ItemComponent.LORE, loreLines)
+                .with(ItemComponent.CUSTOM_NAME, Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
     }
 

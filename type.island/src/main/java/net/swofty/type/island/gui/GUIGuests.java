@@ -28,7 +28,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, (short) 0, 1,
+                return ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
                         "§7To Jerry the Assistant"
                 );
             }
@@ -41,7 +41,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aVisit player islands", Material.FEATHER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aVisit player islands", Material.FEATHER, 1,
                         "§7You can get Guest on other islands",
                         "§7using §a/visit <player>",
                         "",
@@ -61,7 +61,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aGuests limit", Material.SHORT_GRASS, (short) 0, 1,
+                return ItemStackCreator.getStack("§aGuests limit", Material.SHORT_GRASS, 1,
                         "§7You can only host a limited",
                         "§7number of §aguests §7on your",
                         "§7island concurrently.",
@@ -90,7 +90,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aAccess Permissions", Material.OAK_FENCE, (short) 0, 1,
+                return ItemStackCreator.getStack("§aAccess Permissions", Material.OAK_FENCE, 1,
                         "§7You may edit who is able to",
                         "§7guest on your island in your",
                         "§eIsland Settings§7.",
@@ -111,7 +111,7 @@ public class GUIGuests extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aModeration", Material.REPEATER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aModeration", Material.REPEATER, 1,
                         "§7Manage online guests using the",
                         "§eGuests Management §7menu.",
                         "",

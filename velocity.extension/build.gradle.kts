@@ -31,10 +31,10 @@ dependencies {
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.2")
     implementation(project(":commons"))
 
-    implementation("net.raphimc:ViaLoader:2.2.14-SNAPSHOT")
-    implementation("com.viaversion:viabackwards-common:4.10.1")
-    implementation("com.viaversion:viarewind-common:3.1.1")
-    implementation("com.viaversion:viaversion:4.10.1")
+    implementation("net.raphimc:ViaLoader:3.0.0-SNAPSHOT")
+    implementation("com.viaversion:viabackwards-common:5.0.0-SNAPSHOT")
+    implementation("com.viaversion:viarewind-common:4.0.0-SNAPSHOT")
+    implementation("com.viaversion:viaversion:5.0.0-SNAPSHOT")
     implementation("io.netty:netty-all:4.1.110.Final")
 
     implementation("net.bytebuddy:byte-buddy:1.14.16")

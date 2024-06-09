@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -65,7 +66,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§eRune Removal", Material.CAULDRON, (short) 0, 1,
+                        "§eRune Removal", Material.CAULDRON, 1,
                         "§7Sometimes, simplicity is most beautiful."
                 );
             }
@@ -90,7 +91,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) {
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
                         updateFromItem(new SkyBlockItem(stack), itemOnRight);
                         return;
                     }
@@ -134,7 +135,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) {
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
                         updateFromItem(itemOnLeft, new SkyBlockItem(stack));
                         return;
                     }
@@ -179,7 +180,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, (short) 0, 1,
+                            "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, 1,
                             "§7Add the rune to your provided item",
                             "§7or provide two runes to attempt to",
                             "§7fuse them."
@@ -190,7 +191,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cRunic Pedestal", Material.BARRIER, (short) 0, 1,
+                            "§cRunic Pedestal", Material.BARRIER, 1,
                             "§7Place a target item in the left slot",
                             "§7and a sacrifice rune in the right slot",
                             "§7to add the two runes effect's to the item",
@@ -216,7 +217,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, (short) 0, 1,
+                            "§aApply a Rune or Fuse Two Runes", Material.END_PORTAL_FRAME, 1,
                             "§7Add the rune to your provided item",
                             "§7or provide two runes to attempt to",
                             "§7fuse them."
@@ -227,7 +228,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, (short) 0, 1,
+                            "§cError!", Material.BARRIER, 1,
                             "§7You cannot combine those items!"
                     );
                 }
@@ -265,7 +266,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§aCombine Items", Material.END_PORTAL_FRAME, (short) 0, 1,
+                            "§aCombine Items", Material.END_PORTAL_FRAME, 1,
                             "§7Combine the provided items.",
                             " ",
                             "§eClick to combine!"
@@ -288,7 +289,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
                     lore.add("§acombine.");
 
                     return ItemStackCreator.getStack(
-                            mergedItem.getDisplayName(), mergedItem.getMaterial(), (short) 0, 1,
+                            mergedItem.getDisplayName(), mergedItem.getMaterial(), 1,
                             lore.toArray(new String[0])
                     );
                 }

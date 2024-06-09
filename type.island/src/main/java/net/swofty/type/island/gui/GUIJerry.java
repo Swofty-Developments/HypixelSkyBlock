@@ -30,7 +30,7 @@ public class GUIJerry extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, (short) 0, 1,
+                return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, 1,
                         "§7View the latest features and",
                         "§7changes to the game.",
                         "",
@@ -47,7 +47,7 @@ public class GUIJerry extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, (short) 0, 1,
+                return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, 1,
                         "§7Any items that may be delivered to",
                         "§7yourself or your island will appear",
                         "§7here for collection!",
@@ -65,7 +65,7 @@ public class GUIJerry extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, (short) 0, 1,
+                return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, 1,
                         "§7Learn all about how to §a/visit",
                         "§7players across the SkyBlock universe!",
                         " ",

@@ -41,19 +41,18 @@ public abstract class GUIClickableItem extends GUIItem {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aGo Back",
-                        Material.ARROW,
-                        (short) 0, 1, "§7To " + gui.getTitle());
+                        Material.ARROW, 1, "§7To " + gui.getTitle());
             }
         };
     }
 
     static GUIClickableItem createGUIOpenerItem(SkyBlockInventoryGUI gui,
                                                 String name, int slot,
-                                                Material type, short data, String... lore) {
+                                                Material type, String... lore) {
         return new GUIClickableItem(slot) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(name, type, data, 1, lore);
+                return ItemStackCreator.getStack(name, type, 1, lore);
             }
 
             @Override

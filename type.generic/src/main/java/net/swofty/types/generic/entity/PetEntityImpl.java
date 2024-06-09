@@ -8,6 +8,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
+import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class PetEntityImpl extends LivingEntity {
     private final String url;
     private final SkyBlockPlayer player;
-    private final int particle;
+    private final Particle particle;
     private Task upAndDownTask;
     private Task moveTowardsPlayer;
     @Getter
@@ -87,8 +88,7 @@ public class PetEntityImpl extends LivingEntity {
                         0.1f,
                         0.1f,
                         0f,
-                        3,
-                        null
+                        3
                 ));
             });
         }, TaskSchedule.tick(5), TaskSchedule.tick(3));

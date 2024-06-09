@@ -2,6 +2,7 @@ package net.swofty.type.hub.gui.elizabeth.subguis;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
@@ -72,7 +73,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                             SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                             itemStack.amount(amount);
-                            ArrayList<String> lore = new ArrayList<>(itemStack.build().getLore().stream().map(StringUtility::getTextFromComponent).toList());
+                            ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                             lore.add(" ");
                             lore.add("§7Cost");
                             lore.add("§b" + StringUtility.commaify(price) + " Bits");

@@ -12,6 +12,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
@@ -119,7 +120,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 );
 
                 double sellPrice = sellable.getSellValue() * stack.amount();
-                List<String> lore = new ArrayList<>(toReplace.build().getLore()
+                List<String> lore = new ArrayList<>(toReplace.build().get(ItemComponent.LORE)
                         .stream()
                         .map(StringUtility::getTextFromComponent)
                         .toList());
@@ -130,11 +131,9 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 lore.add("");
                 lore.add("§eClick to sell!");
 
-                toReplace.lore(lore.stream().map(
-                        line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
-                ).toList());
-                toReplace.displayName(Component.text(
-                        "§a" + StringUtility.getTextFromComponent(toReplace.build().getDisplayName()) +
+                toReplace = ItemStackCreator.updateLore(toReplace, lore);
+                toReplace.set(ItemComponent.CUSTOM_NAME, Component.text(
+                        "§a" + StringUtility.getTextFromComponent(toReplace.build().get(ItemComponent.CUSTOM_NAME)) +
                                 " §8x" + stack.amount()
                 ).decoration(TextDecoration.ITALIC, false));
 
@@ -206,7 +205,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (!player.getShoppingData().hasAnythingToBuyback()) {
-                    return ItemStackCreator.getStack("§aSell Item", Material.HOPPER, (short) 0, 1,
+                    return ItemStackCreator.getStack("§aSell Item", Material.HOPPER, 1,
                             "§7Click items in your inventory to",
                             "§7sell them to this Shop!");
                 }
@@ -219,7 +218,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                 double buyBackPrice = ((Sellable) last.getGenericInstance()).getSellValue() * amountOfLast;
 
-                List<String> lore = new ArrayList<>(itemStack.build().getLore()
+                List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
                         .stream()
                         .map(StringUtility::getTextFromComponent)
                         .toList());
@@ -230,9 +229,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 lore.add("§eClick to buyback!");
 
                 itemStack.amount(amountOfLast);
-                return itemStack.lore(lore.stream().map(
-                        line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
-                ).toList());
+                return ItemStackCreator.updateLore(itemStack, lore);
             }
         });
 
@@ -283,7 +280,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     );
 
                     if (item.getDisplayName() != null)
-                        itemStack.displayName(Component.text(item.getDisplayName())
+                        itemStack.set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName())
                                 .decoration(TextDecoration.ITALIC, false));
 
                     List<String> lore;
@@ -291,7 +288,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     if (item.getLore() != null) {
                         lore = item.lore;
                     } else {
-                        lore = new ArrayList<>(itemStack.build().getLore()
+                        lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
                                 .stream()
                                 .map(StringUtility::getTextFromComponent)
                                 .toList());
@@ -311,9 +308,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     if (item.stackable)
                         lore.add("§eRight-click for more trading options!");
 
-                    return itemStack.lore(lore.stream().map(
-                            line -> Component.text(line).decoration(TextDecoration.ITALIC, false)
-                    ).toList()).amount(item.amount);
+                    return ItemStackCreator.updateLore(itemStack, lore);
                 }
             });
         }
@@ -337,12 +332,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
         double sellPrice = sellable.getSellValue() * stack.amount();
 
-        getPlayer().getShoppingData().pushBuyback(item, stack.getAmount());
+        getPlayer().getShoppingData().pushBuyback(item, stack.amount());
         getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
                 getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
         );
         getPlayer().sendMessage(
-                "§aYou sold §f" + StringUtility.getTextFromComponent(stack.getDisplayName()) + "§a for §6"
+                "§aYou sold §f" + StringUtility.getTextFromComponent(stack.get(ItemComponent.CUSTOM_NAME)) + "§a for §6"
                         + StringUtility.commaify(sellPrice) + " Coin" + (sellPrice != 1 ? "s" : "") + "§a!"
         );
 

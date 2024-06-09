@@ -109,7 +109,7 @@ public enum LaunchPads {
                     SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                         if (slimeBlock.distance(player.getPosition()) <= 15) {
                             player.sendPacket(new ParticlePacket(
-                                    Particle.COMPOSTER.id(),
+                                    Particle.COMPOSTER,
                                     false,
                                     slimeBlock.x(),
                                     slimeBlock.y() + 1,
@@ -118,8 +118,7 @@ public enum LaunchPads {
                                     0.1f,
                                     0.1f,
                                     0f,
-                                    3,
-                                    null
+                                    3
                             ));
                         }
                     });

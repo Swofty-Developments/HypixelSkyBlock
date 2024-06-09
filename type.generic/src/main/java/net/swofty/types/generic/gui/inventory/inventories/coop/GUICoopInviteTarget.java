@@ -101,7 +101,7 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cDeny Invite", Material.BARRIER, (short) 0, 1);
+                return ItemStackCreator.getStack("§cDeny Invite", Material.BARRIER, 1);
             }
         });
 
@@ -159,7 +159,7 @@ public class GUICoopInviteTarget extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aAccept Invite", Material.GREEN_TERRACOTTA, (short) 0, 1,
+                return ItemStackCreator.getStack("§aAccept Invite", Material.GREEN_TERRACOTTA, 1,
                         "§7Creates a NEW §bco-op §7profile on your",
                         "§7account with the above player.",
                         " ",

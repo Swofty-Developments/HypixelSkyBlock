@@ -3,14 +3,17 @@ package net.swofty.type.hub.gui;
 import net.minestom.server.color.Color;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemHideFlag;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.metadata.LeatherArmorMeta;
+import net.minestom.server.item.component.DyedItemColor;
+import net.minestom.server.utils.Unit;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUISeymour extends SkyBlockInventoryGUI {
@@ -54,12 +57,7 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         player.getCoins() >= 3000000 ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.meta(meta -> {
-                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
-                    leatherMeta.color(new Color(56, 56, 56));
-                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
-                            ItemHideFlag.HIDE_ATTRIBUTES);
-                });
+                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(56, 56, 56)));
                 return builder;
             }
         });
@@ -96,13 +94,8 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         player.getCoins() >= 20000000 ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.meta(meta -> {
-                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
-                    leatherMeta.color(new Color(51, 42, 42));
-                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
-                            ItemHideFlag.HIDE_ATTRIBUTES
-                    );
-                });
+                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(51, 42, 42)));
+
                 return builder;
             }
         });
@@ -139,12 +132,7 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         player.getCoins() >= 74999999 ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
-                builder.meta(meta -> {
-                    LeatherArmorMeta.Builder leatherMeta = new LeatherArmorMeta.Builder(meta.tagHandler());
-                    leatherMeta.color(new Color(25, 25, 25));
-                    leatherMeta.hideFlag(ItemHideFlag.HIDE_DYE,
-                            ItemHideFlag.HIDE_ATTRIBUTES);
-                });
+                builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(25, 25, 25)));
                 return builder;
             }
         });

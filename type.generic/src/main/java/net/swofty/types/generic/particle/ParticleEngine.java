@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Getter
 public class ParticleEngine
 {
-      private int particleID;
+      private Particle particle;
       private Pos position;
       private Vec offsets;
       private int particleCount;
@@ -27,7 +27,7 @@ public class ParticleEngine
 
       public ParticleEngine() {
             // Setting default values
-            particleID = Particle.SPLASH.id();
+            particle = Particle.SPLASH;
             offsets = Vec.ZERO;
             position = new Pos(0, 0, 0);
             shape = null;
@@ -41,7 +41,7 @@ public class ParticleEngine
       }
 
       public ParticleEngine type(Particle particle) {
-            this.particleID = particle.id();
+            this.particle = particle;
             return this;
       }
 
@@ -74,7 +74,7 @@ public class ParticleEngine
             if (shape == null) {
                   // If there is no shape just send it
                   target.sendPacket(new ParticlePacket(
-                          this.particleID,
+                          this.particle,
                           false, // Long distance must always be false to not cause lag
                           position.x(),
                           position.y(),
@@ -83,14 +83,13 @@ public class ParticleEngine
                           (float) offsets.y(),
                           (float) offsets.z(),
                           0f,
-                          this.particleCount,
-                          null
+                          this.particleCount
                   ));
                   return;
             }
 
             AtomicLong ticks = new AtomicLong(displayTime.getSeconds() * 20);
-            shape.setParticleID(particleID);
+            shape.setParticle(particle);
             MinecraftServer.getSchedulerManager().submitTask(() -> {
                   if (ticks.get() <= 0) {
                         return TaskSchedule.stop();

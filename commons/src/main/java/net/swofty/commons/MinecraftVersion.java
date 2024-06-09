@@ -44,7 +44,9 @@ public enum MinecraftVersion {
     MINECRAFT_1_19_4(762, new String[]{"1.19.4"}),
     MINECRAFT_1_20(763, new String[]{"1.20", "1.20.1"}),
     MINECRAFT_1_20_2(764, new String[]{"1.20.2"}),
-    MINECRAFT_1_20_3(765, new String[]{"1.20.3", "1.20.4"});
+    MINECRAFT_1_20_3(765, new String[]{"1.20.3", "1.20.4"}),
+    MINECRAFT_1_20_5(766, new String[]{"1.20.5", "1.20.6"}),
+    ;
 
     private final int protocol;
     private final String[] versions;

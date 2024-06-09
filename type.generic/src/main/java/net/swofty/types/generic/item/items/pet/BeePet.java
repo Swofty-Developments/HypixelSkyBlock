@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.pet;
 
+import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
@@ -132,8 +133,8 @@ public class BeePet implements Pet, NotFinishedYet {
     }
 
     @Override
-    public int particleId() {
-        return 38;
+    public Particle particleId() {
+        return Particle.HAPPY_VILLAGER;
     }
 
     @Override

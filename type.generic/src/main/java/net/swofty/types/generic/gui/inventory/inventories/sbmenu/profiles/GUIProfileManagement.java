@@ -56,7 +56,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§eEmpty Profile Slot", Material.OAK_BUTTON, (short) 0, 1,
+                        return ItemStackCreator.getStack("§eEmpty Profile Slot", Material.OAK_BUTTON, 1,
                                 "§8Available",
                                 " ",
                                 "§7Use this slot if you want to",
@@ -120,7 +120,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                         return ItemStackCreator.getStack(
                                 "§eProfile: §a" + finalDataHandler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
-                                Material.EMERALD_BLOCK, (short) 0, 1,
+                                Material.EMERALD_BLOCK, 1,
                                 lore);
                     }
                 });
@@ -145,7 +145,7 @@ public class GUIProfileManagement extends SkyBlockInventoryGUI {
 
                     return ItemStackCreator.getStack(
                             "§eProfile: §a" + finalDataHandler1.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
-                            Material.GRASS_BLOCK, (short) 0, 1,
+                            Material.GRASS_BLOCK, 1,
                             lore);
                 }
             });

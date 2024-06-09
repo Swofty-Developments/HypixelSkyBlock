@@ -74,7 +74,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, (short) 0, 1,
+                return ItemStackCreator.getStack("§aDeposit Coins", Material.CHEST, 1,
                         "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
                         "§7Store coins in the bank to keep",
@@ -100,7 +100,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aWithdraw Coins", Material.DISPENSER, (short) 0, 1,
+                return ItemStackCreator.getStack("§aWithdraw Coins", Material.DISPENSER, 1,
                         "§7Current balance: §6" + StringUtility.decimalify(bankData.getAmount(), 1),
                         " ",
                         "§7Withdraw coins from the bank",

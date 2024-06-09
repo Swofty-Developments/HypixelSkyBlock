@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -49,7 +50,7 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     ItemStack stack = e.getCursorItem();
 
-                    if (stack.getDisplayName() == null) {
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
                         updateFromItem(null);
                         return;
                     }
@@ -77,7 +78,7 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§aRune Removal", Material.BARRIER, (short) 0, 1,
+                            "§aRune Removal", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
                             "§7it in the above slot."
                     );
@@ -113,7 +114,7 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, (short) 0, 1,
+                            "§cError!", Material.BARRIER, 1,
                             "§7Place an item with a rune attached to",
                             "§7it in the above slot."
                     );
@@ -138,7 +139,7 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aClick to Remove Rune!", Material.CAULDRON, (short) 0, 1,
+                        "§aClick to Remove Rune!", Material.CAULDRON, 1,
                         "§cWARNING: The rune will be lost",
                         "§cforever!"
                 );

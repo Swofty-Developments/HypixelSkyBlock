@@ -46,7 +46,7 @@ public class ActionPlayerLaunchPads implements SkyBlockEventClass {
         }
 
         player.sendPacket(new ParticlePacket(
-                Particle.EXPLOSION.id(),
+                Particle.EXPLOSION,
                 false,
                 (float) player.getPosition().x(),
                 (float) player.getPosition().y(),
@@ -55,8 +55,7 @@ public class ActionPlayerLaunchPads implements SkyBlockEventClass {
                 0,
                 0,
                 0,
-                1,
-                null
+                1
         ));
         player.playSound(Sound.sound(Key.key("entity.generic.explode"), Sound.Source.PLAYER, 1, 1));
 

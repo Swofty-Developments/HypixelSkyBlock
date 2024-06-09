@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
@@ -88,9 +89,10 @@ public class GUILevelFeatureRewards extends SkyBlockInventoryGUI {
                         lore.add("§7Levels left to Unlock: §3" + (level - experience.getLevel().asInt()));
                     }
 
-                    return item.lore(lore.stream().map(line -> {
-                        return Component.text(line).decoration(TextDecoration.ITALIC, false);
-                    }).toList()).displayName(Component.text(award.getDisplay()).decoration(TextDecoration.ITALIC, false));
+                    return ItemStackCreator.updateLore(item, lore).set(
+                            ItemComponent.CUSTOM_NAME,
+                            Component.text(award.getDisplay()).decoration(TextDecoration.ITALIC, false)
+                    );
                 }
             });
         }
