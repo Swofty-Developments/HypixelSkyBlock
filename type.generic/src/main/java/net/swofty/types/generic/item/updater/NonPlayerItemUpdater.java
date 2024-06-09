@@ -95,6 +95,7 @@ public class NonPlayerItemUpdater {
             stack.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         }
 
+        ItemStackCreator.clearAttributes(stack);
         return stack;
     }
 

@@ -146,6 +146,7 @@ public class PlayerItemUpdater {
             item.getAttributeHandler().setGemData(gemData);
         }
 
+        ItemStackCreator.clearAttributes(toReturn);
         return Map.entry(item,
                 toReturn.amount(stack.amount())
                         .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))

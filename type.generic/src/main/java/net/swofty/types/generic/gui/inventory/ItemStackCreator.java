@@ -3,7 +3,12 @@ package net.swofty.types.generic.gui.inventory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.entity.attribute.Attribute;
+import net.minestom.server.entity.attribute.AttributeModifier;
+import net.minestom.server.entity.attribute.AttributeOperation;
 import net.minestom.server.item.*;
+import net.minestom.server.item.attribute.AttributeSlot;
+import net.minestom.server.item.component.AttributeList;
 import net.minestom.server.item.component.CustomData;
 import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
@@ -20,9 +25,14 @@ import java.util.stream.Collectors;
 public class ItemStackCreator {
 
     public static ItemStack.Builder createNamedItemStack(Material material, String name) {
-        return ItemStack.builder(material)
+        return clearAttributes(ItemStack.builder(material)
                 .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
+    }
+
+    public static ItemStack.Builder clearAttributes(ItemStack.Builder builder) {
+        builder.set(ItemComponent.ATTRIBUTE_MODIFIERS, new AttributeList(List.of(), false));
+        return builder;
     }
 
     public static ItemStack.Builder createNamedItemStack(Material material) {
@@ -46,10 +56,10 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return builder.set(ItemComponent.LORE, copiedLore.stream()
+        return clearAttributes(builder.set(ItemComponent.LORE, copiedLore.stream()
                 .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                 .collect(Collectors.toList()))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
     }
 
     public static ItemStack.Builder setNotEditable(ItemStack.Builder builder) {
@@ -57,16 +67,16 @@ public class ItemStackCreator {
     }
 
     public static ItemStack.Builder enchant(ItemStack.Builder builder) {
-        return builder.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true)
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        return clearAttributes(builder.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true)
+                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
     }
 
     public static ItemStack.Builder getFromStack(ItemStack stack) {
-        return ItemStack.builder(stack.material())
+        return clearAttributes(ItemStack.builder(stack.material())
                 .amount(stack.amount())
                 .set(ItemComponent.LORE, stack.get(ItemComponent.LORE))
                 .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))
-                .set(ItemComponent.CUSTOM_DATA, stack.get(ItemComponent.CUSTOM_DATA));
+                .set(ItemComponent.CUSTOM_DATA, stack.get(ItemComponent.CUSTOM_DATA)));
     }
 
     public static ItemStack.Builder getStack(String name, Material material, int amount, List<String> lore) {
@@ -75,11 +85,11 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return ItemStack.builder(material).amount(amount).set(ItemComponent.LORE, copiedLore.stream()
+        return clearAttributes(ItemStack.builder(material).amount(amount).set(ItemComponent.LORE, copiedLore.stream()
                 .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                 .collect(Collectors.toList()))
                 .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
-                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+                .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE));
     }
 
     public static ItemStack.Builder getStackHead(String name, String texture, int amount, String... lore) {
@@ -129,14 +139,14 @@ public class ItemStackCreator {
             copiedLore.add(color(s));
         }
 
-        return ItemStack.builder(Material.PLAYER_HEAD)
+        return clearAttributes(ItemStack.builder(Material.PLAYER_HEAD)
                 .set(ItemComponent.LORE, copiedLore.stream()
                         .map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
                         .collect(Collectors.toList()))
                 .set(ItemComponent.CUSTOM_NAME, Component.text(name).decoration(TextDecoration.ITALIC, false))
                 .set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE)
                 .set(ItemComponent.PROFILE, new HeadProfile(skin))
-                .amount(amount);
+                .amount(amount));
     }
 
     public static String color(String string) {
