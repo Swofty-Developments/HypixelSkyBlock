@@ -1,6 +1,7 @@
 package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
@@ -16,7 +17,7 @@ public class GUIShopLibrarian extends SkyBlockShopGUI {
     @Override
     public void initializeShopItems() {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.EXPERIENCE_BOTTLE), 1, new CoinShopPrice(30)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.BOOK), 1, new CoinShopPrice(20)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.BOOK), 1, new CoinShopPrice(20)));
 
         SkyBlockItem sharpness = new SkyBlockItem(ItemTypeLinker.ENCHANTED_BOOK);
         sharpness.getAttributeHandler().addEnchantment(

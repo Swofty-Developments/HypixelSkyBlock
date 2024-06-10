@@ -112,7 +112,7 @@ public class MinionUpgradeExtension extends MinionExtension {
                             "§7adding a minion upgrade item",
                             "§7here.",
                             " ",
-                            "§7Current Upgrade: " + getItemTypeLinkerPassedIn().rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
+                            "§7Current Upgrade: " + getItemTypeLinkerPassedIn().type.rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
                             " ",
                             "§eClick to remove."
                     ).toList());

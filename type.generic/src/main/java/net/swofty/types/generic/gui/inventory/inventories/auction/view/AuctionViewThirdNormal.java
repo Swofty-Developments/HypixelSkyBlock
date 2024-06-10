@@ -21,6 +21,7 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionView
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
@@ -229,7 +230,7 @@ public class AuctionViewThirdNormal implements AuctionView {
                 player.closeInventory();
 
                 AuctionCategories category;
-                if (item.getItem().getGenericInstance() != null && item.getItem().getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
+                if (new SkyBlockItem(item.getItem()).getGenericInstance() != null && new SkyBlockItem(item.getItem()).getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
                     category = instanceCategory.getAuctionCategory();
                 else {
                     category = AuctionCategories.TOOLS;
@@ -293,7 +294,7 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                             if (playersBid < gui.bidAmount && !alertsSentOutTo.contains(proxyPlayer.getUuid())) {
                                 alertsSentOutTo.add(proxyPlayer.getUuid());
-                                proxyPlayer.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eoutbid you by §6" + (gui.bidAmount - playersBid) + " coins §efor the item §6" + item.getItem().getDisplayName() + "§e!").clickEvent(
+                                proxyPlayer.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eoutbid you by §6" + (gui.bidAmount - playersBid) + " coins §efor the item §6" + new SkyBlockItem(item.getItem()).getDisplayName() + "§e!").clickEvent(
                                         ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + gui.auctionID)
                                 ));
                             }
@@ -302,7 +303,7 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                     ProxyPlayer auctionOwner = new ProxyPlayer(item.getOriginator());
                     if (auctionOwner.isOnline().join()) {
-                        auctionOwner.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eplaced a bid of §6" + gui.bidAmount + " coins §eon your item §6" + item.getItem().getDisplayName() + "§e!").clickEvent(
+                        auctionOwner.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §eplaced a bid of §6" + gui.bidAmount + " coins §eon your item §6" + new SkyBlockItem(item.getItem()).getDisplayName() + "§e!").clickEvent(
                                 ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + gui.auctionID)
                         ));
                     }

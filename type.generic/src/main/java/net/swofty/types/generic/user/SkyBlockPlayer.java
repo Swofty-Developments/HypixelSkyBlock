@@ -19,6 +19,8 @@ import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.objects.PlayerShopData;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
@@ -301,6 +303,10 @@ public class SkyBlockPlayer extends Player {
         getInventory().setItemInHand(Hand.MAIN, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
     }
 
+    public int getAmountInInventory(ItemType type) {
+        return getAmountInInventory(ItemTypeLinker.fromType(type));
+    }
+
     public int getAmountInInventory(ItemTypeLinker type) {
         return getAllOfTypeInInventory(type).values().stream().mapToInt(Integer::intValue).sum();
     }
@@ -406,6 +412,10 @@ public class SkyBlockPlayer extends Player {
         this.getInventory().addItemStack(toAdd);
     }
 
+    public void addAndUpdateItem(UnderstandableSkyBlockItem item) {
+        addAndUpdateItem(new SkyBlockItem(item));
+    }
+
     public void addAndUpdateItem(ItemTypeLinker item) {
         addAndUpdateItem(new SkyBlockItem(item));
     }
@@ -425,6 +435,10 @@ public class SkyBlockPlayer extends Player {
         }
 
         return false;
+    }
+
+    public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
+        return takeItem(ItemTypeLinker.fromType(type), amount);
     }
 
     public @Nullable List<SkyBlockItem> takeItem(ItemTypeLinker type, int amount) {

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.vanilla.items.dyes;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
@@ -22,7 +23,7 @@ public class BlackDye implements CustomSkyBlockItem, MultiDefaultCraftable {
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.BLACK_DYE), 1)
-                .add(ItemTypeLinker.WITHER_ROSE, 1));
+                .add(ItemType.WITHER_ROSE, 1));
 
         return recipes;
     }

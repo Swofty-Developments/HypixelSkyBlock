@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.item.ItemType;
 
 public class MossyStoneBricks implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
@@ -36,7 +37,7 @@ public class MossyStoneBricks implements PlaceableCustomSkyBlockItem, Sellable, 
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.STONE_BRICKS, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.VINES, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemType.VINES, 1));
         List<String> pattern = List.of(
                 "AB");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.MOSSY_STONE_BRICKS), ingredientMap, pattern);

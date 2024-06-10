@@ -2,6 +2,7 @@ package net.swofty.types.generic.item;
 
 import net.minestom.server.color.Color;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.ReforgeType;
 import net.swofty.commons.item.attribute.attributes.*;
@@ -26,7 +27,7 @@ public class ItemAttributeHandler {
         this.item = item;
     }
 
-    public String getItemType() {
+    public String getTypeAsString() {
         return ((ItemAttributeType) item.getAttribute("item_type")).getValue();
     }
 
@@ -48,7 +49,7 @@ public class ItemAttributeHandler {
 
     public int getRuneLevel() {
         if (!(item.getGenericInstance() instanceof RuneItem)) {
-            throw new RuntimeException("Item is not a rune item " + getItemType());
+            throw new RuntimeException("Item is not a rune item " + getTypeAsString());
         }
         return ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).getValue();
     }
@@ -166,6 +167,14 @@ public class ItemAttributeHandler {
         }
     }
 
+    public @Nullable ItemType getPotentialType() {
+        try {
+            return ItemType.valueOf(((ItemAttributeType) item.getAttribute("item_type")).getValue());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
     public Rarity getRarity() {
         return ((ItemAttributeRarity) item.getAttribute("rarity")).getValue();
     }
@@ -187,7 +196,7 @@ public class ItemAttributeHandler {
                     "item-uuid", uniqueTrackedID,
                     "attached-player-uuid", player.getUuid(),
                     "attached-player-profile", player.getProfiles().getCurrentlySelected(),
-                    "item-type", item.getAttributeHandler().getItemType())).join();
+                    "item-type", item.getAttributeHandler().getTypeAsString())).join();
         });
     }
 

@@ -1,6 +1,7 @@
 package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -16,7 +17,7 @@ public class GUIShopAlchemist extends SkyBlockShopGUI{
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.NETHER_WART), 1, new CoinShopPrice(30)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.BREWING_STAND), 1, new CoinShopPrice(30)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GLASS_BOTTLE), 8, new CoinShopPrice(48)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WATER_BOTTLE), 1, new CoinShopPrice(6)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WATER_BOTTLE), 1, new CoinShopPrice(6)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.SUGAR), 1, new CoinShopPrice(4)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.RABBIT_FOOT), 1, new CoinShopPrice(10)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GLISTERING_MELON_SLICE), 1, new CoinShopPrice(10)));

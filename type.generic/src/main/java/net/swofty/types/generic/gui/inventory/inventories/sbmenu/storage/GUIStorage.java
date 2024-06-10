@@ -167,7 +167,10 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
                     if (e2.getClickType() == ClickType.RIGHT_CLICK) {
-                        if (!item.getAttributeHandler().getBackpackData().items().isEmpty() && !item.getAttributeHandler().getBackpackData().items().stream().allMatch(SkyBlockItem::isNA)) {
+                        if (!item.getAttributeHandler().getBackpackData().items().isEmpty()
+                                && !item.getAttributeHandler().getBackpackData().items()
+                                    .stream()
+                                    .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
                             player.sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
                             return;
                         }

@@ -111,7 +111,7 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack("§6Same as Best Offer",
-                            itemTypeLinker.material, 1,
+                            itemTypeLinker.type.material, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
                             " ",
                             "§7Use the same price as the lowest",

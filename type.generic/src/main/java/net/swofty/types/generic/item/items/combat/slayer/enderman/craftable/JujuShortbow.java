@@ -12,6 +12,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
@@ -21,7 +22,7 @@ public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowIm
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_STRING, 64));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 32));
         ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK, 32));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " AB",
                 "C B",

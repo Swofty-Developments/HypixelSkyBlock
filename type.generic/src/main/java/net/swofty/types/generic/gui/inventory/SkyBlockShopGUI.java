@@ -179,7 +179,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 if (!player.getShoppingData().hasAnythingToBuyback())
                     return;
 
-                SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
+                SkyBlockItem last = new SkyBlockItem(player.getShoppingData().lastBuyback().getKey());
                 int amountOfLast = player.getShoppingData().lastBuyback().getValue();
                 ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                         player, last.getItemStackBuilder().build()
@@ -210,7 +210,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                             "§7sell them to this Shop!");
                 }
 
-                SkyBlockItem last = player.getShoppingData().lastBuyback().getKey();
+                SkyBlockItem last = new SkyBlockItem(player.getShoppingData().lastBuyback().getKey());
                 int amountOfLast = player.getShoppingData().lastBuyback().getValue();
                 ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                         player, last.getItemStackBuilder().build()
@@ -246,7 +246,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (item.isHasStock() && !player.getShoppingData().canPurchase(item.item, item.amount)) {
+                    if (item.isHasStock() && !player.getShoppingData().canPurchase(item.item.toUnderstandable(), item.amount)) {
                         player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                         return;
                     }
@@ -268,7 +268,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
                     if (item.hasStock)
-                        player.getShoppingData().documentPurchase(item.getItem(), item.amount);
+                        player.getShoppingData().documentPurchase(item.getItem().toUnderstandable(), item.amount);
 
                     updateThis(player);
                 }
@@ -300,7 +300,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     lore.add("");
                     if (item.hasStock) {
                         lore.add("§7Stock");
-                        lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem()) + " §7remaining");
+                        lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
                         lore.add("");
                     }
                     lore.add("§eClick to trade!");
@@ -332,7 +332,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
         double sellPrice = sellable.getSellValue() * stack.amount();
 
-        getPlayer().getShoppingData().pushBuyback(item, stack.amount());
+        getPlayer().getShoppingData().pushBuyback(item.toUnderstandable(), stack.amount());
         getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
                 getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
         );

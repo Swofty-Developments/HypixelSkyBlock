@@ -1,6 +1,7 @@
 package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemTypeLinker;
@@ -39,7 +40,7 @@ public class MiningCollection extends CollectionCategory {
     @Override
     public ItemCollection[] getCollections() {
         return List.of(
-                new ItemCollection(ItemTypeLinker.COBBLESTONE,
+                new ItemCollection(ItemType.COBBLESTONE,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -71,20 +72,20 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.COBBLESTONE, 8));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.COAL, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.COBBLESTONE, 8));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.COAL, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "ABA",
                                         "AAA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.AUTO_SMELTER), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.AUTO_SMELTER), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedCobblestone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.COBBLESTONE);
+                                return getStandardEnchantedRecipe(EnchantedCobblestone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.COBBLESTONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -101,14 +102,14 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_REDSTONE, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "ABA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.COMPACTOR), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.COMPACTOR), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(5000, new UnlockXP() {
@@ -126,52 +127,52 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "A A");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.MINERS_OUTFIT_BOOTS), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_BOOTS), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "AAA",
                                         "AAA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.MINERS_OUTFIT_CHESTPLATE), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_CHESTPLATE), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "   ");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.MINERS_OUTFIT_HELMET), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_HELMET), ingredientMap, pattern);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "A A");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.MINERS_OUTFIT_LEGGINGS), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.MINERS_OUTFIT_LEGGINGS), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(25000, new UnlockXP() {
@@ -189,14 +190,14 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 32));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 32));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "AAA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.HASTE_RING), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.HASTE_RING), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(70000, new UnlockXP() {
@@ -208,18 +209,18 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COBBLESTONE, 64));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_REDSTONE_BLOCK, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 64));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE_BLOCK, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "ABA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.SUPER_COMPACTOR_3000), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.SUPER_COMPACTOR_3000), ingredientMap, pattern);
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.COAL,
+                new ItemCollection(ItemType.COAL,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -251,7 +252,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedCoal.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.COAL);
+                                return getStandardEnchantedRecipe(EnchantedCoal.class, SkyBlockRecipe.RecipeType.MINING, ItemType.COAL);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -274,7 +275,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedCoalBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_COAL);
+                                return getStandardEnchantedRecipe(EnchantedCoalBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_COAL);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -291,24 +292,24 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                                        new SkyBlockItem(ItemTypeLinker.ENCHANTED_CHARCOAL), 1)
-                                        .add(ItemTypeLinker.COAL, 32)
-                                        .add(ItemTypeLinker.COAL, 32)
-                                        .add(ItemTypeLinker.COAL, 32)
-                                        .add(ItemTypeLinker.COAL, 32)
-                                        .add(ItemTypeLinker.OAK_WOOD, 32); // Not only Oak any wood should make charcoal.
+                                        new SkyBlockItem(ItemType.ENCHANTED_CHARCOAL), 1)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.COAL, 32)
+                                        .add(ItemType.OAK_WOOD, 32); // Not only Oak any wood should make charcoal.
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_COAL_BLOCK, 2));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_COAL_BLOCK, 2));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
                                         " A ");
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.ENCHANTED_LAVA_BUCKET), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.ENCHANTED_LAVA_BUCKET), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
@@ -324,7 +325,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.GOLD_INGOT,
+                new ItemCollection(ItemType.GOLD_INGOT,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -362,7 +363,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedGold.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.GOLD_INGOT);
+                                return getStandardEnchantedRecipe(EnchantedGold.class, SkyBlockRecipe.RecipeType.MINING, ItemType.GOLD_INGOT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -391,7 +392,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedGoldBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_GOLD_BLOCK);
+                                return getStandardEnchantedRecipe(EnchantedGoldBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_GOLD_BLOCK);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -406,7 +407,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.LAPIS_LAZULI,
+                new ItemCollection(ItemType.LAPIS_LAZULI,
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -438,7 +439,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedLapisLazuli.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.LAPIS_LAZULI);
+                                return getStandardEnchantedRecipe(EnchantedLapisLazuli.class, SkyBlockRecipe.RecipeType.MINING, ItemType.LAPIS_LAZULI);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -461,7 +462,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedLapisLazuliBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_LAPIS_LAZULI);
+                                return getStandardEnchantedRecipe(EnchantedLapisLazuliBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_LAPIS_LAZULI);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -486,7 +487,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.GRAVEL,
+                new ItemCollection(ItemType.GRAVEL,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -529,7 +530,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedFlint.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLINT);
+                                return getStandardEnchantedRecipe(EnchantedFlint.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLINT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -567,7 +568,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.DIAMOND,
+                new ItemCollection(ItemType.DIAMOND,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -599,7 +600,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedDiamond.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.DIAMOND);
+                                return getStandardEnchantedRecipe(EnchantedDiamond.class, SkyBlockRecipe.RecipeType.MINING, ItemType.DIAMOND);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -626,9 +627,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.DIAMOND_SPREADING), Map.of(
-                                        'E', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_DIAMOND, 1),
-                                        'V', new MaterialQuantifiable(ItemTypeLinker.VINES, 1)
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.DIAMOND_SPREADING), Map.of(
+                                        'E', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1),
+                                        'V', new MaterialQuantifiable(ItemType.VINES, 1)
                                 ), List.of(
                                         "VVV",
                                         "VEV",
@@ -645,7 +646,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedDiamondBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_DIAMOND);
+                                return getStandardEnchantedRecipe(EnchantedDiamondBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_DIAMOND);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -660,7 +661,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.EMERALD,
+                new ItemCollection(ItemType.EMERALD,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -692,7 +693,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedEmerald.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.EMERALD);
+                                return getStandardEnchantedRecipe(EnchantedEmerald.class, SkyBlockRecipe.RecipeType.MINING, ItemType.EMERALD);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -715,7 +716,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(30000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedEmeraldBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_EMERALD);
+                                return getStandardEnchantedRecipe(EnchantedEmeraldBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_EMERALD);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -736,7 +737,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.END_STONE,
+                new ItemCollection(ItemType.END_STONE,
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -780,7 +781,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedEndStone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.END_STONE);
+                                return getStandardEnchantedRecipe(EnchantedEndStone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.END_STONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -813,7 +814,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.FINE_JASPER_GEM,
+                new ItemCollection(ItemType.FINE_JASPER_GEM,
                         new ItemCollectionReward(100, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -823,37 +824,37 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_RUBY_GEM);
+                                return getStandardEnchantedRecipe(FlawedRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_RUBY_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedJade.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_JADE_GEM);
+                                return getStandardEnchantedRecipe(FlawedJade.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JADE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_SAPPHIRE_GEM);
+                                return getStandardEnchantedRecipe(FlawedSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_SAPPHIRE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_AMETHYST_GEM);
+                                return getStandardEnchantedRecipe(FlawedAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_AMETHYST_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_AMBER_GEM);
+                                return getStandardEnchantedRecipe(FlawedAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_AMBER_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_TOPAZ_GEM);
+                                return getStandardEnchantedRecipe(FlawedTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_TOPAZ_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawedJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ROUGH_JASPER_GEM);
+                                return getStandardEnchantedRecipe(FlawedJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JASPER_GEM);
                             }
                         },new UnlockXP() {
                             @Override
@@ -876,37 +877,37 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_RUBY_GEM);
+                                return getStandardEnchantedRecipe(FineRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_RUBY_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineJade.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_JADE_GEM);
+                                return getStandardEnchantedRecipe(FineJade.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_JADE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_SAPPHIRE_GEM);
+                                return getStandardEnchantedRecipe(FineSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_SAPPHIRE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_AMETHYST_GEM);
+                                return getStandardEnchantedRecipe(FineAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_AMETHYST_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_AMBER_GEM);
+                                return getStandardEnchantedRecipe(FineAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_AMBER_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_TOPAZ_GEM);
+                                return getStandardEnchantedRecipe(FineTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_TOPAZ_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FineJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FLAWED_JASPER_GEM);
+                                return getStandardEnchantedRecipe(FineJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FLAWED_JASPER_GEM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -933,37 +934,37 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(500000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_RUBY_GEM);
+                                return getStandardEnchantedRecipe(FlawlessRuby.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_RUBY_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessJade.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_JADE_GEM);
+                                return getStandardEnchantedRecipe(FlawlessJade.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_JADE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_SAPPHIRE_GEM);
+                                return getStandardEnchantedRecipe(FlawlessSapphire.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_SAPPHIRE_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_AMETHYST_GEM);
+                                return getStandardEnchantedRecipe(FlawlessAmethyst.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_AMETHYST_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_AMBER_GEM);
+                                return getStandardEnchantedRecipe(FlawlessAmber.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_AMBER_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_TOPAZ_GEM);
+                                return getStandardEnchantedRecipe(FlawlessTopaz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_TOPAZ_GEM);
                             }
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(FlawlessJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.FINE_JASPER_GEM);
+                                return getStandardEnchantedRecipe(FlawlessJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.FINE_JASPER_GEM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -981,7 +982,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.GLOWSTONE_DUST,
+                new ItemCollection(ItemType.GLOWSTONE_DUST,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -997,7 +998,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedGlowstoneDust.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.GLOWSTONE_DUST);
+                                return getStandardEnchantedRecipe(EnchantedGlowstoneDust.class, SkyBlockRecipe.RecipeType.MINING, ItemType.GLOWSTONE_DUST);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1014,7 +1015,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedGlowstone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_GLOWSTONE_DUST);
+                                return getStandardEnchantedRecipe(EnchantedGlowstone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_GLOWSTONE_DUST);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1035,7 +1036,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.HARD_STONE,
+                new ItemCollection(ItemType.HARD_STONE,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1051,7 +1052,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedHardstone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.HARD_STONE);
+                                return getStandardEnchantedRecipe(EnchantedHardstone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.HARD_STONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1073,7 +1074,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(300000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(ConcentratedStone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_HARD_STONE);
+                                return getStandardEnchantedRecipe(ConcentratedStone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_HARD_STONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1086,7 +1087,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.ICE,
+                new ItemCollection(ItemType.ICE,
                         new ItemCollectionReward(50,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1118,7 +1119,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedIce.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.PACKED_ICE);
+                                return getStandardEnchantedRecipe(EnchantedIce.class, SkyBlockRecipe.RecipeType.MINING, ItemType.PACKED_ICE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1141,7 +1142,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedPackedIce.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_ICE);
+                                return getStandardEnchantedRecipe(EnchantedPackedIce.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_ICE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1172,7 +1173,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.IRON_INGOT,
+                new ItemCollection(ItemType.IRON_INGOT,
                         new ItemCollectionReward(50,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1209,7 +1210,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedIron.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.IRON_INGOT);
+                                return getStandardEnchantedRecipe(EnchantedIron.class, SkyBlockRecipe.RecipeType.MINING, ItemType.IRON_INGOT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1226,15 +1227,15 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.CHEST, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.CHEST, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "ABA",
                                         " A ");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.BUDGET_HOPPER), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.BUDGET_HOPPER), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(5000, new UnlockXP() {
@@ -1246,7 +1247,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedIronBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_IRON_INGOT);
+                                return getStandardEnchantedRecipe(EnchantedIronBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_IRON_INGOT);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1269,15 +1270,15 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_BLOCK, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.CHEST, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_BLOCK, 1));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.CHEST, 1));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "ABA",
                                         " A ");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemTypeLinker.ENCHANTED_HOPPER), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.ENCHANTED_HOPPER), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
@@ -1297,7 +1298,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.MITHRIL,
+                new ItemCollection(ItemType.MITHRIL,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1313,7 +1314,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedMithril.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.MITHRIL);
+                                return getStandardEnchantedRecipe(EnchantedMithril.class, SkyBlockRecipe.RecipeType.MINING, ItemType.MITHRIL);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1355,7 +1356,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.MYCELIUM,
+                new ItemCollection(ItemType.MYCELIUM,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1371,7 +1372,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(750, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedMycelium.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.MYCELIUM);
+                                return getStandardEnchantedRecipe(EnchantedMycelium.class, SkyBlockRecipe.RecipeType.MINING, ItemType.MYCELIUM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1400,7 +1401,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(15000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedMyceliumCube.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_MYCELIUM);
+                                return getStandardEnchantedRecipe(EnchantedMyceliumCube.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_MYCELIUM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1427,7 +1428,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.QUARTZ,
+                new ItemCollection(ItemType.QUARTZ,
                         new ItemCollectionReward(50,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1459,7 +1460,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedQuartz.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.QUARTZ);
+                                return getStandardEnchantedRecipe(EnchantedQuartz.class, SkyBlockRecipe.RecipeType.MINING, ItemType.QUARTZ);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1476,7 +1477,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedQuartzBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_QUARTZ);
+                                return getStandardEnchantedRecipe(EnchantedQuartzBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_QUARTZ);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1503,7 +1504,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.NETHERRACK,
+                new ItemCollection(ItemType.NETHERRACK,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1525,7 +1526,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedNetherrack.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.NETHERRACK);
+                                return getStandardEnchantedRecipe(EnchantedNetherrack.class, SkyBlockRecipe.RecipeType.MINING, ItemType.NETHERRACK);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1540,7 +1541,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.OBSIDIAN,
+                new ItemCollection(ItemType.OBSIDIAN,
                         new ItemCollectionReward(50,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1572,7 +1573,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedObsidian.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.OBSIDIAN);
+                                return getStandardEnchantedRecipe(EnchantedObsidian.class, SkyBlockRecipe.RecipeType.MINING, ItemType.OBSIDIAN);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1617,7 +1618,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.RED_SAND,
+                new ItemCollection(ItemType.RED_SAND,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1627,7 +1628,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedRedSand.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.RED_SAND);
+                                return getStandardEnchantedRecipe(EnchantedRedSand.class, SkyBlockRecipe.RecipeType.MINING, ItemType.RED_SAND);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1644,7 +1645,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedRedSandCube.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_RED_SAND);
+                                return getStandardEnchantedRecipe(EnchantedRedSandCube.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_RED_SAND);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1679,19 +1680,19 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.FLAMES, 4));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_RED_SAND_CUBE, 1));
-                                ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_SULPHUR_CUBE, 1));
-                                ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.PLASMA_BUCKET, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.FLAMES, 4));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_RED_SAND_CUBE, 1));
+                                ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_SULPHUR_CUBE, 1));
+                                ingredientMap.put('D', new MaterialQuantifiable(ItemType.PLASMA_BUCKET, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
                                         "CDC",
                                         "ABA");
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.EVERBURNING_FLAME), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.EVERBURNING_FLAME), ingredientMap, pattern);
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.REDSTONE,
+                new ItemCollection(ItemType.REDSTONE,
                         new ItemCollectionReward(100,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1733,7 +1734,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedRedstone.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.REDSTONE);
+                                return getStandardEnchantedRecipe(EnchantedRedstone.class, SkyBlockRecipe.RecipeType.MINING, ItemType.REDSTONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1767,7 +1768,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedRedstoneBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_REDSTONE);
+                                return getStandardEnchantedRecipe(EnchantedRedstoneBlock.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_REDSTONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1857,7 +1858,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.SAND,
+                new ItemCollection(ItemType.SAND,
                         new ItemCollectionReward(50,new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1895,7 +1896,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSand.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.SAND);
+                                return getStandardEnchantedRecipe(EnchantedSand.class, SkyBlockRecipe.RecipeType.MINING, ItemType.SAND);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1916,7 +1917,7 @@ public class MiningCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.SULPHUR,
+                new ItemCollection(ItemType.SULPHUR,
                         new ItemCollectionReward(200, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1926,7 +1927,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSulphur.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.SULPHUR);
+                                return getStandardEnchantedRecipe(EnchantedSulphur.class, SkyBlockRecipe.RecipeType.MINING, ItemType.SULPHUR);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1955,7 +1956,7 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(15000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSulphurCube.class, SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_SULPHUR);
+                                return getStandardEnchantedRecipe(EnchantedSulphurCube.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_SULPHUR);
                             }
                         }, new UnlockXP() {
                             @Override

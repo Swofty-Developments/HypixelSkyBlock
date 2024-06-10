@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -19,7 +20,7 @@ public class WardenHelmet implements CustomSkyBlockItem, SkullHead, DefaultCraft
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.WARDEN_HEART, 1));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_BLOCK, 64));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "C C");

@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.types.generic.auction.AuctionItemLoreHandler;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -18,6 +19,7 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionVi
 import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewThirdNormal;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
@@ -58,8 +60,8 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.updateLore(
-                        PlayerItemUpdater.playerUpdate(player, item.getItem().getItemStack()),
-                        item.getLore(player)
+                        PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
+                        new AuctionItemLoreHandler(item).getLore(player)
                 );
             }
         });

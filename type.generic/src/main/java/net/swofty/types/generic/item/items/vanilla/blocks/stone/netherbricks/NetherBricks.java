@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.item.ItemType;
 
 public class NetherBricks implements PlaceableCustomSkyBlockItem, Sellable, DefaultCraftable {
     @Override
@@ -35,7 +36,7 @@ public class NetherBricks implements PlaceableCustomSkyBlockItem, Sellable, Defa
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NETHER_BRICK, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemType.NETHER_BRICK, 1));
         List<String> pattern = List.of(
                 "AA",
                 "AA");

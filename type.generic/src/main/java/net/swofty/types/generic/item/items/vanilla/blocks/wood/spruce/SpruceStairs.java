@@ -15,13 +15,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.item.ItemType;
 
 public class SpruceStairs implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.SPRUCE_PLANKS, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "A  ",
                 "AA ",

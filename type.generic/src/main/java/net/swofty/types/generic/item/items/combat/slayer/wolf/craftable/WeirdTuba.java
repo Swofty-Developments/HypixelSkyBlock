@@ -12,6 +12,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class WeirdTuba implements CustomSkyBlockItem, DefaultCraftable, NotFinishedYet {
     @Override
@@ -19,7 +20,7 @@ public class WeirdTuba implements CustomSkyBlockItem, DefaultCraftable, NotFinis
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 20));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 20));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "A A ",
                 "ABA",

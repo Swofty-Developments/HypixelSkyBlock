@@ -9,6 +9,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class GloomlockGrimoire implements CustomSkyBlockItem, DefaultCraftable, Enchanted, NotFinishedYet {
     @Override
@@ -17,7 +18,7 @@ public class GloomlockGrimoire implements CustomSkyBlockItem, DefaultCraftable, 
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 4));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_GUNPOWDER, 64));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BONE_BLOCK, 4));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.BOOK, 1));
+        ingredientMap.put('D', new MaterialQuantifiable(ItemType.BOOK, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "CDC",

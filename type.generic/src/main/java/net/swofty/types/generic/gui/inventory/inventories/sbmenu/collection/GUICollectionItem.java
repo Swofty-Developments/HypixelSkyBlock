@@ -44,7 +44,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§e" + item.getDisplayName(null), item.material, 1,
+                return ItemStackCreator.getStack("§e" + item.getDisplayName(null), item.type.material, 1,
                         "§7View all your " + item.getDisplayName(null) + " Collection",
                         "§7progress and rewards!",
                         " ",

@@ -3,13 +3,13 @@ package net.swofty.service.generic;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
 import net.swofty.commons.protocol.ProtocolSpecification;
-import net.swofty.types.generic.item.attribute.ItemAttribute;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

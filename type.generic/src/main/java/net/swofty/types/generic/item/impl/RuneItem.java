@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.impl;
 
 import lombok.NonNull;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.StringUtility;
@@ -20,7 +21,7 @@ public interface RuneItem extends ExtraRarityDisplay, ExtraUnderNameDisplays, Sk
                 StringUtility.getAsRomanNumeral(item.getAttributeHandler().getRuneLevel());
     }
 
-    default String getDisplayName(ItemTypeLinker type, int runeLevel) {
+    default String getDisplayName(ItemType type, int runeLevel) {
         return getColor() + "◆ " + StringUtility.toNormalCase(type.toString())
                 + " " +
                 StringUtility.getAsRomanNumeral(runeLevel);

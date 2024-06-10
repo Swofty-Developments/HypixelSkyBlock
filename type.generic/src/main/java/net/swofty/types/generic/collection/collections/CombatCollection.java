@@ -1,9 +1,9 @@
 package net.swofty.types.generic.collection.collections;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -33,7 +33,7 @@ public class CombatCollection extends CollectionCategory {
     @Override
     public ItemCollection[] getCollections() {
         return List.of(
-                new ItemCollection(ItemTypeLinker.BLAZE_ROD,
+                new ItemCollection(ItemType.BLAZE_ROD,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -49,7 +49,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBlazePowder.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.BLAZE_ROD);
+                                return getStandardEnchantedRecipe(EnchantedBlazePowder.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.BLAZE_ROD);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -72,7 +72,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(10000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBlazeRod.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_BLAZE_POWDER);
+                                return getStandardEnchantedRecipe(EnchantedBlazeRod.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.ENCHANTED_BLAZE_POWDER);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -93,7 +93,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.STRING,
+                new ItemCollection(ItemType.STRING,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -120,7 +120,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedString.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.STRING);
+                                return getStandardEnchantedRecipe(EnchantedString.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.STRING);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -169,7 +169,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.ENDER_PEARL,
+                new ItemCollection(ItemType.ENDER_PEARL,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -180,12 +180,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                        new SkyBlockItem(ItemTypeLinker.ENCHANTED_ENDER_PEARL), 1)
-                                        .add(ItemTypeLinker.ENDER_PEARL, 4)
-                                        .add(ItemTypeLinker.ENDER_PEARL, 4)
-                                        .add(ItemTypeLinker.ENDER_PEARL, 4)
-                                        .add(ItemTypeLinker.ENDER_PEARL, 4)
-                                        .add(ItemTypeLinker.ENDER_PEARL, 4);
+                                        new SkyBlockItem(ItemType.ENCHANTED_ENDER_PEARL), 1)
+                                        .add(ItemType.ENDER_PEARL, 4)
+                                        .add(ItemType.ENDER_PEARL, 4)
+                                        .add(ItemType.ENDER_PEARL, 4)
+                                        .add(ItemType.ENDER_PEARL, 4)
+                                        .add(ItemType.ENDER_PEARL, 4);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -220,12 +220,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                    new SkyBlockItem(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER), 1)
-                                    .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16)
-                                    .add(ItemTypeLinker.BLAZE_POWDER, 16)
-                                    .add(ItemTypeLinker.BLAZE_POWDER, 16)
-                                    .add(ItemTypeLinker.BLAZE_POWDER, 16)
-                                    .add(ItemTypeLinker.BLAZE_POWDER, 16);
+                                    new SkyBlockItem(ItemType.ENCHANTED_EYE_OF_ENDER), 1)
+                                    .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                    .add(ItemType.BLAZE_POWDER, 16)
+                                    .add(ItemType.BLAZE_POWDER, 16)
+                                    .add(ItemType.BLAZE_POWDER, 16)
+                                    .add(ItemType.BLAZE_POWDER, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -237,12 +237,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                        new SkyBlockItem(ItemTypeLinker.ABSOLUTE_ENDER_PEARL), 1)
-                                        .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16);
+                                        new SkyBlockItem(ItemType.ABSOLUTE_ENDER_PEARL), 1)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -259,14 +259,14 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 16));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_DIAMOND, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
+                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
                                 List<String> pattern = List.of(
                                         "A",
                                         "A",
                                         "B");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.COMBAT, new SkyBlockItem(ItemTypeLinker.ASPECT_OF_THE_END), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.COMBAT, new SkyBlockItem(ItemType.ASPECT_OF_THE_END), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(50000, new UnlockXP() {
@@ -276,7 +276,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.BONE,
+                new ItemCollection(ItemType.BONE,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -304,7 +304,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBone.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.BONE);
+                                return getStandardEnchantedRecipe(EnchantedBone.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.BONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -339,7 +339,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(150000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBoneBlock.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_BONE);
+                                return getStandardEnchantedRecipe(EnchantedBoneBlock.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.ENCHANTED_BONE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -348,7 +348,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.CHILI_PEPPER,
+                new ItemCollection(ItemType.CHILI_PEPPER,
                         new ItemCollectionReward(10, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -382,7 +382,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(StuffedChiliPepper.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.CHILI_PEPPER);
+                                return getStandardEnchantedRecipe(StuffedChiliPepper.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.CHILI_PEPPER);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -409,7 +409,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.GHAST_TEAR,
+                new ItemCollection(ItemType.GHAST_TEAR,
                         new ItemCollectionReward(20, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -426,12 +426,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                        new SkyBlockItem(ItemTypeLinker.ENCHANTED_GHAST_TEAR), 1)
-                                        .add(ItemTypeLinker.GHAST_TEAR, 1)
-                                        .add(ItemTypeLinker.GHAST_TEAR, 1)
-                                        .add(ItemTypeLinker.GHAST_TEAR, 1)
-                                        .add(ItemTypeLinker.GHAST_TEAR, 1)
-                                        .add(ItemTypeLinker.GHAST_TEAR, 1);
+                                        new SkyBlockItem(ItemType.ENCHANTED_GHAST_TEAR), 1)
+                                        .add(ItemType.GHAST_TEAR, 1)
+                                        .add(ItemType.GHAST_TEAR, 1)
+                                        .add(ItemType.GHAST_TEAR, 1)
+                                        .add(ItemType.GHAST_TEAR, 1)
+                                        .add(ItemType.GHAST_TEAR, 1);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -454,14 +454,14 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_GHAST_TEAR, 5));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         " A ",
                                         "AAA",
                                         " A ");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.SILVER_FANG), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.SILVER_FANG), ingredientMap, pattern);
                             }
                         }),
                         new ItemCollectionReward(10000, new UnlockXP() {
@@ -477,7 +477,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.GUNPOWDER,
+                new ItemCollection(ItemType.GUNPOWDER,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -499,7 +499,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedGunpowder.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.GUNPOWDER);
+                                return getStandardEnchantedRecipe(EnchantedGunpowder.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.GUNPOWDER);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -517,12 +517,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                        new SkyBlockItem(ItemTypeLinker.ENCHANTED_FIREWORK_ROCKET), 1)
-                                        .add(ItemTypeLinker.ENCHANTED_GUNPOWDER, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_GUNPOWDER, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_GUNPOWDER, 16)
-                                        .add(ItemTypeLinker.ENCHANTED_GUNPOWDER, 16)
-                                        .add(ItemTypeLinker.PAPER, 16);
+                                        new SkyBlockItem(ItemType.ENCHANTED_FIREWORK_ROCKET), 1)
+                                        .add(ItemType.ENCHANTED_GUNPOWDER, 16)
+                                        .add(ItemType.ENCHANTED_GUNPOWDER, 16)
+                                        .add(ItemType.ENCHANTED_GUNPOWDER, 16)
+                                        .add(ItemType.ENCHANTED_GUNPOWDER, 16)
+                                        .add(ItemType.PAPER, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -549,7 +549,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.MAGMA_CREAM,
+                new ItemCollection(ItemType.MAGMA_CREAM,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -565,7 +565,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedMagmaCream.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.MAGMA_CREAM);
+                                return getStandardEnchantedRecipe(EnchantedMagmaCream.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.MAGMA_CREAM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -600,7 +600,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(WhippedMagmaCream.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_MAGMA_CREAM);
+                                return getStandardEnchantedRecipe(WhippedMagmaCream.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.ENCHANTED_MAGMA_CREAM);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -609,7 +609,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.ROTTEN_FLESH,
+                new ItemCollection(ItemType.ROTTEN_FLESH,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -636,7 +636,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedRottenFlesh.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ROTTEN_FLESH);
+                                return getStandardEnchantedRecipe(EnchantedRottenFlesh.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.ROTTEN_FLESH);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -654,14 +654,14 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ROTTEN_FLESH, 32));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
+                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
                                         "AAA");
 
-                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemTypeLinker.ZOMBIE_HEART), ingredientMap, pattern);
+                                return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ZOMBIE_HEART), ingredientMap, pattern);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -694,7 +694,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.SLIME_BALL,
+                new ItemCollection(ItemType.SLIME_BALL,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -722,7 +722,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSlimeball.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.SLIME_BALL);
+                                return getStandardEnchantedRecipe(EnchantedSlimeball.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.SLIME_BALL);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -745,7 +745,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSlimeBlock.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_SLIMEBALL);
+                                return getStandardEnchantedRecipe(EnchantedSlimeBlock.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.ENCHANTED_SLIMEBALL);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -760,7 +760,7 @@ public class CombatCollection extends CollectionCategory {
                             }
                         })
                 ),
-                new ItemCollection(ItemTypeLinker.SPIDER_EYE,
+                new ItemCollection(ItemType.SPIDER_EYE,
                         new ItemCollectionReward(50, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -782,7 +782,7 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSpiderEye.class, SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.SPIDER_EYE);
+                                return getStandardEnchantedRecipe(EnchantedSpiderEye.class, SkyBlockRecipe.RecipeType.COMBAT, ItemType.SPIDER_EYE);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -806,10 +806,10 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                        new SkyBlockItem(ItemTypeLinker.ENCHANTED_FERMENTED_SPIDER_EYE), 1)
-                                        .add(ItemTypeLinker.BROWN_MUSHROOM, 64)
-                                        .add(ItemTypeLinker.SUGAR, 64)
-                                        .add(ItemTypeLinker.ENCHANTED_SPIDER_EYE, 64);
+                                        new SkyBlockItem(ItemType.ENCHANTED_FERMENTED_SPIDER_EYE), 1)
+                                        .add(ItemType.BROWN_MUSHROOM, 64)
+                                        .add(ItemType.SUGAR, 64)
+                                        .add(ItemType.ENCHANTED_SPIDER_EYE, 64);
                             }
                         }, new UnlockXP() {
                             @Override

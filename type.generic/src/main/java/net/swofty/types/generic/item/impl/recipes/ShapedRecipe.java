@@ -2,6 +2,7 @@ package net.swofty.types.generic.item.impl.recipes;
 
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -79,11 +80,11 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         char patternChar = pattern.get(row).charAt(col);
                         MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
 
-                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemTypeLinker.AIR)) {
+                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR)) {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(tempModifiedStacks[index].getItemStack());
 
                             // skip the iteration if stackMaterial is AIR
-                            if (stackMaterial.getMaterial() == null || stackMaterial.getMaterial().equals(ItemTypeLinker.AIR)) {
+                            if (stackMaterial.getMaterial() == null || stackMaterial.getMaterial().equals(ItemType.AIR)) {
                                 patternMatched = false;
                                 break;
                             }
@@ -173,11 +174,11 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         char patternChar = pattern.get(gridRow - startRow).charAt(gridCol - startCol);
                         MaterialQuantifiable patternMaterial = ingredientMap.get(patternChar);
 
-                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemTypeLinker.AIR)) {
+                        if (patternMaterial != null && !patternMaterial.getMaterial().equals(ItemType.AIR)) {
                             MaterialQuantifiable stackMaterial = MaterialQuantifiable.of(stacks[i]);
 
                             // skip the iteration if stackMaterial is AIR
-                            if (stackMaterial.getMaterial().equals(ItemTypeLinker.AIR)) {
+                            if (stackMaterial.getMaterial().equals(ItemType.AIR)) {
                                 continue;
                             }
 

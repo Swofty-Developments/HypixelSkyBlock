@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -71,6 +72,10 @@ public abstract class SkyBlockRecipe<T> {
     }
 
     public static SkyBlockRecipe<?> getStandardEnchantedRecipe(Class<?> clazz, SkyBlockRecipe.RecipeType type, ItemTypeLinker craftingMaterial) {
+        return getStandardEnchantedRecipe(clazz, type, craftingMaterial.type);
+    }
+
+    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(Class<?> clazz, SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
         List<ItemTypeLinker> matchTypes = Arrays.stream(ItemTypeLinker.values())
                 .filter(itemType -> itemType.clazz != null)
                 .filter(itemType -> itemType.clazz.equals(clazz))
@@ -86,15 +91,15 @@ public abstract class SkyBlockRecipe<T> {
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32);
             recipe.setCustomRecipeDisplay(new SkyBlockItem[] {
-                    new SkyBlockItem(ItemTypeLinker.AIR),
+                    new SkyBlockItem(ItemType.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemTypeLinker.AIR),
+                    new SkyBlockItem(ItemType.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
                     new SkyBlockItem(craftingMaterial, 32),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemTypeLinker.AIR),
+                    new SkyBlockItem(ItemType.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemTypeLinker.AIR),
+                    new SkyBlockItem(ItemType.AIR),
             });
 
             return recipe;

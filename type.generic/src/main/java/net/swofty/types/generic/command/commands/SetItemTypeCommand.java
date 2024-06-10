@@ -2,6 +2,7 @@ package net.swofty.types.generic.command.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.Configuration;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.ItemTypeLinker;
@@ -36,13 +37,13 @@ public class SetItemTypeCommand extends SkyBlockCommand {
                 return;
             }
 
-            ItemTypeLinker newType = context.get(material);
+            ItemType newType = context.get(material).type;
 
             player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 item.getAttributeHandler().getSandboxData().setMaterial(newType);
             });
 
-            player.sendMessage("§aUpdated the type of the item in your hand to §e" + newType.getDisplayName(itemInHand) + "§a.");
+            player.sendMessage("§aUpdated the type of the item in your hand to §e" + context.get(material).getDisplayName(itemInHand) + "§a.");
         }, material);
     }
 }

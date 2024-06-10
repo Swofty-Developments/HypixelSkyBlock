@@ -9,7 +9,7 @@ public class PlayerAbilityHandler {
     private final Map<String, Long> abilityCooldowns = new HashMap<>();
 
     public boolean canUseAbility(SkyBlockItem item, int coolDownDurationTicks) {
-        String itemType = item.getAttributeHandler().getItemType();
+        String itemType = item.getAttributeHandler().getTypeAsString();
         Long lastUsedTime = abilityCooldowns.get(itemType);
 
         long cooldownDurationMillis = coolDownDurationTicks * 50L;
@@ -17,7 +17,7 @@ public class PlayerAbilityHandler {
     }
 
     public long getRemainingCooldown(SkyBlockItem item, int coolDownDurationTicks) {
-        String itemType = item.getAttributeHandler().getItemType();
+        String itemType = item.getAttributeHandler().getTypeAsString();
         Long lastUsedTime = abilityCooldowns.get(itemType);
         long cooldownDurationMillis = coolDownDurationTicks * 50L;
         if (lastUsedTime == null) {
@@ -28,6 +28,6 @@ public class PlayerAbilityHandler {
     }
 
     public void startAbilityCooldown(SkyBlockItem item) {
-        abilityCooldowns.put(item.getAttributeHandler().getItemType(), System.currentTimeMillis());
+        abilityCooldowns.put(item.getAttributeHandler().getTypeAsString(), System.currentTimeMillis());
     }
 }

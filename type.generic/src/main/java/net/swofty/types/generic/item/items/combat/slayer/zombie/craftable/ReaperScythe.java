@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class ReaperScythe implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
@@ -18,7 +19,7 @@ public class ReaperScythe implements CustomSkyBlockItem, DefaultCraftable, Stand
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.SCYTHE_BLADE, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 64));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REAPER_FALCHION, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "ABC",
                 "  C",

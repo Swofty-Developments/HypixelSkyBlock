@@ -11,6 +11,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
@@ -19,7 +20,7 @@ public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, Sta
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.REVENANT_CATALYST, 1));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REVENANT_FALCHION, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

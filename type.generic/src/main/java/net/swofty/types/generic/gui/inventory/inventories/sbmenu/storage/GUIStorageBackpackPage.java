@@ -116,9 +116,9 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (item == null || item.isNA())
+                    if (item == null || new SkyBlockItem(item).isNA())
                         return ItemStackCreator.createNamedItemStack(Material.AIR);
-                    return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
+                    return PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item).getItemStack());
                 }
             });
         });
@@ -136,7 +136,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
         item.getAttributeHandler().getBackpackData().items().clear();
 
         for (int i = 9; i < slots + 9; i++) {
-            item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)));
+            item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)).toUnderstandable());
         }
 
         getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item);
@@ -147,7 +147,7 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
         item.getAttributeHandler().getBackpackData().items().clear();
 
         for (int i = 9; i < slots + 9; i++) {
-            item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)));
+            item.getAttributeHandler().getBackpackData().items().add(new SkyBlockItem(getInventory().getItemStack(i)).toUnderstandable());
         }
 
         getPlayer().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).getValue().getBackpacks().put(page, item);

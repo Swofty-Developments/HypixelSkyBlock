@@ -45,14 +45,14 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
         paged.addAll(Arrays.stream(ItemTypeLinker.values()).map(SkyBlockItem::new).toList());
 
         List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
-        vanilla.removeIf((element) -> ItemTypeLinker.isVanillaReplaced(element.getAttributeHandler().getItemType()));
+        vanilla.removeIf((element) -> ItemTypeLinker.isVanillaReplaced(element.getAttributeHandler().getTypeAsString()));
         paged.addAll(vanilla);
         return paged;
     }
 
     @Override
     public boolean shouldFilterFromSearch(String query, SkyBlockItem item) {
-        return !item.getAttributeHandler().getItemType().toLowerCase().contains(query.replaceAll(" ", "_").toLowerCase());
+        return !item.getAttributeHandler().getTypeAsString().toLowerCase().contains(query.replaceAll(" ", "_").toLowerCase());
     }
 
     @Override

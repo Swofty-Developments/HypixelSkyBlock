@@ -164,7 +164,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     player.sendMessage("§7Putting item in escrow...");
 
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
-                    AuctionItem item = new AuctionItem(escrow.getItem(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
+                    AuctionItem item = new AuctionItem(escrow.getItem().toUnderstandable(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
                             escrow.isBin(), escrow.getPrice());
                     String itemName = StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME));
 

@@ -22,7 +22,7 @@ public class DatapointAuctionEscrow extends Datapoint<DatapointAuctionEscrow.Auc
                 if (value.getItem() == null) {
                     obj.put("item", new JSONObject());
                 } else {
-                    obj.put("item", SkyBlockItemSerializer.serialize(value.getItem()));
+                    obj.put("item", SkyBlockItemSerializer.serialize(value.getItem().toUnderstandable()));
                 }
                 obj.put("price", value.getPrice());
                 obj.put("duration", value.getDuration());
@@ -39,7 +39,7 @@ public class DatapointAuctionEscrow extends Datapoint<DatapointAuctionEscrow.Auc
                 }
 
                 return new AuctionEscrow(
-                        SkyBlockItemDeserializer.deserialize((Map<String, Object>) obj.get("item")),
+                        new SkyBlockItem(SkyBlockItemDeserializer.deserialize((Map<String, Object>) obj.get("item"))),
                         obj.getLong("price"),
                         obj.getLong("duration"),
                         obj.getBoolean("bin"));

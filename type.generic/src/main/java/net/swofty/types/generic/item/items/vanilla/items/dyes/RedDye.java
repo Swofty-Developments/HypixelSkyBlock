@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.item.ItemType;
 
 public class RedDye implements CustomSkyBlockItem, MultiDefaultCraftable {
     @Override
@@ -18,19 +19,19 @@ public class RedDye implements CustomSkyBlockItem, MultiDefaultCraftable {
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.RED_DYE), 1)
-                .add(ItemTypeLinker.BEETROOT, 1));
+                .add(ItemType.BEETROOT, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.RED_DYE), 1)
-                .add(ItemTypeLinker.POPPY, 1));
+                .add(ItemType.POPPY, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.RED_DYE), 1)
-                .add(ItemTypeLinker.RED_TULIP, 1));
+                .add(ItemType.RED_TULIP, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.RED_DYE), 2)
-                .add(ItemTypeLinker.ROSE_BUSH, 1));
+                .add(ItemType.ROSE_BUSH, 1));
 
         return recipes;
     }

@@ -1,20 +1,21 @@
 package net.swofty.types.generic.item.impl.recipes;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum ExchangeableType {
-    WOOD_TYPES(ItemTypeLinker.OAK_WOOD, ItemTypeLinker.OAK_LOG);
+    WOOD_TYPES(ItemType.OAK_WOOD, ItemType.OAK_LOG);
 
-    private final List<ItemTypeLinker> exchangeableMaterials;
+    private final List<ItemType> exchangeableMaterials;
 
-    ExchangeableType(ItemTypeLinker... materials) {
+    ExchangeableType(ItemType... materials) {
         this.exchangeableMaterials = Arrays.asList(materials);
     }
 
-    public static boolean isExchangeable(ItemTypeLinker material1, ItemTypeLinker material2) {
+    public static boolean isExchangeable(ItemType material1, ItemType material2) {
         return Arrays.stream(values())
                 .anyMatch(exchangeableType -> exchangeableType.exchangeableMaterials.contains(material1)
                         && exchangeableType.exchangeableMaterials.contains(material2));

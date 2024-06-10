@@ -11,6 +11,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, StandardItem, DisableAnimationImpl , NotFinishedYet {
     @Override
@@ -18,7 +19,7 @@ public class EdibleMace implements CustomSkyBlockItem, DefaultCraftable, Standar
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_MUTTON, 9));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 18));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " A ",

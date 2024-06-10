@@ -10,6 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.types.generic.auction.AuctionItemLoreHandler;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -96,7 +97,7 @@ public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
                     return ItemStackCreator.getStack(
                             StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
                                     .get(ItemComponent.CUSTOM_NAME)),
-                            item.getItem().getMaterial(), item.getItem().getAmount(), item.getLore(player));
+                            item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
                 }
             });
         }

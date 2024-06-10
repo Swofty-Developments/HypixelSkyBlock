@@ -1131,7 +1131,7 @@ public enum ItemType {
     }
 
 
-    public static ItemType get(String name) {
+    public static @Nullable ItemType get(String name) {
         try {
             return ItemType.valueOf(name);
         } catch (Exception e) {

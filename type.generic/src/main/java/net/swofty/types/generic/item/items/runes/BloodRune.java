@@ -2,6 +2,7 @@ package net.swofty.types.generic.item.items.runes;
 
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -57,7 +58,7 @@ public class BloodRune implements CustomSkyBlockItem, RuneItem, SkyBlockEventCla
     public void run(PlayerKilledSkyBlockMobEvent event) {
         SkyBlockPlayer player = event.getPlayer();
 
-        SkyBlockItem runedItem = player.getStatistics().getItemWithRune(ItemTypeLinker.BLOOD_RUNE);
+        SkyBlockItem runedItem = player.getStatistics().getItemWithRune(ItemType.BLOOD_RUNE);
         if (runedItem == null) return;
         int level = runedItem.getAttributeHandler().getRuneData().getLevel();
         int amountOfParticles = level * 3;

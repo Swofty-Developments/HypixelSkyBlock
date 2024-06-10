@@ -146,10 +146,10 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
             json.put("hasBoughtAppraisalService", hasBoughtAppraisalService);
 
             List<String> currentlyInMuseum = this.currentlyInMuseum.stream()
-                    .map(item -> SkyBlockItemSerializer.serializeJSON(item).toString())
+                    .map(item -> SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString())
                     .toList();
             List<String> previouslyInMuseum = this.previouslyInMuseum.stream()
-                    .map(item -> SkyBlockItemSerializer.serializeJSON(item).toString())
+                    .map(item -> SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString())
                     .toList();
 
             json.put("currentlyInMuseum", currentlyInMuseum);
@@ -182,11 +182,11 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
             data.hasBoughtAppraisalService = json.getBoolean("hasBoughtAppraisalService");
 
             data.previouslyInMuseum = json.getJSONArray("previouslyInMuseum").toList().stream()
-                    .map(item -> SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item)))
+                    .map(item -> new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))))
                     .collect(Collectors.toCollection(ArrayList::new));
 
             data.currentlyInMuseum = json.getJSONArray("currentlyInMuseum").toList().stream()
-                    .map(item -> SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item)))
+                    .map(item -> new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))))
                     .collect(Collectors.toCollection(ArrayList::new));
 
             JSONObject museumDisplayJson = new JSONObject(json.getString("museumDisplay"));

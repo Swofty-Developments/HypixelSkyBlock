@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
@@ -18,7 +19,7 @@ public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 64));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.DIGESTED_MOSQUITO, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " AB",
                 "C B",

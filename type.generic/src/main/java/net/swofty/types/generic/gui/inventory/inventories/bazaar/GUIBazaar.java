@@ -7,6 +7,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
+import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
@@ -116,7 +117,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                 // Save a list of futures for every item in the set
                 List<CompletableFuture<Void>> futures = new ArrayList<>();
 
-                for (ItemTypeLinker type : itemSet.items) {
+                for (ItemType type : itemSet.items) {
                     // Create a new future for each item
                     CompletableFuture<Void> future = new CompletableFuture<>();
                     futures.add(future);
@@ -128,7 +129,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                     baseService.callEndpoint(new ProtocolBazaarGetItem(), values).thenAccept(response -> {
                         BazaarItem bazaarItem = (BazaarItem) response.get("item");
 
-                        lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName(null)
+                        lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
                                 + " §c" + StringUtility.shortenNumber(bazaarItem.getSellStatistics().getMeanOrder()) +
                                 " §8| §a" + StringUtility.shortenNumber(bazaarItem.getBuyStatistics().getMeanOrder()));
                         future.complete(null);

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.command.commands;
 
+import net.swofty.commons.item.ReforgeType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.ItemAttributeHandler;

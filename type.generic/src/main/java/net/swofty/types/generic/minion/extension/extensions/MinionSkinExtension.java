@@ -107,7 +107,7 @@ public class MinionSkinExtension extends MinionExtension {
                             "§7here to change the appearance of",
                             "§7your minion.",
                             " ",
-                            "§7Current Skin: " + getItemTypeLinkerPassedIn().rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
+                            "§7Current Skin: " + getItemTypeLinkerPassedIn().type.rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
                             " ",
                             "§eClick to remove."
                     ).toList());

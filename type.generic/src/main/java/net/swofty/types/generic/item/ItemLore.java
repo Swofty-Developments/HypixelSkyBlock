@@ -6,7 +6,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
+import net.swofty.commons.item.ReforgeType;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
@@ -38,7 +40,7 @@ public class ItemLore {
     }
 
     public static String getBaseName(ItemStack stack) {
-        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getItemType());
+        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getTypeAsString());
     }
 
     @SneakyThrows
@@ -47,7 +49,7 @@ public class ItemLore {
         ItemAttributeHandler handler = item.getAttributeHandler();
 
         Rarity rarity = handler.getRarity();
-        String type = handler.getItemType();
+        String type = handler.getTypeAsString();
         boolean recombobulated = handler.isRecombobulated();
         ItemStatistics statistics = handler.getStatistics();
         Class<?> clazz = item.clazz;
@@ -122,14 +124,15 @@ public class ItemLore {
                     }
 
                     ItemAttributeGemData.GemData.GemSlots gemSlot = gemData.getGem(index);
-                    ItemTypeLinker filledWith = gemSlot.filledWith;
+                    ItemType filledWith = gemSlot.filledWith;
 
                     if (filledWith == null) {
                         gemstoneLore.append("§7[" + gemstone.symbol + "] ");
                         continue;
                     }
 
-                    GemstoneImpl gemstoneImpl = (GemstoneImpl) filledWith.clazz.getDeclaredConstructor().newInstance();
+                    ItemTypeLinker linker = ItemTypeLinker.fromType(filledWith);
+                    GemstoneImpl gemstoneImpl = (GemstoneImpl) new SkyBlockItem(linker).getGenericInstance();
                     GemRarity gemRarity = gemstoneImpl.getAssociatedGemRarity();
                     Gemstone gemstoneEnum = gemstoneImpl.getAssociatedGemstone();
                     Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
@@ -170,7 +173,7 @@ public class ItemLore {
 
             ItemAttributeRuneInfusedWith.RuneData runeData = handler.getRuneData();
             if (runeData != null && runeData.hasRune()) {
-                RuneItem runeItem = runeData.getAsRuneItem();
+                RuneItem runeItem = (RuneItem) new SkyBlockItem(runeData.getRuneType()).getGenericInstance();
                 addLoreLine(runeItem.getDisplayName(runeData.getRuneType(), runeData.getLevel()));
                 addLoreLine(null);
             }
@@ -256,7 +259,7 @@ public class ItemLore {
     }
 
     private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
-            ReforgeType.Reforge reforge, Rarity rarity) {
+                                           ReforgeType.Reforge reforge, Rarity rarity) {
         SkyBlockItem item = new SkyBlockItem(stack);
         double reforgeValue = 0;
         double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);

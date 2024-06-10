@@ -1,13 +1,12 @@
 package net.swofty.types.generic.item.items.enchanted;
 
-
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.commons.item.ItemType;
 
 public class EnchantedPoppy implements Enchanted, Sellable, DefaultCraftable {
     @Override
@@ -18,15 +17,15 @@ public class EnchantedPoppy implements Enchanted, Sellable, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FORAGING,
-                new SkyBlockItem(ItemTypeLinker.ENCHANTED_POPPY), 1)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64)
-                .add(ItemTypeLinker.POPPY, 64);
+                new SkyBlockItem(ItemType.ENCHANTED_POPPY), 1)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64)
+                .add(ItemType.POPPY, 64);
     }
 }

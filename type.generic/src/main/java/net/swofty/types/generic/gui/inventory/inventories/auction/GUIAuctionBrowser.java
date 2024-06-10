@@ -18,6 +18,7 @@ import net.swofty.commons.auctions.AuctionsFilter;
 import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.types.generic.auction.AuctionItemLoreHandler;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -211,11 +212,11 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    SkyBlockItem skyBlockItem = (auctionItem.getItem());
+                    SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
                     ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
 
                     return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
-                            skyBlockItem.getMaterial(), skyBlockItem.getAmount(), auctionItem.getLore());
+                            skyBlockItem.getMaterial(), skyBlockItem.getAmount(), new AuctionItemLoreHandler(auctionItem).getLore());
                 }
             });
         }

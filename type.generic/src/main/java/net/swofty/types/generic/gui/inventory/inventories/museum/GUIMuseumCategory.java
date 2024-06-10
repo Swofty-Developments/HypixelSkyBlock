@@ -241,7 +241,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
                 }
 
                 return ItemStackCreator.getStack("§a" + item.getDisplayName(null),
-                       hasTakenItOut ? Material.LIME_DYE : item.material, 1, lore);
+                       hasTakenItOut ? Material.LIME_DYE : item.type.material, 1, lore);
             }
         };
     }

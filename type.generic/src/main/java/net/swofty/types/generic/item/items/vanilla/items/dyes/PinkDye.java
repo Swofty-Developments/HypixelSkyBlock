@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.item.ItemType;
 
 public class PinkDye implements CustomSkyBlockItem, MultiDefaultCraftable {
     @Override
@@ -18,15 +19,15 @@ public class PinkDye implements CustomSkyBlockItem, MultiDefaultCraftable {
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.PINK_DYE), 2)
-                .add(ItemTypeLinker.PEONY, 1));
+                .add(ItemType.PEONY, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.PINK_DYE), 1)
-                .add(ItemTypeLinker.PINK_PETALS, 1));
+                .add(ItemType.PINK_PETALS, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.PINK_DYE), 1)
-                .add(ItemTypeLinker.PINK_TULIP, 1));
+                .add(ItemType.PINK_TULIP, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.PINK_DYE), 2)

@@ -11,6 +11,7 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Unit;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
@@ -70,9 +71,10 @@ public class PlayerItemUpdater {
         ItemAttributeHandler handler = item.getAttributeHandler();
 
         // Update Rarity
-        try {
-            handler.setRarity(ItemTypeLinker.valueOf(handler.getItemType()).rarity);
-        } catch (IllegalArgumentException e) {
+        ItemType type = handler.getPotentialType();
+        if (type != null) {
+            handler.setRarity(type.rarity);
+        } else {
             handler.setRarity(Rarity.COMMON);
         }
         if (handler.isRecombobulated()) {

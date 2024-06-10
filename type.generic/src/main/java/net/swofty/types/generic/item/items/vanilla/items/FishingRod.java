@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.vanilla.items;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -28,7 +29,7 @@ public class FishingRod implements CustomSkyBlockItem, DefaultCraftable {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.STRING, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "  A",
                 " AB",

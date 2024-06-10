@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
+import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
@@ -76,7 +77,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
         List<CompletableFuture> futures = new ArrayList<>();
 
         int i = 0;
-        for (ItemTypeLinker itemTypeLinker : itemSet.items) {
+        for (ItemType itemTypeLinker : itemSet.items) {
             CompletableFuture future = new CompletableFuture();
             futures.add(future);
             int slot = SLOTS.get(itemSet.items.size())[i];
@@ -91,7 +92,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIBazaarItem(itemTypeLinker).open(player);
+                        new GUIBazaarItem(ItemTypeLinker.fromType(itemTypeLinker)).open(player);
                     }
 
                     @Override
@@ -117,7 +118,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                         lore.add("§eClick to view details!");
 
                         return ItemStackCreator.getStack(
-                                itemTypeLinker.rarity.getColor() + itemTypeLinker.getDisplayName(null),
+                                itemTypeLinker.rarity.getColor() + itemTypeLinker.getDisplayName(),
                                 itemTypeLinker.material, 1, lore);
                     }
                 });

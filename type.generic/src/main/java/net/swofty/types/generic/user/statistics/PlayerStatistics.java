@@ -13,6 +13,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -63,7 +65,7 @@ public class PlayerStatistics {
         this.player = player;
     }
 
-    public @Nullable SkyBlockItem getItemWithRune(ItemTypeLinker runeType) {
+    public @Nullable SkyBlockItem getItemWithRune(ItemType runeType) {
         List<SkyBlockItem> piecesToCheck = getPossibleRuneItems();
 
         for (SkyBlockItem item : piecesToCheck) {
@@ -288,7 +290,7 @@ public class PlayerStatistics {
         ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
         if (hotPotatoBookData.hasPotatoBook()) {
             ItemStatistics.Builder toAdd = ItemStatistics.builder();
-            HotPotatoable.PotatoType potatoType = hotPotatoBookData.getPotatoType();
+            PotatoType potatoType = hotPotatoBookData.getPotatoType();
 
             potatoType.stats.forEach(toAdd::withBase);
             statistics = ItemStatistics.add(statistics, toAdd.build());

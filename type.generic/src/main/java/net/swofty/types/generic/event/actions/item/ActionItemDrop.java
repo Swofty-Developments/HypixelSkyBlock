@@ -17,7 +17,7 @@ public class ActionItemDrop implements SkyBlockEventClass {
     public void run(ItemDropEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (new SkyBlockItem(event.getItemStack()).getAttributeHandler().getItemType().toLowerCase().contains("menu")) {
+        if (new SkyBlockItem(event.getItemStack()).getAttributeHandler().getTypeAsString().toLowerCase().contains("menu")) {
             event.setCancelled(true);
             return;
         }

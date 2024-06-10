@@ -25,7 +25,7 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
 
             for (Map.Entry<Integer, SkyBlockItem> entry : value.getQuiverMap().entrySet()) {
                 serialized.put(String.valueOf(entry.getKey()),
-                        SkyBlockItemSerializer.serializeJSON(entry.getValue()).toString());
+                        SkyBlockItemSerializer.serializeJSON(entry.getValue().toUnderstandable()).toString());
             }
 
             return new JSONObject(serialized).toString();
@@ -38,7 +38,9 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
 
             for (String key : obj.keySet()) {
                 map.put(Integer.parseInt(key),
-                        SkyBlockItemDeserializer.deserializeJSON(new JSONObject(obj.getString(key))));
+                        new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(
+                                new JSONObject(obj.getString(key))
+                        )));
             }
 
             return new PlayerQuiver(map);

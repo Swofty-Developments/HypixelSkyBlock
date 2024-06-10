@@ -3,6 +3,7 @@ package net.swofty.types.generic.collection;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -23,6 +24,10 @@ public abstract class CollectionCategory {
     public abstract ItemCollection[] getCollections();
 
     public ItemCollection getCollection(ItemTypeLinker type) {
+        return getCollection(type.type);
+    }
+
+    public ItemCollection getCollection(ItemType type) {
         for (ItemCollection collection : getCollections()) {
             if (collection.type() == type) {
                 return collection;
@@ -31,7 +36,7 @@ public abstract class CollectionCategory {
         return null;
     }
 
-    public record ItemCollection(ItemTypeLinker type, ItemCollectionReward... rewards) {
+    public record ItemCollection(ItemType type, ItemCollectionReward... rewards) {
         public int getPlacementOf(ItemCollectionReward reward) {
             for (int i = 0; i < rewards.length; i++) {
                 if (rewards[i].requirement == reward.requirement) {

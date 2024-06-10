@@ -25,6 +25,5 @@ dependencies {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("net.kyori:adventure-api:4.17.0")
-    implementation("net.kyori:adventure-text-protocol-gson:4.17.0")
-    implementation("net.kyori:adventure-text-protocol-json:4.17.0")
+    implementation("net.kyori:adventure-text-serializer-gson:4.17.0")
 }

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.weapon;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -69,7 +70,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
             } else {
                 return new SkyBlockRecipe.CraftingResult(false, new String[]{"§cLevel Issue", "§7You must be at least §eLevel 10 §7to craft this item!"});
             }
-        })).add(ItemTypeLinker.DIRT, 10)
+        })).add(ItemType.DIRT, 10)
                 .add(ItemTypeLinker.IRON_PICKAXE, 1);
     }
 

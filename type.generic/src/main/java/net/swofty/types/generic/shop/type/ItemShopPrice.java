@@ -3,6 +3,7 @@ package net.swofty.types.generic.shop.type;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -16,12 +17,12 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ItemShopPrice implements ShopPrice {
 
-    ItemTypeLinker type;
+    ItemType type;
     int amount;
 
     @Override
     public List<String> getGUIDisplay() {
-        return List.of("§6" + type.rarity.getColor() + type.getDisplayName(null) + " §8x" + amount);
+        return List.of("§6" + type.rarity.getColor() + type.getDisplayName() + " §8x" + amount);
     }
 
     @Override

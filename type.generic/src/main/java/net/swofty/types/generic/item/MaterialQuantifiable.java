@@ -4,16 +4,21 @@ import com.mongodb.annotations.Immutable;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 
 @Immutable
 @Getter
 public class MaterialQuantifiable {
-    private ItemTypeLinker material;
+    private ItemType material;
     private int amount;
 
-    public MaterialQuantifiable(ItemTypeLinker material, int amount) {
+    public MaterialQuantifiable(ItemType material, int amount) {
         this.material = material;
         this.amount = amount;
+    }
+
+    public MaterialQuantifiable(ItemTypeLinker material, int amount) {
+        this(material.type, amount);
     }
 
     public MaterialQuantifiable(ItemTypeLinker material) {
@@ -25,6 +30,10 @@ public class MaterialQuantifiable {
     }
 
     public MaterialQuantifiable setMaterial(ItemTypeLinker material) {
+        return setMaterial(material.type);
+    }
+
+    public MaterialQuantifiable setMaterial(ItemType material) {
         this.material = material;
         return this;
     }
@@ -41,6 +50,10 @@ public class MaterialQuantifiable {
     }
 
     public boolean matches(ItemTypeLinker material) {
+        return this.material == material.type;
+    }
+
+    public boolean matches(ItemType material) {
         return this.material == material;
     }
 
@@ -59,7 +72,7 @@ public class MaterialQuantifiable {
 
     public static MaterialQuantifiable of(ItemStack stack) {
         if (stack == null || stack.material() == Material.AIR)
-            return new MaterialQuantifiable(ItemTypeLinker.AIR, (stack != null ? stack.amount() : 1));
+            return new MaterialQuantifiable(ItemType.AIR, (stack != null ? stack.amount() : 1));
         SkyBlockItem found = new SkyBlockItem(stack);
         return new MaterialQuantifiable(found.getAttributeHandler().getPotentialClassLinker(), stack.amount());
     }

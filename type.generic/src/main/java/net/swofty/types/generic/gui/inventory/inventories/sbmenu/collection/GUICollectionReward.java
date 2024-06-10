@@ -68,7 +68,7 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
                 player.getCollection().getDisplay(lore, category, reward);
 
                 return ItemStackCreator.getStack("§a" + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(placement),
-                        item.material, 1, lore);
+                        item.type.material, 1, lore);
             }
         });
 

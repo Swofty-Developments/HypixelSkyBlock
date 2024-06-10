@@ -11,6 +11,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
@@ -20,7 +21,7 @@ public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, Stand
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 8));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REFINED_MITHRIL, 4));
         ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.VOIDWALKER_KATANA, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

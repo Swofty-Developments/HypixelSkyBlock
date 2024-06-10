@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.impl;
 
 import net.minestom.server.event.player.PlayerItemAnimationEvent;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -14,6 +15,10 @@ public interface Enchanted extends CustomSkyBlockItem , DisableAnimationImpl{
     }
 
     default SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemTypeLinker craftingMaterial) {
+        return SkyBlockRecipe.getStandardEnchantedRecipe(this.getClass(), type, craftingMaterial);
+    }
+
+    default SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
         return SkyBlockRecipe.getStandardEnchantedRecipe(this.getClass(), type, craftingMaterial);
     }
 

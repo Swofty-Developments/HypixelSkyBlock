@@ -12,6 +12,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftable, GemstoneItem,
         TrackedUniqueItem, StandardItem, NotFinishedYet {
@@ -22,7 +23,7 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftab
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.BEHEADED_HORROR, 1));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_STRING, 32));
         ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "A A",
                 "BCD",

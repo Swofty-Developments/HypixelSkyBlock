@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.item.ItemType;
 
 public class WoodenHoe implements CustomSkyBlockItem, StandardItem, DefaultCraftable, Sellable {
 
@@ -23,7 +24,7 @@ public class WoodenHoe implements CustomSkyBlockItem, StandardItem, DefaultCraft
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.OAK_PLANKS, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "AA",
                 " B",

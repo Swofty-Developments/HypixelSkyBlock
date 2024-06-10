@@ -7,11 +7,11 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
@@ -325,8 +325,8 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             if (!(itemOnLeft.getGenericInstance() instanceof RuneItem) || !(itemOnRight.getGenericInstance() instanceof RuneItem)) {
                 return false;
             }
-            String runeTypeOnLeft = itemOnLeft.getAttributeHandler().getItemType();
-            String runeTypeOnRight = itemOnRight.getAttributeHandler().getItemType();
+            String runeTypeOnLeft = itemOnLeft.getAttributeHandler().getTypeAsString();
+            String runeTypeOnRight = itemOnRight.getAttributeHandler().getTypeAsString();
             if (!runeTypeOnLeft.equals(runeTypeOnRight))
                 return false;
 
@@ -355,7 +355,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
             SkyBlockItem toReturn = item.clone();
             ItemAttributeRuneInfusedWith.RuneData runeData = toReturn.getAttributeHandler().getRuneData();
-            runeData.setRuneType(runeItem.getAttributeHandler().getPotentialClassLinker());
+            runeData.setRuneType(runeItem.getAttributeHandler().getPotentialType());
             runeData.setLevel(runeItem.getAttributeHandler().getRuneLevel());
             toReturn.getAttributeHandler().setRuneData(runeData);
             return toReturn;
@@ -383,7 +383,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
                     player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
 
-            ItemTypeLinker appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
+            ItemType appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
             Rarity rarity = appliedRune.rarity;
 
             sendSuccessMessage(player, "Applying " + StringUtility.toNormalCase(appliedRune.name()) +

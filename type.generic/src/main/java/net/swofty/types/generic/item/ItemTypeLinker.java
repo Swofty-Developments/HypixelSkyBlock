@@ -1,9 +1,9 @@
 package net.swofty.types.generic.item;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
@@ -183,6 +183,7 @@ import net.swofty.types.generic.item.items.weapon.*;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
+@Getter
 public enum ItemTypeLinker {
     SANDBOX_ITEM(ItemType.SANDBOX_ITEM, SandboxItem.class),
 
@@ -1287,10 +1288,10 @@ public enum ItemTypeLinker {
     }
 
     public static boolean hasLinker(ItemType type) {
-        return fromItem(type) != null;
+        return fromType(type) != null;
     }
 
-    public static @Nullable ItemTypeLinker fromItem(ItemType type) {
+    public static @Nullable ItemTypeLinker fromType(ItemType type) {
         for (ItemTypeLinker linker : values()) {
             if (linker.type == type)
                 return linker;

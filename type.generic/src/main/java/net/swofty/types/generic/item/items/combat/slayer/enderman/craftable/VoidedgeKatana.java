@@ -11,6 +11,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
@@ -19,7 +20,7 @@ public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, Sta
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REFINED_MITHRIL, 1));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 1));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.VOIDWALKER_KATANA, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

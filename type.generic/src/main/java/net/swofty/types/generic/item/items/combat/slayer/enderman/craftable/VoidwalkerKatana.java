@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
@@ -17,7 +18,7 @@ public class VoidwalkerKatana implements CustomSkyBlockItem, DefaultCraftable, S
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_SPHERE, 16));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " A ",

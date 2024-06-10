@@ -9,6 +9,7 @@ import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -30,6 +31,11 @@ public class NonPlayerItemUpdater {
     public NonPlayerItemUpdater(SkyBlockItem item) {
         this.item = item;
         this.stack = item.getItemStackBuilder();
+    }
+
+    public NonPlayerItemUpdater(UnderstandableSkyBlockItem item) {
+        this.item = new SkyBlockItem(item);
+        this.stack = this.item.getItemStackBuilder();
     }
 
     public NonPlayerItemUpdater(ItemStack item) {

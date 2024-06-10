@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.item.ItemType;
 
 public class WhiteDye implements CustomSkyBlockItem, MultiDefaultCraftable {
     @Override
@@ -22,7 +23,7 @@ public class WhiteDye implements CustomSkyBlockItem, MultiDefaultCraftable {
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.WHITE_DYE), 1)
-                .add(ItemTypeLinker.LILY_OF_THE_VALLEY, 1));
+                .add(ItemType.LILY_OF_THE_VALLEY, 1));
 
         return recipes;
     }

@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
+import net.swofty.commons.item.ItemType;
 
 public class ShamanSword implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet{
     @Override
@@ -18,7 +19,7 @@ public class ShamanSword implements CustomSkyBlockItem, DefaultCraftable, Standa
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 2));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 8));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BONE, 4));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

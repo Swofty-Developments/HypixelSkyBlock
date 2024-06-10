@@ -47,7 +47,7 @@ public enum Gemstone {
 
         int toReturn = 0;
         for (ItemAttributeGemData.GemData.GemSlots slot : gemData.slots) {
-            ItemTypeLinker gem = slot.filledWith;
+            ItemTypeLinker gem = ItemTypeLinker.fromType(slot.filledWith);
             if (gem == null) continue;
 
             GemstoneImpl impl = ((GemstoneImpl) gem.clazz.getDeclaredConstructor().newInstance());

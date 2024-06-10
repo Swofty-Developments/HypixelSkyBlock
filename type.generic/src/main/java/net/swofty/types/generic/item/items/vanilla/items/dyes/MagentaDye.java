@@ -10,6 +10,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.item.ItemType;
 
 public class MagentaDye implements CustomSkyBlockItem, MultiDefaultCraftable {
     @Override
@@ -18,11 +19,11 @@ public class MagentaDye implements CustomSkyBlockItem, MultiDefaultCraftable {
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.MAGENTA_DYE), 1)
-                .add(ItemTypeLinker.ALLIUM, 1));
+                .add(ItemType.ALLIUM, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.MAGENTA_DYE), 2)
-                .add(ItemTypeLinker.LILAC, 1));
+                .add(ItemType.LILAC, 1));
 
         recipes.add(new ShapelessRecipe(SkyBlockRecipe.RecipeType.NONE,
                 new SkyBlockItem(ItemTypeLinker.MAGENTA_DYE), 2)

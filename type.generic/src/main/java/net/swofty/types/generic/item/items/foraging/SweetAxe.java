@@ -2,6 +2,7 @@ package net.swofty.types.generic.item.items.foraging;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ReforgeType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -17,6 +18,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import net.swofty.commons.item.ItemType;
 
 public class SweetAxe implements CustomSkyBlockItem, Reforgable, NotFinishedYet, SkyBlockEventClass {
     @Override

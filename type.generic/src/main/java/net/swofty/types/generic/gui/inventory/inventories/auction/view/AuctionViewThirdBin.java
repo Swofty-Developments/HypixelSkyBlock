@@ -18,6 +18,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionViewItem;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -153,11 +154,11 @@ public class AuctionViewThirdBin implements AuctionView {
 
                 new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(), requestMessage).join();
 
-                player.sendMessage("§eYou purchased " + item.getItem().getDisplayName() + "§e for §6" + item.getStartingPrice() + " coins§e!");
+                player.sendMessage("§eYou purchased " + new SkyBlockItem(item.getItem()).getDisplayName() + "§e for §6" + item.getStartingPrice() + " coins§e!");
 
                 ProxyPlayer owner = new ProxyPlayer(item.getOriginator());
                 if (owner.isOnline().join()) {
-                    owner.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §ejust purchased your item §6" + item.getItem().getDisplayName() + "§e!").clickEvent(
+                    owner.sendMessage(Component.text("§6[Auction] " + player.getFullDisplayName() + " §ejust purchased your item §6" + new SkyBlockItem(item.getItem()).getDisplayName() + "§e!").clickEvent(
                             ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ahview " + item.getUuid())
                     ));
                 }

@@ -57,7 +57,7 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
 
         instance.setBlock(position,
                 BlockUtility.applyTexture(block.toBlock(), texture).
-                        withTag(ITEM_TYPE_TAG, item.getAttributeHandler().getItemType())
+                        withTag(ITEM_TYPE_TAG, item.getAttributeHandler().getTypeAsString())
         );
         ItemStack itemInHand = player.getItemInMainHand().withAmount(player.getItemInMainHand().amount() - 1);
         player.setItemInMainHand(itemInHand);

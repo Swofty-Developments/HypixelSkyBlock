@@ -32,7 +32,7 @@ public class BlockAttributeChestData extends BlockAttribute<List<SkyBlockItem>> 
 
         String[] split = string.split(",");
         for (String item : split) {
-            items.add(SkyBlockItemDeserializer.deserializeJSON(new JSONObject(item)));
+            items.add(new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject(item))));
         }
 
         return items;
@@ -44,7 +44,7 @@ public class BlockAttributeChestData extends BlockAttribute<List<SkyBlockItem>> 
         List<String> serializedItems = new ArrayList<>();
 
         items.forEach(item -> {
-            serializedItems.add(SkyBlockItemSerializer.serializeJSON(item).toString());
+            serializedItems.add(SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString());
         });
 
         return String.join(",", serializedItems);

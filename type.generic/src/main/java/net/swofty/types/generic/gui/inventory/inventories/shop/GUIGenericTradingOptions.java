@@ -63,7 +63,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         lore.addAll(stackprice.getGUIDisplay());
         lore.add("");
         lore.add("§7Stock");
-        lore.add("§6 " + player.getShoppingData().getStock(item.getItem()) + " §7remaining");
+        lore.add("§6 " + player.getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
         lore.add("");
         lore.add("§eClick to purchase!");
 
@@ -71,7 +71,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (!player.getShoppingData().canPurchase(item.getItem(), amount)) {
+                if (!player.getShoppingData().canPurchase(item.getItem().toUnderstandable(), amount)) {
                     player.sendMessage("§cYou have reached the maximum amount of items you can buy!");
                     return;
                 }
@@ -87,7 +87,7 @@ public final class GUIGenericTradingOptions extends SkyBlockInventoryGUI {
                 cleanStack.amount(amount);
                 player.addAndUpdateItem(cleanStack.build());
                 player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                player.getShoppingData().documentPurchase(item.getItem(), amount);
+                player.getShoppingData().documentPurchase(item.getItem().toUnderstandable(), amount);
                 updateThis(player);
             }
 
