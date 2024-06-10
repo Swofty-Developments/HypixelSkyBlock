@@ -15,7 +15,6 @@ java {
 
 dependencies {
     implementation(project(":type.generic"))
-    implementation(project(":service.protocol"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation("com.github.Minestom:Minestom:b3aa996e1d") {

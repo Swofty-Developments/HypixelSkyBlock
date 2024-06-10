@@ -10,7 +10,7 @@ import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.Map;
 import java.util.UUID;

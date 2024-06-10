@@ -1,10 +1,10 @@
 package net.swofty.types.generic.item.items.combat.mythological.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ public class DaedalusStick implements CustomSkyBlockItem, Enchanted, PetItem, Se
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.DAEDALUS_AXE;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.DAEDALUS_AXE;
     }
 }

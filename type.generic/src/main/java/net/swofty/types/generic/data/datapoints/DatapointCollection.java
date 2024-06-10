@@ -2,12 +2,12 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -20,7 +20,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             public String serialize(DatapointCollection.PlayerCollection value) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("{");
-                for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
+                for (Map.Entry<ItemTypeLinker, Integer> entry : value.getItems().entrySet()) {
                     sb.append("\"").append(entry.getKey().toString()).append("\":").append(entry.getValue()).append(",");
                 }
                 if (sb.charAt(sb.length() - 1) == ',') {
@@ -33,9 +33,9 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             @Override
             public DatapointCollection.PlayerCollection deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
-                Map<ItemType, Integer> items = new HashMap<>();
+                Map<ItemTypeLinker, Integer> items = new HashMap<>();
                 for (String key : jsonObject.keySet()) {
-                    items.put(ItemType.valueOf(key), jsonObject.getInt(key));
+                    items.put(ItemTypeLinker.valueOf(key), jsonObject.getInt(key));
                 }
                 return new PlayerCollection(items);
             }
@@ -44,7 +44,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             public PlayerCollection clone(PlayerCollection value) {
                 PlayerCollection toReturn = new PlayerCollection(new HashMap<>());
 
-                for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
+                for (Map.Entry<ItemTypeLinker, Integer> entry : value.getItems().entrySet()) {
                     toReturn.getItems().put(entry.getKey(), entry.getValue());
                 }
 
@@ -60,7 +60,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
     @Getter
     @AllArgsConstructor
     public static class PlayerCollection {
-        private Map<ItemType, Integer> items;
+        private Map<ItemTypeLinker, Integer> items;
 
         public CollectionCategory.ItemCollectionReward getReward(CollectionCategory.ItemCollection collection) {
             int collected = get(collection.type());
@@ -74,19 +74,19 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             return null;
         }
 
-        public void increase(ItemType type) {
+        public void increase(ItemTypeLinker type) {
             items.put(type, get(type) + 1);
         }
 
-        public void set(ItemType type, int amount) {
+        public void set(ItemTypeLinker type, int amount) {
             items.put(type, amount);
         }
 
-        public Integer get(ItemType type) {
+        public Integer get(ItemTypeLinker type) {
             return items.getOrDefault(type, 0);
         }
 
-        public boolean unlocked(ItemType type) {
+        public boolean unlocked(ItemTypeLinker type) {
             return get(type) > 0;
         }
 
@@ -209,11 +209,11 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             return lore;
         }
 
-        public static Map<ItemType, Map.Entry<Integer, Integer>> getDifferentValues(
+        public static Map<ItemTypeLinker, Map.Entry<Integer, Integer>> getDifferentValues(
                 DatapointCollection.PlayerCollection oldCollection, DatapointCollection.PlayerCollection newCollection) {
-            Map<ItemType, Map.Entry<Integer, Integer>> toReturn = new HashMap<>();
+            Map<ItemTypeLinker, Map.Entry<Integer, Integer>> toReturn = new HashMap<>();
 
-            for (ItemType type : ItemType.values()) {
+            for (ItemTypeLinker type : ItemTypeLinker.values()) {
                 int oldValue = oldCollection.get(type);
                 int newValue = newCollection.get(type);
 

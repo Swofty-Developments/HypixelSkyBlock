@@ -1,12 +1,11 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.IslandFirstCreatedEvent;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.utility.MathUtility;

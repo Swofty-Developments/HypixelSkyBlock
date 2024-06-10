@@ -1,7 +1,8 @@
 package net.swofty.types.generic.item.impl;
 
 import lombok.Getter;
-import net.swofty.types.generic.item.ReforgeType;
+import net.swofty.commons.item.PotatoType;
+import net.swofty.commons.item.ReforgeType;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.Nullable;
 

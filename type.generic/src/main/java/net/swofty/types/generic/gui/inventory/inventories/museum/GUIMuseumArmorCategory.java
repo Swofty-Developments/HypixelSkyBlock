@@ -16,7 +16,7 @@ import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.museum.MuseumDisplays;
@@ -25,7 +25,7 @@ import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,29 +49,29 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         ItemStack item = e.getClickedItem();
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
 
-        if (skyBlockItem.getAttributeHandler().getItemTypeAsType() == null) {
+        if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == null) {
             return;
         }
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
-        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType()) != null) {
-            player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getItemTypeAsType().getDisplayName(null) + " in your Museum!");
+        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null) {
+            player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getPotentialClassLinker().getDisplayName(null) + " in your Museum!");
             return;
         }
 
         if (skyBlockItem.getGenericInstance() == null)
             return;
-        ItemType type = skyBlockItem.getAttributeHandler().getItemTypeAsType();
+        ItemTypeLinker type = skyBlockItem.getAttributeHandler().getPotentialClassLinker();
         ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(type);
         if (armorSetRegistry == null)
             return;
 
-        boolean hasTakenItOut = data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType()) != null;
+        boolean hasTakenItOut = data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null;
         if (hasTakenItOut) {
             UUID uuidOfAlreadyInMuseum = UUID.fromString(
-                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType())
+                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker())
                             .getAttributeHandler().getUniqueTrackedID());
             UUID uuidOfNew = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
 
@@ -87,15 +87,15 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         });
 
         if (armorSets.contains(armorSetRegistry)) {
-            ItemType helmet = armorSetRegistry.getHelmet();
-            ItemType chestplate = armorSetRegistry.getChestplate();
-            ItemType leggings = armorSetRegistry.getLeggings();
-            ItemType boots = armorSetRegistry.getBoots();
+            ItemTypeLinker helmet = armorSetRegistry.getHelmet();
+            ItemTypeLinker chestplate = armorSetRegistry.getChestplate();
+            ItemTypeLinker leggings = armorSetRegistry.getLeggings();
+            ItemTypeLinker boots = armorSetRegistry.getBoots();
 
             int missing = 0;
-            List<ItemType> set = List.of(helmet, chestplate, leggings, boots);
+            List<ItemTypeLinker> set = List.of(helmet, chestplate, leggings, boots);
             List<SkyBlockItem> itemsToTake = new ArrayList<>();
-            for (ItemType setItem : set) {
+            for (ItemTypeLinker setItem : set) {
                 Map<Integer, Integer> allOfTypeInInventory = player.getAllOfTypeInInventory(setItem);
 
                 boolean hasFoundItem = false;
@@ -107,7 +107,7 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                         // Make sure that the item is the same as the one that was taken out
                         UUID uuidOfPotentialItem = UUID.fromString(potentialItem.getAttributeHandler().getUniqueTrackedID());
                         UUID uuidOfAlreadyInMuseum = UUID.fromString(
-                                data.getTypePreviouslyInMuseum(potentialItem.getAttributeHandler().getItemTypeAsType())
+                                data.getTypePreviouslyInMuseum(potentialItem.getAttributeHandler().getPotentialClassLinker())
                                         .getAttributeHandler().getUniqueTrackedID());
 
                         if (uuidOfPotentialItem.equals(uuidOfAlreadyInMuseum)) {
@@ -197,10 +197,10 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                 continue;
             }
 
-            if (ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getItemTypeAsType()) == null)
+            if (ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getPotentialClassLinker()) == null)
                 continue;
 
-            if (armorSets.contains(ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getItemTypeAsType()))) {
+            if (armorSets.contains(ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getPotentialClassLinker()))) {
                 TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
                         .callEndpoint(new ProtocolGetTrackedItem(),
                                 Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))

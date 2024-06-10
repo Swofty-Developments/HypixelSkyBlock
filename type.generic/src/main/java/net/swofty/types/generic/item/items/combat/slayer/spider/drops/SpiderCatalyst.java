@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.RightClickRecipe;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class SpiderCatalyst implements CustomSkyBlockItem, SkullHead, Sellable, 
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.RECLUSE_FANG;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.RECLUSE_FANG;
     }
 }

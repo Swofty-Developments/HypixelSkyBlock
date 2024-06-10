@@ -3,8 +3,8 @@ package net.swofty.types.generic.item.items.armor.farmsuit;
 import net.minestom.server.color.Color;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 
 public class FarmSuitLeggings implements CustomSkyBlockItem, StandardItem, LeatherColour, Sellable, NotFinishedYet {

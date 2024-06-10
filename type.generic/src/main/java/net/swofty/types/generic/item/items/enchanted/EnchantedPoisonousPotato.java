@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.enchanted;
 
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
@@ -15,6 +15,6 @@ public class EnchantedPoisonousPotato implements Enchanted, Sellable, DefaultCra
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemType.POISONOUS_POTATO);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.POISONOUS_POTATO);
     }
 }

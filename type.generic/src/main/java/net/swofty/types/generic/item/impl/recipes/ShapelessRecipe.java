@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -131,7 +131,7 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
         return recipe;
     }
 
-    public ShapelessRecipe add(ItemType material, int amount) {
+    public ShapelessRecipe add(ItemTypeLinker material, int amount) {
         return add(new MaterialQuantifiable(material, amount));
     }
 
@@ -146,7 +146,7 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 .map(MaterialQuantifiable::clone)
                 .toList();
 
-        List<ItemType> uniqueMaterials = new ArrayList<>(materialsPassedThrough.stream()
+        List<ItemTypeLinker> uniqueMaterials = new ArrayList<>(materialsPassedThrough.stream()
                 .map(MaterialQuantifiable::getMaterial)
                 .distinct()
                 .toList());
@@ -163,14 +163,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 .filter(recipe -> {
                     // Check if the recipe has the same amount of materials as the passed through materials
                     // Updated to consider exchangeable materials.
-                    List<ItemType> recipeMaterials = recipe.getIngredientList().stream()
+                    List<ItemTypeLinker> recipeMaterials = recipe.getIngredientList().stream()
                             .map(MaterialQuantifiable::getMaterial)
                             .distinct()
                             .toList();
 
                     boolean materialsMatch = recipeMaterials.size() == uniqueMaterials.size();
 
-                    for (ItemType recipeMaterial : recipeMaterials) {
+                    for (ItemTypeLinker recipeMaterial : recipeMaterials) {
                         materialsMatch &= uniqueMaterials.stream()
                                 .anyMatch(material -> material == recipeMaterial
                                         || ExchangeableType.isExchangeable(material, recipeMaterial));

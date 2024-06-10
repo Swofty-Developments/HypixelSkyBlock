@@ -21,7 +21,6 @@ repositories {
 
 dependencies {
     implementation(project(":commons"))
-    implementation(project(":service.protocol"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
     implementation("com.github.Minestom:Minestom:b3aa996e1d") {

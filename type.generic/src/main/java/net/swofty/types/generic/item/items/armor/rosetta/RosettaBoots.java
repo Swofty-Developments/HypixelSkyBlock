@@ -5,8 +5,8 @@ import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.StandardItem;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 public class RosettaBoots implements CustomSkyBlockItem, CustomDisplayName, StandardItem, Sellable {
     @Override

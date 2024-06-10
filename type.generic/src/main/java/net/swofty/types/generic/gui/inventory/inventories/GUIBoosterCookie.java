@@ -4,18 +4,12 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.TransactionOption;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.items.communitycenter.BoosterCookie;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-
-import java.util.Map;
 
 public class GUIBoosterCookie extends SkyBlockInventoryGUI {
     public GUIBoosterCookie() {

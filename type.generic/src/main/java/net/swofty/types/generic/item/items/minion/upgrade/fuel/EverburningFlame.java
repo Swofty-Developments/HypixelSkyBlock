@@ -3,7 +3,7 @@ package net.swofty.types.generic.item.items.minion.upgrade.fuel;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import javax.annotation.Nullable;
 import java.util.List;

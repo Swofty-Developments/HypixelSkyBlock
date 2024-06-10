@@ -1,15 +1,15 @@
 package net.swofty.types.generic.item.items.pet;
 
 import net.minestom.server.particle.Particle;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.RarityValue;
 import org.jetbrains.annotations.Nullable;
 

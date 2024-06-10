@@ -3,110 +3,110 @@ package net.swofty.types.generic.bazaar;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.bazaar.BazaarInitializationRequest;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.StringUtility;
 
 import java.util.*;
 
 @Getter
 public enum BazaarCategories {
     FARMING(Material.GOLDEN_HOE, Material.YELLOW_STAINED_GLASS_PANE,
-            "§e", new BazaarItemSet(ItemType.WHEAT, "Wheat & Seeds",
-            ItemType.WHEAT, ItemType.ENCHANTED_BREAD, ItemType.HAY_BALE, ItemType.ENCHANTED_HAY_BALE, ItemType.WHEAT_SEEDS, ItemType.ENCHANTED_SEEDS),
-            new BazaarItemSet(ItemType.CARROT, "Carrot",
-                    ItemType.CARROT, ItemType.ENCHANTED_CARROT, ItemType.ENCHANTED_GOLDEN_CARROT),
-            new BazaarItemSet(ItemType.POTATO, "Potato",
-                    ItemType.POTATO, ItemType.POISONOUS_POTATO, ItemType.ENCHANTED_POTATO, ItemType.ENCHANTED_POISONOUS_POTATO, ItemType.ENCHANTED_BAKED_POTATO),
-            new BazaarItemSet(ItemType.PUMPKIN, "Pumpkin",
-                    ItemType.PUMPKIN, ItemType.ENCHANTED_PUMPKIN, ItemType.POLISHED_PUMPKIN),
-            new BazaarItemSet(ItemType.MELON_SLICE, "Melon",
-                    ItemType.MELON_SLICE, ItemType.ENCHANTED_GLISTERING_MELON, ItemType.ENCHANTED_MELON, ItemType.ENCHANTED_MELON_BLOCK),
-            new BazaarItemSet(ItemType.RED_MUSHROOM, "Mushrooms",
-                    ItemType.RED_MUSHROOM, ItemType.BROWN_MUSHROOM, ItemType.RED_MUSHROOM_BLOCK, ItemType.BROWN_MUSHROOM_BLOCK, ItemType.ENCHANTED_RED_MUSHROOM_BLOCK, ItemType.ENCHANTED_BROWN_MUSHROOM_BLOCK),
-            new BazaarItemSet(ItemType.COCOA_BEANS, "Cocoa Beans",
-                    ItemType.COCOA_BEANS, ItemType.ENCHANTED_COCOA_BEANS, ItemType.ENCHANTED_COOKIE),
-            new BazaarItemSet(ItemType.CACTUS_GREEN, "Cactus",
-                    ItemType.CACTUS, ItemType.ENCHANTED_CACTUS_GREEN, ItemType.ENCHANTED_CACTUS),
-            new BazaarItemSet(ItemType.SUGAR_CANE, "Sugar Cane",
-                    ItemType.SUGAR_CANE, ItemType.ENCHANTED_SUGAR, ItemType.ENCHANTED_PAPER, ItemType.ENCHANTED_SUGAR_CANE),
-            new BazaarItemSet(ItemType.LEATHER, "Leather & Beef",
-                    ItemType.LEATHER, ItemType.ENCHANTED_LEATHER, ItemType.BEEF, ItemType.ENCHANTED_RAW_BEEF),
-            new BazaarItemSet(ItemType.PORKCHOP, "Pork",
-                    ItemType.PORKCHOP, ItemType.ENCHANTED_PORK, ItemType.ENCHANTED_GRILLED_PORK),
-            new BazaarItemSet(ItemType.CHICKEN, "Chicker & Feather",
-                    ItemType.CHICKEN, ItemType.ENCHANTED_RAW_CHICKEN, ItemType.FEATHER, ItemType.ENCHANTED_FEATHER, ItemType.ENCHANTED_EGG, ItemType.OMEGA_ENCHANTED_EGG, ItemType.SUPER_ENCHANTED_EGG),
-            new BazaarItemSet(ItemType.MUTTON, "Mutton",
-                    ItemType.MUTTON, ItemType.ENCHANTED_MUTTON, ItemType.ENCHANTED_COOKED_MUTTON),
-            new BazaarItemSet(ItemType.RABBIT, "Rabbit",
-                    ItemType.RABBIT, ItemType.RABBIT_FOOT, ItemType.RABBIT_HIDE, ItemType.ENCHANTED_RAW_RABBIT, ItemType.ENCHANTED_RABBIT_FOOT, ItemType.ENCHANTED_RABBIT_HIDE),
-            new BazaarItemSet(ItemType.NETHER_WART, "Nether Warts",
-                    ItemType.NETHER_WART, ItemType.ENCHANTED_NETHER_WART)
+            "§e", new BazaarItemSet(ItemTypeLinker.WHEAT, "Wheat & Seeds",
+            ItemTypeLinker.WHEAT, ItemTypeLinker.ENCHANTED_BREAD, ItemTypeLinker.HAY_BALE, ItemTypeLinker.ENCHANTED_HAY_BALE, ItemTypeLinker.WHEAT_SEEDS, ItemTypeLinker.ENCHANTED_SEEDS),
+            new BazaarItemSet(ItemTypeLinker.CARROT, "Carrot",
+                    ItemTypeLinker.CARROT, ItemTypeLinker.ENCHANTED_CARROT, ItemTypeLinker.ENCHANTED_GOLDEN_CARROT),
+            new BazaarItemSet(ItemTypeLinker.POTATO, "Potato",
+                    ItemTypeLinker.POTATO, ItemTypeLinker.POISONOUS_POTATO, ItemTypeLinker.ENCHANTED_POTATO, ItemTypeLinker.ENCHANTED_POISONOUS_POTATO, ItemTypeLinker.ENCHANTED_BAKED_POTATO),
+            new BazaarItemSet(ItemTypeLinker.PUMPKIN, "Pumpkin",
+                    ItemTypeLinker.PUMPKIN, ItemTypeLinker.ENCHANTED_PUMPKIN, ItemTypeLinker.POLISHED_PUMPKIN),
+            new BazaarItemSet(ItemTypeLinker.MELON_SLICE, "Melon",
+                    ItemTypeLinker.MELON_SLICE, ItemTypeLinker.ENCHANTED_GLISTERING_MELON, ItemTypeLinker.ENCHANTED_MELON, ItemTypeLinker.ENCHANTED_MELON_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.RED_MUSHROOM, "Mushrooms",
+                    ItemTypeLinker.RED_MUSHROOM, ItemTypeLinker.BROWN_MUSHROOM, ItemTypeLinker.RED_MUSHROOM_BLOCK, ItemTypeLinker.BROWN_MUSHROOM_BLOCK, ItemTypeLinker.ENCHANTED_RED_MUSHROOM_BLOCK, ItemTypeLinker.ENCHANTED_BROWN_MUSHROOM_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.COCOA_BEANS, "Cocoa Beans",
+                    ItemTypeLinker.COCOA_BEANS, ItemTypeLinker.ENCHANTED_COCOA_BEANS, ItemTypeLinker.ENCHANTED_COOKIE),
+            new BazaarItemSet(ItemTypeLinker.CACTUS_GREEN, "Cactus",
+                    ItemTypeLinker.CACTUS, ItemTypeLinker.ENCHANTED_CACTUS_GREEN, ItemTypeLinker.ENCHANTED_CACTUS),
+            new BazaarItemSet(ItemTypeLinker.SUGAR_CANE, "Sugar Cane",
+                    ItemTypeLinker.SUGAR_CANE, ItemTypeLinker.ENCHANTED_SUGAR, ItemTypeLinker.ENCHANTED_PAPER, ItemTypeLinker.ENCHANTED_SUGAR_CANE),
+            new BazaarItemSet(ItemTypeLinker.LEATHER, "Leather & Beef",
+                    ItemTypeLinker.LEATHER, ItemTypeLinker.ENCHANTED_LEATHER, ItemTypeLinker.BEEF, ItemTypeLinker.ENCHANTED_RAW_BEEF),
+            new BazaarItemSet(ItemTypeLinker.PORKCHOP, "Pork",
+                    ItemTypeLinker.PORKCHOP, ItemTypeLinker.ENCHANTED_PORK, ItemTypeLinker.ENCHANTED_GRILLED_PORK),
+            new BazaarItemSet(ItemTypeLinker.CHICKEN, "Chicker & Feather",
+                    ItemTypeLinker.CHICKEN, ItemTypeLinker.ENCHANTED_RAW_CHICKEN, ItemTypeLinker.FEATHER, ItemTypeLinker.ENCHANTED_FEATHER, ItemTypeLinker.ENCHANTED_EGG, ItemTypeLinker.OMEGA_ENCHANTED_EGG, ItemTypeLinker.SUPER_ENCHANTED_EGG),
+            new BazaarItemSet(ItemTypeLinker.MUTTON, "Mutton",
+                    ItemTypeLinker.MUTTON, ItemTypeLinker.ENCHANTED_MUTTON, ItemTypeLinker.ENCHANTED_COOKED_MUTTON),
+            new BazaarItemSet(ItemTypeLinker.RABBIT, "Rabbit",
+                    ItemTypeLinker.RABBIT, ItemTypeLinker.RABBIT_FOOT, ItemTypeLinker.RABBIT_HIDE, ItemTypeLinker.ENCHANTED_RAW_RABBIT, ItemTypeLinker.ENCHANTED_RABBIT_FOOT, ItemTypeLinker.ENCHANTED_RABBIT_HIDE),
+            new BazaarItemSet(ItemTypeLinker.NETHER_WART, "Nether Warts",
+                    ItemTypeLinker.NETHER_WART, ItemTypeLinker.ENCHANTED_NETHER_WART)
 
     ),
     MINING(Material.DIAMOND_PICKAXE, Material.BLUE_STAINED_GLASS_PANE,
-            "§b", new BazaarItemSet(ItemType.COBBLESTONE, "Cobblestone",
-            ItemType.COBBLESTONE, ItemType.ENCHANTED_COBBLESTONE),
-            new BazaarItemSet(ItemType.COAL, "Coal",
-                    ItemType.COAL, ItemType.ENCHANTED_COAL, ItemType.ENCHANTED_CHARCOAL, ItemType.ENCHANTED_COAL_BLOCK),
-            new BazaarItemSet(ItemType.IRON_INGOT, "Iron",
-                    ItemType.IRON_INGOT, ItemType.ENCHANTED_IRON_INGOT, ItemType.ENCHANTED_IRON_BLOCK),
-            new BazaarItemSet(ItemType.GOLD_INGOT, "Gold",
-                    ItemType.GOLD_INGOT, ItemType.ENCHANTED_GOLD_INGOT, ItemType.ENCHANTED_GOLD_BLOCK),
-            new BazaarItemSet(ItemType.DIAMOND, "Diamond",
-                    ItemType.DIAMOND, ItemType.ENCHANTED_DIAMOND, ItemType.ENCHANTED_DIAMOND_BLOCK),
-            new BazaarItemSet(ItemType.LAPIS_LAZULI, "Lapis",
-                    ItemType.LAPIS_LAZULI, ItemType.ENCHANTED_LAPIS_LAZULI, ItemType.ENCHANTED_LAPIS_LAZULI_BLOCK),
-            new BazaarItemSet(ItemType.EMERALD, "Emerald",
-                    ItemType.EMERALD, ItemType.ENCHANTED_EMERALD, ItemType.ENCHANTED_EMERALD_BLOCK),
-            new BazaarItemSet(ItemType.REDSTONE, "Redstone",
-                    ItemType.REDSTONE, ItemType.ENCHANTED_REDSTONE, ItemType.ENCHANTED_REDSTONE_BLOCK),
-            new BazaarItemSet(ItemType.QUARTZ, "Quartz",
-                    ItemType.QUARTZ, ItemType.ENCHANTED_QUARTZ, ItemType.ENCHANTED_QUARTZ_BLOCK),
-            new BazaarItemSet(ItemType.OBSIDIAN, "Obsidian",
-                    ItemType.OBSIDIAN, ItemType.ENCHANTED_OBSIDIAN),
-            new BazaarItemSet(ItemType.GLOWSTONE_DUST, "Glowstone",
-                    ItemType.GLOWSTONE_DUST, ItemType.ENCHANTED_GLOWSTONE_DUST, ItemType.ENCHANTED_GLOWSTONE),
-            new BazaarItemSet(ItemType.FLINT, "Flint & Gravel",
-                    ItemType.FLINT, ItemType.ENCHANTED_FLINT, ItemType.GRAVEL),
-            new BazaarItemSet(ItemType.HARD_STONE, "Hard Stone",
-                    ItemType.HARD_STONE, ItemType.ENCHANTED_HARD_STONE, ItemType.CONCENTRATED_STONE),
-            new BazaarItemSet(ItemType.ICE, "Ice",
-                    ItemType.ICE, ItemType.PACKED_ICE, ItemType.ENCHANTED_ICE, ItemType.ENCHANTED_PACKED_ICE, ItemType.GLACIAL_FRAGMENT),
-            new BazaarItemSet(ItemType.NETHERRACK, "Netherrack",
-                    ItemType.NETHERRACK, ItemType.ENCHANTED_NETHERRACK),
-            new BazaarItemSet(ItemType.SAND, "Sand",
-                    ItemType.SAND, ItemType.ENCHANTED_SAND, ItemType.RED_SAND, ItemType.ENCHANTED_RED_SAND,ItemType.ENCHANTED_RED_SAND_CUBE),
-            new BazaarItemSet(ItemType.END_STONE, "End Stone",
-                    ItemType.END_STONE, ItemType.ENCHANTED_ENDSTONE),
-            new BazaarItemSet(ItemType.SNOW, "Snow",
-                    ItemType.SNOW, ItemType.SNOW_BLOCK, ItemType.ENCHANTED_SNOW_BLOCK),
-            new BazaarItemSet(ItemType.SULPHUR, "Sulphur",
-                    ItemType.SULPHUR, ItemType.ENCHANTED_SULPHUR, ItemType.ENCHANTED_SULPHUR_CUBE),
-            new BazaarItemSet(ItemType.MYCELIUM, "Mycelium",
-                    ItemType.MYCELIUM, ItemType.ENCHANTED_MYCELIUM, ItemType.ENCHANTED_MYCELIUM_CUBE),
-            new BazaarItemSet(ItemType.LAPIS_LAZULI, "Dwarven Materials",
-                    ItemType.MITHRIL, ItemType.ENCHANTED_MITHRIL, ItemType.REFINED_MITHRIL, ItemType.TITANIUM, ItemType.ENCHANTED_TITANIUM, ItemType.REFINED_TITANIUM, ItemType.ENCHANTED_MITHRIL, ItemType.STARFALL, ItemType.TREASURITE, ItemType.SORROW)
+            "§b", new BazaarItemSet(ItemTypeLinker.COBBLESTONE, "Cobblestone",
+            ItemTypeLinker.COBBLESTONE, ItemTypeLinker.ENCHANTED_COBBLESTONE),
+            new BazaarItemSet(ItemTypeLinker.COAL, "Coal",
+                    ItemTypeLinker.COAL, ItemTypeLinker.ENCHANTED_COAL, ItemTypeLinker.ENCHANTED_CHARCOAL, ItemTypeLinker.ENCHANTED_COAL_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.IRON_INGOT, "Iron",
+                    ItemTypeLinker.IRON_INGOT, ItemTypeLinker.ENCHANTED_IRON_INGOT, ItemTypeLinker.ENCHANTED_IRON_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.GOLD_INGOT, "Gold",
+                    ItemTypeLinker.GOLD_INGOT, ItemTypeLinker.ENCHANTED_GOLD_INGOT, ItemTypeLinker.ENCHANTED_GOLD_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.DIAMOND, "Diamond",
+                    ItemTypeLinker.DIAMOND, ItemTypeLinker.ENCHANTED_DIAMOND, ItemTypeLinker.ENCHANTED_DIAMOND_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.LAPIS_LAZULI, "Lapis",
+                    ItemTypeLinker.LAPIS_LAZULI, ItemTypeLinker.ENCHANTED_LAPIS_LAZULI, ItemTypeLinker.ENCHANTED_LAPIS_LAZULI_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.EMERALD, "Emerald",
+                    ItemTypeLinker.EMERALD, ItemTypeLinker.ENCHANTED_EMERALD, ItemTypeLinker.ENCHANTED_EMERALD_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.REDSTONE, "Redstone",
+                    ItemTypeLinker.REDSTONE, ItemTypeLinker.ENCHANTED_REDSTONE, ItemTypeLinker.ENCHANTED_REDSTONE_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.QUARTZ, "Quartz",
+                    ItemTypeLinker.QUARTZ, ItemTypeLinker.ENCHANTED_QUARTZ, ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.OBSIDIAN, "Obsidian",
+                    ItemTypeLinker.OBSIDIAN, ItemTypeLinker.ENCHANTED_OBSIDIAN),
+            new BazaarItemSet(ItemTypeLinker.GLOWSTONE_DUST, "Glowstone",
+                    ItemTypeLinker.GLOWSTONE_DUST, ItemTypeLinker.ENCHANTED_GLOWSTONE_DUST, ItemTypeLinker.ENCHANTED_GLOWSTONE),
+            new BazaarItemSet(ItemTypeLinker.FLINT, "Flint & Gravel",
+                    ItemTypeLinker.FLINT, ItemTypeLinker.ENCHANTED_FLINT, ItemTypeLinker.GRAVEL),
+            new BazaarItemSet(ItemTypeLinker.HARD_STONE, "Hard Stone",
+                    ItemTypeLinker.HARD_STONE, ItemTypeLinker.ENCHANTED_HARD_STONE, ItemTypeLinker.CONCENTRATED_STONE),
+            new BazaarItemSet(ItemTypeLinker.ICE, "Ice",
+                    ItemTypeLinker.ICE, ItemTypeLinker.PACKED_ICE, ItemTypeLinker.ENCHANTED_ICE, ItemTypeLinker.ENCHANTED_PACKED_ICE, ItemTypeLinker.GLACIAL_FRAGMENT),
+            new BazaarItemSet(ItemTypeLinker.NETHERRACK, "Netherrack",
+                    ItemTypeLinker.NETHERRACK, ItemTypeLinker.ENCHANTED_NETHERRACK),
+            new BazaarItemSet(ItemTypeLinker.SAND, "Sand",
+                    ItemTypeLinker.SAND, ItemTypeLinker.ENCHANTED_SAND, ItemTypeLinker.RED_SAND, ItemTypeLinker.ENCHANTED_RED_SAND, ItemTypeLinker.ENCHANTED_RED_SAND_CUBE),
+            new BazaarItemSet(ItemTypeLinker.END_STONE, "End Stone",
+                    ItemTypeLinker.END_STONE, ItemTypeLinker.ENCHANTED_ENDSTONE),
+            new BazaarItemSet(ItemTypeLinker.SNOW, "Snow",
+                    ItemTypeLinker.SNOW, ItemTypeLinker.SNOW_BLOCK, ItemTypeLinker.ENCHANTED_SNOW_BLOCK),
+            new BazaarItemSet(ItemTypeLinker.SULPHUR, "Sulphur",
+                    ItemTypeLinker.SULPHUR, ItemTypeLinker.ENCHANTED_SULPHUR, ItemTypeLinker.ENCHANTED_SULPHUR_CUBE),
+            new BazaarItemSet(ItemTypeLinker.MYCELIUM, "Mycelium",
+                    ItemTypeLinker.MYCELIUM, ItemTypeLinker.ENCHANTED_MYCELIUM, ItemTypeLinker.ENCHANTED_MYCELIUM_CUBE),
+            new BazaarItemSet(ItemTypeLinker.LAPIS_LAZULI, "Dwarven Materials",
+                    ItemTypeLinker.MITHRIL, ItemTypeLinker.ENCHANTED_MITHRIL, ItemTypeLinker.REFINED_MITHRIL, ItemTypeLinker.TITANIUM, ItemTypeLinker.ENCHANTED_TITANIUM, ItemTypeLinker.REFINED_TITANIUM, ItemTypeLinker.ENCHANTED_MITHRIL, ItemTypeLinker.STARFALL, ItemTypeLinker.TREASURITE, ItemTypeLinker.SORROW)
     ),
     COMBAT(Material.IRON_SWORD, Material.RED_STAINED_GLASS_PANE,
             "§c",
-            new BazaarItemSet(ItemType.ROTTEN_FLESH, "Rotten Flesh",
-                    ItemType.ROTTEN_FLESH, ItemType.ENCHANTED_ROTTEN_FLESH),
-            new BazaarItemSet(ItemType.BONE, "Bone",
-                    ItemType.BONE, ItemType.ENCHANTED_BONE, ItemType.ENCHANTED_BONE_BLOCK, ItemType.ENCHANTED_BONE_MEAL),
-            new BazaarItemSet(ItemType.STRING, "Arachnids",
-                    ItemType.STRING, ItemType.ENCHANTED_STRING, ItemType.SPIDER_EYE, ItemType.ENCHANTED_SPIDER_EYE, ItemType.ENCHANTED_FERMENTED_SPIDER_EYE, ItemType.SOUL_STRING),
-            new BazaarItemSet(ItemType.GUNPOWDER, "Gunpowder",
-                    ItemType.GUNPOWDER, ItemType.ENCHANTED_GUNPOWDER, ItemType.ENCHANTED_FIREWORK_ROCKET),
-            new BazaarItemSet(ItemType.ENDER_PEARL, "Ender Pearl",
-                    ItemType.ENDER_PEARL, ItemType.ENCHANTED_ENDER_PEARL, ItemType.ENCHANTED_EYE_OF_ENDER),
-            new BazaarItemSet(ItemType.GHAST_TEAR, "Ghast Tear",
-                    ItemType.GHAST_TEAR, ItemType.ENCHANTED_GHAST_TEAR),
-            new BazaarItemSet(ItemType.SLIME_BALL, "Slime Drops",
-                    ItemType.SLIME_BALL, ItemType.ENCHANTED_SLIMEBALL, ItemType.ENCHANTED_SLIME_BLOCK, ItemType.MAGMA_CREAM, ItemType.ENCHANTED_MAGMA_CREAM, ItemType.WHIPPED_MAGMA_CREAM),
-            new BazaarItemSet(ItemType.BLAZE_ROD, "Blaze Rod",
-                    ItemType.BLAZE_ROD, ItemType.ENCHANTED_BLAZE_POWDER, ItemType.ENCHANTED_BLAZE_ROD),
-            new BazaarItemSet(ItemType.FEATHER, "Mythological",
-                    ItemType.GRIFFIN_FEATHER, ItemType.DAEDALUS_STICK, ItemType.ANCIENT_CLAW, ItemType.ENCHANTED_ANCIENT_CLAW)
+            new BazaarItemSet(ItemTypeLinker.ROTTEN_FLESH, "Rotten Flesh",
+                    ItemTypeLinker.ROTTEN_FLESH, ItemTypeLinker.ENCHANTED_ROTTEN_FLESH),
+            new BazaarItemSet(ItemTypeLinker.BONE, "Bone",
+                    ItemTypeLinker.BONE, ItemTypeLinker.ENCHANTED_BONE, ItemTypeLinker.ENCHANTED_BONE_BLOCK, ItemTypeLinker.ENCHANTED_BONE_MEAL),
+            new BazaarItemSet(ItemTypeLinker.STRING, "Arachnids",
+                    ItemTypeLinker.STRING, ItemTypeLinker.ENCHANTED_STRING, ItemTypeLinker.SPIDER_EYE, ItemTypeLinker.ENCHANTED_SPIDER_EYE, ItemTypeLinker.ENCHANTED_FERMENTED_SPIDER_EYE, ItemTypeLinker.SOUL_STRING),
+            new BazaarItemSet(ItemTypeLinker.GUNPOWDER, "Gunpowder",
+                    ItemTypeLinker.GUNPOWDER, ItemTypeLinker.ENCHANTED_GUNPOWDER, ItemTypeLinker.ENCHANTED_FIREWORK_ROCKET),
+            new BazaarItemSet(ItemTypeLinker.ENDER_PEARL, "Ender Pearl",
+                    ItemTypeLinker.ENDER_PEARL, ItemTypeLinker.ENCHANTED_ENDER_PEARL, ItemTypeLinker.ENCHANTED_EYE_OF_ENDER),
+            new BazaarItemSet(ItemTypeLinker.GHAST_TEAR, "Ghast Tear",
+                    ItemTypeLinker.GHAST_TEAR, ItemTypeLinker.ENCHANTED_GHAST_TEAR),
+            new BazaarItemSet(ItemTypeLinker.SLIME_BALL, "Slime Drops",
+                    ItemTypeLinker.SLIME_BALL, ItemTypeLinker.ENCHANTED_SLIMEBALL, ItemTypeLinker.ENCHANTED_SLIME_BLOCK, ItemTypeLinker.MAGMA_CREAM, ItemTypeLinker.ENCHANTED_MAGMA_CREAM, ItemTypeLinker.WHIPPED_MAGMA_CREAM),
+            new BazaarItemSet(ItemTypeLinker.BLAZE_ROD, "Blaze Rod",
+                    ItemTypeLinker.BLAZE_ROD, ItemTypeLinker.ENCHANTED_BLAZE_POWDER, ItemTypeLinker.ENCHANTED_BLAZE_ROD),
+            new BazaarItemSet(ItemTypeLinker.FEATHER, "Mythological",
+                    ItemTypeLinker.GRIFFIN_FEATHER, ItemTypeLinker.DAEDALUS_STICK, ItemTypeLinker.ANCIENT_CLAW, ItemTypeLinker.ENCHANTED_ANCIENT_CLAW)
     ),
     WOODS_AND_FISHES(Material.FISHING_ROD, Material.ORANGE_STAINED_GLASS_PANE, "§6"),
     ODDITIES(Material.ENCHANTING_TABLE, Material.PINK_STAINED_GLASS_PANE, "§d"),;
@@ -136,20 +136,20 @@ public enum BazaarCategories {
     }
 
     public static BazaarInitializationRequest getInitializationRequest() {
-        List<ItemType> items = new ArrayList<>();
+        List<ItemTypeLinker> items = new ArrayList<>();
         for (BazaarCategories category : BazaarCategories.values()) {
             for (BazaarItemSet itemSet : category.items) {
                 items.addAll(itemSet.items);
             }
         }
 
-        return new BazaarInitializationRequest(items.stream().map(ItemType::name).toList());
+        return new BazaarInitializationRequest(items.stream().map(ItemTypeLinker::name).toList());
     }
 
-    public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemType itemType) {
+    public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemTypeLinker itemTypeLinker) {
         for (BazaarCategories category : BazaarCategories.values()) {
             for (BazaarItemSet itemSet : category.items) {
-                if (itemSet.items.contains(itemType)) {
+                if (itemSet.items.contains(itemTypeLinker)) {
                     return new AbstractMap.SimpleEntry<>(category, itemSet);
                 }
             }

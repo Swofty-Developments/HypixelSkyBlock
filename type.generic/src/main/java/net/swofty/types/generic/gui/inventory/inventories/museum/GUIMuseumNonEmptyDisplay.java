@@ -20,7 +20,7 @@ import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
     private final int position;
 
     public GUIMuseumNonEmptyDisplay(SkyBlockItem item, MuseumDisplays display, int position) {
-        super(item.getAttributeHandler().getItemTypeAsType().getDisplayName(null),
+        super(item.getAttributeHandler().getPotentialClassLinker().getDisplayName(null),
                 InventoryType.CHEST_4_ROW);
 
         this.item = item;

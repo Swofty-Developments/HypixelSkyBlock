@@ -19,6 +19,7 @@ import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.protocol.objects.PlayerShopData;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -32,7 +33,7 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
@@ -47,11 +48,11 @@ import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.DeathMessageCreator;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -275,15 +276,15 @@ public class SkyBlockPlayer extends Player {
                 .toArray(SkyBlockItem[]::new);
     }
 
-    public Map<Integer, Integer> getAllOfTypeInInventory(ItemType type) {
+    public Map<Integer, Integer> getAllOfTypeInInventory(ItemTypeLinker type) {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < 36; i++) {
             ItemStack stack = getInventory().getItemStack(i);
             SkyBlockItem item = new SkyBlockItem(stack);
-            if (item.getAttributeHandler().getItemTypeAsType() == null) continue;
+            if (item.getAttributeHandler().getPotentialClassLinker() == null) continue;
 
-            if (item.getAttributeHandler().getItemTypeAsType() == type) {
+            if (item.getAttributeHandler().getPotentialClassLinker() == type) {
                 map.put(i, stack.amount());
             }
         }
@@ -300,7 +301,7 @@ public class SkyBlockPlayer extends Player {
         getInventory().setItemInHand(Hand.MAIN, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
     }
 
-    public int getAmountInInventory(ItemType type) {
+    public int getAmountInInventory(ItemTypeLinker type) {
         return getAllOfTypeInInventory(type).values().stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -313,10 +314,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public @Nullable ArmorSetRegistry getArmorSet() {
-        ItemType helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getItemTypeAsType();
-        ItemType chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getItemTypeAsType();
-        ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getItemTypeAsType();
-        ItemType boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getItemTypeAsType();
+        ItemTypeLinker helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getPotentialClassLinker();
+        ItemTypeLinker chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getPotentialClassLinker();
+        ItemTypeLinker leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getPotentialClassLinker();
+        ItemTypeLinker boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getPotentialClassLinker();
 
         return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
     }
@@ -330,7 +331,7 @@ public class SkyBlockPlayer extends Player {
 
         for (SkyBlockItem armorItem : armor) {
             if (armorItem == null) continue;
-            if (armorItem.getAttributeHandler().getItemTypeAsType() == item.getAttributeHandler().getItemTypeAsType()) {
+            if (armorItem.getAttributeHandler().getPotentialClassLinker() == item.getAttributeHandler().getPotentialClassLinker()) {
                 return true;
             }
         }
@@ -405,7 +406,7 @@ public class SkyBlockPlayer extends Player {
         this.getInventory().addItemStack(toAdd);
     }
 
-    public void addAndUpdateItem(ItemType item) {
+    public void addAndUpdateItem(ItemTypeLinker item) {
         addAndUpdateItem(new SkyBlockItem(item));
     }
 
@@ -426,7 +427,7 @@ public class SkyBlockPlayer extends Player {
         return false;
     }
 
-    public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
+    public @Nullable List<SkyBlockItem> takeItem(ItemTypeLinker type, int amount) {
         List<SkyBlockItem> consumedItems = new ArrayList<>();
         Map<Integer, Integer> map = getAllOfTypeInInventory(type);
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
@@ -467,7 +468,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public boolean hasCustomCollectionAward(CustomCollectionAward award) {
-        Map.Entry<ItemType, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
+        Map.Entry<ItemTypeLinker, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
         if (entry == null) return false;
 
         return getCollection().get(entry.getKey()) > entry.getValue();

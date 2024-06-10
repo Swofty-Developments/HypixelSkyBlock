@@ -12,7 +12,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
 

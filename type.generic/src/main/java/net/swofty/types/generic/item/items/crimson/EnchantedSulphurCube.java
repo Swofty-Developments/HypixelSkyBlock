@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.crimson;
 
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -15,7 +15,7 @@ public class EnchantedSulphurCube implements Enchanted, Sellable, DefaultCraftab
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemType.ENCHANTED_SULPHUR);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.MINING, ItemTypeLinker.ENCHANTED_SULPHUR);
     }
 
     @Override

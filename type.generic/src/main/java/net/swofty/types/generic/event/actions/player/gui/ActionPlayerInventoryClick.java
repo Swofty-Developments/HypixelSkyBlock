@@ -16,7 +16,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Interactable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 public class ActionPlayerInventoryClick implements SkyBlockEventClass {
 

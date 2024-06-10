@@ -6,20 +6,20 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSoulbound;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class ItemLore {
 
         if (clazz != null) {
             CustomSkyBlockItem skyBlockItem = (CustomSkyBlockItem) item.getGenericInstance();
-            displayName = handler.getItemTypeAsType().getDisplayName(item);
+            displayName = handler.getPotentialClassLinker().getDisplayName(item);
 
             if (skyBlockItem.getAbsoluteLore(player, item) != null) {
                 skyBlockItem.getAbsoluteLore(player, item).forEach(line -> addLoreLine("§7" + line));
@@ -122,7 +122,7 @@ public class ItemLore {
                     }
 
                     ItemAttributeGemData.GemData.GemSlots gemSlot = gemData.getGem(index);
-                    ItemType filledWith = gemSlot.filledWith;
+                    ItemTypeLinker filledWith = gemSlot.filledWith;
 
                     if (filledWith == null) {
                         gemstoneLore.append("§7[" + gemstone.symbol + "] ");
@@ -195,14 +195,14 @@ public class ItemLore {
             }
 
             // Handle full set abilities
-            if (ArmorSetRegistry.getArmorSet(handler.getItemTypeAsType()) != null) {
-                ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getItemTypeAsType()).getClazz().getDeclaredConstructor().newInstance();
+            if (ArmorSetRegistry.getArmorSet(handler.getPotentialClassLinker()) != null) {
+                ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialClassLinker()).getClazz().getDeclaredConstructor().newInstance();
 
                 int wearingAmount = 0;
                 if (player != null && player.isWearingItem(item)) {
                     for (SkyBlockItem armorItem : player.getArmor()) {
                         if (armorItem == null) continue;
-                        ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getItemTypeAsType());
+                        ArmorSetRegistry armorSetRegistry = ArmorSetRegistry.getArmorSet(armorItem.getAttributeHandler().getPotentialClassLinker());
                         if (armorSetRegistry == null) continue;
                         if (armorSetRegistry.getClazz() == armorSet.getClass()) {
                             wearingAmount++;

@@ -13,10 +13,10 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.*;
 
@@ -34,12 +34,12 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             9, new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26 }
     ));
 
-    private final ItemType item;
+    private final ItemTypeLinker item;
     private final CollectionCategory.ItemCollection category;
     private final CollectionCategory.ItemCollectionReward reward;
     private final int placement;
 
-    public GUICollectionReward(ItemType type, CollectionCategory.ItemCollectionReward reward) {
+    public GUICollectionReward(ItemTypeLinker type, CollectionCategory.ItemCollectionReward reward) {
         super(type.getDisplayName(null) + " "
                 + StringUtility.getAsRomanNumeral(
                         CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
@@ -83,7 +83,7 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
                         SkyBlockItem item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult();
-                        new GUIRecipe(item.getAttributeHandler().getItemTypeAsType(), null).open(player);
+                        new GUIRecipe(item.getAttributeHandler().getPotentialClassLinker(), null).open(player);
                     }
                 }
 

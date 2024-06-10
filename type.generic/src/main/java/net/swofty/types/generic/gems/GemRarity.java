@@ -1,7 +1,7 @@
 package net.swofty.types.generic.gems;
 
 import lombok.Getter;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.commons.item.Rarity;
 
 import java.util.List;
 

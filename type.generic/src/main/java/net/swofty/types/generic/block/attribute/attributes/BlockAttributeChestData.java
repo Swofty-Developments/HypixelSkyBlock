@@ -3,8 +3,8 @@ package net.swofty.types.generic.block.attribute.attributes;
 import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;
-import net.swofty.types.generic.serializer.SkyBlockItemSerializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

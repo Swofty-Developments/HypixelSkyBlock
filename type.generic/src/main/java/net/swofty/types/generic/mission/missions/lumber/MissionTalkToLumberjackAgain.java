@@ -1,6 +1,6 @@
 package net.swofty.types.generic.mission.missions.lumber;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;
@@ -29,7 +29,7 @@ public class MissionTalkToLumberjackAgain extends SkyBlockMission {
 
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
-        player.addAndUpdateItem(ItemType.SWEET_AXE);
+        player.addAndUpdateItem(ItemTypeLinker.SWEET_AXE);
     }
 
     @Override

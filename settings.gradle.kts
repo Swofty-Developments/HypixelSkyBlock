@@ -6,7 +6,6 @@ include(":dungeons")
 include(":velocity.extension")
 include(":proxy.api")
 
-include(":service.protocol")
 include(":service.generic")
 include(":type.generic")
 include(":spark")

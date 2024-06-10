@@ -16,7 +16,7 @@ import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
@@ -24,14 +24,14 @@ import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
+public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
     private final MuseumableItemCategory category;
 
     public GUIMuseumCategory(MuseumableItemCategory category) {
@@ -52,22 +52,22 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
         ItemStack item = e.getClickedItem();
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
 
-        if (skyBlockItem.getAttributeHandler().getItemTypeAsType() == null) {
+        if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == null) {
             return;
         }
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
-        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType()) != null) {
-            player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getItemTypeAsType().getDisplayName(null) + " in your Museum!");
+        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null) {
+            player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getPotentialClassLinker().getDisplayName(null) + " in your Museum!");
             return;
         }
 
-        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType()) != null) {
+        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null) {
             UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
             UUID previouslyInMuseumUUID = UUID.fromString(
-                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getItemTypeAsType())
+                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker())
                             .getAttributeHandler().getUniqueTrackedID()
             );
 
@@ -77,7 +77,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
             }
         }
 
-        if (category.contains(skyBlockItem.getAttributeHandler().getItemTypeAsType())) {
+        if (category.contains(skyBlockItem.getAttributeHandler().getPotentialClassLinker())) {
             skyBlockItem.getAttributeHandler().setSoulBound(true);
             data.add(skyBlockItem);
             player.setMuseumData(data);
@@ -86,7 +86,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumCategory(category).open(player);
-            player.sendMessage("§aYou donated your " + skyBlockItem.getAttributeHandler().getItemTypeAsType().getDisplayName(null) + " to the Museum!");
+            player.sendMessage("§aYou donated your " + skyBlockItem.getAttributeHandler().getPotentialClassLinker().getDisplayName(null) + " to the Museum!");
         }
     }
 
@@ -101,13 +101,13 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public PaginationList<ItemType> fillPaged(SkyBlockPlayer player, PaginationList<ItemType> paged) {
+    public PaginationList<ItemTypeLinker> fillPaged(SkyBlockPlayer player, PaginationList<ItemTypeLinker> paged) {
         paged.addAll(category.getItems());
         return paged;
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, ItemType item) {
+    public boolean shouldFilterFromSearch(String query, ItemTypeLinker item) {
         return !item.getDisplayName(null).toLowerCase().contains(query.toLowerCase());
     }
 
@@ -131,7 +131,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 continue;
             }
 
-            if (category.contains(item.getAttributeHandler().getItemTypeAsType())) {
+            if (category.contains(item.getAttributeHandler().getPotentialClassLinker())) {
                 TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
                         .callEndpoint(new ProtocolGetTrackedItem(),
                                 Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))
@@ -155,12 +155,12 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemType> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemTypeLinker> paged) {
         return "Museum -> " + category.toString();
     }
 
     @Override
-    public GUIClickableItem createItemFor(ItemType item, int slot, SkyBlockPlayer player) {
+    public GUIClickableItem createItemFor(ItemTypeLinker item, int slot, SkyBlockPlayer player) {
         DatapointMuseum.MuseumData data = player.getMuseumData();
         SkyBlockItem skyBlockItem = data.getItem(category, item);
         boolean inMuseum = skyBlockItem != null;

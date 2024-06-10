@@ -1,12 +1,12 @@
 package net.swofty.types.generic.item.items.spooky;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -44,13 +44,13 @@ public class BlastOLantern implements CustomSkyBlockItem, SkullHead, Sellable, C
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.GREEN_CANDY, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.PUMPKIN_GUTS, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GREEN_CANDY, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.PUMPKIN_GUTS, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",
                 "AAA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemType.BLAST_O_LANTERN, 32), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemTypeLinker.BLAST_O_LANTERN, 32), ingredientMap, pattern);
     }
 }

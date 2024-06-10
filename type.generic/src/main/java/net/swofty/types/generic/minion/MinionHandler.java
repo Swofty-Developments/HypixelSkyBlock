@@ -103,7 +103,7 @@ public record MinionHandler(Scheduler scheduler) {
             if (itemsInMinion.size() == tier.getSlots() && action.checkMaterials(
                     islandMinion,
                     instance
-            ) && extensionData.getOfType(MinionShippingExtension.class).getItemTypePassedIn() == null) {
+            ) && extensionData.getOfType(MinionShippingExtension.class).getItemTypeLinkerPassedIn() == null) {
                 // To not overload with replacing holograms if not needed
                 if (tags.getState() == InternalMinionTags.State.BAD_FULL) return;
                 if (tags.getState() == InternalMinionTags.State.BAD_LOCATION) return;

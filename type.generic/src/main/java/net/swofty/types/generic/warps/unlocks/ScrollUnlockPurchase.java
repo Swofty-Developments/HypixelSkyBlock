@@ -1,6 +1,6 @@
 package net.swofty.types.generic.warps.unlocks;
 
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.warps.ScrollUnlockReason;
 
 public class ScrollUnlockPurchase extends ScrollUnlockReason {

@@ -3,9 +3,9 @@ package net.swofty.type.hub.gui.rosetta;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
+import net.swofty.types.generic.item.ItemAttributeHandler;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
 import java.util.Map;
@@ -23,9 +23,9 @@ public class GUIRosettaArmor extends SkyBlockShopGUI {
     }
     @Override
     public void initializeShopItems() {
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_HELMET), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1050)));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_CHESTPLATE), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1320)));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_LEGGINGS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1200)));
-        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemType.ROSETTA_BOOTS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(960)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemTypeLinker.ROSETTA_HELMET), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1050)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemTypeLinker.ROSETTA_CHESTPLATE), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1320)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemTypeLinker.ROSETTA_LEGGINGS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(1200)));
+        attachItem(ShopItem.Single(applyEnchantment(new SkyBlockItem(ItemTypeLinker.ROSETTA_BOOTS), Map.of(EnchantmentType.GROWTH, 1)), 1, new CoinShopPrice(960)));
     }
 }

@@ -4,7 +4,7 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -51,11 +51,11 @@ public class ZombieRing extends SkyBlockValueEvent implements Talisman, DefaultC
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.REVENANT_FLESH, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ZOMBIE_TALISMAN, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_FLESH, 32));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ZOMBIE_TALISMAN, 1));
         List<String> pattern = List.of(
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.ZOMBIE_RING), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemTypeLinker.ZOMBIE_RING), ingredientMap, pattern);
     }
 }

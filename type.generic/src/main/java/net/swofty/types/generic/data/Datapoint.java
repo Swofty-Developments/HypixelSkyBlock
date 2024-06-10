@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;

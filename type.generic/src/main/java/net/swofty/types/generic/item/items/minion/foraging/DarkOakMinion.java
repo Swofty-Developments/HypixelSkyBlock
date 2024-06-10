@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.minion.foraging;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.minion.MinionRegistry;
@@ -12,18 +12,18 @@ public class DarkOakMinion implements CustomSkyBlockItem, Minion {
     }
 
     @Override
-    public ItemType getBaseCraftMaterial() {
-        return ItemType.DARK_OAK_LOG;
+    public ItemTypeLinker getBaseCraftMaterial() {
+        return ItemTypeLinker.DARK_OAK_LOG;
     }
 
     @Override
-    public ItemType getEnchantedCraftMaterial() {
-        return ItemType.ENCHANTED_DARK_OAK_WOOD;
+    public ItemTypeLinker getEnchantedCraftMaterial() {
+        return ItemTypeLinker.ENCHANTED_DARK_OAK_WOOD;
     }
 
     @Override
-    public ItemType getFirstBaseItem() {
-        return ItemType.WOODEN_AXE;
+    public ItemTypeLinker getFirstBaseItem() {
+        return ItemTypeLinker.WOODEN_AXE;
     }
 
     @Override

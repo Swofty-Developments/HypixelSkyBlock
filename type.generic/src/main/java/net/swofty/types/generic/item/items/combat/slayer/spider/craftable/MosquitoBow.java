@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -15,16 +15,16 @@ public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImp
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 64));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.TARANTULA_SILK, 64));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.DIGESTED_MOSQUITO, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 64));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.DIGESTED_MOSQUITO, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
         List<String> pattern = List.of(
                 " AB",
                 "C B",
                 " AB");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.MOSQUITO_BOW), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemTypeLinker.MOSQUITO_BOW), ingredientMap, pattern);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, TrackedUniqueItem, RightClickRecipe {
@@ -24,7 +24,7 @@ public class BeheadedHorror implements CustomSkyBlockItem, SkullHead, Sellable, 
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.REAPER_MASK;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.REAPER_MASK;
     }
 }

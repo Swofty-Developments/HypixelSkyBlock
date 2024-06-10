@@ -23,6 +23,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.Songs;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
@@ -45,8 +46,7 @@ import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.attribute.ItemAttribute;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.MuseumableSet;
@@ -78,7 +78,7 @@ import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -315,7 +315,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 CrystalDatabase.getAllCrystals().forEach(crystal -> {
                     if (crystal.serverType != SkyBlockConst.getTypeLoader().getType()) return;
 
-                    ItemType type = crystal.itemType;
+                    ItemTypeLinker type = crystal.itemTypeLinker;
                     try {
                         ServerOrb asCrystal = (ServerOrb) type.clazz.newInstance();
                         ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
@@ -451,7 +451,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register Museum items
          */
-        Arrays.stream(ItemType.values()).forEach(itemType -> {
+        Arrays.stream(ItemTypeLinker.values()).forEach(itemType -> {
             try {
                 if (itemType.clazz == null) return;
                 if (itemType.clazz.newInstance() instanceof Museumable museumable) {

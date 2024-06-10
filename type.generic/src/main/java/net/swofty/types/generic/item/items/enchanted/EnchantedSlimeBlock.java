@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.enchanted;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
@@ -14,6 +14,6 @@ public class EnchantedSlimeBlock implements Enchanted, Sellable, DefaultCraftabl
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemType.ENCHANTED_SLIMEBALL);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_SLIMEBALL);
     }
 }

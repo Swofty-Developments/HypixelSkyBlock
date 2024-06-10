@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
@@ -11,7 +10,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 public class ActionPlayerBankAddInterest implements SkyBlockEventClass {
 

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.serializer.InventorySerializer;
+import net.swofty.commons.protocol.serializers.InventorySerializer;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -11,16 +11,16 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.RuneItem;
 import net.swofty.types.generic.item.impl.Runeable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -355,7 +355,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
             SkyBlockItem toReturn = item.clone();
             ItemAttributeRuneInfusedWith.RuneData runeData = toReturn.getAttributeHandler().getRuneData();
-            runeData.setRuneType(runeItem.getAttributeHandler().getItemTypeAsType());
+            runeData.setRuneType(runeItem.getAttributeHandler().getPotentialClassLinker());
             runeData.setLevel(runeItem.getAttributeHandler().getRuneLevel());
             toReturn.getAttributeHandler().setRuneData(runeData);
             return toReturn;
@@ -383,7 +383,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
             player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
                     player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
 
-            ItemType appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
+            ItemTypeLinker appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
             Rarity rarity = appliedRune.rarity;
 
             sendSuccessMessage(player, "Applying " + StringUtility.toNormalCase(appliedRune.name()) +

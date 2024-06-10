@@ -1,0 +1,86 @@
+package net.swofty.types.generic.auction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.minestom.server.item.ItemComponent;
+import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.types.generic.data.mongodb.CoopDatabase;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.commons.StringUtility;
+
+import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public record AuctionItemLoreHandler(AuctionItem auctionItem) {
+    @JsonIgnore
+    @Transient
+    public List<String> getLore() {
+        return getLore(null);
+    }
+
+    @JsonIgnore
+    @Transient
+    public List<String> getLore(SkyBlockPlayer player) {
+        List<String> toReturn = new ArrayList<>();
+        SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
+
+        if (player == null) {
+            new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem().build().get(ItemComponent.LORE).forEach(loreEntry -> {
+                toReturn.add(StringUtility.getTextFromComponent(loreEntry));
+            });
+        } else {
+            PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build().get(ItemComponent.LORE).forEach(loreEntry -> {
+                toReturn.add(StringUtility.getTextFromComponent(loreEntry));
+            });
+        }
+
+        toReturn.add("§8§m----------------------");
+        toReturn.add("§7Seller: " + SkyBlockPlayer.getDisplayName(auctionItem.getOriginator()));
+
+        if (auctionItem.isBin()) {
+            toReturn.add("§7Buy it now: §6" + auctionItem.getStartingPrice() + " coins");
+        } else {
+            if (auctionItem.getBids().isEmpty()) {
+                toReturn.add("§7Starting bid: §6" + auctionItem.getStartingPrice() + " coins");
+            } else {
+                toReturn.add("§7Bids: §a" + auctionItem.getBids().size() + " bid" + (auctionItem.getBids().size() == 1 ? "" : "s"));
+                toReturn.add(" ");
+
+                AuctionItem.Bid topBid = auctionItem.getBids().stream().max(Comparator.comparing(AuctionItem.Bid::value)).orElse(null);
+
+                toReturn.add("§7Top bid: §6" + topBid.value() + " coins");
+                toReturn.add("§7Bidder: " + SkyBlockPlayer.getDisplayName(topBid.uuid()));
+            }
+        }
+
+        if (player != null) {
+            if (auctionItem.getOriginator().equals(player.getUuid())) {
+                toReturn.add(" ");
+                toReturn.add("§aThis is your own auction!");
+            } else {
+                CoopDatabase.Coop viewerCoop = CoopDatabase.getFromMember(player.getUuid());
+                if (viewerCoop != null && viewerCoop.members().contains(auctionItem.getOriginator())) {
+                    toReturn.add(" ");
+                    toReturn.add("§aThis is a coop member's auction!");
+                }
+            }
+        }
+
+        toReturn.add(" ");
+        if (auctionItem.isBin() && !auctionItem.getBids().isEmpty()) {
+            toReturn.add("§7Status: §aPurchased");
+        } else if (auctionItem.getEndTime() > System.currentTimeMillis()) {
+            toReturn.add("§7Ends in: §e" + StringUtility.formatTimeLeft(auctionItem.getEndTime() - System.currentTimeMillis()));
+        } else {
+            toReturn.add("§7Status: §aEnded!");
+        }
+        toReturn.add(" ");
+
+        toReturn.add("§eClick to inspect!");
+        return toReturn;
+    }
+}

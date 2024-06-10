@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -15,15 +15,15 @@ public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, Stand
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.TARANTULA_SILK, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_ACACIA_WOOD, 64));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.STICK, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 4));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ACACIA_WOOD, 64));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "ABA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.SCORPION_FOIL), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemTypeLinker.SCORPION_FOIL), ingredientMap, pattern);
     }
 
     @Override

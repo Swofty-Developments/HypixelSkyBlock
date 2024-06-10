@@ -11,7 +11,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -47,7 +47,7 @@ public class GUIMinionRecipes extends SkyBlockInventoryGUI {
         Arrays.stream(RECIPE_SLOTS).forEach(slot -> {
             i.getAndIncrement();
 
-            SkyBlockItem item = new SkyBlockItem(registry.getItemType());
+            SkyBlockItem item = new SkyBlockItem(registry.getItemTypeLinker());
             item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(
                     i.get(),
                     0

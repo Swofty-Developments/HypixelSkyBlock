@@ -9,7 +9,7 @@ import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.display.ItemMuseumDisplay;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

@@ -3,19 +3,17 @@ package net.swofty.types.generic.gui.inventory.inventories;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -44,10 +42,10 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
-        paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
+        paged.addAll(Arrays.stream(ItemTypeLinker.values()).map(SkyBlockItem::new).toList());
 
         List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
-        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.getAttributeHandler().getItemType()));
+        vanilla.removeIf((element) -> ItemTypeLinker.isVanillaReplaced(element.getAttributeHandler().getItemType()));
         paged.addAll(vanilla);
         return paged;
     }

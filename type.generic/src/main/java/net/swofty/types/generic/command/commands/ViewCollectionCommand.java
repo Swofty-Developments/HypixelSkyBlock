@@ -6,7 +6,7 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollectionItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -19,18 +19,18 @@ public class ViewCollectionCommand extends SkyBlockCommand {
 
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<ItemType> itemArgument = ArgumentType.Enum("item", ItemType.class);
+        ArgumentEnum<ItemTypeLinker> itemArgument = ArgumentType.Enum("item", ItemTypeLinker.class);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            final ItemType itemType = context.get(itemArgument);
+            final ItemTypeLinker itemTypeLinker = context.get(itemArgument);
 
-            if (CollectionCategories.getCategory(itemType) == null) {
+            if (CollectionCategories.getCategory(itemTypeLinker) == null) {
                 sender.sendMessage("§cThis item does not have a collection!");
             }
 
-            new GUICollectionItem(itemType).open((SkyBlockPlayer) sender);
+            new GUICollectionItem(itemTypeLinker).open((SkyBlockPlayer) sender);
         }, itemArgument);
     }
 }

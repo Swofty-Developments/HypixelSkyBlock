@@ -16,7 +16,7 @@ import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.scoreboard.SwoftySidebar;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -5,7 +5,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

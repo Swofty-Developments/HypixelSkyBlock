@@ -7,17 +7,17 @@ import net.minestom.server.instance.block.Block;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionRecipe;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.StringUtility;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ import java.util.List;
 public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, TrackedUniqueItem, DefaultCraftable {
     MinionRegistry getMinionRegistry();
 
-    ItemType getBaseCraftMaterial();
-    ItemType getEnchantedCraftMaterial();
-    ItemType getFirstBaseItem();
+    ItemTypeLinker getBaseCraftMaterial();
+    ItemTypeLinker getEnchantedCraftMaterial();
+    ItemTypeLinker getFirstBaseItem();
     boolean isByDefaultCraftable();
 
     default List<SkyBlockRecipe<?>> getRecipes() {
@@ -50,7 +50,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
                     "AAA"
             ));
 
-            SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemType());
+            SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemTypeLinker());
             item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(tier.tier(), 0));
 
             ShapedRecipe recipe = new ShapedRecipe(
@@ -60,7 +60,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
                             getBaseCraftMaterial(),
                             getEnchantedCraftMaterial(),
                             getFirstBaseItem(),
-                            getMinionRegistry().getItemType()
+                            getMinionRegistry().getItemTypeLinker()
                     )),
                     pattern
             );

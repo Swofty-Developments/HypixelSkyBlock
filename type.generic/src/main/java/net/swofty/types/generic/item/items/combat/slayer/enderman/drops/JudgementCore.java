@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.RightClickRecipe;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 public class JudgementCore implements CustomSkyBlockItem, SkullHead, TrackedUniqueItem, RightClickRecipe {
@@ -22,7 +22,7 @@ public class JudgementCore implements CustomSkyBlockItem, SkullHead, TrackedUniq
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.TERMINATOR;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.TERMINATOR;
     }
 }

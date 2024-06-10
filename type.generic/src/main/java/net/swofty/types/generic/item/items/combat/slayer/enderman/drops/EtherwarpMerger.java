@@ -1,10 +1,10 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class EtherwarpMerger implements CustomSkyBlockItem, SkullHead, Sellable,
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.ETHERWARP_CONDUIT;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.ETHERWARP_CONDUIT;
     }
 }

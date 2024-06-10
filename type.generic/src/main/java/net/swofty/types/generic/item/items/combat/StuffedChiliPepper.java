@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.combat;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -30,6 +30,6 @@ public class StuffedChiliPepper implements Enchanted, Sellable, SkullHead, Defau
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemType.CHILI_PEPPER);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.CHILI_PEPPER);
     }
 }

@@ -1,14 +1,14 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -16,15 +16,15 @@ public class AxeOfTheShreeded implements CustomSkyBlockItem, DefaultCraftable, S
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.REVENANT_VISCERA, 64));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SHARD_OF_THE_SHREDDED, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.REAPER_FALCHION, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 64));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SHARD_OF_THE_SHREDDED, 1));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REAPER_FALCHION, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "BCB",
                 "ABA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.AXE_OF_THE_SHREDDED), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemTypeLinker.AXE_OF_THE_SHREDDED), ingredientMap, pattern);
     }
 
     @Override

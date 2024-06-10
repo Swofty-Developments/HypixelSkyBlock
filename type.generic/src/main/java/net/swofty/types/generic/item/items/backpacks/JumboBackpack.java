@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.backpacks;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Backpack;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -22,9 +22,9 @@ public class JumboBackpack implements Backpack, DefaultCraftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        ShapelessRecipe recipe = new ShapelessRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemType.JUMBO_BACKPACK));
-        recipe.add(ItemType.GREATER_BACKPACK, 1);
-        recipe.add(ItemType.JUMBO_BACKPACK_UPGRADE, 1);
+        ShapelessRecipe recipe = new ShapelessRecipe(SkyBlockRecipe.RecipeType.SPECIAL, new SkyBlockItem(ItemTypeLinker.JUMBO_BACKPACK));
+        recipe.add(ItemTypeLinker.GREATER_BACKPACK, 1);
+        recipe.add(ItemTypeLinker.JUMBO_BACKPACK_UPGRADE, 1);
 
         return recipe;
     }

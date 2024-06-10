@@ -60,8 +60,8 @@ public class MinionEntityImpl extends LivingEntity {
 
         MinionSkinExtension skinExtension = (MinionSkinExtension) updatedMinion.getExtensionData().getOfType(MinionSkinExtension.class);
 
-        if (skinExtension.getItemTypePassedIn() != null) {
-            MinionSkinItem skinItem = (MinionSkinItem) new SkyBlockItem(skinExtension.getItemTypePassedIn()).getGenericInstance();
+        if (skinExtension.getItemTypeLinkerPassedIn() != null) {
+            MinionSkinItem skinItem = (MinionSkinItem) new SkyBlockItem(skinExtension.getItemTypeLinkerPassedIn()).getGenericInstance();
 
             setHelmet(skinItem.getHelmet());
             setBoots(skinItem.getBoots());

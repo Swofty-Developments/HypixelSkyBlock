@@ -1,6 +1,5 @@
 package net.swofty.types.generic.item.impl;
 
-import net.swofty.types.generic.item.ReforgeType;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.List;

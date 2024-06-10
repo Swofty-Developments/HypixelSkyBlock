@@ -15,12 +15,12 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -116,7 +116,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                 // Save a list of futures for every item in the set
                 List<CompletableFuture<Void>> futures = new ArrayList<>();
 
-                for (ItemType type : itemSet.items) {
+                for (ItemTypeLinker type : itemSet.items) {
                     // Create a new future for each item
                     CompletableFuture<Void> future = new CompletableFuture<>();
                     futures.add(future);
@@ -167,7 +167,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        ItemType type = clickedItem.getAttributeHandler().getItemTypeAsType();
+        ItemTypeLinker type = clickedItem.getAttributeHandler().getPotentialClassLinker();
         e.setCancelled(true);
 
         if (clickedItem.isNA()) {

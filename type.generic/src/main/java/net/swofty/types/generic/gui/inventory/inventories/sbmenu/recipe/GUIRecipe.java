@@ -13,7 +13,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -30,7 +30,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     SkyBlockInventoryGUI previousGUI;
     int recipeIndex;
 
-    public GUIRecipe(ItemType type, SkyBlockInventoryGUI previousGUI) {
+    public GUIRecipe(ItemTypeLinker type, SkyBlockInventoryGUI previousGUI) {
         this(new SkyBlockItem(type), previousGUI, 0);
     }
 
@@ -39,7 +39,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     }
 
     public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI, int recipeIndex) {
-        super(item.getAttributeHandler().getItemTypeAsType().getDisplayName(item) + " Recipe", InventoryType.CHEST_6_ROW);
+        super(item.getAttributeHandler().getPotentialClassLinker().getDisplayName(item) + " Recipe", InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.previousGUI = previousGUI;
@@ -65,13 +65,13 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        ItemType itemType = item.getAttributeHandler().getItemTypeAsType();
-        if (itemType == null) {
+        ItemTypeLinker itemTypeLinker = item.getAttributeHandler().getPotentialClassLinker();
+        if (itemTypeLinker == null) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
         }
-        List<SkyBlockRecipe<?>> recipes = SkyBlockRecipe.getFromType(itemType);
+        List<SkyBlockRecipe<?>> recipes = SkyBlockRecipe.getFromType(itemTypeLinker);
         if (recipes.isEmpty()) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");

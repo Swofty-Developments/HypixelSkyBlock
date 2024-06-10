@@ -14,7 +14,7 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
@@ -27,7 +27,7 @@ public class ActionCollectionAdd implements SkyBlockEventClass {
         if (SkyBlockConst.isIslandServer()) return;
 
         SkyBlockPlayer player = event.getPlayer();
-        ItemType type = ItemType.fromMaterial(event.getMaterial());
+        ItemTypeLinker type = ItemTypeLinker.fromMaterial(event.getMaterial());
 
         if (type == null) return;
         int oldAmount = player.getCollection().get(type);

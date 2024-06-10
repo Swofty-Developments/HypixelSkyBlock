@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;
-import net.swofty.types.generic.serializer.SkyBlockItemSerializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -38,7 +38,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         public DatapointAccessoryBag.PlayerAccessoryBag deserialize(String json) {
             JSONObject obj = new JSONObject(json);
             Map<Integer, SkyBlockItem> map = new HashMap<>();
-            List<ItemType> discoveredAccessories = new ArrayList<>();
+            List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
 
             for (String key : obj.keySet()) {
                 if (key.equals("discoveredAccessories")) {
@@ -46,7 +46,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                     if (obj.get(key) instanceof String) continue;
                     if (obj.getJSONArray(key).isEmpty()) continue;
                     for (Object o : obj.getJSONArray(key)) {
-                        discoveredAccessories.add(ItemType.valueOf(o.toString()));
+                        discoveredAccessories.add(ItemTypeLinker.valueOf(o.toString()));
                     }
                     continue;
                 }
@@ -78,7 +78,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
     @NoArgsConstructor
     public static class PlayerAccessoryBag {
         private Map<Integer, SkyBlockItem> accessoryMap = new HashMap<>();
-        private List<ItemType> discoveredAccessories = new ArrayList<>();
+        private List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
 
         public @Nullable SkyBlockItem getInSlot(int slot) {
             return accessoryMap.get(slot);
@@ -88,12 +88,12 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
             return List.copyOf(accessoryMap.values());
         }
 
-        public void addDiscoveredAccessory(ItemType type) {
+        public void addDiscoveredAccessory(ItemTypeLinker type) {
             if (discoveredAccessories.contains(type)) return;
             discoveredAccessories.add(type);
         }
 
-        public boolean hasDiscoveredAccessory(ItemType type) {
+        public boolean hasDiscoveredAccessory(ItemTypeLinker type) {
             return discoveredAccessories.contains(type);
         }
 

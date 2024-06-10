@@ -13,7 +13,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.RedisMessage;
-import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;

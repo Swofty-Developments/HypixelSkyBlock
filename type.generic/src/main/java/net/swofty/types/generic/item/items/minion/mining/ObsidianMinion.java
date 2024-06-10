@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.minion.mining;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.minion.MinionRegistry;
@@ -12,18 +12,18 @@ public class ObsidianMinion implements CustomSkyBlockItem, Minion {
     }
 
     @Override
-    public ItemType getBaseCraftMaterial() {
-        return ItemType.OBSIDIAN;
+    public ItemTypeLinker getBaseCraftMaterial() {
+        return ItemTypeLinker.OBSIDIAN;
     }
 
     @Override
-    public ItemType getEnchantedCraftMaterial() {
-        return ItemType.ENCHANTED_OBSIDIAN;
+    public ItemTypeLinker getEnchantedCraftMaterial() {
+        return ItemTypeLinker.ENCHANTED_OBSIDIAN;
     }
 
     @Override
-    public ItemType getFirstBaseItem() {
-        return ItemType.WOODEN_PICKAXE;
+    public ItemTypeLinker getFirstBaseItem() {
+        return ItemTypeLinker.WOODEN_PICKAXE;
     }
 
     @Override

@@ -6,8 +6,8 @@ import net.swofty.types.generic.data.datapoints.DatapointStringList;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.warps.TravelScrollIslands;
 import net.swofty.types.generic.warps.TravelScrollType;
 
@@ -66,7 +66,7 @@ public interface TravelScrollItem extends CustomSkyBlockItem, ExtraRarityDisplay
             return;
         }
 
-        player.takeItem(item.getAttributeHandler().getItemTypeAsType(), 1);
+        player.takeItem(item.getAttributeHandler().getPotentialClassLinker(), 1);
 
         scrolls.add(getTravelScrollType().getInternalName());
         player.getDataHandler().get(DataHandler.Data.USED_SCROLLS, DatapointStringList.class).setValue(scrolls);
@@ -88,7 +88,7 @@ public interface TravelScrollItem extends CustomSkyBlockItem, ExtraRarityDisplay
             return;
         }
 
-        player.takeItem(item.getAttributeHandler().getItemTypeAsType(), 1);
+        player.takeItem(item.getAttributeHandler().getPotentialClassLinker(), 1);
 
         scrolls.add(getTravelScrollType().getInternalName());
         player.getDataHandler().get(DataHandler.Data.USED_SCROLLS, DatapointStringList.class).setValue(scrolls);

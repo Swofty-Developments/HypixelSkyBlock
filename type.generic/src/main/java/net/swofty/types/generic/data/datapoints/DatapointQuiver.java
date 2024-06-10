@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minestom.server.item.Material;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.serializer.SkyBlockItemDeserializer;
-import net.swofty.types.generic.serializer.SkyBlockItemSerializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -102,7 +102,7 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
             return getFirstItemInQuiver() == null;
         }
 
-        public Integer getAmountOfArrows(ItemType arrowType) {
+        public Integer getAmountOfArrows(ItemTypeLinker arrowType) {
             int amount = 0;
             for (SkyBlockItem item : quiverMap.values()) {
                 if (item == null) continue;
@@ -110,7 +110,7 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
                 if (item.isNA()) continue;
                 if (item.getMaterial() == Material.AIR) continue;
 
-                if (item.getAttributeHandler().getItemTypeAsType() == arrowType) {
+                if (item.getAttributeHandler().getPotentialClassLinker() == arrowType) {
                     amount += item.getAmount();
                 }
             }

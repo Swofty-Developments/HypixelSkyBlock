@@ -1,29 +1,29 @@
 package net.swofty.types.generic.item.set;
 
 import lombok.Getter;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.sets.*;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 @Getter
 public enum ArmorSetRegistry {
-    LEAFLET(LeafletSet.class, ItemType.LEAFLET_BOOTS, ItemType.LEAFLET_LEGGINGS, ItemType.LEAFLET_CHESTPLATE, ItemType.LEAFLET_HELMET),
-    MINER_OUTFIT(MinerOutfitSet.class, ItemType.MINERS_OUTFIT_BOOTS, ItemType.MINERS_OUTFIT_LEGGINGS, ItemType.MINERS_OUTFIT_CHESTPLATE, ItemType.MINERS_OUTFIT_HELMET),
-    CHEAP_TUXEDO(CheapTuxedoSet.class, ItemType.CHEAP_TUXEDO_BOOTS, ItemType.CHEAP_TUXEDO_LEGGINGS, ItemType.CHEAP_TUXEDO_CHESTPLATE, null),
-    FANCY_TUXEDO(FancyTuxedoSet.class, ItemType.FANCY_TUXEDO_BOOTS, ItemType.FANCY_TUXEDO_LEGGINGS, ItemType.FANCY_TUXEDO_CHESTPLATE, null),
-    ELEGANT_TUXEDO(ElegantTuxedoSet.class, ItemType.ELEGANT_TUXEDO_BOOTS, ItemType.ELEGANT_TUXEDO_LEGGINGS, ItemType.ELEGANT_TUXEDO_CHESTPLATE, null),
-    MUSHROOM(MushroomSet.class, ItemType.MUSHROOM_BOOTS, ItemType.MUSHROOM_LEGGINGS, ItemType.MUSHROOM_CHESTPLATE, ItemType.MUSHROOM_HELMET),
-    PUMPKIN(PumpkinSet.class, ItemType.PUMPKIN_BOOTS, ItemType.PUMPKIN_LEGGINGS, ItemType.PUMPKIN_CHESTPLATE, ItemType.PUMPKIN_HELMET);
+    LEAFLET(LeafletSet.class, ItemTypeLinker.LEAFLET_BOOTS, ItemTypeLinker.LEAFLET_LEGGINGS, ItemTypeLinker.LEAFLET_CHESTPLATE, ItemTypeLinker.LEAFLET_HELMET),
+    MINER_OUTFIT(MinerOutfitSet.class, ItemTypeLinker.MINERS_OUTFIT_BOOTS, ItemTypeLinker.MINERS_OUTFIT_LEGGINGS, ItemTypeLinker.MINERS_OUTFIT_CHESTPLATE, ItemTypeLinker.MINERS_OUTFIT_HELMET),
+    CHEAP_TUXEDO(CheapTuxedoSet.class, ItemTypeLinker.CHEAP_TUXEDO_BOOTS, ItemTypeLinker.CHEAP_TUXEDO_LEGGINGS, ItemTypeLinker.CHEAP_TUXEDO_CHESTPLATE, null),
+    FANCY_TUXEDO(FancyTuxedoSet.class, ItemTypeLinker.FANCY_TUXEDO_BOOTS, ItemTypeLinker.FANCY_TUXEDO_LEGGINGS, ItemTypeLinker.FANCY_TUXEDO_CHESTPLATE, null),
+    ELEGANT_TUXEDO(ElegantTuxedoSet.class, ItemTypeLinker.ELEGANT_TUXEDO_BOOTS, ItemTypeLinker.ELEGANT_TUXEDO_LEGGINGS, ItemTypeLinker.ELEGANT_TUXEDO_CHESTPLATE, null),
+    MUSHROOM(MushroomSet.class, ItemTypeLinker.MUSHROOM_BOOTS, ItemTypeLinker.MUSHROOM_LEGGINGS, ItemTypeLinker.MUSHROOM_CHESTPLATE, ItemTypeLinker.MUSHROOM_HELMET),
+    PUMPKIN(PumpkinSet.class, ItemTypeLinker.PUMPKIN_BOOTS, ItemTypeLinker.PUMPKIN_LEGGINGS, ItemTypeLinker.PUMPKIN_CHESTPLATE, ItemTypeLinker.PUMPKIN_HELMET);
 
     private final Class<? extends ArmorSet> clazz;
-    private final ItemType boots;
-    private final ItemType leggings;
-    private final ItemType chestplate;
-    private final ItemType helmet;
+    private final ItemTypeLinker boots;
+    private final ItemTypeLinker leggings;
+    private final ItemTypeLinker chestplate;
+    private final ItemTypeLinker helmet;
 
-    ArmorSetRegistry(Class<? extends ArmorSet> clazz, ItemType boots, ItemType legging,
-                     ItemType chestplate, ItemType helmet) {
+    ArmorSetRegistry(Class<? extends ArmorSet> clazz, ItemTypeLinker boots, ItemTypeLinker legging,
+                     ItemTypeLinker chestplate, ItemTypeLinker helmet) {
         this.clazz = clazz;
         this.boots = boots;
         this.leggings = legging;
@@ -40,7 +40,7 @@ public enum ArmorSetRegistry {
         return null;
     }
 
-    public static ArmorSetRegistry getArmorSet(ItemType item) {
+    public static ArmorSetRegistry getArmorSet(ItemTypeLinker item) {
         for (ArmorSetRegistry armorSetRegistry : values()) {
             if (armorSetRegistry.getBoots() == item
                     || armorSetRegistry.getLeggings() == item
@@ -61,7 +61,7 @@ public enum ArmorSetRegistry {
         return count;
     }
 
-    public static ArmorSetRegistry getArmorSet(ItemType boots, ItemType leggings, ItemType chestplate, ItemType helmet) {
+    public static ArmorSetRegistry getArmorSet(ItemTypeLinker boots, ItemTypeLinker leggings, ItemTypeLinker chestplate, ItemTypeLinker helmet) {
         for (ArmorSetRegistry armorSetRegistry : values()) {
             if ((armorSetRegistry.getBoots() == null || armorSetRegistry.getBoots() == boots)
                     && (armorSetRegistry.getLeggings() == null || armorSetRegistry.getLeggings() == leggings)

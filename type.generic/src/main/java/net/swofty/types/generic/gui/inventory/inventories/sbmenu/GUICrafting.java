@@ -16,12 +16,12 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,12 +108,12 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
-                ItemType cursorItemType = cursorItem.getAttributeHandler().getItemTypeAsType();
-                ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getItemTypeAsType();
+                ItemTypeLinker cursorItemTypeLinker = cursorItem.getAttributeHandler().getPotentialClassLinker();
+                ItemTypeLinker resultItemTypeLinker = finalRecipe.getResult().getAttributeHandler().getPotentialClassLinker();
                 boolean isShift = e.getClickType().equals(ClickType.START_SHIFT_CLICK);
 
                 if (!e.getCursorItem().isAir() &&
-                        (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
+                        (cursorItemTypeLinker == null || !cursorItemTypeLinker.equals(resultItemTypeLinker))) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
                     return;
@@ -142,7 +142,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     player.addAndUpdateItem(e.getClickedItem());
                 }
 
-                if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
+                if (cursorItemTypeLinker != null && cursorItemTypeLinker.equals(resultItemTypeLinker) && !isShift) {
                     e.setCancelled(true);
                     player.addAndUpdateItem(cursorItem);
                 }

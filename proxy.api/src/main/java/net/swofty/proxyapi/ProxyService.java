@@ -2,7 +2,7 @@ package net.swofty.proxyapi;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.RedisMessage;
-import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.ProtocolSpecification;
 import org.json.JSONObject;
 
 import java.util.Map;

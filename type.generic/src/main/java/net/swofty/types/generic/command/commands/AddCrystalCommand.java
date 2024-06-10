@@ -5,7 +5,7 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ServerOrb;
@@ -21,12 +21,12 @@ import net.swofty.types.generic.user.categories.Rank;
 public class AddCrystalCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<ItemType> itemType = new ArgumentEnum<>("itemType", ItemType.class);
+        ArgumentEnum<ItemTypeLinker> itemType = new ArgumentEnum<>("itemType", ItemTypeLinker.class);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ItemType type = context.get(itemType);
+            ItemTypeLinker type = context.get(itemType);
             try {
                 CustomSkyBlockItem item = type.clazz.newInstance();
 

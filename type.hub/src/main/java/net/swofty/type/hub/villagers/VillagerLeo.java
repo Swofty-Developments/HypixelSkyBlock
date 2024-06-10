@@ -5,7 +5,7 @@ import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
@@ -48,7 +48,7 @@ public class VillagerLeo extends NPCVillagerDialogue {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemType.LEAFLET_CHESTPLATE, null).open(e.player());
+                        new GUIRecipe(ItemTypeLinker.LEAFLET_CHESTPLATE, null).open(e.player());
                     });
                     return;
                 }

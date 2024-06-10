@@ -1,12 +1,12 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -14,15 +14,15 @@ public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, En
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.NULL_OVOID, 16));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 30));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_BLAZE_ROD, 15));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 16));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 30));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BLAZE_ROD, 15));
         List<String> pattern = List.of(
                 "ABA",
                 "ACA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.GYROKINETIC_WAND), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemTypeLinker.GYROKINETIC_WAND), ingredientMap, pattern);
     }
 
     @Override

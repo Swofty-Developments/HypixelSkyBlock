@@ -2,7 +2,6 @@ package net.swofty.types.generic.event.actions.player.mobdamage;
 
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
@@ -11,8 +10,8 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.DamageIndicator;
 

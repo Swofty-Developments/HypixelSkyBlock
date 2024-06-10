@@ -4,13 +4,13 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class EndSword extends SkyBlockValueEvent implements CustomSkyBlockItem, 
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
         if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getItemTypeAsType() != ItemType.END_SWORD) return;
+        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.END_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.ENDER_DRAGON || event.getMob().getEntityType() == EntityType.ENDERMITE || event.getMob().getEntityType() == EntityType.ENDERMAN) {
             event.setValue((((float) event.getValue()) * 2));
         }

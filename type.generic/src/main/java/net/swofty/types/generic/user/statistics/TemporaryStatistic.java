@@ -2,6 +2,7 @@ package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.statistics.ItemStatistics;
 
 @Getter
 @Setter

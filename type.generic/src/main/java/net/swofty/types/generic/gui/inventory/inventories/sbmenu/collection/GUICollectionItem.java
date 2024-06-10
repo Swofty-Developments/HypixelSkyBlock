@@ -13,19 +13,19 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GUICollectionItem extends SkyBlockInventoryGUI {
-    private final ItemType item;
+    private final ItemTypeLinker item;
     private CollectionCategory category;
     private CollectionCategory.ItemCollection collection;
 
-    public GUICollectionItem(ItemType item) {
+    public GUICollectionItem(ItemTypeLinker item) {
         super(item.getDisplayName(null) + " Collection", InventoryType.CHEST_6_ROW);
 
         this.item = item;

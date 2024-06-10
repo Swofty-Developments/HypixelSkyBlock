@@ -11,11 +11,11 @@ import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(12) {
             Integer price = 6450;
-            ItemType item = ItemType.ABIPHONE_CONTACTS_TRIO;
+            ItemTypeLinker item = ItemTypeLinker.ABIPHONE_CONTACTS_TRIO;
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getBits() >= price) {

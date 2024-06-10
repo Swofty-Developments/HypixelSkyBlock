@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.vanilla.blocks.stone.quartz;
 
 import net.swofty.types.generic.block.BlockType;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MultiDefaultCraftable;
@@ -9,7 +9,7 @@ import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Sellable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -23,16 +23,16 @@ public class QuartzSlab implements PlaceableCustomSkyBlockItem, MultiDefaultCraf
         List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
 
         Map<Character, MaterialQuantifiable> ingredientMap1 = new HashMap<>();
-        ingredientMap1.put('A', new MaterialQuantifiable(ItemType.CHISELED_QUARTZ_BLOCK, 1));
+        ingredientMap1.put('A', new MaterialQuantifiable(ItemTypeLinker.CHISELED_QUARTZ_BLOCK, 1));
         List<String> pattern1 = List.of(
                 "AAA");
-        recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.QUARTZ_SLAB, 6), ingredientMap1, pattern1));
+        recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.QUARTZ_SLAB, 6), ingredientMap1, pattern1));
 
         Map<Character, MaterialQuantifiable> ingredientMap2 = new HashMap<>();
-        ingredientMap2.put('A', new MaterialQuantifiable(ItemType.QUARTZ_BLOCK, 1));
+        ingredientMap2.put('A', new MaterialQuantifiable(ItemTypeLinker.QUARTZ_BLOCK, 1));
         List<String> pattern2 = List.of(
                 "AAA");
-        recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.QUARTZ_SLAB, 6), ingredientMap2, pattern2));
+        recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.QUARTZ_SLAB, 6), ingredientMap2, pattern2));
         return recipes;
     }
 

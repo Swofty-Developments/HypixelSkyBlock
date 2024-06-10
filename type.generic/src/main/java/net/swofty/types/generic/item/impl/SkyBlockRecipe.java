@@ -5,7 +5,7 @@ import lombok.Setter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.SkyBlockGenericLoader;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -53,25 +53,25 @@ public abstract class SkyBlockRecipe<T> {
         return ShapelessRecipe.parseShapelessRecipe(stacks);
     }
 
-    public static @NotNull List<SkyBlockRecipe<?>> getFromType(ItemType type) {
+    public static @NotNull List<SkyBlockRecipe<?>> getFromType(ItemTypeLinker type) {
         ArrayList<SkyBlockRecipe<?>> recipes = new ArrayList<>();
         ShapedRecipe.CACHED_RECIPES.forEach(recipe -> {
-            ItemType itemType = recipe.getResult().getAttributeHandler().getItemTypeAsType();
-            if (itemType != null && itemType == type) {
+            ItemTypeLinker itemTypeLinker = recipe.getResult().getAttributeHandler().getPotentialClassLinker();
+            if (itemTypeLinker != null && itemTypeLinker == type) {
                 recipes.add(recipe);
             }
         });
         ShapelessRecipe.CACHED_RECIPES.forEach(recipe -> {
-            ItemType itemType = recipe.getResult().getAttributeHandler().getItemTypeAsType();
-            if (itemType != null && itemType == type) {
+            ItemTypeLinker itemTypeLinker = recipe.getResult().getAttributeHandler().getPotentialClassLinker();
+            if (itemTypeLinker != null && itemTypeLinker == type) {
                 recipes.add(recipe);
             }
         });
         return recipes;
     }
 
-    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(Class<?> clazz, SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
-        List<ItemType> matchTypes = Arrays.stream(ItemType.values())
+    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(Class<?> clazz, SkyBlockRecipe.RecipeType type, ItemTypeLinker craftingMaterial) {
+        List<ItemTypeLinker> matchTypes = Arrays.stream(ItemTypeLinker.values())
                 .filter(itemType -> itemType.clazz != null)
                 .filter(itemType -> itemType.clazz.equals(clazz))
                 .toList();
@@ -86,15 +86,15 @@ public abstract class SkyBlockRecipe<T> {
                     .add(craftingMaterial, 32)
                     .add(craftingMaterial, 32);
             recipe.setCustomRecipeDisplay(new SkyBlockItem[] {
-                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(ItemTypeLinker.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(ItemTypeLinker.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
                     new SkyBlockItem(craftingMaterial, 32),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(ItemTypeLinker.AIR),
                     new SkyBlockItem(craftingMaterial, 32),
-                    new SkyBlockItem(ItemType.AIR),
+                    new SkyBlockItem(ItemTypeLinker.AIR),
             });
 
             return recipe;

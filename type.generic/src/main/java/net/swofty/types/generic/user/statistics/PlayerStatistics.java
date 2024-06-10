@@ -13,6 +13,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
@@ -22,10 +24,10 @@ import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeRuneInfusedWith;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
 import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
@@ -61,7 +63,7 @@ public class PlayerStatistics {
         this.player = player;
     }
 
-    public @Nullable SkyBlockItem getItemWithRune(ItemType runeType) {
+    public @Nullable SkyBlockItem getItemWithRune(ItemTypeLinker runeType) {
         List<SkyBlockItem> piecesToCheck = getPossibleRuneItems();
 
         for (SkyBlockItem item : piecesToCheck) {
@@ -228,16 +230,16 @@ public class PlayerStatistics {
     }
 
     public void updateAccessoryStatistics() {
-        List<ItemType> usedAccessories = new ArrayList<>();
+        List<ItemTypeLinker> usedAccessories = new ArrayList<>();
         ItemStatistics total = ItemStatistics.builder().build();
         for (ItemStack itemStack : player.getInventory().getItemStacks()) {
             if (SkyBlockItem.isSkyBlockItem(itemStack)) {
                 SkyBlockItem item = new SkyBlockItem(itemStack);
                 if (item.getGenericInstance() == null) continue;
                 if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
-                if (usedAccessories.contains(item.getAttributeHandler().getItemTypeAsType())) continue;
+                if (usedAccessories.contains(item.getAttributeHandler().getPotentialClassLinker())) continue;
 
-                usedAccessories.add(item.getAttributeHandler().getItemTypeAsType());
+                usedAccessories.add(item.getAttributeHandler().getPotentialClassLinker());
                 total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                         calculateExtraItemStatisticsToAdd(
                             item,
@@ -250,9 +252,9 @@ public class PlayerStatistics {
             if (item == null) continue;
             if (item.getGenericInstance() == null) continue;
             if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
-            if (usedAccessories.contains(item.getAttributeHandler().getItemTypeAsType())) continue;
+            if (usedAccessories.contains(item.getAttributeHandler().getPotentialClassLinker())) continue;
 
-            usedAccessories.add(item.getAttributeHandler().getItemTypeAsType());
+            usedAccessories.add(item.getAttributeHandler().getPotentialClassLinker());
             total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                     calculateExtraItemStatisticsToAdd(
                         item,

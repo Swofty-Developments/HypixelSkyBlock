@@ -9,11 +9,11 @@ import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
         for (int slot : displaySlots) {
             if (index < items.size()) {
                 items.forEach(shopItem -> {
-                    ItemType item = shopItem.getItemType();
+                    ItemTypeLinker item = shopItem.getItemTypeLinker();
                     Integer price = shopItem.getPrice();
                     Integer amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {

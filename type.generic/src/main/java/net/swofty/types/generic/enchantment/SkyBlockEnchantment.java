@@ -1,27 +1,34 @@
 package net.swofty.types.generic.enchantment;
 
 import lombok.Builder;
+import net.swofty.commons.item.UnderstandableSkyBlockEnchantment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
 public record SkyBlockEnchantment(EnchantmentType type, int level) {
-
-    public String serialize() {
-        return type.name() + ":" + level;
-    }
-
-    public static SkyBlockEnchantment deserialize(String string) {
-        String[] split = string.split(":");
-        return SkyBlockEnchantment.builder()
-                .type(EnchantmentType.valueOf(split[0]))
-                .level(Integer.parseInt(split[1]))
-                .build();
+    public SkyBlockEnchantment(UnderstandableSkyBlockEnchantment enchantment) {
+        this(EnchantmentType.valueOf(enchantment.getEnchantmentType()), enchantment.getLevel());
     }
 
     public record ItemEnchantments(List<SkyBlockEnchantment> enchantments) {
+        public ItemEnchantments(UnderstandableSkyBlockEnchantment.ItemEnchantments enchantments) {
+            this(enchantments.enchantments().stream().map(SkyBlockEnchantment::new).toList());
+        }
+
         public void addEnchantment(SkyBlockEnchantment enchantment) {
             enchantments.add(enchantment);
         }
+
+        public UnderstandableSkyBlockEnchantment.ItemEnchantments toUnderstandable() {
+            UnderstandableSkyBlockEnchantment.ItemEnchantments itemEnchantments = new UnderstandableSkyBlockEnchantment.ItemEnchantments(new ArrayList<>());
+            enchantments.forEach((enchantment) -> itemEnchantments.addEnchantment(enchantment.toUnderstandable()));
+            return itemEnchantments;
+        }
+    }
+
+    public UnderstandableSkyBlockEnchantment toUnderstandable() {
+        return new UnderstandableSkyBlockEnchantment(type.name(), level);
     }
 }

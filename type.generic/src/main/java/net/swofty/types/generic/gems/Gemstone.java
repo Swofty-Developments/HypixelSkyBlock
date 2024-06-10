@@ -2,9 +2,9 @@ package net.swofty.types.generic.gems;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.GemstoneImpl;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
@@ -12,8 +12,8 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.utility.ChatColor;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.ChatColor;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public enum Gemstone {
 
         int toReturn = 0;
         for (ItemAttributeGemData.GemData.GemSlots slot : gemData.slots) {
-            ItemType gem = slot.filledWith;
+            ItemTypeLinker gem = slot.filledWith;
             if (gem == null) continue;
 
             GemstoneImpl impl = ((GemstoneImpl) gem.clazz.getDeclaredConstructor().newInstance());

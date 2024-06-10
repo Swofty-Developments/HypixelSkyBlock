@@ -1,6 +1,6 @@
 package net.swofty.types.generic.utility;
 
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.commons.item.Rarity;
 
 public record RarityValue<T>(T common, T uncommon, T rare, T epic, T legendary, T rest) {
 

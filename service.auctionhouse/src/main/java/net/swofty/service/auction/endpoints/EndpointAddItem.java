@@ -4,7 +4,7 @@ import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.types.generic.auction.AuctionItem;
+import net.swofty.commons.auctions.AuctionItem;
 import org.bson.Document;
 import org.json.JSONObject;
 

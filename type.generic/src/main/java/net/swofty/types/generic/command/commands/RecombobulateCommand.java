@@ -2,7 +2,7 @@ package net.swofty.types.generic.command.commands;
 
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
+import net.swofty.types.generic.item.ItemAttributeHandler;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;

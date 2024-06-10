@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.enchanted;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Enchanted;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class EnchantedSharkFin implements Enchanted, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemType.SHARK_FIN);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FISHING, ItemTypeLinker.SHARK_FIN);
     }
 
     @Override

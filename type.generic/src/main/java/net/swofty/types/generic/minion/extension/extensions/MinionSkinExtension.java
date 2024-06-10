@@ -10,7 +10,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionSkinItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -24,13 +24,13 @@ import java.util.stream.Stream;
 
 public class MinionSkinExtension extends MinionExtension {
 
-    public MinionSkinExtension(@Nullable ItemType itemType, @Nullable Object data) {
-        super(itemType, data);
+    public MinionSkinExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+        super(itemTypeLinker, data);
     }
 
     @Override
     public @NotNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
-        if (getItemTypePassedIn() == null) {
+        if (getItemTypeLinkerPassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -44,7 +44,7 @@ public class MinionSkinExtension extends MinionExtension {
 
                     if (skinItem.getGenericInstance() instanceof MinionSkinItem) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypePassedIn(skinItem.getAttributeHandler().getItemTypeAsType());
+                        setItemTypeLinkerPassedIn(skinItem.getAttributeHandler().getPotentialClassLinker());
                         minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                         minion.getMinionEntity().updateMinionDisplay(minion);
                     } else {
@@ -81,8 +81,8 @@ public class MinionSkinExtension extends MinionExtension {
                         return;
                     }
 
-                    player.addAndUpdateItem(getItemTypePassedIn());
-                    setItemTypePassedIn(null);
+                    player.addAndUpdateItem(getItemTypeLinkerPassedIn());
+                    setItemTypeLinkerPassedIn(null);
                     e.setClickedItem(ItemStack.AIR);
                     minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                     minion.getMinionEntity().updateMinionDisplay(minion);
@@ -100,14 +100,14 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
+                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypeLinkerPassedIn())).getUpdatedItem();
                     item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(
                             "§7You can insert a Minion Skin",
                             "§7here to change the appearance of",
                             "§7your minion.",
                             " ",
-                            "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(null),
+                            "§7Current Skin: " + getItemTypeLinkerPassedIn().rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
                             " ",
                             "§eClick to remove."
                     ).toList());
@@ -120,17 +120,17 @@ public class MinionSkinExtension extends MinionExtension {
 
     @Override
     public String toString() {
-        if (getItemTypePassedIn() == null)
+        if (getItemTypeLinkerPassedIn() == null)
             return "null";
-        return getItemTypePassedIn().name();
+        return getItemTypeLinkerPassedIn().name();
     }
 
     @Override
     public void fromString(String string) {
         if (string.equals("null")) {
-            setItemTypePassedIn(null);
+            setItemTypeLinkerPassedIn(null);
             return;
         }
-        setItemTypePassedIn(ItemType.valueOf(string));
+        setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(string));
     }
 }

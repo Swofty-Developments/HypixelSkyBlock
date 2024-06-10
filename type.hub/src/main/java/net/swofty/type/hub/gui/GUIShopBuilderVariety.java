@@ -2,7 +2,7 @@ package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
@@ -37,28 +37,28 @@ public class GUIShopBuilderVariety extends SkyBlockShopGUI {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GLASS), 1, new CoinShopPrice(4)));
         attachItem(ShopItem.Single(new SkyBlockItem(Material.LAVA_BUCKET), 1, new CoinShopPrice(20)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.JACK_O_LANTERN), 1, new CoinShopPrice(10)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_ORANGE), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_LEMON), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_LETTUCE), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_MELON), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_APPLE), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_ORANGE), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_LEMON), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_LETTUCE), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_MELON), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_APPLE), 1, new CoinShopPrice(1000)));
 
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BLUE_CORN), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BROWN_MUSHROOM), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_CORN), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_CACTUS), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BUSH), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BEETROOT), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BERRY), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_ANCIENT_FRUIT), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_KIWI), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BLUE_CORN), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BROWN_MUSHROOM), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_CORN), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_CACTUS), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BUSH), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BEETROOT), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BERRY), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_ANCIENT_FRUIT), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_KIWI), 1, new CoinShopPrice(1000)));
 
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_PINK_BERRY), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BERRY_BUSH), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_CHESTO_BERRY), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_LILAC_FRUIT), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_BANANA_BUNCH), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_APPALLED_PUMPKIN), 1, new CoinShopPrice(1000)));
-        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemType.DECORATION_ONION), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_PINK_BERRY), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BERRY_BUSH), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_CHESTO_BERRY), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_LILAC_FRUIT), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_BANANA_BUNCH), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_APPALLED_PUMPKIN), 1, new CoinShopPrice(1000)));
+        attachItem(ShopItem.Stackable(new SkyBlockItem(ItemTypeLinker.DECORATION_ONION), 1, new CoinShopPrice(1000)));
     }
 }

@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -17,14 +17,14 @@ import net.swofty.types.generic.user.categories.Rank;
 public class SetCollectionCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<ItemType> itemType = new ArgumentEnum("item_type", ItemType.class);
+        ArgumentEnum<ItemTypeLinker> itemType = new ArgumentEnum("item_type", ItemTypeLinker.class);
         ArgumentInteger amountArgument = new ArgumentInteger("amount");
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            ItemType type = context.get(itemType);
+            ItemTypeLinker type = context.get(itemType);
             int amount = context.get(amountArgument);
 
             player.getCollection().set(type, amount);

@@ -2,7 +2,7 @@ package net.swofty.types.generic.skill.skills;
 
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.skill.SkillCategory;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistic;
 
 import java.util.List;
 

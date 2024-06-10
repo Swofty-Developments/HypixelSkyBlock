@@ -4,18 +4,18 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.minion.IslandMinionData;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
 @Setter
 public abstract class MinionExtension {
-    private ItemType itemTypePassedIn;
+    private ItemTypeLinker itemTypeLinkerPassedIn;
     private Object data;
 
-    public MinionExtension(@Nullable ItemType itemType, @Nullable Object data) {
-        this.itemTypePassedIn = itemType;
+    public MinionExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+        this.itemTypeLinkerPassedIn = itemTypeLinker;
         this.data = data;
     }
 

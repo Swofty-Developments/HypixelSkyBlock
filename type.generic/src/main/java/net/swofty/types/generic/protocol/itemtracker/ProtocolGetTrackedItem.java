@@ -1,8 +1,8 @@
 package net.swofty.types.generic.protocol.itemtracker;
 
 import net.swofty.commons.TrackedItem;
-import net.swofty.service.protocol.ProtocolSpecification;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.Serializer;
 import org.bson.Document;
 
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package net.swofty.types.generic.collection;
 
 import lombok.Getter;
 import net.swofty.types.generic.collection.collections.*;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,7 +26,7 @@ public enum CollectionCategories {
         this.clazz = clazz;
     }
 
-    public static @Nullable CollectionCategory getCategory(ItemType type) {
+    public static @Nullable CollectionCategory getCategory(ItemTypeLinker type) {
         return getCategories().stream().filter(category -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)).findFirst().orElse(null);
     }
 

@@ -6,7 +6,7 @@ import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.types.generic.auction.AuctionItem;
+import net.swofty.commons.auctions.AuctionItem;
 import org.bson.Document;
 
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
 package net.swofty.types.generic.item.items.enchantment;
 
 import com.mongodb.lang.Nullable;
+import net.swofty.commons.item.PotatoType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -12,7 +13,7 @@ public class HotPotatoBook implements AnvilCombinable, Enchanted, Sellable, Trac
     @Override
     public void apply(SkyBlockItem upgradeItem, SkyBlockItem sacrificeItem) {
         HotPotatoable upgrade = (HotPotatoable) upgradeItem.getGenericInstance();
-        HotPotatoable.PotatoType potatoType = upgrade.getHotPotatoType();
+        PotatoType potatoType = upgrade.getHotPotatoType();
 
         ItemAttributeHotPotatoBookData.HotPotatoBookData upgradeData = upgradeItem.getAttributeHandler().getHotPotatoBookData();
         upgradeData.addAmount(1);
@@ -31,7 +32,7 @@ public class HotPotatoBook implements AnvilCombinable, Enchanted, Sellable, Trac
 
     @Override
     public List<String> getLore(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        List<String> lore = HotPotatoable.PotatoType.allLores();
+        List<String> lore = PotatoType.allLores();
         lore.add("§7This item can be applied to an item up to");
         lore.add("§a10 §7times!");
 

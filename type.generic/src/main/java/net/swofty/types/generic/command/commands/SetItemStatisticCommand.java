@@ -5,15 +5,15 @@ import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeSandboxItem;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.types.generic.item.impl.DefaultSoulbound;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 @CommandParameters(aliases = "updateitemstatistic",
         description = "Updates the statistic of a player's Sandbox item",
@@ -35,9 +35,9 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemType type = itemInHand.getAttributeHandler().getItemTypeAsType();
+            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
 
-            if (type != ItemType.SANDBOX_ITEM) {
+            if (type != ItemTypeLinker.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the lore of sandbox items.");
                 return;
             }

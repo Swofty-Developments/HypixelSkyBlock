@@ -18,13 +18,13 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
+import net.swofty.types.generic.item.ItemAttributeHandler;
 import net.swofty.types.generic.item.impl.Enchantable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;
@@ -168,7 +168,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             }
         });
 
-        ItemType type = item.getAttributeHandler().getItemTypeAsType();
+        ItemTypeLinker type = item.getAttributeHandler().getPotentialClassLinker();
         if (item.getItemStack().amount() > 1 ||
                 type == null ||
                 !(type.clazz.newInstance() instanceof Enchantable)) {

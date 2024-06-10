@@ -11,10 +11,9 @@ import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.block.impl.BlockBreakable;
-import net.swofty.types.generic.block.impl.BlockInteractable;
 import net.swofty.types.generic.block.impl.BlockPlaceable;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -72,7 +71,7 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
 
         event.setResultBlock(Block.AIR);
 
-        SkyBlockItem skyBlockItem = new SkyBlockItem(ItemType.valueOf(type));
+        SkyBlockItem skyBlockItem = new SkyBlockItem(ItemTypeLinker.valueOf(type));
 
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         player.addAndUpdateItem(skyBlockItem);

@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.minion.farming;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.minion.MinionRegistry;
@@ -12,18 +12,18 @@ public class WheatMinion implements CustomSkyBlockItem, Minion {
     }
 
     @Override
-    public ItemType getBaseCraftMaterial() {
-        return ItemType.WHEAT;
+    public ItemTypeLinker getBaseCraftMaterial() {
+        return ItemTypeLinker.WHEAT;
     }
 
     @Override
-    public ItemType getEnchantedCraftMaterial() {
-        return ItemType.ENCHANTED_BREAD;
+    public ItemTypeLinker getEnchantedCraftMaterial() {
+        return ItemTypeLinker.ENCHANTED_BREAD;
     }
 
     @Override
-    public ItemType getFirstBaseItem() {
-        return ItemType.WOODEN_HOE;
+    public ItemTypeLinker getFirstBaseItem() {
+        return ItemTypeLinker.WOODEN_HOE;
     }
 
     @Override

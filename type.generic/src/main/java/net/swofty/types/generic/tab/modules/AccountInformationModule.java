@@ -9,9 +9,9 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.TablistSkinRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.minion;
 
 import lombok.Getter;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 
 import java.util.HashMap;
@@ -92,5 +92,5 @@ public enum MinionRecipe {
         }
     }
 
-    public record MinionRecipeData(ItemType baseMaterial, ItemType enchantedMaterial, ItemType firstBaseItem, ItemType minionItem) {}
+    public record MinionRecipeData(ItemTypeLinker baseMaterial, ItemTypeLinker enchantedMaterial, ItemTypeLinker firstBaseItem, ItemTypeLinker minionItem) {}
 }

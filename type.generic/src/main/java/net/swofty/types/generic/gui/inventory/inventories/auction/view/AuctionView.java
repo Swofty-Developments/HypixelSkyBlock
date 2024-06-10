@@ -1,6 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction.view;
 
-import net.swofty.types.generic.auction.AuctionItem;
+import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionViewItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

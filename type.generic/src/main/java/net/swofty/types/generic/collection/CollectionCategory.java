@@ -4,11 +4,11 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public abstract class CollectionCategory {
 
     public abstract ItemCollection[] getCollections();
 
-    public ItemCollection getCollection(ItemType type) {
+    public ItemCollection getCollection(ItemTypeLinker type) {
         for (ItemCollection collection : getCollections()) {
             if (collection.type() == type) {
                 return collection;
@@ -31,7 +31,7 @@ public abstract class CollectionCategory {
         return null;
     }
 
-    public record ItemCollection(ItemType type, ItemCollectionReward... rewards) {
+    public record ItemCollection(ItemTypeLinker type, ItemCollectionReward... rewards) {
         public int getPlacementOf(ItemCollectionReward reward) {
             for (int i = 0; i < rewards.length; i++) {
                 if (rewards[i].requirement == reward.requirement) {

@@ -9,7 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIJerry extends SkyBlockInventoryGUI {
@@ -80,7 +80,7 @@ public class GUIJerry extends SkyBlockInventoryGUI {
                 player.closeInventory();
                 player.sendMessage("§aI have given you an egg, place this where you would like me to move to!");
 
-                player.addAndUpdateItem(ItemType.MOVE_JERRY);
+                player.addAndUpdateItem(ItemTypeLinker.MOVE_JERRY);
             }
 
             @Override

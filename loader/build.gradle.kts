@@ -27,7 +27,6 @@ dependencies {
     implementation(project(":type.hub"))
     implementation(project(":type.thefarmingislands"))
     implementation(project(":type.generic"))
-    implementation(project(":service.protocol"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":spark"))

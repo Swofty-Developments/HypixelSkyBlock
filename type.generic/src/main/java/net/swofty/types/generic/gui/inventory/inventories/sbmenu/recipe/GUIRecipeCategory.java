@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -22,7 +22,7 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,9 +76,9 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
 
         paged.removeIf(recipe -> recipe.getRecipeType() != type);
 
-        List<ItemType> shownItems = new ArrayList<>();
+        List<ItemTypeLinker> shownItems = new ArrayList<>();
         paged.removeIf(recipe -> {
-            ItemType type = recipe.getResult().getAttributeHandler().getItemTypeAsType();
+            ItemTypeLinker type = recipe.getResult().getAttributeHandler().getPotentialClassLinker();
 
             if (shownItems.contains(type)) {
                 return true;
@@ -179,7 +179,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipe(
-                            item.getResult().getAttributeHandler().getItemTypeAsType(),
+                            item.getResult().getAttributeHandler().getPotentialClassLinker(),
                             GUIRecipeCategory.this).open(player);
                 }
 

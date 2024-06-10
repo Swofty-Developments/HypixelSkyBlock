@@ -1,7 +1,7 @@
 package net.swofty.types.generic.data.datapoints;
 
 import lombok.Getter;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.user.fairysouls.FairySoulExchangeLevels;
 import org.json.JSONObject;

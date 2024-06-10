@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.RightClickRecipe;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class WardenHeart implements CustomSkyBlockItem, SkullHead, TrackedUnique
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.WARDEN_HELMET;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.WARDEN_HELMET;
     }
 }

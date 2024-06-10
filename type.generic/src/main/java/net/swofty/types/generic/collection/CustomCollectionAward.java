@@ -1,7 +1,7 @@
 package net.swofty.types.generic.collection;
 
 import lombok.Getter;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public enum CustomCollectionAward {
     SACK_OF_SACKS_UPGRADE_5("§aMassive Sack of Sacks Upgrade §7(+3 slots)"),
     ;
 
-    public static final Map<CustomCollectionAward, Map.Entry<ItemType, Integer>> AWARD_CACHE = new HashMap<>();
+    public static final Map<CustomCollectionAward, Map.Entry<ItemTypeLinker, Integer>> AWARD_CACHE = new HashMap<>();
 
     private final String display;
 

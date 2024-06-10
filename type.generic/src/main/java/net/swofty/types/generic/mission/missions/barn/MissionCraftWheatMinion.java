@@ -3,7 +3,7 @@ package net.swofty.types.generic.mission.missions.barn;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;
@@ -21,7 +21,7 @@ public class MissionCraftWheatMinion extends SkyBlockMission {
             return;
         }
 
-        if (event.getCraftedItem().getAttributeHandler().getItemTypeAsType() != ItemType.WHEAT_MINION) {
+        if (event.getCraftedItem().getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.WHEAT_MINION) {
             return;
         }
 

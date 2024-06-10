@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.enchanted;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.Sellable;
@@ -14,6 +14,6 @@ public class EnchantedWool implements Enchanted, Sellable, DefaultCraftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemType.WHITE_WOOL);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.FARMING, ItemTypeLinker.WHITE_WOOL);
     }
 }

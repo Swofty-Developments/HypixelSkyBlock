@@ -5,17 +5,17 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.particle.Particle;
 import net.swofty.types.generic.data.datapoints.DatapointPetData;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.items.pet.PetAbility;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.ChatColor;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.ChatColor;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, TrackedUniqueItem, I
 
     private void interact(SkyBlockPlayer player, SkyBlockItem item) {
         DatapointPetData.UserPetData petData = player.getPetData();
-        ItemType type = item.getAttributeHandler().getItemTypeAsType();
+        ItemTypeLinker type = item.getAttributeHandler().getPotentialClassLinker();
         Rarity rarity = item.getAttributeHandler().getRarity();
 
         if (petData.getPet(type) != null) {

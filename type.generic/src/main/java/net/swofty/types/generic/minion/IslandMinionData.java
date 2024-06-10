@@ -6,10 +6,10 @@ import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.SharedInstance;
 import net.swofty.types.generic.entity.MinionEntityImpl;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
 import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
@@ -86,7 +86,7 @@ public class IslandMinionData {
 
             // Check if the item already exists in the inventory.
             Optional<MaterialQuantifiable> existingItem = itemsInMinion.stream()
-                    .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getItemTypeAsType())
+                    .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getPotentialClassLinker())
                     .findFirst();
 
             if (existingItem.isPresent()) {
@@ -94,13 +94,13 @@ public class IslandMinionData {
                 existingItem.get().setAmount(existingItem.get().getAmount() + item.getAmount());
             } else {
                 // If the item does not exist, add it as a new entry.
-                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getItemTypeAsType(), item.getAmount()));
+                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getPotentialClassLinker(), item.getAmount()));
             }
             return true;
         }
 
         public SkyBlockItem asSkyBlockItem() {
-            SkyBlockItem toReturn = new SkyBlockItem(getMinion().getItemType());
+            SkyBlockItem toReturn = new SkyBlockItem(getMinion().getItemTypeLinker());
             toReturn.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(
                     getTier(),
                     getGeneratedItems()
@@ -117,7 +117,7 @@ public class IslandMinionData {
                 percentageSpeedIncrease += 10;
 
             //Handle Minion Fuel
-            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
+            ItemTypeLinker minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypeLinkerPassedIn();
             if (minionFuel != null) {
                 percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
             }
@@ -134,7 +134,7 @@ public class IslandMinionData {
 
         public int getBonusRange(){
             int range = 0;
-            range += extensionData.getMinionUpgradeCount(ItemType.MINION_EXPANDER);
+            range += extensionData.getMinionUpgradeCount(ItemTypeLinker.MINION_EXPANDER);
             return range;
         }
 
@@ -161,7 +161,7 @@ public class IslandMinionData {
             List<MaterialQuantifiable> itemsInMinion = new ArrayList<>();
             ((List<String>) data.get("itemsInMinion")).forEach(item -> {
                 itemsInMinion.add(new MaterialQuantifiable(
-                        ItemType.valueOf(item.split(",")[0]),
+                        ItemTypeLinker.valueOf(item.split(",")[0]),
                         Integer.parseInt(item.split(",")[1])
                 ));
             });

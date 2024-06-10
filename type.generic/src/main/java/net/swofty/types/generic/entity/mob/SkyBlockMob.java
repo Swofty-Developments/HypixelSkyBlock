@@ -22,7 +22,7 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.loottable.LootAffector;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
@@ -30,8 +30,8 @@ import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,15 +134,15 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
 
-        Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
+        Map<ItemTypeLinker, SkyBlockLootTable.LootRecord> drops = getLootTable()
             .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
 
-        for (ItemType itemType : drops.keySet()) {
-            SkyBlockLootTable.LootRecord record = drops.get(itemType);
+        for (ItemTypeLinker itemTypeLinker : drops.keySet()) {
+            SkyBlockLootTable.LootRecord record = drops.get(itemTypeLinker);
 
             if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
-            SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
+            SkyBlockItem item = new SkyBlockItem(itemTypeLinker, record.getAmount());
             DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
             droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }

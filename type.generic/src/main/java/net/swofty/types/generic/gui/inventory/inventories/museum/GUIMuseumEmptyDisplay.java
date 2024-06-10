@@ -21,7 +21,7 @@ import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
         List<SkyBlockItem> items = data.getInMuseumThatAreNotInDisplay();
 
         items.removeIf(item -> {
-            MuseumableItemCategory itemCategory = MuseumableItemCategory.getFromItem(item.getAttributeHandler().getItemTypeAsType());
+            MuseumableItemCategory itemCategory = MuseumableItemCategory.getFromItem(item.getAttributeHandler().getPotentialClassLinker());
             return !display.getAllowedItemCategories().contains(itemCategory);
         });
 

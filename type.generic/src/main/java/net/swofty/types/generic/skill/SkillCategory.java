@@ -7,9 +7,9 @@ import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.commons.StringUtility;
 
 import java.util.Arrays;
 import java.util.List;

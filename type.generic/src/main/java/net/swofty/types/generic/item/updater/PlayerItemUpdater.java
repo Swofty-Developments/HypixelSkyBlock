@@ -14,11 +14,11 @@ import net.minestom.server.utils.Unit;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
-import net.swofty.types.generic.item.ItemType;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.ItemAttributeHandler;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.ItemAttributeHandler;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.item.impl.GemstoneItem;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
@@ -71,7 +71,7 @@ public class PlayerItemUpdater {
 
         // Update Rarity
         try {
-            handler.setRarity(ItemType.valueOf(handler.getItemType()).rarity);
+            handler.setRarity(ItemTypeLinker.valueOf(handler.getItemType()).rarity);
         } catch (IllegalArgumentException e) {
             handler.setRarity(Rarity.COMMON);
         }

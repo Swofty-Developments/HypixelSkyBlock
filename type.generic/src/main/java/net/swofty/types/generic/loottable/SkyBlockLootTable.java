@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.HashMap;
@@ -20,10 +20,10 @@ public abstract class SkyBlockLootTable {
         return (int) (Math.random() * (max - min + 1) + min);
     }
 
-    public List<ItemType> getLootTableItems() {
-        List<ItemType> items = new java.util.ArrayList<>();
+    public List<ItemTypeLinker> getLootTableItems() {
+        List<ItemTypeLinker> items = new java.util.ArrayList<>();
         for (LootRecord record : getLootTable()) {
-            items.add(record.itemType);
+            items.add(record.itemTypeLinker);
         }
         return items;
     }
@@ -33,8 +33,8 @@ public abstract class SkyBlockLootTable {
      * @param player The player to run the chances for
      * @return A map of the loot that the player will receive
      */
-    public @NonNull Map<ItemType, LootRecord> runChances(SkyBlockPlayer player, LootAffector... affectors) {
-        Map<ItemType, LootRecord> loot = new HashMap<>();
+    public @NonNull Map<ItemTypeLinker, LootRecord> runChances(SkyBlockPlayer player, LootAffector... affectors) {
+        Map<ItemTypeLinker, LootRecord> loot = new HashMap<>();
         CalculationMode mode = getCalculationMode();
 
         if (mode == CalculationMode.PICK_ONE) {
@@ -53,7 +53,7 @@ public abstract class SkyBlockLootTable {
                 if (record.shouldCalculate.apply(player)) {
                     current += record.chancePercent;
                     if (random < current) {
-                        loot.put(record.itemType, record);
+                        loot.put(record.itemTypeLinker, record);
                         break;
                     }
                 }
@@ -69,7 +69,7 @@ public abstract class SkyBlockLootTable {
                     }
 
                     if (Math.random() * 100 < adjustedChancePercent) {
-                        loot.put(record.itemType, record);
+                        loot.put(record.itemTypeLinker, record);
                     }
                 }
             }
@@ -82,21 +82,21 @@ public abstract class SkyBlockLootTable {
     @RequiredArgsConstructor
     @AllArgsConstructor
     public static class LootRecord {
-        private final ItemType itemType;
+        private final ItemTypeLinker itemTypeLinker;
         private final int amount;
         private final double chancePercent;
         private Function<SkyBlockPlayer, Boolean> shouldCalculate = player -> true;
 
         public static LootRecord none(int chance) {
-            return new LootRecord(ItemType.AIR, 0, chance, player -> true);
+            return new LootRecord(ItemTypeLinker.AIR, 0, chance, player -> true);
         }
 
         public static LootRecord none(int chance, Function<SkyBlockPlayer, Boolean> shouldCalculate) {
-            return new LootRecord(ItemType.AIR, 0, chance, shouldCalculate);
+            return new LootRecord(ItemTypeLinker.AIR, 0, chance, shouldCalculate);
         }
 
         public static boolean isNone(LootRecord lootRecord) {
-            return lootRecord.itemType == ItemType.AIR && lootRecord.amount == 0;
+            return lootRecord.itemTypeLinker == ItemTypeLinker.AIR && lootRecord.amount == 0;
         }
     }
 

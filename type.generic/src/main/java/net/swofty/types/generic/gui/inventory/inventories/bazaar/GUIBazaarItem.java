@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarPriceSelection;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
@@ -29,21 +29,21 @@ import java.util.List;
 import java.util.Map;
 
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
-    private final ItemType itemType;
-    public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getKey() + " -> " + itemType.getDisplayName(null),
+    private final ItemTypeLinker itemTypeLinker;
+    public GUIBazaarItem(ItemTypeLinker itemTypeLinker) {
+        super(BazaarCategories.getFromItem(itemTypeLinker).getKey() + " -> " + itemTypeLinker.getDisplayName(null),
                 InventoryType.CHEST_4_ROW);
 
-        this.itemType = itemType;
+        this.itemTypeLinker = itemTypeLinker;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(30, new GUIBazaarItemSet(
-                BazaarCategories.getFromItem(itemType).getKey(),
-                BazaarCategories.getFromItem(itemType).getValue())));
+                BazaarCategories.getFromItem(itemTypeLinker).getKey(),
+                BazaarCategories.getFromItem(itemTypeLinker).getValue())));
         set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBazaar(BazaarCategories.getFromItem(itemType).getKey()).open(player);
+                new GUIBazaar(BazaarCategories.getFromItem(itemTypeLinker).getKey()).open(player);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return new NonPlayerItemUpdater(new SkyBlockItem(itemType)).getUpdatedItem();
+                return new NonPlayerItemUpdater(new SkyBlockItem(itemTypeLinker)).getUpdatedItem();
             }
         });
     }
@@ -81,7 +81,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
         Thread.startVirtualThread(() -> {
             BazaarItem item = (BazaarItem) new ProxyService(ServiceType.BAZAAR).callEndpoint(
                     new ProtocolBazaarGetItem(),
-                    new JSONObject().put("item-name", itemType.name()).toMap()
+                    new JSONObject().put("item-name", itemTypeLinker.name()).toMap()
             ).join().get("item");
 
             updateItems(item);
@@ -98,7 +98,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName(null));
+                lore.add("§8" + itemTypeLinker.getDisplayName(null));
                 lore.add(" ");
 
                 if (!item.getSellOrders().isEmpty()) {
@@ -126,10 +126,10 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName(null));
+                lore.add("§8" + itemTypeLinker.getDisplayName(null));
                 lore.add(" ");
 
-                int amountInInventory = player.getAllOfTypeInInventory(itemType).size();
+                int amountInInventory = player.getAllOfTypeInInventory(itemTypeLinker).size();
 
                 if (amountInInventory == 0) {
                     lore.add("§7Inventory: §cNone!");
@@ -162,9 +162,9 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemTypeLinker);
                 if (itemInInventory.isEmpty()) {
-                    player.sendMessage("§cYou don't have any §e" + itemType.getDisplayName(null) + "§c in your inventory!");
+                    player.sendMessage("§cYou don't have any §e" + itemTypeLinker.getDisplayName(null) + "§c in your inventory!");
                     return;
                 }
 
@@ -172,7 +172,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                         itemInInventory.size(),
                         item.getSellStatistics().getLowestOrder(),
                         item.getSellStatistics().getHighestOrder(),
-                        itemType, true).openPriceSelection(player).thenAccept(price -> {
+                        itemTypeLinker, true).openPriceSelection(player).thenAccept(price -> {
                             if (price <= 0) {
                                 if (player.isOnline())
                                     player.sendMessage("§cYou can only sell for a positive amount of coins!");
@@ -181,15 +181,15 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                             player.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
 
-                            int amountInInventory = player.getAmountInInventory(itemType);
-                            Map<Integer, Integer> inInventory = player.getAllOfTypeInInventory(itemType);
+                            int amountInInventory = player.getAmountInInventory(itemTypeLinker);
+                            Map<Integer, Integer> inInventory = player.getAllOfTypeInInventory(itemTypeLinker);
                             inInventory.forEach((slot, amount) -> {
                                 player.getInventory().setItemStack(slot, ItemStack.AIR);
                             });
 
                             ProxyService bazaar = new ProxyService(ServiceType.BAZAAR);
                             Map<String, Object> requestParam = new HashMap<>();
-                            requestParam.put("item-name", itemType.name());
+                            requestParam.put("item-name", itemTypeLinker.name());
                             requestParam.put("amount", amountInInventory);
                             requestParam.put("price", price);
                             requestParam.put("player-uuid", player.getUuid());
@@ -198,7 +198,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                             bazaar.callEndpoint(new ProtocolBazaarAttemptSellOrder(), requestParam).thenAccept(response -> {
                                 if (response.get("success").equals(true)) {
-                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemType.getDisplayName(null) + "§a for §e" + price + " coins each!");
+                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemTypeLinker.getDisplayName(null) + "§a for §e" + price + " coins each!");
                                 } else {
                                     player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
                                     player.sendMessage("§c[Bazaar] §cYou cannot place orders on items you already have orders on!");
@@ -210,16 +210,16 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName(null));
+                lore.add("§8" + itemTypeLinker.getDisplayName(null));
                 lore.add(" ");
                 lore.add("§6Top Offers:");
 
                 if (item.getSellOrders().isEmpty()) {
                     lore.add("§cNo sell orders available.");
                     lore.add(" ");
-                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemTypeLinker);
                     if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
+                        lore.add("§7You have §e" + player.getAmountInInventory(itemTypeLinker) + "§7x in your inventory.");
                         lore.add("§eClick to setup Sell Order");
                     } else {
                         lore.add("§8None in inventory!");
@@ -230,9 +230,9 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     });
                     lore.add(" ");
 
-                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
+                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemTypeLinker);
                     if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
+                        lore.add("§7You have §e" + player.getAmountInInventory(itemTypeLinker) + "§7x in your inventory.");
                         lore.add("§eClick to setup Sell Order");
                     } else {
                         lore.add("§8None in inventory!");

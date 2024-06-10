@@ -206,10 +206,10 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
         if (item.getGenericInstance() instanceof Accessory) {
             DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
-            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getItemTypeAsType());
+            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialClassLinker());
 
             getPlayer().getSkyBlockExperience().addExperience(
-                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getItemTypeAsType())
+                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialClassLinker())
             );
 
             return true;

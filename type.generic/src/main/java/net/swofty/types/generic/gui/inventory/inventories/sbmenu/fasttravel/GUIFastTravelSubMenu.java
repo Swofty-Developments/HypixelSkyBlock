@@ -11,7 +11,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.warps.ScrollUnlockReason;
 import net.swofty.types.generic.warps.TravelScrollIslands;
 import net.swofty.types.generic.warps.TravelScrollType;

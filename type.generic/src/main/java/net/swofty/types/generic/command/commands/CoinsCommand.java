@@ -9,7 +9,7 @@ import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 @CommandParameters(description = "Sets your purse balance",
         usage = "/coins <amount>",

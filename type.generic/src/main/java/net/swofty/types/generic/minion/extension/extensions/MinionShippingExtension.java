@@ -9,13 +9,13 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionShippingItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -24,12 +24,12 @@ public class MinionShippingExtension extends MinionExtension {
     private double heldCoins = 0;
     private double itemsSold = 0;
 
-    public MinionShippingExtension(@Nullable ItemType itemType, @Nullable Object data) {
-        super(itemType, data);
+    public MinionShippingExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+        super(itemTypeLinker, data);
 
         if (data != null) {
             String[] split = ((String) data).split(":");
-            setItemTypePassedIn(ItemType.valueOf(split[0]));
+            setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(split[0]));
             itemsSold = Double.parseDouble(split[1]);
         }
     }
@@ -41,7 +41,7 @@ public class MinionShippingExtension extends MinionExtension {
 
     @Override
     public @NonNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
-        if (getItemTypePassedIn() == null) {
+        if (getItemTypeLinkerPassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -55,7 +55,7 @@ public class MinionShippingExtension extends MinionExtension {
 
                     if (shippingItem.getGenericInstance() instanceof MinionShippingItem) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypePassedIn(shippingItem.getAttributeHandler().getItemTypeAsType());
+                        setItemTypeLinkerPassedIn(shippingItem.getAttributeHandler().getPotentialClassLinker());
                         minion.getExtensionData().setData(slot, MinionShippingExtension.this);
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Shipping Item.");
@@ -105,8 +105,8 @@ public class MinionShippingExtension extends MinionExtension {
                         return;
                     }
 
-                    player.addAndUpdateItem(getItemTypePassedIn());
-                    setItemTypePassedIn(null);
+                    player.addAndUpdateItem(getItemTypeLinkerPassedIn());
+                    setItemTypeLinkerPassedIn(null);
                     itemsSold = 0;
                     e.setClickedItem(ItemStack.AIR);
                     minion.getExtensionData().setData(slot, MinionShippingExtension.this);
@@ -124,7 +124,7 @@ public class MinionShippingExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    SkyBlockItem shippingItem = new SkyBlockItem(getItemTypePassedIn());
+                    SkyBlockItem shippingItem = new SkyBlockItem(getItemTypeLinkerPassedIn());
                     ArrayList<String> lore = new ArrayList<>(shippingItem.getLore());
 
                     lore.add(" ");
@@ -142,9 +142,9 @@ public class MinionShippingExtension extends MinionExtension {
 
     @Override
     public String toString() {
-        if (getItemTypePassedIn() == null)
+        if (getItemTypeLinkerPassedIn() == null)
             return "null";
-        return getItemTypePassedIn().toString() + ":" + itemsSold + ":" + heldCoins;
+        return getItemTypeLinkerPassedIn().toString() + ":" + itemsSold + ":" + heldCoins;
     }
 
     @Override
@@ -152,7 +152,7 @@ public class MinionShippingExtension extends MinionExtension {
         if (string.equals("null"))
             return;
         String[] split = string.split(":");
-        setItemTypePassedIn(ItemType.valueOf(split[0]));
+        setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(split[0]));
         itemsSold = Double.parseDouble(split[1]);
         heldCoins = Double.parseDouble(split[2]);
     }

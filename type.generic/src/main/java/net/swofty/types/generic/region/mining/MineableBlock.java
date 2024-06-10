@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.utility.MaterialQuantifiableRandom;
 
 @Getter

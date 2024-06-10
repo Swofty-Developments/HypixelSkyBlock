@@ -8,7 +8,7 @@ import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
-import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.types.generic.item.attribute.ItemAttribute;
 import org.json.JSONObject;
 

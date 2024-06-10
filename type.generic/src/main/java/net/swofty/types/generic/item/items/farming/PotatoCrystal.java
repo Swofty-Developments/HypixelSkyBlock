@@ -9,14 +9,14 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.PlaceEvent;
 import net.swofty.types.generic.item.impl.ServerOrb;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class PotatoCrystal implements CustomSkyBlockItem, SkullHead, ServerOrb, 
         ).setInstance(player.getInstance(), event.getBlockPosition().add(0, 1, 0));
 
         CrystalDatabase.addCrystal("9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135",
-                new Pos(event.getBlockPosition().add(0, 1, 0)), ItemType.POTATO_CRYSTAL);
+                new Pos(event.getBlockPosition().add(0, 1, 0)), ItemTypeLinker.POTATO_CRYSTAL);
     }
 
     @Override

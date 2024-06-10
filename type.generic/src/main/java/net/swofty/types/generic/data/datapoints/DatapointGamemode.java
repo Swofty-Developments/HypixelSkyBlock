@@ -1,7 +1,7 @@
 package net.swofty.types.generic.data.datapoints;
 
 import net.minestom.server.entity.GameMode;
-import net.swofty.service.protocol.JacksonSerializer;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.types.generic.data.Datapoint;
 
 public class DatapointGamemode extends Datapoint<GameMode> {

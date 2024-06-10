@@ -15,7 +15,7 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
@@ -23,12 +23,12 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.PlayerProfiles;
-import net.swofty.types.generic.user.PlayerShopData;
+import net.swofty.commons.protocol.objects.PlayerShopData;
 import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.MathUtility;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -247,7 +247,7 @@ public class DataHandler {
             });
 
             player.getInventory().setItemStack(8,
-                    new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
+                    new NonPlayerItemUpdater(new SkyBlockItem(ItemTypeLinker.SKYBLOCK_MENU).getItemStack())
                             .getUpdatedItem().build());
         }, (player) -> {
             SkyBlockInventory skyBlockInventory = new SkyBlockInventory();

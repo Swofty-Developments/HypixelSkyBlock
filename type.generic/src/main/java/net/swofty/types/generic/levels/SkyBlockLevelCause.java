@@ -3,7 +3,7 @@ package net.swofty.types.generic.levels;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.Accessory;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.causes.*;
@@ -31,10 +31,10 @@ public class SkyBlockLevelCause {
         }
 
         // Register all accessory causes
-        for (ItemType itemType : ItemType.values()) {
-            if (itemType.clazz == null) continue;
-            if (itemType.clazz.newInstance() instanceof Accessory) {
-                CAUSES.put("accessory-" + itemType.name(), new NewAccessoryLevelCause(itemType));
+        for (ItemTypeLinker itemTypeLinker : ItemTypeLinker.values()) {
+            if (itemTypeLinker.clazz == null) continue;
+            if (itemTypeLinker.clazz.newInstance() instanceof Accessory) {
+                CAUSES.put("accessory-" + itemTypeLinker.name(), new NewAccessoryLevelCause(itemTypeLinker));
             }
         }
 
@@ -44,14 +44,14 @@ public class SkyBlockLevelCause {
         }
 
         // Register all collection causes
-        for (ItemType itemType : ItemType.values()) {
-            CollectionCategory category = CollectionCategories.getCategory(itemType);
+        for (ItemTypeLinker itemTypeLinker : ItemTypeLinker.values()) {
+            CollectionCategory category = CollectionCategories.getCategory(itemTypeLinker);
             if (category == null) continue;
 
             for (CollectionCategory.ItemCollection collection : category.getCollections()) {
                 for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
-                    CAUSES.put("collection-" + itemType.name() + "-" + collection.getPlacementOf(reward),
-                            new CollectionLevelCause( itemType, collection.getPlacementOf(reward)));
+                    CAUSES.put("collection-" + itemTypeLinker.name() + "-" + collection.getPlacementOf(reward),
+                            new CollectionLevelCause(itemTypeLinker, collection.getPlacementOf(reward)));
                 }
             }
         }
@@ -117,10 +117,10 @@ public class SkyBlockLevelCause {
         return null;
     }
 
-    public static CollectionLevelCause getCollectionCause(ItemType itemType, int level) {
+    public static CollectionLevelCause getCollectionCause(ItemTypeLinker itemTypeLinker, int level) {
         for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof CollectionLevelCause collectionCause) {
-                if (collectionCause.getType() == itemType && collectionCause.getLevel() == level) {
+                if (collectionCause.getType() == itemTypeLinker && collectionCause.getLevel() == level) {
                     return collectionCause;
                 }
             }
@@ -143,10 +143,10 @@ public class SkyBlockLevelCause {
         return null;
     }
 
-    public static NewAccessoryLevelCause getAccessoryCause(ItemType itemType) {
+    public static NewAccessoryLevelCause getAccessoryCause(ItemTypeLinker itemTypeLinker) {
         for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof NewAccessoryLevelCause accessoryCause) {
-                if (accessoryCause.itemType == itemType) {
+                if (accessoryCause.itemTypeLinker == itemTypeLinker) {
                     return accessoryCause;
                 }
             }

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.protocol.auctions;
 
-import net.swofty.service.protocol.JacksonSerializer;
-import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.JacksonSerializer;
+import net.swofty.commons.protocol.ProtocolSpecification;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -18,7 +18,7 @@ import net.swofty.types.generic.user.categories.Rank;
 public class SetItemTypeCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<ItemType> material = new ArgumentEnum<>("material", ItemType.class);
+        ArgumentEnum<ItemTypeLinker> material = new ArgumentEnum<>("material", ItemTypeLinker.class);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -29,14 +29,14 @@ public class SetItemTypeCommand extends SkyBlockCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemType type = itemInHand.getAttributeHandler().getItemTypeAsType();
+            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
 
-            if (type != ItemType.SANDBOX_ITEM) {
+            if (type != ItemTypeLinker.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the type of sandbox items.");
                 return;
             }
 
-            ItemType newType = context.get(material);
+            ItemTypeLinker newType = context.get(material);
 
             player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 item.getAttributeHandler().getSandboxData().setMaterial(newType);

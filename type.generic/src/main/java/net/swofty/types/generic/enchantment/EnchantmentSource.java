@@ -2,7 +2,7 @@ package net.swofty.types.generic.enchantment;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 /**

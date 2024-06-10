@@ -1,11 +1,11 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
 import net.swofty.types.generic.item.impl.RightClickRecipe;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 public class ScytheBlade implements CustomSkyBlockItem, Enchanted, RightClickRecipe {
     @Override
@@ -14,7 +14,7 @@ public class ScytheBlade implements CustomSkyBlockItem, Enchanted, RightClickRec
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.REAPER_SCYTHE;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.REAPER_SCYTHE;
     }
 }

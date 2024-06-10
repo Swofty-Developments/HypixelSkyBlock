@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.items.travelscroll;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -22,14 +22,14 @@ public class HubCryptsTravelScroll implements TravelScrollItem, DefaultCraftable
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.REVENANT_VISCERA, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_ENDER_PEARL, 16));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_OBSIDIAN, 16));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_OBSIDIAN, 16));
         List<String> pattern = List.of(
                 "AAA",
                 "CBC",
                 "CCC"
         );
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemType.HUB_CRYPT_TRAVEL_SCROLL), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemTypeLinker.HUB_CRYPT_TRAVEL_SCROLL), ingredientMap, pattern);
     }
 }

@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,9 +31,9 @@ public class RemoveItemLoreCommand extends SkyBlockCommand {
             int line = context.get(lineNumber);
 
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemType type = itemInHand.getAttributeHandler().getItemTypeAsType();
+            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
 
-            if (type != ItemType.SANDBOX_ITEM) {
+            if (type != ItemTypeLinker.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only remove the lore of sandbox items.");
                 return;
             }

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.utility.groups;
 
 import lombok.Getter;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 @Getter
 public enum EnchantItemGroups {

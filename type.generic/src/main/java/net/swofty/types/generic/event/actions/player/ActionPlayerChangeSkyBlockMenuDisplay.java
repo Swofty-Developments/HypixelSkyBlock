@@ -11,14 +11,14 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.QuiverDisplayOnHold;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.List;
 
@@ -75,13 +75,13 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
                 SkyBlockItem item = quiver.getFirstItemInQuiver();
                 builder = ItemStackCreator.getStack("§8Quiver " + StringUtility.stripColor(item.getDisplayName()),
                         quiverDisplay.shouldBeArrow() ? Material.ARROW : Material.FEATHER,
-                        Math.min(64, quiver.getAmountOfArrows(item.getAttributeHandler().getItemTypeAsType())),
+                        Math.min(64, quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialClassLinker())),
                         "§7This item is in your inventory",
                         "§7because you are currently holding a",
                         "§7Bow",
                         " ",
                         "§7Active Arrow: " + item.getDisplayName()
-                                + " §7(§e" + quiver.getAmountOfArrows(item.getAttributeHandler().getItemTypeAsType()) + "§7)",
+                                + " §7(§e" + quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialClassLinker()) + "§7)",
                         " ",
                         "§7Switch away from your Bow to see",
                         "§7the item that was here before.");
@@ -106,7 +106,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
         }
 
         player.getInventory().setItemStack(8,
-                new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
+                new NonPlayerItemUpdater(new SkyBlockItem(ItemTypeLinker.SKYBLOCK_MENU).getItemStack())
                         .getUpdatedItem().build());
     }
 }

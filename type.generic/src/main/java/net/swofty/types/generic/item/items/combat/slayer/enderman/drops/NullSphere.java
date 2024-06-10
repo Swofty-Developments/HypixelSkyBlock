@@ -3,7 +3,7 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.drops;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 public class NullSphere implements CustomSkyBlockItem, Enchanted {
     @Override

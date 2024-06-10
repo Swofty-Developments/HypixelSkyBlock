@@ -10,7 +10,7 @@ import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.types.generic.auction.AuctionItem;
+import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
@@ -25,7 +25,7 @@ import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
 import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
 import java.util.*;

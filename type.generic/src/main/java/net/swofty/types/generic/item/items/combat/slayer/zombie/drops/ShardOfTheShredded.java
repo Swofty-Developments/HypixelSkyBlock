@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.drops;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.RightClickRecipe;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TrackedUniqueItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class ShardOfTheShredded implements CustomSkyBlockItem, SkullHead, Tracke
     }
 
     @Override
-    public ItemType getRecipeItem() {
-        return ItemType.AXE_OF_THE_SHREDDED;
+    public ItemTypeLinker getRecipeItem() {
+        return ItemTypeLinker.AXE_OF_THE_SHREDDED;
     }
 }

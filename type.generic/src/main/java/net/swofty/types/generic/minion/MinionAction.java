@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.MinionShippingItem;
 import net.swofty.types.generic.item.impl.Sellable;
@@ -33,9 +33,9 @@ public abstract class MinionAction {
                 (item.getGenericInstance() instanceof Sellable
                         ? ((Sellable) item.getGenericInstance()).getSellValue() : 0);
 
-        if (extensionData.hasMinionUpgrade(ItemType.DIAMOND_SPREADING)) {
+        if (extensionData.hasMinionUpgrade(ItemTypeLinker.DIAMOND_SPREADING)) {
             if (Math.random() < 0.1) {
-                SkyBlockItem diamond = new SkyBlockItem(ItemType.DIAMOND);
+                SkyBlockItem diamond = new SkyBlockItem(ItemTypeLinker.DIAMOND);
                 islandMinion.addItem(diamond);
             }
         }
@@ -43,10 +43,10 @@ public abstract class MinionAction {
         if (!hasAdded && sellAmount > 0) {
             MinionShippingExtension shippingExtension = (MinionShippingExtension)
                     extensionData.getOfType(MinionShippingExtension.class);
-            if (shippingExtension.getItemTypePassedIn() == null)
+            if (shippingExtension.getItemTypeLinkerPassedIn() == null)
                 return;
 
-            SkyBlockItem shippingItem = new SkyBlockItem(shippingExtension.getItemTypePassedIn());
+            SkyBlockItem shippingItem = new SkyBlockItem(shippingExtension.getItemTypeLinkerPassedIn());
             double percentage = ((MinionShippingItem) shippingItem.getGenericInstance()).getPercentageOfOriginalPrice();
             double sellValue = sellAmount * (percentage / 100);
             shippingExtension.addCoins(sellValue);

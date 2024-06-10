@@ -15,7 +15,6 @@ java {
 
 dependencies {
     implementation(project(":packer"))
-    implementation(project(":service.protocol"))
     implementation("com.github.Minestom:Minestom:b3aa996e1d") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }

@@ -19,7 +19,7 @@ import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

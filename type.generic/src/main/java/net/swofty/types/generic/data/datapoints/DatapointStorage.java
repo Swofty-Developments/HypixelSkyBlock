@@ -6,15 +6,47 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.protocol.Serializer;
+import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.serializer.StorageSerializer;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> {
-    private static final StorageSerializer serializer = new StorageSerializer();
+    private static final Serializer<DatapointStorage.PlayerStorage> serializer = new Serializer<PlayerStorage>() {
+        @Override
+        public String serialize(PlayerStorage value) {
+            JSONObject jsonObject = new JSONObject();
+            List<JSONObject> slots = new ArrayList<>();
+
+            for (PlayerStorage.StorageSlot slot : value.slots) {
+                slots.add(slot.toJson());
+            }
+
+            jsonObject.put("slots", slots);
+            return jsonObject.toString();
+        }
+
+        @Override
+        public PlayerStorage deserialize(String json) {
+            JSONObject jsonObject = new JSONObject(json);
+            List<PlayerStorage.StorageSlot> slots = new ArrayList<>();
+
+            for (Object slot : jsonObject.getJSONArray("slots")) {
+                slots.add(PlayerStorage.StorageSlot.fromJson((JSONObject) slot));
+            }
+
+            return new PlayerStorage(slots);
+        }
+
+        @Override
+        public PlayerStorage clone(PlayerStorage value) {
+            return new PlayerStorage(value.slots);
+        }
+    };
 
     public DatapointStorage(String key, DatapointStorage.PlayerStorage value) {
         super(key, value, serializer);
@@ -24,7 +56,7 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
         this(key, new PlayerStorage());
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true) // Due to serializer serializing "highestPage"
+    @JsonIgnoreProperties(ignoreUnknown = true) // Due to protocol serializing "highestPage"
     @NoArgsConstructor
     public static class PlayerStorage {
         public final List<StorageSlot> slots = new ArrayList<>();
@@ -73,6 +105,28 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
             public int page;
             public Material display;
             public SkyBlockItem[] items;
+
+            public JSONObject toJson() {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("page", page);
+                jsonObject.put("display", display.namespace().asString());
+                List<String> items = new ArrayList<>();
+                for (SkyBlockItem item : this.items) {
+                    items.add(new UnderstandableSkyBlockItemSerializer().serialize(item.toUnderstandable()));
+                }
+                jsonObject.put("items", items);
+                return jsonObject;
+            }
+
+            public static StorageSlot fromJson(JSONObject jsonObject) {
+                int page = jsonObject.getInt("page");
+                Material display = Material.fromNamespaceId(jsonObject.getString("display"));
+                List<SkyBlockItem> items = new ArrayList<>();
+                for (String item : (List<String>) jsonObject.get("items")) {
+                    items.add(new SkyBlockItem(new UnderstandableSkyBlockItemSerializer().deserialize(item)));
+                }
+                return new StorageSlot(page, display, items.toArray(new SkyBlockItem[0]));
+            }
         }
     }
 }

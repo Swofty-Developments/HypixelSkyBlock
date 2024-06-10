@@ -1,7 +1,7 @@
 package net.swofty.types.generic.data.datapoints;
 
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.serializer.InventorySerializer;
+import net.swofty.commons.protocol.serializers.InventorySerializer;
 import net.swofty.types.generic.user.SkyBlockInventory;
 
 public class DatapointInventory extends Datapoint<SkyBlockInventory> {

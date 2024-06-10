@@ -1,9 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu;
 
 import lombok.Setter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
@@ -14,15 +11,15 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.Rarity;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -249,7 +246,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
                 if (convertToItem) {
                     player.addAndUpdateItem(item);
-                    player.getPetData().removePet(item.getAttributeHandler().getItemTypeAsType());
+                    player.getPetData().removePet(item.getAttributeHandler().getPotentialClassLinker());
                     GUIPets guiPets = new GUIPets();
                     guiPets.setSortType(sortType);
                     guiPets.setConvertToItem(convertToItem);
@@ -258,7 +255,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
                     return;
                 }
 
-                player.getPetData().setEnabled(item.getAttributeHandler().getItemTypeAsType(), true);
+                player.getPetData().setEnabled(item.getAttributeHandler().getPotentialClassLinker(), true);
                 player.getPetData().updatePetEntityImpl(player);
                 player.sendMessage("§aSelected pet " + item.getDisplayName() + "§a!");
                 GUIPets guiPets = new GUIPets();

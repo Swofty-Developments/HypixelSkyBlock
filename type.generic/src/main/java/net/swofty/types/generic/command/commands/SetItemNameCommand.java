@@ -4,7 +4,7 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,9 +31,9 @@ public class SetItemNameCommand extends SkyBlockCommand {
             String newName = context.get(name);
 
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemType type = itemInHand.getAttributeHandler().getItemTypeAsType();
+            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
 
-            if (type != ItemType.SANDBOX_ITEM) {
+            if (type != ItemTypeLinker.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the name of sandbox items.");
                 return;
             }

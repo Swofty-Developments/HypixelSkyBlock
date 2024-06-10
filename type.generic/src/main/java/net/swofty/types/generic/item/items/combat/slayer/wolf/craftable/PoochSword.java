@@ -1,14 +1,14 @@
 package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -16,15 +16,15 @@ public class PoochSword implements CustomSkyBlockItem, DefaultCraftable, Standar
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.GOLDEN_TOOTH, 24));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SHAMAN_SWORD, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 24));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SHAMAN_SWORD, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " A ",
                 " B ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER, new SkyBlockItem(ItemType.POOCH_SWORD), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.SVEN_PACKMASTER, new SkyBlockItem(ItemTypeLinker.POOCH_SWORD), ingredientMap, pattern);
     }
 
     @Override

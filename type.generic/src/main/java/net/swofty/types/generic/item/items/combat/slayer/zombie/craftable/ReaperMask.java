@@ -1,14 +1,14 @@
 package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -18,17 +18,17 @@ public class ReaperMask implements CustomSkyBlockItem, SkullHead, DefaultCraftab
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.REVENANT_VISCERA, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.BEHEADED_HORROR, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_STRING, 32));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemType.REVIVED_HEART, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 32));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.BEHEADED_HORROR, 1));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_STRING, 32));
+        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
         List<String> pattern = List.of(
                 "A A",
                 "BCD",
                 "A A");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemType.REAPER_MASK), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.REVENANT_HORROR, new SkyBlockItem(ItemTypeLinker.REAPER_MASK), ingredientMap, pattern);
     }
 
     @Override

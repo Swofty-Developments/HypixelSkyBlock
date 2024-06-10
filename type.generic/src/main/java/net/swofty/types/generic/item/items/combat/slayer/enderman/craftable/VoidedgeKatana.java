@@ -1,14 +1,14 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -16,16 +16,16 @@ public class VoidedgeKatana implements CustomSkyBlockItem, DefaultCraftable, Sta
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.REFINED_MITHRIL, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.NULL_OVOID, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.VOIDWALKER_KATANA, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REFINED_MITHRIL, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 1));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.VOIDWALKER_KATANA, 1));
+        ingredientMap.put(' ', new MaterialQuantifiable(ItemTypeLinker.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",
                 " C ");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemType.VOIDEDGE_KATANA), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.VOIDGLOOM_SERAPH, new SkyBlockItem(ItemTypeLinker.VOIDEDGE_KATANA), ingredientMap, pattern);
     }
 
     @Override

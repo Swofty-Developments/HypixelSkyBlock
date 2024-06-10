@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.mining.crystal;
 
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -20,16 +20,16 @@ public class ConcentratedStone implements Enchanted, Sellable, DefaultCraftable,
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         return new ShapelessRecipe(SkyBlockRecipe.RecipeType.MINING,
-                new SkyBlockItem(ItemType.CONCENTRATED_STONE), 1)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64)
-                .add(ItemType.ENCHANTED_HARD_STONE, 64);
+                new SkyBlockItem(ItemTypeLinker.CONCENTRATED_STONE), 1)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64)
+                .add(ItemTypeLinker.ENCHANTED_HARD_STONE, 64);
     }
 
     @Override

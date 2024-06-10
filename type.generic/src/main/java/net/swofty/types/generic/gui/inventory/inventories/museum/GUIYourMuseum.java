@@ -16,7 +16,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

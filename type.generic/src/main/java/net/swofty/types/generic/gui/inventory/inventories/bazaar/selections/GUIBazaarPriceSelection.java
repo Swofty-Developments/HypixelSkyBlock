@@ -13,7 +13,7 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
     private CompletableFuture<Double> future = new CompletableFuture<>();
     private final boolean isSellOrder;
-    private final ItemType itemType;
+    private final ItemTypeLinker itemTypeLinker;
     private final Double lowestPrice;
     private final Double highestPrice;
     private final Integer amount;
@@ -30,12 +30,12 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
 
     public GUIBazaarPriceSelection(SkyBlockInventoryGUI previousGUI, Integer amount,
                                    Double lowestPrice, Double highestPrice,
-                                   ItemType itemType, boolean isSellOrder) {
+                                   ItemTypeLinker itemTypeLinker, boolean isSellOrder) {
         super("At what price" + (isSellOrder ? " are you selling?" : "are you buying?") + "?", InventoryType.CHEST_4_ROW);
 
         this.lowestPrice = lowestPrice;
         this.highestPrice = highestPrice;
-        this.itemType = itemType;
+        this.itemTypeLinker = itemTypeLinker;
         this.isSellOrder = isSellOrder;
         this.amount = amount;
 
@@ -111,7 +111,7 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack("§6Same as Best Offer",
-                            itemType.material, 1,
+                            itemTypeLinker.material, 1,
                             "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
                             " ",
                             "§7Use the same price as the lowest",

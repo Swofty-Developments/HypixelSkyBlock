@@ -5,7 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.levels.causes.LevelCause;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

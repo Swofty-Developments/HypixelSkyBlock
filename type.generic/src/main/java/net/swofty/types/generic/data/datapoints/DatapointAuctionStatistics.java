@@ -3,7 +3,7 @@ package net.swofty.types.generic.data.datapoints;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.service.protocol.Serializer;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import org.json.JSONObject;
 

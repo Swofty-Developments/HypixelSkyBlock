@@ -1,13 +1,13 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.*;
 
@@ -15,15 +15,15 @@ public class RecluseFang implements CustomSkyBlockItem, DefaultCraftable, Standa
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.TARANTULA_WEB, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SPIDER_CATALYST, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemType.SPIDER_SWORD, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_WEB, 4));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SPIDER_CATALYST, 1));
+        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.SPIDER_SWORD, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",
                 "ACA");
 
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemType.RECLUSE_FANG), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.TARANTULA_BROODFATHER, new SkyBlockItem(ItemTypeLinker.RECLUSE_FANG), ingredientMap, pattern);
     }
 
     @Override

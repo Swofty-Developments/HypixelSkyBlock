@@ -8,15 +8,15 @@ import net.minestom.server.item.Material;
 @Immutable
 @Getter
 public class MaterialQuantifiable {
-    private ItemType material;
+    private ItemTypeLinker material;
     private int amount;
 
-    public MaterialQuantifiable(ItemType material, int amount) {
+    public MaterialQuantifiable(ItemTypeLinker material, int amount) {
         this.material = material;
         this.amount = amount;
     }
 
-    public MaterialQuantifiable(ItemType material) {
+    public MaterialQuantifiable(ItemTypeLinker material) {
         this(material, 1);
     }
 
@@ -24,7 +24,7 @@ public class MaterialQuantifiable {
         this(materialQuantifiable.material, materialQuantifiable.amount);
     }
 
-    public MaterialQuantifiable setMaterial(ItemType material) {
+    public MaterialQuantifiable setMaterial(ItemTypeLinker material) {
         this.material = material;
         return this;
     }
@@ -40,7 +40,7 @@ public class MaterialQuantifiable {
         return potentialMaterial.material == this.material && potentialMaterial.amount == this.amount;
     }
 
-    public boolean matches(ItemType material) {
+    public boolean matches(ItemTypeLinker material) {
         return this.material == material;
     }
 
@@ -59,9 +59,9 @@ public class MaterialQuantifiable {
 
     public static MaterialQuantifiable of(ItemStack stack) {
         if (stack == null || stack.material() == Material.AIR)
-            return new MaterialQuantifiable(ItemType.AIR, (stack != null ? stack.amount() : 1));
+            return new MaterialQuantifiable(ItemTypeLinker.AIR, (stack != null ? stack.amount() : 1));
         SkyBlockItem found = new SkyBlockItem(stack);
-        return new MaterialQuantifiable(found.getAttributeHandler().getItemTypeAsType(), stack.amount());
+        return new MaterialQuantifiable(found.getAttributeHandler().getPotentialClassLinker(), stack.amount());
     }
 
     public static MaterialQuantifiable[] of(ItemStack[] stacks) {
@@ -71,7 +71,7 @@ public class MaterialQuantifiable {
         return materials;
     }
 
-    public static MaterialQuantifiable one(ItemType type) {
+    public static MaterialQuantifiable one(ItemTypeLinker type) {
         return new MaterialQuantifiable(type, 1);
     }
 }

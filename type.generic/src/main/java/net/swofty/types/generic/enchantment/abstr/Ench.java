@@ -3,7 +3,7 @@ package net.swofty.types.generic.enchantment.abstr;
 import lombok.NonNull;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;

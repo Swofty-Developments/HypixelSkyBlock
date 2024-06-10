@@ -2,7 +2,7 @@ package net.swofty.types.generic.user.categories;
 
 import lombok.Getter;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.swofty.types.generic.utility.StringUtility;
+import net.swofty.commons.StringUtility;
 
 @Getter
 public enum Rank {

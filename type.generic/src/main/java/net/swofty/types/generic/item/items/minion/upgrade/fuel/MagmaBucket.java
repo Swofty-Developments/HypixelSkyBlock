@@ -1,12 +1,12 @@
 package net.swofty.types.generic.item.items.minion.upgrade.fuel;
 
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -24,11 +24,11 @@ public class MagmaBucket  implements CustomSkyBlockItem, Sellable, MinionFuelIte
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_LAVA_BUCKET, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.HEAT_CORE, 1));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_LAVA_BUCKET, 1));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.HEAT_CORE, 1));
         List<String> pattern = List.of(
                 "ABA");
-        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemType.MAGMA_BUCKET), ingredientMap, pattern);
+        return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.MAGMA_BUCKET), ingredientMap, pattern);
     }
 
     @Override

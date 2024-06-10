@@ -9,7 +9,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.protocol.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 public class GUIBazaarBuyAmountSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
     private CompletableFuture<Double> future = new CompletableFuture<>();
 
-    public GUIBazaarBuyAmountSelection(SkyBlockInventoryGUI previousGUI, ItemType itemType) {
+    public GUIBazaarBuyAmountSelection(SkyBlockInventoryGUI previousGUI, ItemTypeLinker itemTypeLinker) {
         super("How many do you want?", InventoryType.CHEST_4_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));

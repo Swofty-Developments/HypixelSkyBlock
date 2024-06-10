@@ -2,6 +2,7 @@ package net.swofty.types.generic.user.statistics;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.function.Function;

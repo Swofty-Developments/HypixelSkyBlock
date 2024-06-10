@@ -4,13 +4,13 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamageMobValueUpdateEvent;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.ItemStatistic;
-import net.swofty.types.generic.user.statistics.ItemStatistics;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +49,7 @@ public class SpiderSword extends SkyBlockValueEvent implements CustomSkyBlockIte
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
         if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getItemTypeAsType() != ItemType.SPIDER_SWORD) return;
+        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.SPIDER_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.SPIDER || event.getMob().getEntityType() == EntityType.CAVE_SPIDER || event.getMob().getEntityType() == EntityType.SILVERFISH) {
             event.setValue((((float) event.getValue()) *2));
         }

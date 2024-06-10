@@ -1,6 +1,6 @@
 package net.swofty.types.generic.protocol.bazaar;
 
-import net.swofty.service.protocol.ProtocolSpecification;
+import net.swofty.commons.protocol.ProtocolSpecification;
 
 import java.util.ArrayList;
 import java.util.List;

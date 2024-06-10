@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemType;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -18,29 +18,29 @@ import net.swofty.types.generic.user.categories.Rank;
 public class ItemCommand extends SkyBlockCommand {
     @Override
     public void run(MinestomCommand command) {
-        ArgumentEnum<ItemType> itemArgument = ArgumentType.Enum("item", ItemType.class);
+        ArgumentEnum<ItemTypeLinker> itemArgument = ArgumentType.Enum("item", ItemTypeLinker.class);
         ArgumentInteger amountArgument = ArgumentType.Integer("amount");
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            final ItemType itemType = context.get(itemArgument);
+            final ItemTypeLinker itemTypeLinker = context.get(itemArgument);
 
-            SkyBlockItem item = new SkyBlockItem(itemType);
+            SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
             ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
-            sender.sendMessage("§aGiven you item §e" + itemType.name() + "§a.");
+            sender.sendMessage("§aGiven you item §e" + itemTypeLinker.name() + "§a.");
         }, itemArgument);
 
         command.addSyntax((sender, context) -> {
-            final ItemType itemType = context.get(itemArgument);
+            final ItemTypeLinker itemTypeLinker = context.get(itemArgument);
             final int amount = context.get(amountArgument);
 
-            SkyBlockItem item = new SkyBlockItem(itemType);
+            SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
             item.setAmount(amount);
             ((SkyBlockPlayer) sender).addAndUpdateItem(item);
 
-            sender.sendMessage("§aGiven you item §e" + itemType.name() + "§8 x" + amount + "§a.");
+            sender.sendMessage("§aGiven you item §e" + itemTypeLinker.name() + "§8 x" + amount + "§a.");
         }, itemArgument, amountArgument);
     }
 }
