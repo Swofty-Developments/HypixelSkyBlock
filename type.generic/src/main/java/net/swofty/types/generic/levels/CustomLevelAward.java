@@ -18,6 +18,16 @@ public enum CustomLevelAward {
             "§2Access to the Garden"),
     ACCESS_TO_WARDROBE(ItemStack.builder(Material.LEATHER_CHESTPLATE),
             "§aAccess to Wardrobe"),
+    AUTO_PICKUP_BLOCK_AND_MOB_DROPS(ItemStack.builder(Material.DIAMOND_SWORD),
+            "§aAuto-Pickup Block and Mob Drops"),
+    ACCESS_TO_BAZAAR(ItemStackCreator.getStackHead("c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7"),
+            "§6Access to Bazaar"),
+    ACCESS_TO_WIZARD_PORTAL(ItemStackCreator.getStackHead("838564e28aba98301dbda5fafd86d1da4e2eaeef12ea94dcf440b883e559311c"),
+            "§dAccess to Wizard Portal"),
+    DAILY_COINS_TRADE_LIMIT_OF_1B(ItemStackCreator.getStackHead("740d6e362bc7eee4f911dbd0446307e7458d1050d09aee538ebcb0273cf75742"),
+            "§aDaily Coins Trading Limit of 1B"),
+    DAILY_COINS_TRADE_LIMIT_OF_10B(ItemStackCreator.getStackHead("c43f12c8369f9c3888a45aaf6d7761578402b4241958f7d4ae4eceb56a867d2a"),
+            "§aDaily Coins Trading Limit of 10B")
     ;
     private static final Map<Integer, List<CustomLevelAward>> CACHE = new HashMap<>();
 
