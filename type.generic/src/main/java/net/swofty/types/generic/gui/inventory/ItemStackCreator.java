@@ -147,4 +147,5 @@ public class ItemStackCreator {
     public static String color(String string) {
         return string.replace("&", "§");
     }
+
 }

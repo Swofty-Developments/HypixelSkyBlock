@@ -77,8 +77,11 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             /**
              * Handle block dropping
              */
-            for (int i = 0; i < drops; i++) {
-                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
+            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getAttributeHandler().getPotentialType(), drops);
+            if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+                player.addAndUpdateItem(skyBlockItem);
+            } else {
+                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(skyBlockItem, player);
                 Pos pos = Pos.fromPoint(event.getBlockPosition());
                 // Move the dropped item to the center of the block
                 pos = pos.add(0.5, 0.5, 0.5);

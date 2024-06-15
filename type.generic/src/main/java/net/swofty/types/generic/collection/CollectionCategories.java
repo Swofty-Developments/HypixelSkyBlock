@@ -1,6 +1,7 @@
 package net.swofty.types.generic.collection;
 
 import lombok.Getter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.collections.*;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import org.jetbrains.annotations.Nullable;
