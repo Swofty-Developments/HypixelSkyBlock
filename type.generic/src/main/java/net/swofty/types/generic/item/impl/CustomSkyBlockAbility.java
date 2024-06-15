@@ -5,11 +5,11 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public interface CustomSkyBlockAbility {
+    void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem);
+
     String getAbilityName();
 
     String getAbilityDescription();
-
-    void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem);
 
     int getManaCost();
 

@@ -151,6 +151,10 @@ public class SkyBlockItem {
 
     @SneakyThrows
     private void loadAsStack(ItemStack item) {
+        if (item.material() == Material.AIR) {
+            loadAsMaterial(Material.AIR);
+            return;
+        }
         String itemType = item.getTag(Tag.String("item_type"));
         ItemStatistics statistics = ItemStatistics.empty();
 
