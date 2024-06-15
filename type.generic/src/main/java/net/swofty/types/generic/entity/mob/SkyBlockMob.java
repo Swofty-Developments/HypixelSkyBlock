@@ -144,8 +144,13 @@ public abstract class SkyBlockMob extends EntityCreature {
             if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
             SkyBlockItem item = new SkyBlockItem(itemTypeLinker, record.getAmount());
-            DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
-            droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
+
+            if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+                player.addAndUpdateItem(item);
+            } else {
+                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
+                droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
+            }
         }
     }
 

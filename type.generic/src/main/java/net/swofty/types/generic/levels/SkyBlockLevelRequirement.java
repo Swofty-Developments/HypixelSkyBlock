@@ -47,12 +47,14 @@ public enum SkyBlockLevelRequirement {
     LEVEL_6(600, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
                     ItemStatistic.HEALTH, 5D
-            ).build())
+            ).build()),
+            new CustomLevelUnlock(CustomLevelAward.AUTO_PICKUP_BLOCK_AND_MOB_DROPS)
     ), "§7", null, null),
     LEVEL_7(700, true, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
                     ItemStatistic.HEALTH, 5D
-            ).build())
+            ).build()),
+            new CustomLevelUnlock(CustomLevelAward.ACCESS_TO_BAZAAR)
     ), "§7", null, null),
     LEVEL_8(800, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
@@ -80,7 +82,8 @@ public enum SkyBlockLevelRequirement {
     LEVEL_12(1200, true, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
                     ItemStatistic.HEALTH, 5D
-            ).build())
+            ).build()),
+            new CustomLevelUnlock(CustomLevelAward.ACCESS_TO_WIZARD_PORTAL)
     ), "§7", null, null),
     LEVEL_13(1300, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
@@ -294,7 +297,8 @@ public enum SkyBlockLevelRequirement {
             ).build()),
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
                     ItemStatistic.STRENGTH, 1D
-            ).build())
+            ).build()),
+            new CustomLevelUnlock(CustomLevelAward.DAILY_COINS_TRADE_LIMIT_OF_1B)
     ), "§f", null, null),
     LEVEL_51(5100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
@@ -574,7 +578,8 @@ public enum SkyBlockLevelRequirement {
             ).build()),
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
                     ItemStatistic.STRENGTH, 1D
-            ).build())
+            ).build()),
+            new CustomLevelUnlock(CustomLevelAward.DAILY_COINS_TRADE_LIMIT_OF_10B)
     ), "§e", null, null),
     LEVEL_101(10100, false, List.of(
             new SkyBlockLevelStatisticUnlock(ItemStatistics.builder().withBase(
