@@ -2,6 +2,7 @@ package net.swofty.commons.item;
 
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public record UnderstandableSkyBlockItem(@Nullable ItemType itemKey, List<ItemAt
             }
         }
         return null;
+    }
+
+    public String serialize() {
+        return new UnderstandableSkyBlockItemSerializer().serialize(this);
     }
 }

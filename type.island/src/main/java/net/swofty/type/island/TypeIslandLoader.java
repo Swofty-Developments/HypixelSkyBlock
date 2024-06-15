@@ -108,7 +108,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<ServiceType> getRequiredServices() {
-        return List.of(ServiceType.AUCTION_HOUSE);
+        return List.of(ServiceType.AUCTION_HOUSE, ServiceType.ITEM_TRACKER);
     }
 
     @Override

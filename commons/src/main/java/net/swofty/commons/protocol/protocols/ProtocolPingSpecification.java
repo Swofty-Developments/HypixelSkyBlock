@@ -1,4 +1,4 @@
-package net.swofty.types.generic.protocol;
+package net.swofty.commons.protocol.protocols;
 
 import net.swofty.commons.protocol.ProtocolSpecification;
 

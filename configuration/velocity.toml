@@ -98,7 +98,7 @@ connection-timeout = 5000
 # Specify a read timeout for connections here. The default is 30 seconds.
 read-timeout = 30000
 
-# Enables compatibility with HAProxy's PROXY protocol. If you don't know what this is for, then
+# Enables compatibility with HAProxy's PROXY protocols. If you don't know what this is for, then
 # don't enable it.
 haproxy-protocol = false
 
@@ -131,7 +131,7 @@ log-player-connections = true
 # Whether to enable responding to GameSpy 4 query responses or not.
 enabled = false
 
-# If query is enabled, on what port should the query protocol listen on?
+# If query is enabled, on what port should the query protocols listen on?
 port = 25577
 
 # This is the map name that is reported to the query services.

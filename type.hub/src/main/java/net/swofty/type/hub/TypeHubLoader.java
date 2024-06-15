@@ -27,7 +27,7 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.museum.MuseumDisplays;
-import net.swofty.types.generic.protocol.bazaar.ProtocolInitializeBazaarCheck;
+import net.swofty.commons.protocol.protocols.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.modules.AccountInformationModule;

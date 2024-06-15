@@ -20,6 +20,11 @@ public class ItemShopPrice implements ShopPrice {
     ItemType type;
     int amount;
 
+    public ItemShopPrice(ItemTypeLinker linker, int amount) {
+        this.type = linker.getType();
+        this.amount = amount;
+    }
+
     @Override
     public List<String> getGUIDisplay() {
         return List.of("§6" + type.rarity.getColor() + type.getDisplayName() + " §8x" + amount);

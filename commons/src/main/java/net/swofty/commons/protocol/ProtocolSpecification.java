@@ -54,7 +54,7 @@ public abstract class ProtocolSpecification {
 
             Object value;
             if (entry.serializer != null) {
-                // Deserialize value using the provided protocol
+                // Deserialize value using the provided protocols
                 try {
                     value = entry.serializer.deserialize(json.getString(entry.key));
                 } catch (Exception e) {

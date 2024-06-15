@@ -1,4 +1,4 @@
-package net.swofty.types.generic.protocol.bazaar;
+package net.swofty.commons.protocol.protocols.bazaar;
 
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.protocol.JacksonSerializer;

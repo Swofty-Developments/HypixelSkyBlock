@@ -16,6 +16,7 @@ import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
@@ -134,15 +135,15 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
 
-        Map<ItemTypeLinker, SkyBlockLootTable.LootRecord> drops = getLootTable()
+        Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
             .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
 
-        for (ItemTypeLinker itemTypeLinker : drops.keySet()) {
-            SkyBlockLootTable.LootRecord record = drops.get(itemTypeLinker);
+        for (ItemType itemType : drops.keySet()) {
+            SkyBlockLootTable.LootRecord record = drops.get(itemType);
 
             if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
-            SkyBlockItem item = new SkyBlockItem(itemTypeLinker, record.getAmount());
+            SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
             DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
             droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
         }

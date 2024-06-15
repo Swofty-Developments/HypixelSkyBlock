@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingGUI {

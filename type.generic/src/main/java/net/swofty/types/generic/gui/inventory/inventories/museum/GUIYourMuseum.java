@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 

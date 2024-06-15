@@ -56,7 +56,7 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
         this(key, new PlayerStorage());
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true) // Due to protocol serializing "highestPage"
+    @JsonIgnoreProperties(ignoreUnknown = true) // Due to protocols serializing "highestPage"
     @NoArgsConstructor
     public static class PlayerStorage {
         public final List<StorageSlot> slots = new ArrayList<>();

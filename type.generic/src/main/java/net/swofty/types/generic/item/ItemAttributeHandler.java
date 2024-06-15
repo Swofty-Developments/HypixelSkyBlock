@@ -12,8 +12,8 @@ import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
-import net.swofty.types.generic.protocol.itemtracker.ProtocolUpdateTrackedItem;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.itemtracker.ProtocolUpdateTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 

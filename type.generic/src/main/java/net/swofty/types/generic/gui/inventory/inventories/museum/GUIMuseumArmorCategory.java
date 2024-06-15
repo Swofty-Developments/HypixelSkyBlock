@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
@@ -21,7 +22,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.types.generic.protocol.itemtracker.ProtocolGetTrackedItem;
+import net.swofty.commons.protocol.protocols.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
@@ -47,7 +48,10 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         e.setCancelled(true);
 
         ItemStack item = e.getClickedItem();
+
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
+        UnderstandableSkyBlockItem serializableItem = skyBlockItem.toUnderstandable();
+        String serialized = serializableItem.toString();
 
         if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == null) {
             return;

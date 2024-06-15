@@ -19,8 +19,8 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionView
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
-import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
+import net.swofty.commons.protocol.protocols.auctions.ProtocolAddItem;
+import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 

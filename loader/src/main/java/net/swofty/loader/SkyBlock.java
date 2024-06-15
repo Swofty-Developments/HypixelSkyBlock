@@ -17,7 +17,7 @@ import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
 import net.swofty.types.generic.redis.*;
 import org.json.JSONObject;
 import org.reflections.Reflections;
@@ -174,7 +174,7 @@ public class SkyBlock {
                 "player-handler",
                 "player-count"
         ));
-        Reflections protocolSpecifications = new Reflections("net.swofty.types.generic.protocol");
+        Reflections protocolSpecifications = new Reflections("net.swofty.commons.protocol.protocols");
         Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
         subTypesOfProtocol.forEach(protocol -> {
             try {

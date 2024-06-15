@@ -395,7 +395,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                         Arrays.stream(reward.unlocks()).forEach(unlock -> {
                             if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
                                 CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
-                                        Map.entry(collection.type(), reward.requirement()));
+                                        Map.entry(ItemTypeLinker.fromType(collection.type()), reward.requirement()));
                             }
                         });
                     });
@@ -434,7 +434,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                                     int amount = player.getCollection().get(collection.type());
                                     return new SkyBlockRecipe.CraftingResult(
                                             amount >= reward.requirement(),
-                                            new String[]{"§7You must have §c" + collection.type().getDisplayName(null)
+                                            new String[]{"§7You must have §c" + collection.type().getDisplayName()
                                                     + " Collection "
                                                     + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
                                     );
@@ -490,6 +490,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             if (RedisOriginServer.origin.containsKey(uuid)) {
                 player.setOriginServer(RedisOriginServer.origin.get(uuid));
             }
+
             if (RedisAuthenticate.toAuthenticate.contains(uuid)) {
                 player.setHasAuthenticated(false);
             }

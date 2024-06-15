@@ -10,6 +10,7 @@ import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -99,6 +100,11 @@ public class NonPlayerItemUpdater {
         if (leatherColour != null) {
             stack.set(ItemComponent.DYED_COLOR, new DyedItemColor(leatherColour, false));
             stack.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        }
+
+        for(ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+            stack = stack.set(Tag.String(attribute.getKey()),
+                    item.getAttribute(attribute.getKey()).saveIntoString());
         }
 
         ItemStackCreator.clearAttributes(stack);

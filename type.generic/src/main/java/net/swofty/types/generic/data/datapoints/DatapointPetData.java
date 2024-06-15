@@ -60,7 +60,7 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
     }
 
     @Getter
-    @JsonIgnoreProperties(ignoreUnknown = true) // Due to protocol serializing "enabledPet"
+    @JsonIgnoreProperties(ignoreUnknown = true) // Due to protocols serializing "enabledPet"
     public static class UserPetData {
         private HashMap<SkyBlockItem, Boolean> petsMap;
         private PetEntityImpl enabledPetEntityImpl = null;

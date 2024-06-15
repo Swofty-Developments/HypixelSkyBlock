@@ -12,6 +12,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
@@ -146,6 +147,11 @@ public class PlayerItemUpdater {
                 index++;
             }
             item.getAttributeHandler().setGemData(gemData);
+        }
+
+        for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
+            toReturn.set(Tag.String(attribute.getKey()),
+                    item.getAttribute(attribute.getKey()).saveIntoString());
         }
 
         ItemStackCreator.clearAttributes(toReturn);

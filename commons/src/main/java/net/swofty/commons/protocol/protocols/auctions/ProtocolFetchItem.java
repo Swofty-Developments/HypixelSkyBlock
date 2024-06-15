@@ -1,13 +1,15 @@
-package net.swofty.types.generic.protocol.auctions;
+package net.swofty.commons.protocol.protocols.auctions;
 
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolSpecification;
+import net.swofty.commons.auctions.AuctionItem;
+import net.swofty.commons.protocol.serializers.AuctionItemSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ProtocolDeprecateItem extends ProtocolSpecification {
+public class ProtocolFetchItem extends ProtocolSpecification {
     @Override
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return new ArrayList<>(List.of(
@@ -18,11 +20,14 @@ public class ProtocolDeprecateItem extends ProtocolSpecification {
 
     @Override
     public List<ProtocolEntries<?>> getReturnedProtocolEntries() {
-        return new ArrayList<>();
+        return new ArrayList<>(List.of(
+                new ProtocolEntries<>("item", true,
+                        new AuctionItemSerializer<>(AuctionItem.class))
+        ));
     }
 
     @Override
     public String getEndpoint() {
-        return "deprecate-item";
+        return "fetch-item";
     }
 }

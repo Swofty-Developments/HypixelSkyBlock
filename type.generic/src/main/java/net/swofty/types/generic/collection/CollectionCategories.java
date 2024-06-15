@@ -27,7 +27,8 @@ public enum CollectionCategories {
     }
 
     public static @Nullable CollectionCategory getCategory(ItemTypeLinker type) {
-        return getCategories().stream().filter(category -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)).findFirst().orElse(null);
+        return getCategories().stream().filter(category -> Arrays.stream(category.getCollections()).anyMatch(collection ->
+                collection.type() == type.getType())).findFirst().orElse(null);
     }
 
     public static ArrayList<CollectionCategory> getCategories() {

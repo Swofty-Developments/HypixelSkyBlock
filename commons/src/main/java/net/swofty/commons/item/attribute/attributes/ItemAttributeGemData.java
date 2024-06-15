@@ -34,7 +34,14 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
         String[] split = string.split(",");
         for (String gem : split) {
             String[] gemSplit = gem.split(":");
-            gemData.slots.add(new GemData.GemSlots(Integer.parseInt(gemSplit[0]), ItemType.valueOf(gemSplit[1])));
+            int index = Integer.parseInt(gemSplit[0]);
+            ItemType filledWith = null;
+
+            if (!gemSplit[1].equals("null")) {
+                filledWith = ItemType.valueOf(gemSplit[1]);
+            }
+
+            gemData.putGem(new GemData.GemSlots(index, filledWith));
         }
 
         return gemData;
@@ -45,7 +52,11 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
         List<String> serializedGems = new ArrayList<>();
 
         this.value.slots.forEach(gem -> {
-            serializedGems.add(gem.index + ":" + gem.filledWith.name());
+            if (gem.filledWith == null) {
+                serializedGems.add(gem.index + ":null");
+            } else {
+                serializedGems.add(gem.index + ":" + gem.filledWith.name());
+            }
         });
 
         return String.join(",", serializedGems);

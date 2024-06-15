@@ -165,16 +165,18 @@ public class SkyBlockItem {
                 loadAsItemType(type);
             }
         } else {
-            Material material = Material.fromNamespaceId(itemType);
+            Material material = item.material();
             loadAsMaterial(material);
         }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
             if (item.hasTag(Tag.String(attribute.getKey()))) {
                 attribute.setValue(attribute.loadFromString(item.getTag(Tag.String(attribute.getKey()))));
+                attributes.removeIf(a -> a.getKey().equals(attribute.getKey()));
                 attributes.add(attribute);
             } else {
                 attribute.setValue(attribute.getDefaultValue(statistics));
+                attributes.removeIf(a -> a.getKey().equals(attribute.getKey()));
                 attributes.add(attribute);
             }
         }

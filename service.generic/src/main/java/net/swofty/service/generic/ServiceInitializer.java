@@ -24,13 +24,12 @@ public class ServiceInitializer {
 
     public void init() {
         System.out.println("Initializing service " + service.getType().name() + "...");
-
         ItemAttribute.registerItemAttributes();
 
         /**
          * Cache all protocols
          */
-        service.loopThroughPackage("net.swofty.types.generic.protocol",
+        service.loopThroughPackage("net.swofty.commons.protocol.protocols",
                         ProtocolSpecification.class)
                 .forEach(protocol -> cachedProtocols.put(protocol.getEndpoint(), protocol));
 
@@ -44,6 +43,7 @@ public class ServiceInitializer {
         endpoints.forEach(endpoint -> {
             System.out.println("Registering endpoint " + endpoint.channel() + "...");
             RedisAPI.getInstance().registerChannel(endpoint.channel(), message -> {
+                System.out.println("Received message: " + message.message);
                 String realMessage = message.message.split(";")[1];
 
                 ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));

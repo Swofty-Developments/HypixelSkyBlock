@@ -1,4 +1,4 @@
-package net.swofty.types.generic.protocol.bazaar;
+package net.swofty.commons.protocol.protocols.bazaar;
 
 import net.swofty.commons.protocol.ProtocolSpecification;
 
@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ProtocolBazaarAttemptSellOrder extends ProtocolSpecification {
+public class ProtocolBazaarAttemptBuyOrder extends ProtocolSpecification {
     @Override
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return new ArrayList<>(List.of(
                 new ProtocolEntries<String>("item-name", true),
                 new ProtocolEntries<UUID>("player-uuid", true),
-                new ProtocolEntries<Double>("price", true),
+                new ProtocolEntries<Integer>("price", true),
                 new ProtocolEntries<Integer>("amount", true)
         ));
     }
@@ -26,6 +26,6 @@ public class ProtocolBazaarAttemptSellOrder extends ProtocolSpecification {
 
     @Override
     public String getEndpoint() {
-        return "bazaar-sell-order";
+        return "bazaar-buy-order";
     }
 }

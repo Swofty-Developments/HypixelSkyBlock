@@ -17,9 +17,9 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
-import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarAttemptSellOrder;
-import net.swofty.types.generic.protocol.bazaar.ProtocolBazaarGetItem;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarAttemptSellOrder;
+import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 

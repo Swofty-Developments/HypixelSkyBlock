@@ -88,6 +88,12 @@ public abstract class SkyBlockLootTable {
         private final double chancePercent;
         private Function<SkyBlockPlayer, Boolean> shouldCalculate = player -> true;
 
+        public LootRecord(ItemTypeLinker itemTypeLinker, int amount, double chancePercent) {
+            this.itemType = itemTypeLinker.getType();
+            this.amount = amount;
+            this.chancePercent = chancePercent;
+        }
+
         public static LootRecord none(int chance) {
             return new LootRecord(ItemType.AIR, 0, chance, player -> true);
         }

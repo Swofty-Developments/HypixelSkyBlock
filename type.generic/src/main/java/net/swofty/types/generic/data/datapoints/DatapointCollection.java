@@ -2,6 +2,7 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
@@ -82,12 +83,20 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             items.put(type, amount);
         }
 
+        public Integer get(ItemType type) {
+            return items.getOrDefault(ItemTypeLinker.fromType(type), 0);
+        }
+
         public Integer get(ItemTypeLinker type) {
             return items.getOrDefault(type, 0);
         }
 
-        public boolean unlocked(ItemTypeLinker type) {
+        public boolean unlocked(ItemType type) {
             return get(type) > 0;
+        }
+
+        public boolean unlocked(ItemTypeLinker linker) {
+            return get(linker) > 0;
         }
 
         public List<String> getDisplay(List<String> lore) {
@@ -124,7 +133,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             }
 
             String collectedPercentage = String.format("%.2f", (collected / (double) required) * 100);
-            lore.add("§7Progress to " + collection.type().getDisplayName(null) + " " +
+            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
                     StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
                     ": §e" + collectedPercentage + "§6%");
 
@@ -144,7 +153,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             if (reward.unlocks().length > 0) {
                 lore.add(" ");
                 reward.getDisplay(lore,
-                        collection.type().getDisplayName(null) + " "
+                        collection.type().getDisplayName() + " "
                                 + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
             }
 
@@ -156,7 +165,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             int collected = get(collection.type());
 
             String collectedPercentage = String.format("%.2f", Math.min(((collected / (double) reward.requirement()) * 100), 100));
-            lore.add("§7Progress to " + collection.type().getDisplayName(null) + " " +
+            lore.add("§7Progress to " + collection.type().getDisplayName() + " " +
                     StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) +
                     ": §e" + collectedPercentage + "§6%");
 
@@ -177,7 +186,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             if (reward.unlocks().length > 0) {
                 lore.add(" ");
                 reward.getDisplay(lore,
-                        collection.type().getDisplayName(null) + " "
+                        collection.type().getDisplayName() + " "
                                 + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1) + " ");
             }
 
@@ -187,7 +196,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
         public List<String> getDisplay(List<String> lore, CollectionCategory category) {
             int allCollections = category.getCollections().length;
             int unlockedCollections = (int) items.keySet().stream().filter(
-                    type -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)
+                    type -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type.getType())
             ).filter(this::unlocked).count();
 
             String unlockedPercentage = String.format("%.2f", (unlockedCollections / (double) allCollections) * 100);

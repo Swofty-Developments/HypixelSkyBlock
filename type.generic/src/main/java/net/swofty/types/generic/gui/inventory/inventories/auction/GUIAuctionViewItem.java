@@ -21,8 +21,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
-import net.swofty.types.generic.protocol.auctions.ProtocolFetchItem;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 

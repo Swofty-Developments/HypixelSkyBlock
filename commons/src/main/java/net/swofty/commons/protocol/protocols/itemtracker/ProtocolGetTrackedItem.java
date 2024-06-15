@@ -1,4 +1,4 @@
-package net.swofty.types.generic.protocol.itemtracker;
+package net.swofty.commons.protocol.protocols.itemtracker;
 
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.protocol.ProtocolSpecification;

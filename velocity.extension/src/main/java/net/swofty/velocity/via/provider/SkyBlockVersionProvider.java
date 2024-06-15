@@ -42,7 +42,7 @@ public class SkyBlockVersionProvider extends BaseVersionProvider {
             return ProtocolVersion.getProtocol(compatibleProtocols[0]);
         }
 
-        // Loop through all protocols to get the closest protocol id that Velocity supports (and that Via does too)
+        // Loop through all protocols to get the closest protocols id that Velocity supports (and that Via does too)
 
         // TODO: This needs a better fix, i.e checking ProtocolRegistry to see if it would work.
         // This is more of a workaround for snapshot support
@@ -53,7 +53,7 @@ public class SkyBlockVersionProvider extends BaseVersionProvider {
             }
         }
 
-        Via.getPlatform().getLogger().severe("Panic, no protocol id found for " + playerVersion);
+        Via.getPlatform().getLogger().severe("Panic, no protocols id found for " + playerVersion);
         return playerVersion;
     }
 }

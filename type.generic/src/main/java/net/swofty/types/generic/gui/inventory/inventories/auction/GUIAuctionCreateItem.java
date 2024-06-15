@@ -24,8 +24,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.types.generic.protocol.ProtocolPingSpecification;
-import net.swofty.types.generic.protocol.auctions.ProtocolAddItem;
+import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
+import net.swofty.commons.protocol.protocols.auctions.ProtocolAddItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
