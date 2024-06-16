@@ -10,6 +10,7 @@ import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,36 +31,6 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
     }
 
     @Override
-    public String getAbilityName() {
-        return "Parley";
-    }
-
-    @Override
-    public String getAbilityDescription() {
-        return "§7Channel your inner Jerry";
-    }
-
-    @Override
-    public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
-        player.playSound(Sound.sound(SoundEvent.ENTITY_VILLAGER_YES, Sound.Source.RECORD, 1f, 1f));
-    }
-
-    @Override
-    public int getManaCost() {
-        return 0;
-    }
-
-    @Override
-    public int getAbilityCooldownTicks() {
-        return 5;
-    }
-
-    @Override
-    public AbilityActivation getAbilityActivation() {
-        return AbilityActivation.RIGHT_CLICK;
-    }
-
-    @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
                 .withBase(ItemStatistic.DAMAGE, 1D)
@@ -69,5 +40,42 @@ public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbili
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;
+    }
+
+    @Override
+    public List<Ability> getAbilities() {
+        return List.of(
+                new Ability() {
+                    @Override
+                    public @NotNull String getName() {
+                        return "Parley";
+                    }
+
+                    @Override
+                    public @NotNull String getDescription() {
+                        return "§7Channel your inner Jerry";
+                    }
+
+                    @Override
+                    public @NotNull AbilityActivation getAbilityActivation() {
+                        return AbilityActivation.RIGHT_CLICK;
+                    }
+
+                    @Override
+                    public int getCooldownTicks() {
+                        return 100;
+                    }
+
+                    @Override
+                    public @NotNull AbilityCost getAbilityCost() {
+                        return new NoAbilityCost();
+                    }
+
+                    @Override
+                    public void onUse(@NotNull SkyBlockPlayer player, @NotNull SkyBlockItem sItem) {
+                        player.playSound(Sound.sound(SoundEvent.ENTITY_VILLAGER_YES, Sound.Source.RECORD, 1f, 1f));
+                    }
+                }
+        );
     }
 }

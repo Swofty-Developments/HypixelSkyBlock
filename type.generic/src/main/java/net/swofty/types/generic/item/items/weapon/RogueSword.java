@@ -9,8 +9,10 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.user.statistics.TemporaryStatistic;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, TrackedUniqueItem {
     @Override
@@ -26,40 +28,47 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
     }
 
     @Override
-    public String getAbilityName() {
-        return "Speed Boost";
-    }
-
-    @Override
-    public String getAbilityDescription() {
-        return "Grants §f+100✦ Speed §7for §a30s";
-    }
-
-    @Override
-    public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
-        player.getStatistics().boostStatistic(TemporaryStatistic.builder()
-                .withStatistics(ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100D).build())
-                .withExpirationInTicks(30 * 20)
-                .build());
-    }
-
-    @Override
-    public int getManaCost() {
-        return 50;
-    }
-
-    @Override
-    public int getAbilityCooldownTicks() {
-        return 30;
-    }
-
-    @Override
-    public AbilityActivation getAbilityActivation() {
-        return AbilityActivation.RIGHT_CLICK;
-    }
-
-    @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;
+    }
+
+    @Override
+    public List<Ability> getAbilities() {
+        return List.of(
+                new Ability() {
+                    @Override
+                    public @NotNull String getName() {
+                        return "Speed Boost";
+                    }
+
+                    @Override
+                    public @NotNull String getDescription() {
+                        return "Grants §f+100✦ Speed §7for §a30s";
+                    }
+
+                    @Override
+                    public @NotNull AbilityActivation getAbilityActivation() {
+                        return null;
+                    }
+
+                    @Override
+                    public int getCooldownTicks() {
+                        return 30;
+                    }
+
+                    @Override
+                    public @NotNull AbilityCost getAbilityCost() {
+                        return new AbilityManaCost(50);
+                    }
+
+                    @Override
+                    public void onUse(@NotNull SkyBlockPlayer player, @NotNull SkyBlockItem sItem) {
+                        player.getStatistics().boostStatistic(TemporaryStatistic.builder()
+                                .withStatistics(ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100D).build())
+                                .withExpirationInTicks(30 * 20)
+                                .build());
+                    }
+                }
+        );
     }
 }

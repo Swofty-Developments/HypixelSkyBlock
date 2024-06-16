@@ -185,16 +185,21 @@ public class ItemLore {
             }
 
             // Handle Custom Item Ability
-            if (item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
-                addLoreLine("§6Ability: " + ability.getAbilityName() + "  §e§l" +
-                        ability.getAbilityActivation().getDisplay());
-                for (String line : StringUtility.splitByWordAndLength(ability.getAbilityDescription(), 34)) addLoreLine("§7" + line);
-                if (ability.getManaCost() > 0) addLoreLine("§8Mana Cost: §3" + ability.getManaCost());
-                if (ability.getAbilityCooldownTicks() > 20) {
-                    addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getAbilityCooldownTicks() / 20, 1) + "s");
-                }
+            if (item.getGenericInstance() instanceof CustomSkyBlockAbility abilityClass) {
+                abilityClass.getAbilities().forEach(ability -> {
+                    addLoreLine("§6Ability: " + ability.getName() + "  §e§l" +
+                            ability.getAbilityActivation().getDisplay());
+                    for (String line : StringUtility.splitByWordAndLength(ability.getDescription(), 34)) addLoreLine("§7" + line);
 
-                addLoreLine(null);
+                    String costDisplay = ability.getAbilityCost().getLoreDisplay();
+                    if (costDisplay != null) addLoreLine(costDisplay);
+
+                    if (ability.getCooldownTicks() > 20) {
+                        addLoreLine("§8Cooldown: §a" + StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1) + "s");
+                    }
+
+                    addLoreLine(null);
+                });
             }
 
             // Handle full set abilities

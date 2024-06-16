@@ -21,32 +21,24 @@ public class ActionItemAbilityLeftUse implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof CustomSkyBlockAbility ability) {
-            if (ability.getAbilityActivation() == CustomSkyBlockAbility.AbilityActivation.LEFT_CLICK) {
-                if (ability.getManaCost() > player.getMana()) {
-                    player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                            .display("§c§lNOT ENOUGH MANA")
-                            .ticksToLast(20 * 2)
-                            .build(), StatisticDisplayReplacement.DisplayType.MANA);
+        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof CustomSkyBlockAbility abilityClass) {
+            CustomSkyBlockAbility.Ability ability = abilityClass.getFromActivation(CustomSkyBlockAbility.AbilityActivation.LEFT_CLICK);
+            if (ability != null) {
+                if (!ability.getAbilityCost().canUse(player)) {
+                    ability.getAbilityCost().onFail(player);
                     return;
                 }
 
                 PlayerAbilityHandler abilityHandler = player.getAbilityHandler();
-
-                if (!abilityHandler.canUseAbility(item, ability.getAbilityCooldownTicks())) {
+                if (!abilityHandler.canUseAbility(item, ability.getCooldownTicks())) {
                     player.sendMessage("§cThis ability is on cooldown for " +
-                            Math.round((float) abilityHandler.getRemainingCooldown(item, ability.getAbilityCooldownTicks()) / 1000) + "s.");
+                            Math.round((float) abilityHandler.getRemainingCooldown(item, ability.getCooldownTicks()) / 1000) + "s.");
                     return;
                 }
 
-                player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                        .display("§b-" + ability.getManaCost() + " (§6" + ability.getAbilityName() + "§b)")
-                        .ticksToLast(20 * 2)
-                        .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
                 abilityHandler.startAbilityCooldown(item);
-                player.setMana(player.getMana() - ability.getManaCost());
-
-                ability.onAbilityUse(player, item);
+                ability.getAbilityCost().onUse(player, ability);
+                ability.onUse(player, item);
             }
         }
     }

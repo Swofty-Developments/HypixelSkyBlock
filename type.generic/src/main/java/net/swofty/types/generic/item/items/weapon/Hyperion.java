@@ -10,6 +10,7 @@ import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,36 +31,6 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList("This item literally comes", "out of your mum and", "says §aHELLO §7lmao."));
-    }
-
-    @Override
-    public String getAbilityName() {
-        return "Wither Impact";
-    }
-
-    @Override
-    public String getAbilityDescription() {
-        return "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.";
-    }
-
-    @Override
-    public void onAbilityUse(SkyBlockPlayer player, SkyBlockItem sItem) {
-        player.sendMessage("Hey");
-    }
-
-    @Override
-    public int getManaCost() {
-        return 25;
-    }
-
-    @Override
-    public int getAbilityCooldownTicks() {
-        return 60;
-    }
-
-    @Override
-    public AbilityActivation getAbilityActivation() {
-        return AbilityActivation.RIGHT_CLICK;
     }
 
     @Override
@@ -89,5 +60,42 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
     @Override
     public MuseumableItemCategory getMuseumCategory() {
         return MuseumableItemCategory.WEAPONS;
+    }
+
+    @Override
+    public List<Ability> getAbilities() {
+        return List.of(
+                new Ability() {
+                    @Override
+                    public @NotNull String getName() {
+                        return "Wither Impact";
+                    }
+
+                    @Override
+                    public @NotNull String getDescription() {
+                        return "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.";
+                    }
+
+                    @Override
+                    public @NotNull AbilityActivation getAbilityActivation() {
+                        return AbilityActivation.RIGHT_CLICK;
+                    }
+
+                    @Override
+                    public int getCooldownTicks() {
+                        return 50;
+                    }
+
+                    @Override
+                    public @NotNull AbilityCost getAbilityCost() {
+                        return new AbilityManaCost(25);
+                    }
+
+                    @Override
+                    public void onUse(@NotNull SkyBlockPlayer player, @NotNull SkyBlockItem sItem) {
+                        player.sendMessage("Hey");
+                    }
+                }
+        );
     }
 }
