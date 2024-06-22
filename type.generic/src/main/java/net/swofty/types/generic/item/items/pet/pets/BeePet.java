@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.pet;
+package net.swofty.types.generic.item.items.pet.pets;
 
 import net.minestom.server.particle.Particle;
 import net.swofty.commons.item.Rarity;
@@ -6,6 +6,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.items.pet.PetAbility;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -67,7 +68,7 @@ public class BeePet implements Pet, NotFinishedYet {
 
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
-                    return Arrays.asList("§7Grants §a+20 §7of each to your pet:",
+                    return Arrays.asList("§7Grants §a+" + level*0.2 + " §7of each to your pet:",
                             "§6☘ Farming Fortune",
                             "§6☘ Foraging Fortune",
                             "§6☘ Mining Fortune"
@@ -83,7 +84,7 @@ public class BeePet implements Pet, NotFinishedYet {
 
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
-                    return Arrays.asList("§7Grants §a+30 §7of each to your pet:",
+                    return Arrays.asList("§7Grants §a+30" + level*0.3 + " §7of each to your pet:",
                             "§6☘ Farming Fortune",
                             "§6☘ Foraging Fortune",
                             "§6☘ Mining Fortune"
@@ -101,7 +102,7 @@ public class BeePet implements Pet, NotFinishedYet {
                 @Override
                 public List<String> getDescription(SkyBlockItem instance) {
                     return Arrays.asList(
-                            "§7Gain §a25% §7of received damage as §6❤",
+                            "§7Gain §a" + level*0.2 + "% §7of received damage as §6❤",
                             "§6Absorption"
                     );
                 }
@@ -127,7 +128,7 @@ public class BeePet implements Pet, NotFinishedYet {
     public ItemStatistics getPerLevelStatistics(Rarity rarity) {
         return ItemStatistics.builder()
                 .withBase(ItemStatistic.SPEED, 0.1)
-                .withBase(ItemStatistic.STRENGTH, 0.25)
+                .withBase(ItemStatistic.STRENGTH, 0.3)
                 .withBase(ItemStatistic.INTELLIGENCE, 0.5)
                 .build();
     }

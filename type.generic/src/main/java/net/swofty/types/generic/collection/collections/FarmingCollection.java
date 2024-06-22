@@ -1536,7 +1536,22 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        },
+                                new UnlockRecipe() {
+                                    @Override
+                                    public SkyBlockRecipe<?> getRecipe() {
+                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.SUGAR_CANE, 12));
+                                        List<String> pattern = List.of(
+                                                "AAA",
+                                                "AAA",
+                                                "AAA"
+                                        );
+
+                                        return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.SPEED_TALISMAN), ingredientMap, pattern);
+                                    }
+                                }
+                        ),
                         new ItemCollectionReward(500, new UnlockXP() {
                             @Override
                             public int xp() {
@@ -1568,7 +1583,23 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        },
+                                new UnlockRecipe() {
+                                    @Override
+                                    public SkyBlockRecipe<?> getRecipe() {
+                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_SUGAR, 12));
+                                        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SPEED_TALISMAN, 1));
+                                        List<String> pattern = List.of(
+                                                "AAA",
+                                                "ABA",
+                                                "AAA"
+                                        );
+
+                                        return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.SPEED_RING), ingredientMap, pattern);
+                                    }
+                                }
+                        ),
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1606,7 +1637,23 @@ public class FarmingCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                        }),
+                        },
+                                new UnlockRecipe() {
+                                    @Override
+                                    public SkyBlockRecipe<?> getRecipe() {
+                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_SUGAR_CANE, 6));
+                                        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SPEED_RING, 1));
+                                        List<String> pattern = List.of(
+                                                "AAA",
+                                                "ABA",
+                                                "AAA"
+                                        );
+
+                                        return new ShapedRecipe(SkyBlockRecipe.RecipeType.FARMING, new SkyBlockItem(ItemType.SPEED_ARTIFACT), ingredientMap, pattern);
+                                    }
+                                }
+                        ),
                         new ItemCollectionReward(50000, new UnlockXP() {
                             @Override
                             public int xp() {
