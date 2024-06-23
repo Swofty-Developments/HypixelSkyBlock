@@ -66,7 +66,7 @@ public class SkyBlockServerAttributes {
     public static void saveAttributeLoop() {
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
             AttributeDatabase.saveDocument(toDocument());
-        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3) , ExecutionType.ASYNC);
+        }, TaskSchedule.seconds(3), TaskSchedule.seconds(3) , ExecutionType.TICK_END);
     }
 
     public enum Attributes {

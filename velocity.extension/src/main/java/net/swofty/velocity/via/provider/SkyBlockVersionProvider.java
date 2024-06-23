@@ -15,7 +15,7 @@ public class SkyBlockVersionProvider extends BaseVersionProvider {
 
     @Override
     public ProtocolVersion getClosestServerProtocol(UserConnection user) throws Exception {
-        return user.isClientSide() ? ProtocolVersion.v1_20_5 : getFrontProtocol(user);
+        return user.isClientSide() ? ProtocolVersion.v1_21 : getFrontProtocol(user);
     }
 
     private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {

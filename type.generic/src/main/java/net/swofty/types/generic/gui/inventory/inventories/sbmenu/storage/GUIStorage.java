@@ -8,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
@@ -100,7 +101,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                 DataHandler.Data.BACKPACKS, DatapointBackpacks.class
         ).getValue();
 
-        Map<Integer, SkyBlockItem> backpackItems = backpacks.getBackpacks();
+        Map<Integer, UnderstandableSkyBlockItem> backpackItems = backpacks.getBackpacks();
 
         for (int backpack_slot = 27; backpack_slot <= 44; backpack_slot++) {
             int slot = backpack_slot - 26;
@@ -138,7 +139,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         if (item.isNA()) return;
                         if (!(item.getGenericInstance() instanceof Backpack)) return;
 
-                        backpackItems.put(slot, item);
+                        backpackItems.put(slot, item.toUnderstandable());
                         player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
                                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
                         );
@@ -161,7 +162,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                 continue;
             }
 
-            SkyBlockItem item = backpackItems.get(slot);
+            SkyBlockItem item = new SkyBlockItem(backpackItems.get(slot));
 
             set(new GUIClickableItem(backpack_slot) {
                 @Override

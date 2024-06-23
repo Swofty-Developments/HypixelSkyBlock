@@ -3,6 +3,7 @@ package net.swofty.types.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.HashMap;
@@ -12,15 +13,15 @@ import java.util.Map;
 public class SkyBlockInventory {
 
     @Setter
-    private Map<Integer, SkyBlockItem> items = new HashMap<>();
+    private Map<Integer, UnderstandableSkyBlockItem> items = new HashMap<>();
     @Setter
-    private SkyBlockItem helmet = new SkyBlockItem(Material.AIR);
+    private UnderstandableSkyBlockItem helmet = new SkyBlockItem(Material.AIR).toUnderstandable();
     @Setter
-    private SkyBlockItem chestplate = new SkyBlockItem(Material.AIR);
+    private UnderstandableSkyBlockItem chestplate = new SkyBlockItem(Material.AIR).toUnderstandable();
     @Setter
-    private SkyBlockItem leggings = new SkyBlockItem(Material.AIR);
+    private UnderstandableSkyBlockItem leggings = new SkyBlockItem(Material.AIR).toUnderstandable();
     @Setter
-    private SkyBlockItem boots = new SkyBlockItem(Material.AIR);
+    private UnderstandableSkyBlockItem boots = new SkyBlockItem(Material.AIR).toUnderstandable();
 
     public SkyBlockInventory() {
     }

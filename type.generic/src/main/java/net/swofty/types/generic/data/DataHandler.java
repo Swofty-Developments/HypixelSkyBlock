@@ -231,18 +231,23 @@ public class DataHandler {
         }, (player, datapoint) -> {
             SkyBlockInventory skyBlockInventory = (SkyBlockInventory) datapoint.getValue();
 
-            player.setHelmet(skyBlockInventory.getHelmet().getItemStack());
-            player.setChestplate(skyBlockInventory.getChestplate().getItemStack());
-            player.setLeggings(skyBlockInventory.getLeggings().getItemStack());
-            player.setBoots(skyBlockInventory.getBoots().getItemStack());
+            player.setHelmet(new SkyBlockItem(skyBlockInventory.getHelmet()).getItemStack());
+            player.setChestplate(new SkyBlockItem(skyBlockInventory.getChestplate()).getItemStack());
+            player.setLeggings(new SkyBlockItem(skyBlockInventory.getLeggings()).getItemStack());
+            player.setBoots(new SkyBlockItem(skyBlockInventory.getBoots()).getItemStack());
 
-            skyBlockInventory.getItems().forEach((integer, itemStack) -> {
+            skyBlockInventory.getItems().forEach((integer, understandableSkyBlockItem) -> {
                 PlayerItemOrigin origin = PlayerItemOrigin.INVENTORY_SLOT;
                 origin.setData(integer);
 
-                player.getInventory().setItemStack(integer, itemStack.getItemStack());
+                player.getInventory().setItemStack(integer, new SkyBlockItem(understandableSkyBlockItem).getItemStack());
 
-                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(player, itemStack.getItemStack(), true).build();
+                ItemStack loadedItem = PlayerItemUpdater.playerUpdate(
+                        player,
+                        new SkyBlockItem(understandableSkyBlockItem).getItemStack(),
+                        true
+                ).build();
+
                 origin.setStack(player, loadedItem);
             });
 
@@ -254,25 +259,25 @@ public class DataHandler {
 
             ItemStack helmet = player.getHelmet();
             if (SkyBlockItem.isSkyBlockItem(helmet)) {
-                skyBlockInventory.setHelmet(new SkyBlockItem(helmet));
+                skyBlockInventory.setHelmet(new SkyBlockItem(helmet).toUnderstandable());
             }
             ItemStack chestplate = player.getChestplate();
             if (SkyBlockItem.isSkyBlockItem(chestplate)) {
-                skyBlockInventory.setChestplate(new SkyBlockItem(chestplate));
+                skyBlockInventory.setChestplate(new SkyBlockItem(chestplate).toUnderstandable());
             }
             ItemStack leggings = player.getLeggings();
             if (SkyBlockItem.isSkyBlockItem(leggings)) {
-                skyBlockInventory.setLeggings(new SkyBlockItem(leggings));
+                skyBlockInventory.setLeggings(new SkyBlockItem(leggings).toUnderstandable());
             }
             ItemStack boots = player.getBoots();
             if (SkyBlockItem.isSkyBlockItem(boots)) {
-                skyBlockInventory.setBoots(new SkyBlockItem(boots));
+                skyBlockInventory.setBoots(new SkyBlockItem(boots).toUnderstandable());
             }
 
             for (int i = 0; i <= 36; i++) {
                 ItemStack stack = player.getInventory().getItemStack(i);
                 if (SkyBlockItem.isSkyBlockItem(stack)) {
-                    skyBlockInventory.getItems().put(i, new SkyBlockItem(stack));
+                    skyBlockInventory.getItems().put(i, new SkyBlockItem(stack).toUnderstandable());
                 }
             }
             return new DatapointInventory("inventory", skyBlockInventory);

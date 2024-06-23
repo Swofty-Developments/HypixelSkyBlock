@@ -31,7 +31,7 @@ public record MinionHandler(Scheduler scheduler) {
                 exception.printStackTrace();
             }
             return TaskSchedule.tick(3);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 
     private void minionLoop() {

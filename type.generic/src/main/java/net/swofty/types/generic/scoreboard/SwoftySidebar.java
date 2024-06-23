@@ -223,13 +223,15 @@ public class SwoftySidebar implements Scoreboard {
     @Override
     public boolean removeViewer(@NotNull Player player) {
         final boolean result = this.viewers.remove(player);
+        if (!result) return false;
+
         ScoreboardObjectivePacket scoreboardObjectivePacket = this.getDestructionObjectivePacket();
         player.sendPacket(scoreboardObjectivePacket);
         for (ScoreboardLine line : lines) {
             player.sendPacket(line.getScoreDestructionPacket(objectiveName)); // Is it necessary?
             player.sendPacket(line.sidebarTeam.getDestructionPacket());
         }
-        return result;
+        return true;
     }
 
     @NotNull
@@ -381,7 +383,6 @@ public class SwoftySidebar implements Scoreboard {
      * This class is used to create a team for the {@link SwoftySidebar}
      */
     private static class SidebarTeam {
-
         private final String teamName;
         private Component prefix, suffix;
         private final String entityName;

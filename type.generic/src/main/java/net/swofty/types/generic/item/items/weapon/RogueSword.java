@@ -48,7 +48,7 @@ public class RogueSword implements CustomSkyBlockItem, CustomSkyBlockAbility, St
 
                     @Override
                     public @NotNull AbilityActivation getAbilityActivation() {
-                        return null;
+                        return AbilityActivation.RIGHT_CLICK;
                     }
 
                     @Override

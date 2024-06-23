@@ -78,7 +78,7 @@ public final class Spark implements SparkPlugin {
 
     @Override
     public void executeAsync(Runnable runnable) {
-        MinecraftServer.getSchedulerManager().scheduleNextTick(runnable, ExecutionType.ASYNC);
+        MinecraftServer.getSchedulerManager().scheduleNextTick(runnable, ExecutionType.TICK_END);
     }
 
     @Override

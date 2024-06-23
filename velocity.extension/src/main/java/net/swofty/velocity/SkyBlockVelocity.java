@@ -88,7 +88,7 @@ public class SkyBlockVelocity {
         /**
          * Cross version support!
          */
-        ViaLoader.init(null , new SkyBlockVLLoader() , new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
+        ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
 
         /**
          * Register packets

@@ -16,7 +16,7 @@ java {
 
 dependencies {
     implementation(project(":packer"))
-    implementation("com.github.Minestom:Minestom:914ddd8dc6") {
+    implementation("com.github.Minestom:Minestom:277dceacf1") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

@@ -3,6 +3,7 @@ package net.swofty.types.generic.data.datapoints;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.protocol.serializers.InventorySerializer;
@@ -25,7 +26,7 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
     @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class PlayerBackpacks {
-        private final Map<Integer, SkyBlockItem> backpacks;
+        private final Map<Integer, UnderstandableSkyBlockItem> backpacks;
         @Setter
         private int unlockedSlots;
 
@@ -34,7 +35,7 @@ public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackp
             this.unlockedSlots = 1;
         }
 
-        public PlayerBackpacks(Map<Integer, SkyBlockItem> backpacks, int unlockedSlots) {
+        public PlayerBackpacks(Map<Integer, UnderstandableSkyBlockItem> backpacks, int unlockedSlots) {
             this.backpacks = backpacks;
             this.unlockedSlots = unlockedSlots;
         }

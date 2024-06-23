@@ -636,11 +636,7 @@ public class SkyBlockPlayer extends Player {
         float maxHealth = statistics.allStatistics().getOverall(ItemStatistic.HEALTH).floatValue();
         MaxHealthValueUpdateEvent event = new MaxHealthValueUpdateEvent(this, maxHealth);
         SkyBlockValueEvent.callValueUpdateEvent(event);
-
-        float health = (float) event.getValue();
-        getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
-
-        return health;
+        return (float) event.getValue();
     }
 
     @Override

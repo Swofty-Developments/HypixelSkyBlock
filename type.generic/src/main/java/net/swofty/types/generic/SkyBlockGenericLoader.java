@@ -227,7 +227,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockRegion.cacheRegions();
         SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
         MinecraftServer.getDimensionTypeRegistry().register(
-                DimensionType.builder(NamespaceID.from("skyblock:island"))
+                NamespaceID.from("skyblock:island"),
+                DimensionType.builder()
                         .ambientLight(2)
                         .build());
         SkyBlockIsland.runVacantLoop(MinecraftServer.getSchedulerManager());

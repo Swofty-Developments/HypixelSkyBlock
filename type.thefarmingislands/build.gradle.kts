@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("com.github.Minestom:Minestom:914ddd8dc6") {
+    implementation("com.github.Minestom:Minestom:277dceacf1") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

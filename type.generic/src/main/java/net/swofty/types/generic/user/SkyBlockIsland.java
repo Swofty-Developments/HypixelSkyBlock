@@ -192,6 +192,6 @@ public class SkyBlockIsland {
                     player.getSkyBlockIsland().runVacantCheck();
             });
             return TaskSchedule.tick(4);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 }

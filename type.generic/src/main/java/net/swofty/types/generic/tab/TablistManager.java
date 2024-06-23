@@ -107,6 +107,6 @@ public abstract class TablistManager {
                     } catch (Exception e) {}
                 });
             });
-        }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.ASYNC);
+        }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.TICK_END);
     }
 }

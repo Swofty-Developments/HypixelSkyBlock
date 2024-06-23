@@ -216,6 +216,6 @@ public class SkyBlock {
             }, TaskSchedule.tick(4), TaskSchedule.stop());
 
             return TaskSchedule.seconds(1);
-        } , ExecutionType.ASYNC);
+        } , ExecutionType.TICK_END);
     }
 }

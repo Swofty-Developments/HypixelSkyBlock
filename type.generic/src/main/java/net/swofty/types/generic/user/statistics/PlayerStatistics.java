@@ -428,7 +428,7 @@ public class PlayerStatistics {
                 player.sendActionBar(Component.text(toSend));
             });
             return TaskSchedule.tick(4);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 
     public static void statisticsLoop() {
@@ -475,7 +475,7 @@ public class PlayerStatistics {
                 }
             });
             return TaskSchedule.tick(30);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 
     public static void missionLoop() {
@@ -525,7 +525,7 @@ public class PlayerStatistics {
                 barCache.put(player, bar);
             });
             return TaskSchedule.tick(30);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 
     public static void manaLoop() {
@@ -541,7 +541,7 @@ public class PlayerStatistics {
                 }
             });
             return TaskSchedule.seconds(1);
-        }, ExecutionType.ASYNC);
+        }, ExecutionType.TICK_END);
     }
 }
 

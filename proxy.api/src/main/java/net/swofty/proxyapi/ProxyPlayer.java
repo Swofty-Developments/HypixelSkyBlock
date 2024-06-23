@@ -140,7 +140,11 @@ public class ProxyPlayer {
         json.put("actions", "version");
 
         RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
-            future.complete(MinecraftVersion.byProtocolId(Integer.parseInt(s)));
+            try {
+                future.complete(MinecraftVersion.byProtocolId(Integer.parseInt(s)));
+            } catch (Exception e) {
+                future.complete(MinecraftVersion.MINECRAFT_1_21);
+            } // ViaVersion is disabled
         });
 
         return future;

@@ -2,7 +2,6 @@ package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -26,6 +25,8 @@ public class ActionPlayerRemoveTab implements SkyBlockEventClass {
         SkyBlockGenericLoader.getLoadedPlayers().forEach(player2 -> {
             Rank player2Rank = player2.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
             Rank playerRank = ((SkyBlockPlayer) player).getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
+
+            if (player2.getUuid().equals(player.getUuid())) return;
 
             player2.sendPacket(new TeamsPacket("ZZZZZ" + player.getUsername(), new TeamsPacket.CreateTeamAction(
                     Component.text(playerRank.getPrefix()),

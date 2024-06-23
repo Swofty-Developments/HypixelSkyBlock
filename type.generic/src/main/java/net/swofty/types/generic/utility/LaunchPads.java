@@ -101,7 +101,7 @@ public enum LaunchPads {
 
                 hologramMap.keySet().removeIf(uuid -> !updated.contains(uuid));
             }
-        }, TaskSchedule.seconds(2), TaskSchedule.seconds(2), ExecutionType.ASYNC);
+        }, TaskSchedule.seconds(2), TaskSchedule.seconds(2), ExecutionType.TICK_END);
 
         scheduler.scheduleTask(() -> {
             for (LaunchPads launchPad : launchPads) {
@@ -124,7 +124,7 @@ public enum LaunchPads {
                     });
                 }
             }
-        }, TaskSchedule.seconds(2), TaskSchedule.tick(5), ExecutionType.ASYNC);
+        }, TaskSchedule.seconds(2), TaskSchedule.tick(5), ExecutionType.TICK_END);
     }
 
     public static @Nullable LaunchPads getLaunchPadInRange(Pos pos, double range) {
