@@ -48,7 +48,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 2. Make a folder called `configuration` in the same directory as the JAR file. (Note this should be placed differently to where your Proxy is)
 3. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 4. Move this file into the `configuration` folder you just made.
-5. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/6zcvolfjk5bislu/HypixelSkyBlockMinestom.zip/file)
+5. Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file)
 6. Get the Hypixel SkyBlock hub from the above download and put it in the configuration folder you made under the name `hypixel_hub`.
 7. Get the Hypixel Island default template from the above download and put it in the configuration folder you made under the name `hypixel_island_template`.
 8. There should be a `forwarding.secret` file where your Velocity JAR is, take this and put it into your `resources.json` under `velocity-secret`.
