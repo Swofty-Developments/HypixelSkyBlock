@@ -140,7 +140,7 @@ import net.swofty.types.generic.item.items.miscellaneous.gifts.DeadBushofLove;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.GameAnnihilator;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.GameBreaker;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.QualityMap;
-import net.swofty.types.generic.item.items.pet.BeePet;
+import net.swofty.types.generic.item.items.pet.pets.BeePet;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.runes.BloodRune;
 import net.swofty.types.generic.item.items.spooky.*;
@@ -206,6 +206,8 @@ public enum ItemTypeLinker {
     ZOMBIE_RING(ItemType.ZOMBIE_RING, ZombieRing.class),
     ZOMBIE_ARTIFACT(ItemType.ZOMBIE_ARTIFACT, ZombieArtifact.class),
     SPEED_TALISMAN(ItemType.SPEED_TALISMAN, SpeedTalisman.class),
+    SPEED_RING(ItemType.SPEED_RING, SpeedRing.class),
+    SPEED_ARTIFACT(ItemType.SPEED_ARTIFACT, SpeedArtifact.class),
     SKELETON_TALISMAN(ItemType.SKELETON_TALISMAN, SkeletonTalisman.class),
     HASTE_RING(ItemType.HASTE_RING, HasteRing.class),
     FARMING_TALISMAN(ItemType.FARMING_TALISMAN, FarmingTalisman.class),

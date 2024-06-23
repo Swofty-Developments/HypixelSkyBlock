@@ -27,6 +27,8 @@ public enum ItemType {
     ZOMBIE_RING(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
     ZOMBIE_ARTIFACT(Material.PLAYER_HEAD,  Rarity.RARE),
     SPEED_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
+    SPEED_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    SPEED_ARTIFACT(Material.PLAYER_HEAD, Rarity.RARE),
     SKELETON_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
     HASTE_RING(Material.PLAYER_HEAD,  Rarity.RARE),
     FARMING_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
