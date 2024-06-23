@@ -47,8 +47,8 @@ public class UndeadSword extends SkyBlockValueEvent implements CustomSkyBlockIte
         PlayerDamageMobValueUpdateEvent event = (PlayerDamageMobValueUpdateEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.UNDEAD_SWORD) return;
+        if (item.isNA() || item.isAir()) return;
+        if (item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.UNDEAD_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.ZOMBIE || event.getMob().getEntityType() == EntityType.ZOMBIFIED_PIGLIN || event.getMob().getEntityType() == EntityType.SKELETON || event.getMob().getEntityType() == EntityType.WITHER_SKELETON) {
             event.setValue((((float) event.getValue()) *2));
         }

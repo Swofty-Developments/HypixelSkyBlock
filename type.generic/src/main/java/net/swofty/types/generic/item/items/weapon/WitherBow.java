@@ -49,9 +49,9 @@ public class WitherBow extends SkyBlockValueEvent implements CustomSkyBlockItem,
         PlayerDamageMobValueUpdateEvent event = (PlayerDamageMobValueUpdateEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.WITHER_BOW) return;
-        if ( event.getMob().getEntityType() == EntityType.WITHER_SKELETON || event.getMob().getEntityType() == EntityType.WITHER) {
+        if (item.isNA() || item.isAir()) return;
+        if (item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.WITHER_BOW) return;
+        if (event.getMob().getEntityType() == EntityType.WITHER_SKELETON || event.getMob().getEntityType() == EntityType.WITHER) {
             event.setValue((((float) event.getValue()) *2));
         }
     }

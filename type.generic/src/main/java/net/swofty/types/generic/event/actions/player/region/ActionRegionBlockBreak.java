@@ -1,10 +1,12 @@
 package net.swofty.types.generic.event.actions.player.region;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
@@ -19,7 +21,6 @@ import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.types.generic.utility.MaterialQuantifiableRandom;
 
 public class ActionRegionBlockBreak implements SkyBlockEventClass {
 
@@ -69,15 +70,22 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
                     player, item.getMaterial(), event.getBlockPosition()
             ));
 
-            MineableBlock mineableBlock = MineableBlock.get(block);
-            Double fortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getFortuneType());
-            Double dropMultiplicator = (1 + (fortune*0.01));
-            Integer drops = mineableBlock.getDrops().getAmount(dropMultiplicator);
+            MineableBlock mineableBlock;
+            Integer drops;
+            
+            try {
+                mineableBlock = MineableBlock.get(block);
+                Double fortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getFortuneType());
+                Double dropMultiplicator = (1 + (fortune*0.01));
+                drops = mineableBlock.getDrops().getAmount(dropMultiplicator);
+            } catch (NullPointerException e) {
+                drops = 1;
+            }
 
             /**
              * Handle block dropping
              */
-            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getAttributeHandler().getPotentialType(), drops);
+            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(drops).build());
             if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);
             } else {
@@ -85,14 +93,6 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
                 Pos pos = Pos.fromPoint(event.getBlockPosition());
                 // Move the dropped item to the center of the block
                 pos = pos.add(0.5, 0.5, 0.5);
-                // Move block closer to player by 0.5 blocks
-                Pos playerPos = player.getPosition().add(0, 0.5, 0);
-                double x = playerPos.x() - pos.x();
-                double y = playerPos.y() - pos.y();
-                double z = playerPos.z() - pos.z();
-                double distance = Math.sqrt(x * x + y * y + z * z);
-                double multiplier = 1.4 / distance;
-                pos = pos.add(x * multiplier, y * multiplier * 3, z * multiplier);
 
                 droppedItem.setInstance(player.getInstance(), pos);
                 droppedItem.addViewer(player);

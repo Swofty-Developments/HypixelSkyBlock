@@ -48,8 +48,8 @@ public class SpiderSword extends SkyBlockValueEvent implements CustomSkyBlockIte
         PlayerDamageMobValueUpdateEvent event = (PlayerDamageMobValueUpdateEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.SPIDER_SWORD) return;
+        if (item.isNA() || item.isAir()) return;
+        if (item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.SPIDER_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.SPIDER || event.getMob().getEntityType() == EntityType.CAVE_SPIDER || event.getMob().getEntityType() == EntityType.SILVERFISH) {
             event.setValue((((float) event.getValue()) *2));
         }
