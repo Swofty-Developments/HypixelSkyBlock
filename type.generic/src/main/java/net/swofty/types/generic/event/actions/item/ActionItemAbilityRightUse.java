@@ -10,7 +10,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockAbility;
 import net.swofty.types.generic.user.PlayerAbilityHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 
 public class ActionItemAbilityRightUse implements SkyBlockEventClass {
 

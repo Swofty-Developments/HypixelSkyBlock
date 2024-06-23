@@ -8,9 +8,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
@@ -53,7 +51,6 @@ import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.DeathMessageCreator;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.NotNull;
@@ -83,9 +80,6 @@ public class SkyBlockPlayer extends Player {
     private boolean inLaunchpad = false;
     @Setter
     private ServerType originServer = ServerType.HUB;
-    private StatisticDisplayReplacement manaDisplayReplacement = null;
-    private StatisticDisplayReplacement defenseDisplayReplacement = null;
-    private StatisticDisplayReplacement coinsDisplayReplacement = null;
     @Setter
     private SkyBlockIsland skyBlockIsland;
     @Setter
@@ -357,37 +351,6 @@ public class SkyBlockPlayer extends Player {
 
     public ProxyPlayer asProxyPlayer() {
         return new ProxyPlayer(this);
-    }
-
-    public void setDisplayReplacement(StatisticDisplayReplacement replacement, StatisticDisplayReplacement.DisplayType type) {
-        switch (type) {
-            case MANA:
-                this.manaDisplayReplacement = replacement;
-                break;
-            case DEFENSE:
-                this.defenseDisplayReplacement = replacement;
-                break;
-            case COINS:
-                this.coinsDisplayReplacement = replacement;
-                break;
-        }
-
-        int hashCode = replacement.hashCode();
-
-        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-            StatisticDisplayReplacement scheduledReplacement = switch (type) {
-                case MANA -> this.manaDisplayReplacement;
-                case DEFENSE -> this.defenseDisplayReplacement;
-                case COINS -> this.coinsDisplayReplacement;
-            };
-            if (hashCode == scheduledReplacement.hashCode()) {
-                switch (type) {
-                    case MANA -> this.manaDisplayReplacement = null;
-                    case DEFENSE -> this.defenseDisplayReplacement = null;
-                    case COINS -> this.coinsDisplayReplacement = null;
-                }
-            }
-        }, TaskSchedule.tick(replacement.getTicksToLast()), TaskSchedule.stop());
     }
 
     public SkyBlockItem updateItem(PlayerItemOrigin origin, Consumer<SkyBlockItem> update) {

@@ -8,8 +8,6 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
-import net.swofty.commons.StringUtility;
 
 @CommandParameters(description = "Sets your purse balance",
         usage = "/coins <amount>",
@@ -26,10 +24,6 @@ public class CoinsCommand extends SkyBlockCommand {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
             player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(context.get(doubleArgument));
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .ticksToLast(20)
-                    .display(StringUtility.commaify(context.get(doubleArgument)))
-                    .build(), StatisticDisplayReplacement.DisplayType.COINS);
 
             sender.sendMessage("§aSuccessfully set coins to to §e" + context.getRaw(doubleArgument) + "§a.");
         }, doubleArgument);

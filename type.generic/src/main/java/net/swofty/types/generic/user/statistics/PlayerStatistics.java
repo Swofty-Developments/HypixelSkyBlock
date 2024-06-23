@@ -31,7 +31,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
-import net.swofty.types.generic.item.impl.HotPotatoable;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.impl.StandardItem;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
@@ -41,6 +40,7 @@ import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -407,25 +407,21 @@ public class PlayerStatistics {
         Scheduler scheduler = MinecraftServer.getSchedulerManager();
         scheduler.submitTask(() -> {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                SkyBlockActionBar actionBar = SkyBlockActionBar.getFor(player);
+
+                // Set default displays
                 float absorption = player.getAdditionalHearts();
                 String heartsColour = absorption > 0.0f ? "§6" : "§c";
+                actionBar.setDefaultDisplay(SkyBlockActionBar.BarSection.HEALTH,
+                        heartsColour + Math.round(player.getHealth() + absorption) + "/" + Math.round(player.getMaxHealth()) + "❤");
+                actionBar.setDefaultDisplay(SkyBlockActionBar.BarSection.DEFENSE,
+                        player.getDefense() == 0 ? "" : "§a" + Math.round(player.getDefense()) + "❈ Defense");
+                actionBar.setDefaultDisplay(SkyBlockActionBar.BarSection.MANA,
+                        "§b" + Math.round(player.getMana()) + "/" + Math.round(player.getMaxMana()) + "✎ Mana");
 
-                String healthText = heartsColour + Math.round(player.getHealth() + absorption) + "/" +
-                        Math.round(player.getMaxHealth()) + "❤";
-                String defenseText = player.getDefense() == 0 ? "" : "§a" + Math.round(player.getDefense()) + "❈ Defense";
-                String manaText = "§b" + Math.round(player.getMana()) + "/" + Math.round(player.getMaxMana()) + "✎ Mana";
-
-                if (player.getManaDisplayReplacement() != null) {
-                    manaText = player.getManaDisplayReplacement().getDisplay();
-                }
-
-                if (player.getDefenseDisplayReplacement() != null) {
-                    defenseText = player.getDefenseDisplayReplacement().getDisplay();
-                }
-
-                String toSend = healthText + "     " + defenseText + "     " + manaText;
-
-                player.sendActionBar(Component.text(toSend));
+                // Build and send the action bar
+                String actionBarString = actionBar.buildActionBarString();
+                player.sendActionBar(Component.text(actionBarString));
             });
             return TaskSchedule.tick(4);
         }, ExecutionType.TICK_END);

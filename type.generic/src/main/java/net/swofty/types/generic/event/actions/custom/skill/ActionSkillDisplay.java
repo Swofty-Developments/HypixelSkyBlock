@@ -4,7 +4,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 
 public class ActionSkillDisplay implements SkyBlockEventClass {
 
@@ -20,11 +20,14 @@ public class ActionSkillDisplay implements SkyBlockEventClass {
         int currentLevel = event.getPlayer().getSkills().getCurrentLevel(event.getSkillCategory());
         int currentRequirement = event.getSkillCategory().asCategory().getReward(currentLevel + 1).requirement();
 
-        event.getPlayer().setDisplayReplacement(StatisticDisplayReplacement.builder()
-                .display("§3+" + difference + " " + event.getSkillCategory() + " (" + event.getNewValueCumulative()
-                        + "/" + currentRequirement + ")")
-                .ticksToLast(20)
-                .purpose(StatisticDisplayReplacement.Purpose.SKILL)
-                .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
+        SkyBlockActionBar.getFor(event.getPlayer()).addReplacement(
+                SkyBlockActionBar.BarSection.DEFENSE,
+                new SkyBlockActionBar.DisplayReplacement(
+                        "§3+" + difference + " " + event.getSkillCategory() + " (" + event.getNewValueCumulative()
+                                + "/" + currentRequirement + ")",
+                        20,
+                        2
+                )
+        );
     }
 }

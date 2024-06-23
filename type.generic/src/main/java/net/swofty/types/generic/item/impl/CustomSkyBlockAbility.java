@@ -3,8 +3,8 @@ package net.swofty.types.generic.item.impl;
 import lombok.Getter;
 import lombok.NonNull;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,20 +65,28 @@ public interface CustomSkyBlockAbility {
 
         @Override
         public void onUse(@NonNull SkyBlockPlayer player, @NonNull Ability ability) {
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .display("§b-" + cost + " (§6" + ability.getName() + "§b)")
-                    .ticksToLast(20 * 2)
-                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
+            SkyBlockActionBar.getFor(player).addReplacement(
+                    SkyBlockActionBar.BarSection.MANA,
+                    new SkyBlockActionBar.DisplayReplacement(
+                            "§b-" + cost + " (§6" + ability.getName() + "§b)",
+                            20,
+                            2
+                    )
+            );
             player.setMana(player.getMana() - cost);
         }
 
 
         @Override
         public void onFail(@NonNull SkyBlockPlayer player) {
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .display("§c§lNOT ENOUGH MANA")
-                    .ticksToLast(20 * 2)
-                    .build(), StatisticDisplayReplacement.DisplayType.MANA);
+            SkyBlockActionBar.getFor(player).addReplacement(
+                    SkyBlockActionBar.BarSection.MANA,
+                    new SkyBlockActionBar.DisplayReplacement(
+                            "§c§lNOT ENOUGH MANA",
+                            20 * 2,
+                            2
+                    )
+            );
         }
 
         @Override

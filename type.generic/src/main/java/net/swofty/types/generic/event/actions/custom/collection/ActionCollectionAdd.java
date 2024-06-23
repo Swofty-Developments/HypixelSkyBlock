@@ -15,8 +15,8 @@ import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
 import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
 
 public class ActionCollectionAdd implements SkyBlockEventClass {
@@ -64,38 +64,29 @@ public class ActionCollectionAdd implements SkyBlockEventClass {
         CollectionCategory.ItemCollection collection = category.getCollection(type);
 
         MathUtility.delay(() -> {
-            if (player.getDefenseDisplayReplacement() != null) {
-                // Allow for skill display to override collection displays
-                StatisticDisplayReplacement.Purpose purpose = player.getDefenseDisplayReplacement().getPurpose();
-                if (purpose != null && purpose.equals(StatisticDisplayReplacement.Purpose.SKILL)) return;
+            SkyBlockActionBar bar = SkyBlockActionBar.getFor(player);
+            int startingPriority = 5;
+            int addedAmount = 1;
 
-                String addedAmountString = player.getDefenseDisplayReplacement().getDisplay();
-                int addedAmount = 1;
-
+            SkyBlockActionBar.DisplayReplacement existingReplacement = bar.getReplacement(SkyBlockActionBar.BarSection.DEFENSE);
+            if (existingReplacement != null) {
+                startingPriority = existingReplacement.priority() + 1;
                 try {
-                    addedAmount = Integer.parseInt(addedAmountString.substring(2, addedAmountString.indexOf(" "))) + 1;
+                    addedAmount = Integer.parseInt(existingReplacement.display().substring(2, existingReplacement.display().indexOf(" "))) + 1;
                 } catch (NumberFormatException ignored) {}
-
-                player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                        .ticksToLast(20)
-                        .purpose(StatisticDisplayReplacement.Purpose.COLLECTION)
-                        .display(
-                                "§2+" + addedAmount + " " + category.getName() +
-                                        " §7(" + player.getCollection().get(type) +
-                                        "/" +
-                                        player.getCollection().getReward(collection).requirement() + ")")
-                        .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
-            } else {
-                player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                        .ticksToLast(20)
-                        .purpose(StatisticDisplayReplacement.Purpose.COLLECTION)
-                        .display(
-                                "§2+1 " + category.getName() +
-                                        " §7(" + player.getCollection().get(type) +
-                                        "/" +
-                                        player.getCollection().getReward(collection).requirement() + ")")
-                        .build(), StatisticDisplayReplacement.DisplayType.DEFENSE);
             }
+
+            bar.addReplacement(
+                    SkyBlockActionBar.BarSection.DEFENSE,
+                    new SkyBlockActionBar.DisplayReplacement(
+                            "§2+" + addedAmount + " " + category.getName() +
+                                    " §7(" + player.getCollection().get(type) +
+                                    "/" +
+                                    player.getCollection().getReward(collection).requirement() + ")",
+                            20,
+                            startingPriority
+                    )
+            );
         }, 5);
     }
 }

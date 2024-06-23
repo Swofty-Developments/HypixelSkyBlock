@@ -4,8 +4,8 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 
 public class ActionRegionChangeDisplay implements SkyBlockEventClass {
 
@@ -15,11 +15,14 @@ public class ActionRegionChangeDisplay implements SkyBlockEventClass {
 
         if (event.getTo() != null && event.getFrom() != null
                 && !event.getTo().equals(event.getFrom())) {
-            player.setDisplayReplacement(StatisticDisplayReplacement
-                    .builder()
-                    .ticksToLast(20)
-                    .display(event.getTo().getColor() + " ⏣ " + event.getTo().getName())
-                    .build(), StatisticDisplayReplacement.DisplayType.DEFENSE
+
+            SkyBlockActionBar.getFor(player).addReplacement(
+                    SkyBlockActionBar.BarSection.DEFENSE,
+                    new SkyBlockActionBar.DisplayReplacement(
+                            event.getTo().getColor() + " ⏣ " + event.getTo().getName(),
+                            20,
+                            2
+                    )
             );
         }
     }

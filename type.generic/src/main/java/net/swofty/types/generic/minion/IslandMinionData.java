@@ -94,7 +94,7 @@ public class IslandMinionData {
                 existingItem.get().setAmount(existingItem.get().getAmount() + item.getAmount());
             } else {
                 // If the item does not exist, add it as a new entry.
-                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getPotentialClassLinker(), item.getAmount()));
+                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getPotentialType(), item.getAmount()));
             }
             return true;
         }

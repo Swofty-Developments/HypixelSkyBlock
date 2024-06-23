@@ -11,7 +11,6 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.types.generic.utility.MathUtility;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.NotNull;
@@ -90,10 +89,5 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
         int coins = (int) (0.3 + ((enchantmentLevel - 1) * 0.3));
 
         event.getPlayer().setCoins(event.getPlayer().getCoins() + (coins * mobLevel));
-        event.getPlayer().setDisplayReplacement(StatisticDisplayReplacement.builder()
-                .display(String.valueOf((coins * mobLevel)))
-                .purpose(StatisticDisplayReplacement.Purpose.ENCHANTMENT)
-                .ticksToLast(20)
-                .build(), StatisticDisplayReplacement.DisplayType.COINS);
     }
 }

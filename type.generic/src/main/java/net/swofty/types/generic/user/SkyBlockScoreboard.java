@@ -15,7 +15,6 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.scoreboard.SwoftySidebar;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.commons.StringUtility;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +41,6 @@ public class SkyBlockScoreboard {
                 DataHandler dataHandler = player.getDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();
-                StatisticDisplayReplacement coinReplacement = player.getCoinsDisplayReplacement();
 
                 if (dataHandler == null) {
                     continue;
@@ -65,8 +63,7 @@ public class SkyBlockScoreboard {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()) +
-                        (coinReplacement == null ? "" : " §e(+" + coinReplacement.getDisplay() + ")"), sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
                 addLine("§fBits: §b" + StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue()), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&

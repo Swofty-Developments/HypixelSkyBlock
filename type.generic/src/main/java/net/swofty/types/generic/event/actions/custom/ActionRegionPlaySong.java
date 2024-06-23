@@ -8,8 +8,8 @@ import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.noteblock.SkyBlockSong;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.RegionType;
+import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.statistics.StatisticDisplayReplacement;
 import net.swofty.commons.StringUtility;
 
 import java.util.List;
@@ -31,11 +31,14 @@ public class ActionRegionPlaySong implements SkyBlockEventClass {
             Songs randomSong = songs.get((int) (Math.random() * songs.size()));
             songHandler.setPlayerSong(new SkyBlockSong(randomSong));
 
-            player.setDisplayReplacement(StatisticDisplayReplacement.builder()
-                    .ticksToLast(20)
-                    .purpose(StatisticDisplayReplacement.Purpose.MUSIC)
-                    .display("§2" + StringUtility.toNormalCase(randomSong.name()))
-                    .build(), StatisticDisplayReplacement.DisplayType.MANA);
+            SkyBlockActionBar.getFor(player).addReplacement(
+                    SkyBlockActionBar.BarSection.MANA,
+                    new SkyBlockActionBar.DisplayReplacement(
+                            "§2" + StringUtility.toNormalCase(randomSong.name()),
+                            20,
+                            2
+                    )
+            );
         }
     }
 }
