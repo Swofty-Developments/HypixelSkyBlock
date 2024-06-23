@@ -46,8 +46,8 @@ public class EndSword extends SkyBlockValueEvent implements CustomSkyBlockItem, 
         PlayerDamageMobValueUpdateEvent event = (PlayerDamageMobValueUpdateEvent) tempEvent;
         SkyBlockPlayer player = event.getPlayer();
         SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
-        if(item.isNA() || item.isAir()) return;
-        if(item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.END_SWORD) return;
+        if (item.isNA() || item.isAir()) return;
+        if (item.getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.END_SWORD) return;
         if (event.getMob().getEntityType() == EntityType.ENDER_DRAGON || event.getMob().getEntityType() == EntityType.ENDERMITE || event.getMob().getEntityType() == EntityType.ENDERMAN) {
             event.setValue((((float) event.getValue()) * 2));
         }
