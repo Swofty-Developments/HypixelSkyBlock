@@ -55,10 +55,10 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 9. Run the jar using `java -jar {Insert the JAR file} ISLAND`, this will create an Island server that will latch onto your running proxy.
 10. To make other game servers for the other islands merely run the command above again but with different island types, you can see all the possible types [here](https://github.com/Swofty-Developments/HypixelSkyBlock/blob/7df2db59ef0f14281f332d2cf43fdbf8ab09e574/commons/src/main/java/net/swofty/commons/ServerType.java#L4).
 11. Download `NanoLimbo-1.7-all.jar` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and start it in the background using `java -jar NanoLimbo-1.7-all.jar`.
-12. (OPTIONAL) If you wish to have regions, download the CSV of the regions from this Git repo and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
-13. (OPTIONAL) If you wish to have fairy souls, download the CSV of the fairy souls from this Git repo and upload them to the `fairysouls` collection made in your Mongo after starting the server. Once you have done this restart your server.
-14. (OPTIONAL) If you wish to have the Hub crystals (you can also just `/addcrystal`), download the CSV of the collections from this Git repo and upload them to the `crystals` collection made in your Mongo after starting the server. Once you have done this restart your server.
-15. (OPTIONAL) If you wish to have Songs on your server, copy the `songs` folder from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration), and put it inside of your configuration folder.
+12. Download `Minestom.regions.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and upload them to the `regions` collection made in your Mongo after starting the server. Once you have done this restart your server.
+13. (OPTIONAL) If you wish to have fairy souls, download `Minestom.fairysouls.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and upload them to the `fairysouls` collection made in your Mongo after starting the server. Once you have done this restart your server.
+14. (OPTIONAL) If you wish to have the Hub crystals (you can also just `/addcrystal`), download `Minestom.crystals.csv` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and upload them to the `crystals` collection made in your Mongo after starting the server. Once you have done this restart your server.
+15. (OPTIONAL) If you wish to have Songs on your server, copy the `songs` folder from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration), and put it inside your configuration folder.
 
 ### Service Setup Guide
 1. Due to the nature of SkyBlock, there may be a variety of services that need to be ran. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
@@ -70,6 +70,14 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 2. Download the [pack_textures](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and [SkyBlockPack](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) folders and move them where the packer JAR is.
 3. Run the packer JAR using `java -jar SkyBlockPacker.jar -v (Location of SkyBlockPack) -o (Output Directory) -t (Location of Pack Textures)`.
 4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
+
+### Common Issues
+1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
+
+    => Your Memurai isn't running.
+2. `Preview features are not enabled for... Try running with '--enable-preview'`
+
+    => try `java --enable-preview -jar SkyBlockCore.jar {ServerType}`
 
 ## Credits
 
