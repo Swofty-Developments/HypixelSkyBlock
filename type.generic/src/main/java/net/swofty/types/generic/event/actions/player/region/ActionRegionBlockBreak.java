@@ -71,21 +71,21 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             ));
 
             MineableBlock mineableBlock;
-            Integer drops;
+            Integer dropAmount;
             
             try {
                 mineableBlock = MineableBlock.get(block);
                 Double fortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getFortuneType());
                 Double dropMultiplicator = (1 + (fortune*0.01));
-                drops = mineableBlock.getDrops().getAmount(dropMultiplicator);
+                dropAmount = mineableBlock.getDrops().getAmount(dropMultiplicator);
             } catch (NullPointerException e) {
-                drops = 1;
+                dropAmount = 1;
             }
 
             /**
              * Handle block dropping
              */
-            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(drops).build());
+            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
             if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);
             } else {
