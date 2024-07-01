@@ -278,6 +278,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                     ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                             player, sbItem.getItemStackBuilder().build()
                     );
+                    itemStack.amount(item.amount);
 
                     if (item.getDisplayName() != null)
                         itemStack.set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName())

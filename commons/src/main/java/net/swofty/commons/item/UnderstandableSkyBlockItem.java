@@ -29,4 +29,8 @@ public record UnderstandableSkyBlockItem(@Nullable ItemType itemKey, List<ItemAt
     public String serialize() {
         return new UnderstandableSkyBlockItemSerializer().serialize(this);
     }
+
+    public static UnderstandableSkyBlockItem deserialize(String json) {
+        return new UnderstandableSkyBlockItemSerializer().deserialize(json);
+    }
 }

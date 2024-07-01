@@ -2,17 +2,18 @@ package net.swofty.types.generic.item;
 
 import com.mongodb.annotations.Immutable;
 import lombok.Getter;
+import lombok.NonNull;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
+import org.jetbrains.annotations.NotNull;
 
-@Immutable
 @Getter
 public class MaterialQuantifiable {
-    private ItemType material;
+    private @NonNull ItemType material;
     private int amount;
 
-    public MaterialQuantifiable(ItemType material, int amount) {
+    public MaterialQuantifiable(@NotNull ItemType material, int amount) {
         this.material = material;
         this.amount = amount;
     }
@@ -25,15 +26,15 @@ public class MaterialQuantifiable {
         this(material, 1);
     }
 
-    public MaterialQuantifiable(MaterialQuantifiable materialQuantifiable) {
+    public MaterialQuantifiable(@NonNull MaterialQuantifiable materialQuantifiable) {
         this(materialQuantifiable.material, materialQuantifiable.amount);
     }
 
-    public MaterialQuantifiable setMaterial(ItemTypeLinker material) {
+    public MaterialQuantifiable setMaterial(@NonNull ItemTypeLinker material) {
         return setMaterial(material.type);
     }
 
-    public MaterialQuantifiable setMaterial(ItemType material) {
+    public MaterialQuantifiable setMaterial(@NonNull ItemType material) {
         this.material = material;
         return this;
     }

@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.ReforgeType;
@@ -39,24 +40,25 @@ public class ItemLore {
         this.stack = stack;
     }
 
-    public static String getBaseName(ItemStack stack) {
-        return StringUtility.toNormalCase(new SkyBlockItem(stack).getAttributeHandler().getTypeAsString());
-    }
-
     @SneakyThrows
     public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
         ItemAttributeHandler handler = item.getAttributeHandler();
 
         Rarity rarity = handler.getRarity();
-        String type = handler.getTypeAsString();
         boolean recombobulated = handler.isRecombobulated();
         ItemStatistics statistics = handler.getStatistics();
         Class<?> clazz = item.clazz;
 
         if (recombobulated) rarity = rarity.upgrade();
 
-        String displayName = StringUtility.toNormalCase(type);
+        String displayName;
+        if (handler.getPotentialType() != null) {
+            displayName = handler.getPotentialType().getDisplayName();
+        } else {
+            Material material = stack.material();
+            displayName = StringUtility.toNormalCase(material.namespace().value());
+        }
         String displayRarity = rarity.getDisplay();
 
         if (clazz != null) {
@@ -235,10 +237,6 @@ public class ItemLore {
             if (item.getGenericInstance() instanceof Reforgable) {
                 addLoreLine("§8This item can be reforged!");
                 if (handler.getReforge() != null) displayName = handler.getReforge().prefix() + " " + displayName;
-            }
-
-            if (item.getGenericInstance() instanceof ArrowImpl) {
-                addLoreLine("§8Stats added when shot!");
             }
 
             ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();

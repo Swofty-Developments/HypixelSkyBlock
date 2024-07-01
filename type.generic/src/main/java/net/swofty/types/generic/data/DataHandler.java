@@ -219,9 +219,15 @@ public class DataHandler {
                 player.getTeam().sendUpdatePacket();
             }, 5);
         }, ((player, datapoint) -> {
-            Team team = new TeamBuilder(player.getUsername(), MinecraftServer.getTeamManager())
-                    .prefix(Component.text(((Rank) datapoint.getValue()).getPrefix()))
-                    .teamColor(((Rank) datapoint.getValue()).getTextColor())
+            DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
+            Rank rank = (Rank) datapoint.getValue();
+
+            Team team = new TeamBuilder("ZZZZ" + player.getUsername(), MinecraftServer.getTeamManager())
+                    .prefix(Component.text(
+                            "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
+                                    rank.getPrefix()
+                    ))
+                    .teamColor(rank.getTextColor())
                     .build();
             player.setTeam(team);
             player.getTeam().sendUpdatePacket();
@@ -239,8 +245,6 @@ public class DataHandler {
             skyBlockInventory.getItems().forEach((integer, understandableSkyBlockItem) -> {
                 PlayerItemOrigin origin = PlayerItemOrigin.INVENTORY_SLOT;
                 origin.setData(integer);
-
-                player.getInventory().setItemStack(integer, new SkyBlockItem(understandableSkyBlockItem).getItemStack());
 
                 ItemStack loadedItem = PlayerItemUpdater.playerUpdate(
                         player,

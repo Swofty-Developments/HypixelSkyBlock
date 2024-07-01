@@ -31,7 +31,7 @@ dependencies {
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.2")
     implementation(project(":commons"))
 
-    implementation("net.raphimc:ViaLoader:3.0.2-SNAPSHOT")
+    implementation("net.raphimc:ViaLoader:3.0.1")
     implementation("com.viaversion:viabackwards-common:5.0.1")
     implementation("com.viaversion:viarewind-common:4.0.0")
     implementation("com.viaversion:viaversion:5.0.1")

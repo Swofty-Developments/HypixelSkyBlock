@@ -160,7 +160,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                     return;
                 }
 
-                String itemName = ItemLore.getBaseName(item.getItemStack());
+                String itemName = item.getDisplayName();
 
                 player.sendMessage("§aYou reforged your" +
                         item.getAttributeHandler().getRarity().getColor() + oldPrefix + " " + itemName + "§a into a " +

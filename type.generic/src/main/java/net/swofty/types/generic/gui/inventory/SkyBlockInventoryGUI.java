@@ -295,12 +295,19 @@ public abstract class SkyBlockInventoryGUI {
 
         // Initializing GUI
         Thread.startVirtualThread(() -> {
-            setItems(openEvent);
-            updateItemStacks(inventory, player);
-            ActionPlayerChangeSkyBlockMenuDisplay.setMainMenu(player);
-            onOpen(openEvent);
-            if (player.getHeldSlot() != itemInHand) {
-                player.sendMessage("§cYour item in hand cannot change in between opening GUIs");
+            try {
+                setItems(openEvent);
+                updateItemStacks(inventory, player);
+                ActionPlayerChangeSkyBlockMenuDisplay.setMainMenu(player);
+                onOpen(openEvent);
+                if (player.getHeldSlot() != itemInHand) {
+                    player.sendMessage("§cYour item in hand cannot change in between opening GUIs");
+                    return;
+                }
+            } catch (Exception e) {
+                player.sendMessage("§cAn error occurred while opening the GUI");
+                player.closeInventory();
+                e.printStackTrace();
                 return;
             }
             hasFinishedLoading = true;

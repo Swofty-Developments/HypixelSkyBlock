@@ -991,6 +991,7 @@ public enum ItemType {
     WHITE_TULIP(Material.WHITE_TULIP,  Rarity.COMMON),
     ROSE_BUSH(Material.ROSE_BUSH,  Rarity.COMMON),
     TORCHFLOWER(Material.TORCHFLOWER,  Rarity.COMMON),
+    TORCH(Material.TORCH,  Rarity.COMMON),
     PITCHER_PLANT(Material.PITCHER_PLANT,  Rarity.COMMON),
     BLUE_ORCHID(Material.BLUE_ORCHID,  Rarity.COMMON),
     PEONY(Material.PEONY,  Rarity.COMMON),
@@ -1138,7 +1139,7 @@ public enum ItemType {
 
     public static @Nullable ItemType get(String name) {
         try {
-            return ItemType.valueOf(name);
+            return ItemType.valueOf(name.replace("minecraft:", "").toUpperCase());
         } catch (Exception e) {
             return null;
         }

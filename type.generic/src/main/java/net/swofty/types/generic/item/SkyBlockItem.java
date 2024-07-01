@@ -49,10 +49,22 @@ public class SkyBlockItem {
                 loadAsItemType(item.itemKey());
             }
         }
+        setAmount(item.amount());
     }
 
     public SkyBlockItem(Material material) {
-        loadAsMaterial(material);
+        String materialName = material.namespace().value();
+        ItemType itemType = ItemType.get(materialName);
+        if (itemType != null) {
+            ItemTypeLinker linker = ItemTypeLinker.fromType(itemType);
+            if (linker != null) {
+                loadAsLinker(linker);
+            } else {
+                loadAsItemType(itemType);
+            }
+        } else {
+            loadAsMaterial(material);
+        }
     }
 
     public SkyBlockItem(ItemTypeLinker type) {
@@ -79,17 +91,17 @@ public class SkyBlockItem {
     }
 
     public SkyBlockItem(String type) {
-        try {
-            ItemType itemType = ItemType.valueOf(type);
-            ItemTypeLinker linker = ItemTypeLinker.fromType(itemType);
-            if (linker != null) {
-                loadAsLinker(linker);
-            } else {
-                loadAsItemType(itemType);
-            }
-        } catch (IllegalArgumentException e) {
+        ItemType itemType = ItemType.get(type);
+        if (itemType == null) {
             Material material = Material.fromNamespaceId(type.toLowerCase());
             loadAsMaterial(material);
+            return;
+        }
+        ItemTypeLinker linker = ItemTypeLinker.fromType(itemType);
+        if (linker != null) {
+            loadAsLinker(linker);
+        } else {
+            loadAsItemType(itemType);
         }
     }
 
@@ -302,7 +314,9 @@ public class SkyBlockItem {
     }
 
     public static boolean isSkyBlockItem(ItemStack item) {
-        return item.hasTag(Tag.String("item_type"));
+        if (item.get(ItemComponent.CUSTOM_DATA) == null)
+            return false;
+        return item.get(ItemComponent.CUSTOM_DATA).hasTag(Tag.String("item_type"));
     }
 
     @Override
