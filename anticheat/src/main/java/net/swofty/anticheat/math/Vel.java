@@ -435,6 +435,15 @@ public final class Vel implements Point {
                 z + (alpha * (Vel.z - z)));
     }
 
+    @Override
+    public String toString() {
+        return "Vel{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
+
     @Contract(pure = true)
     public @NotNull Vel interpolate(@NotNull Vel target, double alpha, @NotNull Interpolation interpolation) {
         return lerp(target, interpolation.apply(alpha));

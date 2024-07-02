@@ -3,11 +3,17 @@ package net.swofty.loader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.extras.velocity.VelocityProxy;
+import net.minestom.server.listener.PlayerPositionListener;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.anticheat.loader.SwoftyAnticheat;
+import net.swofty.anticheat.loader.SwoftyValues;
+import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyAPI;
@@ -145,6 +151,22 @@ public class SkyBlock {
                     "server-name", "",
                     SkyBlockConst::setServerName);
             checkProxyConnected(MinecraftServer.getSchedulerManager());
+
+            /**
+             * Initialize the anticheat
+             */
+            Thread.startVirtualThread(() -> {
+                Logger.info("Initializing anticheat...");
+
+                MinestomLoader minestomLoader = new MinestomLoader();
+                minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
+
+                SwoftyAnticheat.loader(minestomLoader);
+                SwoftyAnticheat.values(new SwoftyValues());
+                SwoftyAnticheat.start();
+
+                Logger.info("Anticheat initialized");
+            });
         });
         new Thread(() -> {
             try {

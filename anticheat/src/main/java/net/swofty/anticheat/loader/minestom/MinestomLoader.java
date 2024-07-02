@@ -3,22 +3,93 @@ package net.swofty.anticheat.loader.minestom;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.listener.PlayerPositionListener;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventNode;
+import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.network.packet.client.ClientPacket;
+import net.minestom.server.network.packet.client.play.ClientPlayerPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionAndRotationPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerRotationPacket;
-import net.minestom.server.network.packet.server.play.PlayerPositionAndLookPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.anticheat.engine.SwoftyPlayer;
-import net.swofty.anticheat.loader.SwoftyPlayerManager;
-import net.swofty.anticheat.loader.SwoftySchedulerManager;
+import net.swofty.anticheat.event.SwoftyEventHandler;
+import net.swofty.anticheat.event.events.AnticheatPacketEvent;
+import net.swofty.anticheat.event.packet.IsOnGroundPacket;
+import net.swofty.anticheat.event.packet.PositionAndRotationPacket;
+import net.swofty.anticheat.event.packet.PositionPacket;
+import net.swofty.anticheat.event.packet.RotationPacket;
+import net.swofty.anticheat.loader.managers.SwoftyPlayerManager;
+import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
 import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.math.Pos;
 
 import java.util.*;
 
-public class MinestomLoader implements Loader {
+public class MinestomLoader extends Loader {
     private Map<Runnable, Integer> activeTasks = new HashMap<>();
+
+    public void registerListeners(GlobalEventHandler eventHandler) {
+        EventNode<Event> eventNode = EventNode.all("packet-handler-client");
+
+        eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
+            ClientPacket packet = rawEvent.getPacket();
+            AnticheatPacketEvent playerPacketEvent = null;
+
+            switch (packet.getClass().getSimpleName()) {
+                case ("ClientPlayerPositionAndRotationPacket") -> {
+                    ClientPlayerPositionAndRotationPacket packetCasted = (ClientPlayerPositionAndRotationPacket) packet;
+
+                    playerPacketEvent = new AnticheatPacketEvent(new PositionAndRotationPacket(
+                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
+                            new Pos(
+                                    packetCasted.position().x(),
+                                    packetCasted.position().y(),
+                                    packetCasted.position().z(),
+                                    packetCasted.position().yaw(),
+                                    packetCasted.position().pitch()
+                            ),
+                            packetCasted.onGround()
+                    ));
+                }
+                case ("ClientPlayerPacket") -> {
+                    ClientPlayerPacket packetCasted = (ClientPlayerPacket) packet;
+
+                    playerPacketEvent = new AnticheatPacketEvent(new IsOnGroundPacket(
+                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
+                            packetCasted.onGround()
+                    ));
+                }
+                case ("ClientPlayerPositionPacket") -> {
+                    ClientPlayerPositionPacket packetCasted = (ClientPlayerPositionPacket) packet;
+
+                    playerPacketEvent = new AnticheatPacketEvent(new PositionPacket(
+                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
+                            packetCasted.position().x(),
+                            packetCasted.position().y(),
+                            packetCasted.position().z(),
+                            packetCasted.onGround()
+                    ));
+                }
+                case ("ClientPlayerRotationPacket") -> {
+                    ClientPlayerRotationPacket packetCasted = (ClientPlayerRotationPacket) packet;
+
+                    playerPacketEvent = new AnticheatPacketEvent(new RotationPacket(
+                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
+                            packetCasted.yaw(),
+                            packetCasted.pitch(),
+                            packetCasted.onGround()
+                    ));
+                }
+            }
+
+            if (playerPacketEvent != null) {
+                SwoftyEventHandler.callEvent(playerPacketEvent);
+            }
+        });
+        eventHandler.addChild(eventNode);
+    }
 
     @Override
     public SwoftySchedulerManager getSchedulerManager() {
@@ -79,15 +150,6 @@ public class MinestomLoader implements Loader {
         return new SwoftyPlayerManager(uuid) {
 
             @Override
-            public Pos getPositionFromPlayer() {
-                return new Pos(
-                        player.getPosition().x(),
-                        player.getPosition().y(),
-                        player.getPosition().z()
-                );
-            }
-
-            @Override
             public void setPositionForPlayer(Pos pos) {
                 player.teleport(new net.minestom.server.coordinate.Pos(
                         pos.x(),
@@ -99,21 +161,17 @@ public class MinestomLoader implements Loader {
             }
 
             @Override
-            public Vec getVelocityFromPlayer() {
-                return new Vec(
-                        player.getVelocity().x(),
-                        player.getVelocity().y(),
-                        player.getVelocity().z()
-                );
-            }
-
-            @Override
             public void setVelocityForPlayer(Vec vel) {
                 player.setVelocity(new net.minestom.server.coordinate.Vec(
                         vel.x(),
                         vel.y(),
                         vel.z()
                 ));
+            }
+
+            @Override
+            public void sendMessage(String message) {
+                player.sendMessage(message);
             }
         };
     }

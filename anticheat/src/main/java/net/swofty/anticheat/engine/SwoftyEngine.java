@@ -1,8 +1,8 @@
 package net.swofty.anticheat.engine;
 
+import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.loader.Loader;
-import net.swofty.anticheat.loader.SwoftyPlayerManager;
-import net.swofty.anticheat.loader.SwoftySchedulerManager;
+import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,6 @@ public class SwoftyEngine {
     }
 
     public static void registerModules() {
-        // Register all modules
+        SwoftyEventHandler.registerEventMethods(new MovementEvents());
     }
 }

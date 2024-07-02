@@ -1,4 +1,4 @@
-package net.swofty.anticheat.loader;
+package net.swofty.anticheat.loader.managers;
 
 public abstract class SwoftySchedulerManager {
     public abstract int scheduleDelayedTask(Runnable runnable, int delay);

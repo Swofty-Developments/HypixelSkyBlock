@@ -1,4 +1,4 @@
-package net.swofty.anticheat.loader;
+package net.swofty.anticheat.loader.managers;
 
 import net.minestom.server.coordinate.Vec;
 import net.swofty.anticheat.math.Pos;
@@ -12,9 +12,7 @@ public abstract class SwoftyPlayerManager {
         this.uuid = uuid;
     }
 
-    public abstract Pos getPositionFromPlayer();
     public abstract void setPositionForPlayer(Pos pos);
-
-    public abstract Vec getVelocityFromPlayer();
     public abstract void setVelocityForPlayer(Vec vel);
+    public abstract void sendMessage(String message);
 }

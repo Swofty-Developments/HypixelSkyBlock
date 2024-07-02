@@ -56,6 +56,8 @@ public class DatapointInventory extends Datapoint<SkyBlockInventory> {
                 chestplate = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("chestplate"));
                 leggings = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("leggings"));
                 boots = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("boots"));
+
+                e.printStackTrace();
             }
 
             inventory.setHelmet(helmet);

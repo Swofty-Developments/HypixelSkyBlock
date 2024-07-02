@@ -3,27 +3,30 @@ package net.swofty.anticheat.engine;
 import lombok.Getter;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
+import net.swofty.anticheat.loader.SwoftyAnticheat;
+import net.swofty.anticheat.loader.managers.SwoftyPlayerManager;
 import net.swofty.anticheat.math.Pos;
 import net.swofty.anticheat.math.Vel;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class SwoftyPlayer {
     public static Map<UUID, SwoftyPlayer> players = new HashMap<>();
 
     private final UUID uuid;
-    private List<PlayerTickInformation> lastTicks;
-    private PlayerTickInformation currentTick;
+    private List<PlayerTickInformation> lastTicks = new ArrayList<>();
+    private PlayerTickInformation currentTick = new PlayerTickInformation(new Pos(0, 0, 0), new Vel(0, 0, 0), false);
 
     public SwoftyPlayer(UUID uuid) {
         this.uuid = uuid;
 
         players.put(uuid, this);
+    }
+
+    private void forgetTicks() {
+        lastTicks.clear();
     }
 
     public void moveTickOn() {
@@ -32,6 +35,11 @@ public class SwoftyPlayer {
         Vel calculatedVelocity = currentPos.sub(lastPos).asVel();
 
         currentTick = new PlayerTickInformation(currentTick.getPos(), calculatedVelocity, currentTick.isOnGround());
+
+        if (lastTicks.isEmpty()) {
+            lastTicks.add(currentTick);
+            return;
+        }
 
         SwoftyEventHandler.callEvent(new PlayerPositionUpdateEvent(this,
                 lastTicks.getLast(),
@@ -51,11 +59,14 @@ public class SwoftyPlayer {
     }
 
     public void processMovement(@NotNull Pos packetPosition, boolean onGround) {
-        if (currentTick == null) return;
-        PlayerTickInformation newTick = new PlayerTickInformation(
+        currentTick = new PlayerTickInformation(
                 packetPosition,
                 currentTick.getVel(),
                 onGround
         );
+    }
+
+    public SwoftyPlayerManager getManager() {
+        return SwoftyAnticheat.getLoader().getPlayerManager(uuid);
     }
 }

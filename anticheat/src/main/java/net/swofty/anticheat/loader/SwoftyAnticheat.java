@@ -1,10 +1,12 @@
 package net.swofty.anticheat.loader;
 
+import lombok.Getter;
 import net.swofty.anticheat.engine.SwoftyEngine;
 import net.swofty.anticheat.event.AntiCheatListener;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 
 public class SwoftyAnticheat {
+    @Getter
     private static Loader loader = null;
     private static SwoftyValues values = null;
 
