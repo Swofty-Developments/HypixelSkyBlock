@@ -73,7 +73,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.island.event.traditional",
+                "net.swofty.type.island.events.traditional",
                 SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
@@ -86,7 +86,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockEventClass> getCustomEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.island.event.custom",
+                "net.swofty.type.island.events.custom",
                 SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
