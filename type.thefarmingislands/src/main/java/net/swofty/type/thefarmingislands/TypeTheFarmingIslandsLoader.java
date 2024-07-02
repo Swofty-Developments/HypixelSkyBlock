@@ -67,7 +67,7 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.thefarmingislands.events",
+                "net.swofty.type.thefarmingislands.event",
                 SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }

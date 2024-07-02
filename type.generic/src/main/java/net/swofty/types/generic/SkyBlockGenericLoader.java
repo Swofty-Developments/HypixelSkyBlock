@@ -213,7 +213,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         typeLoader.getTablistManager().runScheduler(MinecraftServer.getSchedulerManager());
 
         /**
-         * Register packet events
+         * Register packet event
          */
         loopThroughPackage("net.swofty.types.generic.packet.packets.client", SkyBlockPacketClientListener.class)
                 .forEach(SkyBlockPacketClientListener::cacheListener);
@@ -352,7 +352,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockLevelCause.initializeCauses();
 
         /**
-         * Register events
+         * Register event
          */
         loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);

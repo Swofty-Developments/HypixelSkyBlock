@@ -44,7 +44,7 @@ public class PacketDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
         super.exceptionCaught(ctx, cause);
     }
 
-    // Abuse decoder handler to catch events
+    // Abuse decoder handler to catch event
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object event) throws Exception {
         if (event != PlayerChannelInitializer.COMPRESSION_ENABLED_EVENT) {

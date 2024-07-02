@@ -133,7 +133,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     @Override
     public List<SkyBlockEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.hub.events",
+                "net.swofty.type.hub.event",
                 SkyBlockEventClass.class
         ).collect(Collectors.toList());
     }
