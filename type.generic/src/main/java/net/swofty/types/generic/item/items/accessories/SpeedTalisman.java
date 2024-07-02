@@ -8,6 +8,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpeedTalisman implements Talisman, ConstantStatistics {
@@ -18,7 +19,7 @@ public class SpeedTalisman implements Talisman, ConstantStatistics {
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7");
+        return new ArrayList<>();
     }
 
     @Override

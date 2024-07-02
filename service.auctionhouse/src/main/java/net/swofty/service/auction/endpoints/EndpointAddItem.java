@@ -21,7 +21,7 @@ public class EndpointAddItem implements ServiceEndpoint {
 
     @Override
     public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        AuctionItem auctionItem = (AuctionItem) messageData.get("auctionItem");
+        AuctionItem auctionItem = (AuctionItem) messageData.get("item");
         AuctionCategories category = (AuctionCategories) messageData.get("category");
         Document document = auctionItem.toDocument();
         document.put("category", category.name());

@@ -3,6 +3,7 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryClickEvent;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -146,7 +147,12 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
     @Override
     public boolean allowHotkeying() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+        save(getPlayer());
     }
 
     @Override
@@ -161,6 +167,7 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Accessory Bag!");
+        save(getPlayer());
     }
 
     private int getTotalSlots(SkyBlockPlayer player) {

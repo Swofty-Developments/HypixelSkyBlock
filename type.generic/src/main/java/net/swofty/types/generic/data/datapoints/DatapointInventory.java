@@ -41,10 +41,22 @@ public class DatapointInventory extends Datapoint<SkyBlockInventory> {
             JSONObject jsonObject = new JSONObject(json);
             SkyBlockInventory inventory = new SkyBlockInventory();
 
-            UnderstandableSkyBlockItem helmet = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("helmet"));
-            UnderstandableSkyBlockItem chestplate = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("chestplate"));
-            UnderstandableSkyBlockItem leggings = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("leggings"));
-            UnderstandableSkyBlockItem boots = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("boots"));
+            UnderstandableSkyBlockItem helmet;
+            UnderstandableSkyBlockItem chestplate;
+            UnderstandableSkyBlockItem leggings;
+            UnderstandableSkyBlockItem boots;
+
+            try {
+                helmet = UnderstandableSkyBlockItem.deserialize(jsonObject.get("helmet").toString());
+                chestplate = UnderstandableSkyBlockItem.deserialize(jsonObject.get("chestplate").toString());
+                leggings = UnderstandableSkyBlockItem.deserialize(jsonObject.get("leggings").toString());
+                boots = UnderstandableSkyBlockItem.deserialize(jsonObject.get("boots").toString());
+            } catch (Exception e) {
+                helmet = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("helmet"));
+                chestplate = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("chestplate"));
+                leggings = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("leggings"));
+                boots = UnderstandableSkyBlockItem.deserialize(jsonObject.getString("boots"));
+            }
 
             inventory.setHelmet(helmet);
             inventory.setChestplate(chestplate);

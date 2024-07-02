@@ -21,6 +21,10 @@ public class WheatAndFlowersConfiguration extends SkyBlockMiningConfiguration {
         task.setIntermediaryBlock(Block.AIR);
         task.setReviveBlock(Block.AIR);
 
+        if (task.getInitialMinedBlock().equals(Block.WHEAT)) {
+            task.setReviveBlock(Block.WHEAT);
+        }
+
         return task;
     }
 
@@ -43,6 +47,6 @@ public class WheatAndFlowersConfiguration extends SkyBlockMiningConfiguration {
 
     @Override
     public long getRegenerationTime() {
-        return 1;
+        return 10000;
     }
 }

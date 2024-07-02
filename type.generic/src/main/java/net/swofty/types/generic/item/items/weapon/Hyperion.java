@@ -52,6 +52,7 @@ public class Hyperion implements CustomSkyBlockItem, CustomSkyBlockAbility, Stan
                 new GemstoneItemSlot(Gemstone.Slots.COMBAT, 250000)
         );
     }
+
     @Override
     public StandardItemType getStandardItemType() {
         return StandardItemType.SWORD;

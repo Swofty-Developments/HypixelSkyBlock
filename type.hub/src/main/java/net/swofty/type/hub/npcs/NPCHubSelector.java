@@ -28,7 +28,7 @@ public class NPCHubSelector extends SkyBlockNPC {
 
             @Override
             public Pos position(SkyBlockPlayer player) {
-                return new Pos(-10, 70, 67, 180, 0);
+                return new Pos(-10, 70, -67, 180, 0);
             }
 
             @Override
@@ -43,5 +43,4 @@ public class NPCHubSelector extends SkyBlockNPC {
         e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
                         .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
     }
-
 }

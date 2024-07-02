@@ -30,6 +30,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(project(":spark"))
+    implementation(project(":anticheat"))
     implementation("org.slf4j:slf4j-api:2.0.13")
     implementation("com.github.Minestom:Minestom:277dceacf1") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")

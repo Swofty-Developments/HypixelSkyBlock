@@ -2,6 +2,8 @@ package net.swofty.types.generic.levels.unlocks;
 
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.levels.SkyBlockLevelUnlock;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -24,7 +26,23 @@ public class SkyBlockLevelStatisticUnlock extends SkyBlockLevelUnlock {
 
     @Override
     public ItemStack.Builder getItemDisplay(SkyBlockPlayer player, int level) {
-        return null;
+        List<String> statisticsDisplay = new ArrayList<>();
+        statistics.getStatisticsAdditive().forEach((key, value) -> {
+            if (value > 0)
+                statisticsDisplay.add("§8 +§a" + value + key.getSuffix() + " " + key.getDisplayColor() + key.getSymbol() + " " + key.getDisplayName());
+        });
+
+        if (statisticsDisplay.isEmpty()) {
+            statisticsDisplay.add("§8No statistics unlocked");
+        }
+
+        List<String> lore = new ArrayList<>();
+        for (int i = 1; i < statisticsDisplay.size(); i++) {
+            lore.add(statisticsDisplay.get(i));
+        }
+        lore.add("§8Level " + level);
+
+        return ItemStackCreator.getStack(statisticsDisplay.getFirst(), Material.APPLE, 1, lore);
     }
 
     @Override
