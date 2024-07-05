@@ -1,10 +1,12 @@
 package net.swofty.anticheat.event.events;
 
+import lombok.Getter;
 import net.swofty.anticheat.engine.PlayerTickInformation;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.math.Pos;
 import net.swofty.anticheat.math.Vel;
 
+@Getter
 public class PlayerPositionUpdateEvent {
     private final SwoftyPlayer player;
     private final PlayerTickInformation previousTick;

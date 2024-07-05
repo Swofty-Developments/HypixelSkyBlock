@@ -11,6 +11,8 @@ import net.minestom.server.listener.PlayerPositionListener;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.anticheat.flag.FlagType;
+import net.swofty.anticheat.loader.PunishmentHandler;
 import net.swofty.anticheat.loader.SwoftyAnticheat;
 import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
@@ -163,6 +165,12 @@ public class SkyBlock {
 
                 SwoftyAnticheat.loader(minestomLoader);
                 SwoftyAnticheat.values(new SwoftyValues());
+                SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {
+                    @Override
+                    public void onFlag(UUID uuid, FlagType flagType) {
+                        Logger.info("Player " + uuid + " flagged for " + flagType.name());
+                    }
+                });
                 SwoftyAnticheat.start();
 
                 Logger.info("Anticheat initialized");

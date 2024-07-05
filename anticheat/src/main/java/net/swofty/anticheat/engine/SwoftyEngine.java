@@ -1,12 +1,14 @@
 package net.swofty.anticheat.engine;
 
+import javassist.tools.reflect.Reflection;
 import net.swofty.anticheat.event.SwoftyEventHandler;
+import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
+import org.reflections.Reflections;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class SwoftyEngine {
     public static void startSchedulers(Loader loader) {
@@ -17,6 +19,7 @@ public class SwoftyEngine {
 
             SwoftyPlayer.players.forEach((uuid, player) -> {
                 if (!onlinePlayers.contains(uuid)) {
+                    player.getWorld().shutdown();
                     SwoftyPlayer.players.remove(uuid);
                     return;
                 }
@@ -34,7 +37,11 @@ public class SwoftyEngine {
         }, 1, 1);
     }
 
-    public static void registerModules() {
+    public static void registerEvents() {
         SwoftyEventHandler.registerEventMethods(new MovementEvents());
+
+        Arrays.stream(FlagType.values()).forEach(flagType -> {
+            SwoftyEventHandler.registerEventMethods(flagType.getFlagSupplier().get());
+        });
     }
 }

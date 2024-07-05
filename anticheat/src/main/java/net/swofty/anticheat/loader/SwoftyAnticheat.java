@@ -4,11 +4,19 @@ import lombok.Getter;
 import net.swofty.anticheat.engine.SwoftyEngine;
 import net.swofty.anticheat.event.AntiCheatListener;
 import net.swofty.anticheat.event.SwoftyEventHandler;
+import net.swofty.anticheat.flag.FlagType;
+
+import java.util.UUID;
 
 public class SwoftyAnticheat {
     @Getter
     private static Loader loader = null;
     private static SwoftyValues values = null;
+    @Getter
+    private static PunishmentHandler punishmentHandler = new PunishmentHandler() {
+        @Override
+        public void onFlag(UUID uuid, FlagType flagType) {}
+    };
 
     public static void loader(Loader loader) {
         SwoftyAnticheat.loader = loader;
@@ -16,6 +24,10 @@ public class SwoftyAnticheat {
 
     public static void values(SwoftyValues values) {
         SwoftyAnticheat.values = values;
+    }
+
+    public static void punishmentHandler(PunishmentHandler punishmentHandler) {
+        SwoftyAnticheat.punishmentHandler = punishmentHandler;
     }
 
     public static void registerEvent(AntiCheatListener listener) {
@@ -31,7 +43,7 @@ public class SwoftyAnticheat {
             throw new IllegalStateException("Values not set, use SwoftyAnticheat#values(SwoftyValues) to set the values");
         }
 
-        SwoftyEngine.registerModules();
+        SwoftyEngine.registerEvents();
         SwoftyEngine.startSchedulers(loader);
     }
 }

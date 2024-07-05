@@ -7,11 +7,10 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.client.ClientPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerPositionAndRotationPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerRotationPacket;
+import net.minestom.server.network.packet.client.play.*;
+import net.minestom.server.network.packet.server.play.ServerDataPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.event.SwoftyEventHandler;
@@ -36,6 +35,8 @@ public class MinestomLoader extends Loader {
         eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
             ClientPacket packet = rawEvent.getPacket();
             AnticheatPacketEvent playerPacketEvent = null;
+
+            System.out.println(packet.getClass().getSimpleName());
 
             switch (packet.getClass().getSimpleName()) {
                 case ("ClientPlayerPositionAndRotationPacket") -> {
@@ -148,7 +149,6 @@ public class MinestomLoader extends Loader {
         Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid);
 
         return new SwoftyPlayerManager(uuid) {
-
             @Override
             public void setPositionForPlayer(Pos pos) {
                 player.teleport(new net.minestom.server.coordinate.Pos(
