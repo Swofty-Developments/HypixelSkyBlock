@@ -1,30 +1,42 @@
-package net.swofty.types.generic.item.items.accessories;
+package net.swofty.types.generic.item.items.accessories.speed;
 
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ConstantStatistics;
-import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SpeedArtifact implements Talisman, ConstantStatistics {
+public class SpeedTalisman implements TieredTalisman, ConstantStatistics {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "f06706eecb2d558ace27abda0b0b7b801d36d17dd7a890a9520dbe522374f8a6";
+        return "8624bacb5f1986e6477abce4ae7dca1820a5260b6233b55ba1d9ba936c84b";
     }
 
     @Override
     public List<String> getTalismanDisplay() {
-        return List.of("§7");
+        return new ArrayList<>();
     }
 
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.SPEED, 5D)
+                .withBase(ItemStatistic.SPEED, 1D)
                 .build();
+    }
+
+    @Override
+    public ItemTypeLinker getBaseTalismanTier() {
+        return ItemTypeLinker.SPEED_TALISMAN;
+    }
+
+    @Override
+    public Integer getTier() {
+        return 1;
     }
 }

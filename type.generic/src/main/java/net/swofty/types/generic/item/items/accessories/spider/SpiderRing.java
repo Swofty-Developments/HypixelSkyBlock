@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman {
+public class SpiderRing extends SkyBlockValueEvent implements TieredTalisman {
     @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return PlayerDamagedByMobValueUpdateEvent.class;
@@ -26,7 +26,7 @@ public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman
         if (!player.hasTalisman(this)) return;
 
         if (event.getMob().getEntityType() == EntityType.SPIDER || event.getMob().getEntityType() == EntityType.CAVE_SPIDER || event.getMob().getEntityType() == EntityType.SILVERFISH) {
-            event.setValue((float) (((float) event.getValue()) * 0.85));
+            event.setValue((float) (((float) event.getValue()) * 0.90));
         }
     }
 
@@ -34,12 +34,12 @@ public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman
     public List<String> getTalismanDisplay() {
         return List.of("§7Reduces the damage taken from",
                 "§7§7Cave Spiders§7 and §7Spiders",
-                "§7by §a15%§7.");
+                "§7by §a10%§7.");
     }
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8";
+        return "7652bd7617e56c756514f83c28dd1d96a7e5e167bf7fb593693fc65046f799";
     }
 
     @Override
@@ -49,6 +49,6 @@ public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman
 
     @Override
     public Integer getTier() {
-        return 3;
+        return 2;
     }
 }

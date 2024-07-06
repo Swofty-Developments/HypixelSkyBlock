@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.item.Rarity;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
+import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -19,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.PlayerAccessoryBag> {
-    public static Serializer<DatapointAccessoryBag.PlayerAccessoryBag> serializer = new Serializer<>() {
+    public static Serializer<PlayerAccessoryBag> serializer = new Serializer<>() {
         @Override
-        public String serialize(DatapointAccessoryBag.PlayerAccessoryBag value) {
+        public String serialize(PlayerAccessoryBag value) {
             Map<String, String> serialized = new HashMap<>();
 
             serialized.put("discoveredAccessories", new JSONObject(value.getDiscoveredAccessories()).toString());
@@ -35,7 +37,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         }
 
         @Override
-        public DatapointAccessoryBag.PlayerAccessoryBag deserialize(String json) {
+        public PlayerAccessoryBag deserialize(String json) {
             JSONObject obj = new JSONObject(json);
             Map<Integer, SkyBlockItem> map = new HashMap<>();
             List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
@@ -57,21 +59,21 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                         )));
             }
 
-            return new DatapointAccessoryBag.PlayerAccessoryBag(map, discoveredAccessories);
+            return new PlayerAccessoryBag(map, discoveredAccessories);
         }
 
         @Override
-        public DatapointAccessoryBag.PlayerAccessoryBag clone(DatapointAccessoryBag.PlayerAccessoryBag value) {
-            return new DatapointAccessoryBag.PlayerAccessoryBag(value.getAccessoryMap(), value.getDiscoveredAccessories());
+        public PlayerAccessoryBag clone(PlayerAccessoryBag value) {
+            return new PlayerAccessoryBag(value.getAccessoryMap(), value.getDiscoveredAccessories());
         }
     };
 
-    public DatapointAccessoryBag(String key, DatapointAccessoryBag.PlayerAccessoryBag value) {
+    public DatapointAccessoryBag(String key, PlayerAccessoryBag value) {
         super(key, value, serializer);
     }
 
     public DatapointAccessoryBag(String key) {
-        super(key, new DatapointAccessoryBag.PlayerAccessoryBag(), serializer);
+        super(key, new PlayerAccessoryBag(), serializer);
     }
 
     @Getter
@@ -88,6 +90,35 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
 
         public List<SkyBlockItem> getAllAccessories() {
             return List.copyOf(accessoryMap.values());
+        }
+
+        public List<SkyBlockItem> getUniqueAccessories() {
+            List<SkyBlockItem> accessories = new ArrayList<>(getAllAccessories());
+            Map<ItemTypeLinker, SkyBlockItem> highestTierTalismans = new HashMap<>();
+
+            for (SkyBlockItem accessory : accessories) {
+                if (accessory.getGenericInstance() instanceof TieredTalisman currentTalisman) {
+                    ItemTypeLinker baseTalisman = currentTalisman.getBaseTalismanTier();
+                    TieredTalisman tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? (TieredTalisman) highestTierTalismans.get(baseTalisman).getGenericInstance() : null;
+
+                    if (tieredTalisman == null || tieredTalisman.getTier() < currentTalisman.getTier()) {
+                        highestTierTalismans.put(baseTalisman, accessory);
+                    }
+                } else if (!accessory.isAir()) {
+                    highestTierTalismans.put(accessory.getAttributeHandler().getPotentialClassLinker(), accessory);
+                }
+            }
+            return List.copyOf(highestTierTalismans.values());
+        }
+
+        public List<SkyBlockItem> getUniqueAccessories(Rarity rarity) {
+            List<SkyBlockItem> talismans = new ArrayList<>(List.of());
+            for (SkyBlockItem item : getUniqueAccessories()) {
+                if (rarity == item.getAttributeHandler().getRarity()) {
+                    talismans.add(item);
+                }
+            }
+            return talismans;
         }
 
         public void addDiscoveredAccessory(ItemTypeLinker type) {

@@ -3,7 +3,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryClickEvent;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -17,6 +16,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Accessory;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -147,12 +147,7 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
     @Override
     public boolean allowHotkeying() {
-        return true;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        save(getPlayer());
+        return false;
     }
 
     @Override
@@ -167,7 +162,6 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Accessory Bag!");
-        save(getPlayer());
     }
 
     private int getTotalSlots(SkyBlockPlayer player) {
@@ -211,7 +205,7 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         if (item.getMaterial().equals(Material.AIR)) return true;
         if (item.getGenericInstance() == null) return false;
 
-        if (item.getGenericInstance() instanceof Accessory) {
+        if (item.getGenericInstance() instanceof Accessory || item.getGenericInstance() instanceof TieredTalisman) {
             DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
             accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialClassLinker());
 

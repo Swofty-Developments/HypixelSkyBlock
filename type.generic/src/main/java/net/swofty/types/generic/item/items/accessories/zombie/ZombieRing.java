@@ -9,7 +9,7 @@ import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ZombieRing extends SkyBlockValueEvent implements Talisman, DefaultCraftable {
+public class ZombieRing extends SkyBlockValueEvent implements TieredTalisman, DefaultCraftable {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "55d996cb5a8e5a71a274275f46944b944eeeacd2e1cadef918b05b879a03336f";
@@ -57,5 +57,15 @@ public class ZombieRing extends SkyBlockValueEvent implements Talisman, DefaultC
                 "ABA");
 
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.SLAYER, new SkyBlockItem(ItemTypeLinker.ZOMBIE_RING), ingredientMap, pattern);
+    }
+
+    @Override
+    public ItemTypeLinker getBaseTalismanTier() {
+        return ItemTypeLinker.ZOMBIE_TALISMAN;
+    }
+
+    @Override
+    public Integer getTier() {
+        return 2;
     }
 }

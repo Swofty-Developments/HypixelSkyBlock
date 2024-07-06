@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -71,6 +72,8 @@ public class GUIYourBags extends SkyBlockInventoryGUI {
                             "§7Talismans, Rings, Artifacts, and Orbs",
                             "§7within it. All will still work while in this",
                             "§7bag!",
+                            " ",
+                            "§7Magical Power: §6" + StringUtility.commaify(player.getMagicalPower()),
                             " ",
                             "§eClick to open!");
                 }
