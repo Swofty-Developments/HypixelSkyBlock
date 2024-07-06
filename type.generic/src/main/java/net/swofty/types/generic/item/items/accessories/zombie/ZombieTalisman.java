@@ -6,13 +6,14 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ZombieTalisman extends SkyBlockValueEvent implements TieredTalisman {
+public class ZombieTalisman extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "762897c60d83c20db90ec405b6725ad52d4c34695644505bccb648b877061f0a";

@@ -3,10 +3,7 @@ package net.swofty.types.generic.item.items.accessories.dungeon.treasure;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.DefaultCraftable;
-import net.swofty.types.generic.item.impl.NotFinishedYet;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.TieredTalisman;
+import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TreasureRing implements TieredTalisman, NotFinishedYet, DefaultCraftable {
+public class TreasureRing implements TieredTalisman, NotFinishedYet, DefaultCraftable, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Grants §a+2% §7extra loot to end",

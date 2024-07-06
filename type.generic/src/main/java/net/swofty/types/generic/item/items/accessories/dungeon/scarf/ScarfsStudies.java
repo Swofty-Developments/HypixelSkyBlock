@@ -3,13 +3,14 @@ package net.swofty.types.generic.item.items.accessories.dungeon.scarf;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ScarfsStudies implements TieredTalisman, NotFinishedYet {
+public class ScarfsStudies implements TieredTalisman, NotFinishedYet, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Gain dungeon class experience",

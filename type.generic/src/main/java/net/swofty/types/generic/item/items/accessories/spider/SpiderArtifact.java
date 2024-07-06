@@ -6,13 +6,14 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman {
+public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
     @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return PlayerDamagedByMobValueUpdateEvent.class;

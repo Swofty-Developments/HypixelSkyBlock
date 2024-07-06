@@ -223,6 +223,11 @@ public enum ItemType {
     DECORATION_PINK_BERRY(Material.PLAYER_HEAD,  Rarity.COMMON),
 
     /**
+     * Power Stones
+     */
+    LUXURIOUS_SPOOL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+    /**
      * Farming Props
      */
     ROOKIE_HOE(Material.STONE_HOE,  Rarity.COMMON),

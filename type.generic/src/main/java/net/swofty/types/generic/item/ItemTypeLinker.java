@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
@@ -155,6 +156,7 @@ import net.swofty.types.generic.item.items.miscellaneous.gifts.GameBreaker;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.QualityMap;
 import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.pet.pets.BeePet;
+import net.swofty.types.generic.item.items.powerstones.LuxuriousSpool;
 import net.swofty.types.generic.item.items.runes.BloodRune;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
@@ -412,6 +414,11 @@ public enum ItemTypeLinker {
     DECORATION_ONION(ItemType.DECORATION_ONION, Onion.class),
     DECORATION_ORANGE(ItemType.DECORATION_ORANGE, Orange.class),
     DECORATION_PINK_BERRY(ItemType.DECORATION_PINK_BERRY, PinkBerry.class),
+
+    /**
+     * Power Stones
+     */
+    LUXURIOUS_SPOOL(ItemType.LUXURIOUS_SPOOL, LuxuriousSpool.class),
 
     /**
      * Farming Props

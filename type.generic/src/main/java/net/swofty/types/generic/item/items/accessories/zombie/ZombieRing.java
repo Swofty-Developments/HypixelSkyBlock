@@ -8,6 +8,7 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ZombieRing extends SkyBlockValueEvent implements TieredTalisman, DefaultCraftable {
+public class ZombieRing extends SkyBlockValueEvent implements TieredTalisman, DefaultCraftable, SkullHead {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "55d996cb5a8e5a71a274275f46944b944eeeacd2e1cadef918b05b879a03336f";

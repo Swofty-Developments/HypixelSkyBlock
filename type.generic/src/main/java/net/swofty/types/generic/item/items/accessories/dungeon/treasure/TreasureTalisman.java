@@ -3,13 +3,14 @@ package net.swofty.types.generic.item.items.accessories.dungeon.treasure;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TreasureTalisman implements TieredTalisman, NotFinishedYet {
+public class TreasureTalisman implements TieredTalisman, NotFinishedYet, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Grants §a+1% §7extra loot to end",

@@ -168,6 +168,7 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
 
         e.setCancelled(true);
         getPlayer().sendMessage("§cYou cannot put this item in the Accessory Bag!");
+        save(getPlayer());
     }
 
     private int getTotalSlots(SkyBlockPlayer player) {
