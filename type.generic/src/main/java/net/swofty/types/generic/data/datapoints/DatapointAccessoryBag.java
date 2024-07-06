@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.PlayerAccessoryBag> {
-    public static Serializer<PlayerAccessoryBag> serializer = new Serializer<>() {
+    public static Serializer<DatapointAccessoryBag.PlayerAccessoryBag> serializer = new Serializer<>() {
         @Override
-        public String serialize(PlayerAccessoryBag value) {
+        public String serialize(DatapointAccessoryBag.PlayerAccessoryBag value) {
             Map<String, String> serialized = new HashMap<>();
 
             serialized.put("discoveredAccessories", new JSONObject(value.getDiscoveredAccessories()).toString());
@@ -37,7 +37,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         }
 
         @Override
-        public PlayerAccessoryBag deserialize(String json) {
+        public DatapointAccessoryBag.PlayerAccessoryBag deserialize(String json) {
             JSONObject obj = new JSONObject(json);
             Map<Integer, SkyBlockItem> map = new HashMap<>();
             List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
@@ -59,21 +59,21 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                         )));
             }
 
-            return new PlayerAccessoryBag(map, discoveredAccessories);
+            return new DatapointAccessoryBag.PlayerAccessoryBag(map, discoveredAccessories);
         }
 
         @Override
-        public PlayerAccessoryBag clone(PlayerAccessoryBag value) {
-            return new PlayerAccessoryBag(value.getAccessoryMap(), value.getDiscoveredAccessories());
+        public DatapointAccessoryBag.PlayerAccessoryBag clone(DatapointAccessoryBag.PlayerAccessoryBag value) {
+            return new DatapointAccessoryBag.PlayerAccessoryBag(value.getAccessoryMap(), value.getDiscoveredAccessories());
         }
     };
 
-    public DatapointAccessoryBag(String key, PlayerAccessoryBag value) {
+    public DatapointAccessoryBag(String key, DatapointAccessoryBag.PlayerAccessoryBag value) {
         super(key, value, serializer);
     }
 
     public DatapointAccessoryBag(String key) {
-        super(key, new PlayerAccessoryBag(), serializer);
+        super(key, new DatapointAccessoryBag.PlayerAccessoryBag(), serializer);
     }
 
     @Getter
