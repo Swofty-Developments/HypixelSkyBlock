@@ -8,5 +8,6 @@
   "require-authentication": true,
   "host-name": "0.0.0.0",
   "transfer-timeout": "800",
-  "sandbox-mode": true
+  "sandbox-mode": true,
+  "anticheat": true
 }

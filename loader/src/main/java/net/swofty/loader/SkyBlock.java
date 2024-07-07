@@ -3,11 +3,8 @@ package net.swofty.loader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import lombok.extern.java.Log;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.extras.velocity.VelocityProxy;
-import net.minestom.server.listener.PlayerPositionListener;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -157,24 +154,26 @@ public class SkyBlock {
             /**
              * Initialize the anticheat
              */
-            Thread.startVirtualThread(() -> {
-                Logger.info("Initializing anticheat...");
+            if (Configuration.getOrDefault("anticheat", true)) {
+                Thread.startVirtualThread(() -> {
+                    Logger.info("Initializing anticheat...");
 
-                MinestomLoader minestomLoader = new MinestomLoader();
-                minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
+                    MinestomLoader minestomLoader = new MinestomLoader();
+                    minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
 
-                SwoftyAnticheat.loader(minestomLoader);
-                SwoftyAnticheat.values(new SwoftyValues());
-                SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {
-                    @Override
-                    public void onFlag(UUID uuid, FlagType flagType) {
-                        Logger.info("Player " + uuid + " flagged for " + flagType.name());
-                    }
+                    SwoftyAnticheat.loader(minestomLoader);
+                    SwoftyAnticheat.values(new SwoftyValues());
+                    SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {
+                        @Override
+                        public void onFlag(UUID uuid, FlagType flagType) {
+                            Logger.info("Player " + uuid + " flagged for " + flagType.name());
+                        }
+                    });
+                    SwoftyAnticheat.start();
+
+                    Logger.info("Anticheat initialized");
                 });
-                SwoftyAnticheat.start();
-
-                Logger.info("Anticheat initialized");
-            });
+            }
         });
         new Thread(() -> {
             try {
