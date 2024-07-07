@@ -43,7 +43,11 @@ public class EnchantmentFirstStrike implements Ench, EnchFromTable, EventBasedEn
 
     @Override
     public List<EnchantItemGroups> getGroups() {
-        return List.of(EnchantItemGroups.FISHING_WEAPON, EnchantItemGroups.LONG_SWORD,EnchantItemGroups.SWORD);
+        return List.of(
+                EnchantItemGroups.FISHING_WEAPON,
+                EnchantItemGroups.LONG_SWORD,
+                EnchantItemGroups.SWORD
+        );
     }
 
     @Override

@@ -17,7 +17,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class ChangeNBTCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentString keyArgument = ArgumentType.String("key");
         ArgumentString valueArgument = ArgumentType.String("value");
 

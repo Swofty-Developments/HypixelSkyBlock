@@ -14,7 +14,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class XpCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentInteger levelArgument = ArgumentType.Integer("level");
 
         command.addSyntax((sender, context) -> {

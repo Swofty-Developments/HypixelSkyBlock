@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class PlayMusicCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<Songs> song = new ArgumentEnum<>("song", Songs.class);
 
         command.addSyntax((sender, context) -> {

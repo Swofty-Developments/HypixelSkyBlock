@@ -3,11 +3,8 @@ package net.swofty.loader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import lombok.extern.java.Log;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.extras.velocity.VelocityProxy;
-import net.minestom.server.listener.PlayerPositionListener;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -18,9 +15,11 @@ import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -102,17 +101,12 @@ public class SkyBlock {
          */
         Logger.info("Initializing proxy support...");
 
-        List<String> outgoingChannels = initOutgoingRedisChannels();
-        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID, outgoingChannels.toArray(new String[0]));
-        proxyAPI.registerProxyToClient("ping", RedisPing.class);
-        proxyAPI.registerProxyToClient("run-event", RedisRunEvent.class);
-        proxyAPI.registerProxyToClient("refresh-data", RedisRefreshCoopData.class);
-        proxyAPI.registerProxyToClient("has-island", RedisHasIslandLoaded.class);
-        proxyAPI.registerProxyToClient("bank-hash", RedisBankHash.class);
-        proxyAPI.registerProxyToClient("authenticate", RedisAuthenticate.class);
-        proxyAPI.registerProxyToClient("origin-server", RedisOriginServer.class);
-        proxyAPI.registerProxyToClient("finished-transfer", RedisTransferredFromThisServer.class);
-        proxyAPI.registerProxyToClient("teleport", RedisTeleport.class);
+        ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.types.generic.redis", ProxyToClient.class)
+                .forEach(proxyAPI::registerFromProxyHandler);
+        Arrays.stream(ToProxyChannels.values()).forEach(
+                ServerOutboundMessage::registerServerToProxy
+        );
         proxyAPI.start();
 
         VelocityProxy.enable(Configuration.get("velocity-secret"));
@@ -149,7 +143,7 @@ public class SkyBlock {
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
 
-            RedisMessage.sendMessageToProxy(
+            ServerOutboundMessage.sendMessageToProxy(
                     "server-name", "",
                     SkyBlockConst::setServerName);
             checkProxyConnected(MinecraftServer.getSchedulerManager());
@@ -188,7 +182,7 @@ public class SkyBlock {
             System.exit(0);
         }).start();
 
-        RedisMessage.sendMessageToProxy(
+        ServerOutboundMessage.sendMessageToProxy(
                 "server-initialized",
                 new JSONObject().put("type", serverType.name())
                         .put("port" , pterodactylPort)
@@ -224,7 +218,7 @@ public class SkyBlock {
             AtomicBoolean responded = new AtomicBoolean(false);
 
             try {
-                RedisMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
+                ServerOutboundMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
                     if (response.equals("true"))
                         responded.set(true);
                 });

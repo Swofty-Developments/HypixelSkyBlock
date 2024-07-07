@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
 public class GamemodeCommand extends SkyBlockCommand {
 
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<GameMode> gamemode = ArgumentType.Enum("gamemode", GameMode.class);
         gamemode.setFormat(ArgumentEnum.Format.LOWER_CASED);
 

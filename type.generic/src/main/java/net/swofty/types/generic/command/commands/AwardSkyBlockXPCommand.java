@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class AwardSkyBlockXPCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentString causeArgument = ArgumentType.String("cause");
 
         command.addSyntax((sender, context) -> {

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
-@ChannelListener(channel = "server-initialized")
+@ChannelListener(channel = "registeredServer-initialized")
 public class ListenerServerInitialized extends RedisListener {
     @Override
     public String receivedMessage(String message, UUID serverUUID) {
@@ -18,6 +18,6 @@ public class ListenerServerInitialized extends RedisListener {
 
         GameManager.GameServer server = GameManager.addServer(type, serverUUID , port);
 
-        return String.valueOf(server.server().getServerInfo().getAddress().getPort());
+        return String.valueOf(server.registeredServer().getServerInfo().getAddress().getPort());
     }
 }

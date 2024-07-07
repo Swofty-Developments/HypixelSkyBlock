@@ -14,7 +14,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SendToCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<ServerType> serverType = new ArgumentEnum<>("server_type", ServerType.class);
 
         command.addSyntax((sender, context) -> {

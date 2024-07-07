@@ -16,8 +16,8 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class BitsCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
-        ArgumentNumber<Integer> intArgument = ArgumentType.Integer("amount").min(0);
+    public void registerUsage(MinestomCommand command) {
+        ArgumentNumber<Double> doubleArgument = ArgumentType.Double("amount").min(0D);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -26,6 +26,6 @@ public class BitsCommand extends SkyBlockCommand {
 
             player.getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(context.get(intArgument));
             sender.sendMessage("§aSuccessfully set bits to to §e" + context.getRaw(intArgument) + "§a.");
-        }, intArgument);
+        }, doubleArgument);
     }
 }

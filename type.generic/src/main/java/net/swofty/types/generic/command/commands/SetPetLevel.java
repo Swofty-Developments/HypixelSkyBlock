@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SetPetLevel extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentInteger level = new ArgumentInteger("level");
 
         command.addSyntax((sender, context) -> {

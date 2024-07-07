@@ -7,7 +7,9 @@ import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class UnderstandableSkyBlockItemSerializer implements Serializer<UnderstandableSkyBlockItem> {
 
@@ -19,9 +21,15 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
         jsonObject.put("amount", value.amount());
         jsonObject.put("material", value.material().namespace().asString());
 
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
         value.attributes().forEach(attribute -> {
-            jsonObject.put(attribute.getKey(), attribute.saveIntoString());
+            futures.add(CompletableFuture.runAsync(() -> {
+                jsonObject.put(attribute.getKey(), attribute.saveIntoString());
+            }));
         });
+
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
         return jsonObject.toString();
     }

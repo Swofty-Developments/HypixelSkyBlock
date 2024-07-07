@@ -3,19 +3,16 @@ package net.swofty.velocity.gamemanager;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.Configuration;
-import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public record TransferHandler(Player player) {
     public static ArrayList<Player> playersInLimbo = new ArrayList<>();
 
-    public void transferTo(RegisteredServer currentServer, RegisteredServer toTransferTo) {
+    public void standardTransferTo(RegisteredServer currentServer, RegisteredServer toTransferTo) {
         new Thread(() -> {
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
 
@@ -40,6 +37,14 @@ public record TransferHandler(Player player) {
             RedisMessage.sendMessageToServer(UUID.fromString(currentServer.getServerInfo().getName()),
                     "finished-transfer",
                     player.getUniqueId().toString());
+        }).start();
+    }
+
+    public void noLimboTransferTo(RegisteredServer toTransferTo) {
+        new Thread(() -> {
+            playersInLimbo.remove(player);
+
+            player.createConnectionRequest(toTransferTo).connectWithIndication();
         }).start();
     }
 }

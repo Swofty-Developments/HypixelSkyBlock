@@ -23,7 +23,7 @@ public abstract class SkyBlockCommand {
         this.command = new MinestomCommand(this);
     }
 
-    public abstract void run(MinestomCommand command);
+    public abstract void registerUsage(MinestomCommand command);
 
     public boolean permissionCheck(CommandSender sender) {
         SkyBlockPlayer player = (SkyBlockPlayer) sender;
@@ -59,7 +59,7 @@ public abstract class SkyBlockCommand {
                 return dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(command.getParams().permission());
             });
 
-            command.run(this);
+            command.registerUsage(this);
         }
     }
 }

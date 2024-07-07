@@ -1,46 +1,39 @@
 package net.swofty.proxyapi;
 
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.RedisMessage;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
+import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 public class ProxyAPI {
-    public ProxyAPI(String URI, UUID serverUUID, String... toRegister) {
+    public ProxyAPI(String URI, UUID serverUUID) {
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterID(serverUUID.toString());
-
-        registerChannels(toRegister);
     }
 
-    public void registerProxyToClient(String channelID, Class<? extends ProxyToClient> clazz) {
-        RedisAPI.getInstance().registerChannel(channelID, (event) -> {
+    public void registerFromProxyHandler(ProxyToClient handler) {
+        RedisAPI.getInstance().registerChannel(handler.getChannel().getChannelName(), (event) -> {
             String[] split = event.message.split("}=-=-=\\{");
             UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
             String rawMessage = split[1];
+            JSONObject json = new JSONObject(rawMessage);
 
-            String response;
-            try {
-                response = clazz.newInstance().onMessage(rawMessage);
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+            JSONObject response = handler.onMessage(json);
+
+            if (!handler.getChannel().matchesRequirementsServerSide(json)) {
+                throw new RuntimeException("Message does not match requirements for server side");
             }
 
             RedisAPI.getInstance().publishMessage(
                     "proxy",
-                    ChannelRegistry.getFromName(channelID),
-                    request + "}=-=-={" + response);
+                    ChannelRegistry.getFromName(handler.getChannel().getChannelName()),
+                    request + "}=-=-={" + response.toString());
         });
     }
 
     public void start() {
         RedisAPI.getInstance().startListeners();
-    }
-
-    public static void registerChannels(String[] channels) {
-        Arrays.stream(channels).forEach(RedisMessage::register);
     }
 }

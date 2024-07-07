@@ -22,7 +22,7 @@ import net.swofty.commons.statistics.ItemStatistics;
         allowsConsole = false)
 public class SetItemStatisticCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<ItemStatistic> statistic = new ArgumentEnum<>("statistic", ItemStatistic.class);
         ArgumentDouble amount = new ArgumentDouble("amount");
 

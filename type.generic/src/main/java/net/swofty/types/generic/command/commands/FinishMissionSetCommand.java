@@ -17,7 +17,7 @@ import java.util.Arrays;
         allowsConsole = false)
 public class FinishMissionSetCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<MissionSet> set = ArgumentType.Enum("set", MissionSet.class);
 
         command.addSyntax((sender, context) -> {

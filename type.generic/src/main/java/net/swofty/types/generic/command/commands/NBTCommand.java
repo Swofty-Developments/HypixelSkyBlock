@@ -23,7 +23,7 @@ public class NBTCommand extends SkyBlockCommand {
     private static Map<UUID, String> itemNBTCache = new HashMap<>();
 
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 

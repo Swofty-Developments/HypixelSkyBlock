@@ -18,7 +18,7 @@ import net.swofty.types.generic.user.categories.Rank;
 public class ViewCollectionCommand extends SkyBlockCommand {
 
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<ItemTypeLinker> itemArgument = ArgumentType.Enum("item", ItemTypeLinker.class);
 
         command.addSyntax((sender, context) -> {

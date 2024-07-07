@@ -8,6 +8,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.permission.PermissionsSetupEvent;
+import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
@@ -30,6 +31,7 @@ import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.data.CoopDatabase;
 import net.swofty.velocity.data.ProfilesDatabase;
@@ -37,6 +39,7 @@ import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
+import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -125,19 +128,14 @@ public class SkyBlockVelocity {
         loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
                 .forEach(listener ->  {
                     RedisAPI.getInstance().registerChannel(
-                        listener.getClass().getAnnotation(ChannelListener.class).channel(),
+                        listener.getClass().getAnnotation(ChannelListener.class).channel().getChannelName(),
                             (event2) -> {
                                 listener.onMessage(event2.channel, event2.message);
                             });
                 });
-        RedisMessage.registerProxyToServer("ping");
-        RedisMessage.registerProxyToServer("run-event");
-        RedisMessage.registerProxyToServer("refresh-data");
-        RedisMessage.registerProxyToServer("has-island");
-        RedisMessage.registerProxyToServer("bank-hash");
-        RedisMessage.registerProxyToServer("origin-server");
-        RedisMessage.registerProxyToServer("finished-transfer");
-        RedisMessage.registerProxyToServer("teleport");
+        for (FromProxyChannels channel : FromProxyChannels.values()) {
+            RedisMessage.registerProxyToServer(channel);
+        }
         RedisAPI.getInstance().startListeners();
 
         /**
@@ -170,13 +168,55 @@ public class SkyBlockVelocity {
         }
 
         // TODO: Force Resource Pack
-        event.setInitialServer(toSendTo.server());
+        event.setInitialServer(toSendTo.registeredServer());
 
         if (shouldAuthenticate) {
             RedisMessage.sendMessageToServer(toSendTo.internalID(),
                     "authenticate",
                     player.getUniqueId().toString());
         }
+    }
+
+    @Subscribe
+    public void onServerCrash(KickedFromServerEvent event) {
+        // Send the player to the limbo
+        RegisteredServer originalServer = event.getServer();
+        Component reason = event.getServerKickReason().orElse(Component.text(
+                "§cThe registeredServer has crashed and is being moved to limbo."
+        ));
+        ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
+
+        event.setResult(KickedFromServerEvent.RedirectPlayer.create(
+                limboServer,
+                null
+        ));
+        TransferHandler.playersInLimbo.add(event.getPlayer());
+
+        Thread.startVirtualThread(() -> {
+            // Determine if the registeredServer disconnect was due to a crash
+            // if it was, then we send the player back to another registeredServer
+            // of that type, otherwise we disconnect them for the same
+            // reason as the original
+            try {
+                Thread.sleep(GameManager.SLEEP_TIME + 100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            TransferHandler.playersInLimbo.remove(event.getPlayer());
+
+            boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
+            if (isOnline) {
+                event.getPlayer().disconnect(reason);
+                return;
+            }
+
+            GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverType);
+            if (server == null) {
+                event.getPlayer().disconnect(reason);
+                return;
+            }
+            new TransferHandler(event.getPlayer()).noLimboTransferTo(server.registeredServer());
+        });
     }
 
     @Subscribe

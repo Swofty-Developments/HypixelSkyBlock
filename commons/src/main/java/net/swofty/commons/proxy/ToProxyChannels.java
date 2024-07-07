@@ -1,0 +1,49 @@
+package net.swofty.commons.proxy;
+
+import lombok.Getter;
+import net.swofty.commons.proxy.requirements.to.*;
+import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
+
+public enum ToProxyChannels {
+    REQUEST_SERVERS_NAME("server-name", new ServerNameRequirements()),
+    PLAYER_COUNT("player-count", new PlayerCountRequirements()),
+    PLAYER_HANDLER("player-handler", new PlayerHandlerRequirements()),
+    PROXY_IS_ONLINE("proxy-online", new ProxyIsOnlineRequirements()),
+    REGISTER_SERVER("register-server", new RegisterServerRequirements()),
+    ;
+
+    @Getter
+    private final String channelName;
+    private final ProxyChannelRequirements requirements;
+
+    ToProxyChannels(String channel, ProxyChannelRequirements requirements) {
+        this.channelName = channel;
+        this.requirements = requirements;
+    }
+
+    ToProxyChannels(String channel) {
+        this(channel, null);
+    }
+
+    public boolean matchesRequirementsServerSide(@Nullable JSONObject message) {
+        if (message == null) return true;
+        if (requirements == null) return true;
+        return requirements.getRequiredKeysForServer().stream().allMatch(key -> message.has(key.key()));
+    }
+
+    public boolean matchesRequirementsProxySide(@Nullable JSONObject message) {
+        if (message == null) return true;
+        if (requirements == null) return true;
+        return requirements.getRequiredKeysForProxy().stream().allMatch(key -> message.has(key.key()));
+    }
+
+    public static ToProxyChannels getChannelName(String channel) {
+        for (ToProxyChannels proxyChannel : ToProxyChannels.values()) {
+            if (proxyChannel.channelName.equalsIgnoreCase(channel)) {
+                return proxyChannel;
+            }
+        }
+        throw new IllegalArgumentException("Unknown channelName: " + channel);
+    }
+}

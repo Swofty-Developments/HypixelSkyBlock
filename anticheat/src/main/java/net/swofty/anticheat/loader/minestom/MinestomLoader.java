@@ -7,10 +7,12 @@ import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.event.player.PlayerPacketOutEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.play.*;
-import net.minestom.server.network.packet.server.play.ServerDataPacket;
+import net.minestom.server.network.packet.server.ServerPacket;
+import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.event.SwoftyEventHandler;
@@ -23,6 +25,7 @@ import net.swofty.anticheat.loader.managers.SwoftyPlayerManager;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
 import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.math.Pos;
+import net.swofty.anticheat.world.Block;
 
 import java.util.*;
 
@@ -32,11 +35,21 @@ public class MinestomLoader extends Loader {
     public void registerListeners(GlobalEventHandler eventHandler) {
         EventNode<Event> eventNode = EventNode.all("packet-handler-client");
 
+        eventNode.addListener(PlayerPacketOutEvent.class, rawEvent -> {
+            ServerPacket packet = rawEvent.getPacket();
+            System.out.println(packet.getClass().getSimpleName());
+
+            /**MultiBlockChangePacket;
+            ChunkBatchStartPacket;
+            ChunkBatchFinishedPacket;
+
+            ChunkDataPacket;
+            BlockChangePacket;**/
+        });
+
         eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
             ClientPacket packet = rawEvent.getPacket();
             AnticheatPacketEvent playerPacketEvent = null;
-
-            System.out.println(packet.getClass().getSimpleName());
 
             switch (packet.getClass().getSimpleName()) {
                 case ("ClientPlayerPositionAndRotationPacket") -> {

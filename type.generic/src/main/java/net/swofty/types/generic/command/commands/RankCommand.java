@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.categories.Rank;
 @CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.ADMIN, allowsConsole = true)
 public class RankCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEntity entityArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true);
         ArgumentEnum<Rank> rankArgument = ArgumentType.Enum("rank", Rank.class);
 

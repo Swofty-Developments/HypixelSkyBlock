@@ -18,7 +18,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SetItemLoreCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentInteger lineNumber = new ArgumentInteger("line_number");
         ArgumentStringArray lore = new ArgumentStringArray("lore");
 

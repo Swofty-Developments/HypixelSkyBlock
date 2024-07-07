@@ -4,23 +4,20 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
-import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 
 @Getter
 public class ProxyPlayer {
@@ -38,10 +35,14 @@ public class ProxyPlayer {
     public void sendMessage(TextComponent message) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "message");
         json.put("message", JSONComponentSerializer.json().serialize(message));
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.MESSAGE;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
     }
 
     public void sendMessage(String message) {
@@ -52,14 +53,18 @@ public class ProxyPlayer {
     public void teleport(Pos pos) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "teleport");
         json.put("x", pos.x());
         json.put("y", pos.y());
         json.put("z", pos.z());
         json.put("yaw", pos.yaw());
         json.put("pitch", pos.pitch());
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.TELEPORT;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
     }
 
     public CompletableFuture<Boolean> isOnline() {
@@ -67,14 +72,15 @@ public class ProxyPlayer {
 
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "N/A");
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
-            if (s.equals("true")) {
-                future.complete(true);
-            } else {
-                future.complete(false);
-            }
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {
+            boolean isOnline = (boolean) s.get("isOnline");
+            future.complete(isOnline);
         });
 
         return future;
@@ -83,20 +89,28 @@ public class ProxyPlayer {
     public void runEvent(ProxyUnderstandableEvent event) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "event");
         json.put("event", event.getClass().getName());
         json.put("data", event.asProxyUnderstandable());
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.EVENT;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
     }
 
     public void transferTo(ServerType serverType) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "transfer");
         json.put("type", serverType.toString());
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
     }
 
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
@@ -104,10 +118,14 @@ public class ProxyPlayer {
 
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "transfer");
         json.put("type", serverType.toString());
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
 
         waitingForTransferComplete.put(uuid, future);
 
@@ -119,14 +137,14 @@ public class ProxyPlayer {
 
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "bank-hash");
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
-            if (s.equals("false")) {
-                future.complete(null);
-                return;
-            }
-            future.complete(UUID.fromString(s));
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.BANK_HASH;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {
+            future.complete(UUID.fromString((String) s.get("bankHash")));
         });
 
         return future;
@@ -137,11 +155,17 @@ public class ProxyPlayer {
 
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "version");
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.VERSION;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {
             try {
-                future.complete(MinecraftVersion.byProtocolId(Integer.parseInt(s)));
+                future.complete(MinecraftVersion.byProtocolId(
+                        (int) s.get("version")
+                ));
             } catch (Exception e) {
                 future.complete(MinecraftVersion.MINECRAFT_1_21);
             } // ViaVersion is disabled
@@ -153,9 +177,13 @@ public class ProxyPlayer {
     public void refreshCoopData(String datapoint) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
-        json.put("actions", "refresh-coop-data");
         json.put("datapoint", datapoint);
 
-        RedisMessage.sendMessageToProxy("player-handler", json.toString(), (s) -> {});
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.REFRESH_COOP_DATA;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
     }
 }

@@ -15,7 +15,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class TestBlackCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 

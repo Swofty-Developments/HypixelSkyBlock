@@ -18,7 +18,7 @@ import java.time.Duration;
 public class TestParticleEngineCommand extends SkyBlockCommand
 {
       @Override
-      public void run(MinestomCommand command) {
+      public void registerUsage(MinestomCommand command) {
             ArgumentNumber<Double> doubleArgument = ArgumentType.Double("radius").min(0D);
             ArgumentNumber<Integer> intArg = ArgumentType.Integer("intensity").min(0);
             ArgumentNumber<Integer> durationArg = ArgumentType.Integer("duration").min(1);

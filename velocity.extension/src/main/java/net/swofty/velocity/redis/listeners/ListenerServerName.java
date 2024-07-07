@@ -6,7 +6,7 @@ import net.swofty.velocity.redis.RedisListener;
 
 import java.util.UUID;
 
-@ChannelListener(channel = "server-name")
+@ChannelListener(channel = "registeredServer-name")
 public class ListenerServerName extends RedisListener {
     @Override
     public String receivedMessage(String message, UUID serverUUID) {

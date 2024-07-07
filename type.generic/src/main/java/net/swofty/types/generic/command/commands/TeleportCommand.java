@@ -15,7 +15,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class TeleportCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEntity entityArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true);
         command.addSyntax((sender, context) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) sender;

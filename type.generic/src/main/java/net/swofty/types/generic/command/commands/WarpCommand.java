@@ -20,7 +20,7 @@ import java.util.List;
         allowsConsole = false)
 public class WarpCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentString warpArgument = ArgumentType.String("warp");
 
         command.addSyntax((sender, context) -> {

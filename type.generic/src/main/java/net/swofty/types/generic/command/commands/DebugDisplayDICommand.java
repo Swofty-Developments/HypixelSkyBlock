@@ -16,7 +16,7 @@ import net.swofty.types.generic.utility.DamageIndicator;
         allowsConsole = false)
 public class DebugDisplayDICommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentBoolean crit = ArgumentType.Boolean("critical");
         ArgumentInteger damage = ArgumentType.Integer("damage");
 

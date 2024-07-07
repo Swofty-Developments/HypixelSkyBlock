@@ -1,5 +1,9 @@
 package net.swofty.proxyapi.redis;
 
+import net.swofty.commons.proxy.FromProxyChannels;
+import org.json.JSONObject;
+
 public interface ProxyToClient {
-    String onMessage(String message);
+    FromProxyChannels getChannel();
+    JSONObject onMessage(JSONObject message);
 }

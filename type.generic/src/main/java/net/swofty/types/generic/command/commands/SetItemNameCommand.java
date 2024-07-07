@@ -17,7 +17,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SetItemNameCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentString name = new ArgumentString("name");
 
         command.addSyntax((sender, context) -> {

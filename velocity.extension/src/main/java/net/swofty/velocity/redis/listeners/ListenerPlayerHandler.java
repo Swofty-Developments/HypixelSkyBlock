@@ -5,6 +5,9 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import com.viaversion.viaversion.api.Via;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
@@ -19,117 +22,83 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ChannelListener(channel = "player-handler")
+@ChannelListener(channel = ToProxyChannels.PLAYER_HANDLER)
 public class ListenerPlayerHandler extends RedisListener {
     @Override
-    public String receivedMessage(String message, UUID serverUUID) {
-        JSONObject json = new JSONObject(message);
-        UUID uuid = UUID.fromString(json.getString("uuid"));
-        String action = json.getString("actions");
+    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
+        UUID uuid = UUID.fromString(message.getString("uuid"));
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.valueOf(
+                        message.getString("action"));
 
         Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuid);
         if (potentialPlayer.isEmpty()) {
-            return "false";
+            if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
+                return new JSONObject().put("isOnline", false);
+            }
+            return new JSONObject();
+        }
+        if (action == PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE) {
+            return new JSONObject().put("isOnline", true);
         }
         Player player = potentialPlayer.get();
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
         switch (action) {
-            case "transfer" -> {
-                ServerType type = ServerType.valueOf(json.getString("type"));
+            case TRANSFER -> {
+                ServerType type = ServerType.valueOf(message.getString("type"));
                 if (!GameManager.hasType(type) || TransferHandler.playersInLimbo.contains(player)) {
-                    return "true";
+                    return new JSONObject();
                 }
-                ServerType playersCurrentServer = GameManager.getTypeFromUUID(UUID.fromString(player.getCurrentServer()
-                        .get()
-                        .getServer()
-                        .getServerInfo()
-                        .getName()));
-
-                new Thread(() -> {
-                    List<GameManager.GameServer> gameServers = GameManager.getFromType(type);
-                    List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(type);
-                    GameManager.GameServer toSendTo = gameServers.get(0);
-
-                    for (BalanceConfiguration configuration : configurations) {
-                        GameManager.GameServer server = configuration.getServer(player, gameServers);
-                        if (server != null) {
-                            toSendTo = server;
-                            break;
-                        }
-                    }
-
-                    RedisMessage.sendMessageToServer(toSendTo.internalID(),
-                            "origin-server",
-                            player.getUniqueId().toString() + ":" + playersCurrentServer.name());
-
-                    new TransferHandler(player).transferTo(player.getCurrentServer().get().getServer(), toSendTo.server());
-                }).start();
+                GameManager.GameServer toSendTo = BalanceConfigurations.getServerFor(player, type);
+                new TransferHandler(player).standardTransferTo(player.getCurrentServer().get().getServer(), toSendTo.registeredServer());
             }
-            case "teleport" -> {
-                UUID target = UUID.fromString(json.getString("uuid"));
-                Double x = json.getDouble("x");
-                Double y = json.getDouble("y");
-                Double z = json.getDouble("z");
-                Float yaw = json.getFloat("yaw");
-                Float pitch = json.getFloat("pitch");
-
-                Optional<Player> targetPlayer = SkyBlockVelocity.getServer().getPlayer(target);
-                if (targetPlayer.isEmpty()) {
-                    return "false";
-                }
-
-                return RedisMessage.sendMessageToServer(UUID.fromString(targetPlayer.get().getCurrentServer().get().getServer().getServerInfo().getName()),
-                        "teleport",
-                        json.toString()).join();
-            }
-            case "bank-hash" -> {
+            case TELEPORT -> {
                 if (potentialServer.isEmpty()) {
-                    return "false";
+                    return new JSONObject();
                 }
-                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-
-                return RedisMessage.sendMessageToServer(playerServer,
-                        "bank-hash",
-                        player.getUniqueId().toString()).join();
+                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                return RedisMessage.sendMessageToServer(server,
+                        FromProxyChannels.TELEPORT,
+                        message).join();
             }
-            case "version" -> {
-                return String.valueOf(Via.getAPI().getPlayerVersion(player.getUniqueId()));
-            }
-            case "event" -> {
-                String event = json.getString("event");
-                String data = json.getString("data");
-
+            case BANK_HASH -> {
                 if (potentialServer.isEmpty()) {
-                    return "false";
+                    return new JSONObject();
                 }
-                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-
-                RedisMessage.sendMessageToServer(playerServer, "run-event",
-                        player.getUniqueId().toString() + "," +
-                        event + "," +
-                        data
-                );
+                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                return RedisMessage.sendMessageToServer(server,
+                        FromProxyChannels.GET_BANK_HASH,
+                        message).join();
             }
-            case "refresh-coop-data" -> {
-                String datapoint = json.getString("datapoint");
-
+            case VERSION -> {
+                return new JSONObject().put("version", Via.getAPI().getPlayerVersion(player.getUniqueId()));
+            }
+            case EVENT -> {
                 if (potentialServer.isEmpty()) {
-                    return "false";
+                    return new JSONObject();
                 }
-                UUID playerServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-
-                RedisMessage.sendMessageToServer(playerServer, "refresh-data",
-                        player.getUniqueId().toString() + "," +
-                        datapoint
-                );
+                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                RedisMessage.sendMessageToServer(server,
+                        FromProxyChannels.RUN_EVENT_ON_SERVER,
+                        message
+                ).join();
             }
-            case "message" -> {
-                String messageToSend = json.getString("message");
+            case REFRESH_COOP_DATA -> {
+                if (potentialServer.isEmpty()) {
+                    return new JSONObject();
+                }
+                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                RedisMessage.sendMessageToServer(server,
+                        FromProxyChannels.REFRESH_COOP_DATA_ON_SERVER,
+                        message
+                ).join();
+            }
+            case MESSAGE -> {
+                String messageToSend = message.getString("message");
                 player.sendMessage(JSONComponentSerializer.json().deserialize(messageToSend));
             }
-        }
-
-        return "true";
+        };
+        return new JSONObject();
     }
 }

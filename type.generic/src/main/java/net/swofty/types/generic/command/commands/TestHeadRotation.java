@@ -18,7 +18,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class TestHeadRotation extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentDouble x = ArgumentType.Double("x");
 
         command.addSyntax((sender, context) -> {

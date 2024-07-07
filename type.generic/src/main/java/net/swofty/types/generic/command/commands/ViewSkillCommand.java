@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class ViewSkillCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<SkillCategories> skillArgument = ArgumentType.Enum("skill", SkillCategories.class);
 
         command.addSyntax((sender, context) -> {

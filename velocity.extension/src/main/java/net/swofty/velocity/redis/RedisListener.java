@@ -2,6 +2,7 @@ package net.swofty.velocity.redis;
 
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -21,23 +22,24 @@ public abstract class RedisListener {
         UUID filterID = UUID.fromString(split[2]);
 
         String messageWithoutFilter = rawMessage.substring(rawMessage.indexOf(";") + 1);
+        JSONObject json = new JSONObject(messageWithoutFilter);
 
         Thread.startVirtualThread(() -> {
-            String response;
+            JSONObject response;
             try {
-                response = receivedMessage(messageWithoutFilter, filterID);
+                response = receivedMessage(json, filterID);
             } catch (Exception e) {
                 System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
                 e.printStackTrace();
-                response = "error";
+                return;
             }
 
             RedisAPI.getInstance().publishMessage(
                     filterID.toString(),
                     ChannelRegistry.getFromName(channel),
-                    uuid + "}=-=-={" + response);
+                    uuid + "}=-=-={" + response.toString());
         });
     }
 
-    public abstract String receivedMessage(String message, UUID serverUUID);
+    public abstract JSONObject receivedMessage(JSONObject message, UUID serverUUID);
 }

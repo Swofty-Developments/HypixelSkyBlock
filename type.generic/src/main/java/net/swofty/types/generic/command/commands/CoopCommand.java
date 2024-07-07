@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
         allowsConsole = false)
 public class CoopCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentStringArray args = ArgumentType.StringArray("player");
 
         command.addSyntax((sender, context) -> {

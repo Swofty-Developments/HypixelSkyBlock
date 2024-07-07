@@ -17,7 +17,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SpawnHologramCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentStringArray nameArgument = ArgumentType.StringArray("name");
 
         command.addSyntax((sender, context) -> {

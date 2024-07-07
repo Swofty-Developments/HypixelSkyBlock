@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class PlaceStructureCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentInteger rotation = ArgumentType.Integer("rotation");
 
         command.addSyntax((sender, context) -> {

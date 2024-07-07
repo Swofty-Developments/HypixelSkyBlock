@@ -19,7 +19,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class EnchantCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<EnchantmentType> typeArgument =
                 ArgumentType.Enum("enchantment_type", EnchantmentType.class);
         ArgumentInteger level = ArgumentType.Integer("level");

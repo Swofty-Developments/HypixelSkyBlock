@@ -16,7 +16,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class SetCollectionCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentEnum<ItemTypeLinker> itemType = new ArgumentEnum("item_type", ItemTypeLinker.class);
         ArgumentInteger amountArgument = new ArgumentInteger("amount");
 

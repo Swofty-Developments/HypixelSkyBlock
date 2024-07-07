@@ -15,7 +15,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class CoinsCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentNumber<Double> doubleArgument = ArgumentType.Double("amount").min(0D);
 
         command.addSyntax((sender, context) -> {

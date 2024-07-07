@@ -8,6 +8,7 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -15,6 +16,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameManager {
+    public static final int SLEEP_TIME = 400;
     @Getter
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
@@ -34,7 +36,25 @@ public class GameManager {
         return server;
     }
 
-    public static ServerType getTypeFromUUID(UUID uuid) {
+    public static @Nullable GameServer getFromRegisteredServer(RegisteredServer registeredServer) {
+        for (ArrayList<GameServer> gameServers : servers.values()) {
+            for (GameServer gameServer : gameServers) {
+                if (gameServer.registeredServer().equals(registeredServer)) return gameServer;
+            }
+        }
+        return null;
+    }
+
+    public static @Nullable ServerType getTypeFromRegisteredServer(RegisteredServer registeredServer) {
+        for (ServerType type : servers.keySet()) {
+            for (GameServer gameServer : servers.get(type)) {
+                if (gameServer.registeredServer().equals(registeredServer)) return type;
+            }
+        }
+        return null;
+    }
+
+    public static @Nullable ServerType getTypeFromUUID(UUID uuid) {
         for (ServerType type : servers.keySet()) {
             for (GameServer gameServer : servers.get(type)) {
                 if (gameServer.internalID().equals(uuid)) return type;
@@ -64,7 +84,7 @@ public class GameManager {
         server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
             servers.forEach((serverType, registeredServers) -> {
                 registeredServers.forEach(registeredServer -> {
-                    RegisteredServer givenServer = registeredServer.server();
+                    RegisteredServer givenServer = registeredServer.registeredServer();
                     AtomicBoolean pingSuccess = new AtomicBoolean(false);
                     long startTime = System.currentTimeMillis();
 
@@ -78,12 +98,12 @@ public class GameManager {
                             System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
                             servers.get(serverType).remove(registeredServer);
                         }
-                    }).delay(Duration.ofMillis(300)).schedule();
+                    }).delay(Duration.ofMillis(SLEEP_TIME - 100)).schedule();
                 });
 
                 System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());
             });
-        }).repeat(Duration.ofMillis(500)).schedule();
+        }).repeat(Duration.ofMillis(SLEEP_TIME)).schedule();
     }
 
     private static int getNextAvailableDisplayName() {
@@ -107,9 +127,9 @@ public class GameManager {
         ArrayList<GameServer> gameServers = new ArrayList<>();
         servers.values().forEach(gameServers::addAll);
 
-        int highestPort = gameServers.stream().mapToInt(gameServer -> gameServer.server().getServerInfo().getAddress().getPort()).max().getAsInt();
+        int highestPort = gameServers.stream().mapToInt(gameServer -> gameServer.registeredServer().getServerInfo().getAddress().getPort()).max().getAsInt();
         return highestPort + 1;
     }
 
-    public record GameServer(String displayName, UUID internalID, RegisteredServer server) { }
+    public record GameServer(String displayName, UUID internalID, RegisteredServer registeredServer) { }
 }

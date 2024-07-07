@@ -15,7 +15,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class AnvilGUICommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentString text = ArgumentType.String("text");
 
         command.addSyntax((sender, context) -> {

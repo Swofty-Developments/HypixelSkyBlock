@@ -1,7 +1,7 @@
 package net.swofty.proxyapi;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.RedisMessage;
+import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.commons.protocol.ProtocolSpecification;
 import org.json.JSONObject;
 
@@ -14,7 +14,7 @@ public record ProxyService(ServiceType type) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
 
-        RedisMessage.sendMessageService(type, pingProtocol,
+        ServerOutboundMessage.sendMessageToService(type, pingProtocol,
                 new JSONObject(), (s) -> {
             future.complete(true);
             hasReceivedResponse.set(true);
@@ -42,7 +42,7 @@ public record ProxyService(ServiceType type) {
 
         JSONObject json = protocol.toJSON(values, true);
 
-        RedisMessage.sendMessageService(type, protocol,
+        ServerOutboundMessage.sendMessageToService(type, protocol,
                 json, (s) -> {
             Map<String, Object> response = protocol.fromJSON(new JSONObject(s), false);
 

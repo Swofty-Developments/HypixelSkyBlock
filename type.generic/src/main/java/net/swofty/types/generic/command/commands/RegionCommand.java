@@ -20,7 +20,7 @@ import net.swofty.types.generic.user.categories.Rank;
         allowsConsole = false)
 public class RegionCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentGroup removeRegion = ArgumentType.Group("remove",
                 ArgumentType.Literal("remove"),
                 ArgumentType.String("region_id"));

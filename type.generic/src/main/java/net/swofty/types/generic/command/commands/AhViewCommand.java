@@ -17,7 +17,7 @@ import java.util.UUID;
         allowsConsole = false)
 public class AhViewCommand extends SkyBlockCommand {
     @Override
-    public void run(MinestomCommand command) {
+    public void registerUsage(MinestomCommand command) {
         ArgumentUUID uuid = new ArgumentUUID("uuid");
 
         command.addSyntax((sender, context) -> {
