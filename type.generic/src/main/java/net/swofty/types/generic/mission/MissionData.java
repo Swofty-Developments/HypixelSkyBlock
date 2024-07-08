@@ -39,53 +39,51 @@ public class MissionData {
 
     @SneakyThrows
     public Map.Entry<ActiveMission, Boolean> getMission(Class<? extends SkyBlockMission> skyBlockMission) {
-        return getMission(skyBlockMission.newInstance().getID());
+        return getMission(getMissionIDFromClass(skyBlockMission));
     }
 
     public List<ActiveMission> getActiveMissions(RegionType regionType) {
         return activeMissions.stream().filter(mission -> {
-            SkyBlockMission skyBlockMission = missionClassCache.get(mission.getMissionID());
+            SkyBlockMission skyBlockMission = getMissionFromCache(mission.getMissionID());
             return skyBlockMission.getValidRegions().contains(regionType);
         }).collect(Collectors.toList());
     }
 
     public boolean isCurrentlyActive(String missionID) {
-        return getMission(missionID) != null && !getMission(missionID).getValue();
+        return activeMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID));
     }
 
     public boolean isCurrentlyActive(Class<? extends SkyBlockMission> skyBlockMission) {
-        return getMission(skyBlockMission) != null && !getMission(skyBlockMission).getValue();
+        return isCurrentlyActive(getMissionIDFromClass(skyBlockMission));
     }
 
     public boolean hasCompleted(String missionID) {
-        return getMission(missionID) != null && getMission(missionID).getValue();
+        return completedMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID));
     }
 
     public boolean hasCompleted(Class<? extends SkyBlockMission> skyBlockMission) {
-        return getMission(skyBlockMission) != null && getMission(skyBlockMission).getValue();
+        return hasCompleted(getMissionIDFromClass(skyBlockMission));
     }
 
+    @SneakyThrows
     public void startMission(Class<? extends SkyBlockMission> skyBlockMission) {
-        if (activeMissions.stream().anyMatch(mission -> mission.getMissionID().equals(skyBlockMission.getSimpleName()))) {
+        String missionID = getMissionIDFromClass(skyBlockMission);
+        if (activeMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID))) {
             throw new RuntimeException("Mission already started");
         }
-        if (completedMissions.stream().anyMatch(mission -> mission.getMissionID().equals(skyBlockMission.getSimpleName()))) {
+        if (completedMissions.stream().anyMatch(mission -> mission.getMissionID().equals(missionID))) {
             throw new RuntimeException("Mission already started, was previously completed");
         }
 
-        try {
-            SkyBlockMission mission = skyBlockMission.newInstance();
-            ActiveMission activeMission = new ActiveMission(mission.getID(), 0, mission instanceof SkyBlockProgressMission);
+        SkyBlockMission mission = getMissionFromCache(missionID);
+        ActiveMission activeMission = new ActiveMission(missionID, 0, mission instanceof SkyBlockProgressMission);
 
-            Map<String, Object> data = mission.onStart(getSkyBlockPlayer(), activeMission);
-            if (data != null) {
-                activeMission.setCustomData(data);
-            }
-
-            activeMissions.add(activeMission);
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        Map<String, Object> data = mission.onStart(getSkyBlockPlayer(), activeMission);
+        if (data != null) {
+            activeMission.setCustomData(data);
         }
+
+        activeMissions.add(activeMission);
     }
 
     public void endMission(String missionID) {
@@ -94,28 +92,23 @@ public class MissionData {
         }
 
         ActiveMission activeMission = activeMissions.stream().filter(mission -> mission.getMissionID().equals(missionID)).findFirst().get();
-        missionClassCache.get(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData(), activeMission);
+        getMissionFromCache(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData(), activeMission);
         activeMission.setMissionEnded((int) SkyBlockCalendar.getElapsed());
         activeMissions.remove(activeMission);
         completedMissions.add(activeMission);
     }
 
-    @SneakyThrows
     public void endMission(Class<? extends SkyBlockMission> skyBlockMission) {
-        endMission(skyBlockMission.newInstance().getID());
+        endMission(getMissionIDFromClass(skyBlockMission));
     }
 
     public @Nullable SkyBlockProgressMission getAsProgressMission(String missionID) {
-        try {
-            return (SkyBlockProgressMission) missionClassCache.get(missionID);
-        } catch (ClassCastException e) {
-            return null;
-        }
+        SkyBlockMission mission = getMissionFromCache(missionID);
+        return (mission instanceof SkyBlockProgressMission) ? (SkyBlockProgressMission) mission : null;
     }
 
-    @SneakyThrows
     public @Nullable SkyBlockProgressMission getAsProgressMission(Class<? extends SkyBlockMission> skyBlockMission) {
-        return getAsProgressMission(skyBlockMission.newInstance().getID());
+        return getAsProgressMission(getMissionIDFromClass(skyBlockMission));
     }
 
     public Map<String, Object> serialize() {
@@ -205,11 +198,11 @@ public class MissionData {
 
         @Override
         public String toString() {
-            return MissionData.getMissionClass(missionID).getName();
+            return getMissionFromCache(missionID).getName();
         }
 
         public void checkIfMissionEnded(SkyBlockPlayer player) {
-            SkyBlockProgressMission mission = (SkyBlockProgressMission) MissionData.getMissionClass(missionID);
+            SkyBlockProgressMission mission = (SkyBlockProgressMission) getMissionFromCache(missionID);
 
             if (missionProgress >= mission.getMaxProgress()) {
                 player.getMissionData().endMission(missionID);
@@ -217,7 +210,7 @@ public class MissionData {
         }
 
         public List<String> getObjectiveCompleteText(ArrayList<String> rewards) {
-            SkyBlockMission mission = MissionData.getMissionClass(missionID);
+            SkyBlockMission mission = getMissionFromCache(missionID);
 
             if (rewards == null || rewards.isEmpty())
                 return Arrays.asList(
@@ -239,7 +232,7 @@ public class MissionData {
         }
 
         public List<String> getNewObjectiveText() {
-            SkyBlockMission mission = MissionData.getMissionClass(missionID);
+            SkyBlockMission mission = getMissionFromCache(missionID);
 
             return Arrays.asList(
                     "§7 ",
@@ -247,6 +240,19 @@ public class MissionData {
                     "§f  " + mission.getName(),
                     "§7 ");
         }
+    }
+
+    private static SkyBlockMission getMissionFromCache(String missionID) {
+        SkyBlockMission mission = missionClassCache.get(missionID);
+        if (mission == null) {
+            throw new IllegalArgumentException("Mission not found in cache: " + missionID);
+        }
+        return mission;
+    }
+
+    @SneakyThrows
+    private static String getMissionIDFromClass(Class<? extends SkyBlockMission> skyBlockMission) {
+        return skyBlockMission.newInstance().getID();
     }
 
     public static SkyBlockMission getMissionClass(String missionID) {

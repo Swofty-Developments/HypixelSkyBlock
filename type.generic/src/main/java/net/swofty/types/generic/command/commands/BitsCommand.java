@@ -17,15 +17,15 @@ import net.swofty.types.generic.user.categories.Rank;
 public class BitsCommand extends SkyBlockCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
-        ArgumentNumber<Double> doubleArgument = ArgumentType.Double("amount").min(0D);
+        ArgumentNumber<Integer> bitsArgument = ArgumentType.Integer("amount").min(0);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
 
-            player.getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(context.get(intArgument));
-            sender.sendMessage("§aSuccessfully set bits to to §e" + context.getRaw(intArgument) + "§a.");
-        }, doubleArgument);
+            player.getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(context.get(bitsArgument));
+            sender.sendMessage("§aSuccessfully set bits to to §e" + context.getRaw(bitsArgument) + "§a.");
+        }, bitsArgument);
     }
 }

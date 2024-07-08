@@ -11,16 +11,10 @@ import java.util.UUID;
 @ChannelListener(channel = ToProxyChannels.PROXY_IS_ONLINE)
 public class ListenerProxyOnline extends RedisListener {
     @Override
-    public String receivedMessage(String message, UUID serverUUID) {
-        if (GameManager.getFromUUID(serverUUID) == null) {
-            return "false";
-        }
-
-        return "true";
-    }
-
-    @Override
     public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
-        return null;
+        if (GameManager.getFromUUID(serverUUID) == null) {
+            return new JSONObject().put("online", false);
+        }
+        return new JSONObject().put("online", true);
     }
 }

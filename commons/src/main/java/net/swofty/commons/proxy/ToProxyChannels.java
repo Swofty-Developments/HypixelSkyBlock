@@ -11,6 +11,7 @@ public enum ToProxyChannels {
     PLAYER_HANDLER("player-handler", new PlayerHandlerRequirements()),
     PROXY_IS_ONLINE("proxy-online", new ProxyIsOnlineRequirements()),
     REGISTER_SERVER("register-server", new RegisterServerRequirements()),
+    FINISHED_WITH_PLAYER("finished-with-player", new FinishedWithPlayerRequirements()),
     ;
 
     @Getter

@@ -10,6 +10,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionSet;
+import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.mission.missions.MissionUseTeleporter;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -33,7 +34,9 @@ public class ActionPlayerTravel implements SkyBlockEventClass {
         if (block == Block.NETHER_PORTAL.namespace()) {
             MissionData data = player.getMissionData();
 
-            if (!MissionSet.GETTING_STARTED.hasCompleted(player) && !data.isCurrentlyActive(MissionUseTeleporter.class)) {
+            if (!MissionSet.GETTING_STARTED.hasCompleted(player)
+                    && !data.isCurrentlyActive(MissionUseTeleporter.class)
+            ) {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
             }

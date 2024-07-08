@@ -491,10 +491,12 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             if (RedisOriginServer.origin.containsKey(uuid)) {
                 player.setOriginServer(RedisOriginServer.origin.get(uuid));
+                RedisOriginServer.origin.remove(uuid);
             }
 
             if (RedisAuthenticate.toAuthenticate.contains(uuid)) {
                 player.setHasAuthenticated(false);
+                RedisAuthenticate.toAuthenticate.remove(uuid);
             }
 
             Logger.info("Received new player: " + username + " (" + uuid + ")");

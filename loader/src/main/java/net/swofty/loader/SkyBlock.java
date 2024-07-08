@@ -144,8 +144,10 @@ public class SkyBlock {
             Logger.info("Internal ID: " + serverUUID.toString());
 
             ServerOutboundMessage.sendMessageToProxy(
-                    "server-name", "",
-                    SkyBlockConst::setServerName);
+                    ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),
+                    (response) -> {
+                        SkyBlockConst.setServerName((String) response.get("server-name"));
+                    });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
             /**
@@ -185,11 +187,10 @@ public class SkyBlock {
         }).start();
 
         ServerOutboundMessage.sendMessageToProxy(
-                "server-initialized",
+                ToProxyChannels.REGISTER_SERVER,
                 new JSONObject().put("type", serverType.name())
-                        .put("port" , pterodactylPort)
-                        .toString(),
-                (response) -> startServer.complete(isPterodactyl ? pterodactylPort : Integer.parseInt(response)) );
+                        .put("port" , pterodactylPort),
+                (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
     }
 
     public static List<String> initOutgoingRedisChannels() {
@@ -220,9 +221,11 @@ public class SkyBlock {
             AtomicBoolean responded = new AtomicBoolean(false);
 
             try {
-                ServerOutboundMessage.sendMessageToProxy("proxy-online", "online", (response) -> {
-                    if (response.equals("true"))
+                ServerOutboundMessage.sendMessageToProxy(
+                        ToProxyChannels.PROXY_IS_ONLINE, new JSONObject(), (response) -> {
+                    if (response.get("online").equals(true)) {
                         responded.set(true);
+                    }
                 });
             } catch (Exception e) {
                 MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));

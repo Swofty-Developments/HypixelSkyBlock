@@ -24,7 +24,7 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
     @Override
     public void write(final ChannelHandlerContext ctx, final Object packet, final ChannelPromise promise) throws Exception {
         try {
-            if (TransferHandler.playersInLimbo.contains(player)
+            if (new TransferHandler(player).isInLimbo()
                     && packet.getClass() != RespawnPacket.class
                     && packet.getClass() != JoinGamePacket.class
                     && packet.getClass() != BossBarPacket.class
@@ -39,7 +39,7 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
             if (respawn == null && packet.getClass() == RespawnPacket.class) {
                 respawn = (RespawnPacket) packet;
             }
-            if (packet.getClass() != RespawnPacket.class && TransferHandler.playersInLimbo.contains(player)) {
+            if (packet.getClass() != RespawnPacket.class && new TransferHandler(player).isInLimbo()) {
                 if (respawn != null) {
                     write(ctx, respawn, ctx.newPromise());
                 }

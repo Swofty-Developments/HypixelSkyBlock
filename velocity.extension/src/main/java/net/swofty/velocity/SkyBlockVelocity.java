@@ -46,6 +46,7 @@ import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 import net.swofty.velocity.via.loader.SkyBlockVLLoader;
+import org.json.JSONObject;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -172,8 +173,8 @@ public class SkyBlockVelocity {
 
         if (shouldAuthenticate) {
             RedisMessage.sendMessageToServer(toSendTo.internalID(),
-                    "authenticate",
-                    player.getUniqueId().toString());
+                    FromProxyChannels.PROMPT_PLAYER_FOR_AUTHENTICATION,
+                    new JSONObject().put("uuid", player.getUniqueId().toString()));
         }
     }
 
@@ -182,7 +183,7 @@ public class SkyBlockVelocity {
         // Send the player to the limbo
         RegisteredServer originalServer = event.getServer();
         Component reason = event.getServerKickReason().orElse(Component.text(
-                "§cThe registeredServer has crashed and is being moved to limbo."
+                "§cYour connection to the server was lost. Please try again later."
         ));
         ServerType serverType = GameManager.getTypeFromRegisteredServer(originalServer);
 
@@ -190,7 +191,9 @@ public class SkyBlockVelocity {
                 limboServer,
                 null
         ));
-        TransferHandler.playersInLimbo.add(event.getPlayer());
+
+        TransferHandler transferHandler = new TransferHandler(event.getPlayer());
+        transferHandler.standardTransferTo(originalServer, serverType);
 
         Thread.startVirtualThread(() -> {
             // Determine if the registeredServer disconnect was due to a crash
@@ -198,24 +201,27 @@ public class SkyBlockVelocity {
             // of that type, otherwise we disconnect them for the same
             // reason as the original
             try {
-                Thread.sleep(GameManager.SLEEP_TIME + 100);
+                Thread.sleep(GameManager.SLEEP_TIME + 300);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            TransferHandler.playersInLimbo.remove(event.getPlayer());
 
             boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
             if (isOnline) {
+                transferHandler.forceRemoveFromLimbo();
                 event.getPlayer().disconnect(reason);
                 return;
             }
 
             GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverType);
             if (server == null) {
+                transferHandler.forceRemoveFromLimbo();
                 event.getPlayer().disconnect(reason);
                 return;
             }
-            new TransferHandler(event.getPlayer()).noLimboTransferTo(server.registeredServer());
+
+            transferHandler.noLimboTransferTo(server.registeredServer());
+            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
         });
     }
 

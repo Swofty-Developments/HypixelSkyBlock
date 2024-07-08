@@ -16,8 +16,8 @@ public class ActionStartHubMission implements SkyBlockEventClass {
         if (event.getTo() != RegionType.VILLAGE) return;
 
         MissionData data = event.getPlayer().getMissionData();
-        if (data.isCurrentlyActive("talk_to_villagers")) return;
-        if (data.hasCompleted("talk_to_villagers")) return;
+        if (data.isCurrentlyActive(MissionTalkToVillagers.class)) return;
+        if (data.hasCompleted(MissionTalkToVillagers.class)) return;
 
         data.startMission(MissionTalkToVillagers.class);
     }

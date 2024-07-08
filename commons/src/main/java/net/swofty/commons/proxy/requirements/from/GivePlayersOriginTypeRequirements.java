@@ -4,18 +4,17 @@ import net.swofty.commons.proxy.ProxyChannelRequirements;
 
 import java.util.List;
 
-public class DoesServerHaveIslandRequirements extends ProxyChannelRequirements {
+public class GivePlayersOriginTypeRequirements extends ProxyChannelRequirements {
     @Override
     public List<RequiredKey> getRequiredKeysForProxy() {
         return List.of(
-                new RequiredKey("island-uuid") // The uuid of the island
+                new RequiredKey("uuid"), // The uuid of the player
+                new RequiredKey("origin-type") // The type of the origin server
         );
     }
 
     @Override
     public List<RequiredKey> getRequiredKeysForServer() {
-        return List.of(
-                new RequiredKey("server-has-it") // Whether the server has the island
-        );
+        return List.of();
     }
 }

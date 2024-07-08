@@ -3,7 +3,9 @@ package net.swofty.types.generic.redis;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,14 +15,16 @@ public class RedisOriginServer implements ProxyToClient {
     public static Map<UUID, ServerType> origin = new HashMap<>();
 
     @Override
-    public String onMessage(String message) {
-        UUID uuid = UUID.fromString(message.split(":")[0]);
-        ServerType serverType = ServerType.valueOf(message.split(":")[1]);
+    public FromProxyChannels getChannel() {
+        return FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE;
+    }
 
-        origin.put(uuid, serverType);
+    @Override
+    public JSONObject onMessage(JSONObject message) {
+        UUID uuid = UUID.fromString(message.getString("uuid"));
+        ServerType originType = ServerType.valueOf(message.getString("origin-type"));
 
-        MinecraftServer.getSchedulerManager().scheduleTask(() -> origin.remove(uuid),
-                TaskSchedule.seconds(3), TaskSchedule.stop());
-        return "true";
+        origin.put(uuid, originType);
+        return new JSONObject();
     }
 }

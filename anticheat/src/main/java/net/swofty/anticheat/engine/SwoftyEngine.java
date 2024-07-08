@@ -17,13 +17,15 @@ public class SwoftyEngine {
             List<UUID> onlinePlayers = loader.getOnlinePlayers();
             List<SwoftyPlayer> players = new ArrayList<>();
 
-            SwoftyPlayer.players.forEach((uuid, player) -> {
-                if (!onlinePlayers.contains(uuid)) {
-                    player.getWorld().shutdown();
-                    SwoftyPlayer.players.remove(uuid);
-                    return;
-                }
-            });
+            synchronized (SwoftyPlayer.players) {
+                SwoftyPlayer.players.forEach((uuid, player) -> {
+                    if (!onlinePlayers.contains(uuid)) {
+                        player.getWorld().shutdown();
+                        SwoftyPlayer.players.remove(uuid);
+                        return;
+                    }
+                });
+            }
 
             onlinePlayers.forEach(uuid -> {
                 if (!SwoftyPlayer.players.containsKey(uuid)) {

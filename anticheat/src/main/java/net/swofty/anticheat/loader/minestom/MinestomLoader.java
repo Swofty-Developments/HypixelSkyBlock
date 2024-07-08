@@ -37,7 +37,6 @@ public class MinestomLoader extends Loader {
 
         eventNode.addListener(PlayerPacketOutEvent.class, rawEvent -> {
             ServerPacket packet = rawEvent.getPacket();
-            System.out.println(packet.getClass().getSimpleName());
 
             /**MultiBlockChangePacket;
             ChunkBatchStartPacket;

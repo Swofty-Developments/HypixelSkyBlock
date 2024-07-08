@@ -4,6 +4,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.mission.MissionSet;
+import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 

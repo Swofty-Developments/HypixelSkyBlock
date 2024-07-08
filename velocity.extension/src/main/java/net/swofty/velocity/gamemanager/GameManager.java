@@ -6,9 +6,11 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.Getter;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -16,11 +18,11 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameManager {
-    public static final int SLEEP_TIME = 400;
+    public static final int SLEEP_TIME = 300;
     @Getter
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
-    public static GameServer addServer(ServerType type, UUID serverID , int port) {
+    public static GameServer addServer(ServerType type, UUID serverID, int port) {
         port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
                 new ServerInfo(serverID.toString(), new InetSocketAddress(Configuration.get("host-name"), port))
@@ -39,7 +41,9 @@ public class GameManager {
     public static @Nullable GameServer getFromRegisteredServer(RegisteredServer registeredServer) {
         for (ArrayList<GameServer> gameServers : servers.values()) {
             for (GameServer gameServer : gameServers) {
-                if (gameServer.registeredServer().equals(registeredServer)) return gameServer;
+                if (gameServer.registeredServer().equals(registeredServer)) {
+                    return gameServer;
+                }
             }
         }
         return null;
@@ -88,7 +92,9 @@ public class GameManager {
                     AtomicBoolean pingSuccess = new AtomicBoolean(false);
                     long startTime = System.currentTimeMillis();
 
-                    RedisMessage.sendMessageToServer(registeredServer.internalID(), "ping", "check").thenRun(() -> {
+                    RedisMessage.sendMessageToServer(registeredServer.internalID(),
+                            FromProxyChannels.PING_SERVER, new JSONObject()
+                    ).thenRun(() -> {
                         pingSuccess.set(true);
                     });
 

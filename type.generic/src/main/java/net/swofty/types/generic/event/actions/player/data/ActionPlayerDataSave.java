@@ -5,6 +5,8 @@ import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
@@ -14,6 +16,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -23,7 +26,7 @@ public class ActionPlayerDataSave implements SkyBlockEventClass {
 
 
     @SneakyThrows
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = false , isAsync = true)
+    @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(PlayerDisconnectEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID uuid = player.getUuid();
@@ -68,8 +71,13 @@ public class ActionPlayerDataSave implements SkyBlockEventClass {
         });
 
         DataHandler.userCache.remove(uuid);
+        ServerOutboundMessage.sendMessageToProxy(
+                ToProxyChannels.FINISHED_WITH_PLAYER,
+                new JSONObject().put("uuid", uuid.toString()),
+                (response) -> {}
+        );
         MathUtility.delay(() -> {
             SkyBlockConst.getTypeLoader().getTablistManager().deleteTablistEntries(player);
-        }, 10);
+        }, 5);
     }
 }

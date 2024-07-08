@@ -13,10 +13,11 @@ import net.swofty.anticheat.world.PlayerWorld;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class SwoftyPlayer {
-    public static Map<UUID, SwoftyPlayer> players = new HashMap<>();
+    public static final Map<UUID, SwoftyPlayer> players = new ConcurrentHashMap<>();
 
     private final UUID uuid;
     private List<PlayerTickInformation> lastTicks = new ArrayList<>();

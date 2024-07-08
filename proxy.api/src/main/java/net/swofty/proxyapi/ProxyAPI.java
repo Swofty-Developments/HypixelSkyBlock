@@ -1,9 +1,11 @@
 package net.swofty.proxyapi;
 
+import lombok.extern.java.Log;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.UUID;
 
@@ -22,7 +24,8 @@ public class ProxyAPI {
 
             JSONObject response = handler.onMessage(json);
 
-            if (!handler.getChannel().matchesRequirementsServerSide(json)) {
+            if (!handler.getChannel().matchesRequirementsServerSide(response)) {
+                Logger.error("Handler " + handler.getClass().getName());
                 throw new RuntimeException("Message does not match requirements for server side");
             }
 

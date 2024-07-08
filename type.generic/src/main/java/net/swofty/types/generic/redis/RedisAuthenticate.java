@@ -2,23 +2,17 @@ package net.swofty.types.generic.redis;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.data.mongodb.AuthenticationDatabase;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class RedisAuthenticate implements ProxyToClient {
     public static ArrayList<UUID> toAuthenticate = new ArrayList<>();
-
-    @Override
-    public String onMessage(String message) {
-        toAuthenticate.add(UUID.fromString(message));
-        MinecraftServer.getSchedulerManager().scheduleTask(() -> toAuthenticate.remove(UUID.fromString(message)),
-                TaskSchedule.seconds(1), TaskSchedule.stop());
-        return "true";
-    }
 
     public static void promptAuthentication(SkyBlockPlayer player) {
         player.sendMessage("§aHey! You need to authenticate your account to play on this server.");
@@ -40,5 +34,17 @@ public class RedisAuthenticate implements ProxyToClient {
                 player.kick("§cYou have been kicked for not authenticating your account.");
             }
         }, TaskSchedule.seconds(30), TaskSchedule.stop());
+    }
+
+    @Override
+    public FromProxyChannels getChannel() {
+        return FromProxyChannels.PROMPT_PLAYER_FOR_AUTHENTICATION;
+    }
+
+    @Override
+    public JSONObject onMessage(JSONObject message) {
+        UUID uuid = UUID.fromString(message.getString("uuid"));
+        toAuthenticate.add(uuid);
+        return new JSONObject();
     }
 }

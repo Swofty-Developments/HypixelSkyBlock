@@ -9,7 +9,6 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
@@ -18,7 +17,6 @@ import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,11 +45,13 @@ public class ListenerPlayerHandler extends RedisListener {
         switch (action) {
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf(message.getString("type"));
-                if (!GameManager.hasType(type) || TransferHandler.playersInLimbo.contains(player)) {
+                if (!GameManager.hasType(type) || new TransferHandler(player).isInLimbo()) {
                     return new JSONObject();
                 }
-                GameManager.GameServer toSendTo = BalanceConfigurations.getServerFor(player, type);
-                new TransferHandler(player).standardTransferTo(player.getCurrentServer().get().getServer(), toSendTo.registeredServer());
+                new TransferHandler(player).standardTransferTo(
+                        player.getCurrentServer().get().getServer(),
+                        type
+                );
             }
             case TELEPORT -> {
                 if (potentialServer.isEmpty()) {

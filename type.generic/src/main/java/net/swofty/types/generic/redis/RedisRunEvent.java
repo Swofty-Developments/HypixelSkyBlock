@@ -1,27 +1,30 @@
 package net.swofty.types.generic.redis;
 
 import net.minestom.server.event.Event;
+import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 public class RedisRunEvent implements ProxyToClient {
     @Override
-    public String onMessage(String message) {
-        String playerUuid = message.split(",")[0];
-        String eventClassName = message.split(",")[1];
+    public FromProxyChannels getChannel() {
+        return FromProxyChannels.RUN_EVENT_ON_SERVER;
+    }
 
-        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(UUID.fromString(playerUuid));
+    @Override
+    public JSONObject onMessage(JSONObject message) {
+        UUID uuid = UUID.fromString(message.getString("uuid"));
+        String eventClassName = message.getString("event");
+        String eventArgs = message.getString("data");
 
-        String[] eventArgs = message.split(",");
-        String[] eventArgsWithoutPlayerName = new String[eventArgs.length - 2];
-        System.arraycopy(eventArgs, 2, eventArgsWithoutPlayerName, 0, eventArgs.length - 2);
-
-        String finalArgs = String.join(",", eventArgsWithoutPlayerName);
+        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
+        if (player == null) return new JSONObject();
 
         // Access static method
         // public static CollectionUpdateEvent fromProxyUnderstandable(SkyBlockPlayer player, String string) {
@@ -37,13 +40,13 @@ public class RedisRunEvent implements ProxyToClient {
         Event event = null;
         try {
             event = (Event) eventClass.getMethod("fromProxyUnderstandable", SkyBlockPlayer.class, String.class)
-                    .invoke(null, player, finalArgs);
+                    .invoke(null, player, eventArgs);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
         SkyBlockEventHandler.callSkyBlockEvent(event);
 
-        return "ok";
+        return new JSONObject();
     }
 }
