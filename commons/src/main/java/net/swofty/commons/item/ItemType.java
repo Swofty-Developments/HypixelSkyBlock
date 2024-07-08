@@ -47,6 +47,7 @@ public enum ItemType {
     TREASURE_RING(Material.PLAYER_HEAD,  Rarity.EPIC),
     TREASURE_TALISMAN(Material.PLAYER_HEAD,  Rarity.RARE),
     SPIDER_TALISMAN(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    SPIDER_RING(Material.PLAYER_HEAD, Rarity.RARE),
     SPIDER_ARTIFACT(Material.PLAYER_HEAD,  Rarity.EPIC),
     MINE_AFFINITY_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
     VILLAGE_AFFINITY_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
@@ -220,6 +221,11 @@ public enum ItemType {
     DECORATION_ONION(Material.PLAYER_HEAD,  Rarity.COMMON),
     DECORATION_ORANGE(Material.PLAYER_HEAD,  Rarity.COMMON),
     DECORATION_PINK_BERRY(Material.PLAYER_HEAD,  Rarity.COMMON),
+
+    /**
+     * Power Stones
+     */
+    LUXURIOUS_SPOOL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
     /**
      * Farming Props

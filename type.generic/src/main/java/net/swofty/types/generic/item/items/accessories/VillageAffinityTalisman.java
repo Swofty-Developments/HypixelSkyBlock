@@ -5,6 +5,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class VillageAffinityTalisman implements Talisman, SkyBlockEventClass {
+public class VillageAffinityTalisman implements Talisman, SkyBlockEventClass, SkullHead {
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(PlayerRegionChangeEvent event) {

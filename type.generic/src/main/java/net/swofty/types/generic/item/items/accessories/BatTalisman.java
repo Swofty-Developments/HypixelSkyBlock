@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.items.accessories;
 
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BatTalisman implements Talisman {
+public class BatTalisman implements Talisman, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return null;

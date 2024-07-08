@@ -5,6 +5,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MineAffinityTalisman implements Talisman, SkyBlockEventClass {
+public class MineAffinityTalisman implements Talisman, SkyBlockEventClass, SkullHead {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "d9563fdc4acab6db324b21bc43b238fe465e530a6327e7eef11d2d0c4ea";

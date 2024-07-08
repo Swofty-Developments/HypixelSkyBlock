@@ -6,7 +6,6 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
@@ -15,12 +14,14 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.PlayerConnection;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.objects.PlayerShopData;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -38,6 +39,7 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ArrowImpl;
 import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -49,10 +51,8 @@ import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
-import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.DeathMessageCreator;
-import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -249,6 +249,10 @@ public class SkyBlockPlayer extends Player {
         return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
     }
 
+    public boolean hasTalisman(TieredTalisman talisman) {
+        return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
+    }
+
     public List<Talisman> getTalismans() {
         List<Talisman> inInventory = Stream.of(getAllInventoryItems())
                 .filter(item -> item.getGenericInstance() != null)
@@ -261,6 +265,24 @@ public class SkyBlockPlayer extends Player {
                 .map(item -> (Talisman) item.getGenericInstance()).toList();
 
         return Stream.concat(inInventory.stream(), inAccessoryBag.stream()).collect(Collectors.toList());
+    }
+
+    public Integer getMagicalPower() {
+
+        int magicalPower = 0;
+
+        for (SkyBlockItem accessory : getAccessoryBag().getUniqueAccessories()) {
+            Rarity taliRarity = accessory.getAttributeHandler().getRarity();
+            switch (taliRarity) {
+                case COMMON -> magicalPower += 3;
+                case UNCOMMON -> magicalPower += 5;
+                case RARE -> magicalPower += 8;
+                case EPIC -> magicalPower += 12;
+                case LEGENDARY -> magicalPower += 16;
+                case MYTHIC -> magicalPower += 22;
+            }
+        }
+        return magicalPower;
     }
 
     public void setMuseumData(DatapointMuseum.MuseumData data) {
