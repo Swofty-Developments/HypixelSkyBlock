@@ -151,24 +151,26 @@ public class SkyBlock {
             /**
              * Initialize the anticheat
              */
-            Thread.startVirtualThread(() -> {
-                Logger.info("Initializing anticheat...");
+            if (Configuration.getOrDefault("anticheat", true)) {
+                Thread.startVirtualThread(() -> {
+                    Logger.info("Initializing anticheat...");
 
-                MinestomLoader minestomLoader = new MinestomLoader();
-                minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
+                    MinestomLoader minestomLoader = new MinestomLoader();
+                    minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
 
-                SwoftyAnticheat.loader(minestomLoader);
-                SwoftyAnticheat.values(new SwoftyValues());
-                SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {
-                    @Override
-                    public void onFlag(UUID uuid, FlagType flagType) {
-                        Logger.info("Player " + uuid + " flagged for " + flagType.name());
-                    }
+                    SwoftyAnticheat.loader(minestomLoader);
+                    SwoftyAnticheat.values(new SwoftyValues());
+                    SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {
+                        @Override
+                        public void onFlag(UUID uuid, FlagType flagType) {
+                            Logger.info("Player " + uuid + " flagged for " + flagType.name());
+                        }
+                    });
+                    SwoftyAnticheat.start();
+
+                    Logger.info("Anticheat initialized");
                 });
-                SwoftyAnticheat.start();
-
-                Logger.info("Anticheat initialized");
-            });
+            }
         });
         new Thread(() -> {
             try {
