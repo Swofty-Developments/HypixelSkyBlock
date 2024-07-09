@@ -12,7 +12,16 @@ import java.util.function.BiFunction;
 public enum ReforgeType {
     SWORDS(List.of(
             new Reforge("Epic", (originalStatistics, level) -> {
-                return originalStatistics.addBase(ItemStatistic.STRENGTH, (double) (10 + (level * 5)));
+                ReforgeValue<Integer> strength = new ReforgeValue<>(
+                        15, 20, 25, 32, 40, 50);
+                ReforgeValue<Integer> critDamage = new ReforgeValue<>(
+                        10, 15, 20, 27, 35, 45);
+                ReforgeValue<Integer> bonusAttackSpeed = new ReforgeValue<>(
+                        1, 2, 4, 7, 10, 15);
+                return originalStatistics.addBase(ItemStatistic.STRENGTH, (double) strength.getForRarity(level))
+                        .addBase(ItemStatistic.CRIT_DAMAGE, (double) critDamage.getForRarity(level))
+                        .addBase(ItemStatistic.BONUS_ATTACK_SPEED, (double) bonusAttackSpeed.getForRarity(level))
+                        ;
             })
     )),
     BOWS(List.of(
@@ -47,6 +56,22 @@ public enum ReforgeType {
     public record Reforge(String prefix, BiFunction<ItemStatistics, Integer, ItemStatistics> calculation) {
         public ItemStatistics getAfterCalculation(ItemStatistics statistic, Integer level) {
             return calculation.apply(statistic, level);
+        }
+    }
+
+    private record ReforgeValue<T>(T common, T uncommon, T rare, T epic, T legendary, T mythic) {
+
+        private T getForRarity(Integer rarity) {
+            return switch (rarity) {
+                case 1 -> common;
+                case 2 -> uncommon;
+                case 3 -> rare;
+                case 4 -> epic;
+                case 5 -> legendary;
+                case 6, 7, 8 -> mythic;
+
+                default -> throw new IllegalStateException("Unexpected value: " + rarity);
+            };
         }
     }
 }

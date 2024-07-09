@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -84,27 +85,20 @@ public class ItemLore {
                 addLoreLine(null);
             }
 
-            boolean health = addPossiblePropertyInt(ItemStatistic.HEALTH, statistics.getOverall(ItemStatistic.HEALTH),
-                    handler.getReforge(), rarity
-            );
-            boolean damage = addPossiblePropertyInt(ItemStatistic.DAMAGE, statistics.getOverall(ItemStatistic.DAMAGE),
-                    handler.getReforge(), rarity
-            );
-            boolean defence = addPossiblePropertyInt(ItemStatistic.DEFENSE, statistics.getOverall(ItemStatistic.DEFENSE),
-                    handler.getReforge(), rarity
-            );
-            boolean strength = addPossiblePropertyInt(ItemStatistic.STRENGTH, statistics.getOverall(ItemStatistic.STRENGTH),
-                    handler.getReforge(), rarity
-            );
-            boolean intelligence = addPossiblePropertyInt(ItemStatistic.INTELLIGENCE, statistics.getOverall(ItemStatistic.INTELLIGENCE),
-                    handler.getReforge(), rarity
-            );
-            boolean miningSpeed = addPossiblePropertyInt(ItemStatistic.MINING_SPEED, statistics.getOverall(ItemStatistic.MINING_SPEED),
-                    handler.getReforge(), rarity
-            );
-            boolean speed = addPossiblePropertyInt(ItemStatistic.SPEED, statistics.getOverall(ItemStatistic.SPEED),
-                    handler.getReforge(), rarity
-            );
+            List<ItemStatistic> itemStatistics = new ArrayList<>(List.of(ItemStatistic.DAMAGE, ItemStatistic.STRENGTH, ItemStatistic.CRIT_CHANCE, ItemStatistic.CRIT_DAMAGE,
+                    ItemStatistic.SEA_CREATURE_CHANCE, ItemStatistic.BONUS_ATTACK_SPEED, ItemStatistic.ABILITY_DAMAGE, ItemStatistic.HEALTH, ItemStatistic.DEFENSE,
+                    ItemStatistic.SPEED, ItemStatistic.INTELLIGENCE, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK, ItemStatistic.TRUE_DEFENSE, ItemStatistic.HEALTH_REGEN,
+                    ItemStatistic.MENDING, ItemStatistic.VITALITY, ItemStatistic.FEROCITY, ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE,
+                    ItemStatistic.FARMING_FORTUNE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.COLD_RESISTANCE,ItemStatistic.PRISTINE,
+                    ItemStatistic.SWING_RANGE));
+
+            boolean addNextLine = false;
+            for (ItemStatistic itemStatistic : itemStatistics) {
+                boolean x = addPossiblePropertyInt(itemStatistic, statistics.getOverall(itemStatistic), handler.getReforge(), rarity);
+                if (x) {
+                    addNextLine = true;
+                }
+            }
 
             if (item.getGenericInstance() instanceof ShortBowImpl) {
                 addLoreLine("§7Shot Cooldown: §a" + ((ShortBowImpl) item.getGenericInstance()).getCooldown() + "s");
@@ -145,7 +139,7 @@ public class ItemLore {
                 if (!gemstoneLore.toString().trim().isEmpty()) {addLoreLine(gemstoneLore.toString());}
             }
 
-            if (damage || defence || health || strength || intelligence || miningSpeed || speed) addLoreLine(null);
+            if (addNextLine) addLoreLine(null);
 
             // Handle Item Enchantments
             if (item.getGenericInstance() instanceof Enchantable enchantable) {
@@ -267,10 +261,8 @@ public class ItemLore {
         double reforgeValue = 0;
         double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
         if (reforge != null) {
-            overallValue += reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1)
-                    .getOverall(statistic);
-            reforgeValue = reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1)
-                    .getOverall(statistic) - overallValue;
+            reforgeValue = reforge.getAfterCalculation(ItemStatistics.empty(), rarity.ordinal() + 1).getOverall(statistic);
+            overallValue += reforgeValue;
         }
         overallValue += gemstoneValue;
 
