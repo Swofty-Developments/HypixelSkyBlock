@@ -38,5 +38,4 @@ public class HologramEntity extends Entity {
         meta.setCustomName(Component.text(text));
         meta.setNotifyAboutChanges(true);
     }
-
 }

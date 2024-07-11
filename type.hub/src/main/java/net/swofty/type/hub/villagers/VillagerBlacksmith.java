@@ -48,7 +48,7 @@ public class VillagerBlacksmith extends NPCVillagerDialogue {
             });
             return;
         }
-        if (!data.hasCompleted(MissionMineCoal.class)) {
+        if  (!data.hasCompleted(MissionMineCoal.class)) {
             e.player().sendMessage("§e[NPC] Blacksmith§f: Retrieve 10 coal from the Coal Mines!");
             return;
         }
