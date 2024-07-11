@@ -23,7 +23,7 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
-    implementation("com.github.Minestom:Minestom:277dceacf1") {
+    implementation("com.github.Minestom:Minestom:2be6f9c507") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("dev.hollowcube:polar:1.10.0")

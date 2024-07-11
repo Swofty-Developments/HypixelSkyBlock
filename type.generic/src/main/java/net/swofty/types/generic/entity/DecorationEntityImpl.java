@@ -13,7 +13,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 
 public class DecorationEntityImpl extends EntityCreature {
-    public DecorationEntityImpl(SkyBlockItem item , SkyBlockPlayer player) {
+    public DecorationEntityImpl(SkyBlockItem item, SkyBlockPlayer player) {
         super(EntityType.ARMOR_STAND);
         this.setInvisible(true);
 
@@ -27,10 +27,9 @@ public class DecorationEntityImpl extends EntityCreature {
         setHelmet(
                 ItemStackCreator.getStackHead(decorationHead.getSkullTexture(player , item)).build()
         );
-
     }
 
-    public void spawn(Instance instance , Point pos) {
+    public void spawn(Instance instance, Point pos) {
        this.setInstance(instance , pos.sub(0, 1.46875, 0));
     }
 }
