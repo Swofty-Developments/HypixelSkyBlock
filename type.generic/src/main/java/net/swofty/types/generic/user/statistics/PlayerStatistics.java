@@ -267,8 +267,7 @@ public class PlayerStatistics {
         accessoryStatistics = total;
     }
 
-    private ItemStatistics calculateExtraItemStatisticsToAdd(SkyBlockItem item,
-                                                        SkyBlockPlayer causer, LivingEntity enemy) {
+    private ItemStatistics calculateExtraItemStatisticsToAdd(SkyBlockItem item, SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics statistics = ItemStatistics.builder().build();
         statistics = getReforgeStatistics(item, statistics);
         statistics = getGemstoneStatistics(item, statistics);

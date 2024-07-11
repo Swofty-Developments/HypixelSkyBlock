@@ -2,13 +2,14 @@ package net.swofty.types.generic.item.items.accessories;
 
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TalismanOfPower implements Talisman , NotFinishedYet {
+public class TalismanOfPower implements Talisman , NotFinishedYet, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Allows you to harness the power",

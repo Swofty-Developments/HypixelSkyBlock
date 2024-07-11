@@ -4,14 +4,16 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SpiderArtifact extends SkyBlockValueEvent implements Talisman {
+public class SpiderArtifact extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
     @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return PlayerDamagedByMobValueUpdateEvent.class;
@@ -39,5 +41,15 @@ public class SpiderArtifact extends SkyBlockValueEvent implements Talisman {
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8";
+    }
+
+    @Override
+    public ItemTypeLinker getBaseTalismanTier() {
+        return ItemTypeLinker.SPIDER_TALISMAN;
+    }
+
+    @Override
+    public Integer getTier() {
+        return 3;
     }
 }

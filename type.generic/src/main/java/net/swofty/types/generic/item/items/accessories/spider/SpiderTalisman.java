@@ -4,14 +4,16 @@ import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Talisman;
+import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SpiderTalisman extends SkyBlockValueEvent implements Talisman {
+public class SpiderTalisman extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
     @Override
     public List<String> getTalismanDisplay() {
         return List.of("§7Reduces the damage taken from",
@@ -39,5 +41,15 @@ public class SpiderTalisman extends SkyBlockValueEvent implements Talisman {
         if (event.getMob().getEntityType() == EntityType.SPIDER || event.getMob().getEntityType() == EntityType.CAVE_SPIDER || event.getMob().getEntityType() == EntityType.SILVERFISH) {
             event.setValue((float) (((float) event.getValue()) * 0.95));
         }
+    }
+
+    @Override
+    public ItemTypeLinker getBaseTalismanTier() {
+        return ItemTypeLinker.SPIDER_TALISMAN;
+    }
+
+    @Override
+    public Integer getTier() {
+        return 1;
     }
 }

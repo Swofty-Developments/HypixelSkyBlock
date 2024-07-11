@@ -3,14 +3,28 @@ package net.swofty.types.generic.item;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
 import net.swofty.types.generic.item.items.accessories.*;
 import net.swofty.types.generic.item.items.accessories.abicases.*;
-import net.swofty.types.generic.item.items.accessories.dungeon.*;
+import net.swofty.types.generic.item.items.accessories.dungeon.AutoRecombobulator;
+import net.swofty.types.generic.item.items.accessories.dungeon.CatacombsExpertRing;
+import net.swofty.types.generic.item.items.accessories.dungeon.WitherRelic;
+import net.swofty.types.generic.item.items.accessories.dungeon.scarf.ScarfsGrimoire;
+import net.swofty.types.generic.item.items.accessories.dungeon.scarf.ScarfsStudies;
+import net.swofty.types.generic.item.items.accessories.dungeon.scarf.ScarfsThesis;
+import net.swofty.types.generic.item.items.accessories.dungeon.treasure.TreasureArtifact;
+import net.swofty.types.generic.item.items.accessories.dungeon.treasure.TreasureRing;
+import net.swofty.types.generic.item.items.accessories.dungeon.treasure.TreasureTalisman;
+import net.swofty.types.generic.item.items.accessories.speed.SpeedArtifact;
+import net.swofty.types.generic.item.items.accessories.speed.SpeedRing;
+import net.swofty.types.generic.item.items.accessories.speed.SpeedTalisman;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderArtifact;
+import net.swofty.types.generic.item.items.accessories.spider.SpiderRing;
 import net.swofty.types.generic.item.items.accessories.spider.SpiderTalisman;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieArtifact;
 import net.swofty.types.generic.item.items.accessories.zombie.ZombieRing;
@@ -140,8 +154,9 @@ import net.swofty.types.generic.item.items.miscellaneous.gifts.DeadBushofLove;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.GameAnnihilator;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.GameBreaker;
 import net.swofty.types.generic.item.items.miscellaneous.gifts.QualityMap;
-import net.swofty.types.generic.item.items.pet.pets.BeePet;
 import net.swofty.types.generic.item.items.pet.petitems.*;
+import net.swofty.types.generic.item.items.pet.pets.BeePet;
+import net.swofty.types.generic.item.items.powerstones.LuxuriousSpool;
 import net.swofty.types.generic.item.items.runes.BloodRune;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
@@ -180,7 +195,6 @@ import net.swofty.types.generic.item.items.vanilla.items.bow.Bow;
 import net.swofty.types.generic.item.items.vanilla.items.dyes.*;
 import net.swofty.types.generic.item.items.vanilla.items.weapon.*;
 import net.swofty.types.generic.item.items.weapon.*;
-import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
@@ -226,6 +240,7 @@ public enum ItemTypeLinker {
     TREASURE_RING(ItemType.TREASURE_RING, TreasureRing.class),
     TREASURE_TALISMAN(ItemType.TREASURE_TALISMAN, TreasureTalisman.class),
     SPIDER_TALISMAN(ItemType.SPIDER_TALISMAN, SpiderTalisman.class),
+    SPIDER_RING(ItemType.SPIDER_RING, SpiderRing.class),
     SPIDER_ARTIFACT(ItemType.SPIDER_ARTIFACT, SpiderArtifact.class),
     MINE_AFFINITY_TALISMAN(ItemType.MINE_AFFINITY_TALISMAN, MineAffinityTalisman.class),
     VILLAGE_AFFINITY_TALISMAN(ItemType.VILLAGE_AFFINITY_TALISMAN, VillageAffinityTalisman.class),
@@ -399,6 +414,11 @@ public enum ItemTypeLinker {
     DECORATION_ONION(ItemType.DECORATION_ONION, Onion.class),
     DECORATION_ORANGE(ItemType.DECORATION_ORANGE, Orange.class),
     DECORATION_PINK_BERRY(ItemType.DECORATION_PINK_BERRY, PinkBerry.class),
+
+    /**
+     * Power Stones
+     */
+    LUXURIOUS_SPOOL(ItemType.LUXURIOUS_SPOOL, LuxuriousSpool.class),
 
     /**
      * Farming Props

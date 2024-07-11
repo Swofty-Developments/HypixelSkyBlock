@@ -3,13 +3,14 @@ package net.swofty.types.generic.item.items.accessories.abicases;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SumsungGGAbicase implements Talisman, CustomDisplayName, NotFinishedYet {
+public class SumsungGGAbicase implements Talisman, CustomDisplayName, NotFinishedYet, SkullHead {
 
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {

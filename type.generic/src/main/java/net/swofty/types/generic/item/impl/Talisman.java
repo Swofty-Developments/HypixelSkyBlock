@@ -7,7 +7,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 
 import java.util.List;
 
-public interface Talisman extends CustomSkyBlockItem, SkullHead, ExtraRarityDisplay, TrackedUniqueItem, Accessory,
+public interface Talisman extends CustomSkyBlockItem, ExtraRarityDisplay, TrackedUniqueItem, Accessory,
                                   ConstantStatistics {
     List<String> getTalismanDisplay();
 

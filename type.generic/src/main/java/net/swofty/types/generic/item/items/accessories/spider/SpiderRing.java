@@ -1,4 +1,4 @@
-package net.swofty.types.generic.item.items.accessories.zombie;
+package net.swofty.types.generic.item.items.accessories.spider;
 
 import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
@@ -13,17 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ZombieTalisman extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
-    @Override
-    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
-        return "762897c60d83c20db90ec405b6725ad52d4c34695644505bccb648b877061f0a";
-    }
-
-    @Override
-    public List<String> getTalismanDisplay() {
-        return List.of("§7Reduces the damage taken from", "§7Zombies by §a5%.");
-    }
-
+public class SpiderRing extends SkyBlockValueEvent implements TieredTalisman, SkullHead {
     @Override
     public Class<? extends ValueUpdateEvent> getValueEvent() {
         return PlayerDamagedByMobValueUpdateEvent.class;
@@ -36,18 +26,30 @@ public class ZombieTalisman extends SkyBlockValueEvent implements TieredTalisman
 
         if (!player.hasTalisman(this)) return;
 
-        if (event.getMob().getEntityType() == EntityType.ZOMBIE) {
-            event.setValue((float) (((float) event.getValue()) * 0.95));
+        if (event.getMob().getEntityType() == EntityType.SPIDER || event.getMob().getEntityType() == EntityType.CAVE_SPIDER || event.getMob().getEntityType() == EntityType.SILVERFISH) {
+            event.setValue((float) (((float) event.getValue()) * 0.90));
         }
     }
 
     @Override
+    public List<String> getTalismanDisplay() {
+        return List.of("§7Reduces the damage taken from",
+                "§7§7Cave Spiders§7 and §7Spiders",
+                "§7by §a10%§7.");
+    }
+
+    @Override
+    public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
+        return "7652bd7617e56c756514f83c28dd1d96a7e5e167bf7fb593693fc65046f799";
+    }
+
+    @Override
     public ItemTypeLinker getBaseTalismanTier() {
-        return ItemTypeLinker.ZOMBIE_TALISMAN;
+        return ItemTypeLinker.SPIDER_TALISMAN;
     }
 
     @Override
     public Integer getTier() {
-        return 1;
+        return 2;
     }
 }
