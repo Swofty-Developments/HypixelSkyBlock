@@ -3,10 +3,13 @@ package net.swofty.anticheat.engine;
 import lombok.Getter;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
+import net.swofty.anticheat.event.packet.PingResponsePacket;
+import net.swofty.anticheat.event.packet.RequestPingPacket;
+import net.swofty.anticheat.event.packet.SwoftyPacket;
+import net.swofty.anticheat.flag.FlagManager;
 import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.loader.PunishmentHandler;
 import net.swofty.anticheat.loader.SwoftyAnticheat;
-import net.swofty.anticheat.loader.managers.SwoftyPlayerManager;
 import net.swofty.anticheat.math.Pos;
 import net.swofty.anticheat.math.Vel;
 import net.swofty.anticheat.world.PlayerWorld;
@@ -14,18 +17,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 @Getter
 public class SwoftyPlayer {
     public static final Map<UUID, SwoftyPlayer> players = new ConcurrentHashMap<>();
-
     private final UUID uuid;
+
     private List<PlayerTickInformation> lastTicks = new ArrayList<>();
     private PlayerTickInformation currentTick = new PlayerTickInformation(new Pos(0, 0, 0), new Vel(0, 0, 0), false);
     private PlayerWorld world = new PlayerWorld();
 
+    private final LinkedBlockingDeque<PingRequest> pingRequests = new LinkedBlockingDeque<>();
+    private long ping;
+    private long lastPingResponse;
+    private final FlagManager flagManager;
+
     public SwoftyPlayer(UUID uuid) {
         this.uuid = uuid;
+        this.flagManager = new FlagManager(uuid, new HashMap<>());
 
         players.put(uuid, this);
     }
@@ -43,6 +53,7 @@ public class SwoftyPlayer {
         Vel calculatedVelocity = currentPos.sub(lastPos).asVel();
 
         currentTick = new PlayerTickInformation(currentTick.getPos(), calculatedVelocity, currentTick.isOnGround());
+        currentTick.setPing(ping);
 
         if (lastTicks.isEmpty()) {
             lastTicks.add(currentTick);
@@ -66,10 +77,53 @@ public class SwoftyPlayer {
         currentTick = new PlayerTickInformation(currentTick.getPos(), currentTick.getVel(), currentTick.isOnGround());
     }
 
-    public void flag(FlagType type) {
+    public int ticksSinceLastPingResponse() {
+        return (int) (System.currentTimeMillis() - lastPingResponse) / 1000;
+    }
+
+    public void sendPingRequest() {
+        // Between 1 and 50000000
+        int randomId = new Random().nextInt(50000000) + 1;
+
+        PingRequest request = new PingRequest(randomId);
+        pingRequests.offerLast(request);
+        if (pingRequests.size() > SwoftyAnticheat.getValues().getTicksAllowedToMissPing()) {
+            pingRequests.pollFirst();
+        }
+
+        // Send ping packet to client
+        sendPacket(new RequestPingPacket(this, randomId));
+    }
+
+    public void handlePingResponse(long id) {
+        long currentTime = System.currentTimeMillis();
+        for (PingRequest request : pingRequests) {
+            if (request.getPingId() == id) {
+                request.setTime(currentTime);
+                updatePing();
+                break;
+            }
+        }
+    }
+
+    private void updatePing() {
+        long totalPing = 0;
+        int count = 0;
+        lastPingResponse = System.currentTimeMillis();
+        for (PingRequest request : pingRequests) {
+            if (request.getTime() != -1) {
+                totalPing += (request.getTime() - request.getInitiatedTime());
+                count++;
+            }
+        }
+        if (count > 0) {
+            ping = Math.max(0, (totalPing / count) - SwoftyAnticheat.getValues().getTickLength());
+        }
+    }
+
+    public void flag(FlagType flagType, double certainty) {
         if (lastTicks.size() == 1) return; // We need at least 2 ticks to flag
-        PunishmentHandler punishmentHandler = SwoftyAnticheat.getPunishmentHandler();
-        punishmentHandler.onFlag(uuid, type);
+        flagManager.addFlag(flagType, certainty);
     }
 
     public void processMovement(@NotNull Pos packetPosition, boolean onGround) {
@@ -80,7 +134,7 @@ public class SwoftyPlayer {
         );
     }
 
-    public SwoftyPlayerManager getManager() {
-        return SwoftyAnticheat.getLoader().getPlayerManager(uuid);
+    public void sendPacket(SwoftyPacket packet) {
+        SwoftyAnticheat.getLoader().sendPacket(uuid, packet);
     }
 }

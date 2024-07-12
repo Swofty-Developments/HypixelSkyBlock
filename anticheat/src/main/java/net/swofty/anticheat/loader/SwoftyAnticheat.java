@@ -11,6 +11,7 @@ import java.util.UUID;
 public class SwoftyAnticheat {
     @Getter
     private static Loader loader = null;
+    @Getter
     private static SwoftyValues values = null;
     @Getter
     private static PunishmentHandler punishmentHandler = new PunishmentHandler() {
@@ -43,6 +44,7 @@ public class SwoftyAnticheat {
             throw new IllegalStateException("Values not set, use SwoftyAnticheat#values(SwoftyValues) to set the values");
         }
 
+        loader.onInitialize();
         SwoftyEngine.registerEvents();
         SwoftyEngine.startSchedulers(loader);
     }

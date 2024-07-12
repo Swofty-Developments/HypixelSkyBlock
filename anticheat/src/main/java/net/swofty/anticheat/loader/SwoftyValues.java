@@ -7,4 +7,6 @@ import lombok.Setter;
 @Setter
 public class SwoftyValues {
     private boolean shouldPrint = true;
+    private int ticksAllowedToMissPing = 40;
+    private int tickLength = 50;
 }

@@ -158,8 +158,6 @@ public class SkyBlock {
                     Logger.info("Initializing anticheat...");
 
                     MinestomLoader minestomLoader = new MinestomLoader();
-                    minestomLoader.registerListeners(MinecraftServer.getGlobalEventHandler());
-
                     SwoftyAnticheat.loader(minestomLoader);
                     SwoftyAnticheat.values(new SwoftyValues());
                     SwoftyAnticheat.punishmentHandler(new PunishmentHandler() {

@@ -11,6 +11,8 @@ public class PlayerTickInformation {
     private final Vel vel;
     private final boolean onGround;
 
+    @Setter
+    private long ping;
     private PlayerTickInformation next;
     private PlayerTickInformation previous;
 

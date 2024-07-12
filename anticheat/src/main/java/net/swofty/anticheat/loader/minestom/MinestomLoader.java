@@ -1,191 +1,33 @@
 package net.swofty.anticheat.loader.minestom;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.Event;
-import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.event.player.PlayerPacketOutEvent;
-import net.minestom.server.instance.Instance;
+import net.minestom.server.listener.manager.PacketPlayListenerConsumer;
 import net.minestom.server.network.packet.client.ClientPacket;
+import net.minestom.server.network.packet.client.common.ClientPingRequestPacket;
+import net.minestom.server.network.packet.client.common.ClientPongPacket;
 import net.minestom.server.network.packet.client.play.*;
+import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.play.*;
-import net.minestom.server.timer.TaskSchedule;
-import net.swofty.anticheat.engine.SwoftyPlayer;
+import net.minestom.server.network.packet.server.common.PingPacket;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.AnticheatPacketEvent;
-import net.swofty.anticheat.event.packet.IsOnGroundPacket;
-import net.swofty.anticheat.event.packet.PositionAndRotationPacket;
-import net.swofty.anticheat.event.packet.PositionPacket;
-import net.swofty.anticheat.event.packet.RotationPacket;
-import net.swofty.anticheat.loader.managers.SwoftyPlayerManager;
+import net.swofty.anticheat.event.packet.*;
+import net.swofty.anticheat.loader.LoaderPacketHandler;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
 import net.swofty.anticheat.loader.Loader;
-import net.swofty.anticheat.math.Pos;
-import net.swofty.anticheat.world.Block;
+import net.swofty.anticheat.loader.minestom.packets.*;
+import org.tinylog.Logger;
 
 import java.util.*;
 
 public class MinestomLoader extends Loader {
-    private Map<Runnable, Integer> activeTasks = new HashMap<>();
-
-    public void registerListeners(GlobalEventHandler eventHandler) {
-        EventNode<Event> eventNode = EventNode.all("packet-handler-client");
-
-        eventNode.addListener(PlayerPacketOutEvent.class, rawEvent -> {
-            ServerPacket packet = rawEvent.getPacket();
-
-            /**MultiBlockChangePacket;
-            ChunkBatchStartPacket;
-            ChunkBatchFinishedPacket;
-
-            ChunkDataPacket;
-            BlockChangePacket;**/
-        });
-
-        eventNode.addListener(PlayerPacketEvent.class, rawEvent -> {
-            ClientPacket packet = rawEvent.getPacket();
-            AnticheatPacketEvent playerPacketEvent = null;
-
-            switch (packet.getClass().getSimpleName()) {
-                case ("ClientPlayerPositionAndRotationPacket") -> {
-                    ClientPlayerPositionAndRotationPacket packetCasted = (ClientPlayerPositionAndRotationPacket) packet;
-
-                    playerPacketEvent = new AnticheatPacketEvent(new PositionAndRotationPacket(
-                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
-                            new Pos(
-                                    packetCasted.position().x(),
-                                    packetCasted.position().y(),
-                                    packetCasted.position().z(),
-                                    packetCasted.position().yaw(),
-                                    packetCasted.position().pitch()
-                            ),
-                            packetCasted.onGround()
-                    ));
-                }
-                case ("ClientPlayerPacket") -> {
-                    ClientPlayerPacket packetCasted = (ClientPlayerPacket) packet;
-
-                    playerPacketEvent = new AnticheatPacketEvent(new IsOnGroundPacket(
-                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
-                            packetCasted.onGround()
-                    ));
-                }
-                case ("ClientPlayerPositionPacket") -> {
-                    ClientPlayerPositionPacket packetCasted = (ClientPlayerPositionPacket) packet;
-
-                    playerPacketEvent = new AnticheatPacketEvent(new PositionPacket(
-                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
-                            packetCasted.position().x(),
-                            packetCasted.position().y(),
-                            packetCasted.position().z(),
-                            packetCasted.onGround()
-                    ));
-                }
-                case ("ClientPlayerRotationPacket") -> {
-                    ClientPlayerRotationPacket packetCasted = (ClientPlayerRotationPacket) packet;
-
-                    playerPacketEvent = new AnticheatPacketEvent(new RotationPacket(
-                            SwoftyPlayer.players.get(rawEvent.getPlayer().getUuid()),
-                            packetCasted.yaw(),
-                            packetCasted.pitch(),
-                            packetCasted.onGround()
-                    ));
-                }
-            }
-
-            if (playerPacketEvent != null) {
-                SwoftyEventHandler.callEvent(playerPacketEvent);
-            }
-        });
-        eventHandler.addChild(eventNode);
-    }
-
     @Override
     public SwoftySchedulerManager getSchedulerManager() {
-        return new SwoftySchedulerManager() {
-            @Override
-            public int scheduleDelayedTask(Runnable runnable, int delay) {
-                int id = activeTasks.size();
-
-                activeTasks.put(runnable, id);
-                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    runnable.run();
-                    activeTasks.remove(runnable);
-                    return TaskSchedule.stop();
-                }, TaskSchedule.tick(delay));
-
-                return id;
-            }
-
-            @Override
-            public int scheduleRepeatingTask(Runnable runnable, int delay, int period) {
-                int id = activeTasks.size();
-
-                activeTasks.put(runnable, id);
-                MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                    if (!activeTasks.containsKey(runnable)) {
-                        return TaskSchedule.stop();
-                    }
-                    runnable.run();
-                    return TaskSchedule.tick(period);
-                }, TaskSchedule.tick(delay));
-
-                return id;
-            }
-
-            @Override
-            public void cancelTask(int taskId) {
-                List<Runnable> toRemove = new ArrayList<>();
-                activeTasks.forEach((runnable, id) -> {
-                    if (id == taskId) {
-                        toRemove.add(runnable);
-                    }
-                });
-
-                toRemove.forEach(activeTasks::remove);
-            }
-
-            @Override
-            public void cancelAllTasks() {
-                activeTasks.clear();
-            }
-        };
-    }
-
-    @Override
-    public SwoftyPlayerManager getPlayerManager(UUID uuid) {
-        Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid);
-
-        return new SwoftyPlayerManager(uuid) {
-            @Override
-            public void setPositionForPlayer(Pos pos) {
-                player.teleport(new net.minestom.server.coordinate.Pos(
-                        pos.x(),
-                        pos.y(),
-                        pos.z(),
-                        pos.yaw(),
-                        pos.pitch()
-                ));
-            }
-
-            @Override
-            public void setVelocityForPlayer(Vec vel) {
-                player.setVelocity(new net.minestom.server.coordinate.Vec(
-                        vel.x(),
-                        vel.y(),
-                        vel.z()
-                ));
-            }
-
-            @Override
-            public void sendMessage(String message) {
-                player.sendMessage(message);
-            }
-        };
+        return new MinestomSchedulerManager();
     }
 
     @Override
@@ -193,5 +35,75 @@ public class MinestomLoader extends Loader {
         List<UUID> players = new ArrayList<>();
         MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> players.add(player.getUuid()));
         return players;
+    }
+
+    @Override
+    public void onInitialize() {
+        GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
+
+        registerPacketHandler(PositionAndRotationPacket.class,
+                new MinestomHandlerPositionAndRotationPacket());
+        registerPacketHandler(IsOnGroundPacket.class,
+                new MinestomHandlerClientPacket());
+        registerPacketHandler(PositionPacket.class,
+                new MinestomHandlerPositionPacket());
+        registerPacketHandler(RotationPacket.class,
+                new MinestomHandlerRotationPacket());
+        registerPacketHandler(RequestPingPacket.class,
+                new MinestomHandlerPingRequestPacket());
+        registerPacketHandler(PingResponsePacket.class,
+                new MinestomHandlerPingResponsePacket());
+
+        globalEventHandler.addListener(PlayerPacketOutEvent.class, (event) -> {
+            ServerPacket packet = event.getPacket();
+            LoaderPacketHandler handler = getPacketHandler(packet.getClass());
+            if (handler == null) return;
+
+            SwoftyPacket swoftyPacket = handler.buildSwoftyPacket(event.getPlayer().getUuid(), packet);
+            if (swoftyPacket == null) return;
+
+            SwoftyEventHandler.callEvent(new AnticheatPacketEvent(swoftyPacket));
+        });
+
+        MinecraftServer.getPacketListenerManager().setPlayListener(
+                ClientPongPacket.class, (packet, player) -> {
+                    LoaderPacketHandler handler = getPacketHandler(ClientPongPacket.class);
+                    SwoftyPacket swoftyPacket = handler.buildSwoftyPacket(player.getUuid(), packet);
+                    if (swoftyPacket == null) return;
+
+                    SwoftyEventHandler.callEvent(new AnticheatPacketEvent(swoftyPacket));
+                });
+
+        globalEventHandler.addListener(PlayerPacketEvent.class, (event) -> {
+            ClientPacket packet = event.getPacket();
+            LoaderPacketHandler handler = getPacketHandler(packet.getClass());
+            if (handler == null) return;
+
+            SwoftyPacket swoftyPacket = handler.buildSwoftyPacket(event.getPlayer().getUuid(), packet);
+            if (swoftyPacket == null) return;
+
+            SwoftyEventHandler.callEvent(new AnticheatPacketEvent(swoftyPacket));
+        });
+    }
+
+    @Override
+    public void sendPacket(UUID uuid, SwoftyPacket packet) {
+        Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid);
+        if (player == null) return;
+
+        try {
+            player.sendPacket((SendablePacket) getPacketHandler(packet).buildLoaderPacket(uuid, packet));
+        } catch (Exception e) {
+            Logger.error("Error when attempting to send packet " + packet.getClass().getSimpleName() + " to " + uuid);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendMessage(UUID uuid, String message) {
+        Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid);
+        if (player == null) return;
+
+        player.sendMessage(message);
     }
 }

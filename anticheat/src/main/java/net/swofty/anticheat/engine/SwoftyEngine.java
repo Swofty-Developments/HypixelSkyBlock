@@ -4,6 +4,7 @@ import javassist.tools.reflect.Reflection;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.loader.Loader;
+import net.swofty.anticheat.loader.SwoftyAnticheat;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
 import org.reflections.Reflections;
 
@@ -22,7 +23,6 @@ public class SwoftyEngine {
                     if (!onlinePlayers.contains(uuid)) {
                         player.getWorld().shutdown();
                         SwoftyPlayer.players.remove(uuid);
-                        return;
                     }
                 });
             }
@@ -35,12 +35,19 @@ public class SwoftyEngine {
                 }
             });
 
-            players.forEach(SwoftyPlayer::moveTickOn);
+            players.forEach((player -> {
+                player.moveTickOn();
+                player.sendPingRequest();
+                if (player.ticksSinceLastPingResponse() > SwoftyAnticheat.getValues().getTicksAllowedToMissPing()) {
+                    player.flag(FlagType.TIMEOUT_PING_PACKETS, 100);
+                }
+            }));
         }, 1, 1);
     }
 
     public static void registerEvents() {
         SwoftyEventHandler.registerEventMethods(new MovementEvents());
+        SwoftyEventHandler.registerEventMethods(new PingEvents());
 
         Arrays.stream(FlagType.values()).forEach(flagType -> {
             SwoftyEventHandler.registerEventMethods(flagType.getFlagSupplier().get());
