@@ -5,6 +5,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.actions.MinionCutTreeAction;
 import net.swofty.types.generic.minion.actions.MinionMineAction;
 
 import java.util.List;
@@ -73,6 +74,6 @@ public class MinionJungle extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.JUNGLE_LOG);
+        return new MinionCutTreeAction(Block.JUNGLE_LOG);
     }
 }

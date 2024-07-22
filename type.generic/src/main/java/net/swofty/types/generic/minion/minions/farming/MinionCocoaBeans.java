@@ -6,6 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.actions.MinionMineAction;
+import net.swofty.types.generic.minion.actions.MinionMineCocoaBeansAction;
 
 import java.util.List;
 
@@ -76,6 +77,6 @@ public class MinionCocoaBeans extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.COCOA);
+        return new MinionMineCocoaBeansAction(Block.COCOA);
     }
 }
