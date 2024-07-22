@@ -12,7 +12,7 @@ import java.util.List;
 public class MinionOak extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
-        return List.of( //skins done
+        return List.of(
                 new MinionTier(1, 48, 64,
                         "57e4a30f361204ea9cded3fbff850160731a0081cc452cfe26aed48e97f6364b",
                         Material.WOODEN_AXE, true),
@@ -51,17 +51,17 @@ public class MinionOak extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(255,155,0);
+        return new Color(239,200,57);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(255,255,0);
+        return new Color(239,200,57);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(255,255,0);
+        return new Color(239,200,57);
     }
 
     @Override

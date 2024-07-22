@@ -157,12 +157,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return null;
-                            }
-
-                            @Override
-                            public List<SkyBlockRecipe<?>> getRecipes() {
-                                return ItemTypeLinker.SPRUCE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                                return ItemTypeLinker.SPRUCE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
                             }
                         },new UnlockXP() {
                             @Override
@@ -228,12 +223,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return null;
-                            }
-
-                            @Override
-                            public List<SkyBlockRecipe<?>> getRecipes() {
-                                return ItemTypeLinker.BIRCH_MINION.getNewInstance(Minion.class).getRawRecipes();
+                                return ItemTypeLinker.BIRCH_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -305,12 +295,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return null;
-                            }
-
-                            @Override
-                            public List<SkyBlockRecipe<?>> getRecipes() {
-                                return ItemTypeLinker.JUNGLE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                                return ItemTypeLinker.JUNGLE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
                             }
                         },new UnlockXP() {
                             @Override
@@ -376,12 +361,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return null;
-                            }
-
-                            @Override
-                            public List<SkyBlockRecipe<?>> getRecipes() {
-                                return ItemTypeLinker.ACACIA_MINION.getNewInstance(Minion.class).getRawRecipes();
+                                return ItemTypeLinker.ACACIA_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -447,12 +427,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return null;
-                            }
-
-                            @Override
-                            public List<SkyBlockRecipe<?>> getRecipes() {
-                                return ItemTypeLinker.DARK_OAK_MINION.getNewInstance(Minion.class).getRawRecipes();
+                                return ItemTypeLinker.DARK_OAK_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
                             }
                         }, new UnlockXP() {
                             @Override

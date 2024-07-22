@@ -4,8 +4,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -590,7 +592,11 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.FISHING_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

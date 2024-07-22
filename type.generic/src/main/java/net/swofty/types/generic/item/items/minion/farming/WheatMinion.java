@@ -18,7 +18,7 @@ public class WheatMinion implements CustomSkyBlockItem, Minion {
 
     @Override
     public ItemTypeLinker getEnchantedCraftMaterial() {
-        return ItemTypeLinker.ENCHANTED_BREAD;
+        return ItemTypeLinker.ENCHANTED_HAY_BALE;
     }
 
     @Override

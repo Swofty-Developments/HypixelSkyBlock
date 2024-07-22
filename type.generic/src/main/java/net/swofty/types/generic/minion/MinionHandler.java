@@ -44,7 +44,7 @@ public record MinionHandler(Scheduler scheduler) {
             SkyBlockMinion.MinionTier tier = minion.getTiers().get(islandMinion.getTier() - 1);
             long lastAction = islandMinion.getLastAction();
             MinionExtensionData extensionData = islandMinion.getExtensionData();
-            long timeBetweenActions = tier.timeBetweenActions() * 1000L;
+            long timeBetweenActions = (long) tier.timeBetweenActions() * 1000L;
 
             //Handle percentage speed increase from both fuels and minion upgrades
             double percentageSpeedIncrease = islandMinion.getSpeedPercentage();

@@ -54,17 +54,17 @@ public class MinionRedstone extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(189, 68, 52); // Redstone minion's boot color
+        return new Color(219, 79, 15);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(189, 68, 52); // Redstone minion's leggings color
+        return new Color(219, 79, 15);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(189, 68, 52); // Redstone minion's chestplate color
+        return new Color(219, 79, 15);
     }
 
 

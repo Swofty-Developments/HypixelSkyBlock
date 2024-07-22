@@ -54,17 +54,17 @@ public class MinionLapis extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(38, 97, 156); // Lapis minion's boot color
+        return new Color(9, 82, 160);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(38, 97, 156); // Lapis minion's leggings color
+        return new Color(9, 82, 160);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(38, 97, 156); // Lapis minion's chestplate color
+        return new Color(9, 82, 160);
     }
 
 

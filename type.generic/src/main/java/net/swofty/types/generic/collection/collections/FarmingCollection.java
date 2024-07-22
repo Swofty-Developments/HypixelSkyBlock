@@ -4,8 +4,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.MaterialQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -36,7 +38,11 @@ public class FarmingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return Arrays.asList(
                 new ItemCollection(ItemType.WHEAT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.WHEAT_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -209,7 +215,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CARROT,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.CARROT_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -275,7 +285,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CACTUS,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.CACTUS_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -341,7 +355,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.COCOA_BEANS,
-                        new ItemCollectionReward(75, new UnlockXP() {
+                        new ItemCollectionReward(75, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.COCOA_BEANS_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -474,7 +492,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.LEATHER,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.COW_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -597,7 +619,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MELON_SLICE,
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.MELON_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -667,7 +693,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.RED_MUSHROOM,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.MUSHROOM_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -831,7 +861,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MUTTON,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.SHEEP_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -903,7 +937,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.NETHER_WART,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.NETHER_WART_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1011,7 +1049,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.POTATO,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.POTATO_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1089,7 +1131,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.PUMPKIN,
-                        new ItemCollectionReward(40, new UnlockXP() {
+                        new ItemCollectionReward(40, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.PUMPKIN_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1222,7 +1268,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CHICKEN,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.CHICKEN_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1334,7 +1384,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.PORKCHOP,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.PIG_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1400,7 +1454,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.RABBIT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.RABBIT_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1525,7 +1583,11 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SUGAR_CANE,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.SUGAR_CANE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }}, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

@@ -133,7 +133,9 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.types.generic.item.items.mining.dwarven.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
-import net.swofty.types.generic.item.items.minion.farming.WheatMinion;
+import net.swofty.types.generic.item.items.minion.combat.*;
+import net.swofty.types.generic.item.items.minion.farming.*;
+import net.swofty.types.generic.item.items.minion.fishing.FishingMinion;
 import net.swofty.types.generic.item.items.minion.foraging.*;
 import net.swofty.types.generic.item.items.minion.mining.*;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
@@ -311,11 +313,6 @@ public enum ItemTypeLinker {
     COBBLESTONE_MINION(ItemType.COBBLESTONE_MINION, CobblestoneMinion.class),
     COAL_MINION(ItemType.COAL_MINION, CoalMinion.class),
     SNOW_MINION(ItemType.SNOW_MINION, SnowMinion.class),
-    ACACIA_MINION(ItemType.ACACIA_MINION, AcaciaMinion.class),
-    BIRCH_MINION(ItemType.BIRCH_MINION, BirchMinion.class),
-    DARK_OAK_MINION(ItemType.DARK_OAK_MINION, DarkOakMinion.class),
-    JUNGLE_MINION(ItemType.JUNGLE_MINION, JungleMinion.class),
-    OAK_MINION(ItemType.OAK_MINION, OakMinion.class),
     DIAMOND_MINION(ItemType.DIAMOND_MINION, DiamondMinion.class),
     EMERALD_MINION(ItemType.EMERALD_MINION, EmeraldMinion.class),
     IRON_MINION(ItemType.IRON_MINION, IronMinion.class),
@@ -328,8 +325,45 @@ public enum ItemTypeLinker {
     OBSIDIAN_MINION(ItemType.OBSIDIAN_MINION, ObsidianMinion.class),
     SAND_MINION(ItemType.SAND_MINION, SandMinion.class),
     GRAVEL_MINION(ItemType.GRAVEL_MINION, GravelMinion.class),
+    GLOWSTONE_MINION(ItemType.GLOWSTONE_MINION, GlowstoneMinion.class),
+    HARD_STONE_MINION(ItemType.HARD_STONE_MINION, HardStoneMinion.class),
+    MITHRIL_MINION(ItemType.MITHRIL_MINION, MithrilMinion.class),
+
+    ACACIA_MINION(ItemType.ACACIA_MINION, AcaciaMinion.class),
+    BIRCH_MINION(ItemType.BIRCH_MINION, BirchMinion.class),
+    DARK_OAK_MINION(ItemType.DARK_OAK_MINION, DarkOakMinion.class),
+    JUNGLE_MINION(ItemType.JUNGLE_MINION, JungleMinion.class),
+    OAK_MINION(ItemType.OAK_MINION, OakMinion.class),
     SPRUCE_MINION(ItemType.SPRUCE_MINION, SpruceMinion.class),
+
+    FISHING_MINION(ItemType.FISHING_MINION, FishingMinion.class),
+
     WHEAT_MINION(ItemType.WHEAT_MINION, WheatMinion.class),
+    POTATO_MINION(ItemType.POTATO_MINION, PotatoMinion.class),
+    CACTUS_MINION(ItemType.CACTUS_MINION, CactusMinion.class),
+    CARROT_MINION(ItemType.CARROT_MINION, CarrotMinion.class),
+    COCOA_BEANS_MINION(ItemType.COCOA_BEANS_MINION, CocoaBeansMinion.class),
+    MELON_MINION(ItemType.MELON_MINION, MelonMinion.class),
+    MUSHROOM_MINION(ItemType.MUSHROOM_MINION, MushroomMinion.class),
+    NETHER_WART_MINION(ItemType.NETHER_WART_MINION, NetherWartMinion.class),
+    PUMPKIN_MINION(ItemType.PUMPKIN_MINION, PumpkinMinion.class),
+    SUGAR_CANE_MINION(ItemType.SUGAR_CANE_MINION, SugarCaneMinion.class),
+    CHICKEN_MINION(ItemType.CHICKEN_MINION, ChickenMinion.class),
+    COW_MINION(ItemType.COW_MINION, CowMinion.class),
+    PIG_MINION(ItemType.PIG_MINION, PigMinion.class),
+    RABBIT_MINION(ItemType.RABBIT_MINION, RabbitMinion.class),
+    SHEEP_MINION(ItemType.SHEEP_MINION, SheepMinion.class),
+
+    BLAZE_MINION(ItemType.BLAZE_MINION, BlazeMinion.class),
+    CAVE_SPIDER_MINION(ItemType.CAVE_SPIDER_MINION, CaveSpiderMinion.class),
+    CREEPER_MINION(ItemType.CREEPER_MINION, CreeperMinion.class),
+    ENDERMAN_MINION(ItemType.ENDERMAN_MINION, EndermanMinion.class),
+    GHAST_MINION(ItemType.GHAST_MINION, GhastMinion.class),
+    MAGMA_CUBE_MINION(ItemType.MAGMA_CUBE_MINION, MagmaCubeMinion.class),
+    SKELETON_MINION(ItemType.SKELETON_MINION, SkeletonMinion.class),
+    SLIME_MINION(ItemType.SLIME_MINION, SlimeMinion.class),
+    SPIDER_MINION(ItemType.SPIDER_MINION, SpiderMinion.class),
+    ZOMBIE_MINION(ItemType.ZOMBIE_MINION, ZombieMinion.class),
 
     /**
      * Minion Upgrades
@@ -938,6 +972,7 @@ public enum ItemTypeLinker {
     POISONOUS_POTATO(ItemType.POISONOUS_POTATO, Potato.class),
     RABBIT_FOOT(ItemType.RABBIT_FOOT, RabbitFoot.class),
     RABBIT_HIDE(ItemType.RABBIT_HIDE, RabbitHide.class),
+    MAGMA_CREAM(ItemType.MAGMA_CREAM, MagmaCream.class),
     BEEF(ItemType.BEEF, Beef.class),
     COAL_BLOCK(ItemType.COAL_BLOCK, CoalBlock.class),
     LAPIS_LAZULI_BLOCK(ItemType.LAPIS_LAZULI_BLOCK, LapisLazuliBlock.class),
