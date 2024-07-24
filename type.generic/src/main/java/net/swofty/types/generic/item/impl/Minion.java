@@ -11,10 +11,7 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.minion.IslandMinionData;
-import net.swofty.types.generic.minion.MinionRecipe;
-import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.commons.StringUtility;
@@ -26,11 +23,9 @@ import java.util.List;
 
 public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, TrackedUniqueItem, DefaultCraftable {
     MinionRegistry getMinionRegistry();
-
-    ItemTypeLinker getBaseCraftMaterial();
-    ItemTypeLinker getEnchantedCraftMaterial();
     ItemTypeLinker getFirstBaseItem();
     boolean isByDefaultCraftable();
+    List<MinionIngredient> getMinionCraftingIngredients();
 
     default List<SkyBlockRecipe<?>> getRecipes() {
         if (!isByDefaultCraftable()) return new ArrayList<>();
@@ -57,8 +52,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
                     SkyBlockRecipe.RecipeType.MINION,
                     item,
                     MinionRecipe.fromNumber(tier.tier() - 1).getRecipeFunction().apply(new MinionRecipe.MinionRecipeData(
-                            getBaseCraftMaterial(),
-                            getEnchantedCraftMaterial(),
+                            getMinionCraftingIngredients(),
                             getFirstBaseItem(),
                             getMinionRegistry().getItemTypeLinker()
                     )),
@@ -169,6 +163,28 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
         lore.add("§9§lRARE");
         return lore;
     }
+
+    /*public record MinionCraftingIngredients<T>(T tier1, T tier2, T tier3, T tier4, T tier5, T tier6, T tier7, T tier8, T tier9, T tier10, T tier11) {
+
+        public T getForTier(Integer tier) {
+            return switch (tier) {
+                case 1 -> tier1;
+                case 2 -> tier2;
+                case 3 -> tier3;
+                case 4 -> tier4;
+                case 5 -> tier5;
+                case 6 -> tier6;
+                case 7 -> tier7;
+                case 8 -> tier8;
+                case 9 -> tier9;
+                case 10 -> tier10;
+                case 11 -> tier11;
+                default -> tier1;
+            };
+        }
+    }*/
+
+
 
     @Override
     default SkyBlockRecipe<?> getRecipe() {
