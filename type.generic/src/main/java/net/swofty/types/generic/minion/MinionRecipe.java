@@ -23,7 +23,7 @@ public class MinionRecipe {
             return new MinionRecipe((materials) -> {
                 Map<Character, MaterialQuantifiable> map = new HashMap<>();
                 map.put('A', new MaterialQuantifiable(materials.minionIngredients().get(number).getItem(), materials.minionIngredients().get(number).getAmount()));
-                if (number != 1) {
+                if (number != 0) {
                     map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
                 } else {
                     map.put('B', new MaterialQuantifiable(materials.firstBaseItem(), 1));

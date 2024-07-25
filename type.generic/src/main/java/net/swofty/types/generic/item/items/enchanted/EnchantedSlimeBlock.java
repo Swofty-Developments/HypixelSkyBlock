@@ -14,6 +14,6 @@ public class EnchantedSlimeBlock implements Enchanted, Sellable, DefaultCraftabl
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_SLIMEBALL);
+        return getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType.COMBAT, ItemTypeLinker.ENCHANTED_SLIME_BALL);
     }
 }

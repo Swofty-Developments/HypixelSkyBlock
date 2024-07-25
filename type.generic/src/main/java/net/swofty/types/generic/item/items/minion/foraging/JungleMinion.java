@@ -3,22 +3,15 @@ package net.swofty.types.generic.item.items.minion.foraging;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.minion.MinionIngredient;
 import net.swofty.types.generic.minion.MinionRegistry;
+
+import java.util.List;
 
 public class JungleMinion implements CustomSkyBlockItem, Minion {
     @Override
     public MinionRegistry getMinionRegistry() {
         return MinionRegistry.JUNGLE;
-    }
-
-    @Override
-    public ItemTypeLinker getBaseCraftMaterial() {
-        return ItemTypeLinker.JUNGLE_LOG;
-    }
-
-    @Override
-    public ItemTypeLinker getEnchantedCraftMaterial() {
-        return ItemTypeLinker.ENCHANTED_JUNGLE_WOOD;
     }
 
     @Override
@@ -31,4 +24,20 @@ public class JungleMinion implements CustomSkyBlockItem, Minion {
         return false;
     }
 
+    @Override
+    public List<MinionIngredient> getMinionCraftingIngredients() {
+        return List.of(
+                new MinionIngredient(ItemTypeLinker.JUNGLE_LOG, 10),
+                new MinionIngredient(ItemTypeLinker.JUNGLE_LOG, 20),
+                new MinionIngredient(ItemTypeLinker.JUNGLE_LOG, 40),
+                new MinionIngredient(ItemTypeLinker.JUNGLE_LOG, 64),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 1),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 2),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 4),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 8),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 16),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 32),
+                new MinionIngredient(ItemTypeLinker.ENCHANTED_JUNGLE_LOG, 64)
+        );
+    }
 }

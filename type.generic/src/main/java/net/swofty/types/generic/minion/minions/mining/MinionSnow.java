@@ -15,7 +15,7 @@ public class MinionSnow extends SkyBlockMinion {
         return List.of(
                 new MinionTier(1, 13, 64,
                         "f6d180684c3521c9fc89478ba4405ae9ce497da8124fa0da5a0126431c4b78c3",
-                        Material.WOODEN_SHOVEL, true),
+                        Material.WOODEN_SHOVEL, false),
                 new MinionTier(2, 13, 192,
                         "69921bab54af140481c016a59a819b369667a4e4fb2f2449ceebf7c897ed588e",
                         Material.WOODEN_SHOVEL, true),

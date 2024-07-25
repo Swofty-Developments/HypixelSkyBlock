@@ -126,7 +126,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
+                                return getStandardEnchantedRecipe(EnchantedOakLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -186,7 +186,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSpruceWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
+                                return getStandardEnchantedRecipe(EnchantedSpruceLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -258,7 +258,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBirchWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
+                                return getStandardEnchantedRecipe(EnchantedBirchLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -330,7 +330,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedJungleWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
+                                return getStandardEnchantedRecipe(EnchantedJungleLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -396,7 +396,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedAcaciaWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.ACACIA_LOG);
+                                return getStandardEnchantedRecipe(EnchantedAcaciaLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.ACACIA_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -456,7 +456,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedDarkOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.DARK_OAK_LOG);
+                                return getStandardEnchantedRecipe(EnchantedDarkOakLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.DARK_OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override

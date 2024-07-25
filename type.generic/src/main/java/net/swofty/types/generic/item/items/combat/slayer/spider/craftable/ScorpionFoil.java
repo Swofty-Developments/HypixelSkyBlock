@@ -16,7 +16,7 @@ public class ScorpionFoil implements CustomSkyBlockItem, DefaultCraftable, Stand
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
         ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ACACIA_WOOD, 64));
+        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ACACIA_LOG, 64));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
         List<String> pattern = List.of(
                 "ABA",

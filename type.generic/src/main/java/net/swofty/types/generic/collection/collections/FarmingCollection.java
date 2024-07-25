@@ -1667,15 +1667,15 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
                                         new SkyBlockItem(ItemType.ENCHANTED_BOOKSHELF), 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1);
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1);
                             }
                         }, new UnlockXP() {
                             @Override

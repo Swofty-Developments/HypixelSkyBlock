@@ -14,14 +14,14 @@ public class SoulEsoward implements CustomSkyBlockItem, DefaultCraftable, Enchan
     @Override
     public SkyBlockRecipe<?> getRecipe() {
         Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_WOOD, 18));
+        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_LOG, 18));
         ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SUMMONING_EYE, 1));
         ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 4));
         ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 6));
-        ingredientMap.put('E', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_WOOD, 14));
-        ingredientMap.put('F', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_WOOD, 5));
+        ingredientMap.put('E', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_LOG, 14));
+        ingredientMap.put('F', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_LOG, 5));
         ingredientMap.put('G', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 1));
-        ingredientMap.put('H', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_WOOD, 11));
+        ingredientMap.put('H', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BIRCH_LOG, 11));
         ingredientMap.put('I', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 2));
         List<String> pattern = List.of(
                 "ABC",
