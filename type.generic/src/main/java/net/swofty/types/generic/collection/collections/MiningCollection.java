@@ -44,9 +44,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.COBBLESTONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.COBBLESTONE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -219,9 +224,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.COAL_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.COAL_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -319,9 +329,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.GOLD_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.GOLD_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -396,9 +411,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.LAPIS_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.LAPIS_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -452,12 +472,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(150000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
@@ -471,9 +493,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.GRAVEL_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.GRAVEL_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -547,9 +574,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.DIAMOND_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.DIAMOND_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -635,9 +667,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.EMERALD_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.EMERALD_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -706,9 +743,14 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.ENDSTONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
                             }
-                        },  new UnlockXP() {
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ENDSTONE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -816,7 +858,7 @@ public class MiningCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return getStandardEnchantedRecipe(FlawedJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JASPER_GEM);
                             }
-                        },new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -883,12 +925,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockRecipe() {
@@ -928,17 +972,20 @@ public class MiningCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(2000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
@@ -947,7 +994,8 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return ItemTypeLinker.GLOWSTONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1005,7 +1053,8 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return ItemTypeLinker.HARD_STONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1036,7 +1085,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(150000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(300000, new UnlockRecipe() {
@@ -1046,12 +1096,14 @@ public class MiningCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
@@ -1059,7 +1111,12 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.ICE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ICE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1121,12 +1178,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
@@ -1140,7 +1199,12 @@ public class MiningCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.IRON_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.IRON_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1160,11 +1224,11 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }, new UnlockCustomAward() {
-                                    @Override
-                                    public CustomCollectionAward getAward() {
-                                        return CustomCollectionAward.PROTECTION_DISCOUNT;
-                                    }
-                                }),
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.PROTECTION_DISCOUNT;
+                            }
+                        }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1241,12 +1305,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(400000, new UnlockXP() {
@@ -1261,7 +1327,8 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return ItemTypeLinker.MITHRIL_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1304,17 +1371,20 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
@@ -1391,10 +1461,15 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.QUARTZ,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.QUARTZ_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.QUARTZ_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1499,10 +1574,15 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.OBSIDIAN,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.OBSIDIAN_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.OBSIDIAN_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1645,10 +1725,15 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.REDSTONE,
-                        new ItemCollectionReward(100,new UnlockRecipe() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.REDSTONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.REDSTONE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1736,7 +1821,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1746,7 +1832,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(400000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1756,7 +1843,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(600000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1766,7 +1854,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(800000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1776,7 +1865,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1786,7 +1876,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1796,7 +1887,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1400000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1806,10 +1898,15 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SAND,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.SAND_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SAND_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
                         }, new UnlockXP() {
                             @Override

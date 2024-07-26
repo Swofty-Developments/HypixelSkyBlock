@@ -380,12 +380,14 @@ public class FishingCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
@@ -595,8 +597,14 @@ public class FishingCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.FISHING_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.FISHING_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

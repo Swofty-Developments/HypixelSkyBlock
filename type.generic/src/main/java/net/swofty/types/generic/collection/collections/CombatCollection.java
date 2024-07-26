@@ -39,8 +39,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.BLAZE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.BLAZE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -103,8 +109,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -183,8 +195,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.ENDERMAN_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ENDERMAN_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -234,12 +252,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                    new SkyBlockItem(ItemType.ENCHANTED_EYE_OF_ENDER), 1)
-                                    .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16);
+                                        new SkyBlockItem(ItemType.ENCHANTED_EYE_OF_ENDER), 1)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -294,8 +312,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.SKELETON_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SKELETON_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -431,8 +455,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(20, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.GHAST_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.GHAST_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -472,7 +502,7 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                            }, new UnlockRecipe() {
+                        }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
@@ -503,8 +533,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.CREEPER_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CREEPER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -579,8 +615,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.MAGMA_CUBE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.MAGMA_CUBE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -643,8 +685,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.ZOMBIE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ZOMBIE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -732,8 +780,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.SLIME_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SLIME_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -802,8 +856,14 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return ItemTypeLinker.CAVE_SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
-                            }}, new UnlockXP() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CAVE_SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
