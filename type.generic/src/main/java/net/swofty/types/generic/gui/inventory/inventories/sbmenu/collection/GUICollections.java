@@ -11,6 +11,7 @@ import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUICraftedMinions;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -53,6 +54,22 @@ public class GUICollections extends SkyBlockInventoryGUI {
                 lore.add(" ");
                 lore.add("§eClick to view!");
                 return ItemStackCreator.getStack("§aCollections", Material.PAINTING, 1, lore.toArray(new String[0]));
+            }
+        });
+
+        set(new GUIClickableItem(50) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUICraftedMinions(new GUICollections()).open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStackHead("§aCrafted Minions", "ebcc099f3a00ece0e5c4b31d31c828e52b06348d0a4eac11f3fcbef3c05cb407", 1,
+                "§7View all the unique minions that you",
+                        "§7have crafted.",
+                        "",
+                        "§eClick to view!");
             }
         });
 

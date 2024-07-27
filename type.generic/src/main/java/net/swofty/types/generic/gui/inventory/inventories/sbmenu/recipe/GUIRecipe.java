@@ -83,8 +83,6 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             recipeIndex = 0;
         SkyBlockRecipe recipe = recipes.get(recipeIndex);
 
-        Arrays.stream(recipe.getRecipeDisplay()).toList().forEach(recipeList -> System.out.println("RecipeList: " + recipeList.toString()));
-
         if (recipes.size() > recipeIndex + 1) {
             set(new GUIClickableItem(32) {
                 @Override
