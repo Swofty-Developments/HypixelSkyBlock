@@ -21,6 +21,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
@@ -81,6 +82,8 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
         if (recipeIndex >= recipes.size())
             recipeIndex = 0;
         SkyBlockRecipe recipe = recipes.get(recipeIndex);
+
+        Arrays.stream(recipe.getRecipeDisplay()).toList().forEach(recipeList -> System.out.println("RecipeList: " + recipeList.toString()));
 
         if (recipes.size() > recipeIndex + 1) {
             set(new GUIClickableItem(32) {

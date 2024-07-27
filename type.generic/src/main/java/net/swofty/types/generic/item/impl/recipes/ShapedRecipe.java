@@ -232,7 +232,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                             }
                         }
                     }
-
+                    System.out.println("First Filter: " + recipe.getRecipeDisplay().toString());
                     return false;
                 })
                 .filter(recipe -> {
@@ -240,18 +240,21 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         Character character = entry.getKey();
 
                         Function<SkyBlockItem, Boolean> extraRequirements = recipe.getExtraRequirements().get(character);
+                        System.out.println("ExtraRequirements: " + extraRequirements.toString());
                         if (extraRequirements == null) {
                             continue;
                         }
 
                         for (int position : entry.getValue()) {
                             SkyBlockItem item = new SkyBlockItem(stacks[position]);
+                            System.out.println("Item: " + item.toString());
                             if (!extraRequirements.apply(item)) {
                                 return false;
                             }
+                            //extraRequirements.apply(item);
                         }
                     }
-
+                    System.out.println("Second Filter: " + recipe.getRecipeDisplay().toString());
                     return true;
                 })
                 .max(Comparator.comparing(recipe -> {
