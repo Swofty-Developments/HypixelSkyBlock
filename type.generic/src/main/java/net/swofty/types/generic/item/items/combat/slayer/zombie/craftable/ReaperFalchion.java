@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -16,11 +16,11 @@ import net.swofty.commons.item.ItemType;
 public class ReaperFalchion implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.REVENANT_CATALYST, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REVENANT_FALCHION, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.REVIVED_HEART, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.REVENANT_CATALYST, 1));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.REVENANT_FALCHION, 1));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

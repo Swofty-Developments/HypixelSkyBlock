@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.wood.spruce;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -19,8 +19,8 @@ import java.util.Map;
 public class SpruceSlab implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.SPRUCE_PLANKS, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.SPRUCE_PLANKS, 1));
         List<String> pattern = List.of(
                 "AAA");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.SPRUCE_SLAB, 6), ingredientMap, pattern);

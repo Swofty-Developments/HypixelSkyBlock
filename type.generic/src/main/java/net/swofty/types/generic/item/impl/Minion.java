@@ -58,27 +58,11 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
                     )),
                     pattern
             );
-            try {
-                for (SkyBlockItem skyBlockItem : recipe.getRecipeDisplay()) {
-                    System.out.println("Before addExtraRequirement: " + skyBlockItem);
-                }
-            } catch (NullPointerException _) {
-
-            }
             recipe.addExtraRequirement('B', (minionItem) -> {
-                System.out.println("1: " + minionItem.toString());
                 if (minionItem.getGenericInstance() instanceof Minion)
                     return minionItem.getAttributeHandler().getMinionData().tier() == Math.max(1, tier.tier() - 1);
-                System.out.println("2: " + minionItem.toString());
                 return true;
             });
-            try {
-                for (SkyBlockItem skyBlockItem : recipe.getRecipeDisplay()) {
-                    System.out.println("After addExtraRequirement: " + skyBlockItem);
-                }
-            } catch (NullPointerException _) {
-
-            }
 
             toReturn.add(recipe);
         });

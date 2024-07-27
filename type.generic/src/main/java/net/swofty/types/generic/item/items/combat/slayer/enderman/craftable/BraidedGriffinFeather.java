@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -17,9 +17,9 @@ import java.util.Map;
 public class BraidedGriffinFeather implements CustomSkyBlockItem, DefaultCraftable, Enchanted {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GRIFFIN_FEATHER, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SOUL_STRING, 64));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.GRIFFIN_FEATHER, 32));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.SOUL_STRING, 64));
         List<String> pattern = List.of(
                 "ABA ",
                 "BAB",

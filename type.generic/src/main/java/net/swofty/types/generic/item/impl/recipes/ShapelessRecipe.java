@@ -6,7 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     public static final List<ShapelessRecipe> CACHED_RECIPES = new ArrayList<>();
 
-    private final List<MaterialQuantifiable> ingredientList;
+    private final List<ItemQuantifiable> ingredientList;
     @Setter
     private SkyBlockItem[] customRecipeDisplay = null;
 
@@ -65,20 +65,21 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
 
     @Override
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
-        // Start with a copy of the ingredients needed for the recipe
-        List<MaterialQuantifiable> materialsToConsume = new ArrayList<>(ingredientList);
-        SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length); // Copy of the input stacks array
+        List<ItemQuantifiable> materialsToConsume = new ArrayList<>(ingredientList);
+        SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length);
 
         for (int i = 0; i < modifiedStacks.length && !materialsToConsume.isEmpty(); i++) {
             if (modifiedStacks[i] == null) {
-                continue; // Skip null SkyBlockItems
+                continue;
             }
 
-            // Get the MaterialQuantifiable representation of the current stack
-            MaterialQuantifiable currentStackMaterial = MaterialQuantifiable.of(modifiedStacks[i].getItemStack());
-            MaterialQuantifiable toConsume = materialsToConsume.stream()
-                    .filter(material -> material.matches(currentStackMaterial.getMaterial())
-                            || ExchangeableType.isExchangeable(material.getMaterial(), currentStackMaterial.getMaterial()))
+            ItemQuantifiable currentStackMaterial = ItemQuantifiable.of(modifiedStacks[i].getItemStack());
+            ItemQuantifiable toConsume = materialsToConsume.stream()
+                    .filter(material -> material.matchesMaterial(currentStackMaterial.getItem())
+                            || ExchangeableType.isExchangeable(
+                                    material.getItem().getAttributeHandler().getPotentialType(),
+                                    currentStackMaterial.getItem().getAttributeHandler().getPotentialType()
+                    ))
                     .findFirst()
                     .orElse(null);
 
@@ -87,17 +88,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 int consumeAmount = toConsume.getAmount();
 
                 if (stackAmount >= consumeAmount) {
-                    // Enough materials in the current stack, subtract the amount
                     currentStackMaterial.setAmount(stackAmount - consumeAmount);
-                    materialsToConsume.remove(toConsume); // Remove the consumed material from the recipe
-                    // Update the SkyBlockItem with the new amount or set to null if all consumed
+                    materialsToConsume.remove(toConsume);
                     modifiedStacks[i] = (currentStackMaterial.getAmount() > 0) ?
-                            new SkyBlockItem(currentStackMaterial.getMaterial(), currentStackMaterial.getAmount()) : // Ensure toSkyBlockItem correctly represents the quantity
+                            currentStackMaterial.toSkyBlockItem() :
                             null;
                 } else {
-                    // Not enough materials in the current stack, consume all and reduce needed amount
                     toConsume.setAmount(consumeAmount - stackAmount);
-                    modifiedStacks[i] = null; // This stack has been fully consumed
+                    modifiedStacks[i] = null;
                 }
             }
         }
@@ -116,8 +114,8 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
         SkyBlockItem[] display = new SkyBlockItem[9];
         int i = 0;
 
-        for (MaterialQuantifiable material : ingredientList) {
-            display[i] = new SkyBlockItem(material.getMaterial());
+        for (ItemQuantifiable material : ingredientList) {
+            display[i] = material.getItem().clone();
             display[i].setAmount(material.getAmount());
             i++;
         }
@@ -126,50 +124,42 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
     }
 
     @Override
-    public SkyBlockRecipe clone() {
+    public SkyBlockRecipe<?> clone() {
         ShapelessRecipe recipe = new ShapelessRecipe(recipeType, result, amount, canCraft);
-        recipe.ingredientList.addAll(ingredientList.stream().map(MaterialQuantifiable::clone).toList());
+        recipe.ingredientList.addAll(ingredientList.stream().map(ItemQuantifiable::clone).toList());
         return recipe;
     }
 
     public ShapelessRecipe add(ItemTypeLinker material, int amount) {
-        return add(new MaterialQuantifiable(material, amount));
+        return add(new ItemQuantifiable(material, amount));
     }
 
     public ShapelessRecipe add(ItemType material, int amount) {
-        return add(new MaterialQuantifiable(material, amount));
+        return add(new ItemQuantifiable(material, amount));
     }
 
-    public ShapelessRecipe add(MaterialQuantifiable material) {
+    public ShapelessRecipe add(ItemQuantifiable material) {
         ingredientList.add(material.clone());
         return this;
     }
 
     public static ShapelessRecipe parseShapelessRecipe(ItemStack[] stacks) {
-        List<MaterialQuantifiable> materialsPassedThrough = Arrays.stream(stacks)
-                .map(MaterialQuantifiable::of)
-                .map(MaterialQuantifiable::clone)
+        List<ItemQuantifiable> materialsPassedThrough = Arrays.stream(stacks)
+                .map(ItemQuantifiable::of)
+                .map(ItemQuantifiable::clone)
                 .toList();
 
         List<ItemType> uniqueMaterials = new ArrayList<>(materialsPassedThrough.stream()
-                .map(MaterialQuantifiable::getMaterial)
+                .map(iq -> iq.getItem().getAttributeHandler().getPotentialType())
                 .distinct()
                 .toList());
 
-        uniqueMaterials.removeIf(material -> {
-            try {
-                return material.material == null || material.material == Material.AIR;
-            } catch (NullPointerException ignored) {
-                return true;
-            }
-        });
+        uniqueMaterials.removeIf(material -> material == null || material == ItemType.AIR);
 
         return CACHED_RECIPES.stream()
                 .filter(recipe -> {
-                    // Check if the recipe has the same amount of materials as the passed through materials
-                    // Updated to consider exchangeable materials.
                     List<ItemType> recipeMaterials = recipe.getIngredientList().stream()
-                            .map(MaterialQuantifiable::getMaterial)
+                            .map(iq -> iq.getItem().getAttributeHandler().getPotentialType())
                             .distinct()
                             .toList();
 
@@ -184,17 +174,18 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                     return materialsMatch;
                 })
                 .filter(recipe -> {
-                    // Checks if the recipe soft matches, meaning that materialsPassedThrough has at least the same materials as materialsNeeded
-                    // and atleast the amount of materialsNeeded, but not necessarily the same amount
-                    List<MaterialQuantifiable> materialsNeeded = recipe.getIngredientList().stream()
-                            .map(MaterialQuantifiable::new)
-                            .map(MaterialQuantifiable::clone)
+                    List<ItemQuantifiable> materialsNeeded = recipe.getIngredientList().stream()
+                            .map(ItemQuantifiable::new)
+                            .map(ItemQuantifiable::clone)
                             .collect(Collectors.toList());
 
                     materialsPassedThrough.forEach(material -> {
-                        MaterialQuantifiable found = materialsNeeded.stream()
-                                .filter(needed -> needed.matches(material.getMaterial())
-                                        || ExchangeableType.isExchangeable(needed.getMaterial(), material.getMaterial()))
+                        ItemQuantifiable found = materialsNeeded.stream()
+                                .filter(needed -> needed.matchesMaterial(material.getItem())
+                                        || ExchangeableType.isExchangeable(
+                                                needed.getItem().getAttributeHandler().getPotentialType(),
+                                                material.getItem().getAttributeHandler().getPotentialType()
+                                        ))
                                 .findFirst()
                                 .orElse(null);
 

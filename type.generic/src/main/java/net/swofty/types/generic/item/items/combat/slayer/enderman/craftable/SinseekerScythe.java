@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,10 +14,10 @@ import java.util.*;
 public class SinseekerScythe implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_ATOM, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 8));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.SINFUL_DICE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.NULL_ATOM, 4));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 8));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.SINFUL_DICE, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "BCB",

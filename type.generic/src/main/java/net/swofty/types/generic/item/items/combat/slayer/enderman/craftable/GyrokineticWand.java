@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -13,10 +13,10 @@ import java.util.*;
 public class GyrokineticWand implements CustomSkyBlockItem, DefaultCraftable, Enchanted, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 16));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 30));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_BLAZE_ROD, 15));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 16));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 30));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_BLAZE_ROD, 15));
         List<String> pattern = List.of(
                 "ABA",
                 "ACA",

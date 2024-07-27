@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
@@ -25,10 +25,10 @@ public class Anvil implements PlaceableCustomSkyBlockItem, DefaultCraftable, Not
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.IRON_BLOCK, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.IRON_INGOT, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.IRON_BLOCK, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.IRON_INGOT, 1));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "AAA",
                 " B ",

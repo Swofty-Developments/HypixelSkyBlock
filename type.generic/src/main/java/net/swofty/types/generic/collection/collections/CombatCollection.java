@@ -5,7 +5,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -290,9 +290,9 @@ public class CombatCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
                                 List<String> pattern = List.of(
                                         "A",
                                         "A",
@@ -505,9 +505,9 @@ public class CombatCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         " A ",
                                         "AAA",
@@ -735,9 +735,9 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",

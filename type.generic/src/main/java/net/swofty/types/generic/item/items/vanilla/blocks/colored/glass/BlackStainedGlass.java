@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.colored.glass;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -34,9 +34,9 @@ public class BlackStainedGlass implements PlaceableCustomSkyBlockItem, Sellable,
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GLASS, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.BLACK_DYE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.GLASS, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.BLACK_DYE, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

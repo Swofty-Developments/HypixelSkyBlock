@@ -26,7 +26,7 @@ public class SwoftyPlayer {
 
     private List<PlayerTickInformation> lastTicks = new ArrayList<>();
     private PlayerTickInformation currentTick = new PlayerTickInformation(new Pos(0, 0, 0), new Vel(0, 0, 0), false);
-    private PlayerWorld world = new PlayerWorld();
+    private final PlayerWorld world = new PlayerWorld();
 
     private final LinkedBlockingDeque<PingRequest> pingRequests = new LinkedBlockingDeque<>();
     private long ping;

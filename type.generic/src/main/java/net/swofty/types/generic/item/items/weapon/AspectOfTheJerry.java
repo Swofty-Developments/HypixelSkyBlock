@@ -3,7 +3,7 @@ package net.swofty.types.generic.item.items.weapon;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -19,9 +19,9 @@ import java.util.Map;
 public class AspectOfTheJerry implements CustomSkyBlockItem, CustomSkyBlockAbility, StandardItem, DefaultCraftable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.MOVE_JERRY, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.MOVE_JERRY, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.STICK, 1));
         List<String> pattern = List.of(
                 "A",
                 "A",

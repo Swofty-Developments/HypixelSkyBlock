@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.colored.wool;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -34,9 +34,9 @@ public class GrayWool implements PlaceableCustomSkyBlockItem, Sellable, DefaultC
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.WHITE_WOOL, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.GRAY_DYE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.WHITE_WOOL, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.GRAY_DYE, 1));
         List<String> pattern = List.of(
                 "AB");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.GRAY_WOOL), ingredientMap, pattern);

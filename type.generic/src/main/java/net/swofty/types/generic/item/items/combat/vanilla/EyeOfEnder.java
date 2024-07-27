@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.vanilla;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -22,9 +22,9 @@ public class EyeOfEnder implements CustomSkyBlockItem, DefaultCraftable, Sellabl
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENDER_PEARL, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.BLAZE_POWDER, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ENDER_PEARL, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.BLAZE_POWDER, 1));
         List<String> pattern = List.of(
                 "A",
                 "B");

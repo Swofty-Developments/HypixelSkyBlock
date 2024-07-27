@@ -1,10 +1,12 @@
 package net.swofty.anticheat.loader.minestom;
 
+import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.event.player.PlayerPacketOutEvent;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.listener.manager.PacketPlayListenerConsumer;
 import net.minestom.server.network.packet.client.ClientPacket;
 import net.minestom.server.network.packet.client.common.ClientPingRequestPacket;
@@ -13,6 +15,9 @@ import net.minestom.server.network.packet.client.play.*;
 import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.common.PingPacket;
+import net.minestom.server.network.packet.server.play.BlockChangePacket;
+import net.minestom.server.network.packet.server.play.ChunkDataPacket;
+import net.minestom.server.network.packet.server.play.data.ChunkData;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.AnticheatPacketEvent;
 import net.swofty.anticheat.event.packet.*;

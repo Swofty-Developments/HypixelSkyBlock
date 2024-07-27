@@ -15,6 +15,7 @@ public class Compactor implements CustomSkyBlockItem, Enchanted, NotFinishedYet 
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
     }
+
     @Override
     public ArrayList<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(Arrays.asList(

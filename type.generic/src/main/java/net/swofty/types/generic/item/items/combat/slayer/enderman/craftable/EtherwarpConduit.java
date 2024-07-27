@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,9 +14,9 @@ import java.util.*;
 public class EtherwarpConduit implements CustomSkyBlockItem, DefaultCraftable, SkullHead, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 3));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.REFINED_TITANIUM, 16));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 3));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.REFINED_TITANIUM, 16));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

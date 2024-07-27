@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.mythological.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,11 +14,11 @@ import java.util.*;
 public class SwordOfRevelations implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GRIFFIN_FEATHER, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ANCIENT_CLAW, 8));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_GOLD_BLOCK, 8));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.GRIFFIN_FEATHER, 32));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_ANCIENT_CLAW, 8));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_GOLD_BLOCK, 8));
+        ingredientMap.put('D', new ItemQuantifiable(ItemTypeLinker.STICK, 1));
         List<String> pattern = List.of(
                 "ABA",
                 "ACA",

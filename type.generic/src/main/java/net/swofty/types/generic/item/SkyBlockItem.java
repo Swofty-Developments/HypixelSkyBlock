@@ -250,7 +250,10 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException e) {
             if (typeAttribute.getValue().equalsIgnoreCase("N/A"))
                 return Material.BEDROCK;
-            return Material.fromNamespaceId(typeAttribute.getValue());
+            Material material = Material.fromNamespaceId(typeAttribute.getValue());
+            if (material == null)
+                return Material.AIR;
+            return material;
         }
     }
 

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -15,11 +15,11 @@ import net.swofty.commons.item.ItemType;
 public class MosquitoBow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 64));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.DIGESTED_MOSQUITO, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 64));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.DIGESTED_MOSQUITO, 1));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " AB",
                 "C B",

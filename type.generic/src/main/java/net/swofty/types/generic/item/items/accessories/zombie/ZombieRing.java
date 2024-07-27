@@ -5,7 +5,7 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkullHead;
@@ -51,9 +51,9 @@ public class ZombieRing extends SkyBlockValueEvent implements TieredTalisman, De
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_FLESH, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ZOMBIE_TALISMAN, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.REVENANT_FLESH, 32));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ZOMBIE_TALISMAN, 1));
         List<String> pattern = List.of(
                 "ABA");
 

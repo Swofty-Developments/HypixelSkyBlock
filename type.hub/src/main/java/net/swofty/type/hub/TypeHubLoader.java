@@ -190,5 +190,4 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     public @Nullable CustomWorlds getMainInstance() {
         return CustomWorlds.HUB;
     }
-
 }

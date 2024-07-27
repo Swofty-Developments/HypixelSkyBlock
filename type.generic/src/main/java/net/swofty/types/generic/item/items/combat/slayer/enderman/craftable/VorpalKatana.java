@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -16,12 +16,12 @@ import net.swofty.commons.item.ItemType;
 public class VorpalKatana implements CustomSkyBlockItem, DefaultCraftable, StandardItem, GemstoneItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_EDGE, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 8));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.REFINED_MITHRIL, 4));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.VOIDWALKER_KATANA, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.NULL_EDGE, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 8));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.REFINED_MITHRIL, 4));
+        ingredientMap.put('D', new ItemQuantifiable(ItemTypeLinker.VOIDWALKER_KATANA, 1));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " A ",
                 " B ",

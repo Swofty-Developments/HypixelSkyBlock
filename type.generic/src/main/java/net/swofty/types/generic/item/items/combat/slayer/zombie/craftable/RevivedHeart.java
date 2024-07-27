@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.combat.slayer.zombie.craftable;
 
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -40,9 +40,9 @@ public class RevivedHeart implements CustomSkyBlockItem, SkullHead, TrackedUniqu
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ZOMBIE_HEART, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.CRYSTALLIZED_HEART, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ZOMBIE_HEART, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.CRYSTALLIZED_HEART, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

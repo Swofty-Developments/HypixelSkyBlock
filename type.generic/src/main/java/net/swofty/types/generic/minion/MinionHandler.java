@@ -9,7 +9,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
@@ -99,7 +99,7 @@ public record MinionHandler(Scheduler scheduler) {
             }
 
             // Check if the minion is full
-            List<MaterialQuantifiable> itemsInMinion = islandMinion.getItemsInMinion();
+            List<ItemQuantifiable> itemsInMinion = islandMinion.getItemsInMinion();
             if (itemsInMinion.size() == tier.getSlots() && action.checkMaterials(
                     islandMinion,
                     instance
