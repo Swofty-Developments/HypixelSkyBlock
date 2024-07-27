@@ -34,7 +34,17 @@ public class FishingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.CLAY_BALL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CLAY_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

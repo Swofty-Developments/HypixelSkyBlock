@@ -2,8 +2,10 @@ package net.swofty.types.generic.minion;
 
 import lombok.Getter;
 import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.item.items.minion.foraging.FlowerMinion;
 import net.swofty.types.generic.minion.minions.combat.*;
 import net.swofty.types.generic.minion.minions.farming.*;
+import net.swofty.types.generic.minion.minions.fishing.MinionClay;
 import net.swofty.types.generic.minion.minions.fishing.MinionFishing;
 import net.swofty.types.generic.minion.minions.foraging.*;
 import net.swofty.types.generic.minion.minions.mining.*;
@@ -35,8 +37,10 @@ public enum MinionRegistry {
     JUNGLE(MinionJungle.class, ItemTypeLinker.JUNGLE_MINION),
     OAK(MinionOak.class, ItemTypeLinker.OAK_MINION),
     SPRUCE(MinionSpruce.class, ItemTypeLinker.SPRUCE_MINION),
+    FLOWER(MinionFlower.class, ItemTypeLinker.FLOWER_MINION),
 
     FISHING(MinionFishing.class, ItemTypeLinker.FISHING_MINION),
+    CLAY(MinionClay.class, ItemTypeLinker.CLAY_MINION),
 
     WHEAT(MinionWheat.class, ItemTypeLinker.WHEAT_MINION),
     POTATO(MinionPotato.class, ItemTypeLinker.POTATO_MINION),

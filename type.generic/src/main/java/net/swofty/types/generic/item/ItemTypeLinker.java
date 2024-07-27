@@ -134,6 +134,7 @@ import net.swofty.types.generic.item.items.mining.dwarven.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
 import net.swofty.types.generic.item.items.minion.combat.*;
 import net.swofty.types.generic.item.items.minion.farming.*;
+import net.swofty.types.generic.item.items.minion.fishing.ClayMinion;
 import net.swofty.types.generic.item.items.minion.fishing.FishingMinion;
 import net.swofty.types.generic.item.items.minion.foraging.*;
 import net.swofty.types.generic.item.items.minion.mining.*;
@@ -334,8 +335,10 @@ public enum ItemTypeLinker {
     JUNGLE_MINION(ItemType.JUNGLE_MINION, JungleMinion.class),
     OAK_MINION(ItemType.OAK_MINION, OakMinion.class),
     SPRUCE_MINION(ItemType.SPRUCE_MINION, SpruceMinion.class),
+    FLOWER_MINION(ItemType.FLOWER_MINION, FlowerMinion.class),
 
     FISHING_MINION(ItemType.FISHING_MINION, FishingMinion.class),
+    CLAY_MINION(ItemType.CLAY_MINION, ClayMinion.class),
 
     WHEAT_MINION(ItemType.WHEAT_MINION, WheatMinion.class),
     POTATO_MINION(ItemType.POTATO_MINION, PotatoMinion.class),
@@ -982,6 +985,7 @@ public enum ItemTypeLinker {
     GOLD_NUGGET(ItemType.GOLD_NUGGET, GoldNugget.class),
     CACTUS(ItemType.CACTUS, Cactus.class),
     CHEST(ItemType.CHEST, Chest.class),
+    DANDELION(ItemType.DANDELION, Dandelion.class),
     IRON_HELMET(ItemType.IRON_HELMET, IronHelmet.class),
     IRON_CHESTPLATE(ItemType.IRON_CHESTPLATE, IronChestplate.class),
     IRON_LEGGINGS(ItemType.IRON_LEGGINGS, IronLeggings.class),

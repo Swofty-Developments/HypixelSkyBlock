@@ -140,8 +140,10 @@ public enum ItemType {
     DARK_OAK_MINION(Material.PLAYER_HEAD,  Rarity.RARE),
     JUNGLE_MINION(Material.PLAYER_HEAD,  Rarity.RARE),
     OAK_MINION(Material.PLAYER_HEAD,  Rarity.RARE),
+    FLOWER_MINION(Material.PLAYER_HEAD, Rarity.RARE),
 
     FISHING_MINION(Material.PLAYER_HEAD, Rarity.RARE),
+    CLAY_MINION(Material.PLAYER_HEAD, Rarity.RARE),
 
     WHEAT_MINION(Material.PLAYER_HEAD,  Rarity.RARE),
     POTATO_MINION(Material.PLAYER_HEAD, Rarity.RARE),
