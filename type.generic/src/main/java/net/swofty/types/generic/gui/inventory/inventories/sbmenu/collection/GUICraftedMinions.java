@@ -1,4 +1,4 @@
-package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
+package net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -7,10 +7,12 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollections;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -20,8 +22,7 @@ import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
@@ -79,26 +80,40 @@ public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
+                if (e.getClickedItem().material() != Material.GRAY_DYE) {
+                    new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
+                }
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 ItemStack.Builder itemStack;
-                boolean unlocked = true; //for easier lore handling, will be replaced later by actual data
                 MinionRegistry minionRegistry = item.getAttributeHandler().getMinionType();
+                DatapointMinionData.ProfileMinionData playerData = player.getDataHandler().get(DataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
+                ArrayList<String> lore = new ArrayList<>();
+                List<Integer> tiers = List.of();
+                boolean unlocked = false;
+
+                for (Map.Entry<String, List<Integer>> minion : playerData.craftedMinions()) {
+                    if (Objects.equals(minion.getKey(), minionRegistry.name())) {
+                        tiers = minion.getValue();
+                    }
+                }
+                for (SkyBlockMinion.MinionTier minionTier : minionRegistry.asSkyBlockMinion().getTiers()) {
+                    if (tiers.contains(minionTier.tier())) {
+                        lore.add("§a✔ Tier " + StringUtility.getAsRomanNumeral(minionTier.tier()));
+                        unlocked = true;
+                    } else {
+                        lore.add("§c✖ Tier " + StringUtility.getAsRomanNumeral(minionTier.tier()));
+                    }
+                }
                 if (unlocked) {
-                    ArrayList<String> lore = new ArrayList<>();
-                    for (SkyBlockMinion.MinionTier tier : item.getAttributeHandler().getMinionType().asSkyBlockMinion().getTiers()) {
-                        String unlockedIcon = unlocked ? "§a✔" : "§c✖";
-                        lore.add(unlockedIcon + " Tier " + StringUtility.getAsRomanNumeral(tier.tier()));
-                    };
                     lore.add("");
                     lore.add("§eClick to view recipes!");
                     itemStack = ItemStackCreator.getStackHead(StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
                             minionRegistry.asSkyBlockMinion().getTiers().getFirst().texture(), 1, lore);
                 } else {
-                    itemStack = ItemStackCreator.getStack(StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
+                    itemStack = ItemStackCreator.getStack("§c" + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
                             Material.GRAY_DYE, 1, "§7You haven't crafted this minion.");
                 }
                 return itemStack;
