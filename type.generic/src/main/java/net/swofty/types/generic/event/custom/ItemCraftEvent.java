@@ -42,7 +42,6 @@ public class ItemCraftEvent implements PlayerInstanceEvent {
                     List<Integer> tiers = new ArrayList<>(playerData.craftedMinions().get(i).getValue());
                     tiers.add(tier);
                     minion.setValue(tiers);
-                    System.out.println(playerData.craftedMinions());
                     playerData.craftedMinions().remove(playerData.craftedMinions().get(i));
                     playerData.craftedMinions().add(minion);
                     minionTypeInList = true;
