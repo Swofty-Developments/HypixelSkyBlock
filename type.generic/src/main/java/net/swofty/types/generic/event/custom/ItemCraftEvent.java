@@ -27,22 +27,29 @@ public class ItemCraftEvent implements PlayerInstanceEvent {
             String name = craftedItem.getAttributeHandler().getMinionType().name();
             Integer tier = craftedItem.getAttributeHandler().getMinionData().tier();
             AbstractMap.SimpleEntry<String, List<Integer>> minion = new AbstractMap.SimpleEntry<>(name, List.of(tier));
+            boolean minionTypeInList = false;
 
-            for (Map.Entry<String, List<Integer>> craftedMinion : playerData.craftedMinions()) {
-                if (Objects.equals(craftedMinion.getKey(), name)) {
-                    for (Integer i : craftedMinion.getValue()) {
-                        if (Objects.equals(i, tier)) return;
+            if (playerData.craftedMinions().isEmpty()) {
+                playerData.craftedMinions().add(minion);
+                return;
+            }
+
+            for (int i = 0; i < playerData.craftedMinions().size(); i++) {
+                if (Objects.equals(playerData.craftedMinions().get(i).getKey(), name)) {
+                    for (Integer integer : playerData.craftedMinions().get(i).getValue()) {
+                        if (Objects.equals(integer, tier)) return;
                     }
-                    List<Integer> tiers = new ArrayList<>(craftedMinion.getValue());
+                    List<Integer> tiers = new ArrayList<>(playerData.craftedMinions().get(i).getValue());
                     tiers.add(tier);
                     minion.setValue(tiers);
-                    playerData.craftedMinions().remove(craftedMinion);
+                    System.out.println(playerData.craftedMinions());
+                    playerData.craftedMinions().remove(playerData.craftedMinions().get(i));
                     playerData.craftedMinions().add(minion);
-                } else {
-                    playerData.craftedMinions().add(minion);
+                    minionTypeInList = true;
                 }
             }
-            if (playerData.craftedMinions().isEmpty()) {
+
+            if (!minionTypeInList) {
                 playerData.craftedMinions().add(minion);
             }
         }
