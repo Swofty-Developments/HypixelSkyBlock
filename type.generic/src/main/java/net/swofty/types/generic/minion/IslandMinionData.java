@@ -114,11 +114,11 @@ public class IslandMinionData {
             return toReturn;
         }
 
-        public int getSpeedPercentage(){//Handle percentage speed increase from both fuels and minion upgrades
+        public int getSpeedPercentage() {//Handle percentage speed increase from both fuels and minion upgrades
             int percentageSpeedIncrease = 0;
 
             //Handle Mithril Infusion
-            if(isMithrilInfusion())
+            if (isMithrilInfusion())
                 percentageSpeedIncrease += 10;
 
             //Handle Minion Fuel
@@ -128,7 +128,7 @@ public class IslandMinionData {
             }
 
             //Handle speed increases from minion upgrades
-            for(SkyBlockItem item : extensionData.getMinionUpgrades()) {
+            for (SkyBlockItem item : extensionData.getMinionUpgrades()) {
                 if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
                     percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
                 }
@@ -137,7 +137,7 @@ public class IslandMinionData {
             return percentageSpeedIncrease;
         }
 
-        public int getBonusRange(){
+        public int getBonusRange() {
             int range = 0;
             range += extensionData.getMinionUpgradeCount(ItemTypeLinker.MINION_EXPANDER);
             return range;
@@ -165,11 +165,26 @@ public class IslandMinionData {
         public static IslandMinion deserialize(Map<String, Object> data) {
             List<ItemQuantifiable> itemsInMinion = new ArrayList<>();
             ((List<String>) data.get("itemsInMinion")).forEach(item -> {
-                itemsInMinion.add(new ItemQuantifiable(
-                        new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(item.split(",")[0])),
-                        Integer.parseInt(item.split(",")[1])
-                ));
+                int splitIndex = item.lastIndexOf(",");
+                if (splitIndex != -1) {
+                    String itemJson = item.substring(0, splitIndex);
+                    int amount;
+                    try {
+                        amount = Integer.parseInt(item.substring(splitIndex + 1));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Failed to parse item amount: " + item);
+                        throw new RuntimeException("Failed to parse item amount: " + item, e);
+                    }
+                    itemsInMinion.add(new ItemQuantifiable(
+                            new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(itemJson)),
+                            amount
+                    ));
+                } else {
+                    System.err.println("Invalid item format: " + item);
+                    throw new RuntimeException("Invalid item format: " + item);
+                }
             });
+
             MinionExtensionData extensionData;
             if (data.containsKey("extensionData"))
                 extensionData = MinionExtensionData.fromString(data.get("extensionData").toString());
@@ -196,7 +211,7 @@ public class IslandMinionData {
         }
     }
 
-    public Map<String, Object> serialize() {
+        public Map<String, Object> serialize() {
         Map<String, Object> data = new HashMap<>();
 
         minions.forEach(minion -> {

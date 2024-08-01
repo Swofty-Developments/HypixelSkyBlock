@@ -68,17 +68,15 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, CollectionCategory.ItemCollection item) {
-        String itemName = item.type().getDisplayName();
-        return !itemName.toLowerCase().contains(query.toLowerCase());
+    protected boolean shouldFilterFromSearch(String query, CollectionCategory.ItemCollection item) {
+        return false;
     }
 
     @Override
     public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
         border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getCloseItem(50));
-        set(createSearchItem(this, 48, query));
-        set(GUIClickableItem.getGoBackItem(49, new GUICollections()));
+        set(GUIClickableItem.getCloseItem(49));
+        set(GUIClickableItem.getGoBackItem(48, new GUICollections()));
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
