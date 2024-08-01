@@ -14,58 +14,57 @@ public class MinionObsidian extends SkyBlockMinion {
     public List<MinionTier> getTiers() {
         return List.of(
                 new MinionTier(1, 45, 64,
-                        "8799e3e68599902e4d2a1f6a83e851ced923b417cbef616f4b20f521d73cc0bd",
+                        "320c29ab966637cb9aecc34ee76d5a0130461e0c4fdb08cdaf80939fa1209102",
                         Material.WOODEN_PICKAXE, true),
                 new MinionTier(2, 45, 192,
-                        "2e23904f297e695b34b7228f7261cb0e92f3997f256e54215a0c7c43deab6a4",
+                        "58348315724fb1409142dda1cab2e45be34ead373d4a1ecdae6cb4143cd2bd25",
                         Material.WOODEN_PICKAXE, true),
                 new MinionTier(3, 42, 192,
-                        "941fe0587c906c7a90ff8f33878372415f7e97343d42f5ad2a694e74f1743cb5",
+                        "c5c30c4800b25625ab51d4569437ad7f3e5f6465b51575512388b4c96ecbac90",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(4, 42, 384,
-                        "a3b6894b171c08030ee1912111f56145354bd5bb4c84e87532fbf90a58c1152c",
+                        "1f417418f6df6efc7515ef31f4db570353d36ee87d46c6f87a7f9678b1f3ac57",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(5, 39, 384,
-                        "5602c201ca0cf8fee876ff8c35bb7b751b90d0f35693161e56882bfc3aa8e00a",
+                        "44d4ae42f0d6e82c7ebf9877303f9a84c96ce1978a8ac33681143f4b55a447ce",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(6, 39, 576,
-                        "df02ea2296a5aa300baf68940cd2be784aa88a6f4c3874c156dbd0c2f35dff7c",
+                        "7c124351bd2da2312d261574fb578594c18720ac9c9d9edfdb57754b7340bd27",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(7, 35, 576,
-                        "4b1931187d69fe9149a288890939a38c9164aed51923097a97ea1680e2304fe9",
+                        "db80b743fa6a8537c495ba7786ebefb3325e6013dc87d8c144ab902bbdb20f86",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(8, 35, 768,
-                        "e719664dca20535088ecaf0093d1fde4a1ffce9ff17195b708cdb26c5313e6a9=",
+                        "745c8fc5ccb0bdbc19278c7e91ad6ac33d44f11fae46e1bfbfd1737ec1e420d4",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(9, 30, 768,
-                        "87df3b9e30fa91891c5f26593349a0f8b8f3a132f6cb7c17e3de90ff89c3dd15",
+                        "15a45b66c8e21b515ea25abf47c9c27d995fe79b128844a0c8bf7777f3badee5",
                         Material.GOLDEN_PICKAXE, true),
                 new MinionTier(10, 30, 960,
-                        "ce956c2dcc64c25b8ca9262c875fe41a00700072c04ba10d4de57f9d647c8fe2",
+                        "1731be266b727b49ad135b4ea7b94843f7b322f873888da9fe037edea2984324",
                         Material.GOLDEN_PICKAXE, true),
                 new MinionTier(11, 24, 960,
-                        "6683ed5cc2a062c4924d3eda50c336c64a9a9868ef9c2d7624e74aab01ecf6ed",
+                        "4d36910bcbb3fc0b7dedaae85ff052967ad74f3f4c2fb6f7dd2bed5bcfd0992b",
                         Material.DIAMOND_PICKAXE, true),
                 new MinionTier(12, 21, 960,
                         "d80c2415787ef06c5aee6df1d60b91283cbf02dc22c48a7cd28e652b45f21d32",
-                        Material.DIAMOND_PICKAXE, true)
+                        Material.DIAMOND_PICKAXE, false)
         );
     }
-    //hm
 
     @Override
     public Color getBootColour() {
-        return new Color(25, 25, 25); // Obsidian minion's boot color
+        return new Color(59, 49, 86);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(25, 25, 25); // Obsidian minion's leggings color
+        return new Color(59, 49, 86);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(25, 25, 25); // Obsidian minion's chestplate color
+        return new Color(59, 49, 86);
     }
 
 

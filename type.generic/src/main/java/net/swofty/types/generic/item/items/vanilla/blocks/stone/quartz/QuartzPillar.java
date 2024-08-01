@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.stone.quartz;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -28,8 +28,8 @@ public class QuartzPillar implements PlaceableCustomSkyBlockItem, DefaultCraftab
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.QUARTZ_BLOCK, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.QUARTZ_BLOCK, 1));
         List<String> pattern = List.of(
                 "A",
                 "A");

@@ -48,8 +48,6 @@ public class MinionEntityImpl extends LivingEntity {
         meta.setHasArms(true);
 
         setInvisible(false);
-
-        updateMinionDisplay(islandMinion);
     }
 
     public void updateMinionDisplay(IslandMinionData.IslandMinion updatedMinion) {
@@ -82,7 +80,10 @@ public class MinionEntityImpl extends LivingEntity {
 
     @Override
     public void spawn() {
+        super.spawn();
+
         activeMinions.add(this);
+        updateMinionDisplay(islandMinion);
     }
 
     @Override

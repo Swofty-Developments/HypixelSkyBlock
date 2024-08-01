@@ -51,17 +51,17 @@ public class MinionEndstone extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(214, 214, 140); // Endstone minion's boot color
+        return new Color(242, 242, 185);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(214, 214, 140); // Endstone minion's leggings color
+        return new Color(242, 242, 185);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(214, 214, 140); // Endstone minion's chestplate color
+        return new Color(242, 242, 185);
     }
 
 

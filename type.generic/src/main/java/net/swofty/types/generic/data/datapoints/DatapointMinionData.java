@@ -18,8 +18,13 @@ public class DatapointMinionData extends Datapoint<DatapointMinionData.ProfileMi
                 StringBuilder sb = new StringBuilder();
                 sb.append("{");
 
-                for (Map.Entry<String, Integer> entry : value.craftedMinions) {
-                    sb.append(entry.getKey()).append(":").append(entry.getValue()).append(",");
+                for (Map.Entry<String, List<Integer>> entry : value.craftedMinions) {
+                    sb.append(entry.getKey()).append(":[");
+                    entry.getValue().forEach(tier -> sb.append(tier).append(","));
+                    if (sb.length() > 1) {
+                        sb.deleteCharAt(sb.length() - 1);
+                    }
+                    sb.append("],");
                 }
 
                 if (sb.length() > 1) {
@@ -32,9 +37,13 @@ public class DatapointMinionData extends Datapoint<DatapointMinionData.ProfileMi
             @Override
             public DatapointMinionData.ProfileMinionData deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
-                List<Map.Entry<String, Integer>> craftedMinions = new ArrayList<>();
+                List<Map.Entry<String, List<Integer>>> craftedMinions = new ArrayList<>();
                 for (String key : jsonObject.keySet()) {
-                    craftedMinions.add(Map.entry(key, jsonObject.getInt(key)));
+                    List<Integer> list = new ArrayList<>();
+                    for (Object object : jsonObject.getJSONArray(key)) {
+                        list.add((int) object);
+                    }
+                    craftedMinions.add(Map.entry(key, list));
                 }
                 return new ProfileMinionData(craftedMinions);
             }
@@ -50,7 +59,7 @@ public class DatapointMinionData extends Datapoint<DatapointMinionData.ProfileMi
         this(key, new ProfileMinionData(new ArrayList<>()));
     }
 
-    public record ProfileMinionData(List<Map.Entry<String, Integer>> craftedMinions) {
+    public record ProfileMinionData(List<Map.Entry<String, List<Integer>>> craftedMinions) {
         private static final Map<Integer, Integer> SLOTS_FOR_CRAFTED = new HashMap<>(Map.of(
                 0, 5,
                 5, 6,

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.farming.vanilla;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -22,9 +22,9 @@ public class GlisteringMelon implements CustomSkyBlockItem, DefaultCraftable, Se
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GOLD_NUGGET, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.MELON_SLICE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.GOLD_NUGGET, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.MELON_SLICE, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

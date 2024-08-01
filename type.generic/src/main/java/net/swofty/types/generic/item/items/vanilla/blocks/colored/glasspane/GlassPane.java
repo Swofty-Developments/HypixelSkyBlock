@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.colored.glasspane;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -24,8 +24,8 @@ public class GlassPane implements PlaceableCustomSkyBlockItem, Sellable, Default
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.GLASS, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.GLASS, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "AAA");

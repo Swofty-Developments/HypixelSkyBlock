@@ -54,17 +54,17 @@ public class MinionWheat extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(255,255,0);
+        return new Color(244,220,66);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(255,255,0);
+        return new Color(244,220,66);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(255,255,0);
+        return new Color(244,220,66);
     }
 
     @Override

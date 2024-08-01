@@ -1,83 +1,18 @@
 package net.swofty.types.generic.minion;
 
 import lombok.Getter;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
+import net.swofty.types.generic.item.SkyBlockItem;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 @Getter
-public enum MinionRecipe {
-    ONE((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.baseMaterial(), 10));
-        map.put('B', new MaterialQuantifiable(materials.firstBaseItem(), 1));
-        return map;
-    }),
-    TWO((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.baseMaterial(), 20));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    THREE((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.baseMaterial(), 40));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    FOUR((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.baseMaterial(), 64));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    FIVE((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 1));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    SIX((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 2));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    SEVEN((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 4));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    EIGHT((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 8));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    NINE((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 16));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    TEN((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 32));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    ELEVEN((materials) -> {
-        Map<Character, MaterialQuantifiable> map = new HashMap<>();
-        map.put('A', new MaterialQuantifiable(materials.enchantedMaterial(), 64));
-        map.put('B', new MaterialQuantifiable(materials.minionItem(), 1));
-        return map;
-    }),
-    ;
-
+public class MinionRecipe {
     private final Function<MinionRecipeData, Map> recipeFunction;
 
     MinionRecipe(Function<MinionRecipeData, Map> recipeFunction) {
@@ -86,11 +21,28 @@ public enum MinionRecipe {
 
     public static MinionRecipe fromNumber(int number) {
         try {
-            return values()[number];
+            return new MinionRecipe((materials) -> {
+                Map<Character, ItemQuantifiable> map = new HashMap<>();
+                map.put('A', new ItemQuantifiable(materials.minionIngredients().get(number).getItem(), materials.minionIngredients().get(number).getAmount()));
+                if (number != 0) {
+                    ItemTypeLinker itemTypeLinker = materials.minionItem();
+                    SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
+                    item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(number, 1));
+                    map.put('B', new ItemQuantifiable(item, 1));
+                } else {
+                    map.put('B', new ItemQuantifiable(materials.firstBaseItem(), 1));
+                }
+                return map;
+            });
         } catch (ArrayIndexOutOfBoundsException e) {
-            return ONE;
+            return new MinionRecipe((materials) -> {
+                Map<Character, ItemQuantifiable> map = new HashMap<>();
+                map.put('A', new ItemQuantifiable(materials.minionIngredients().get(1).getItem(), materials.minionIngredients().get(1).getAmount()));
+                map.put('B', new ItemQuantifiable(materials.firstBaseItem(), 1));
+                return map;
+            });
         }
     }
 
-    public record MinionRecipeData(ItemTypeLinker baseMaterial, ItemTypeLinker enchantedMaterial, ItemTypeLinker firstBaseItem, ItemTypeLinker minionItem) {}
+    public record MinionRecipeData(List<MinionIngredient> minionIngredients, ItemTypeLinker firstBaseItem, ItemTypeLinker minionItem) {}
 }

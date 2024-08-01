@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.stone.sandstone;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -19,14 +19,14 @@ public class RedSandstoneSlab implements PlaceableCustomSkyBlockItem, MultiDefau
     public List<SkyBlockRecipe<?>> getRecipes() {
         List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
 
-        Map<Character, MaterialQuantifiable> ingredientMap1 = new HashMap<>();
-        ingredientMap1.put('A', new MaterialQuantifiable(ItemTypeLinker.RED_SANDSTONE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap1 = new HashMap<>();
+        ingredientMap1.put('A', new ItemQuantifiable(ItemTypeLinker.RED_SANDSTONE, 1));
         List<String> pattern1 = List.of(
                 "AAA");
         recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.RED_SANDSTONE_SLAB, 6), ingredientMap1, pattern1));
 
-        Map<Character, MaterialQuantifiable> ingredientMap2 = new HashMap<>();
-        ingredientMap2.put('A', new MaterialQuantifiable(ItemTypeLinker.CHISELED_RED_SANDSTONE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap2 = new HashMap<>();
+        ingredientMap2.put('A', new ItemQuantifiable(ItemTypeLinker.CHISELED_RED_SANDSTONE, 1));
         List<String> pattern2 = List.of(
                 "AAA");
         recipes.add(new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.RED_SANDSTONE_SLAB, 6), ingredientMap2, pattern2));

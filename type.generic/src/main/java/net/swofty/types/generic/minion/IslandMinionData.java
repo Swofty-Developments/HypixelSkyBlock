@@ -5,9 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.SharedInstance;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
@@ -53,7 +54,7 @@ public class IslandMinionData {
         private final Pos position;
         private final MinionRegistry minion;
         private final int tier;
-        private List<MaterialQuantifiable> itemsInMinion;
+        private List<ItemQuantifiable> itemsInMinion;
         private int generatedItems;
         private long lastAction;
         private MinionEntityImpl minionEntity;
@@ -74,7 +75,7 @@ public class IslandMinionData {
         public boolean addItem(SkyBlockItem item) {
             int slots = minion.asSkyBlockMinion().getTiers().get(getTier() - 1).getSlots();
             // Calculate the total number of items in minion as if they were in stacks of 64.
-            int totalItemsInStacks = itemsInMinion.stream().mapToInt(MaterialQuantifiable::getAmount).sum();
+            int totalItemsInStacks = itemsInMinion.stream().mapToInt(ItemQuantifiable::getAmount).sum();
 
             // Check if adding the new item would exceed the total slot capacity (slots * 64).
             if ((totalItemsInStacks + item.getAmount()) > (slots * 64)) {
@@ -85,8 +86,8 @@ public class IslandMinionData {
             setGeneratedItems(getGeneratedItems() + item.getAmount());
 
             // Check if the item already exists in the inventory.
-            Optional<MaterialQuantifiable> existingItem = itemsInMinion.stream()
-                    .filter(materialQuantifiable -> materialQuantifiable.getMaterial() == item.getAttributeHandler().getPotentialType())
+            Optional<ItemQuantifiable> existingItem = itemsInMinion.stream()
+                    .filter(materialQuantifiable -> materialQuantifiable.matchesMaterial(item))
                     .findFirst();
 
             if (existingItem.isPresent()) {
@@ -98,7 +99,7 @@ public class IslandMinionData {
                     System.out.println(item.getAttributeHandler().getTypeAsString());
                     throw new NullPointerException("Item type is null");
                 }
-                itemsInMinion.add(new MaterialQuantifiable(item.getAttributeHandler().getPotentialType(), item.getAmount()));
+                itemsInMinion.add(new ItemQuantifiable(item.getAttributeHandler().getPotentialType(), item.getAmount()));
             }
             return true;
         }
@@ -145,7 +146,7 @@ public class IslandMinionData {
         public Map<String, Object> serialize() {
             List<String> itemsInMinionAsString = new ArrayList<>();
             itemsInMinion.forEach(item -> {
-                itemsInMinionAsString.add(item.getMaterial().name() + "," + item.getAmount());
+                itemsInMinionAsString.add(item.getItem().toUnderstandable().serialize() + "," + item.getAmount());
             });
 
             Map<String, Object> data = new HashMap<>();
@@ -162,10 +163,10 @@ public class IslandMinionData {
         }
 
         public static IslandMinion deserialize(Map<String, Object> data) {
-            List<MaterialQuantifiable> itemsInMinion = new ArrayList<>();
+            List<ItemQuantifiable> itemsInMinion = new ArrayList<>();
             ((List<String>) data.get("itemsInMinion")).forEach(item -> {
-                itemsInMinion.add(new MaterialQuantifiable(
-                        ItemTypeLinker.valueOf(item.split(",")[0]),
+                itemsInMinion.add(new ItemQuantifiable(
+                        new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(item.split(",")[0])),
                         Integer.parseInt(item.split(",")[1])
                 ));
             });

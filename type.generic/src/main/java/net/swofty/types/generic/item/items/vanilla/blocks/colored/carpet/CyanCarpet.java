@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.colored.carpet;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -34,8 +34,8 @@ public class CyanCarpet implements PlaceableCustomSkyBlockItem, Sellable, Defaul
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.CYAN_WOOL, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.CYAN_WOOL, 1));
         List<String> pattern = List.of(
                 "AA");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.CYAN_CARPET, 3), ingredientMap, pattern);

@@ -54,17 +54,17 @@ public class MinionDiamond extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(122, 121, 100); // Diamond minion's boot color
+        return new Color(33, 198, 163);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(122, 121, 100); // Diamond minion's leggings color
+        return new Color(33, 198, 163);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(122, 121, 100); // Diamond minion's chestplate color
+        return new Color(33, 198, 163);
     }
 
     @Override

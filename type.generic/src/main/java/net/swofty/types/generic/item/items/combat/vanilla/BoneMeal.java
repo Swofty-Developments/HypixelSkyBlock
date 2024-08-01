@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.vanilla;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -21,8 +21,8 @@ public class BoneMeal implements CustomSkyBlockItem, DefaultCraftable {
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.BONE, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.BONE, 1));
         List<String> pattern = List.of(
                 "A");
 

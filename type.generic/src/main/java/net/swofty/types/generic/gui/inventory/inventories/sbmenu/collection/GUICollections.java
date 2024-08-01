@@ -56,6 +56,22 @@ public class GUICollections extends SkyBlockInventoryGUI {
             }
         });
 
+        set(new GUIClickableItem(50) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                new GUICraftedMinions(new GUICollections()).open(player);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                return ItemStackCreator.getStackHead("§aCrafted Minions", "ebcc099f3a00ece0e5c4b31d31c828e52b06348d0a4eac11f3fcbef3c05cb407", 1,
+                "§7View all the unique minions that you",
+                        "§7have crafted.",
+                        "",
+                        "§eClick to view!");
+            }
+        });
+
         int index = 0;
         for (int slot : displaySlots) {
             CollectionCategory category = allCategories.get(index);

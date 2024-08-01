@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,12 +14,12 @@ import java.util.*;
 public class Terminator implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.TESSELLATED_ENDER_PEARL, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_BLADE, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.JUDGEMENT_CORE, 1));
-        ingredientMap.put('E', new MaterialQuantifiable(ItemTypeLinker.BRAIDED_GRIFFIN_FEATHER, 4));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.TESSELLATED_ENDER_PEARL, 4));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.NULL_BLADE, 1));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.TARANTULA_SILK, 64));
+        ingredientMap.put('D', new ItemQuantifiable(ItemTypeLinker.JUDGEMENT_CORE, 1));
+        ingredientMap.put('E', new ItemQuantifiable(ItemTypeLinker.BRAIDED_GRIFFIN_FEATHER, 4));
         List<String> pattern = List.of(
                 "ABC",
                 "BDE",

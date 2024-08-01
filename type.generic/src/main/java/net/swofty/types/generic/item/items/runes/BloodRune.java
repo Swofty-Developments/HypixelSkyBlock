@@ -53,7 +53,6 @@ public class BloodRune implements CustomSkyBlockItem, RuneItem, SkyBlockEventCla
         return "e02677053dc54245dac4b399d14aae21ee71a010bd9c336c8ecee1a0dbe8f58b";
     }
 
-
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true , isAsync = true)
     public void run(PlayerKilledSkyBlockMobEvent event) {
         SkyBlockPlayer player = event.getPlayer();

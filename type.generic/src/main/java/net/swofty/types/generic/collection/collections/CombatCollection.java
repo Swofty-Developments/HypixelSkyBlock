@@ -4,8 +4,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -34,7 +36,17 @@ public class CombatCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.BLAZE_ROD,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.BLAZE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -94,7 +106,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.STRING,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -170,7 +192,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.ENDER_PEARL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ENDERMAN_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -220,12 +252,12 @@ public class CombatCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.COMBAT,
-                                    new SkyBlockItem(ItemType.ENCHANTED_EYE_OF_ENDER), 1)
-                                    .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16)
-                                    .add(ItemType.BLAZE_POWDER, 16);
+                                        new SkyBlockItem(ItemType.ENCHANTED_EYE_OF_ENDER), 1)
+                                        .add(ItemType.ENCHANTED_ENDER_PEARL, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16)
+                                        .add(ItemType.BLAZE_POWDER, 16);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -258,9 +290,9 @@ public class CombatCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_EYE_OF_ENDER, 16));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_DIAMOND, 1));
                                 List<String> pattern = List.of(
                                         "A",
                                         "A",
@@ -277,7 +309,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.BONE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SKELETON_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -410,7 +452,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.GHAST_TEAR,
-                        new ItemCollectionReward(20, new UnlockXP() {
+                        new ItemCollectionReward(20, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.GHAST_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -450,12 +502,12 @@ public class CombatCollection extends CollectionCategory {
                             public int xp() {
                                 return 4;
                             }
-                            }, new UnlockRecipe() {
+                        }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_GHAST_TEAR, 5));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         " A ",
                                         "AAA",
@@ -478,7 +530,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.GUNPOWDER,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CREEPER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -550,7 +612,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MAGMA_CREAM,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.MAGMA_CUBE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -610,7 +682,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.ROTTEN_FLESH,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.ZOMBIE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -653,9 +735,9 @@ public class CombatCollection extends CollectionCategory {
                         new ItemCollectionReward(5000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_ROTTEN_FLESH, 32));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -695,7 +777,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SLIME_BALL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SLIME_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -761,7 +853,17 @@ public class CombatCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SPIDER_EYE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CAVE_SPIDER_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

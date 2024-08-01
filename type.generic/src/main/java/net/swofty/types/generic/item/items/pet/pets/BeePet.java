@@ -118,6 +118,11 @@ public class BeePet implements Pet, NotFinishedYet {
     }
 
     @Override
+    public RarityValue<Integer> getGeorgePrice() {
+        return new RarityValue<>(2500, 5000, 25000, 100000, 325000, 0);
+    }
+
+    @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
                 .withBase(ItemStatistic.STRENGTH, 5D)

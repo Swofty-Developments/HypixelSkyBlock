@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.spider.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -14,10 +14,10 @@ import java.util.*;
 public class RecluseFang implements CustomSkyBlockItem, DefaultCraftable, StandardItem, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.TARANTULA_WEB, 4));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.SPIDER_CATALYST, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.SPIDER_SWORD, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.TARANTULA_WEB, 4));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.SPIDER_CATALYST, 1));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.SPIDER_SWORD, 1));
         List<String> pattern = List.of(
                 "AAA",
                 "ABA",

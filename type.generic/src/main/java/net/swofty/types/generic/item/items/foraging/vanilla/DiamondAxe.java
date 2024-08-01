@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.foraging.vanilla;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -28,10 +28,10 @@ public class DiamondAxe implements CustomSkyBlockItem, AxeImpl, DefaultCraftable
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.DIAMOND, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.STICK, 1));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.DIAMOND, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.STICK, 1));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "AA",
                 "AB",

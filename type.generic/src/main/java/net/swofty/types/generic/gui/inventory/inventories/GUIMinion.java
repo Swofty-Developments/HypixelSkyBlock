@@ -17,7 +17,7 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.MinionFuelItem;
@@ -113,7 +113,9 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                 }
 
                 minion.getItemsInMinion().forEach(item -> {
-                    player.addAndUpdateItem(new SkyBlockItem(item.getMaterial(), item.getAmount()));
+                    SkyBlockItem skyBlockItem = item.getItem();
+                    skyBlockItem.setAmount(item.getAmount());
+                    player.addAndUpdateItem(skyBlockItem);
                 });
                 minion.setItemsInMinion(new ArrayList<>());
 
@@ -250,10 +252,11 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                     }
                     if (minion.getItemsInMinion().size() < finalI) return;
 
-                    MaterialQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
+                    ItemQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
                     minion.getItemsInMinion().remove(item);
 
-                    player.addAndUpdateItem(new SkyBlockItem(item.getMaterial(), item.getAmount()));
+                    item.getItem().setAmount(item.getAmount());
+                    player.addAndUpdateItem(item.getItem());
                     refreshItems(player);
                 }
 
@@ -263,8 +266,8 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
 
                     if (minion.getItemsInMinion().size() < finalI) return ItemStack.builder(Material.AIR);
 
-                    MaterialQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
-                    SkyBlockItem skyBlockItem = new SkyBlockItem(item.getMaterial(), item.getAmount());
+                    ItemQuantifiable item = minion.getItemsInMinion().get(finalI - 1);
+                    SkyBlockItem skyBlockItem = item.getItem();
 
                     return new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                 }

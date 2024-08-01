@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -16,9 +16,9 @@ import java.util.Map;
 public class TessellatedEnderPearl implements CustomSkyBlockItem, SkullHead, DefaultCraftable, Sellable, TrackedUniqueItem {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_LAPIS_LAZULI_BLOCK, 8));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ABSOLUTE_ENDER_PEARL, 16));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_LAPIS_LAZULI_BLOCK, 8));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ABSOLUTE_ENDER_PEARL, 16));
         List<String> pattern = List.of(
                 "ABA",
                 "BBB",

@@ -44,7 +44,6 @@ public class GUIProfileSelect extends SkyBlockInventoryGUI {
                 PlayerProfiles toSet = new PlayerProfiles();
                 toSet.setProfiles(profiles.getProfiles());
 
-
                 player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
                     UserDatabase database = new UserDatabase(player.getUuid());
                     toSet.setCurrentlySelected(profileUuid);

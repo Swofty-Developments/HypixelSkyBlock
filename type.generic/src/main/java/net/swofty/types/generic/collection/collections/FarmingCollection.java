@@ -4,8 +4,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -36,7 +38,17 @@ public class FarmingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return Arrays.asList(
                 new ItemCollection(ItemType.WHEAT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.WHEAT_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -61,8 +73,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.HAY_BALE, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -75,8 +87,8 @@ public class FarmingCollection extends CollectionCategory {
 
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.HAY_BALE, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "AAA",
@@ -88,8 +100,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.HAY_BALE, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -101,9 +113,9 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.HAY_BALE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",
@@ -121,9 +133,9 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.HAY_BALE, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.WHEAT_SEEDS, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.HAY_BALE, 1));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.WHEAT_SEEDS, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
                                         "BAB",
@@ -209,7 +221,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CARROT,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CARROT_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -275,7 +297,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CACTUS,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CACTUS_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -341,7 +373,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.COCOA_BEANS,
-                        new ItemCollectionReward(75, new UnlockXP() {
+                        new ItemCollectionReward(75, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.COCOA_BEANS_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -474,7 +516,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.LEATHER,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.COW_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -489,8 +541,8 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(250, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.LEATHER, 10));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.LEATHER, 10));
                                 List<String> pattern = List.of(
                                         "LLL",
                                         "L L",
@@ -518,9 +570,9 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(2500, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.LEATHER, 64));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.SMALL_BACKPACK, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.LEATHER, 64));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.SMALL_BACKPACK, 1));
                                 List<String> pattern = List.of(
                                         "LLL",
                                         "LBL",
@@ -554,9 +606,9 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(25000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.ENCHANTED_LEATHER, 2));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.MEDIUM_BACKPACK, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.ENCHANTED_LEATHER, 2));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.MEDIUM_BACKPACK, 1));
                                 List<String> pattern = List.of(
                                         "LLL",
                                         "LBL",
@@ -579,9 +631,9 @@ public class FarmingCollection extends CollectionCategory {
                         new ItemCollectionReward(100000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.ENCHANTED_LEATHER, 4));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.LARGE_BACKPACK, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.ENCHANTED_LEATHER, 4));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.LARGE_BACKPACK, 1));
                                 List<String> pattern = List.of(
                                         "LLL",
                                         "LBL",
@@ -597,7 +649,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MELON_SLICE,
-                        new ItemCollectionReward(250, new UnlockXP() {
+                        new ItemCollectionReward(250, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.MELON_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -656,7 +718,8 @@ public class FarmingCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
@@ -667,7 +730,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.RED_MUSHROOM,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.MUSHROOM_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -687,8 +760,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -700,8 +773,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -715,8 +788,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -730,8 +803,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "AAA",
@@ -745,8 +818,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -760,9 +833,9 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.RED_MUSHROOM, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.RED_MUSHROOM, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",
@@ -831,7 +904,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MUTTON,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SHEEP_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -903,7 +986,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.NETHER_WART,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.NETHER_WART_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -995,7 +1088,8 @@ public class FarmingCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
@@ -1011,7 +1105,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.POTATO,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.POTATO_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1071,9 +1175,9 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('P', new MaterialQuantifiable(ItemType.PAPER, 1));
-                                ingredientMap.put('E', new MaterialQuantifiable(ItemType.ENCHANTED_BAKED_POTATO, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('P', new ItemQuantifiable(ItemType.PAPER, 1));
+                                ingredientMap.put('E', new ItemQuantifiable(ItemType.ENCHANTED_BAKED_POTATO, 1));
                                 List<String> pattern = List.of(
                                         "PP",
                                         "PE");
@@ -1089,7 +1193,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.PUMPKIN,
-                        new ItemCollectionReward(40, new UnlockXP() {
+                        new ItemCollectionReward(40, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.PUMPKIN_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1103,8 +1217,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.PUMPKIN, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -1116,8 +1230,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.PUMPKIN, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "AAA",
@@ -1131,8 +1245,8 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.PUMPKIN, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -1144,9 +1258,9 @@ public class FarmingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PUMPKIN, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.PUMPKIN, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "   ",
                                         "A A",
@@ -1211,7 +1325,8 @@ public class FarmingCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
@@ -1222,7 +1337,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.CHICKEN,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CHICKEN_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1334,7 +1459,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.PORKCHOP,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.PIG_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1400,7 +1535,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.RABBIT,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.RABBIT_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1525,7 +1670,17 @@ public class FarmingCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SUGAR_CANE,
-                        new ItemCollectionReward(100, new UnlockXP() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.SUGAR_CANE_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1540,8 +1695,8 @@ public class FarmingCollection extends CollectionCategory {
                                 new UnlockRecipe() {
                                     @Override
                                     public SkyBlockRecipe<?> getRecipe() {
-                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.SUGAR_CANE, 12));
+                                        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new ItemQuantifiable(ItemType.SUGAR_CANE, 12));
                                         List<String> pattern = List.of(
                                                 "AAA",
                                                 "AAA",
@@ -1587,9 +1742,9 @@ public class FarmingCollection extends CollectionCategory {
                                 new UnlockRecipe() {
                                     @Override
                                     public SkyBlockRecipe<?> getRecipe() {
-                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_SUGAR, 12));
-                                        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SPEED_TALISMAN, 1));
+                                        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_SUGAR, 12));
+                                        ingredientMap.put('B', new ItemQuantifiable(ItemType.SPEED_TALISMAN, 1));
                                         List<String> pattern = List.of(
                                                 "AAA",
                                                 "ABA",
@@ -1605,15 +1760,15 @@ public class FarmingCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return new ShapelessRecipe(SkyBlockRecipe.RecipeType.FARMING,
                                         new SkyBlockItem(ItemType.ENCHANTED_BOOKSHELF), 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
                                         .add(ItemType.ENCHANTED_PAPER, 2)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1)
-                                        .add(ItemType.ENCHANTED_OAK_WOOD, 1);
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1)
+                                        .add(ItemType.ENCHANTED_OAK_LOG, 1);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -1641,9 +1796,9 @@ public class FarmingCollection extends CollectionCategory {
                                 new UnlockRecipe() {
                                     @Override
                                     public SkyBlockRecipe<?> getRecipe() {
-                                        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                        ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_SUGAR_CANE, 6));
-                                        ingredientMap.put('B', new MaterialQuantifiable(ItemType.SPEED_RING, 1));
+                                        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                        ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_SUGAR_CANE, 6));
+                                        ingredientMap.put('B', new ItemQuantifiable(ItemType.SPEED_RING, 1));
                                         List<String> pattern = List.of(
                                                 "AAA",
                                                 "ABA",

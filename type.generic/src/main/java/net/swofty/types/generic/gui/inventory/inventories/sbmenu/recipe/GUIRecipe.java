@@ -21,6 +21,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {

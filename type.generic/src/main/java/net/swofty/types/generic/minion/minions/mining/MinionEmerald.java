@@ -54,17 +54,17 @@ public class MinionEmerald extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(0, 255, 0); // Emerald minion's boot color (green)
+        return new Color(60, 252, 102);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(0, 255, 0); // Emerald minion's leggings color (green)
+        return new Color(60, 252, 102);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(0, 255, 0); // Emerald minion's chestplate color (green)
+        return new Color(60, 252, 102);
     }
 
     @Override

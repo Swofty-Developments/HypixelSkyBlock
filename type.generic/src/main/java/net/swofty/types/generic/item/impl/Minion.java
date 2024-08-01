@@ -11,10 +11,7 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.minion.IslandMinionData;
-import net.swofty.types.generic.minion.MinionRecipe;
-import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.commons.StringUtility;
@@ -26,11 +23,9 @@ import java.util.List;
 
 public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, TrackedUniqueItem, DefaultCraftable {
     MinionRegistry getMinionRegistry();
-
-    ItemTypeLinker getBaseCraftMaterial();
-    ItemTypeLinker getEnchantedCraftMaterial();
     ItemTypeLinker getFirstBaseItem();
     boolean isByDefaultCraftable();
+    List<MinionIngredient> getMinionCraftingIngredients();
 
     default List<SkyBlockRecipe<?>> getRecipes() {
         if (!isByDefaultCraftable()) return new ArrayList<>();
@@ -57,8 +52,7 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
                     SkyBlockRecipe.RecipeType.MINION,
                     item,
                     MinionRecipe.fromNumber(tier.tier() - 1).getRecipeFunction().apply(new MinionRecipe.MinionRecipeData(
-                            getBaseCraftMaterial(),
-                            getEnchantedCraftMaterial(),
+                            getMinionCraftingIngredients(),
                             getFirstBaseItem(),
                             getMinionRegistry().getItemTypeLinker()
                     )),
@@ -146,9 +140,9 @@ public interface Minion extends CustomSkyBlockItem, SkullHead, PlaceEvent, Track
 
         List<String> lore = new ArrayList<>(Arrays.asList(
                 "§7Place this minion and it will start",
-                "§7generating and mining " + minionRegistry.name().toLowerCase() + "!",
+                "§7generating and mining " + StringUtility.toNormalCase(minionRegistry.name()) + "!",
                 "§7Requires an open area to place",
-                "§7" + minionRegistry.name().toLowerCase() + ". Minions also work",
+                "§7" + StringUtility.toNormalCase(minionRegistry.name()) + ". Minions also work",
                 "§7you are offline!",
                 ""
         ));

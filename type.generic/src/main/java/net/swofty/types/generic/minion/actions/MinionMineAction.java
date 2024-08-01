@@ -6,7 +6,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
@@ -51,17 +51,17 @@ public class MinionMineAction extends MinionAction {
 
     @Override
     public boolean checkMaterials(IslandMinionData.IslandMinion minion, Instance island) {
-        List<MaterialQuantifiable> items = minion.getItemsInMinion();
+        List<ItemQuantifiable> items = minion.getItemsInMinion();
 
         if (items.stream().noneMatch(item -> {
-            return item.getMaterial().material == Material.fromNamespaceId(toMine.namespace());
+            return item.getItem().getMaterial() == Material.fromNamespaceId(toMine.namespace());
         })) {
             return true;
         }
 
         boolean shouldAllow = false;
-        for (MaterialQuantifiable item : items) {
-            if (item.getMaterial().material == Material.fromNamespaceId(toMine.namespace())) {
+        for (ItemQuantifiable item : items) {
+            if (item.getItem().getMaterial() == Material.fromNamespaceId(toMine.namespace())) {
                 if (item.getAmount() != 64) {
                     shouldAllow = true;
                 }

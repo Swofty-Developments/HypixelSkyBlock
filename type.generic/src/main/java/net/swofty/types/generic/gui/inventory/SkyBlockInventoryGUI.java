@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
-public abstract class SkyBlockInventoryGUI {
+public abstract class  SkyBlockInventoryGUI {
     public static final Map<UUID, SkyBlockInventoryGUI> GUI_MAP = new ConcurrentHashMap<>();
 
     protected String title;
@@ -91,11 +91,9 @@ public abstract class SkyBlockInventoryGUI {
      * @return the GUIItem in that slot, if there is none, null
      */
     public GUIItem get(int slot) {
-        for (GUIItem item : items) {
-            if (item.itemSlot == slot)
-                return item;
+        synchronized (items) {
+            return items.stream().filter(item -> item.itemSlot == slot).findFirst().orElse(null);
         }
-        return null;
     }
 
     /**

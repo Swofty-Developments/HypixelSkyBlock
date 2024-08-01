@@ -5,6 +5,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
+import net.swofty.types.generic.minion.actions.MinionCutTreeAction;
 import net.swofty.types.generic.minion.actions.MinionMineAction;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class MinionBirch extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
-        return List.of( //skins done
+        return List.of(
                 new MinionTier(1, 48, 64,
                         "eb74109dbb88178afb7a9874afc682904cedb3df75978a51f7beeb28f924251",
                         Material.WOODEN_AXE, true),
@@ -51,17 +52,17 @@ public class MinionBirch extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(255,155,0);
+        return new Color(220,242,220);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(255,255,0);
+        return new Color(220,242,220);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(255,255,0);
+        return new Color(220,242,220);
     }
 
     @Override
@@ -73,6 +74,6 @@ public class MinionBirch extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.BIRCH_LOG);
+        return new MinionCutTreeAction(Block.BIRCH_LOG);
     }
 }

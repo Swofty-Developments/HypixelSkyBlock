@@ -5,7 +5,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -63,9 +63,9 @@ public class ForagingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A");
@@ -75,9 +75,9 @@ public class ForagingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "LLL",
                                         "L L",
@@ -88,9 +88,9 @@ public class ForagingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "L L",
                                         "L L");
@@ -100,9 +100,9 @@ public class ForagingCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('L', new MaterialQuantifiable(ItemType.OAK_LEAVES, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('L', new ItemQuantifiable(ItemType.OAK_LEAVES, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "L L",
                                         "LLL",
@@ -126,7 +126,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
+                                return getStandardEnchantedRecipe(EnchantedOakLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -164,7 +164,7 @@ public class ForagingCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.SPRUCE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -191,7 +191,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedSpruceWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
+                                return getStandardEnchantedRecipe(EnchantedSpruceLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.SPRUCE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -268,7 +268,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedBirchWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
+                                return getStandardEnchantedRecipe(EnchantedBirchLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.BIRCH_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -312,7 +312,7 @@ public class ForagingCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.JUNGLE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -345,7 +345,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedJungleWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
+                                return getStandardEnchantedRecipe(EnchantedJungleLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.JUNGLE_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -416,7 +416,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedAcaciaWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.ACACIA_LOG);
+                                return getStandardEnchantedRecipe(EnchantedAcaciaLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.ACACIA_LOG);
                             }
                         }, new UnlockXP() {
                             @Override
@@ -481,7 +481,7 @@ public class ForagingCollection extends CollectionCategory {
                         new ItemCollectionReward(2000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                return getStandardEnchantedRecipe(EnchantedDarkOakWood.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.DARK_OAK_LOG);
+                                return getStandardEnchantedRecipe(EnchantedDarkOakLog.class, SkyBlockRecipe.RecipeType.FORAGING, ItemType.DARK_OAK_LOG);
                             }
                         }, new UnlockXP() {
                             @Override

@@ -1,11 +1,14 @@
 package net.swofty.types.generic.collection;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -55,7 +58,11 @@ public abstract class CollectionCategory {
                 switch (unlock.type()) {
                     case RECIPE -> {
                         ((UnlockRecipe) unlock).getRecipes().forEach(recipe -> {
-                            lore.add("§7  §e" + recipe.getResult().getDisplayName() + " §7Recipes");
+                            if (recipe.getResult().getDisplayName().contains("Minion") && !Arrays.toString(lore.toArray()).contains("Minion §7Recipes")) {
+                                lore.add("§9  " + StringUtility.toNormalCase(recipe.getResult().getAttributeHandler().getMinionType().toString()) + " Minion §7Recipes");
+                            } else if (!recipe.getResult().getDisplayName().contains("Minion")) {
+                                lore.add("§7  §e" + recipe.getResult().getDisplayName() + " §7Recipe");
+                            }
                         });
                     }
                     case CUSTOM_AWARD -> {
@@ -92,16 +99,28 @@ public abstract class CollectionCategory {
 
         @Override
         public ItemStack.Builder getDisplay(SkyBlockPlayer player) {
+            SkyBlockItem skyBlockItem = getRecipes().getFirst().getResult();
             ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
-            ArrayList<String> lore = new ArrayList<>(
-                    updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList()
-            );
-            lore.add(" ");
-            int others = getRecipes().size() - 1;
-            if (others > 0) {
-                lore.add("§8+" + others + " more recipes");
+            ArrayList<String> lore = new ArrayList<>(updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+            if (skyBlockItem.getGenericInstance() instanceof Minion) {
+                String material = StringUtility.toNormalCase(skyBlockItem.getAttributeHandler().getMinionType().toString());
+                updatedItem.customName(Component.text("§r§9" + material + " Minion Recipes"));
+                lore.clear();
+                lore.add("§7Place this minion and it will start");
+                lore.add("§7generating and mining " + material + "!");
+                lore.add("§7Requires an open area to place");
+                lore.add("§7" + material + ".");
+                lore.add("");
+                lore.add("§eClick to view recipes!");
+            } else {
+                lore.add(" ");
+                int others = getRecipes().size() - 1;
+
+                if (others > 0) {
+                    lore.add("§8+" + others + " more recipes");
+                }
+                lore.add("§eClick to view recipe");
             }
-            lore.add("§eClick to view recipe");
 
             return ItemStackCreator.updateLore(updatedItem, lore);
         }
