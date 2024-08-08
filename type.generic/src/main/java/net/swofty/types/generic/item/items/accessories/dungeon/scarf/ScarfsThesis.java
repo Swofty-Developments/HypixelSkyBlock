@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.accessories.dungeon.scarf;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -26,8 +26,8 @@ public class ScarfsThesis implements TieredTalisman, NotFinishedYet, DefaultCraf
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.SCARFS_STUDIES, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.SCARFS_STUDIES, 1));
         List<String> pattern = List.of(
                 "AA",
                 "AA"

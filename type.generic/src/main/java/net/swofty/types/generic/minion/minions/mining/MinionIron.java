@@ -54,17 +54,17 @@ public class MinionIron extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(180, 180, 180);
+        return new Color(222, 224, 223);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(180, 180, 180); // Iron minion's leggings color
+        return new Color(222, 224, 223);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(180, 180, 180); // Iron minion's chestplate color
+        return new Color(222, 224, 223);
     }
 
 

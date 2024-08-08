@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.wolf.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -17,10 +17,10 @@ import net.swofty.commons.item.ItemType;
 public class WeirdTuba implements CustomSkyBlockItem, DefaultCraftable, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 20));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 20));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_IRON_INGOT, 20));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.GOLDEN_TOOTH, 20));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 "A A ",
                 "ABA",

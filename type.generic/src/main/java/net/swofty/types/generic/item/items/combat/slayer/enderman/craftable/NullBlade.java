@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
@@ -17,10 +17,10 @@ import java.util.Map;
 public class NullBlade implements CustomSkyBlockItem, DefaultCraftable, Enchanted {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 16));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.NULL_EDGE, 1));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK, 32));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 16));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.NULL_EDGE, 1));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK, 32));
         List<String> pattern = List.of(
                 "ABA",
                 "CBC",

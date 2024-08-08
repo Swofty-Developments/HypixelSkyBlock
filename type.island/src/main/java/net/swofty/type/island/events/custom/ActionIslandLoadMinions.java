@@ -43,7 +43,7 @@ public class ActionIslandLoadMinions implements SkyBlockEventClass {
             SkyBlockMinion.MinionTier tier = data.getMinion().asSkyBlockMinion().getTiers().get(tierIndex - 1);
             MinionExtensionData extensionData = data.getExtensionData();
 
-            long timeBetweenActions = tier.timeBetweenActions();
+            long timeBetweenActions = (long) tier.timeBetweenActions();
             ItemTypeLinker minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypeLinkerPassedIn();
 
             //Handle percentage speed increase from both fuels and minion upgrades

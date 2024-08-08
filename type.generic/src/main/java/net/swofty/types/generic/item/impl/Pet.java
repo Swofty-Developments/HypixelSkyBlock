@@ -16,6 +16,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.commons.ChatColor;
 import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.utility.RarityValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public interface Pet extends CustomSkyBlockItem, SkullHead, TrackedUniqueItem, Interactable {
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
+    RarityValue<Integer> getGeorgePrice(); //0 if you can't sell it at that rarity
     ItemStatistics getBaseStatistics();
     ItemStatistics getPerLevelStatistics(Rarity rarity);
     Particle particleId();

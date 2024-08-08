@@ -1,6 +1,7 @@
 package net.swofty.types.generic.minion;
 
 import net.minestom.server.color.Color;
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 
@@ -14,7 +15,7 @@ public abstract class SkyBlockMinion {
     public abstract List<MinionExpectations> getExpectations();
     public abstract MinionAction getAction();
 
-    public record MinionTier(int tier, int timeBetweenActions, int storage, String texture, Material heldItem, boolean craftable) {
+    public record MinionTier(int tier, float timeBetweenActions, int storage, String texture, Material heldItem, boolean craftable) {
         public int getSlots() {
             return storage / 64;
         }

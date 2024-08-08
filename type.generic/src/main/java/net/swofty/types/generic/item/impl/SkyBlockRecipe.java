@@ -54,7 +54,7 @@ public abstract class SkyBlockRecipe<T> {
         return ShapelessRecipe.parseShapelessRecipe(stacks);
     }
 
-    public static @NotNull List<SkyBlockRecipe<?>> getFromType(ItemTypeLinker type) {
+    public static @NotNull List<SkyBlockRecipe<?>>  getFromType(ItemTypeLinker type) {
         ArrayList<SkyBlockRecipe<?>> recipes = new ArrayList<>();
         ShapedRecipe.CACHED_RECIPES.forEach(recipe -> {
             ItemTypeLinker itemTypeLinker = recipe.getResult().getAttributeHandler().getPotentialClassLinker();

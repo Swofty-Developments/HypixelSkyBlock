@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.impl.CustomDisplayName;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.items.SandboxItem;
@@ -133,7 +132,10 @@ import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
 import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.types.generic.item.items.mining.dwarven.*;
 import net.swofty.types.generic.item.items.mining.vanilla.*;
-import net.swofty.types.generic.item.items.minion.farming.WheatMinion;
+import net.swofty.types.generic.item.items.minion.combat.*;
+import net.swofty.types.generic.item.items.minion.farming.*;
+import net.swofty.types.generic.item.items.minion.fishing.ClayMinion;
+import net.swofty.types.generic.item.items.minion.fishing.FishingMinion;
 import net.swofty.types.generic.item.items.minion.foraging.*;
 import net.swofty.types.generic.item.items.minion.mining.*;
 import net.swofty.types.generic.item.items.minion.upgrade.MithrilInfusion;
@@ -311,25 +313,59 @@ public enum ItemTypeLinker {
     COBBLESTONE_MINION(ItemType.COBBLESTONE_MINION, CobblestoneMinion.class),
     COAL_MINION(ItemType.COAL_MINION, CoalMinion.class),
     SNOW_MINION(ItemType.SNOW_MINION, SnowMinion.class),
-    ACACIA_MINION(ItemType.ACACIA_MINION, AcaciaMinion.class),
-    BIRCH_MINION(ItemType.BIRCH_MINION, BirchMinion.class),
-    DARK_OAK_MINION(ItemType.DARK_OAK_MINION, DarkOakMinion.class),
-    JUNGLE_MINION(ItemType.JUNGLE_MINION, JungleMinion.class),
-    OAK_MINION(ItemType.OAK_MINION, OakMinion.class),
     DIAMOND_MINION(ItemType.DIAMOND_MINION, DiamondMinion.class),
     EMERALD_MINION(ItemType.EMERALD_MINION, EmeraldMinion.class),
     IRON_MINION(ItemType.IRON_MINION, IronMinion.class),
     GOLD_MINION(ItemType.GOLD_MINION, GoldMinion.class),
     LAPIS_MINION(ItemType.LAPIS_MINION, LapisMinion.class),
     REDSTONE_MINION(ItemType.REDSTONE_MINION, RedstoneMinion.class),
-    ENDSTONE_MINION(ItemType.ENDSTONE_MINION, EndstoneMinion.class),
+    ENDSTONE_MINION(ItemType.ENDSTONE_MINION, EndStoneMinion.class),
     ICE_MINION(ItemType.ICE_MINION, IceMinion.class),
     QUARTZ_MINION(ItemType.QUARTZ_MINION, QuartzMinion.class),
     OBSIDIAN_MINION(ItemType.OBSIDIAN_MINION, ObsidianMinion.class),
     SAND_MINION(ItemType.SAND_MINION, SandMinion.class),
     GRAVEL_MINION(ItemType.GRAVEL_MINION, GravelMinion.class),
+    GLOWSTONE_MINION(ItemType.GLOWSTONE_MINION, GlowstoneMinion.class),
+    HARD_STONE_MINION(ItemType.HARD_STONE_MINION, HardStoneMinion.class),
+    MITHRIL_MINION(ItemType.MITHRIL_MINION, MithrilMinion.class),
+
+    ACACIA_MINION(ItemType.ACACIA_MINION, AcaciaMinion.class),
+    BIRCH_MINION(ItemType.BIRCH_MINION, BirchMinion.class),
+    DARK_OAK_MINION(ItemType.DARK_OAK_MINION, DarkOakMinion.class),
+    JUNGLE_MINION(ItemType.JUNGLE_MINION, JungleMinion.class),
+    OAK_MINION(ItemType.OAK_MINION, OakMinion.class),
     SPRUCE_MINION(ItemType.SPRUCE_MINION, SpruceMinion.class),
+    FLOWER_MINION(ItemType.FLOWER_MINION, FlowerMinion.class),
+
+    FISHING_MINION(ItemType.FISHING_MINION, FishingMinion.class),
+    CLAY_MINION(ItemType.CLAY_MINION, ClayMinion.class),
+
     WHEAT_MINION(ItemType.WHEAT_MINION, WheatMinion.class),
+    POTATO_MINION(ItemType.POTATO_MINION, PotatoMinion.class),
+    CACTUS_MINION(ItemType.CACTUS_MINION, CactusMinion.class),
+    CARROT_MINION(ItemType.CARROT_MINION, CarrotMinion.class),
+    COCOA_BEANS_MINION(ItemType.COCOA_BEANS_MINION, CocoaBeansMinion.class),
+    MELON_MINION(ItemType.MELON_MINION, MelonMinion.class),
+    MUSHROOM_MINION(ItemType.MUSHROOM_MINION, MushroomMinion.class),
+    NETHER_WART_MINION(ItemType.NETHER_WART_MINION, NetherWartMinion.class),
+    PUMPKIN_MINION(ItemType.PUMPKIN_MINION, PumpkinMinion.class),
+    SUGAR_CANE_MINION(ItemType.SUGAR_CANE_MINION, SugarCaneMinion.class),
+    CHICKEN_MINION(ItemType.CHICKEN_MINION, ChickenMinion.class),
+    COW_MINION(ItemType.COW_MINION, CowMinion.class),
+    PIG_MINION(ItemType.PIG_MINION, PigMinion.class),
+    RABBIT_MINION(ItemType.RABBIT_MINION, RabbitMinion.class),
+    SHEEP_MINION(ItemType.SHEEP_MINION, SheepMinion.class),
+
+    BLAZE_MINION(ItemType.BLAZE_MINION, BlazeMinion.class),
+    CAVE_SPIDER_MINION(ItemType.CAVE_SPIDER_MINION, CaveSpiderMinion.class),
+    CREEPER_MINION(ItemType.CREEPER_MINION, CreeperMinion.class),
+    ENDERMAN_MINION(ItemType.ENDERMAN_MINION, EndermanMinion.class),
+    GHAST_MINION(ItemType.GHAST_MINION, GhastMinion.class),
+    MAGMA_CUBE_MINION(ItemType.MAGMA_CUBE_MINION, MagmaCubeMinion.class),
+    SKELETON_MINION(ItemType.SKELETON_MINION, SkeletonMinion.class),
+    SLIME_MINION(ItemType.SLIME_MINION, SlimeMinion.class),
+    SPIDER_MINION(ItemType.SPIDER_MINION, SpiderMinion.class),
+    ZOMBIE_MINION(ItemType.ZOMBIE_MINION, ZombieMinion.class),
 
     /**
      * Minion Upgrades
@@ -896,6 +932,7 @@ public enum ItemTypeLinker {
     PUMPKIN(ItemType.PUMPKIN, Pumpkin.class),
     REDSTONE(ItemType.REDSTONE, Redstone.class),
     REDSTONE_BLOCK(ItemType.REDSTONE_BLOCK, RedstoneBlock.class),
+    PACKED_ICE(ItemType.PACKED_ICE, PackedIce.class),
     ROTTEN_FLESH(ItemType.ROTTEN_FLESH, RottenFlesh.class),
     SLIME_BALL(ItemType.SLIME_BALL, SlimeBall.class),
     SPONGE(ItemType.SPONGE, Sponge.class),
@@ -911,7 +948,7 @@ public enum ItemTypeLinker {
     BROWN_MUSHROOM(ItemType.BROWN_MUSHROOM, Mushroom.class),
     MUTTON(ItemType.MUTTON, Mutton.class),
     NETHER_WART(ItemType.NETHER_WART, NetherWart.class),
-    CHICKEN(ItemType.CHICKEN, RawChicken.class),
+    RAW_CHICKEN(ItemType.CHICKEN, RawChicken.class),
     PORKCHOP(ItemType.PORKCHOP, RawPorkchop.class),
     RABBIT(ItemType.RABBIT, RawRabbit.class),
     WHEAT_SEEDS(ItemType.WHEAT_SEEDS, Seeds.class),
@@ -938,7 +975,9 @@ public enum ItemTypeLinker {
     POISONOUS_POTATO(ItemType.POISONOUS_POTATO, Potato.class),
     RABBIT_FOOT(ItemType.RABBIT_FOOT, RabbitFoot.class),
     RABBIT_HIDE(ItemType.RABBIT_HIDE, RabbitHide.class),
-    BEEF(ItemType.BEEF, Beef.class),
+    MAGMA_CREAM(ItemType.MAGMA_CREAM, MagmaCream.class),
+    RAW_BEEF(ItemType.BEEF, RawBeef.class),
+    MELON_BLOCK(ItemType.MELON_BLOCK, MelonBlock.class),
     COAL_BLOCK(ItemType.COAL_BLOCK, CoalBlock.class),
     LAPIS_LAZULI_BLOCK(ItemType.LAPIS_LAZULI_BLOCK, LapisLazuliBlock.class),
     BLAZE_POWDER(ItemType.BLAZE_POWDER, BlazePowder.class),
@@ -946,6 +985,7 @@ public enum ItemTypeLinker {
     GOLD_NUGGET(ItemType.GOLD_NUGGET, GoldNugget.class),
     CACTUS(ItemType.CACTUS, Cactus.class),
     CHEST(ItemType.CHEST, Chest.class),
+    DANDELION(ItemType.DANDELION, Dandelion.class),
     IRON_HELMET(ItemType.IRON_HELMET, IronHelmet.class),
     IRON_CHESTPLATE(ItemType.IRON_CHESTPLATE, IronChestplate.class),
     IRON_LEGGINGS(ItemType.IRON_LEGGINGS, IronLeggings.class),
@@ -1159,9 +1199,9 @@ public enum ItemTypeLinker {
     /**
      * Enchanted Items
      */
-    ENCHANTED_ACACIA_WOOD(ItemType.ENCHANTED_ACACIA_WOOD, EnchantedAcaciaWood.class),
+    ENCHANTED_ACACIA_LOG(ItemType.ENCHANTED_ACACIA_LOG, EnchantedAcaciaLog.class),
     ENCHANTED_BAKED_POTATO(ItemType.ENCHANTED_BAKED_POTATO, EnchantedBakedPotato.class),
-    ENCHANTED_BIRCH_WOOD(ItemType.ENCHANTED_BIRCH_WOOD, EnchantedBirchWood.class),
+    ENCHANTED_BIRCH_LOG(ItemType.ENCHANTED_BIRCH_LOG, EnchantedBirchLog.class),
     ENCHANTED_BLAZE_ROD(ItemType.ENCHANTED_BLAZE_ROD, EnchantedBlazeRod.class),
     ENCHANTED_BLAZE_POWDER(ItemType.ENCHANTED_BLAZE_POWDER, EnchantedBlazePowder.class),
     ENCHANTED_BONE(ItemType.ENCHANTED_BONE, EnchantedBone.class),
@@ -1170,7 +1210,7 @@ public enum ItemTypeLinker {
     ENCHANTED_COAL(ItemType.ENCHANTED_COAL, EnchantedCoal.class),
     ENCHANTED_COBBLESTONE(ItemType.ENCHANTED_COBBLESTONE, EnchantedCobblestone.class),
     ENCHANTED_COCOA_BEANS(ItemType.ENCHANTED_COCOA_BEANS, EnchantedCocoaBeans.class),
-    ENCHANTED_DARK_OAK_WOOD(ItemType.ENCHANTED_DARK_OAK_WOOD, EnchantedDarkOakWood.class),
+    ENCHANTED_DARK_OAK_LOG(ItemType.ENCHANTED_DARK_OAK_LOG, EnchantedDarkOakLog.class),
     ENCHANTED_DIAMOND(ItemType.ENCHANTED_DIAMOND, EnchantedDiamond.class),
     ENCHANTED_EGG(ItemType.ENCHANTED_EGG, EnchantedEgg.class),
     SUPER_ENCHANTED_EGG(ItemType.SUPER_ENCHANTED_EGG, SuperEnchantedEgg.class),
@@ -1181,12 +1221,12 @@ public enum ItemTypeLinker {
     ENCHANTED_EMERALD_BLOCK(ItemType.ENCHANTED_EMERALD_BLOCK, EnchantedEmeraldBlock.class),
     ENCHANTED_GOLD_INGOT(ItemType.ENCHANTED_GOLD_INGOT, EnchantedGold.class),
     ENCHANTED_GOLD_BLOCK(ItemType.ENCHANTED_GOLD_BLOCK, EnchantedGoldBlock.class),
-    ENCHANTED_JUNGLE_WOOD(ItemType.ENCHANTED_JUNGLE_WOOD, EnchantedJungleWood.class),
+    ENCHANTED_JUNGLE_LOG(ItemType.ENCHANTED_JUNGLE_LOG, EnchantedJungleLog.class),
     ENCHANTED_GUNPOWDER(ItemType.ENCHANTED_GUNPOWDER, EnchantedGunpowder.class),
     ENCHANTED_IRON_INGOT(ItemType.ENCHANTED_IRON_INGOT, EnchantedIron.class),
     ENCHANTED_IRON_BLOCK(ItemType.ENCHANTED_IRON_BLOCK, EnchantedIronBlock.class),
     ENCHANTED_LEATHER(ItemType.ENCHANTED_LEATHER, EnchantedLeather.class),
-    ENCHANTED_OAK_WOOD(ItemType.ENCHANTED_OAK_WOOD, EnchantedOakWood.class),
+    ENCHANTED_OAK_LOG(ItemType.ENCHANTED_OAK_LOG, EnchantedOakLog.class),
     ENCHANTED_OBSIDIAN(ItemType.ENCHANTED_OBSIDIAN, EnchantedObsidian.class),
     ENCHANTED_PACKED_ICE(ItemType.ENCHANTED_PACKED_ICE, EnchantedPackedIce.class),
     ENCHANTED_POTATO(ItemType.ENCHANTED_POTATO, EnchantedPotato.class),
@@ -1195,7 +1235,7 @@ public enum ItemTypeLinker {
     ENCHANTED_REDSTONE_BLOCK(ItemType.ENCHANTED_REDSTONE_BLOCK, EnchantedRedstoneBlock.class),
     ENCHANTED_ROTTEN_FLESH(ItemType.ENCHANTED_ROTTEN_FLESH, EnchantedRottenFlesh.class),
     ENCHANTED_SPONGE(ItemType.ENCHANTED_SPONGE, EnchantedSponge.class),
-    ENCHANTED_SPRUCE_WOOD(ItemType.ENCHANTED_SPRUCE_WOOD, EnchantedSpruceWood.class),
+    ENCHANTED_SPRUCE_LOG(ItemType.ENCHANTED_SPRUCE_LOG, EnchantedSpruceLog.class),
     ENCHANTED_STRING(ItemType.ENCHANTED_STRING, EnchantedString.class),
     ENCHANTED_SUGAR(ItemType.ENCHANTED_SUGAR, EnchantedSugar.class),
     ENCHANTED_SNOW_BLOCK(ItemType.ENCHANTED_SNOW_BLOCK, EnchantedSnowBlock.class),
@@ -1263,7 +1303,7 @@ public enum ItemTypeLinker {
     ENCHANTED_RAW_RABBIT(ItemType.ENCHANTED_RAW_RABBIT, EnchantedRawRabbit.class),
     ENCHANTED_SAND(ItemType.ENCHANTED_SAND, EnchantedSand.class),
     ENCHANTED_SEEDS(ItemType.ENCHANTED_SEEDS, EnchantedSeeds.class),
-    ENCHANTED_SLIMEBALL(ItemType.ENCHANTED_SLIMEBALL, EnchantedSlimeball.class),
+    ENCHANTED_SLIME_BALL(ItemType.ENCHANTED_SLIMEBALL, EnchantedSlimeball.class),
     ENCHANTED_SLIME_BLOCK(ItemType.ENCHANTED_SLIME_BLOCK, EnchantedSlimeBlock.class),
     ENCHANTED_SUGAR_CANE(ItemType.ENCHANTED_SUGAR_CANE, EnchantedSugarCane.class),
     ENCHANTED_SULPHUR(ItemType.ENCHANTED_SULPHUR, EnchantedSulphur.class),

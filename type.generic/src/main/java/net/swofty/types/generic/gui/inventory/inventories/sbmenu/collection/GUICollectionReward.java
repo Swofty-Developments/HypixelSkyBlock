@@ -10,11 +10,13 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
@@ -82,8 +84,16 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
-                        SkyBlockItem item = ((CollectionCategory.UnlockRecipe) unlock).getRecipe().getResult();
-                        new GUIRecipe(item.getAttributeHandler().getPotentialClassLinker(), null).open(player);
+                        try {
+                            SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
+                            if (skyBlockItem.getGenericInstance() instanceof Minion) {
+                                new GUIMinionRecipes(skyBlockItem.getAttributeHandler().getMinionType(), new GUICollectionReward(item, reward)).open(player);
+                            } else {
+                                new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialClassLinker(), null).open(player);
+                            }
+                        } catch (NullPointerException exception) {
+                            player.sendMessage("There is no recipe available for this item!");
+                        }
                     }
                 }
 

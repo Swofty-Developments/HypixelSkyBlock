@@ -83,6 +83,8 @@ public class MinionEntityImpl extends LivingEntity {
 
     @Override
     public void spawn() {
+        super.spawn();
+
         activeMinions.add(this);
         updateMinionDisplay(islandMinion);
     }

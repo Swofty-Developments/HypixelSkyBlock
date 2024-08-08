@@ -2,6 +2,7 @@ package net.swofty.types.generic.event.actions.player.region;
 
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
@@ -29,6 +30,7 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.isBypassBuild()) return;
+        if (player.getGameMode() == GameMode.CREATIVE) return;
 
         event.setCancelled(true);
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());

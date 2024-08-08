@@ -4,8 +4,10 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
 import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
@@ -32,7 +34,17 @@ public class FishingCollection extends CollectionCategory {
     public ItemCollection[] getCollections() {
         return List.of(
                 new ItemCollection(ItemType.CLAY_BALL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.CLAY_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -378,12 +390,14 @@ public class FishingCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
@@ -458,9 +472,9 @@ public class FishingCollection extends CollectionCategory {
                         new ItemCollectionReward(25, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.PRISMARINE_SHARD, 32));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.STICK, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.PRISMARINE_SHARD, 32));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.STICK, 1));
                                 List<String> pattern = List.of(
                                         "A",
                                         "A",
@@ -590,7 +604,17 @@ public class FishingCollection extends CollectionCategory {
                                 return 4;
                             }
                         }),
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return null;
+                            }
+
+                            @Override
+                            public List<SkyBlockRecipe<?>> getRecipes() {
+                                return ItemTypeLinker.FISHING_MINION.getNewInstance(Minion.class).getRawRecipes();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;

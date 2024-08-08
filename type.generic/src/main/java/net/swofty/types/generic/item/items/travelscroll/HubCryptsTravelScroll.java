@@ -1,7 +1,7 @@
 package net.swofty.types.generic.item.items.travelscroll;
 
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -21,10 +21,10 @@ public class HubCryptsTravelScroll implements TravelScrollItem, DefaultCraftable
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_OBSIDIAN, 16));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.REVENANT_VISCERA, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_ENDER_PEARL, 16));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_OBSIDIAN, 16));
         List<String> pattern = List.of(
                 "AAA",
                 "CBC",

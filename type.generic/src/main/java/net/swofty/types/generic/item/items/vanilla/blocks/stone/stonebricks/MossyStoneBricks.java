@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.stone.stonebricks;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -35,9 +35,9 @@ public class MossyStoneBricks implements PlaceableCustomSkyBlockItem, Sellable, 
 
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.STONE_BRICKS, 1));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemType.VINES, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.STONE_BRICKS, 1));
+        ingredientMap.put('B', new ItemQuantifiable(ItemType.VINES, 1));
         List<String> pattern = List.of(
                 "AB");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.MOSSY_STONE_BRICKS), ingredientMap, pattern);

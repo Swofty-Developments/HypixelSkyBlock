@@ -32,7 +32,7 @@ dependencies {
     implementation(project(":spark"))
     implementation(project(":anticheat"))
     implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("com.github.Minestom:Minestom:2be6f9c507") {
+    implementation("net.minestom:minestom-snapshots:12794d4263") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
     implementation("dev.hollowcube:polar:1.10.0")

@@ -104,8 +104,9 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                String name = forward ? "§a->" : "§a<-";
-                return ItemStackCreator.createNamedItemStack(Material.ARROW, name);
+                String name = forward ? "§aNext Page" : "§aPrevious Page";
+                String lore = forward ? "§ePage " + (page + 1) : "§ePage " + (page - 1);
+                return ItemStackCreator.getStack(name, Material.ARROW, 1, lore);
             }
         };
     }

@@ -13,55 +13,55 @@ public class MinionGravel extends SkyBlockMinion {
     @Override
     public List<MinionTier> getTiers() {
         return List.of(
-                new MinionTier(1, 26, 64,
-                        "4a3700896117fd94889b0216d124f1e67e4f0e9ca3b04d168f849a297be2047d",
+                new MinionTier(1, 26, 128,
+                        "7458507ed31cf9a38986ac8795173c609637f03da653f30483a721d3fbe602d",
                         Material.WOODEN_SHOVEL, true),
-                new MinionTier(2, 26, 192,
-                        "42ff2723653485266994f373dfc42ae7191e915a988c0a211c08512d49537e2a",
+                new MinionTier(2, 26, 256,
+                        "fb48c89157ae36038bbd9c88054ef8797f5b6f38631c1b57e58dcb8d701fa61d",
                         Material.WOODEN_SHOVEL, true),
-                new MinionTier(3, 24, 192,
-                        "f6bade9160f39ac68e23b865407768e9ef2aff684a5cb4c5990217eeef5edefc",
-                        Material.WOODEN_SHOVEL, true),
+                new MinionTier(3, 24, 256,
+                        "aae230c0ded51aa97c7964db885786f0c77f6244539b185ef4a5f2554199c785",
+                        Material.STONE_SHOVEL, true),
                 new MinionTier(4, 24, 384,
-                        "2ee6c57f32d447a2d80fbe2a8a2b75df49f1ad658a550fe76d3510efb1149917",
-                        Material.WOODEN_SHOVEL, true),
+                        "ef5b6973f41305d2b41aa82b94ef3b95e05e943e4cd4f793ca59278c46cbb985",
+                        Material.STONE_SHOVEL, true),
                 new MinionTier(5, 22, 384,
-                        "b1dc11062ef2fc5ae04ca2b473a9ac68c0f238ac17c0ead8927e32b7a62bbda2",
-                        Material.WOODEN_SHOVEL, true),
+                        "c5961d126cda263759e43940c5665e9f1487ac2c7e26f903e5086affb3785714",
+                        Material.STONE_SHOVEL, true),
                 new MinionTier(6, 22, 576,
-                        "40dce9099737f40505ca6052a6d1ae89d130455f4d347c0114efd50abc3a1af4",
-                        Material.WOODEN_SHOVEL, true),
+                        "69c5f0583967589650b0de2c5108811ff01c32ac9861a820bba650f0412126d6",
+                        Material.IRON_SHOVEL, true),
                 new MinionTier(7, 19, 576,
-                        "e95a9f97387f3892298e855075145823888e308c8c31aaf176d3d57fd24acea3",
-                        Material.WOODEN_SHOVEL, true),
+                        "d092f7535b5d091cc3d3f0a343be5d46f16466ae9344b0cac452f3435f00996a",
+                        Material.IRON_SHOVEL, true),
                 new MinionTier(8, 19, 768,
-                        "dd0ea7955d363aeb4d1e6965e64c52744da0aeb7fe8c976617cb8f0e8b6d491d",
-                        Material.WOODEN_SHOVEL, true),
+                        "7117a2f4cf83c41a8dfb9c7a8238ca06bbdb5540a1e91e8721df5476b70f6e74",
+                        Material.IRON_SHOVEL, true),
                 new MinionTier(9, 16, 768,
-                        "f13abcf4dedd27e9d19973b7b5365c7f7105141af237d85390c1eea8e8d31950",
-                        Material.WOODEN_SHOVEL, true),
+                        "14463534f9fbf4590d9e2dcc1067231ccb8d7f641ee56f4652a17f5027f62c63",
+                        Material.GOLDEN_SHOVEL, true),
                 new MinionTier(10, 16, 960,
-                        "289b398bf60585fb5ab4c6a8bd07bb9f3699af0d4884a3d5b6ff9285e76e782f",
-                        Material.WOODEN_SHOVEL, true),
+                        "5c6e62f2366d42596c752925c7799c63edbfc226fffd9327ce7780b24c3abd11",
+                        Material.GOLDEN_SHOVEL, true),
                 new MinionTier(11, 13, 960,
-                        "1479dca9f84860056e5fb5f56b2edcf3c90b7375e305eaeaf319a3bf2b0121e5",
-                        Material.WOODEN_SHOVEL, true)
+                        "3945c30d258d68576f061c162b7d50ca8a1f07e41d557e42723dbd4fcce5d594",
+                        Material.DIAMOND_SHOVEL, true)
         );
     }
 
     @Override
     public Color getBootColour() {
-        return new Color(130, 130, 130); // Gravel minion's boot color (Gray)
+        return new Color(0, 0, 0);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(130, 130, 130); // Gravel minion's leggings color (Gray)
+        return new Color(0, 0, 0);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(130, 130, 130); // Gravel minion's chestplate color (Gray)
+        return new Color(0, 0, 0);
     }
 
 

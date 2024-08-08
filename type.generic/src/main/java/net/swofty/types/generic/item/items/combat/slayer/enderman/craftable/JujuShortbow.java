@@ -3,7 +3,7 @@ package net.swofty.types.generic.item.items.combat.slayer.enderman.craftable;
 import net.minestom.server.coordinate.Vec;
 import net.swofty.types.generic.entity.ArrowEntityImpl;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
@@ -17,12 +17,12 @@ import net.swofty.commons.item.ItemType;
 public class JujuShortbow implements CustomSkyBlockItem, DefaultCraftable, BowImpl, NotFinishedYet {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 32));
-        ingredientMap.put('B', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_STRING, 64));
-        ingredientMap.put('C', new MaterialQuantifiable(ItemTypeLinker.NULL_OVOID, 32));
-        ingredientMap.put('D', new MaterialQuantifiable(ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK, 32));
-        ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_EYE_OF_ENDER, 32));
+        ingredientMap.put('B', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_STRING, 64));
+        ingredientMap.put('C', new ItemQuantifiable(ItemTypeLinker.NULL_OVOID, 32));
+        ingredientMap.put('D', new ItemQuantifiable(ItemTypeLinker.ENCHANTED_QUARTZ_BLOCK, 32));
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
         List<String> pattern = List.of(
                 " AB",
                 "C B",

@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.items.vanilla.blocks.wood.acacia;
 
 import net.swofty.types.generic.block.BlockType;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.DefaultCraftable;
 import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
@@ -19,8 +19,8 @@ import java.util.Map;
 public class AcaciaPressurePlate implements PlaceableCustomSkyBlockItem, DefaultCraftable, Sellable {
     @Override
     public SkyBlockRecipe<?> getRecipe() {
-        Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-        ingredientMap.put('A', new MaterialQuantifiable(ItemTypeLinker.ACACIA_PLANKS, 1));
+        Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+        ingredientMap.put('A', new ItemQuantifiable(ItemTypeLinker.ACACIA_PLANKS, 1));
         List<String> pattern = List.of(
                 "AA");
         return new ShapedRecipe(SkyBlockRecipe.RecipeType.NONE, new SkyBlockItem(ItemTypeLinker.ACACIA_PRESSURE_PLATE), ingredientMap, pattern);

@@ -54,17 +54,17 @@ public class MinionCoal extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(0,0,0);
+        return new Color(10,10,10);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(0,0,0);
+        return new Color(10,10,10);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(0,0,0);
+        return new Color(10,10,10);
     }
 
     @Override

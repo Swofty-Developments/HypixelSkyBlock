@@ -5,6 +5,8 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
+import net.swofty.types.generic.museum.MuseumRewards;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -38,6 +40,11 @@ public class AdminMeCommand extends SkyBlockCommand {
                 SkyBlockPlayer player = (SkyBlockPlayer) sender;
                 UUID realUUID = player.getUuid();
                 UUID crackedUUID = UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{player.getName()}").getBytes(StandardCharsets.UTF_8));
+
+                player.getSkyBlockExperience().addExperience(
+                        SkyBlockLevelCause.getMuseumCause(MuseumRewards.REWARD_3)
+                );
+
 
                 List<UUID> adminUUIDs = new ArrayList<>();
                 ADMIN_LIST.forEach(admin -> adminUUIDs.add(UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{admin}").getBytes(StandardCharsets.UTF_8))));

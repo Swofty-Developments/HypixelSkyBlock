@@ -14,37 +14,37 @@ public class MinionLapis extends SkyBlockMinion {
     public List<MinionTier> getTiers() {
         return List.of(
                 new MinionTier(1, 29, 64,
-                        "3654a0f8a85d131ac9e633776837d931f0a952dcf174c28972788fef343917ed",
+                        "64fd97b9346c1208c1db3957530cdfc5789e3e65943786b0071cf2b2904a6b5c",
                         Material.WOODEN_PICKAXE, true),
                 new MinionTier(2, 29, 192,
-                        "9f3a29fe392f3b15b641f18668f888cbaca5a9065d22f76e149fc60c0459f1f2",
+                        "65be0e9684b28a2531bec6186f75171c1111c3133b8ea944f32c34f247ea6923",
                         Material.WOODEN_PICKAXE, true),
                 new MinionTier(3, 27, 192,
-                        "8bb69d622dd5ff8ad423a379dd309046551388ae9e157fd643cefd79cbf3efe6",
+                        "2a3915a78c2397f2cef96002391f54c544889c5ced4089eb723d14b0a6f02b08",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(4, 27, 384,
-                        "37167d3d36785567737aa225b324504c30bf4b451f92bd8c9c081dd7f53458d0",
+                        "97df8ae6e1436504a6f08137313e5e47e17aa078827f3a636336668a4188e6fc",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(5, 25, 384,
-                        "f777471870afa67f5d17c6534739f3eef8ff4d95d660ae80f41e28b1165cc0c2",
+                        "aa5d796b9687cc358ea59b06fdd9a0a519d2c7a2928de10d37848b91fbbc648f",
                         Material.STONE_PICKAXE, true),
                 new MinionTier(6, 25, 576,
-                        "1d8a853354472f41dde5a584c160799484788a042487a2053aac55ad6a9780a4",
+                        "6e5db0956181c801b21e53cd7eb7335941801a0f335b535a7c9afd26022e9e70",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(7, 23, 576,
-                        "6fa5bbebcbd18d58091dece4576153c6dff34cb16323c9b634db031eee14116b",
+                        "1a49908cf8c407860512997f8256f0b831bd8fc4f41d0bf21cd23dbc0bdebb0f",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(8, 23, 768,
-                        "1f43f65fd40d5300603dfd790922b4020fed0f87261a1fbaf7c88fcedd38813f=",
+                        "c08a219f5cf568c9e03711518fcf18631a1866b407c1315017e3bf57f44ef563",
                         Material.IRON_PICKAXE, true),
                 new MinionTier(9, 21, 768,
-                        "36a33c76348ea038943642db763ca2bab278a005bb6735a23dc1c801dded6cde",
+                        "e5a93254f20364b7117f606fd6745769994acd3b5c057d3382e5dd828f9ebfd4",
                         Material.GOLDEN_PICKAXE, true),
                 new MinionTier(10, 21, 960,
-                        "56a745e9e375e2f7661f2db6339e9c94b009b4f15a56174ac3b2fd7ef66b4b2a",
+                        "6fe5c4ceb6e66e7e0c357014be3d58f052a38c040be62f26af5fb9bed437541",
                         Material.GOLDEN_PICKAXE, true),
                 new MinionTier(11, 18, 960,
-                        "7e05846c2b0668022342acdc82e62ffecad75b8be7fe52f533948457fe16791a",
+                        "736cd50c9e8cf786646960734b5e23e4d2e3112f4494d5ddb3c1e45033324a0e",
                         Material.DIAMOND_PICKAXE, true),
                 new MinionTier(12, 16, 960,
                         "edc594af5a8391c59001582b274864cf0701505609ece652c2a356de4617c28e",
@@ -54,17 +54,17 @@ public class MinionLapis extends SkyBlockMinion {
 
     @Override
     public Color getBootColour() {
-        return new Color(38, 97, 156); // Lapis minion's boot color
+        return new Color(9, 82, 160);
     }
 
     @Override
     public Color getLeggingsColour() {
-        return new Color(38, 97, 156); // Lapis minion's leggings color
+        return new Color(9, 82, 160);
     }
 
     @Override
     public Color getChestplateColour() {
-        return new Color(38, 97, 156); // Lapis minion's chestplate color
+        return new Color(9, 82, 160);
     }
 
 

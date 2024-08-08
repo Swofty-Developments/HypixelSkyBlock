@@ -5,7 +5,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.MaterialQuantifiable;
+import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
 import net.swofty.types.generic.item.impl.SkyBlockRecipe;
@@ -51,7 +51,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.COBBLESTONE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -71,9 +71,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.COBBLESTONE, 8));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.COAL, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.COBBLESTONE, 8));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.COAL, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "ABA",
@@ -101,9 +101,10 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_REDSTONE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -126,9 +127,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "A A");
@@ -138,9 +139,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "AAA",
@@ -151,9 +152,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -164,9 +165,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -189,9 +190,9 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 32));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 32));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -208,9 +209,10 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 64));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_REDSTONE_BLOCK, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_COBBLESTONE, 64));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_REDSTONE_BLOCK, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "AAA",
                                         "A A",
@@ -231,7 +233,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.COAL_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -302,10 +304,10 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_COAL_BLOCK, 2));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_COAL_BLOCK, 2));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
                                         " A ");
@@ -336,7 +338,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.GOLD_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -418,7 +420,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.LAPIS_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -472,12 +474,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(150000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
@@ -498,7 +502,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.GRAVEL_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -579,7 +583,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.DIAMOND_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -628,8 +632,8 @@ public class MiningCollection extends CollectionCategory {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return new ShapedRecipe(SkyBlockRecipe.RecipeType.MINING, new SkyBlockItem(ItemType.DIAMOND_SPREADING), Map.of(
-                                        'E', new MaterialQuantifiable(ItemType.ENCHANTED_DIAMOND, 1),
-                                        'V', new MaterialQuantifiable(ItemType.VINES, 1)
+                                        'E', new ItemQuantifiable(ItemType.ENCHANTED_DIAMOND, 1),
+                                        'V', new ItemQuantifiable(ItemType.VINES, 1)
                                 ), List.of(
                                         "VVV",
                                         "VEV",
@@ -672,7 +676,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.EMERALD_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -748,7 +752,7 @@ public class MiningCollection extends CollectionCategory {
                             public List<SkyBlockRecipe<?>> getRecipes() {
                                 return ItemTypeLinker.ENDSTONE_MINION.getNewInstance(Minion.class).getRawRecipes();
                             }
-                        },  new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -856,7 +860,7 @@ public class MiningCollection extends CollectionCategory {
                             public SkyBlockRecipe<?> getRecipe() {
                                 return getStandardEnchantedRecipe(FlawedJasper.class, SkyBlockRecipe.RecipeType.MINING, ItemType.ROUGH_JASPER_GEM);
                             }
-                        },new UnlockXP() {
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -923,12 +927,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockRecipe() {
@@ -968,22 +974,30 @@ public class MiningCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(2000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
                 new ItemCollection(ItemType.GLOWSTONE_DUST,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.GLOWSTONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1037,7 +1051,12 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.HARD_STONE,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.HARD_STONE_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1068,7 +1087,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(150000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(300000, new UnlockRecipe() {
@@ -1078,17 +1098,19 @@ public class MiningCollection extends CollectionCategory {
                             }
                         }, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
                 new ItemCollection(ItemType.ICE,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
@@ -1158,12 +1180,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
@@ -1174,7 +1198,7 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.IRON_INGOT,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
@@ -1202,11 +1226,11 @@ public class MiningCollection extends CollectionCategory {
                                 return 4;
                             }
                         }, new UnlockCustomAward() {
-                                    @Override
-                                    public CustomCollectionAward getAward() {
-                                        return CustomCollectionAward.PROTECTION_DISCOUNT;
-                                    }
-                                }),
+                            @Override
+                            public CustomCollectionAward getAward() {
+                                return CustomCollectionAward.PROTECTION_DISCOUNT;
+                            }
+                        }),
                         new ItemCollectionReward(1000, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
@@ -1226,10 +1250,10 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.CHEST, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_IRON_INGOT, 1));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.CHEST, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "ABA",
@@ -1269,10 +1293,10 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.ENCHANTED_IRON_BLOCK, 1));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.CHEST, 1));
-                                ingredientMap.put(' ', new MaterialQuantifiable(ItemType.AIR, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.ENCHANTED_IRON_BLOCK, 1));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.CHEST, 1));
+                                ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 1));
                                 List<String> pattern = List.of(
                                         "A A",
                                         "ABA",
@@ -1283,12 +1307,14 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(100000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(400000, new UnlockXP() {
@@ -1299,7 +1325,12 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.MITHRIL,
-                        new ItemCollectionReward(50, new UnlockXP() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
+                            @Override
+                            public SkyBlockRecipe<?> getRecipe() {
+                                return ItemTypeLinker.MITHRIL_MINION.getNewInstance(Minion.class).getRawRecipes().getFirst();
+                            }
+                        }, new UnlockXP() {
                             @Override
                             public int xp() {
                                 return 4;
@@ -1342,17 +1373,20 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(250000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(500000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         })
                 ),
@@ -1429,7 +1463,7 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.QUARTZ,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
@@ -1542,7 +1576,7 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.OBSIDIAN,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
@@ -1679,11 +1713,11 @@ public class MiningCollection extends CollectionCategory {
                         }, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
-                                Map<Character, MaterialQuantifiable> ingredientMap = new HashMap<>();
-                                ingredientMap.put('A', new MaterialQuantifiable(ItemType.FLAMES, 4));
-                                ingredientMap.put('B', new MaterialQuantifiable(ItemType.ENCHANTED_RED_SAND_CUBE, 1));
-                                ingredientMap.put('C', new MaterialQuantifiable(ItemType.ENCHANTED_SULPHUR_CUBE, 1));
-                                ingredientMap.put('D', new MaterialQuantifiable(ItemType.PLASMA_BUCKET, 1));
+                                Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
+                                ingredientMap.put('A', new ItemQuantifiable(ItemType.FLAMES, 4));
+                                ingredientMap.put('B', new ItemQuantifiable(ItemType.ENCHANTED_RED_SAND_CUBE, 1));
+                                ingredientMap.put('C', new ItemQuantifiable(ItemType.ENCHANTED_SULPHUR_CUBE, 1));
+                                ingredientMap.put('D', new ItemQuantifiable(ItemType.PLASMA_BUCKET, 1));
                                 List<String> pattern = List.of(
                                         "ABA",
                                         "CDC",
@@ -1693,7 +1727,7 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.REDSTONE,
-                        new ItemCollectionReward(100,new UnlockRecipe() {
+                        new ItemCollectionReward(100, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
@@ -1789,7 +1823,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1799,7 +1834,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(400000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1809,7 +1845,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(600000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1819,7 +1856,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(800000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1829,7 +1867,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1000000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1839,7 +1878,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1200000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1849,7 +1889,8 @@ public class MiningCollection extends CollectionCategory {
                         }),
                         new ItemCollectionReward(1400000, new UnlockXP() {
                             @Override
-                            public int xp() {return 4;
+                            public int xp() {
+                                return 4;
                             }
                         }, new UnlockCustomAward() {
                             @Override
@@ -1859,7 +1900,7 @@ public class MiningCollection extends CollectionCategory {
                         })
                 ),
                 new ItemCollection(ItemType.SAND,
-                        new ItemCollectionReward(50,new UnlockRecipe() {
+                        new ItemCollectionReward(50, new UnlockRecipe() {
                             @Override
                             public SkyBlockRecipe<?> getRecipe() {
                                 return null;
