@@ -48,8 +48,6 @@ public class MinionEntityImpl extends LivingEntity {
         meta.setHasArms(true);
 
         setInvisible(false);
-
-        updateMinionDisplay(islandMinion);
     }
 
     public void updateMinionDisplay(IslandMinionData.IslandMinion updatedMinion) {
@@ -77,12 +75,16 @@ public class MinionEntityImpl extends LivingEntity {
                     new DyedItemColor(minion.getChestplateColour(), false)).build());
         }
 
-        setItemInMainHand(ItemStack.builder(minionTier.heldItem()).build());
+        try {
+            setItemInMainHand(ItemStack.builder(minionTier.heldItem()).build());
+        } catch (Exception e) {}
+        // TODO: Fix this, I have no clue why it stopped working
     }
 
     @Override
     public void spawn() {
         activeMinions.add(this);
+        updateMinionDisplay(islandMinion);
     }
 
     @Override

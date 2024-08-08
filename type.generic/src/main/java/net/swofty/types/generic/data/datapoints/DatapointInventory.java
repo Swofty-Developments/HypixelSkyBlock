@@ -3,12 +3,10 @@ package net.swofty.types.generic.data.datapoints;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.commons.protocol.serializers.InventorySerializer;
 import net.swofty.types.generic.user.SkyBlockInventory;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DatapointInventory extends Datapoint<SkyBlockInventory> {

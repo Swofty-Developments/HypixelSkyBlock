@@ -50,6 +50,11 @@ public class SkyBlockItem {
             }
         }
         setAmount(item.amount());
+
+        item.attributes().forEach(attribute -> {
+            ItemAttribute attributeOnItem = getAttribute(attribute.getKey());
+            attributeOnItem.setValue(attribute.getValue());
+        });
     }
 
     public SkyBlockItem(Material material) {

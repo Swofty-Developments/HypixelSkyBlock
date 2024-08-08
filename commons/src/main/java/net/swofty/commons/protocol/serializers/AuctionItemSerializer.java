@@ -1,40 +1,63 @@
 package net.swofty.commons.protocol.serializers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.SneakyThrows;
+import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
+import org.json.JSONObject;
 
-public class AuctionItemSerializer<T> implements Serializer<T> {
-    private final ObjectMapper mapper;
-    private final Class<T> clazz;
+import java.util.List;
+import java.util.UUID;
 
-    public AuctionItemSerializer(Class<T> clazz) {
-        this.mapper = new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        this.clazz = clazz;
-
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(UnderstandableSkyBlockItem.class, new SkyBlockItemSerializer());
-        module.addDeserializer(UnderstandableSkyBlockItem.class, new SkyBlockItemDeserializer());
-        mapper.registerModule(module);
-    }
-
-    @SneakyThrows
-    @Override
-    public String serialize(T value) {
-        return mapper.writeValueAsString(value);
-    }
-
-    @SneakyThrows
-    @Override
-    public T deserialize(String json) {
-        return mapper.readValue(json, clazz);
-    }
+public class AuctionItemSerializer<T> implements Serializer<AuctionItem> {
 
     @Override
-    public T clone(T value) {
-        return value;
+    public String serialize(AuctionItem value) {
+        UUID uuid = value.getUuid();
+        UUID originator = value.getOriginator();
+        UnderstandableSkyBlockItem item = value.getItem();
+        long endTime = value.getEndTime();
+        boolean isBin = value.isBin();
+        Integer startingPrice = value.getStartingPrice();
+
+        JSONObject obj = new JSONObject();
+        obj.put("uuid", uuid.toString());
+        obj.put("originator", originator.toString());
+        obj.put("item", new UnderstandableSkyBlockItemSerializer().serialize(item));
+        obj.put("end", endTime);
+        obj.put("bin", isBin);
+        obj.put("starting-price", startingPrice);
+        obj.put("bids", value.getBids().stream().map(AuctionItem.Bid::toString).toList());
+        return obj.toString();
+    }
+
+    @Override
+    public AuctionItem deserialize(String json) {
+        JSONObject obj = new JSONObject(json);
+        UUID uuid = UUID.fromString(obj.getString("uuid"));
+        UUID originator = UUID.fromString(obj.getString("originator"));
+        UnderstandableSkyBlockItem item = new UnderstandableSkyBlockItemSerializer().deserialize(obj.getString("item"));
+        long endTime = obj.getLong("end");
+        boolean isBin = obj.getBoolean("bin");
+        Integer startingPrice = obj.getInt("starting-price");
+        List<AuctionItem.Bid> bids = obj.getJSONArray("bids").toList().stream()
+                .map(Object::toString)
+                .map(AuctionItem.Bid::fromString)
+                .toList();
+
+        AuctionItem auctionItem = new AuctionItem();
+        auctionItem.setUuid(uuid);
+        auctionItem.setOriginator(originator);
+        auctionItem.setItem(item);
+        auctionItem.setEndTime(endTime);
+        auctionItem.setBin(isBin);
+        auctionItem.setStartingPrice(startingPrice);
+        auctionItem.setBids(bids);
+        return auctionItem;
+    }
+
+    @Override
+    public AuctionItem clone(AuctionItem value) {
+        return new AuctionItem(value.getItem(), value.getOriginator(), value.getEndTime(), value.isBin(), Long.valueOf(value.getStartingPrice()));
     }
 }

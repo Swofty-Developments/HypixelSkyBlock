@@ -112,6 +112,10 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
                 jsonObject.put("display", display.namespace().asString());
                 List<String> items = new ArrayList<>();
                 for (SkyBlockItem item : this.items) {
+                    if (item == null) {
+                        items.add("null");
+                        continue;
+                    }
                     items.add(item.toUnderstandable().serialize());
                 }
                 jsonObject.put("items", items);
@@ -123,6 +127,10 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
                 Material display = Material.fromNamespaceId(jsonObject.getString("display"));
                 List<SkyBlockItem> items = new ArrayList<>();
                 for (Object item : jsonObject.getJSONArray("items")) {
+                    if (item.equals("null")) {
+                        items.add(null);
+                        continue;
+                    }
                     items.add(new SkyBlockItem(new UnderstandableSkyBlockItemSerializer().deserialize((String) item)));
                 }
                 return new StorageSlot(page, display, items.toArray(new SkyBlockItem[0]));

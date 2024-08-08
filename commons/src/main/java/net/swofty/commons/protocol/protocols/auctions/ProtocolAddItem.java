@@ -15,7 +15,7 @@ public class ProtocolAddItem extends ProtocolSpecification {
     public List<ProtocolEntries<?>> getServiceProtocolEntries() {
         return new ArrayList<>(List.of(
                 new ProtocolEntries<>("item", true,
-                        new AuctionItemSerializer<>(AuctionItem.class)),
+                        new AuctionItemSerializer<>()),
                 new ProtocolEntries<AuctionCategories>("category", true,
                         new JacksonSerializer<>(AuctionCategories.class))
         ));

@@ -1,5 +1,12 @@
 package net.swofty.commons.protocol.serializers;
 
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
@@ -7,9 +14,9 @@ import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class UnderstandableSkyBlockItemSerializer implements Serializer<UnderstandableSkyBlockItem> {
 
@@ -17,19 +24,14 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
     public String serialize(UnderstandableSkyBlockItem value) {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("itemKey", value.itemKey());
+        jsonObject.put("itemKey", value.itemKey() != null ? value.itemKey().name() : "null");
         jsonObject.put("amount", value.amount());
-        jsonObject.put("material", value.material().namespace().asString());
+        jsonObject.put("material", value.itemKey() != null ? value.itemKey().material :
+                value.material().namespace().asString());
 
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
-
-        value.attributes().forEach(attribute -> {
-            futures.add(CompletableFuture.runAsync(() -> {
-                jsonObject.put(attribute.getKey(), attribute.saveIntoString());
-            }));
-        });
-
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        for (ItemAttribute attribute : value.attributes()) {
+            jsonObject.put("attr-" + attribute.getKey(), attribute.saveIntoString());
+        }
 
         return jsonObject.toString();
     }
@@ -39,23 +41,35 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
         JSONObject jsonObject = new JSONObject(json);
 
         ItemType itemKey = null;
-        if (jsonObject.has("itemKey"))
-            itemKey = ItemType.valueOf(jsonObject.getString("itemKey"));
-        int amount = jsonObject.getInt("amount");
-        String material = jsonObject.getString("material");
-
-        List<ItemAttribute> attributes = ItemAttribute.getPossibleAttributes().stream().toList();
-
-        attributes.forEach(attribute -> {
-            if (jsonObject.has(attribute.getKey())) {
-                attribute.loadFromString(jsonObject.getString(attribute.getKey()));
+        if (!jsonObject.getString("itemKey").equals("null")) {
+            try {
+                itemKey = ItemType.valueOf(jsonObject.getString("itemKey"));
+            } catch (IllegalArgumentException e) {
+                // Handle invalid itemKey
+                System.err.println("Invalid itemKey: " + jsonObject.getString("itemKey"));
             }
-        });
+        }
 
-        return new UnderstandableSkyBlockItem(itemKey,
-                attributes,
-                amount,
-                Material.fromNamespaceId(material));
+        int amount = jsonObject.getInt("amount");
+        String materialStr = jsonObject.getString("material");
+        Material material = Material.fromNamespaceId(materialStr);
+        if (material == null) {
+            throw new IllegalArgumentException("Invalid material: " + materialStr);
+        }
+
+        List<ItemAttribute> attributes = new ArrayList<>();
+        for (ItemAttribute possibleAttribute : ItemAttribute.getPossibleAttributes()) {
+            if (jsonObject.has("attr-" + possibleAttribute.getKey())) {
+                Object value = possibleAttribute.loadFromString(jsonObject.getString("attr-" + possibleAttribute.getKey()));
+                possibleAttribute.setValue(value);
+                attributes.add(possibleAttribute);
+            } else {
+                possibleAttribute.setValue(possibleAttribute.getDefaultValue(null));
+                attributes.add(possibleAttribute);
+            }
+        }
+
+        return new UnderstandableSkyBlockItem(itemKey, attributes, amount, material);
     }
 
     @Override

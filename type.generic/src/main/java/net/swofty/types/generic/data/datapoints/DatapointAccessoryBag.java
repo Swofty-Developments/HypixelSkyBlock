@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.item.Rarity;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -30,7 +29,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
 
             for (Map.Entry<Integer, SkyBlockItem> entry : value.getAccessoryMap().entrySet()) {
                 serialized.put(String.valueOf(entry.getKey()),
-                        SkyBlockItemSerializer.serializeJSON(entry.getValue().toUnderstandable()).toString());
+                        entry.getValue().toUnderstandable().serialize());
             }
 
             return new JSONObject(serialized).toString();
@@ -54,9 +53,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                 }
 
                 map.put(Integer.parseInt(key),
-                        new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(
-                                new JSONObject(obj.getString(key))
-                        )));
+                        new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(obj.getString(key))));
             }
 
             return new DatapointAccessoryBag.PlayerAccessoryBag(map, discoveredAccessories);

@@ -4,16 +4,42 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.serializers.InventorySerializer;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatapointBackpacks extends Datapoint<DatapointBackpacks.PlayerBackpacks> {
-    private static final InventorySerializer<DatapointBackpacks.PlayerBackpacks> serializer =
-            new InventorySerializer<>(DatapointBackpacks.PlayerBackpacks.class);
+    private static final Serializer<PlayerBackpacks> serializer = new Serializer<>() {
+        @Override
+        public String serialize(PlayerBackpacks value) {
+            JSONObject jsonObject = new JSONObject();
+            for (Map.Entry<Integer, UnderstandableSkyBlockItem> entry : value.backpacks.entrySet()) {
+                jsonObject.put(entry.getKey().toString(), entry.getValue().serialize());
+            }
+            jsonObject.put("unlockedSlots", value.unlockedSlots);
+            return jsonObject.toString();
+        }
+
+        @Override
+        public PlayerBackpacks deserialize(String json) {
+            JSONObject jsonObject = new JSONObject(json);
+            Map<Integer, UnderstandableSkyBlockItem> backpacks = new HashMap<>();
+            for (Object key : jsonObject.keySet()) {
+                if (key.equals("unlockedSlots")) continue;
+                backpacks.put(Integer.parseInt(key.toString()), UnderstandableSkyBlockItem.deserialize(jsonObject.getString(key.toString())));
+            }
+            int unlockedSlots = jsonObject.getInt("unlockedSlots");
+            return new PlayerBackpacks(backpacks, unlockedSlots);
+        }
+
+        @Override
+        public PlayerBackpacks clone(PlayerBackpacks value) {
+            return new PlayerBackpacks(value.backpacks, value.unlockedSlots);
+        }
+    };
 
     public DatapointBackpacks(String key, DatapointBackpacks.PlayerBackpacks value) {
         super(key, value, serializer);

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AuctionItemListSerializer implements Serializer<List<AuctionItem>> {
-    private final AuctionItemSerializer<AuctionItem> auctionItemSerializer = new AuctionItemSerializer<>(AuctionItem.class);
+    private final AuctionItemSerializer<AuctionItem> auctionItemSerializer = new AuctionItemSerializer<>();
 
     @Override
     public String serialize(List<AuctionItem> value) {

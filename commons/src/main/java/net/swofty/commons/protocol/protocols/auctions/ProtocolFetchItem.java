@@ -22,7 +22,7 @@ public class ProtocolFetchItem extends ProtocolSpecification {
     public List<ProtocolEntries<?>> getReturnedProtocolEntries() {
         return new ArrayList<>(List.of(
                 new ProtocolEntries<>("item", true,
-                        new AuctionItemSerializer<>(AuctionItem.class))
+                        new AuctionItemSerializer<>())
         ));
     }
 

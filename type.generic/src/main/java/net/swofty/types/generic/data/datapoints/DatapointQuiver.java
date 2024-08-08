@@ -5,12 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -24,8 +23,10 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
             Map<String, String> serialized = new HashMap<>();
 
             for (Map.Entry<Integer, SkyBlockItem> entry : value.getQuiverMap().entrySet()) {
-                serialized.put(String.valueOf(entry.getKey()),
-                        SkyBlockItemSerializer.serializeJSON(entry.getValue().toUnderstandable()).toString());
+                serialized.put(
+                        String.valueOf(entry.getKey()),
+                        entry.getValue().toUnderstandable().serialize()
+                ).toString();
             }
 
             return new JSONObject(serialized).toString();
@@ -38,9 +39,7 @@ public class DatapointQuiver extends Datapoint<DatapointQuiver.PlayerQuiver> {
 
             for (String key : obj.keySet()) {
                 map.put(Integer.parseInt(key),
-                        new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(
-                                new JSONObject(obj.getString(key))
-                        )));
+                        new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(obj.getString(key))));
             }
 
             return new PlayerQuiver(map);

@@ -1,10 +1,9 @@
 package net.swofty.types.generic.block.attribute.attributes;
 
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -32,7 +31,7 @@ public class BlockAttributeChestData extends BlockAttribute<List<SkyBlockItem>> 
 
         String[] split = string.split(",");
         for (String item : split) {
-            items.add(new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject(item))));
+            items.add(new SkyBlockItem(UnderstandableSkyBlockItem.deserialize(item)));
         }
 
         return items;
@@ -44,7 +43,7 @@ public class BlockAttributeChestData extends BlockAttribute<List<SkyBlockItem>> 
         List<String> serializedItems = new ArrayList<>();
 
         items.forEach(item -> {
-            serializedItems.add(SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString());
+            serializedItems.add(item.toUnderstandable().serialize());
         });
 
         return String.join(",", serializedItems);

@@ -3,9 +3,11 @@ package net.swofty.commons.item.attribute.attributes;
 import lombok.SneakyThrows;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
-import net.swofty.commons.protocol.serializers.InventorySerializer;
+import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +26,28 @@ public class ItemAttributeBackpackData extends ItemAttribute<ItemAttributeBackpa
     @SneakyThrows
     @Override
     public ItemAttributeBackpackData.BackpackData loadFromString(String string) {
-        InventorySerializer<BackpackData> serializer =
-                new InventorySerializer<>(BackpackData.class);
+        JSONObject jsonObject = new JSONObject(string);
+        List<UnderstandableSkyBlockItem> items = new ArrayList<>();
 
-        return serializer.deserialize(string);
+        if (jsonObject.has("items")) {
+            for (Object item : jsonObject.getJSONArray("items")) {
+                items.add(UnderstandableSkyBlockItem.deserialize(item.toString()));
+            }
+        }
+
+        return new BackpackData(items);
     }
 
     @SneakyThrows
     @Override
     public String saveIntoString() {
-        InventorySerializer<BackpackData> serializer =
-                new InventorySerializer<>(BackpackData.class);
+        JSONObject jsonObject = new JSONObject();
 
-        return serializer.serialize(this.value);
+        jsonObject.put("items", new JSONArray(value.items().stream()
+                .map(UnderstandableSkyBlockItem::serialize)
+                .toList()));
+
+        return jsonObject.toString();
     }
 
     public record BackpackData(List<UnderstandableSkyBlockItem> items) {

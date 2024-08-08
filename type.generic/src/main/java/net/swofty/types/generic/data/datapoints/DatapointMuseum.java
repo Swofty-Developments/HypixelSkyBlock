@@ -4,14 +4,13 @@ import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.commons.protocol.serializers.SkyBlockItemDeserializer;
-import net.swofty.commons.protocol.serializers.SkyBlockItemSerializer;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -146,10 +145,10 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
             json.put("hasBoughtAppraisalService", hasBoughtAppraisalService);
 
             List<String> currentlyInMuseum = this.currentlyInMuseum.stream()
-                    .map(item -> SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString())
+                    .map(item -> item.toUnderstandable().serialize())
                     .toList();
             List<String> previouslyInMuseum = this.previouslyInMuseum.stream()
-                    .map(item -> SkyBlockItemSerializer.serializeJSON(item.toUnderstandable()).toString())
+                    .map(item -> item.toUnderstandable().serialize())
                     .toList();
 
             json.put("currentlyInMuseum", currentlyInMuseum);
@@ -182,11 +181,11 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
             data.hasBoughtAppraisalService = json.getBoolean("hasBoughtAppraisalService");
 
             data.previouslyInMuseum = json.getJSONArray("previouslyInMuseum").toList().stream()
-                    .map(item -> new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))))
+                    .map(item -> new SkyBlockItem(UnderstandableSkyBlockItem.deserialize((String) item)))
                     .collect(Collectors.toCollection(ArrayList::new));
 
             data.currentlyInMuseum = json.getJSONArray("currentlyInMuseum").toList().stream()
-                    .map(item -> new SkyBlockItem(SkyBlockItemDeserializer.deserializeJSON(new JSONObject((String) item))))
+                    .map(item -> new SkyBlockItem(UnderstandableSkyBlockItem.deserialize((String) item)))
                     .collect(Collectors.toCollection(ArrayList::new));
 
             JSONObject museumDisplayJson = new JSONObject(json.getString("museumDisplay"));
