@@ -1,20 +1,16 @@
 package net.swofty.types.generic.item.items.communitycenter.sacks;
 
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.Sack;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DungeonSack implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
-    @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.empty();
-    }
+public class DungeonSack implements SkullHead, NotFinishedYet, Sack {
 
     @Override
     public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
@@ -38,5 +34,35 @@ public class DungeonSack implements CustomSkyBlockItem, SkullHead, NotFinishedYe
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "fb96c585ccd35f073da38d165cb9bb18ff136f1a184eee3f44725354640ebbd4";
+    }
+
+    @Override
+    public List<ItemTypeLinker> getSackItems() {
+        return List.of(
+                ItemTypeLinker.ANCIENT_ROSE,
+                //ItemTypeLinker.BIGFOOT_LASSO,
+                //ItemTypeLinker.BONZO_FRAGMENT,
+                //ItemTypeLinker.DECOY,
+                //ItemTypeLinker.DUNGEON_CHEST_KEY,
+                //ItemTypeLinker.FEL_PEARL,
+                //ItemTypeLinker.HEALING_TISSUE,
+                //ItemTypeLinker.INFLATABLE_JERRY,
+                //ItemTypeLinker.JOLLY_PINK_ROCK,
+                ItemTypeLinker.KISMET_FEATHER
+                //ItemTypeLinker.LASR_EYE,
+                //ItemTypeLinker.LIVID_FRAGMENT,
+                //ItemTypeLinker.MIMIC_FRAGMENT,
+                //ItemTypeLinker.SCARF_FRAGMENT,
+                //ItemTypeLinker.SPIRIT_LEAP,
+                //ItemTypeLinker.SUPERBOOM_TNT,
+                //ItemTypeLinker.THORN_FRAGMENT,
+                //ItemTypeLinker.TRAP,
+                //ItemTypeLinker.WITHER_CATALYST
+        );
+    }
+
+    @Override
+    public int getMaximumCapacity() {
+        return 20160;
     }
 }

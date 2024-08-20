@@ -1,20 +1,16 @@
 package net.swofty.types.generic.item.items.communitycenter.sacks;
 
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.Sack;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DwarvenSack implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
-    @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.empty();
-    }
+public class DwarvenSack implements SkullHead, NotFinishedYet, Sack {
 
     @Override
     public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
@@ -35,5 +31,28 @@ public class DwarvenSack implements CustomSkyBlockItem, SkullHead, NotFinishedYe
     @Override
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "daf9711d231e3abfb6fb744711f0d86e6041ee077dae16ddc703a7b4ea165d58";
+    }
+
+    @Override
+    public List<ItemTypeLinker> getSackItems() {
+        return List.of(
+                //ItemTypeLinker.BIOFUEL,
+                ItemTypeLinker.GLACITE_JEWEL,
+                ItemTypeLinker.GOBLIN_EGG,
+                ItemTypeLinker.OIL_BARREL,
+                ItemTypeLinker.PLASMA,
+                ItemTypeLinker.SORROW,
+                ItemTypeLinker.VOLTA,
+                ItemTypeLinker.BLUE_GOBLIN_EGG,
+                ItemTypeLinker.GREEN_GOBLIN_EGG,
+                ItemTypeLinker.RED_GOBLIN_EGG,
+                ItemTypeLinker.YELLOW_GOBLIN_EGG
+        );
+    }
+
+
+    @Override
+    public int getMaximumCapacity() {
+        return 20160;
     }
 }

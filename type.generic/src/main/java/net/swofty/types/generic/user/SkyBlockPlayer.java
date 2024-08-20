@@ -38,6 +38,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.ArrowImpl;
+import net.swofty.types.generic.item.impl.Sack;
 import net.swofty.types.generic.item.impl.Talisman;
 import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
@@ -457,6 +458,71 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
     }
 
+    public DatapointSackOfSacks.PlayerSackOfSacks getSackOfSacks() {
+        return getDataHandler().get(DataHandler.Data.SACK_OF_SACKS, DatapointSackOfSacks.class).getValue();
+    }
+
+    public DatapointItemsInSacks.PlayerItemsInSacks getSackItems() {
+        return getDataHandler().get(DataHandler.Data.ITEMS_IN_SACKS, DatapointItemsInSacks.class).getValue();
+    }
+
+    public List<SkyBlockItem> getAllSacks() {
+        List<SkyBlockItem> sacks = new ArrayList<>(getSackOfSacks().getAllSacks());
+        for (SkyBlockItem item : getAllInventoryItems()) {
+            if (item.getGenericInstance() instanceof Sack) {
+                sacks.add(item);
+            }
+        }
+        return sacks;
+    }
+
+    public int getMaxSackStorage(ItemTypeLinker sack) {
+        int maxStorage = 0;
+        for (SkyBlockItem skyBlockItem : getAllSacks()) {
+            if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == sack && skyBlockItem.getGenericInstance() instanceof Sack sackInstance) {
+                maxStorage = maxStorage + sackInstance.getMaximumCapacity();
+            }
+        }
+        return maxStorage;
+    }
+
+    public boolean canInsertItem(ItemTypeLinker item) {
+        for (SkyBlockItem sack : getAllSacks()) {
+            if (sack.getGenericInstance() instanceof Sack sackInstance) {
+                for (ItemTypeLinker linker : sackInstance.getSackItems()) {
+                    if (linker == item) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public boolean canInsertItem(ItemTypeLinker item, Integer amount) {
+        if (!canInsertItem(item)) return false;
+
+        List<Map<SkyBlockItem, Integer>> maxStorages = new ArrayList<>();
+        for (SkyBlockItem sack : getAllSacks()) {
+            if (sack.getGenericInstance() instanceof Sack sackInstance) {
+                for (ItemTypeLinker linker : sackInstance.getSackItems()) {
+                    if (linker == item) {
+                        if (!maxStorages.contains(sack)) {
+                            maxStorages.add(Map.of(sack, getMaxSackStorage(sack.getAttributeHandler().getPotentialClassLinker())));
+                        }
+                    }
+                }
+            }
+        }
+
+        maxStorages.sort((map1, map2) -> {
+            Integer value1 = map1.values().iterator().next();
+            Integer value2 = map2.values().iterator().next();
+            return value2.compareTo(value1);
+        });
+
+        return maxStorages.getFirst().values().iterator().next() >= getSackItems().getAmount(item) + amount;
+    }
+
     public String getShortenedDisplayName() {
         return StringUtility.getTextFromComponent(Component.text(this.getUsername(),
                 getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
@@ -581,11 +647,21 @@ public class SkyBlockPlayer extends Player {
     public void setGems(int gems) {
         getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).setValue(gems);
     }
+
     public Boolean getPurchaseConfirmationBits() {
         return getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).getValue();
     }
+
     public void setPurchaseConfirmationBits(boolean enabled) {
         getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).setValue(enabled);
+    }
+
+    public Long getBoosterCookieExpirationDate() {
+        return getDataHandler().get(DataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).getValue();
+    }
+
+    public void setBoosterCookieExpirationDate(long timestamp) {
+        getDataHandler().get(DataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).setValue(timestamp);
     }
 
     @Override

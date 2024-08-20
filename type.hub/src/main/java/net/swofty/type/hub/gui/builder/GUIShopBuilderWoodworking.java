@@ -1,6 +1,5 @@
-package net.swofty.type.hub.gui;
+package net.swofty.type.hub.gui.builder;
 
-import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
 import net.swofty.types.generic.item.SkyBlockItem;

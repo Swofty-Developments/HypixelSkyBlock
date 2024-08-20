@@ -62,33 +62,33 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
 
         public Integer getAsLevel(Rarity rarity) {
             return switch (rarity) {
-                case Rarity.COMMON -> getLevel(experience, COMMON_XP_GOALS);
-                case Rarity.UNCOMMON -> getLevel(experience, UNCOMMON_XP_GOALS);
-                case Rarity.RARE -> getLevel(experience, RARE_XP_GOALS);
-                case Rarity.EPIC -> getLevel(experience, EPIC_XP_GOALS);
-                case Rarity.LEGENDARY -> getLevel(experience, LEGENDARY_XP_GOALS);
+                case COMMON -> getLevel(experience, COMMON_XP_GOALS);
+                case UNCOMMON -> getLevel(experience, UNCOMMON_XP_GOALS);
+                case RARE -> getLevel(experience, RARE_XP_GOALS);
+                case EPIC -> getLevel(experience, EPIC_XP_GOALS);
+                case LEGENDARY -> getLevel(experience, LEGENDARY_XP_GOALS);
                 default -> 0;
             };
         }
 
         public double getAsExperience(Rarity rarity) {
             return switch (rarity) {
-                case Rarity.COMMON -> experience - COMMON_XP_GOALS.get(getAsLevel(Rarity.COMMON));
-                case Rarity.UNCOMMON -> experience - UNCOMMON_XP_GOALS.get(getAsLevel(Rarity.UNCOMMON));
-                case Rarity.RARE -> experience - RARE_XP_GOALS.get(getAsLevel(Rarity.RARE));
-                case Rarity.EPIC -> experience - EPIC_XP_GOALS.get(getAsLevel(Rarity.EPIC));
-                case Rarity.LEGENDARY -> experience - LEGENDARY_XP_GOALS.get(getAsLevel(Rarity.LEGENDARY));
+                case COMMON -> experience - COMMON_XP_GOALS.get(getAsLevel(Rarity.COMMON));
+                case UNCOMMON -> experience - UNCOMMON_XP_GOALS.get(getAsLevel(Rarity.UNCOMMON));
+                case RARE -> experience - RARE_XP_GOALS.get(getAsLevel(Rarity.RARE));
+                case EPIC -> experience - EPIC_XP_GOALS.get(getAsLevel(Rarity.EPIC));
+                case LEGENDARY -> experience - LEGENDARY_XP_GOALS.get(getAsLevel(Rarity.LEGENDARY));
                 default -> 0;
             };
         }
 
         public long getExperienceForLevel(int level, Rarity rarity) {
             return switch (rarity) {
-                case Rarity.COMMON -> COMMON_XP_GOALS.get(level - 1);
-                case Rarity.UNCOMMON -> UNCOMMON_XP_GOALS.get(level - 1);
-                case Rarity.RARE -> RARE_XP_GOALS.get(level - 1);
-                case Rarity.EPIC -> EPIC_XP_GOALS.get(level - 1);
-                case Rarity.LEGENDARY -> LEGENDARY_XP_GOALS.get(level - 1);
+                case COMMON -> COMMON_XP_GOALS.get(level - 1);
+                case UNCOMMON -> UNCOMMON_XP_GOALS.get(level - 1);
+                case RARE -> RARE_XP_GOALS.get(level - 1);
+                case EPIC -> EPIC_XP_GOALS.get(level - 1);
+                case LEGENDARY -> LEGENDARY_XP_GOALS.get(level - 1);
                 default -> 0;
             };
         }
