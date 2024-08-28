@@ -1,6 +1,5 @@
 package net.swofty.commons.item;
 
-
 import lombok.Getter;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
