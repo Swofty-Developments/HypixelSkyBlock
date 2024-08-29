@@ -23,7 +23,7 @@ import java.util.List;
 
 public class GUISack extends SkyBlockInventoryGUI {
     ItemTypeLinker itemTypeLinker;
-    Boolean closeGUI;
+    Boolean closeGUIButton;
 
     private static final List<SackSize> SACK_SIZES = List.of(
             new SackSize(14, InventoryType.CHEST_4_ROW, List.of(
@@ -54,17 +54,17 @@ public class GUISack extends SkyBlockInventoryGUI {
         return nearestSackSize;
     }
 
-    public GUISack(ItemTypeLinker sack, Boolean closeGUI) {
+    public GUISack(ItemTypeLinker sack, Boolean closeGUIButton) {
         super(StringUtility.toNormalCase(sack.name()), getSackSize(sack).getInventoryType());
         this.itemTypeLinker = sack;
-        this.closeGUI = closeGUI;
+        this.closeGUIButton = closeGUIButton;
     }
 
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        if (!closeGUI) {
+        if (!closeGUIButton) {
             switch (GUISack.super.size) {
                 case InventoryType.CHEST_4_ROW -> set(GUIClickableItem.getGoBackItem(31, new GUISackOfSacks()));
                 case InventoryType.CHEST_5_ROW -> set(GUIClickableItem.getGoBackItem(40, new GUISackOfSacks()));
@@ -106,13 +106,13 @@ public class GUISack extends SkyBlockInventoryGUI {
                                 SkyBlockItem itemAdded = new SkyBlockItem(linker);
                                 itemAdded.setAmount(64);
                                 player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUI).open(player);
+                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             } else {
                                 player.getSackItems().decrease(linker, amount);
                                 SkyBlockItem itemAdded = new SkyBlockItem(linker);
                                 itemAdded.setAmount(amount);
                                 player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUI).open(player);
+                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             }
                         } else if (e.getClickType() == ClickType.LEFT_CLICK) {
                             int airSlots = 0;
@@ -127,13 +127,13 @@ public class GUISack extends SkyBlockInventoryGUI {
                                 for (int i = 0; i < airSlots; i++) {
                                     player.addAndUpdateItem(itemAdded);
                                 }
-                                new GUISack(itemTypeLinker, closeGUI).open(player);
+                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             } else {
                                 player.getSackItems().decrease(linker, amount);
                                 SkyBlockItem itemAdded = new SkyBlockItem(linker);
                                 itemAdded.setAmount(amount);
                                 player.addAndUpdateItem(itemAdded);
-                                new GUISack(itemTypeLinker, closeGUI).open(player);
+                                new GUISack(itemTypeLinker, closeGUIButton).open(player);
                             }
                         }
                     }

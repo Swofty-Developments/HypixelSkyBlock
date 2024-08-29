@@ -59,6 +59,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -478,9 +480,23 @@ public class SkyBlockPlayer extends Player {
 
     public int getMaxSackStorage(ItemTypeLinker sack) {
         int maxStorage = 0;
+        String sackCategory = "";
+
+        Matcher matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(sack.name());
+        if (matcher.find()) {
+            sackCategory = matcher.group(2);
+        } else {
+            System.out.println("Invalid sack name: " + sack.name());
+            return 0;
+        }
+
         for (SkyBlockItem skyBlockItem : getAllSacks()) {
-            if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == sack && skyBlockItem.getGenericInstance() instanceof Sack sackInstance) {
-                maxStorage = maxStorage + sackInstance.getMaximumCapacity();
+            matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(skyBlockItem.getAttributeHandler().getPotentialClassLinker().name());
+            if (matcher.find()) {
+                String otherCategory = matcher.group(2);
+                if (sackCategory.equals(otherCategory) && skyBlockItem.getGenericInstance() instanceof Sack sackInstance) {
+                    maxStorage += sackInstance.getMaximumCapacity();
+                }
             }
         }
         return maxStorage;

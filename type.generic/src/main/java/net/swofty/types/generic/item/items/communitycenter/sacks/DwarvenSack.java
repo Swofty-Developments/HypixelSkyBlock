@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.items.communitycenter.sacks;
 
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUISack;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
@@ -55,4 +56,9 @@ public class DwarvenSack implements SkullHead, NotFinishedYet, Sack {
     public int getMaximumCapacity() {
         return 20160;
     }
+
+    @Override
+    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        new GUISack(ItemTypeLinker.DWARVEN_SACK, true).open(player);
+    };
 }
