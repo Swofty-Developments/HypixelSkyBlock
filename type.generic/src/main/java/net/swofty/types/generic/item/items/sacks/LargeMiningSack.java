@@ -81,6 +81,6 @@ public class LargeMiningSack implements SkullHead, NotFinishedYet, Sack {
 
     @Override
     public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
-        new GUISack(ItemTypeLinker.SMALL_MINING_SACK, true).open(player);
+        new GUISack(ItemTypeLinker.LARGE_MINING_SACK, true).open(player);
     };
 }
