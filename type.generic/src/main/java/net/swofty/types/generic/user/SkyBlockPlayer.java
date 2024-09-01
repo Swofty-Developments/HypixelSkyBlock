@@ -680,6 +680,10 @@ public class SkyBlockPlayer extends Player {
         getDataHandler().get(DataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).setValue(timestamp);
     }
 
+    public DatapointKat.PlayerKat getKatData() {
+        return getDataHandler().get(DataHandler.Data.KAT, DatapointKat.class).getValue();
+    }
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());

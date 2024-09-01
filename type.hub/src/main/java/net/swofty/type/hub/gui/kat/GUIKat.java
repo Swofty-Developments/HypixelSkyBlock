@@ -1,4 +1,4 @@
-package net.swofty.type.hub.gui;
+package net.swofty.type.hub.gui.kat;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -8,18 +8,18 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.item.Rarity;
-import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.items.pet.KatUpgrade;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.ArrayList;
 
 public class GUIKat extends SkyBlockInventoryGUI {
 
@@ -120,24 +120,56 @@ public class GUIKat extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity()) == null) return;
-                KatUpgrade katUpgrade = ((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity());
+                if (((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) return;
+                KatUpgrade katUpgrade = ((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
+                int coins = katUpgrade.getCoins();
+                long time = katUpgrade.getTime();
+                ItemTypeLinker upgradeItem = katUpgrade.getItem();
+                Integer itemAmount = katUpgrade.getAmount();
+
+                if (player.getCoins() < coins) return;
+                if (player.getAmountInInventory(upgradeItem) < itemAmount) return;
+
+                new GUIConfirmKat(item).open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aHire Kat", Material.RED_TERRACOTTA, 1,
-                        "§7Kat will take care of your §5Golem §7pet",
-                        "§7for §920 days§7 then its §9rarity§7 will be",
-                        "§7upgraded!",
-                        "",
-                        "§7Cost",
-                        "§9Enchanted Iron Block §8x8",
-                        "§69,970,000 Coins",
-                        "",
-                        "§cYou don't have enough Coins!" //or "§eClick to hire Kat!"
-                );
+                if (((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) {
+                    return ItemStackCreator.getStack("§aSomething went wrong!", Material.RED_TERRACOTTA, 1);
+                }
+                KatUpgrade katUpgrade = ((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
+                int coins = katUpgrade.getCoins();
+                long time = katUpgrade.getTime();
+                ItemTypeLinker upgradeItem = katUpgrade.getItem();
+                Integer itemAmount = katUpgrade.getAmount();
+                ArrayList<String> lore = new ArrayList<>();
+                Material material = Material.RED_TERRACOTTA;
+                if (player.getCoins() >= coins && player.getAmountInInventory(upgradeItem) >= itemAmount) {
+                    material = Material.GREEN_TERRACOTTA;
+                }
+                lore.add("§7Kat will take care of your §5" + item.getDisplayName());
+                lore.add("§7for §9" + StringUtility.formatTimeLeftWrittenOut(time) + "§7 then its §9rarity§7 will be");
+                lore.add("§7upgraded!");
+                lore.add("");
+                lore.add("§7Cost");
+                if (upgradeItem != null) {
+                    lore.add("§9" + StringUtility.toNormalCase(upgradeItem.name()) + " §8x" + itemAmount);
+                }
+                if (coins != 0) {
+                    lore.add("§6" + StringUtility.commaify(coins) + " Coins");
+                }
+                if (player.getCoins() >= coins && player.getAmountInInventory(upgradeItem) >= itemAmount) {
+                    lore.add("");
+                    lore.add("§eClick to hire Kat!");
+                } else if (player.getCoins() < coins) {
+                    lore.add("");
+                    lore.add("§cYou don't have enough Coins!");
+                } else {
+                    lore.add("");
+                    lore.add("§cYou don't have the required items!");
+                }
+                return ItemStackCreator.getStack("§aHire Kat", material, 1, lore);
             }
         });
         updateItemStacks(getInventory(), getPlayer());

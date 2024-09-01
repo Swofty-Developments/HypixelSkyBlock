@@ -123,6 +123,21 @@ public class StringUtility {
         return sb.toString().trim();
     }
 
+    public static String formatTimeLeftWrittenOut(long millis) {
+        StringBuilder sb = new StringBuilder();
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis % TimeUnit.DAYS.toMillis(1));
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis % TimeUnit.HOURS.toMillis(1));
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis % TimeUnit.MINUTES.toMillis(1));
+
+        // Eliminated redundant checks by concatenating non-zero values directly
+        if (days > 0) sb.append(days).append((days == 1) ? " day ":" days ");
+        if (hours > 0) sb.append(hours).append((hours == 1) ? " hour ":" hours ");
+        if (minutes > 0) sb.append(minutes).append((minutes == 1) ? " minute ":" minutes ");
+        if (seconds > 0 || sb.isEmpty()) sb.append(seconds).append((seconds == 1) ? " second ":" seconds ");
+        return sb.toString().trim();
+    }
+
     public static String commaify(int i) {
         return INTEGER_FORMAT.format(i);
     }

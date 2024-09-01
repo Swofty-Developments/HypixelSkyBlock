@@ -374,7 +374,8 @@ public class DataHandler {
         }),
         VISITED_ISLANDS("visited_islands", false, false, false, DatapointStringList.class, new DatapointStringList("visited_islands")),
         USED_SCROLLS("used_scrolls", false, false, false, DatapointStringList.class, new DatapointStringList("used_scrolls")),
-        BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false, DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L));
+        BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false, DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
+        KAT("kat", false, false, false, DatapointKat.class, new DatapointKat("kat")),
         ;
 
         @Getter
