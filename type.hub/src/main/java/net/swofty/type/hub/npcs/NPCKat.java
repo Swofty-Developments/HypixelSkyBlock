@@ -1,10 +1,13 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.item.ItemStack;
+import net.swofty.type.hub.gui.kat.GUIKat;
+import net.swofty.types.generic.data.datapoints.DatapointKat;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.impl.KatItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NPCKat extends SkyBlockNPC {
@@ -13,7 +16,7 @@ public class NPCKat extends SkyBlockNPC {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Kat", "§e§lCLICK"};
+                return new String[]{"§bKat", "§e§lCLICK"};
             }
 
             @Override
@@ -40,8 +43,23 @@ public class NPCKat extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        DatapointKat.PlayerKat katData = e.player().getKatData();
+        SkyBlockItem heldItem = new SkyBlockItem(e.player().getItemInMainHand());
+        if (heldItem.getGenericInstance() instanceof KatItem katItem && katData.getFinishTime() != 0 && katData.getFinishTime() > System.currentTimeMillis()) {
+            Long reducedTime = katItem.reducedDays().longValue();
+            katData.setFinishedTime(reducedTime);
+            e.player().setItemInMainHand(ItemStack.AIR);
+        } else if (katData.getPet() != null) {
+            if (katData.getFinishTime() > System.currentTimeMillis()) {
+                e.player().sendMessage("Kat didnt upgrade ur pet yet");
+            } else {
+                SkyBlockItem pet = katData.getPet();
+                pet.getAttributeHandler().getRarity().upgrade();
+                e.player().addAndUpdateItem(pet);
+                katData.setKatMap(0L, null);
+            }
+        } else {
+            new GUIKat().open(e.player());
+        }
     }
-
 }

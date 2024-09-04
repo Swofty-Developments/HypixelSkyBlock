@@ -9,6 +9,7 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.types.generic.item.items.pet.KatUpgrade;
 import net.swofty.types.generic.item.items.pet.PetAbility;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -25,6 +26,8 @@ public interface Pet extends CustomSkyBlockItem, SkullHead, TrackedUniqueItem, I
     List<PetAbility> getPetAbilities(SkyBlockItem instance);
     String getPetName();
     RarityValue<Integer> getGeorgePrice(); //0 if you can't sell it at that rarity
+    @Nullable
+    RarityValue<KatUpgrade> getKatUpgrades();
     ItemStatistics getBaseStatistics();
     ItemStatistics getPerLevelStatistics(Rarity rarity);
     Particle particleId();

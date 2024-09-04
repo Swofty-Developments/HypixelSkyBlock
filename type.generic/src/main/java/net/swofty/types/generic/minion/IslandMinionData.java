@@ -211,7 +211,7 @@ public class IslandMinionData {
         }
     }
 
-        public Map<String, Object> serialize() {
+    public Map<String, Object> serialize() {
         Map<String, Object> data = new HashMap<>();
 
         minions.forEach(minion -> {

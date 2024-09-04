@@ -1,19 +1,18 @@
 package net.swofty.types.generic.event.actions.player.region;
 
-import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
-import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.item.ItemDropChanger;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -88,7 +87,10 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
              * Handle block dropping
              */
             SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
-            if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+            ItemTypeLinker droppedItemLinker = skyBlockItem.getAttributeHandler().getPotentialClassLinker();
+            if (player.canInsertItem(droppedItemLinker, dropAmount)) {
+                player.getSackItems().increase(droppedItemLinker, dropAmount);
+            } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);
             } else {
                 DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(skyBlockItem, player);

@@ -353,6 +353,8 @@ public class DataHandler {
         PET_DATA("pet_data", false, false, false, DatapointPetData.class, new DatapointPetData("pet_data")),
         QUIVER("quiver", false, false, false, DatapointQuiver.class, new DatapointQuiver("quiver")),
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
+        SACK_OF_SACKS("sack_of_sacks", false, false, false, DatapointSackOfSacks.class, new DatapointSackOfSacks("sack_of_sacks")),
+        ITEMS_IN_SACKS("items_in_sacks", false, false, false, DatapointItemsInSacks.class, new DatapointItemsInSacks("items_in_sacks")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
         GEMS("gems", false, false, false, DatapointInteger.class, new DatapointInteger("gems", 0)),
@@ -372,6 +374,8 @@ public class DataHandler {
         }),
         VISITED_ISLANDS("visited_islands", false, false, false, DatapointStringList.class, new DatapointStringList("visited_islands")),
         USED_SCROLLS("used_scrolls", false, false, false, DatapointStringList.class, new DatapointStringList("used_scrolls")),
+        BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false, DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
+        KAT("kat", false, false, false, DatapointKat.class, new DatapointKat("kat")),
         ;
 
         @Getter

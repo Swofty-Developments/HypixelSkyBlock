@@ -1,4 +1,4 @@
-package net.swofty.type.hub.gui;
+package net.swofty.type.hub.gui.builder;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
