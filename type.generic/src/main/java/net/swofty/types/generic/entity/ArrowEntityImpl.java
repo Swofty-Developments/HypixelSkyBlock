@@ -2,9 +2,7 @@ package net.swofty.types.generic.entity;
 
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.collision.CollisionUtils;
-import net.minestom.server.collision.PhysicsResult;
-import net.minestom.server.collision.ShapeImpl;
+import net.minestom.server.collision.*;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -16,6 +14,9 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.utility.MathUtility;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 public class ArrowEntityImpl extends LivingEntity {
     private long cooldown = 0;
@@ -72,35 +73,37 @@ public class ArrowEntityImpl extends LivingEntity {
             cooldown = System.currentTimeMillis();
         }
 
-        PhysicsResult collided = CollisionUtils.checkEntityCollisions(instance, this.getBoundingBox(), posBefore, diff, 3, (e) -> e != this, result);
-        if (collided != null && collided.collisionShapes()[0] != shooter) {
-            if (collided.collisionShapes()[0] instanceof Entity entity) {
-                EntityType entityType = entity.getEntityType();
-                if (entityType == EntityType.PLAYER ||
-                        entityType == EntityType.ARMOR_STAND) {
+        @NotNull Collection<EntityCollisionResult> collided = CollisionUtils.checkEntityCollisions(instance, this.getBoundingBox(), posBefore, diff, 3, (e) -> e != this, result);
+        for (EntityCollisionResult collisionResult : collided) {
+            if (collisionResult != null && collisionResult.entity() != shooter) {
+                if (collisionResult.entity() instanceof Entity entity) {
+                    EntityType entityType = entity.getEntityType();
+                    if (entityType == EntityType.PLAYER ||
+                            entityType == EntityType.ARMOR_STAND) {
+                        return;
+                    }
+
+                    var e = new ProjectileCollideWithEntityEvent(
+                            this,
+                            Pos.fromPoint(collisionResult.collisionPoint()),
+                            entity
+                    );
+                    MinecraftServer.getGlobalEventHandler().call(e);
+                    if (!e.isCancelled()) {
+                        remove();
+                        kill();
+                    }
                     return;
                 }
-
-                var e = new ProjectileCollideWithEntityEvent(this, collided.newPosition(), entity);
-                MinecraftServer.getGlobalEventHandler().call(e);
-                if (!e.isCancelled()) {
-                    remove();
-                    kill();
-                }
-                return;
             }
         }
 
         if (result.hasCollision()) {
             Block hitBlock = null;
-            if (result.collisionShapes()[0] instanceof ShapeImpl block) {
-                hitBlock = block.block();
-            }
-            if (result.collisionShapes()[1] instanceof ShapeImpl block) {
-                hitBlock = block.block();
-            }
-            if (result.collisionShapes()[2] instanceof ShapeImpl block) {
-                hitBlock = block.block();
+            for (Shape shape : result.collisionShapes()) {
+                if (shape instanceof ShapeImpl block) {
+                    hitBlock = getInstance().getBlock(block.relativeEnd());
+                }
             }
 
             if (hitBlock == null) return;

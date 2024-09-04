@@ -145,7 +145,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
             SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
             ItemTypeLinker droppedItemLinker = item.getAttributeHandler().getPotentialClassLinker();
-            if (player.canInsertItem(droppedItemLinker, record.getAmount())) {
+            if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
                 player.getSackItems().increase(droppedItemLinker, record.getAmount());
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(item);

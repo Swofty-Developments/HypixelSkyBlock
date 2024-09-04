@@ -88,7 +88,7 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
              */
             SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
             ItemTypeLinker droppedItemLinker = skyBlockItem.getAttributeHandler().getPotentialClassLinker();
-            if (player.canInsertItem(droppedItemLinker, dropAmount)) {
+            if (player.canInsertItemIntoSacks(droppedItemLinker, dropAmount)) {
                 player.getSackItems().increase(droppedItemLinker, dropAmount);
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);

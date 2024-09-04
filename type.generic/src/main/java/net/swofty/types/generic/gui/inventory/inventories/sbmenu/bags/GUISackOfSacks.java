@@ -113,7 +113,7 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
                 for (ItemStack itemStack : player.getInventory().getItemStacks()) {
                     SkyBlockItem item = new SkyBlockItem(itemStack);
                     ItemTypeLinker linker = item.getAttributeHandler().getPotentialClassLinker();
-                    if (player.canInsertItem(linker)) {
+                    if (player.canInsertItemIntoSacks(linker)) {
                         player.getSackItems().increase(linker, item.getAmount());
                         player.getInventory().setItemStack(slot, ItemStack.AIR);
                     }

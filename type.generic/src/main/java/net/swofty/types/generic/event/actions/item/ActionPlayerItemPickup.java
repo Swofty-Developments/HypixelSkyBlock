@@ -23,7 +23,7 @@ public class ActionPlayerItemPickup implements SkyBlockEventClass {
                     player.sendPacket(new CollectItemPacket(item.getEntityId(), player.getEntityId(),
                             item.getItem().getAmount()));
 
-                    if (player.canInsertItem(item.getItem().getAttributeHandler().getPotentialClassLinker(), item.getItem().getAmount())) {
+                    if (player.canInsertItemIntoSacks(item.getItem().getAttributeHandler().getPotentialClassLinker(), item.getItem().getAmount())) {
                         player.getSackItems().increase(item.getItem().getAttributeHandler().getPotentialClassLinker(), item.getItem().getAmount());
                     } else {
                         player.addAndUpdateItem(item.getItem());

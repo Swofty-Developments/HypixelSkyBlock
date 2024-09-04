@@ -502,7 +502,7 @@ public class SkyBlockPlayer extends Player {
         return maxStorage;
     }
 
-    public boolean canInsertItem(ItemTypeLinker item) {
+    public boolean canInsertItemIntoSacks(ItemTypeLinker item) {
         for (SkyBlockItem sack : getAllSacks()) {
             if (sack.getGenericInstance() instanceof Sack sackInstance) {
                 for (ItemTypeLinker linker : sackInstance.getSackItems()) {
@@ -514,8 +514,8 @@ public class SkyBlockPlayer extends Player {
         }
         return false;
     }
-    public boolean canInsertItem(ItemTypeLinker item, Integer amount) {
-        if (!canInsertItem(item)) return false;
+    public boolean canInsertItemIntoSacks(ItemTypeLinker item, Integer amount) {
+        if (!canInsertItemIntoSacks(item)) return false;
 
         List<Map<SkyBlockItem, Integer>> maxStorages = new ArrayList<>();
         for (SkyBlockItem sack : getAllSacks()) {
