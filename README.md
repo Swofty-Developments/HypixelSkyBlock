@@ -7,7 +7,7 @@ A 1.8 to 1.21 recreation of HypixelSkyBlock utilizing Minestom, with the intenti
 
 #### Releases
 
-Releases are auto deployed on push onto the GitHub releases page which can be found [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases). Updates are also periodically sent within my discord server located at [discord.gg/atlas-network-830345347867476000](https://discord.gg/discord.gg/theatlas).
+Releases are auto deployed on push onto the GitHub releases page which can be found [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases). Updates are also periodically sent within my discord server located at [discord.gg/theatlas](https://discord.gg/discord.gg/theatlas).
 
 #### Javadocs
 
