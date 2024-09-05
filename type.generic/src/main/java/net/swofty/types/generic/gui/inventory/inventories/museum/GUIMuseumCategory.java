@@ -138,7 +138,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
                         ).join().get("tracked-item");
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
-                List<String> lore = new ArrayList<>(item.getLore());
+                List<String> lore = new ArrayList<>(item.getLore(player));
                 lore.add("§8§m---------------------");
                 lore.add("§7Item Created");
                 lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));

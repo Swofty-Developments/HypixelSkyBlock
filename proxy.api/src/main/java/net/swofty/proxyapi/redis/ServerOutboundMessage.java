@@ -40,6 +40,25 @@ public class ServerOutboundMessage {
                 message.toString() + "}=-=-={" + uuid + "}=-=-={" + filterID);
     }
 
+    public static void registerFromProtocolSpecification(ProtocolSpecification specification) {
+        RedisAPI.getInstance().registerChannel(specification.getEndpoint(), (event) -> {
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+
+            String[] split = messageWithoutFilter.split("}=-=-=\\{");
+
+            UUID uuid = UUID.fromString(split[0]);
+            JSONObject message = new JSONObject(split[1]);
+
+            specification.getRequiredInboundFields().forEach(key -> {
+                if (!message.has(key)) {
+                    throw new RuntimeException("Message does not contain required key " + key);
+                }
+            });
+
+            redisMessageListeners.get(uuid).accept(message);
+        });
+    }
+
     public static void sendMessageToService(ServiceType service,
                                             ProtocolSpecification specification,
                                             JSONObject message,

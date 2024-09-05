@@ -44,7 +44,7 @@ public record ProxyService(ServiceType type) {
 
         ServerOutboundMessage.sendMessageToService(type, protocol,
                 json, (s) -> {
-            Map<String, Object> response = protocol.fromJSON(new JSONObject(s), false);
+            Map<String, Object> response = protocol.fromJSON(s, false);
 
             Thread.startVirtualThread(() -> {
                 future.complete(response);

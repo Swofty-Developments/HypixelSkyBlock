@@ -20,6 +20,9 @@ import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -346,5 +349,11 @@ public class SkyBlockItem {
         return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(ItemComponent.LORE).stream().map(
                 StringUtility::getTextFromComponent
         ).toList();
+    }
+
+    public List<String> getLore(@NotNull SkyBlockPlayer player) {
+        return PlayerItemUpdater.playerUpdate(player, getItemStackBuilder().build(), false).build()
+                .get(ItemComponent.LORE).stream().map(
+                        StringUtility::getTextFromComponent).toList();
     }
 }

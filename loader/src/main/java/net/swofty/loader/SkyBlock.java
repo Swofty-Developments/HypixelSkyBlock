@@ -107,6 +107,9 @@ public class SkyBlock {
         Arrays.stream(ToProxyChannels.values()).forEach(
                 ServerOutboundMessage::registerServerToProxy
         );
+        List<ProtocolSpecification> protocolSpecifications = SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.commons.protocol.protocols", ProtocolSpecification.class).toList();
+        protocolSpecifications.forEach(ServerOutboundMessage::registerFromProtocolSpecification);
         proxyAPI.start();
 
         VelocityProxy.enable(Configuration.get("velocity-secret"));

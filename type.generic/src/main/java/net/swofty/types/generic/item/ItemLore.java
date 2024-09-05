@@ -149,10 +149,11 @@ public class ItemLore {
                         handler.getEnchantments().forEach((enchantment) -> {
                             addLoreLine("§9" + enchantment.type().getName() +
                                     " " + StringUtility.getAsRomanNumeral(enchantment.level()));
-                            StringUtility.splitByWordAndLength(
-                                    enchantment.type().getDescription(enchantment.level(), player),
-                                    34
-                            ).forEach(string -> addLoreLine("§7" + string));
+                            if (player != null)
+                                StringUtility.splitByWordAndLength(
+                                        enchantment.type().getDescription(enchantment.level(), player),
+                                        34
+                                ).forEach(string -> addLoreLine("§7" + string));
                         });
 
                     } else {
