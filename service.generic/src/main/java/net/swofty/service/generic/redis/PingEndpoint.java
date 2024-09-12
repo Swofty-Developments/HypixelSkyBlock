@@ -1,21 +1,22 @@
 package net.swofty.service.generic.redis;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.PingProtocolObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PingEndpoint implements ServiceEndpoint {
+public class PingEndpoint implements ServiceEndpoint<
+        PingProtocolObject.EmptyMessage,
+        PingProtocolObject.EmptyMessage> {
     @Override
-    public String channel() {
-        return "service-ping";
+    public ProtocolObject<PingProtocolObject.EmptyMessage, PingProtocolObject.EmptyMessage> associatedProtocolObject() {
+        return new PingProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("online", true);
-        return response;
+    public PingProtocolObject.EmptyMessage onMessage(ServiceProxyRequest message, PingProtocolObject.EmptyMessage messageObject) {
+        return new PingProtocolObject.EmptyMessage();
     }
-
 }

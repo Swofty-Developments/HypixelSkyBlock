@@ -2,6 +2,8 @@ package net.swofty.service.bazaar.endpoints;
 
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 import net.swofty.service.bazaar.BazaarService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
@@ -10,18 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class BazaarSellOrder implements ServiceEndpoint {
+public class BazaarSellOrder implements ServiceEndpoint<
+        BazaarSellProtocolObject.BazaarSellMessage,
+        BazaarSellProtocolObject.BazaarSellResponse> {
+
     @Override
-    public String channel() {
-        return "bazaar-sell-order";
+    public ProtocolObject associatedProtocolObject() {
+        return new BazaarSellProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        String itemName = (String) messageData.get("item-name");
-        UUID playerUUID = (UUID) messageData.get("player-uuid");
-        Double price = (Double) messageData.get("price");
-        int amount = (int) messageData.get("amount");
+    public BazaarSellProtocolObject.BazaarSellResponse onMessage(ServiceProxyRequest message, BazaarSellProtocolObject.BazaarSellMessage messageObject) {
+        String itemName = messageObject.itemName;
+        UUID playerUUID = messageObject.playerUUID;
+        Double price = messageObject.price;
+        int amount = messageObject.amount;
 
         Map<String, Object> toReturn = new HashMap<>();
 
@@ -30,13 +35,13 @@ public class BazaarSellOrder implements ServiceEndpoint {
 
         if (item.getSellOrders().containsKey(playerUUID)) {
             toReturn.put("successful", false);
-            return toReturn;
+            return new BazaarSellProtocolObject.BazaarSellResponse(false);
         }
 
         BazaarService.getCacheService().invalidateCache(itemName);
         item.getSellOrders().put(playerUUID, Map.entry(price, (double) amount));
         BazaarService.getCacheService().setItem(itemName, item.toDocument());
 
-        return toReturn;
+        return new BazaarSellProtocolObject.BazaarSellResponse(true);
     }
 }

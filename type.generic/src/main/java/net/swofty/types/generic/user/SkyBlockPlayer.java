@@ -20,7 +20,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.commons.protocol.objects.PlayerShopData;
+import net.swofty.commons.PlayerShopData;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;

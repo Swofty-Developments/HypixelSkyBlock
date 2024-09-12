@@ -14,7 +14,6 @@ import java.util.UUID;
 public class ServiceProxyRequest {
     private UUID requestId;
     private String requestServer;
-    private List<String> requiredKeys;
     private String endpoint;
     private String message;
 
@@ -23,7 +22,6 @@ public class ServiceProxyRequest {
                 .put("requestId", requestId.toString())
                 .put("requestServer", requestServer)
                 .put("endpoint", endpoint)
-                .put("requiredKeys", String.join(",", requiredKeys))
                 .put("message", message);
     }
 
@@ -31,7 +29,6 @@ public class ServiceProxyRequest {
         return new ServiceProxyRequest(
                 UUID.fromString(json.getString("requestId")),
                 json.getString("requestServer"),
-                List.of(json.getString("requiredKeys").split(",")),
                 json.getString("endpoint"),
                 json.getString("message")
         );

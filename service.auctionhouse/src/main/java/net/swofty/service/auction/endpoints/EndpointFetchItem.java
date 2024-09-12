@@ -1,6 +1,7 @@
 package net.swofty.service.auction.endpoints;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.auction.AuctionInactiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
@@ -11,28 +12,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class EndpointFetchItem implements ServiceEndpoint {
+public class EndpointFetchItem implements ServiceEndpoint<
+        AuctionFetchItemProtocolObject.AuctionFetchItemMessage,
+        AuctionFetchItemProtocolObject.AuctionFetchItemResponse> {
+
     @Override
-    public String channel() {
-        return "fetch-item";
+    public AuctionFetchItemProtocolObject associatedProtocolObject() {
+        return new AuctionFetchItemProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        UUID uuidToFetch = (UUID) messageData.get("uuid");
+    public AuctionFetchItemProtocolObject.AuctionFetchItemResponse onMessage(ServiceProxyRequest message, AuctionFetchItemProtocolObject.AuctionFetchItemMessage messageObject) {
+        UUID uuidToFetch = messageObject.uuid();
 
-        Map<String, Object> toReturn = new HashMap<>();
+        AuctionItem toReturn = new AuctionItem();
 
         Document item = AuctionActiveDatabase.collection.find(new Document("_id", uuidToFetch.toString())).first();
         if (item != null) {
-            toReturn.put("item", AuctionItem.fromDocument(item));
+            toReturn = AuctionItem.fromDocument(item);
         }
 
         Document inactiveItem = AuctionInactiveDatabase.collection.find(new Document("_id", uuidToFetch.toString())).first();
         if (inactiveItem != null) {
-            toReturn.put("item", AuctionItem.fromDocument(inactiveItem));
+            toReturn = AuctionItem.fromDocument(inactiveItem);
         }
 
-        return toReturn;
+        return new AuctionFetchItemProtocolObject.AuctionFetchItemResponse(toReturn);
     }
 }

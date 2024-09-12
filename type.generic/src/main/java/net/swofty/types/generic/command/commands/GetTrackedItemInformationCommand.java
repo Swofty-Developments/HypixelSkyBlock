@@ -2,18 +2,18 @@ package net.swofty.types.generic.command.commands;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.commons.StringUtility;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @CommandParameters(aliases = "itemtrackedinformation",
         description = "Gets the information of a tracked item in the players hand",
@@ -33,15 +33,18 @@ public class GetTrackedItemInformationCommand extends SkyBlockCommand {
             }
 
             ProxyService service = new ProxyService(ServiceType.ITEM_TRACKER);
-            if (!service.isOnline(new ProtocolPingSpecification()).join()) {
+            if (!service.isOnline().join()) {
                 sender.sendMessage("§cThe item tracker service is currently offline.");
                 return;
             }
             long start = System.currentTimeMillis();
 
-            TrackedItem trackedItem = (TrackedItem) service.callEndpoint(new ProtocolGetTrackedItem(),
-                    Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))
-            ).join().get("tracked-item");
+            CompletableFuture<TrackedItemRetrieveProtocolObject.TrackedItemResponse> trackedItemFuture = service.handleRequest(
+                    new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                            UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
+            ));
+
+            TrackedItem trackedItem = trackedItemFuture.join().trackedItem();
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             player.sendMessage("§aInformation for tracked item in hand:");

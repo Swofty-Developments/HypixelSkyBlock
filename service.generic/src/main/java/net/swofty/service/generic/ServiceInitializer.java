@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.Serializer;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
-import net.swofty.commons.protocol.ProtocolSpecification;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -20,18 +21,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ServiceInitializer {
     private final SkyBlockService service;
-    public Map<String, ProtocolSpecification> cachedProtocols = new HashMap<>();
 
     public void init() {
         System.out.println("Initializing service " + service.getType().name() + "...");
         ItemAttribute.registerItemAttributes();
-
-        /**
-         * Cache all protocols
-         */
-        service.loopThroughPackage("net.swofty.commons.protocol.protocols",
-                        ProtocolSpecification.class)
-                .forEach(protocol -> cachedProtocols.put(protocol.getEndpoint(), protocol));
 
         /**
          * Register Redis
@@ -41,38 +34,27 @@ public class ServiceInitializer {
         endpoints.add(new PingEndpoint());
 
         endpoints.forEach(endpoint -> {
-            System.out.println("Registering endpoint " + endpoint.channel() + "...");
-            RedisAPI.getInstance().registerChannel(endpoint.channel(), message -> {
-                System.out.println("Received message: " + message.message);
-                String realMessage = message.message.split(";")[1];
+            ProtocolObject protocolObject = endpoint.associatedProtocolObject();
 
+            RedisAPI.getInstance().registerChannel(protocolObject.channel(), message -> {
+                System.out.println("Received message: " + message.message);
+                // Everything after the first semicolon is the actual message
+                String realMessage = message.message.substring(message.message.indexOf(";") + 1);
                 ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));
-                ProtocolSpecification specification = cachedProtocols.get(request.getEndpoint());
-                Map<String, Object> messageData = specification.fromJSON(
-                        new JSONObject(request.getMessage()), true);
+
+                Object messageData = protocolObject.translateFromString(request.getMessage());
 
                 Thread.startVirtualThread(() -> {
-                    Map<String, Object> rawResponse = endpoint.onMessage(request, messageData);
-                    JSONObject response = specification.toJSON(rawResponse, false);
-
-                    request.getRequiredKeys().forEach(key -> {
-                        if (!response.has(key) && !key.isEmpty()) {
-                            throw new RuntimeException("Channel response " + endpoint.channel() + " does not contain required key " + key);
-                        }
-                    });
-
-                    // Clear keys not in response keys
-                    List<String> keysToRemove = new ArrayList<>();
-                    response.keySet().forEach(key -> {
-                        if (!request.getRequiredKeys().contains(key)) {
-                            keysToRemove.add(key);
-                        }
-                    });
-                    keysToRemove.forEach(response::remove);
+                    Object rawResponse = endpoint.onMessage(request, messageData);
+                    String response = protocolObject.translateReturnToString(rawResponse);
 
                     RedisAPI.getInstance().publishMessage(request.getRequestServer(),
-                            ChannelRegistry.getFromName(request.getEndpoint()),
-                            request.getRequestId() + "}=-=-={" + response);
+                            ChannelRegistry.getFromName(protocolObject.channel()),
+                            request.getRequestId() + "}=-=---={" + response);
+
+                    System.out.println("Giving response: " + response);
+                    System.out.println("Published message to " + request.getRequestServer());
+                    System.out.println("Channel: " + protocolObject.channel());
                 });
             });
         });

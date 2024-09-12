@@ -7,6 +7,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionCategories;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
@@ -19,14 +21,13 @@ import net.swofty.types.generic.gui.inventory.inventories.auction.GUIAuctionView
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolAddItem;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class AuctionViewThirdBin implements AuctionView {
     @Override
@@ -114,12 +115,11 @@ public class AuctionViewThirdBin implements AuctionView {
                 player.sendMessage("§7Processing purchase...");
 
                 // Check that it is still available, by checking it has 0 bids
-                Map<String, Object> itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
-                        new ProtocolFetchItem(),
-                        new JSONObject().put("uuid", item.getUuid().toString()).toMap()
-                ).join();
+                CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future = new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(
+                        new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(item.getUuid())
+                );
+                AuctionItem item = future.join().item();
 
-                AuctionItem item = (AuctionItem) itemResponse.get("item");
                 if (!item.getBids().isEmpty()) {
                     player.sendMessage("§cCouldn't purchase the item, it has been sold!");
                     player.sendMessage("§8Returning escrowed coins...");
@@ -148,11 +148,11 @@ public class AuctionViewThirdBin implements AuctionView {
                 }});
                 item.setEndTime(System.currentTimeMillis());
 
-                Map<String, Object> requestMessage = new HashMap<>();
-                requestMessage.put("item", item);
-                requestMessage.put("category", AuctionCategories.TOOLS);
+                AuctionAddItemProtocolObject.AuctionAddItemMessage message =
+                        new AuctionAddItemProtocolObject.AuctionAddItemMessage(
+                                item, AuctionCategories.TOOLS);
 
-                new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(), requestMessage).join();
+                new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).join();
 
                 player.sendMessage("§eYou purchased " + new SkyBlockItem(item.getItem()).getDisplayName() + "§e for §6" + item.getStartingPrice() + " coins§e!");
 

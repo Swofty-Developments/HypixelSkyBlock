@@ -6,6 +6,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -17,9 +19,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarAttemptSellOrder;
-import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private final ItemTypeLinker itemTypeLinker;
@@ -79,11 +79,11 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         Thread.startVirtualThread(() -> {
-            BazaarItem item = (BazaarItem) new ProxyService(ServiceType.BAZAAR).callEndpoint(
-                    new ProtocolBazaarGetItem(),
-                    new JSONObject().put("item-name", itemTypeLinker.name()).toMap()
-            ).join().get("item");
+            BazaarGetItemProtocolObject.BazaarGetItemResponse response = (BazaarGetItemProtocolObject.BazaarGetItemResponse) new ProxyService(ServiceType.BAZAAR).handleRequest(
+                    new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemTypeLinker.name())
+            ).join();
 
+            BazaarItem item = response.item();
             updateItems(item);
         });
     }
@@ -196,8 +196,11 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
                             player.sendMessage("§6[Bazaar] §7Submitting sell order...");
 
-                            bazaar.callEndpoint(new ProtocolBazaarAttemptSellOrder(), requestParam).thenAccept(response -> {
-                                if (response.get("success").equals(true)) {
+                            BazaarSellProtocolObject.BazaarSellMessage message =
+                                    new BazaarSellProtocolObject.BazaarSellMessage(itemTypeLinker.name(), player.getUuid(), price, amountInInventory);
+                            CompletableFuture<BazaarSellProtocolObject.BazaarSellResponse> future = bazaar.handleRequest(message);
+                            future.thenAccept(response -> {
+                                if (response.successful) {
                                     player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemTypeLinker.getDisplayName(null) + "§a for §e" + price + " coins each!");
                                 } else {
                                     player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
@@ -249,7 +252,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }

@@ -23,7 +23,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.PlayerProfiles;
-import net.swofty.commons.protocol.objects.PlayerShopData;
+import net.swofty.commons.PlayerShopData;
 import net.swofty.types.generic.user.SkyBlockInventory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;

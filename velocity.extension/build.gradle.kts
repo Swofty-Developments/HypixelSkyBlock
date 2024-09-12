@@ -28,7 +28,7 @@ dependencies {
     annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     api(files("velocity-proxy-3.3.0-SNAPSHOT.jar"))
 
-    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.2")
+    implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
     implementation(project(":commons"))
 
     implementation("net.raphimc:ViaLoader:3.0.1")

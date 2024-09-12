@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
@@ -19,8 +20,6 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.commons.StringUtility;
@@ -61,21 +60,24 @@ public class GUIManageAuctions extends SkyBlockInventoryGUI implements Refreshin
 
     public void setItems() {
         List<UUID> auctions = getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue();
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
+        List<CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse>> futures = new ArrayList<>(auctions.size());
         PaginationList<AuctionItem> auctionItems = new PaginationList<>(7);
 
         auctions.forEach(uuid -> {
-            CompletableFuture<Void> future = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
-                    new ProtocolFetchItem(), new JSONObject().put("uuid", uuid).toMap())
-                    .thenAccept(response -> {
-                        AuctionItem item = (AuctionItem) response.get("item");
-                        synchronized (auctionItems) {
-                            auctionItems.add(item);
-                        }
-                    }).exceptionally(ex -> {
-                        ex.printStackTrace();
-                        return null;
-                    });
+            AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
+                    new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(uuid);
+            CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
+                    new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
+
+            future.thenAccept(response -> {
+                AuctionItem item = response.item();
+                synchronized (auctionItems) {
+                    auctionItems.add(item);
+                }
+            }).exceptionally(ex -> {
+                ex.printStackTrace();
+                return null;
+            });
             futures.add(future);
         });
 
@@ -140,7 +142,7 @@ public class GUIManageAuctions extends SkyBlockInventoryGUI implements Refreshin
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
             return;

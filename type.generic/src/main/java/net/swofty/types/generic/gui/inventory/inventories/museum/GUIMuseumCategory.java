@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
@@ -20,7 +21,6 @@ import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.commons.protocol.protocols.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
@@ -132,10 +132,10 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
             }
 
             if (category.contains(item.getAttributeHandler().getPotentialClassLinker())) {
-                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))
-                        ).join().get("tracked-item");
+                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                        UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
+                );
+                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 List<String> lore = new ArrayList<>(item.getLore(player));
@@ -197,10 +197,9 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
                 }
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
+                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(trackedItemUUID);
                 TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", trackedItemUUID))
-                        .join().get("tracked-item");
+                        .handleRequest(message).join();
 
                 List<String> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add("§8§m---------------------");

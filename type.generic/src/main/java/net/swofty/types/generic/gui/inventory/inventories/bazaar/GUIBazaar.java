@@ -8,6 +8,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
@@ -18,8 +19,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
@@ -122,12 +121,12 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
                     CompletableFuture<Void> future = new CompletableFuture<>();
                     futures.add(future);
 
-                    // Call the bazaar-get-item endpoint
-                    Map<String, Object> values = new JSONObject().put("item-name", type.name()).toMap();
-
                     ProxyService baseService = new ProxyService(ServiceType.BAZAAR);
-                    baseService.callEndpoint(new ProtocolBazaarGetItem(), values).thenAccept(response -> {
-                        BazaarItem bazaarItem = (BazaarItem) response.get("item");
+                    BazaarGetItemProtocolObject.BazaarGetItemMessage message = new BazaarGetItemProtocolObject.BazaarGetItemMessage(type.name());
+                    CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = baseService.handleRequest(message);
+
+                    Thread.startVirtualThread(() -> {
+                        BazaarItem bazaarItem = futureBazaar.join().item();
 
                         lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
                                 + " §c" + StringUtility.shortenNumber(bazaarItem.getSellStatistics().getMeanOrder()) +
@@ -192,7 +191,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }

@@ -1,15 +1,11 @@
 package net.swofty.proxyapi;
 
-import lombok.extern.java.Log;
-import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class ProxyAPI {

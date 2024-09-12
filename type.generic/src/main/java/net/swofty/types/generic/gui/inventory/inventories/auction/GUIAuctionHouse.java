@@ -9,25 +9,18 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
-import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.types.generic.data.mongodb.UserDatabase;
-import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.user.categories.Rank;
 
 public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
         super("Auction House", InventoryType.CHEST_4_ROW);
 
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join())
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
             fill(Material.BLACK_STAINED_GLASS_PANE, "§cAuction House is currently offline!");
     }
 
@@ -146,7 +139,7 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

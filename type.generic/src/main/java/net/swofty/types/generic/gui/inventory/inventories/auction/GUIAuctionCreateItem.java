@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionCategories;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
@@ -24,15 +25,11 @@ import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolAddItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private SkyBlockInventoryGUI previousGUI;
@@ -147,7 +144,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 ProxyService auctionService = new ProxyService(ServiceType.AUCTION_HOUSE);
 
-                auctionService.isOnline(new ProtocolPingSpecification()).thenAccept((response) -> {
+                auctionService.isOnline().thenAccept((response) -> {
                     if (escrow.getItem() == null || !response)
                         return;
 
@@ -177,14 +174,14 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
 
                     player.sendMessage("§7Setting up the auction...");
 
-                    Map<String, Object> requestMessage = new HashMap<>();
-                    requestMessage.put("category", category);
-                    requestMessage.put("item", item);
+                    AuctionAddItemProtocolObject.AuctionAddItemMessage message =
+                            new AuctionAddItemProtocolObject.AuctionAddItemMessage(item, category);
+                    CompletableFuture<AuctionAddItemProtocolObject.AuctionAddItemResponse> future =
+                            auctionService.handleRequest(message);
+                    UUID auctionUUID = future.join().uuid();
 
-                    auctionService.callEndpoint(new ProtocolAddItem(), requestMessage).thenAccept(response2 -> {
-                        player.sendMessage("§eAuction started for " + itemName + "§e!");
-                        player.sendMessage("§8ID: " + response2.get("uuid"));
-                    });
+                    player.sendMessage("§eAuction started for " + itemName + "§e!");
+                    player.sendMessage("§8ID: " + auctionUUID);
                 });
             }
 
@@ -307,7 +304,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

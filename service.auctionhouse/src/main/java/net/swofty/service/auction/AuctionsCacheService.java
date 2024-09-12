@@ -9,6 +9,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class AuctionsCacheService {
     private final Cache<String, Object> cache;
@@ -20,9 +21,9 @@ public class AuctionsCacheService {
                 .build();
     }
 
-    public Object getAuctions(String categoryFilter, AuctionsFilter filter) {
+    public List<Document> getAuctions(String categoryFilter, AuctionsFilter filter) {
         // Check the cache first
-        Object result = cache.getIfPresent(categoryFilter + "-" + filter);
+        List<Document> result = (List<Document>) cache.getIfPresent(categoryFilter + "-" + filter);
         if (result != null) {
             return result; // Return cached result
         }
@@ -39,8 +40,8 @@ public class AuctionsCacheService {
 
         result = switch (filter) {
             case SHOW_ALL -> documents;
-            case AUCTIONS_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(false));
-            case BIN_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(true));
+            case AUCTIONS_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(false)).toList();
+            case BIN_ONLY -> documents.stream().filter(document -> document.getBoolean("bin").equals(true)).toList();
         };
 
         cache.put(categoryFilter + "-" + filter, result);

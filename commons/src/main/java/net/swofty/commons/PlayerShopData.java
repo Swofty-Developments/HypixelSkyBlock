@@ -1,7 +1,5 @@
-package net.swofty.commons.protocol.objects;
+package net.swofty.commons;
 
-import net.minestom.server.item.Material;
-import net.swofty.commons.Tuple;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 

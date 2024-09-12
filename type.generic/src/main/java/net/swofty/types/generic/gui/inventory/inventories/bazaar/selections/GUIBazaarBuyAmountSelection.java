@@ -10,7 +10,6 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;
@@ -34,7 +33,7 @@ public class GUIBazaarBuyAmountSelection extends SkyBlockInventoryGUI implements
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }

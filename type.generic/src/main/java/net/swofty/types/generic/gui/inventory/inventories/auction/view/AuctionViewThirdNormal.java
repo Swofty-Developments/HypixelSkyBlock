@@ -7,6 +7,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionCategories;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.proxyapi.ProxyService;
@@ -23,8 +25,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolAddItem;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
@@ -247,9 +247,11 @@ public class AuctionViewThirdNormal implements AuctionView {
 
                 player.sendMessage("§7Processing bid...");
                 Thread.startVirtualThread(() -> {
-                    Map<String, Object> itemResponse = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
-                            new ProtocolFetchItem(), new JSONObject().put("uuid", item.getUuid()).toMap()).join();
-                    AuctionItem item = (AuctionItem) itemResponse.get("item");
+                    AuctionFetchItemProtocolObject.AuctionFetchItemResponse itemResponse = (AuctionFetchItemProtocolObject.AuctionFetchItemResponse) new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(
+                            new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(item.getUuid())
+                    ).join();
+
+                    AuctionItem item = itemResponse.item();
                     AuctionItem.Bid highestBid = item.getBids().stream().max(Comparator.comparingLong(AuctionItem.Bid::value)).orElse(null);
 
                     if (highestBid != null && highestBid.value() >= gui.bidAmount) {
@@ -272,11 +274,10 @@ public class AuctionViewThirdNormal implements AuctionView {
                     // Add two minutes on
                     item.setEndTime(item.getEndTime() + 120000);
 
-                    Map<String, Object> request = new HashMap<>();
-                    request.put("item", item);
-                    request.put("category", category);
-                    new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolAddItem(),
-                            request).join();
+                    AuctionAddItemProtocolObject.AuctionAddItemMessage message =
+                            new AuctionAddItemProtocolObject.AuctionAddItemMessage(
+                                    item, category);
+                    new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).join();
 
                     player.sendMessage("§eBid of §6" + gui.bidAmount + " coins §eplaced!");
                     new GUIAuctionViewItem(gui.auctionID, gui.previousGUI).open(player);
