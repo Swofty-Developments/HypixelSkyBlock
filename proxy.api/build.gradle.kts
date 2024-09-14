@@ -21,6 +21,7 @@ repositories {
 dependencies {
     implementation(project(":commons"))
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
+    // implementation("net.swofty:AtlasRedisAPI:1.1.4")
     implementation("net.minestom:minestom-snapshots:4553d3c574") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }

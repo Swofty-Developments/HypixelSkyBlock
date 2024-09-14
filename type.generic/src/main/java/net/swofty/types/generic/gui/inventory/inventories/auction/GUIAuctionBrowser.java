@@ -66,9 +66,9 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
                 );
 
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
-                .thenAccept(response -> {
-            // Get "items" key which is a list of Document JSONs and cast it into a list of Documents
-            List<AuctionItem> auctionItems = (List<AuctionItem>) response;
+                .thenAccept(responseRaw -> {
+            AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
+            List<AuctionItem> auctionItems = response.items();
 
             // Items are already sorted, so just paginate them
             PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);

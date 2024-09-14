@@ -31,11 +31,16 @@ public class EndpointAddItem implements ServiceEndpoint<
         Document document = auctionItem.toDocument();
         document.put("category", category.name());
 
-        if (AuctionActiveDatabase.collection.find(new Document("_id", document.get("_id"))).first() != null) {
-            AuctionActiveDatabase.collection.updateOne(new Document("_id", document.get("_id")), new Document("$set", auctionItem));
-        } else {
-            AuctionActiveDatabase.collection.insertOne(document);
-        }
+        Thread.startVirtualThread(() -> {
+            if (AuctionActiveDatabase.collection.find(new Document("_id", document.get("_id"))).first() != null) {
+                AuctionActiveDatabase.collection.replaceOne(
+                        new Document("_id", document.get("_id")),
+                        document
+                );
+            } else {
+                AuctionActiveDatabase.collection.insertOne(document);
+            }
+        });
 
         return new AuctionAddItemProtocolObject.AuctionAddItemResponse(UUID.fromString((String) document.get("_id")));
     }

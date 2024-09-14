@@ -23,7 +23,7 @@ public record ProxyService(ServiceType type) {
 
         Thread.startVirtualThread(() -> {
             try {
-                Thread.sleep(300);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -40,10 +40,8 @@ public record ProxyService(ServiceType type) {
         ProtocolObject<T, R> protocolObject = ServerOutboundMessage.protocolObjects.get(request.getClass().getSimpleName());
 
         CompletableFuture<R> future = new CompletableFuture<>();
-        System.out.println("Sending message to service " + type.name() + "... " + protocolObject.channel());
         Thread.startVirtualThread(() -> {
             ServerOutboundMessage.sendMessageToService(type, protocolObject, request, (s) -> {
-                System.out.println("Received message from service " + type.name() + "...");
                 Thread.startVirtualThread(() -> {
                     future.complete(protocolObject.translateReturnFromString(s));
                 });

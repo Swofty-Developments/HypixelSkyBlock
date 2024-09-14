@@ -29,6 +29,7 @@ dependencies {
     api(files("velocity-proxy-3.3.0-SNAPSHOT.jar"))
 
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
+    // implementation("net.swofty:AtlasRedisAPI:1.1.4")
     implementation(project(":commons"))
 
     implementation("net.raphimc:ViaLoader:3.0.1")

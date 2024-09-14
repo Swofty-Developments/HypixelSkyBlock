@@ -35,9 +35,9 @@ public class ServiceInitializer {
 
         endpoints.forEach(endpoint -> {
             ProtocolObject protocolObject = endpoint.associatedProtocolObject();
+            System.out.println("Registering channel " + protocolObject.channel());
 
             RedisAPI.getInstance().registerChannel(protocolObject.channel(), message -> {
-                System.out.println("Received message: " + message.message);
                 // Everything after the first semicolon is the actual message
                 String realMessage = message.message.substring(message.message.indexOf(";") + 1);
                 ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));
@@ -49,12 +49,8 @@ public class ServiceInitializer {
                     String response = protocolObject.translateReturnToString(rawResponse);
 
                     RedisAPI.getInstance().publishMessage(request.getRequestServer(),
-                            ChannelRegistry.getFromName(protocolObject.channel()),
-                            request.getRequestId() + "}=-=---={" + response);
-
-                    System.out.println("Giving response: " + response);
-                    System.out.println("Published message to " + request.getRequestServer());
-                    System.out.println("Channel: " + protocolObject.channel());
+                            ChannelRegistry.getFromName(request.getEndpoint()),
+                            request.getRequestId() + "}=-=---={" + response).join();
                 });
             });
         });

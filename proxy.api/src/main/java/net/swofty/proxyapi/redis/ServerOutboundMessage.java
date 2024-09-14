@@ -49,13 +49,9 @@ public class ServerOutboundMessage {
         String requestTypeName = getRequestTypeName(object);
         protocolObjects.put(requestTypeName, object);
 
-        System.out.println("Registering channel: " + object.channel());
-
         RedisAPI.getInstance().registerChannel(object.channel(), (event) -> {
-            System.out.println("Received message back 2: " + event.message);
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             String[] split = messageWithoutFilter.split("}=-=---=\\{");
-            System.out.println("Received message back RAW: " + messageWithoutFilter);
 
             UUID uuid = UUID.fromString(split[0]);
             String message;
@@ -77,9 +73,6 @@ public class ServerOutboundMessage {
         redisMessageListeners.put(requestId, response);
 
         String message = specification.translateToString(rawMessage);
-
-        System.out.println("Request ID: " + requestId);
-        System.out.println("Callback ID: " + toCallback);
 
         RedisAPI.getInstance().publishMessage(service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
