@@ -11,7 +11,9 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.utility.MathUtility;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class MinionMineAction extends MinionAction {
     private final Block toMine;
 
     @Override
-    public SkyBlockItem onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
+    public @NotNull List<SkyBlockItem> onAction(MinionActionEvent event, IslandMinionData.IslandMinion minion, Instance island) {
         List<Pos> minePositions = MathUtility.getRangeExcludingSelf(
                 minion.getPosition().sub(0, 1, 0), 2 + minion.getBonusRange()
         );
@@ -46,7 +48,9 @@ public class MinionMineAction extends MinionAction {
             }
         });
 
-        return hasAir ? null : new SkyBlockItem(Material.fromNamespaceId(toMine.namespace()));
+        return hasAir ?
+                new ArrayList<>() :
+                List.of(new SkyBlockItem(Material.fromNamespaceId(toMine.namespace())));
     }
 
     @Override

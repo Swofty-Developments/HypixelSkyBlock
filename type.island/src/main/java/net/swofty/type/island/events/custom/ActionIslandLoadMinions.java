@@ -13,6 +13,7 @@ import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import org.bson.Document;
 
+import java.util.List;
 import java.util.Map;
 
 public class ActionIslandLoadMinions implements SkyBlockEventClass {
@@ -59,13 +60,13 @@ public class ActionIslandLoadMinions implements SkyBlockEventClass {
                 Thread.startVirtualThread(() -> {
                     for (int i = 0; i < amountOfActions; i++) {
                         MinionAction action = data.getMinion().asSkyBlockMinion().getAction();
-                        SkyBlockItem item = action.onAction(
+                        List<SkyBlockItem> items = action.onAction(
                                 new MinionAction.MinionActionEvent(),
                                 data,
                                 event.getIsland().getIslandInstance());
 
-                        if (item != null)
-                            MinionAction.onMinionIteration(data, data.getMinionEntity().getMinion(), item);
+                        if (!items.isEmpty())
+                            MinionAction.onMinionIteration(data, data.getMinionEntity().getMinion(), items);
                     }
                 });
             }

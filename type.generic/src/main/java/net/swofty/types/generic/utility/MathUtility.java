@@ -6,6 +6,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.timer.TaskSchedule;
+import net.minestom.server.utils.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,21 @@ public class MathUtility {
 
     public static String formatDecimals(double value) {
         return String.format("%.2f", value);
+    }
+
+    public static boolean isWithinSameBlock(Pos pos1, Pos pos2) {
+        return pos1.blockX() == pos2.blockX() && pos1.blockY() == pos2.blockY() && pos1.blockZ() == pos2.blockZ();
+    }
+
+    public static Direction getDirectionFromPositions(Pos from, Pos to) {
+        double xDiff = to.x() - from.x();
+        double zDiff = to.z() - from.z();
+
+        if (Math.abs(xDiff) > Math.abs(zDiff)) {
+            return xDiff > 0 ? Direction.EAST : Direction.WEST;
+        } else {
+            return zDiff > 0 ? Direction.SOUTH : Direction.NORTH;
+        }
     }
 
     public static InventoryType getFromSize(int size) {

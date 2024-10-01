@@ -66,14 +66,14 @@ public class MinionCreeper extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(1, Block.GRASS_BLOCK)
+                new MobGapExpectation(2)
         );
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(EntityType.CREEPER);
+        throw new RuntimeException("Not implemented yet");
     }
 }

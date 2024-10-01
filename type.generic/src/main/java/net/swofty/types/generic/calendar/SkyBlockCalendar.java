@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.command.commands.MinionGenerationCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -108,6 +109,11 @@ public final class SkyBlockCalendar {
         hours = hours > 12 ? hours - 12 : (hours == 0 ? 12 : hours);
 
         String symbol = isDaytime ? "§e" + DAY_SYMBOL : "§b" + NIGHT_SYMBOL;
-        return String.format("%d:%s%s %s", hours, formattedMinutes, timePeriod, symbol);
+        String message = String.format("%d:%s%s %s", hours, formattedMinutes, timePeriod, symbol);
+
+        if (MinionGenerationCommand.divisionFactor != 1) {
+            message += " §c(Minion Speed: " + MinionGenerationCommand.divisionFactor + ")";
+        }
+        return message;
     }
 }

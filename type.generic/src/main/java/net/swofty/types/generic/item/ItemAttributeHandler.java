@@ -190,7 +190,6 @@ public class ItemAttributeHandler {
         item.getAttribute("unique-tracked-id").setValue(uniqueTrackedID);
 
         Thread.startVirtualThread(() -> {
-
             ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
             if (!itemTracker.isOnline().join()) return;
 
@@ -204,7 +203,6 @@ public class ItemAttributeHandler {
 
             CompletableFuture<TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse> future
                     = itemTracker.handleRequest(message);
-
         });
     }
 

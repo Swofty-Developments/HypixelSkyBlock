@@ -68,10 +68,8 @@ public class MinionCarrot extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
-        return List.of(
-                new MinionExpectations(1, Block.CARROTS, Block.DIRT)
-        );
+    public List<MinionExpectation> getExpectations() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override

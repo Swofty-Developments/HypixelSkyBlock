@@ -69,14 +69,15 @@ public class MinionCocoaBeans extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(1, Block.COCOA, Block.DIRT)
+                new BlockExpectation(0, Block.JUNGLE_LOG, Block.COCOA, Block.AIR),
+                new MobGapExpectation(1)
         );
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineCocoaBeansAction(Block.COCOA);
+        return new MinionMineCocoaBeansAction();
     }
 }

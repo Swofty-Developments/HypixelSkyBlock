@@ -69,14 +69,14 @@ public class MinionMagmaCube extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(1, Block.GRASS_BLOCK)
+                new MobGapExpectation(1)
         );
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(EntityType.MAGMA_CUBE);
+        throw new RuntimeException("Not implemented yet");
     }
 }

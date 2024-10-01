@@ -8,6 +8,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.command.commands.MinionGenerationCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointInteger;

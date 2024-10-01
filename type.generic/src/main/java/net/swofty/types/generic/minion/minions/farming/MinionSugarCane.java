@@ -68,14 +68,12 @@ public class MinionSugarCane extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
-        return List.of(
-                new MinionExpectations(1, Block.SUGAR_CANE, Block.DIRT)
-        );
+    public List<MinionExpectation> getExpectations() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.SUGAR_CANE);
+        throw new RuntimeException("Not implemented yet");
     }
 }

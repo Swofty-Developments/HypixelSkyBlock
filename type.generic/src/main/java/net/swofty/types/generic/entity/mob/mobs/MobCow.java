@@ -1,31 +1,27 @@
 package net.swofty.types.generic.entity.mob.mobs;
 
-import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.utils.time.TimeUnit;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobSheep extends SkyBlockMob {
-    public MobSheep(EntityType entityType) {
+public class MobCow extends SkyBlockMob {
+    public MobCow(EntityType entityType) {
         super(entityType);
     }
 
     @Override
     public String getDisplayName() {
-        return "Sheep";
+        return "Cow";
     }
 
     @Override
@@ -55,19 +51,7 @@ public class MobSheep extends SkyBlockMob {
 
     @Override
     public @Nullable SkyBlockLootTable getLootTable() {
-        return new SkyBlockLootTable() {
-            @Override
-            public @NonNull List<LootRecord> getLootTable() {
-                return List.of(
-                        new LootRecord(ItemType.LEATHER, makeAmountBetween(1, 3), 80)
-                );
-            }
-
-            @Override
-            public @NonNull CalculationMode getCalculationMode() {
-                return CalculationMode.CALCULATE_INDIVIDUAL;
-            }
-        };
+        return null;
     }
 
     @Override
@@ -85,3 +69,4 @@ public class MobSheep extends SkyBlockMob {
         return 4;
     }
 }
+

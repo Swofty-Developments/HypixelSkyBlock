@@ -1,25 +1,26 @@
 package net.swofty.types.generic.entity.mob.mobs;
 
-import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.minestom.server.entity.ai.target.ClosestEntityTarget;
+import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
-import net.swofty.commons.item.ItemType;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobSheep extends SkyBlockMob {
-    public MobSheep(EntityType entityType) {
+public class MobZombie extends SkyBlockMob {
+    public MobZombie(EntityType entityType) {
         super(entityType);
     }
 
@@ -36,13 +37,17 @@ public class MobSheep extends SkyBlockMob {
     @Override
     public List<GoalSelector> getGoalSelectors() {
         return List.of(
+                new MeleeAttackGoal(this, 1.6, 20, TimeUnit.SERVER_TICK),
                 new RandomStrollGoal(this, 15)
         );
     }
 
     @Override
     public List<TargetSelector> getTargetSelectors() {
-        return new ArrayList<>();
+        return List.of(
+                new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
+                new ClosestEntityTarget(this, 16, entity -> entity instanceof SkyBlockPlayer)
+        );
     }
 
     @Override
@@ -55,24 +60,12 @@ public class MobSheep extends SkyBlockMob {
 
     @Override
     public @Nullable SkyBlockLootTable getLootTable() {
-        return new SkyBlockLootTable() {
-            @Override
-            public @NonNull List<LootRecord> getLootTable() {
-                return List.of(
-                        new LootRecord(ItemType.LEATHER, makeAmountBetween(1, 3), 80)
-                );
-            }
-
-            @Override
-            public @NonNull CalculationMode getCalculationMode() {
-                return CalculationMode.CALCULATE_INDIVIDUAL;
-            }
-        };
+        return null;
     }
 
     @Override
     public SkillCategories getSkillCategory() {
-        return SkillCategories.FARMING;
+        return SkillCategories.COMBAT;
     }
 
     @Override

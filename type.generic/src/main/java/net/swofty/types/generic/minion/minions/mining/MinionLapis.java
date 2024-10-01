@@ -67,11 +67,10 @@ public class MinionLapis extends SkyBlockMinion {
         return new Color(9, 82, 160);
     }
 
-
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(-1, Block.LAPIS_ORE, Block.AIR)
+                new BlockExpectation(-1, Block.LAPIS_ORE, Block.AIR)
         );
     }
 

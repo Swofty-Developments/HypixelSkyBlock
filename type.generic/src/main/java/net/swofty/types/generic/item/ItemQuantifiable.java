@@ -69,6 +69,7 @@ public class ItemQuantifiable {
     }
 
     public SkyBlockItem toSkyBlockItem() {
+        item.setAmount(amount);
         return item;
     }
 

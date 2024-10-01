@@ -8,6 +8,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,50 @@ public abstract class SkyBlockLootTable {
         return (int) (Math.random() * (max - min + 1) + min);
     }
 
-    public List<ItemType> getLootTableItems() {
+    public @NonNull List<ItemType> getLootTableItems() {
         List<ItemType> items = new java.util.ArrayList<>();
         for (LootRecord record : getLootTable()) {
             items.add(record.itemType);
         }
         return items;
+    }
+
+    /**
+     * Runs the chances without a player
+     * @return A map of the loot that the player will receive
+     */
+    public @NonNull Map<ItemType, LootRecord> runChancesNoPlayer() {
+        Map<ItemType, LootRecord> loot = new HashMap<>();
+        CalculationMode mode = getCalculationMode();
+
+        if (mode == CalculationMode.PICK_ONE) {
+            double cumulativeChance = 0;
+
+            for (LootRecord record : getLootTable()) {
+                cumulativeChance += record.chancePercent;
+            }
+
+            int random = (int) (Math.random() * cumulativeChance);
+            double current = 0;
+
+            for (LootRecord record : getLootTable()) {
+                current += record.chancePercent;
+                if (random < current) {
+                    loot.put(record.itemType, record);
+                    break;
+                }
+            }
+        } else if (mode == CalculationMode.CALCULATE_INDIVIDUAL) {
+            for (LootRecord record : getLootTable()) {
+                double adjustedChancePercent = record.chancePercent;
+
+                if (Math.random() * 100 < adjustedChancePercent) {
+                    loot.put(record.itemType, record);
+                }
+            }
+        }
+
+        return loot;
     }
 
     /**
@@ -50,7 +89,10 @@ public abstract class SkyBlockLootTable {
             int random = (int) (Math.random() * cumulativeChance);
             double current = 0;
 
-            for (LootRecord record : getLootTable()) {
+            List<LootRecord> records = getLootTable();
+            Collections.shuffle(records);
+
+            for (LootRecord record : records) {
                 if (record.shouldCalculate.apply(player)) {
                     current += record.chancePercent;
                     if (random < current) {

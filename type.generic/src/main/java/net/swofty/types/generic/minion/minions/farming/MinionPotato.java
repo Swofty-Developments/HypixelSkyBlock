@@ -68,14 +68,12 @@ public class MinionPotato extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
-        return List.of(
-                new MinionExpectations(1, Block.POTATOES, Block.DIRT)
-        );
+    public List<MinionExpectation> getExpectations() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.POTATOES);
+        throw new RuntimeException("Not implemented yet");
     }
 }
