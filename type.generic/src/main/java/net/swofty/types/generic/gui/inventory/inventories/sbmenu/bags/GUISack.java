@@ -146,7 +146,7 @@ public class GUISack extends SkyBlockInventoryGUI {
                         String color = (amount == finalMaxStorage) ? "§a" : "§e";
                         lore.add("§8" + StringUtility.toNormalCase(itemTypeLinker.name()));
                         lore.add("");
-                        lore.add("§7Stored: " + color + amount + "§7/" + StringUtility.shortenNumber(finalMaxStorage));
+                        lore.add("§7Stored: " + color + amount + "§7/" + StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)));
                         lore.add("");
                         if (amount != 0) {
                             lore.add("§bRight-Click for stack!");
