@@ -26,7 +26,7 @@ public class MobZombie extends SkyBlockMob {
 
     @Override
     public String getDisplayName() {
-        return "Sheep";
+        return "Zombie";
     }
 
     @Override

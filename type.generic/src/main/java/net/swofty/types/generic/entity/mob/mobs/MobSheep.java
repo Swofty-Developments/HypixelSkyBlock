@@ -9,6 +9,7 @@ import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -59,7 +60,7 @@ public class MobSheep extends SkyBlockMob {
             @Override
             public @NonNull List<LootRecord> getLootTable() {
                 return List.of(
-                        new LootRecord(ItemType.LEATHER, makeAmountBetween(1, 3), 80)
+                        new LootRecord(ItemType.MUTTON, makeAmountBetween(1, 3), 80)
                 );
             }
 
