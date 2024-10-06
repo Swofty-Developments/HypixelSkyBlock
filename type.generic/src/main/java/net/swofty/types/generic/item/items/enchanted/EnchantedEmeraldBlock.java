@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.Sellable;
 public class EnchantedEmeraldBlock implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
-        return 153600;
+        return 102400;
     }
 
 }
