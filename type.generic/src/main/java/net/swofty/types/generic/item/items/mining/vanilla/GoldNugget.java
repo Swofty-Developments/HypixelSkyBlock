@@ -31,6 +31,6 @@ public class GoldNugget implements CustomSkyBlockItem, DefaultCraftable, Sellabl
 
     @Override
     public double getSellValue() {
-        return 0.4;
+        return 0.3;
     }
 }

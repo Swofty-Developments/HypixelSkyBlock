@@ -31,7 +31,7 @@ public class GoldIngot implements CustomSkyBlockItem, SkillableMine, Sellable, E
 
     @Override
     public double getSellValue() {
-        return 4;
+        return 3;
     }
 }
 

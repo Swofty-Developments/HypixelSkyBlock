@@ -26,6 +26,6 @@ public class Emerald implements CustomSkyBlockItem, SkillableMine, Sellable {
 
     @Override
     public double getSellValue() {
-        return 6;
+        return 4;
     }
 }

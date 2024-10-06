@@ -35,7 +35,7 @@ public class EmeraldBlock implements PlaceableCustomSkyBlockItem, Sellable, Defa
 
     @Override
     public double getSellValue() {
-        return 54;
+        return 36;
     }
 
     @Override

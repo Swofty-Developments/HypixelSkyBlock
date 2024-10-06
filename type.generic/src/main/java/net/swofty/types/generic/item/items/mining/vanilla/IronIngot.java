@@ -13,6 +13,6 @@ public class IronIngot implements CustomSkyBlockItem, Sellable {
 
     @Override
     public double getSellValue() {
-        return 3;
+        return 2;
     }
 }

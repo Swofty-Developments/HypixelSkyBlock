@@ -7,7 +7,7 @@ public class EnchantedEmerald implements Enchanted, Sellable {
 
     @Override
     public double getSellValue() {
-        return 960;
+        return 640;
     }
 
 }

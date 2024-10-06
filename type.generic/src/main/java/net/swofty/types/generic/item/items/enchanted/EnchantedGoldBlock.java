@@ -6,7 +6,7 @@ import net.swofty.types.generic.item.impl.Sellable;
 public class EnchantedGoldBlock implements Enchanted, Sellable {
     @Override
     public double getSellValue() {
-        return 102000;
+        return 76800;
     }
 
 }
