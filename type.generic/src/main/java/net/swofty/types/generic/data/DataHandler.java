@@ -358,7 +358,6 @@ public class DataHandler {
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
         GEMS("gems", false, false, false, DatapointInteger.class, new DatapointInteger("gems", 0)),
-        PURCHASE_CONFIRMATION_BITS("purchase_confirmation_bits", false, false, false, DatapointBoolean.class, new DatapointBoolean("purchase_confirmation_bits", true)),
         MUSEUM_DATA("museum_data", false, false, false, DatapointMuseum.class, new DatapointMuseum("museum_data"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             DatapointMuseum.MuseumData data = (DatapointMuseum.MuseumData) datapoint.getValue();

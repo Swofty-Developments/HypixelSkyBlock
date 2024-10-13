@@ -50,6 +50,12 @@ public class DatapointSackOfSacks extends Datapoint<DatapointSackOfSacks.PlayerS
 
     public record PlayerSackOfSacks(List<Map.Entry<Integer, SkyBlockItem>> sackMap) {
 
+        /**
+         * Retrieves the sack item located in the specified slot.
+         *
+         * @param slot the slot index of the sack
+         * @return the {@link SkyBlockItem} in the specified slot, or {@code null} if no item exists
+         */
         public @Nullable SkyBlockItem getInSlot(int slot) {
             for (Map.Entry<Integer, SkyBlockItem> itemEntry : sackMap) {
                 if (itemEntry.getKey() == slot) {
@@ -59,6 +65,11 @@ public class DatapointSackOfSacks extends Datapoint<DatapointSackOfSacks.PlayerS
             return null;
         }
 
+        /**
+         * Retrieves a list of all sack items currently in the sack map.
+         *
+         * @return an unmodifiable list of {@link SkyBlockItem} representing all sacks
+         */
         public List<SkyBlockItem> getAllSacks() {
             List<SkyBlockItem> items = new ArrayList<>();
             for (Map.Entry<Integer, SkyBlockItem> itemEntry : List.copyOf(sackMap)) {
@@ -67,20 +78,34 @@ public class DatapointSackOfSacks extends Datapoint<DatapointSackOfSacks.PlayerS
             return items;
         }
 
+        /**
+         * Removes the sack item from the specified slot.
+         *
+         * @param slot the slot index of the sack to remove
+         */
         public void removeFromSlot(int slot) {
             sackMap.removeIf(itemEntry -> itemEntry.getKey() == slot);
         }
 
+        /**
+         * Sets the specified sack item in the given slot.
+         * If the slot is already taken, the existing item is replaced.
+         *
+         * @param slot the slot index where the sack should be placed
+         * @param item the {@link SkyBlockItem} to place in the specified slot
+         */
         public void setInSlot(int slot, SkyBlockItem item) {
             boolean slotTaken = false;
             for (int i = 0; i < sackMap.size(); i++) {
                 if (sackMap.get(i).getKey() == slot) {
+                    // Update the item in the existing slot
                     AbstractMap.SimpleEntry<Integer, SkyBlockItem> map = new AbstractMap.SimpleEntry<>(slot, item);
                     sackMap.remove(sackMap.get(i));
                     sackMap.add(map);
                     slotTaken = true;
                 }
             }
+            // Add new item if the slot was not already taken
             if (!slotTaken) {
                 sackMap.add(Map.entry(slot, item));
             }

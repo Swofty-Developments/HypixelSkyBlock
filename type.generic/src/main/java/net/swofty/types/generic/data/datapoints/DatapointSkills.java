@@ -84,10 +84,23 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         private Map<SkillCategories, Double> skills;
         private ItemStatistics skillStatistics = ItemStatistics.empty();
 
+        /**
+         * Gets the raw experience value for the specified skill category.
+         *
+         * @param category The skill category to retrieve experience for.
+         * @return The raw experience points for the given category.
+         */
         public Double getRaw(SkillCategories category) {
             return skills.get(category);
         }
 
+        /**
+         * Calculates the cumulative experience in the specified skill category.
+         * This excludes the experience required for all previously completed levels.
+         *
+         * @param category The skill category to retrieve cumulative experience for.
+         * @return The cumulative experience value for the given category.
+         */
         public Double getCumulative(SkillCategories category) {
             // Minus the requirements of all previous levels
             SkillCategory skillCategory = category.asCategory();
@@ -101,10 +114,23 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             return getRaw(category) - cumulative;
         }
 
+        /**
+         * Sets the player's skill statistics.
+         *
+         * @param statistics The new skill statistics to set.
+         */
         public void setStatistics(ItemStatistics statistics) {
             skillStatistics = statistics;
         }
 
+        /**
+         * Updates the raw experience for a given skill category and triggers a SkillUpdateEvent.
+         * The event includes details such as the old experience, new experience, and cumulative change.
+         *
+         * @param player   The player whose skills are being updated.
+         * @param category The skill category to update.
+         * @param value    The new raw experience value for the given category.
+         */
         public void setRaw(SkyBlockPlayer player, SkillCategories category, Double value) {
             SkyBlockEventHandler.callSkyBlockEvent(new SkillUpdateEvent(
                     player,
@@ -118,23 +144,41 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             player.playSound(Sound.sound(Key.key("entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 2f), Sound.Emitter.self());
         }
 
+        /**
+         * Creates and returns a default PlayerSkills instance with all skill categories initialized to 0 experience.
+         *
+         * @return A default PlayerSkills object with zeroed experience in all categories.
+         */
         public static PlayerSkills getDefault() {
             return new PlayerSkills(Map.of(
-                SkillCategories.COMBAT, 0.0,
-                SkillCategories.FARMING, 0.0,
-                SkillCategories.FISHING, 0.0,
-                SkillCategories.MINING, 0.0,
-                SkillCategories.FORAGING, 0.0,
-                SkillCategories.ENCHANTING, 0.0
+                    SkillCategories.COMBAT, 0.0,
+                    SkillCategories.FARMING, 0.0,
+                    SkillCategories.FISHING, 0.0,
+                    SkillCategories.MINING, 0.0,
+                    SkillCategories.FORAGING, 0.0,
+                    SkillCategories.ENCHANTING, 0.0
             ), ItemStatistics.empty());
         }
 
+        /**
+         * Gets the current level of the specified skill category based on the raw experience.
+         *
+         * @param category The skill category to retrieve the level for.
+         * @return The current level for the given skill category.
+         */
         public Integer getCurrentLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
             return skillCategory.getLevel(getRaw(category));
         }
 
+        /**
+         * Gets the next level of the specified skill category.
+         * If the current level is the highest, returns null.
+         *
+         * @param category The skill category to retrieve the next level for.
+         * @return The next level, or null if already at the highest level.
+         */
         public Integer getNextLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
@@ -147,6 +191,13 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             return level + 1;
         }
 
+        /**
+         * Calculates the percentage progress towards the next level in the specified skill category.
+         * Returns "100" if the player is already at the highest level.
+         *
+         * @param category The skill category to calculate the percentage for.
+         * @return The percentage of progress as a string.
+         */
         public String getPercentage(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
@@ -163,6 +214,16 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
             return String.format("%.2f", (current / next) * 100);
         }
 
+        /**
+         * Creates a display list for the player's progress in the specified skill category.
+         * It calculates and formats the percentage and visual loading bar to represent the progress.
+         *
+         * @param lore       The list of strings to which the progress will be added.
+         * @param category   The skill category for which to generate the display.
+         * @param requirement The requirement to achieve the next level.
+         * @param prefix     A prefix string to add to the display.
+         * @return A list of strings representing the skill progress.
+         */
         public List<String> getDisplay(List<String> lore, SkillCategories category, double requirement, String prefix) {
             double currentHas = getCumulative(category);
 
@@ -185,5 +246,6 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
 
             return lore;
         }
+
     }
 }
