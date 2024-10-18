@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -38,7 +39,7 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
                     SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                     ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                     SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
-                    if (!player.getPurchaseConfirmationBits()) {
+                    if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                         player.addAndUpdateItem(finalItem);
                         Integer remainingBits = player.getBits() - price;
                         player.setBits(remainingBits);

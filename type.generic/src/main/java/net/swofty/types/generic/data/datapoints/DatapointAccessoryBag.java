@@ -81,14 +81,31 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         private Map<Integer, SkyBlockItem> accessoryMap = new HashMap<>();
         private List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
 
+        /**
+         * Retrieves the accessory item located in the specified slot.
+         *
+         * @param slot the slot index of the accessory
+         * @return the {@link SkyBlockItem} in the specified slot, or {@code null} if no item exists
+         */
         public @Nullable SkyBlockItem getInSlot(int slot) {
             return accessoryMap.get(slot);
         }
 
+        /**
+         * Retrieves a list of all accessories currently in the accessory map.
+         *
+         * @return an unmodifiable list of {@link SkyBlockItem} representing all accessories
+         */
         public List<SkyBlockItem> getAllAccessories() {
             return List.copyOf(accessoryMap.values());
         }
 
+        /**
+         * Retrieves a list of unique accessories, ensuring that only the highest tier version
+         * of each accessory type is included.
+         *
+         * @return an unmodifiable list of unique {@link SkyBlockItem} accessories
+         */
         public List<SkyBlockItem> getUniqueAccessories() {
             List<SkyBlockItem> accessories = new ArrayList<>(getAllAccessories());
             Map<ItemTypeLinker, SkyBlockItem> highestTierTalismans = new HashMap<>();
@@ -98,6 +115,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                     ItemTypeLinker baseTalisman = currentTalisman.getBaseTalismanTier();
                     TieredTalisman tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? (TieredTalisman) highestTierTalismans.get(baseTalisman).getGenericInstance() : null;
 
+                    // Update the highest tier talisman if necessary
                     if (tieredTalisman == null || tieredTalisman.getTier() < currentTalisman.getTier()) {
                         highestTierTalismans.put(baseTalisman, accessory);
                     }
@@ -108,8 +126,14 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
             return List.copyOf(highestTierTalismans.values());
         }
 
+        /**
+         * Retrieves a list of unique accessories filtered by the specified rarity.
+         *
+         * @param rarity the {@link Rarity} to filter the accessories by
+         * @return an unmodifiable list of unique {@link SkyBlockItem} accessories matching the specified rarity
+         */
         public List<SkyBlockItem> getUniqueAccessories(Rarity rarity) {
-            List<SkyBlockItem> talismans = new ArrayList<>(List.of());
+            List<SkyBlockItem> talismans = new ArrayList<>();
             for (SkyBlockItem item : getUniqueAccessories()) {
                 if (rarity == item.getAttributeHandler().getRarity()) {
                     talismans.add(item);
@@ -118,19 +142,41 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
             return talismans;
         }
 
+        /**
+         * Adds a discovered accessory type to the list of discovered accessories.
+         *
+         * @param type the {@link ItemTypeLinker} representing the accessory type to add
+         */
         public void addDiscoveredAccessory(ItemTypeLinker type) {
             if (discoveredAccessories.contains(type)) return;
             discoveredAccessories.add(type);
         }
 
+        /**
+         * Checks if the specified accessory type has been discovered.
+         *
+         * @param type the {@link ItemTypeLinker} representing the accessory type to check
+         * @return {@code true} if the accessory type has been discovered; {@code false} otherwise
+         */
         public boolean hasDiscoveredAccessory(ItemTypeLinker type) {
             return discoveredAccessories.contains(type);
         }
 
+        /**
+         * Removes the accessory item from the specified slot.
+         *
+         * @param slot the slot index of the accessory to remove
+         */
         public void removeFromSlot(int slot) {
             accessoryMap.remove(slot);
         }
 
+        /**
+         * Sets the specified accessory item in the given slot.
+         *
+         * @param slot the slot index where the accessory should be placed
+         * @param item the {@link SkyBlockItem} to place in the specified slot
+         */
         public void setInSlot(int slot, SkyBlockItem item) {
             accessoryMap.put(slot, item);
         }

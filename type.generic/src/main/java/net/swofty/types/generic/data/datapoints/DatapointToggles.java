@@ -67,6 +67,7 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
         }
 
         public enum ToggleType {
+            PURCHASE_CONFIRMATION_BITS(true),
             SKYBLOCK_LEVELS_IN_CHAT(true),
             DISABLE_DROP_MESSAGES(false),
             HAS_SPOKEN_TO_BEA(false),
