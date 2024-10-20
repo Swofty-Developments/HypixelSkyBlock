@@ -6,18 +6,19 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.ReforgeType;
 import net.swofty.commons.item.attribute.attributes.*;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.itemtracker.ProtocolUpdateTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 public class ItemAttributeHandler {
@@ -188,15 +189,20 @@ public class ItemAttributeHandler {
     public void setUniqueTrackedID(String uniqueTrackedID, SkyBlockPlayer player) {
         item.getAttribute("unique-tracked-id").setValue(uniqueTrackedID);
 
-        ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
         Thread.startVirtualThread(() -> {
-            if (!itemTracker.isOnline(new ProtocolPingSpecification()).join()) return;
+            ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
+            if (!itemTracker.isOnline().join()) return;
 
-            itemTracker.callEndpoint(new ProtocolUpdateTrackedItem(), Map.of(
-                    "item-uuid", uniqueTrackedID,
-                    "attached-player-uuid", player.getUuid(),
-                    "attached-player-profile", player.getProfiles().getCurrentlySelected(),
-                    "item-type", item.getAttributeHandler().getTypeAsString())).join();
+            TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage message =
+                    new TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage(
+                            UUID.fromString(uniqueTrackedID),
+                            player.getUuid(),
+                            player.getProfiles().getCurrentlySelected(),
+                            item.getAttributeHandler().getTypeAsString()
+            );
+
+            CompletableFuture<TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse> future
+                    = itemTracker.handleRequest(message);
         });
     }
 

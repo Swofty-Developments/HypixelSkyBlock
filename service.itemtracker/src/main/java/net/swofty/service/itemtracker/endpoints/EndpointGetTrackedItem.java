@@ -2,6 +2,7 @@ package net.swofty.service.itemtracker.endpoints;
 
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.itemtracker.TrackedItemsDatabase;
 
@@ -9,23 +10,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class EndpointGetTrackedItem implements ServiceEndpoint {
+public class EndpointGetTrackedItem implements ServiceEndpoint<
+        TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage,
+        TrackedItemRetrieveProtocolObject.TrackedItemResponse> {
+
     @Override
-    public String channel() {
-        return "get-tracked-item";
+    public TrackedItemRetrieveProtocolObject associatedProtocolObject() {
+        return new TrackedItemRetrieveProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        UUID itemUUID = UUID.fromString((String) messageData.get("item-uuid"));
+    public TrackedItemRetrieveProtocolObject.TrackedItemResponse onMessage(ServiceProxyRequest message, TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage messageObject) {
+        UUID itemUUID = messageObject.itemUUID();
 
         if (!new TrackedItemsDatabase(itemUUID).exists()) {
             throw new RuntimeException("Attempted to get a tracked item that does not exist.");
         }
 
         TrackedItem item = new TrackedItemsDatabase(itemUUID).get();
-        return new HashMap<>() {{
-            put("tracked-item", item);
-        }};
+        return new TrackedItemRetrieveProtocolObject.TrackedItemResponse(item);
     }
 }

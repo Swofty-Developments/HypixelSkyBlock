@@ -1,13 +1,13 @@
-> This is a Minestom-implementation of a Hypixel-SkyBlock recreation hosted on my server at discord.gg/atlas-network-830345347867476000. This implementation is nowhere near complete and is not ready for production. There are still portions of the codebase which are messy and aren't following proper Minestom standard practice.
+> This is a Minestom-implementation of a Hypixel-SkyBlock recreation hosted on my server at discord.gg/theatlas. This implementation is nowhere near complete and is not ready for production. There are still portions of the codebase which are messy and aren't following proper Minestom standard practice.
 # Hypixel SkyBlock
 
-[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/atlas-network-830345347867476000)
+[<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/theatlas)
 
 A 1.8 to 1.21 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase.
 
 #### Releases
 
-Releases are auto deployed on push onto the GitHub releases page which can be found [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases). Updates are also periodically sent within my discord server located at [discord.gg/atlas-network-830345347867476000](https://discord.gg/atlas-network-830345347867476000).
+Releases are auto deployed on push onto the GitHub releases page which can be found [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases). Updates are also periodically sent within my discord server located at [discord.gg/theatlas](https://discord.gg/discord.gg/theatlas).
 
 #### Javadocs
 

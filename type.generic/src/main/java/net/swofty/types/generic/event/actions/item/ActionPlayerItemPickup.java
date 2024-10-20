@@ -6,6 +6,7 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerItemPickup implements SkyBlockEventClass {
@@ -23,7 +24,14 @@ public class ActionPlayerItemPickup implements SkyBlockEventClass {
                     player.sendPacket(new CollectItemPacket(item.getEntityId(), player.getEntityId(),
                             item.getItem().getAmount()));
 
-                    player.addAndUpdateItem(item.getItem());
+                    ItemTypeLinker type = item.getItem().getAttributeHandler().getPotentialClassLinker();
+                    int amount = item.getItem().getAmount();
+
+                    if (player.canInsertItemIntoSacks(type, amount)) {
+                        player.getSackItems().increase(type, amount);
+                    } else {
+                        player.addAndUpdateItem(item.getItem());
+                    }
                     item.remove();
                 }
             });

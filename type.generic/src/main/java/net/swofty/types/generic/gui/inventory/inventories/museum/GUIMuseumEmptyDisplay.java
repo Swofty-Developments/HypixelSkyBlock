@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -16,8 +17,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
@@ -80,7 +79,7 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
-        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
             player.sendMessage("§cThe item tracker is currently offline. Please try again later.");
             player.closeInventory();
             return;
@@ -119,10 +118,10 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public GUIClickableItem createItemFor(SkyBlockItem item, int slot, SkyBlockPlayer player) {
-        TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).callEndpoint(
-                new ProtocolGetTrackedItem(),
-                Map.of("item-uuid", item.getAttributeHandler().getUniqueTrackedID()
-        )).join().get("tracked-item");
+        TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                item.getAttributeHandler().getUniqueTrackedID()
+        );
+        TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
 
         return new GUIClickableItem(slot) {
             @Override

@@ -27,7 +27,6 @@ import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.museum.MuseumDisplays;
-import net.swofty.commons.protocol.protocols.bazaar.ProtocolInitializeBazaarCheck;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.modules.AccountInformationModule;
@@ -92,9 +91,9 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
          */
         Logger.info("Registering bazaar cache");
         ProxyService bazaarService = new ProxyService(ServiceType.BAZAAR);
-        Map<String, Object> request = new HashMap<>();
-        request.put("init-request", BazaarCategories.getInitializationRequest());
-        bazaarService.callEndpoint(new ProtocolInitializeBazaarCheck(), request);
+        if (bazaarService.isOnline().join()) {
+            bazaarService.handleRequest(BazaarCategories.getInitializationRequest()).join();
+        }
 
         /**
          * Register museum chunks

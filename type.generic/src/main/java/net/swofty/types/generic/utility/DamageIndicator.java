@@ -43,10 +43,6 @@ public class DamageIndicator {
         return this;
     }
 
-    public DamageIndicator color(Color c) {
-        return this;
-    }
-
     public DamageIndicator critical(boolean c) {
         this.crit = c;
         return this;

@@ -1,6 +1,5 @@
 package net.swofty.proxyapi;
 
-import lombok.extern.java.Log;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.PlayerShopData;
+import net.swofty.commons.PlayerShopData;
 
 import java.util.Map;
 

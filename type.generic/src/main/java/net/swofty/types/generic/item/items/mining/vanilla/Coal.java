@@ -40,7 +40,7 @@ public class Coal implements CustomSkyBlockItem, SkillableMine, Sellable, Minion
 
     @Override
     public double getSellValue() {
-        return 2;
+        return 1;
     }
 
     @Override

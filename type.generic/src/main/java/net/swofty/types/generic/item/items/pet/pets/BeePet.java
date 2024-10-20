@@ -2,10 +2,12 @@ package net.swofty.types.generic.item.items.pet.pets;
 
 import net.minestom.server.particle.Particle;
 import net.swofty.commons.item.Rarity;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.items.pet.KatUpgrade;
 import net.swofty.types.generic.item.items.pet.PetAbility;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -120,6 +122,18 @@ public class BeePet implements Pet, NotFinishedYet {
     @Override
     public RarityValue<Integer> getGeorgePrice() {
         return new RarityValue<>(2500, 5000, 25000, 100000, 325000, 0);
+    }
+
+    @Override
+    public RarityValue<KatUpgrade> getKatUpgrades() {
+        return new RarityValue<>(
+                null,
+                KatUpgrade.WithItem(3600000L, 5000, ItemTypeLinker.COAL_BLOCK, 128),
+                KatUpgrade.WithItem(21600000L, 40000, ItemTypeLinker.GOLD_BLOCK, 128),
+                KatUpgrade.WithItem(86400000L, 150000, ItemTypeLinker.ENCHANTED_COAL_BLOCK, 9),
+                KatUpgrade.WithItem(259200000L, 450000, ItemTypeLinker.ENCHANTED_GOLD_BLOCK, 9),
+                null)
+                ;
     }
 
     @Override

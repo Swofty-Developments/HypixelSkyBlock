@@ -35,7 +35,7 @@ public class IronBlock implements PlaceableCustomSkyBlockItem, Sellable, Default
 
     @Override
     public double getSellValue() {
-        return 27;
+        return 18;
     }
 
     @Override

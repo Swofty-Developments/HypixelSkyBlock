@@ -3,7 +3,7 @@ package net.swofty.types.generic.entity.mob;
 import lombok.Getter;
 import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.types.generic.entity.mob.mobs.MobSheep;
+import net.swofty.types.generic.entity.mob.mobs.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -12,8 +12,12 @@ import java.util.List;
 
 @Getter
 public class MobRegistry {
-    private static List<MobRegistry> REGISTERED_MOBS = new ArrayList<>(Arrays.asList(
-            new MobRegistry(EntityType.SHEEP, MobSheep.class)
+    private static final List<MobRegistry> REGISTERED_MOBS = new ArrayList<>(Arrays.asList(
+            new MobRegistry(EntityType.SHEEP, MobSheep.class),
+            new MobRegistry(EntityType.ZOMBIE, MobZombie.class),
+            new MobRegistry(EntityType.CHICKEN, MobChicken.class),
+            new MobRegistry(EntityType.PIG, MobPig.class),
+            new MobRegistry(EntityType.RABBIT, MobRabbit.class)
     ));
 
     private final EntityType entityType;

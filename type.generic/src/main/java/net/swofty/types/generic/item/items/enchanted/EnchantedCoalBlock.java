@@ -7,7 +7,7 @@ public class EnchantedCoalBlock implements Enchanted, Sellable {
 
     @Override
     public double getSellValue() {
-        return 51000;
+        return 25500;
     }
 
 }

@@ -1,9 +1,15 @@
 package net.swofty.types.generic.entity.mob.mobs;
 
+import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
+import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
+import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -30,7 +36,9 @@ public class MobSheep extends SkyBlockMob {
 
     @Override
     public List<GoalSelector> getGoalSelectors() {
-        return new ArrayList<>();
+        return List.of(
+                new RandomStrollGoal(this, 15)
+        );
     }
 
     @Override
@@ -48,7 +56,19 @@ public class MobSheep extends SkyBlockMob {
 
     @Override
     public @Nullable SkyBlockLootTable getLootTable() {
-        return null;
+        return new SkyBlockLootTable() {
+            @Override
+            public @NonNull List<LootRecord> getLootTable() {
+                return List.of(
+                        new LootRecord(ItemType.MUTTON, makeAmountBetween(1, 3), 80)
+                );
+            }
+
+            @Override
+            public @NonNull CalculationMode getCalculationMode() {
+                return CalculationMode.CALCULATE_INDIVIDUAL;
+            }
+        };
     }
 
     @Override
@@ -63,6 +83,6 @@ public class MobSheep extends SkyBlockMob {
 
     @Override
     public long getSkillXP() {
-        return 0;
+        return 4;
     }
 }

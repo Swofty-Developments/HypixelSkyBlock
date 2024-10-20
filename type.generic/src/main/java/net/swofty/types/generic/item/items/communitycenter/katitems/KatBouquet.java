@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.items.communitycenter.katitems;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.Enchanted;
+import net.swofty.types.generic.item.impl.KatItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -10,11 +11,17 @@ import net.swofty.commons.statistics.ItemStatistics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KatBouquet implements CustomSkyBlockItem, Enchanted, NotFinishedYet {
+public class KatBouquet implements KatItem, Enchanted, NotFinishedYet {
     @Override
     public ItemStatistics getStatistics(SkyBlockItem instance) {
         return ItemStatistics.empty();
     }
+
+    @Override
+    public Integer reducedDays() {
+        return 5;
+    }
+
     @Override
     public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
         return new ArrayList<>(List.of(

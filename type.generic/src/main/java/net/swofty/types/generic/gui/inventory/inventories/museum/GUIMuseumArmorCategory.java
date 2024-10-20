@@ -11,6 +11,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
@@ -22,7 +23,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.commons.protocol.protocols.itemtracker.ProtocolGetTrackedItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
@@ -205,10 +205,10 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                 continue;
 
             if (armorSets.contains(ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getPotentialClassLinker()))) {
-                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()))
-                        ).join().get("tracked-item");
+                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                        UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
+                );
+                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 toReturn.set(ItemComponent.CUSTOM_DATA, item.getItemStack().get(ItemComponent.CUSTOM_DATA));
@@ -286,24 +286,17 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                             "§7Museum");
                 }
 
-                UUID helmetUUID = UUID.fromString(helmet.getAttributeHandler().getUniqueTrackedID());
 
-                TrackedItem trackedHelmet = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(helmet.getAttributeHandler().getUniqueTrackedID())))
-                        .join().get("tracked-item");
-                TrackedItem trackedChestplate = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(chestplate.getAttributeHandler().getUniqueTrackedID())))
-                        .join().get("tracked-item");
-                TrackedItem trackedLeggings = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(leggings.getAttributeHandler().getUniqueTrackedID())))
-                        .join().get("tracked-item");
-                TrackedItem trackedBoots = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .callEndpoint(new ProtocolGetTrackedItem(),
-                                Map.of("item-uuid", UUID.fromString(boots.getAttributeHandler().getUniqueTrackedID())))
-                        .join().get("tracked-item");
+                ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
+                UUID helmetUUID = UUID.fromString(helmet.getAttributeHandler().getUniqueTrackedID());
+                UUID chestplateUUID = UUID.fromString(chestplate.getAttributeHandler().getUniqueTrackedID());
+                UUID leggingsUUID = UUID.fromString(leggings.getAttributeHandler().getUniqueTrackedID());
+                UUID bootsUUID = UUID.fromString(boots.getAttributeHandler().getUniqueTrackedID());
+
+                TrackedItem trackedHelmet = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(helmetUUID)).join();
+                TrackedItem trackedChestplate = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(chestplateUUID)).join();
+                TrackedItem trackedLeggings = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(leggingsUUID)).join();
+                TrackedItem trackedBoots = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(bootsUUID)).join();
 
                 int helmetValue = new ItemPriceCalculator(helmet).calculateCleanPrice().intValue();
                 int chestplateValue = new ItemPriceCalculator(chestplate).calculateCleanPrice().intValue();

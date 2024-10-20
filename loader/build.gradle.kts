@@ -11,8 +11,8 @@ group = "net.swofty"
 version = "3.0"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
@@ -32,10 +32,10 @@ dependencies {
     implementation(project(":spark"))
     implementation(project(":anticheat"))
     implementation("org.slf4j:slf4j-api:2.0.13")
-    implementation("net.minestom:minestom-snapshots:789befee31") {
+    implementation("net.minestom:minestom-snapshots:4553d3c574") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.11.1")
+    implementation("dev.hollowcube:polar:1.10.0")
 }
 
 application {

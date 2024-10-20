@@ -73,17 +73,21 @@ public class ArrowEntityImpl extends LivingEntity {
             cooldown = System.currentTimeMillis();
         }
 
-       Collection<EntityCollisionResult> entityCollisionResults = CollisionUtils.checkEntityCollisions(instance, this.getBoundingBox(), posBefore, diff, 3, (e) -> e != this, result);
-        entityCollisionResults.forEach((collided) ->{
-
-            if (collided != null && collided.entity() != shooter) {
-                if (collided.entity() instanceof Entity entity) {
+        @NotNull Collection<EntityCollisionResult> collided = CollisionUtils.checkEntityCollisions(instance, this.getBoundingBox(), posBefore, diff, 3, (e) -> e != this, result);
+        for (EntityCollisionResult collisionResult : collided) {
+            if (collisionResult != null && collisionResult.entity() != shooter) {
+                if (collisionResult.entity() instanceof Entity entity) {
                     EntityType entityType = entity.getEntityType();
                     if (entityType == EntityType.PLAYER ||
                             entityType == EntityType.ARMOR_STAND) {
                         return;
                     }
-                    ProjectileCollideWithEntityEvent e = new ProjectileCollideWithEntityEvent(this, (Pos) collided.collisionPoint(), entity);
+
+                    var e = new ProjectileCollideWithEntityEvent(
+                            this,
+                            Pos.fromPoint(collisionResult.collisionPoint()),
+                            entity
+                    );
                     MinecraftServer.getGlobalEventHandler().call(e);
                     if (!e.isCancelled()) {
                         remove();
@@ -92,19 +96,14 @@ public class ArrowEntityImpl extends LivingEntity {
                     return;
                 }
             }
-
-        });
+        }
 
         if (result.hasCollision()) {
             Block hitBlock = null;
-            if (result.collisionShapes()[0] instanceof ShapeImpl block) {
-                hitBlock = block.block();
-            }
-            if (result.collisionShapes()[1] instanceof ShapeImpl block) {
-                hitBlock = block.block();
-            }
-            if (result.collisionShapes()[2] instanceof ShapeImpl block) {
-                hitBlock = block.block();
+            for (Shape shape : result.collisionShapes()) {
+                if (shape instanceof ShapeImpl block) {
+                    hitBlock = getInstance().getBlock(block.relativeEnd());
+                }
             }
 
             if (hitBlock == null) return;

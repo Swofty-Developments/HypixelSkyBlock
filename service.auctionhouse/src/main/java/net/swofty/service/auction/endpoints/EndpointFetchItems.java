@@ -4,6 +4,7 @@ import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.auctions.AuctionsFilter;
 import net.swofty.commons.auctions.AuctionsSorting;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.service.auction.AuctionService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.commons.auctions.AuctionItem;
@@ -14,22 +15,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EndpointFetchItems implements ServiceEndpoint {
+public class EndpointFetchItems implements ServiceEndpoint<
+        AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage,
+        AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse> {
+
     @Override
-    public String channel() {
-        return "fetch-items";
+    public AuctionFetchItemsProtocolObject associatedProtocolObject() {
+        return new AuctionFetchItemsProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        AuctionsSorting sorting = (AuctionsSorting) messageData.get("sorting");
-        AuctionsFilter filter = (AuctionsFilter) messageData.get("filter");
-        AuctionCategories category = (AuctionCategories) messageData.get("category");
+    public AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse onMessage(ServiceProxyRequest message, AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage messageObject) {
+        AuctionsSorting sorting = messageObject.sorting();
+        AuctionsFilter filter = messageObject.filter();
+        AuctionCategories category = messageObject.category();
 
-        List<Document> results = (List<Document>) AuctionService.cacheService.getAuctions(category.toString(), filter);
+        List<Document> results = AuctionService.cacheService.getAuctions(category.toString(), filter);
 
         if (results.isEmpty()) {
-            return new HashMap<>(Map.of("items", new ArrayList<>()));
+            return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(new ArrayList<>());
         }
 
         // Sort according to sorting
@@ -64,10 +68,6 @@ public class EndpointFetchItems implements ServiceEndpoint {
                 break;
         }
 
-        HashMap<String, Object> toReturn = new HashMap<>();
-        // Convert all the documents to JSON and add them to an items array
-        toReturn.put("items", results.stream().map(AuctionItem::fromDocument).toList());
-
-        return toReturn;
+        return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList());
     }
 }

@@ -66,14 +66,14 @@ public class MinionEnderman extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(1, Block.GRASS_BLOCK)
+                new MobGapExpectation(3)
         );
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(EntityType.ENDERMAN);
+        throw new RuntimeException("Not implemented yet");
     }
 }

@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
@@ -18,8 +19,6 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.bazaar.ProtocolBazaarGetItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
@@ -83,11 +82,10 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
             int slot = SLOTS.get(itemSet.items.size())[i];
 
             Thread.startVirtualThread(() -> {
-                BazaarItem item = (BazaarItem) new ProxyService(ServiceType.BAZAAR)
-                        .callEndpoint(new ProtocolBazaarGetItem(),
-                                new JSONObject().put("item-name", itemTypeLinker.name()).toMap())
-                        .join()
-                        .get("item");
+                BazaarGetItemProtocolObject.BazaarGetItemMessage message =
+                        new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemTypeLinker.name());
+                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = new ProxyService(ServiceType.BAZAAR).handleRequest(message);
+                BazaarItem item = futureBazaar.join().item();
 
                 set(new GUIClickableItem(slot) {
                     @Override
@@ -175,7 +173,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }

@@ -41,14 +41,9 @@ public class AdminMeCommand extends SkyBlockCommand {
                 UUID realUUID = player.getUuid();
                 UUID crackedUUID = UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{player.getName()}").getBytes(StandardCharsets.UTF_8));
 
-                player.getSkyBlockExperience().addExperience(
-                        SkyBlockLevelCause.getMuseumCause(MuseumRewards.REWARD_3)
-                );
-
-
                 List<UUID> adminUUIDs = new ArrayList<>();
                 ADMIN_LIST.forEach(admin -> adminUUIDs.add(UUID.nameUUIDFromBytes((STR."OfflinePlayer:\{admin}").getBytes(StandardCharsets.UTF_8))));
-                ADMIN_LIST.forEach(admin -> {
+                ADMIN_LIST.parallelStream().forEach(admin -> {
                     try {
                         adminUUIDs.add(MojangUtils.getUUID(admin));
                     } catch (IOException e) {

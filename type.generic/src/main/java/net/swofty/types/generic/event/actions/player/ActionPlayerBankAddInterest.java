@@ -32,25 +32,28 @@ public class ActionPlayerBankAddInterest implements SkyBlockEventClass {
         }
         
         int times = (int) Math.min(difference / SkyBlockCalendar.INTEREST_INTERVAL, 2);
-        double totalEarnt = bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE * times;
+        double totalToGive = bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE * times;
 
-        // Cap at bank limit
-        totalEarnt = Math.min(bankData.getAmount() + totalEarnt, bankData.getBalanceLimit() - bankData.getAmount());
+        double totalEarnt = bankData.getAmount() + totalToGive;
+        if (totalEarnt > bankData.getBalanceLimit()) {
+            totalToGive = bankData.getBalanceLimit() - bankData.getAmount();
+            totalEarnt = bankData.getBalanceLimit();
+        }
 
-        if (totalEarnt == 0) return;
+        if (totalToGive == 0) return;
 
         bankData.setAmount(bankData.getAmount() + totalEarnt);
         bankData.setLastClaimedInterest(SkyBlockCalendar.getElapsed());
         bankData.addTransaction(new DatapointBankData.Transaction(
                 System.currentTimeMillis(),
-                totalEarnt,
+                totalToGive,
                 "§cBank Interest"
         ));
         player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
         player.sendMessage("§b------------------------------------------------");
         player.sendMessage("§aYou have just received §6" +
-                StringUtility.commaify(totalEarnt) + " coins§a as bank interest!");
+                StringUtility.commaify(totalToGive) + " coins§a as bank interest!");
         player.sendMessage("§b------------------------------------------------");
     }
 }

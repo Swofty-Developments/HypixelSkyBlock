@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom-snapshots:789befee31") {
+    implementation("net.minestom:minestom-snapshots:4553d3c574") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

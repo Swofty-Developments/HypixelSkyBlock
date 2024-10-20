@@ -68,14 +68,12 @@ public class MinionNetherWart extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
-        return List.of(
-                new MinionExpectations(1, Block.NETHER_WART, Block.SOUL_SAND)
-        );
+    public List<MinionExpectation> getExpectations() {
+        throw new RuntimeException("Not implemented yet");
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionMineAction(Block.NETHER_WART);
+        throw new RuntimeException("Not implemented yet");
     }
 }

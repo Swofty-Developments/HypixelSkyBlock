@@ -64,15 +64,12 @@ public class MinionGravel extends SkyBlockMinion {
         return new Color(0, 0, 0);
     }
 
-
-
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(-1, Block.GRAVEL, Block.AIR)
+                new BlockExpectation(-1, Block.GRAVEL, Block.AIR)
         );
     }
-    //hm
 
     @Override
     public MinionAction getAction() {

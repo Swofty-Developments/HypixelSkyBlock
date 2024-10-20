@@ -1,0 +1,80 @@
+package net.swofty.types.generic.entity.mob.mobs;
+
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.ai.GoalSelector;
+import net.minestom.server.entity.ai.TargetSelector;
+import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
+import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.minestom.server.entity.ai.target.ClosestEntityTarget;
+import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.loottable.SkyBlockLootTable;
+import net.swofty.types.generic.skill.SkillCategories;
+import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MobZombie extends SkyBlockMob {
+    public MobZombie(EntityType entityType) {
+        super(entityType);
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Zombie";
+    }
+
+    @Override
+    public Integer getLevel() {
+        return 1;
+    }
+
+    @Override
+    public List<GoalSelector> getGoalSelectors() {
+        return List.of(
+                new MeleeAttackGoal(this, 1.6, 20, TimeUnit.SERVER_TICK),
+                new RandomStrollGoal(this, 15)
+        );
+    }
+
+    @Override
+    public List<TargetSelector> getTargetSelectors() {
+        return List.of(
+                new LastEntityDamagerTarget(this, 16), // First target the last entity which attacked you
+                new ClosestEntityTarget(this, 16, entity -> entity instanceof SkyBlockPlayer)
+        );
+    }
+
+    @Override
+    public ItemStatistics getBaseStatistics() {
+        return ItemStatistics.builder()
+                .withBase(ItemStatistic.HEALTH, 100D)
+                .withBase(ItemStatistic.SPEED, 70D)
+                .build();
+    }
+
+    @Override
+    public @Nullable SkyBlockLootTable getLootTable() {
+        return null;
+    }
+
+    @Override
+    public SkillCategories getSkillCategory() {
+        return SkillCategories.COMBAT;
+    }
+
+    @Override
+    public long damageCooldown() {
+        return 200;
+    }
+
+    @Override
+    public long getSkillXP() {
+        return 4;
+    }
+}

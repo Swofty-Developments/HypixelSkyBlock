@@ -4,6 +4,7 @@ import net.minestom.server.color.Color;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.entity.mob.mobs.MobZombie;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.actions.MinionKillMobAction;
@@ -66,14 +67,14 @@ public class MinionZombie extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(1, Block.GRASS_BLOCK)
+                new MobGapExpectation(2)
         );
     }
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(EntityType.ZOMBIE);
+        return new MinionKillMobAction(() -> new MobZombie(EntityType.ZOMBIE));
     }
 }

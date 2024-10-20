@@ -19,7 +19,7 @@ public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.Gem
     }
 
     @Override
-    public GemData getDefaultValue(@org.jetbrains.annotations.Nullable ItemStatistics defaultStatistics) {
+    public GemData getDefaultValue(@Nullable ItemStatistics defaultStatistics) {
         return new GemData(new ArrayList<>());
     }
 

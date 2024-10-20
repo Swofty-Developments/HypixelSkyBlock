@@ -16,6 +16,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionCategories;
 import net.swofty.commons.auctions.AuctionsFilter;
 import net.swofty.commons.auctions.AuctionsSorting;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
@@ -26,8 +27,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItems;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.commons.StringUtility;
@@ -59,15 +58,17 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
     }
 
     private void updateItemsCache() {
-        Map<String, Object> request = new HashMap<>();
-        request.put("sorting", sorting);
-        request.put("filter", filter);
-        request.put("category", category);
+        AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage message =
+                new AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage(
+                        sorting,
+                        filter,
+                        category
+                );
 
-        new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(new ProtocolFetchItems(), request)
-                .thenAccept(response -> {
-                            // Get "items" key which is a list of Document JSONs and cast it into a list of Documents
-            List<AuctionItem> auctionItems = (List<AuctionItem>) response.get("items");
+        new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
+                .thenAccept(responseRaw -> {
+            AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
+            List<AuctionItem> auctionItems = response.items();
 
             // Items are already sorted, so just paginate them
             PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
@@ -259,7 +260,7 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

@@ -5,6 +5,7 @@ import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRarity;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.commons.auctions.AuctionItem;
@@ -12,26 +13,35 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.UUID;
 
-public class EndpointAddItem implements ServiceEndpoint {
+public class EndpointAddItem implements ServiceEndpoint<
+        AuctionAddItemProtocolObject.AuctionAddItemMessage,
+        AuctionAddItemProtocolObject.AuctionAddItemResponse> {
+
     @Override
-    public String channel() {
-        return "add-item";
+    public AuctionAddItemProtocolObject associatedProtocolObject() {
+        return new AuctionAddItemProtocolObject();
     }
 
     @Override
-    public Map<String, Object> onMessage(ServiceProxyRequest message, Map<String, Object> messageData) {
-        AuctionItem auctionItem = (AuctionItem) messageData.get("item");
-        AuctionCategories category = (AuctionCategories) messageData.get("category");
+    public AuctionAddItemProtocolObject.AuctionAddItemResponse onMessage(ServiceProxyRequest message, AuctionAddItemProtocolObject.AuctionAddItemMessage messageObject) {
+        AuctionItem auctionItem = messageObject.item();
+        AuctionCategories category = messageObject.category();
         Document document = auctionItem.toDocument();
         document.put("category", category.name());
 
-        if (AuctionActiveDatabase.collection.find(new Document("_id", document.get("_id"))).first() != null) {
-            AuctionActiveDatabase.collection.updateOne(new Document("_id", document.get("_id")), new Document("$set", auctionItem));
-        } else {
-            AuctionActiveDatabase.collection.insertOne(document);
-        }
+        Thread.startVirtualThread(() -> {
+            if (AuctionActiveDatabase.collection.find(new Document("_id", document.get("_id"))).first() != null) {
+                AuctionActiveDatabase.collection.replaceOne(
+                        new Document("_id", document.get("_id")),
+                        document
+                );
+            } else {
+                AuctionActiveDatabase.collection.insertOne(document);
+            }
+        });
 
-        return new JSONObject().put("uuid", document.get("_id")).toMap();
+        return new AuctionAddItemProtocolObject.AuctionAddItemResponse(UUID.fromString((String) document.get("_id")));
     }
 }

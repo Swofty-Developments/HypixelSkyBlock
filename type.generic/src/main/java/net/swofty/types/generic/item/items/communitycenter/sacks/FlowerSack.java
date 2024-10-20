@@ -1,20 +1,17 @@
 package net.swofty.types.generic.item.items.communitycenter.sacks;
 
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUISack;
+import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.NotFinishedYet;
+import net.swofty.types.generic.item.impl.Sack;
 import net.swofty.types.generic.item.impl.SkullHead;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FlowerSack implements CustomSkyBlockItem, SkullHead, NotFinishedYet {
-    @Override
-    public ItemStatistics getStatistics(SkyBlockItem instance) {
-        return ItemStatistics.empty();
-    }
+public class FlowerSack implements SkullHead, NotFinishedYet, Sack {
 
     @Override
     public List<String> getLore(SkyBlockPlayer player, SkyBlockItem item) {
@@ -37,4 +34,37 @@ public class FlowerSack implements CustomSkyBlockItem, SkullHead, NotFinishedYet
     public String getSkullTexture(@Nullable SkyBlockPlayer player, SkyBlockItem item) {
         return "afc3b5db9bd99cd12161ed2ea4623795f28e793c6dab67cd3e803ccfaaad7cfd";
     }
+
+    @Override
+    public List<ItemTypeLinker> getSackItems() {
+        return List.of(
+                //ItemTypeLinker.ALLIUM,
+                //ItemTypeLinker.AZURE_BLUET,
+                //ItemTypeLinker.BLUE_ORCHID,
+                ItemTypeLinker.DANDELION,
+                ItemTypeLinker.ENCHANTED_DANDELION,
+                ItemTypeLinker.ENCHANTED_POPPY
+                //ItemTypeLinker.ENDSTONE_ROSE,
+                //ItemTypeLinker.LILAC,
+                //ItemTypeLinker.ORANGE_TULIP,
+                //ItemTypeLinker.OXEYE_DAISY,
+                //ItemTypeLinker.PEONY,
+                //ItemTypeLinker.PINK_TULIP,
+                //ItemTypeLinker.POPPY,
+                //ItemTypeLinker.RED_TULIP,
+                //ItemTypeLinker.ROSE_BUSH,
+                //ItemTypeLinker.SUNFLOWER,
+                //ItemTypeLinker.WHITE_TULIP
+        );
+    }
+
+    @Override
+    public int getMaximumCapacity() {
+        return 20160;
+    }
+
+    @Override
+    public void onRightInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        new GUISack(ItemTypeLinker.FLOWER_SACK, true).open(player);
+    };
 }

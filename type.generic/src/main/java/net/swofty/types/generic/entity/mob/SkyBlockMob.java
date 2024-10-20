@@ -1,6 +1,7 @@
 package net.swofty.types.generic.entity.mob;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -33,6 +34,7 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.types.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -144,8 +146,15 @@ public abstract class SkyBlockMob extends EntityCreature {
             if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
             SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
-            DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
-            droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
+            ItemTypeLinker droppedItemLinker = item.getAttributeHandler().getPotentialClassLinker();
+            if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
+                player.getSackItems().increase(droppedItemLinker, record.getAmount());
+            } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+                player.addAndUpdateItem(item);
+            } else {
+                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(item, player);
+                droppedItem.setInstance(getInstance(), getPosition().add(0, 0.5, 0));
+            }
         }
     }
 
@@ -201,5 +210,15 @@ public abstract class SkyBlockMob extends EntityCreature {
         } catch (Exception e) {
             // Suppress odd warnings
         }
+    }
+
+    public static @NonNull List<SkyBlockMob> getMobFromFuzzyPosition(Pos position) {
+        List<SkyBlockMob> mobs = new ArrayList<>();
+        for (SkyBlockMob mob : getMobs()) {
+            if (MathUtility.isWithinSameBlock(mob.getPosition(), position)) {
+                mobs.add(mob);
+            }
+        }
+        return mobs;
     }
 }

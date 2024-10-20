@@ -15,17 +15,15 @@ import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.commons.protocol.ProtocolSpecification;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.types.generic.redis.*;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
@@ -107,6 +105,9 @@ public class SkyBlock {
         Arrays.stream(ToProxyChannels.values()).forEach(
                 ServerOutboundMessage::registerServerToProxy
         );
+        List<ProtocolObject> protocolObjects = SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.commons.protocol.objects", ProtocolObject.class).toList();
+        protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
         proxyAPI.start();
 
         VelocityProxy.enable(Configuration.get("velocity-secret"));
@@ -122,7 +123,7 @@ public class SkyBlock {
          * Ensure all services are running
          */
         typeLoader.getRequiredServices().forEach(serviceType -> {
-            new ProxyService(serviceType).isOnline(new ProtocolPingSpecification()).thenAccept(online -> {
+            new ProxyService(serviceType).isOnline().thenAccept(online -> {
                 if (!online) {
                     Logger.error("Service " + serviceType.name() + " is not online!");
                 }
@@ -189,29 +190,6 @@ public class SkyBlock {
                 new JSONObject().put("type", serverType.name())
                         .put("port" , pterodactylPort),
                 (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
-    }
-
-    public static List<String> initOutgoingRedisChannels() {
-        List<String> requiredChannels = new ArrayList<>(Arrays.asList(
-                "proxy-online",
-                "server-initialized",
-                "server-name",
-                "player-handler",
-                "player-count"
-        ));
-        Reflections protocolSpecifications = new Reflections("net.swofty.commons.protocol.protocols");
-        Set<Class<? extends ProtocolSpecification>> subTypesOfProtocol = protocolSpecifications.getSubTypesOf(ProtocolSpecification.class);
-        subTypesOfProtocol.forEach(protocol -> {
-            try {
-                ProtocolSpecification specification = protocol.getDeclaredConstructor().newInstance();
-                requiredChannels.add(specification.getEndpoint());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-        });
-
-        return requiredChannels;
     }
 
     private static void checkProxyConnected(Scheduler scheduler) {

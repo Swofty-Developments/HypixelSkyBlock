@@ -67,12 +67,10 @@ public class MinionRedstone extends SkyBlockMinion {
         return new Color(219, 79, 15);
     }
 
-
-
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(-1, Block.REDSTONE_ORE, Block.AIR)
+                new BlockExpectation(-1, Block.REDSTONE_ORE, Block.AIR)
         );
     }
 

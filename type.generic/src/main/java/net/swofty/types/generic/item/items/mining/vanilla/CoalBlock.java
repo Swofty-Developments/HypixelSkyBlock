@@ -26,7 +26,7 @@ public class CoalBlock implements PlaceableCustomSkyBlockItem, Sellable, MinionF
 
     @Override
     public double getSellValue() {
-        return 18;
+        return 9;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class GoldBlock implements PlaceableCustomSkyBlockItem, Sellable, Default
 
     @Override
     public double getSellValue() {
-        return 36;
+        return 27;
     }
 
     @Override

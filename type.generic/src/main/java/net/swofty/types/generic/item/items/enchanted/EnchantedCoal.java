@@ -13,7 +13,7 @@ public class EnchantedCoal implements Enchanted, Sellable, MinionFuelItem {
 
     @Override
     public double getSellValue() {
-        return 320;
+        return 160;
     }
 
     @Override

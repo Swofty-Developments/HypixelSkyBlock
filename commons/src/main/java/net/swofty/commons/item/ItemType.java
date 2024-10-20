@@ -108,6 +108,13 @@ public enum ItemType {
     INFERNO_FUE_BLOCK(Material.PLAYER_HEAD,  Rarity.RARE),
 
     /**
+     * Sacks
+     */
+    SMALL_MINING_SACK(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    MEDIUM_MINING_SACK(Material.PLAYER_HEAD, Rarity.RARE),
+    LARGE_MINING_SACK(Material.PLAYER_HEAD, Rarity.EPIC),
+
+    /**
      * Runes
      */
     BLOOD_RUNE(Material.PLAYER_HEAD,  Rarity.COMMON),

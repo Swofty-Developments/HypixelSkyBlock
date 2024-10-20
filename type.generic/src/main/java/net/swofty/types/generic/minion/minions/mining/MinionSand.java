@@ -65,9 +65,9 @@ public class MinionSand extends SkyBlockMinion {
     }
 
     @Override
-    public List<MinionExpectations> getExpectations() {
+    public List<MinionExpectation> getExpectations() {
         return List.of(
-                new MinionExpectations(-1, Block.SAND, Block.AIR)
+                new BlockExpectation(-1, Block.SAND, Block.AIR)
         );
     }
 

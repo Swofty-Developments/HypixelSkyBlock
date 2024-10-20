@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
@@ -21,13 +22,12 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
-import net.swofty.commons.protocol.protocols.auctions.ProtocolFetchItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     public final UUID auctionID;
@@ -50,10 +50,12 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
     }
 
     public void updateItems() {
-        Map<String, Object> response = new ProxyService(ServiceType.AUCTION_HOUSE).callEndpoint(
-                new ProtocolFetchItem(),
-                new JSONObject().put("uuid", auctionID.toString()).toMap()).join();
-        AuctionItem item = (AuctionItem) response.get("item");
+        AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
+                new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(auctionID);
+        CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
+                new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
+        AuctionItem item = future.join().item();
+
         set(GUIClickableItem.getGoBackItem(49, previousGUI));
 
         set(new GUIItem(13) {
@@ -85,7 +87,7 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
             player.sendMessage("§cAuction House is currently offline!");
             player.closeInventory();
         }

@@ -112,9 +112,9 @@ public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 if (unlocked) {
                     lore.add("");
                     lore.add("§eClick to view recipes!");
-                    String colour;
-                    colour = (minionAmount == minionRegistry.asSkyBlockMinion().getTiers().size()) ? "§a" : "§e";
-                    itemStack = ItemStackCreator.getStackHead(colour + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
+                    String color;
+                    color = (minionAmount == minionRegistry.asSkyBlockMinion().getTiers().size()) ? "§a" : "§e";
+                    itemStack = ItemStackCreator.getStackHead(color + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",
                             minionRegistry.asSkyBlockMinion().getTiers().getFirst().texture(), 1, lore);
                 } else {
                     itemStack = ItemStackCreator.getStack("§c" + StringUtility.toNormalCase(minionRegistry.name()) + " Minion",

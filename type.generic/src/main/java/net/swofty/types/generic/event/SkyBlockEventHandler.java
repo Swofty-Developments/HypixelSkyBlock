@@ -28,7 +28,9 @@ public class SkyBlockEventHandler {
     private static final ArrayList<EventMethodEntry> cachedCustomEvents = new ArrayList<>();
     private static final EventNode<Event> customEventNode = (EventNode<Event>) EventNodes.CUSTOM.eventNode;
 
-    private record EventMethodEntry(Method method, Object instance, SkyBlockEvent skyBlockEvent) { }
+    private record EventMethodEntry(Method method,
+                                    Object instance,
+                                    SkyBlockEvent skyBlockEvent) { }
 
     public static void registerEventMethods(Object instance) {
         Class<?> clazz = instance.getClass();

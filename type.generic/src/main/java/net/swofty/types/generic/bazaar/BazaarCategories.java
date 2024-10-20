@@ -2,9 +2,9 @@ package net.swofty.types.generic.bazaar;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bazaar.BazaarInitializationRequest;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.protocol.objects.bazaar.BazaarInitializeProtocolObject;
 import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.*;
@@ -136,7 +136,7 @@ public enum BazaarCategories {
         return StringUtility.toNormalCase(name());
     }
 
-    public static BazaarInitializationRequest getInitializationRequest() {
+    public static BazaarInitializeProtocolObject.BazaarInitializationRequest getInitializationRequest() {
         List<ItemType> items = new ArrayList<>();
         for (BazaarCategories category : BazaarCategories.values()) {
             for (BazaarItemSet itemSet : category.items) {
@@ -144,7 +144,7 @@ public enum BazaarCategories {
             }
         }
 
-        return new BazaarInitializationRequest(items.stream().map(ItemType::name).toList());
+        return new BazaarInitializeProtocolObject.BazaarInitializationRequest(items.stream().map(ItemType::name).toList());
     }
 
     public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemType itemType) {

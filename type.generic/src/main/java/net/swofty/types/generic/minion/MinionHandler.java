@@ -7,6 +7,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.types.generic.command.commands.MinionGenerationCommand;
 import net.swofty.types.generic.entity.MinionEntityImpl;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
 import net.swofty.types.generic.item.ItemQuantifiable;
@@ -44,7 +45,7 @@ public record MinionHandler(Scheduler scheduler) {
             SkyBlockMinion.MinionTier tier = minion.getTiers().get(islandMinion.getTier() - 1);
             long lastAction = islandMinion.getLastAction();
             MinionExtensionData extensionData = islandMinion.getExtensionData();
-            long timeBetweenActions = (long) tier.timeBetweenActions() * 1000L;
+            long timeBetweenActions = ((long) tier.timeBetweenActions() / MinionGenerationCommand.divisionFactor) * 1000L;
 
             //Handle percentage speed increase from both fuels and minion upgrades
             double percentageSpeedIncrease = islandMinion.getSpeedPercentage();
@@ -64,20 +65,15 @@ public record MinionHandler(Scheduler scheduler) {
             int extraMinionRange = islandMinion.getBonusRange();
 
             // Check if the minion is in a perfect location
-            boolean allBlocksMeetExpectations = true;
-            for (SkyBlockMinion.MinionExpectations expectation : minion.getExpectations()) {
-                int yLevel = minionEntity.getPosition().blockY() + expectation.yLevel();
-                List<Pos> positions = MathUtility.getRangeExcludingSelf(minionEntity.getPosition().withY(yLevel), 2 + extraMinionRange);
-
-                for (Pos position : positions) {
-                    if (!Arrays.asList(expectation.material()).contains(instance.getBlock(position))) {
-                        allBlocksMeetExpectations = false;
-                        break;
-                    }
+            boolean allExpectationsMet = true;
+            for (SkyBlockMinion.MinionExpectation expectation : minion.getExpectations()) {
+                if (!expectation.meetsExpectation(instance, islandMinion)) {
+                    allExpectationsMet = false;
+                    break;
                 }
             }
 
-            if (!allBlocksMeetExpectations) {
+            if (!allExpectationsMet) {
                 // To not overload with replacing holograms if not needed
                 if (tags.getState() == InternalMinionTags.State.BAD_FULL) return;
                 if (tags.getState() == InternalMinionTags.State.BAD_LOCATION) return;
@@ -154,7 +150,7 @@ public record MinionHandler(Scheduler scheduler) {
             MinionAction.MinionActionEvent event = new MinionAction.MinionActionEvent();
             tags.setState(InternalMinionTags.State.ROTATING);
 
-            SkyBlockItem item = action.onAction(event, islandMinion, instance);
+            List<SkyBlockItem> items = action.onAction(event, islandMinion, instance);
 
             Pos toLook = event.getToLook();
             List<Pos> points = MathUtility.lookSteps(minionEntity.getPosition(), toLook, STEPS);
@@ -163,8 +159,8 @@ public record MinionHandler(Scheduler scheduler) {
             tags.setCurrentStep(0);
             tags.setAction(event.getAction());
 
-            if (item != null)
-                MinionAction.onMinionIteration(islandMinion, minion, item);
+            if (!items.isEmpty())
+                MinionAction.onMinionIteration(islandMinion, minion, items);
         });
     }
 

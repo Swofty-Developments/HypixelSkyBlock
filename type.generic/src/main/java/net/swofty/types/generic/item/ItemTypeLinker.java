@@ -160,6 +160,9 @@ import net.swofty.types.generic.item.items.pet.petitems.*;
 import net.swofty.types.generic.item.items.pet.pets.BeePet;
 import net.swofty.types.generic.item.items.powerstones.LuxuriousSpool;
 import net.swofty.types.generic.item.items.runes.BloodRune;
+import net.swofty.types.generic.item.items.sacks.LargeMiningSack;
+import net.swofty.types.generic.item.items.sacks.MediumMiningSack;
+import net.swofty.types.generic.item.items.sacks.SmallMiningSack;
 import net.swofty.types.generic.item.items.spooky.*;
 import net.swofty.types.generic.item.items.travelscroll.HubCastleTravelScroll;
 import net.swofty.types.generic.item.items.travelscroll.HubCryptsTravelScroll;
@@ -301,6 +304,13 @@ public enum ItemTypeLinker {
     EXPERTISE(ItemType.EXPERTISE, Expertise.class),
     HECATOMB(ItemType.HECATOMB, Hecatomb.class),
     INFERNO_FUE_BLOCK(ItemType.INFERNO_FUE_BLOCK, InfernoFuelBlock.class),
+
+    /**
+     * Sacks
+     */
+    SMALL_MINING_SACK(ItemType.SMALL_MINING_SACK, SmallMiningSack.class),
+    MEDIUM_MINING_SACK(ItemType.MEDIUM_MINING_SACK, MediumMiningSack.class),
+    LARGE_MINING_SACK(ItemType.LARGE_MINING_SACK, LargeMiningSack.class),
 
     /**
      * Runes

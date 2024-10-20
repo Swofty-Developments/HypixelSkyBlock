@@ -14,7 +14,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.commons.protocol.protocols.ProtocolPingSpecification;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
@@ -36,7 +35,7 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
     @SneakyThrows
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline(new ProtocolPingSpecification()).join()) {
+        if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
             e.player().sendMessage("§cThe item tracker is currently offline. Please try again later.");
             e.player().closeInventory();
             return;
