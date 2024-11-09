@@ -1,7 +1,7 @@
 package net.swofty.types.generic.minion.extension;
 
 import lombok.SneakyThrows;
-import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtension;
@@ -23,51 +23,51 @@ public class MinionExtensionData {
     @SneakyThrows
     public MinionExtension getOfType(Class<? extends MinionExtension> clazz) {
         return extensionData.values().stream().filter(clazz::isInstance).findFirst().orElse(
-                clazz.getConstructor(ItemTypeLinker.class, Object.class).newInstance(null, null)
+                clazz.getConstructor(ItemType.class, Object.class).newInstance(null, null)
         );
     }
 
-    public boolean hasMinionUpgrade(ItemTypeLinker type) {
+    public boolean hasMinionUpgrade(ItemType type) {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionUpgradeExtension)
-                .anyMatch(extension -> extension.getItemTypeLinkerPassedIn() == type);
+                .anyMatch(extension -> extension.getItemTypePassedIn() == type);
     }
 
-    public int getMinionUpgradeCount(ItemTypeLinker type) {
+    public int getMinionUpgradeCount(ItemType type) {
         return (int)extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionUpgradeExtension)
-                .filter(extension -> extension.getItemTypeLinkerPassedIn() == type).count();
+                .filter(extension -> extension.getItemTypePassedIn() == type).count();
     }
 
     public SkyBlockItem[] getMinionUpgrades() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionUpgradeExtension)
-                .filter(extension -> extension.getItemTypeLinkerPassedIn() != null)
-                .map(extension -> new SkyBlockItem(extension.getItemTypeLinkerPassedIn()))
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .toArray(SkyBlockItem[]::new);
     }
     @Nullable
     public SkyBlockItem getMinionSkin() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionSkinExtension)
-                .filter(extension -> extension.getItemTypeLinkerPassedIn() != null)
-                .map(extension -> new SkyBlockItem(extension.getItemTypeLinkerPassedIn()))
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .findFirst().orElse(null);
     }
     @Nullable
     public SkyBlockItem getAutomatedShipping() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionShippingExtension)
-                .filter(extension -> extension.getItemTypeLinkerPassedIn() != null)
-                .map(extension -> new SkyBlockItem(extension.getItemTypeLinkerPassedIn()))
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .findFirst().orElse(null);
     }
     @Nullable
     public SkyBlockItem getFuel() {
         return extensionData.values().stream()
                 .filter(extension -> extension instanceof MinionFuelExtension)
-                .filter(extension -> extension.getItemTypeLinkerPassedIn() != null)
-                .map(extension -> new SkyBlockItem(extension.getItemTypeLinkerPassedIn()))
+                .filter(extension -> extension.getItemTypePassedIn() != null)
+                .map(extension -> new SkyBlockItem(extension.getItemTypePassedIn()))
                 .findFirst().orElse(null);
     }
 
@@ -75,7 +75,7 @@ public class MinionExtensionData {
     public MinionExtension getMinionExtension(int slot) {
         if (!extensionData.containsKey(slot)) {
             MinionExtension extension = MinionExtensions.getFromSlot(slot).getInstance().getDeclaredConstructor(
-                    ItemTypeLinker.class, Object.class
+                    ItemType.class, Object.class
             ).newInstance(null, null);
 
             extensionData.put(slot, extension);
@@ -103,7 +103,7 @@ public class MinionExtensionData {
             int slot = Integer.parseInt(key);
 
             MinionExtension extension = MinionExtensions.getFromSlot(slot).getInstance().getDeclaredConstructor(
-                    ItemTypeLinker.class, Object.class
+                    ItemType.class, Object.class
             ).newInstance(null, null);
 
             extension.fromString(entryJson.getString("serialized"));

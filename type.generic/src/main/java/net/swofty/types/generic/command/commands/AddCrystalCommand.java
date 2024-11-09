@@ -5,7 +5,6 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.impl.ServerOrb;

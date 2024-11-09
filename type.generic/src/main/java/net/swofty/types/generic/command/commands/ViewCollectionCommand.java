@@ -6,7 +6,6 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection.GUICollectionItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -28,6 +27,7 @@ public class ViewCollectionCommand extends SkyBlockCommand {
 
             if (CollectionCategories.getCategory(itemTypeLinker) == null) {
                 sender.sendMessage("§cThis item does not have a collection!");
+                return;
             }
 
             new GUICollectionItem(itemTypeLinker).open((SkyBlockPlayer) sender);

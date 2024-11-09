@@ -24,7 +24,6 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.loottable.LootAffector;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;

@@ -2,7 +2,7 @@ package net.swofty.types.generic.museum;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.StringUtility;
 
@@ -18,7 +18,7 @@ public enum MuseumableItemCategory {
     RARITIES("Rarities", Material.EMERALD_BLOCK, "§5")
     ;
 
-    private final static Map<MuseumableItemCategory, List<ItemTypeLinker>> ITEMS = new HashMap<>();
+    private final static Map<MuseumableItemCategory, List<ItemType>> ITEMS = new HashMap<>();
 
     private final String category;
     private final Material material;
@@ -30,7 +30,7 @@ public enum MuseumableItemCategory {
         this.color = color;
     }
 
-    public List<ItemTypeLinker> getItems() {
+    public List<ItemType> getItems() {
         return ITEMS.getOrDefault(this, new ArrayList<>());
     }
 
@@ -39,11 +39,11 @@ public enum MuseumableItemCategory {
         return StringUtility.toNormalCase(name().replace("_", " "));
     }
 
-    public boolean contains(ItemTypeLinker item) {
+    public boolean contains(ItemType item) {
         return ITEMS.getOrDefault(this, new ArrayList<>()).contains(item);
     }
 
-    public static MuseumableItemCategory getFromItem(ItemTypeLinker item) {
+    public static MuseumableItemCategory getFromItem(ItemType item) {
         for (MuseumableItemCategory category : ITEMS.keySet()) {
             if (ITEMS.getOrDefault(category, new ArrayList<>()).contains(item)) {
                 return category;
@@ -68,7 +68,7 @@ public enum MuseumableItemCategory {
 
         for (SkyBlockItem item : items) {
             for (MuseumableItemCategory category : ITEMS.keySet()) {
-                if (ITEMS.get(category).contains(item.getAttributeHandler().getPotentialClassLinker())) {
+                if (ITEMS.get(category).contains(item.getAttributeHandler().getPotentialType())) {
                     sortedItems.get(category).add(item);
                     break;
                 }
@@ -78,7 +78,7 @@ public enum MuseumableItemCategory {
         return sortedItems;
     }
 
-    public static void addItem(MuseumableItemCategory category, ItemTypeLinker item) {
+    public static void addItem(MuseumableItemCategory category, ItemType item) {
         if (!ITEMS.containsKey(category)) {
             ITEMS.put(category, new ArrayList<>());
         }

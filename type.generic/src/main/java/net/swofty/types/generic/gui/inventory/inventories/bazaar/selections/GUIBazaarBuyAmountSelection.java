@@ -9,7 +9,6 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;

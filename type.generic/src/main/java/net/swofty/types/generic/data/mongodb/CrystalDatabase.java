@@ -6,8 +6,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -42,14 +42,14 @@ public class CrystalDatabase {
                 Double x1 = doc.getDouble("x");
                 Double y1 = doc.getDouble("y");
                 Double z1 = doc.getDouble("z");
-                ItemTypeLinker itemTypeLinker = ItemTypeLinker.valueOf(doc.getString("itemType"));
+                ItemType itemTypeLinker = ItemType.valueOf(doc.getString("itemType"));
                 ServerType serverType = ServerType.valueOf(doc.getString("serverType"));
 
                 CrystalData crystal = new CrystalData();
 
                 crystal.url = url;
                 crystal.position = new Pos(x1 + 0.5, y1, z1 + 0.5);
-                crystal.itemTypeLinker = itemTypeLinker;
+                crystal.itemType = itemTypeLinker;
                 crystal.serverType = serverType;
 
                 crystals.add(crystal);
@@ -58,14 +58,14 @@ public class CrystalDatabase {
         return crystals;
     }
 
-    public static void addCrystal(String url, Pos position, ItemTypeLinker itemTypeLinker) {
+    public static void addCrystal(String url, Pos position, ItemType itemType) {
         Document doc = new Document();
         doc.append("_id", Math.toIntExact((collection.countDocuments() + 1)));
         doc.append("url", url);
         doc.append("x", position.x());
         doc.append("y", position.y());
         doc.append("z", position.z());
-        doc.append("itemType", itemTypeLinker.name());
+        doc.append("itemType", itemType.name());
         doc.append("serverType", SkyBlockConst.getTypeLoader().getType().name());
         collection.insertOne(doc);
     }
@@ -90,9 +90,9 @@ public class CrystalDatabase {
             Double y = doc.getDouble("y");
             Double z = doc.getDouble("z");
             // Manually handle DB migrations
-            ItemTypeLinker itemTypeLinker;
+            ItemType itemTypeLinker;
             try {
-                itemTypeLinker = ItemTypeLinker.valueOf(doc.getString("itemType"));
+                itemTypeLinker = ItemType.valueOf(doc.getString("itemType"));
             } catch (Exception e) {
                 Logger.error("Error parsing crystal data for crystal with ID " + id + " - skipping.");
                 continue;
@@ -102,7 +102,7 @@ public class CrystalDatabase {
 
             crystal.url = url;
             crystal.position = new Pos(x + 0.5, y, z + 0.5);
-            crystal.itemTypeLinker = itemTypeLinker;
+            crystal.itemType = itemTypeLinker;
             crystal.serverType = ServerType.valueOf(doc.getString("serverType"));
 
             crystals.add(crystal);
@@ -113,7 +113,7 @@ public class CrystalDatabase {
     public static class CrystalData {
         public String url;
         public Pos position;
-        public ItemTypeLinker itemTypeLinker;
+        public ItemType itemType;
         public ServerType serverType;
     }
 }

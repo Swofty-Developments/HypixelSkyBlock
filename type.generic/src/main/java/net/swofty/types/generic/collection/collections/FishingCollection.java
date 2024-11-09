@@ -4,20 +4,19 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.types.generic.item.crafting.ShapedRecipe;
+import net.swofty.types.generic.item.crafting.ShapelessRecipe;
 import net.swofty.types.generic.item.items.enchanted.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.swofty.types.generic.item.impl.SkyBlockRecipe.getStandardEnchantedRecipe;
+import static net.swofty.types.generic.item.crafting.SkyBlockRecipe.getStandardEnchantedRecipe;
 
 public class FishingCollection extends CollectionCategory {
     @Override

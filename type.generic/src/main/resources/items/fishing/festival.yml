@@ -1,0 +1,13 @@
+items:
+  - id: BLUE_SHARK_TOOTH
+    rarity: COMMON
+  - id: GREAT_WHITE_SHARK_TOOTH
+    rarity: COMMON
+    components:
+      - id: TRACKED_UNIQUE
+  - id: NURSE_SHARK_TOOTH
+    rarity: COMMON
+  - id: SHARK_FIN
+    rarity: COMMON
+  - id: TIGER_SHARK_TOOTH
+    rarity: COMMON

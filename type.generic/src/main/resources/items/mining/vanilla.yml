@@ -1,0 +1,655 @@
+items:
+  - id: COAL
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 2.0
+      - id: MINION_FUEL
+        fuel_percentage: 5.0
+        last_time_ms: 1800000
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+  - id: COAL_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 18.0
+      - id: MINION_FUEL
+        fuel_percentage: 5.0
+        last_time_ms: 18000000
+  - id: DIAMOND
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 8.0
+  - id: DIAMOND_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 72.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: DIAMOND_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+  - id: DIAMOND_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 230.0
+      breaking_power: 4.0
+      damage: 30.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: DIAMOND_PICKAXE
+              amount: 1
+            pattern:
+              - AAA
+              - ' B '
+              - ' B '
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 12.0
+  - id: DIAMOND_SHOVEL
+    rarity: COMMON
+    default_statistics:
+      damage: 30.0
+    components:
+      - id: SHOVEL
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: DIAMOND_SHOVEL
+              amount: 1
+            pattern:
+              - A
+              - B
+              - B
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 4.0
+  - id: EMERALD
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 6.0
+  - id: EMERALD_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 54.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: EMERALD_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: EMERALD
+                amount: 1
+  - id: END_STONE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 3.0
+      - id: SELLABLE
+        value: 2.0
+  - id: FLINT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+  - id: GLOWSTONE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 8.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: GLOWSTONE
+              amount: 1
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: GLOWSTONE_DUST
+                amount: 1
+  - id: GLOWSTONE_DUST
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 2.0
+  - id: GOLD_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 36.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: GOLD_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+  - id: GOLDEN_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 250.0
+      damage: 15.0
+      breaking_power: 1.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: GOLDEN_PICKAXE
+              amount: 1
+            pattern:
+              - AAA
+              - ' B '
+              - ' B '
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 6.0
+  - id: GOLDEN_SHOVEL
+    rarity: COMMON
+    default_statistics:
+      damage: 15.0
+    components:
+      - id: SHOVEL
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: GOLDEN_SHOVEL
+              amount: 1
+            pattern:
+              - A
+              - B
+              - B
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 3.0
+  - id: GOLD_INGOT
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 4.0
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+  - id: GOLD_NUGGET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: GOLD_NUGGET
+              amount: 1
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+      - id: SELLABLE
+        value: 0.4
+  - id: GOLD_ORE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 4.0
+  - id: GRAVEL
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 3.0
+  - id: ICE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+  - id: IRON_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 27.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: IRON_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+  - id: IRON_INGOT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: IRON_ORE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 3.0
+  - id: IRON_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 160.0
+      damage: 24.0
+      breaking_power: 3.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: IRON_PICKAXE
+              amount: 1
+            pattern:
+              - AAA
+              - ' B '
+              - ' B '
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 4.0
+  - id: IRON_SHOVEL
+    rarity: COMMON
+    default_statistics:
+      damage: 25.0
+    components:
+      - id: SHOVEL
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: IRON_SHOVEL
+              amount: 1
+            pattern:
+              - A
+              - B
+              - B
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 2.0
+  - id: LAPIS_LAZULI
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 1.0
+  - id: LAPIS_LAZULI_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 9.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: LAPIS_LAZULI_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LAPIS_LAZULI
+                amount: 1
+  - id: MYCELIUM
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 5.0
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 3.0
+  - id: NETHERRACK
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 0.5
+      - id: SELLABLE
+        value: 1.0
+  - id: OBSIDIAN
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 20.0
+      - id: SELLABLE
+        value: 7.0
+  - id: PACKED_ICE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 4.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: PACKED_ICE
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ICE
+                amount: 1
+  - id: QUARTZ
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 4.0
+  - id: RED_SAND
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 5.0
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 3.0
+  - id: REDSTONE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 1.0
+  - id: REDSTONE_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 9.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: REDSTONE_BLOCK
+              amount: 1
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: REDSTONE
+                amount: 1
+  - id: SAND
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 3.0
+      - id: SELLABLE
+        value: 2.0
+  - id: SNOW
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+  - id: SNOWBALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+  - id: SNOW_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 4.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: SNOW_BLOCK
+              amount: 1
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SNOWBALL
+                amount: 1
+  - id: STONE_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 110.0
+      damage: 20.0
+      breaking_power: 2.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: STONE_PICKAXE
+              amount: 1
+            pattern:
+              - AAA
+              - ' B '
+              - ' B '
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: STONE_SHOVEL
+    rarity: COMMON
+    default_statistics:
+      damage: 20.0
+    components:
+      - id: SHOVEL
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: STONE_SHOVEL
+              amount: 1
+            pattern:
+              - A
+              - B
+              - B
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: WOODEN_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 70.0
+      damage: 15.0
+      breaking_power: 1.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: WOODEN_PICKAXE
+              amount: 1
+            pattern:
+              - AAA
+              - ' B '
+              - ' B '
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: WOODEN_SHOVEL
+    rarity: COMMON
+    default_statistics:
+      damage: 15.0
+    components:
+      - id: SHOVEL
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            result:
+              type: WOODEN_SHOVEL
+              amount: 1
+            pattern:
+              - A
+              - B
+              - B
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+      - id: SELLABLE
+        value: 1.0

@@ -11,7 +11,6 @@ import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
-import net.swofty.types.generic.item.impl.*;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+import net.swofty.types.generic.item.components.*;
 
 public class ItemAttributeHandler {
     SkyBlockItem item;
@@ -33,30 +33,26 @@ public class ItemAttributeHandler {
     }
 
     public boolean shouldBeEnchanted() {
-        if (item.getGenericInstance() == null)
-            return false;
-        return item.getGenericInstance() instanceof Enchanted;
+        return item.hasComponent(EnchantedComponent.class);
     }
 
     public @Nullable ItemAttributeSandboxItem.SandboxData getSandboxData() {
-        if (item.getGenericInstance() == null) return null;
         return ((ItemAttributeSandboxItem) item.getAttribute("sandboxdata")).getValue();
     }
 
     public void setSandboxData(ItemAttributeSandboxItem.SandboxData data) {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a sandbox item");
-        ((ItemAttributeSandboxItem) item.getAttribute("sandboxdata")).setValue(data);
+        item.getAttribute("sandboxdata").setValue(data);
     }
 
     public int getRuneLevel() {
-        if (!(item.getGenericInstance() instanceof RuneItem)) {
+        if (!(item.hasComponent(RuneableComponent.class))) {
             throw new RuntimeException("Item is not a rune item " + getTypeAsString());
         }
         return ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).getValue();
     }
 
     public void setRuneLevel(int level) {
-        if (!(item.getGenericInstance() instanceof RuneItem)) throw new RuntimeException("Item is not a rune item");
+        if (!(item.hasComponent(RuneableComponent.class))) throw new RuntimeException("Item is not a rune item");
         ((ItemAttributeRuneLevel) item.getAttribute("rune_level")).setValue(level);
     }
 
@@ -77,12 +73,11 @@ public class ItemAttributeHandler {
     }
 
     public boolean isPet() {
-        return item.getGenericInstance() instanceof Pet;
+        return item.hasComponent(PetItemComponent.class);
     }
 
     public ItemAttributePetData.PetData getPetData() {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a pet");
-        if (item.getGenericInstance() instanceof Pet) {
+        if (item.hasComponent(PetItemComponent.class)) {
             return ((ItemAttributePetData) item.getAttribute("pet_data")).getValue();
         } else {
             throw new RuntimeException("Item is not a pet");
@@ -90,34 +85,31 @@ public class ItemAttributeHandler {
     }
 
     public Color getLeatherColour() {
-        if (item.getGenericInstance() == null)
-            return null;
-        if (item.getGenericInstance() instanceof LeatherColour colour)
-            return colour.getLeatherColour();
+        if (item.hasComponent(LeatherColorComponent.class)) {
+            return item.getComponent(LeatherColorComponent.class).getColor();
+        }
         return null;
     }
 
     public void setSoulBound(boolean coopAllowed) {
-        ((ItemAttributeSoulbound) item.getAttribute("soul_bound")).setValue(
+        item.getAttribute("soul_bound").setValue(
                 new ItemAttributeSoulbound.SoulBoundData(coopAllowed)
         );
     }
 
     public ItemAttributeSoulbound.SoulBoundData getSoulBoundData() {
-        if (item.getGenericInstance() == null)
-            return null;
         ItemAttributeSoulbound.SoulBoundData potentialData = ((ItemAttributeSoulbound) item
                 .getAttribute("soul_bound"))
                 .getValue();
         if (potentialData != null) return potentialData;
-        if (item.getGenericInstance() instanceof DefaultSoulbound soulBound)
-            return new ItemAttributeSoulbound.SoulBoundData(soulBound.isCoopAllowed());
+        if (item.hasComponent(DefaultSoulboundComponent.class))
+            return new ItemAttributeSoulbound.SoulBoundData(
+                    item.getComponent(DefaultSoulboundComponent.class).isCoopAllowed());
         return null;
     }
 
     public @Nullable ItemAttributeGemData.GemData getGemData() {
-        if (item.getGenericInstance() == null) return null;
-        if (item.getGenericInstance() instanceof GemstoneItem) {
+        if (item.hasComponent(GemstoneComponent.class)) {
             return ((ItemAttributeGemData) item.getAttribute("gems")).getValue();
         } else {
             return null;
@@ -125,8 +117,7 @@ public class ItemAttributeHandler {
     }
 
     public void setGemData(ItemAttributeGemData.GemData data) {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a gemstone item");
-        if (item.getGenericInstance() instanceof GemstoneItem) {
+        if (item.hasComponent(GemstoneComponent.class)) {
             ((ItemAttributeGemData) item.getAttribute("gems")).setValue(data);
         } else {
             throw new RuntimeException("Item is not a gemstone item");
@@ -134,8 +125,7 @@ public class ItemAttributeHandler {
     }
 
     public void setPetData(ItemAttributePetData.PetData data) {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a pet");
-        if (item.getGenericInstance() instanceof Pet) {
+        if (item.hasComponent(PetItemComponent.class)) {
             ((ItemAttributePetData) item.getAttribute("pet_data")).setValue(data);
         } else {
             throw new RuntimeException("Item is not a pet");
@@ -143,8 +133,7 @@ public class ItemAttributeHandler {
     }
 
     public ItemAttributeBackpackData.BackpackData getBackpackData() {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
-        if (item.getGenericInstance() instanceof Backpack) {
+        if (item.hasComponent(BackpackComponent.class)) {
             return ((ItemAttributeBackpackData) item.getAttribute("backpack_data")).getValue();
         } else {
             throw new RuntimeException("Item is not a backpack");
@@ -152,19 +141,10 @@ public class ItemAttributeHandler {
     }
 
     public void setBackpackData(ItemAttributeBackpackData.BackpackData data) {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a backpack");
-        if (item.getGenericInstance() instanceof Backpack) {
+        if (item.hasComponent(BackpackComponent.class)) {
             ((ItemAttributeBackpackData) item.getAttribute("backpack_data")).setValue(data);
         } else {
             throw new RuntimeException("Item is not a backpack");
-        }
-    }
-
-    public @Nullable ItemTypeLinker getPotentialClassLinker() {
-        try {
-            return ItemTypeLinker.valueOf(((ItemAttributeType) item.getAttribute("item_type")).getValue());
-        } catch (IllegalArgumentException e) {
-            return null;
         }
     }
 
@@ -228,17 +208,15 @@ public class ItemAttributeHandler {
     }
 
     public MinionRegistry getMinionType() {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
-        if (item.getGenericInstance() instanceof Minion minion) {
-            return minion.getMinionRegistry();
+        if (item.hasComponent(MinionComponent.class)) {
+            return item.getComponent(MinionComponent.class).getMinionRegistry();
         } else {
             throw new RuntimeException("Item is not a minion");
         }
     }
 
     public ItemAttributeMinionData.MinionData getMinionData() {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
-        if (item.getGenericInstance() instanceof Minion) {
+        if (item.hasComponent(MinionComponent.class)) {
             return ((ItemAttributeMinionData) item.getAttribute("minion_tier")).getValue();
         } else {
             throw new RuntimeException("Item is not a minion");
@@ -246,9 +224,8 @@ public class ItemAttributeHandler {
     }
 
     public void setMinionData(ItemAttributeMinionData.MinionData data) {
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
-        if (item.getGenericInstance() instanceof Minion) {
-            ((ItemAttributeMinionData) item.getAttribute("minion_tier")).setValue(data);
+        if (item.hasComponent(MinionComponent.class)) {
+            item.getAttribute("minion_tier").setValue(data);
         } else {
             throw new RuntimeException("Item is not a minion");
         }
@@ -298,8 +275,7 @@ public class ItemAttributeHandler {
     }
 
     public boolean isMithrilInfused(){
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
-        if (item.getGenericInstance() instanceof Minion) {
+        if (item.hasComponent(MinionComponent.class)) {
             return ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).getValue();
         } else {
             throw new RuntimeException("Item is not a minion");
@@ -307,8 +283,7 @@ public class ItemAttributeHandler {
     }
 
     public void setMithrilInfused(boolean value){
-        if (item.getGenericInstance() == null) throw new RuntimeException("Item is not a minion");
-        if (item.getGenericInstance() instanceof Minion) {
+        if (item.hasComponent(MinionComponent.class)) {
             ((ItemAttributeMithrilInfusion) item.getAttribute("mithril_infusion")).setValue(value);
         } else {
             throw new RuntimeException("Item is not a minion");

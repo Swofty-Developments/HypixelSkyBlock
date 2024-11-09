@@ -7,10 +7,10 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIJamie extends SkyBlockInventoryGUI {
@@ -25,7 +25,7 @@ public class GUIJamie extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.addAndUpdateItem(ItemTypeLinker.ROGUE_SWORD);
+                player.addAndUpdateItem(ItemType.ROGUE_SWORD);
                 player.closeInventory();
                 player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
             }

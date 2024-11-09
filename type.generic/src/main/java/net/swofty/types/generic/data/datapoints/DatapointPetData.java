@@ -2,14 +2,14 @@ package net.swofty.types.generic.data.datapoints;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.entity.PetEntityImpl;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -77,12 +77,12 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
             petsMap.put(pet, false);
         }
 
-        public void setEnabled(ItemTypeLinker type, boolean enabled) {
+        public void setEnabled(ItemType type, boolean enabled) {
             // Set all previous true pets to false
-            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialClassLinker() == type).forEach(pet -> petsMap.put(pet, false));
+            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).forEach(pet -> petsMap.put(pet, false));
 
             // Set the new pet to the new state
-            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialClassLinker() == type).findFirst().ifPresent(pet -> petsMap.put(pet, enabled));
+            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).findFirst().ifPresent(pet -> petsMap.put(pet, enabled));
 
             if (enabledPetEntityImpl != null)
                 enabledPetEntityImpl.remove();
@@ -97,15 +97,13 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
 
             SkyBlockItem enabledPet = getEnabledPet();
             if (enabledPet != null) {
-                enabledPetEntityImpl = new PetEntityImpl(player, ((SkullHead) enabledPet.getGenericInstance()).getSkullTexture(
-                        player, enabledPet
-                ), enabledPet);
+                enabledPetEntityImpl = new PetEntityImpl(player, enabledPet.getComponent(SkullHeadComponent.class).getSkullTexture(enabledPet), enabledPet);
                 enabledPetEntityImpl.setInstance(player.getInstance(), player.getPosition());
             }
         }
 
-        public void isEnabled(ItemTypeLinker type) {
-            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialClassLinker() == type).findFirst().ifPresent(petsMap::get);
+        public void isEnabled(ItemType type) {
+            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).findFirst().ifPresent(petsMap::get);
         }
 
         public void deselectCurrent() {
@@ -116,12 +114,12 @@ public class DatapointPetData extends Datapoint<DatapointPetData.UserPetData> {
             return petsMap.keySet().stream().filter(petsMap::get).findFirst().orElse(null);
         }
 
-        public @Nullable SkyBlockItem getPet(ItemTypeLinker type) {
-            return petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialClassLinker() == type).findFirst().orElse(null);
+        public @Nullable SkyBlockItem getPet(ItemType type) {
+            return petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).findFirst().orElse(null);
         }
 
-        public void removePet(ItemTypeLinker petType) {
-            petsMap.keySet().removeIf(pet -> pet.getAttributeHandler().getPotentialClassLinker() == petType);
+        public void removePet(ItemType petType) {
+            petsMap.keySet().removeIf(pet -> pet.getAttributeHandler().getPotentialType() == petType);
         }
     }
 }

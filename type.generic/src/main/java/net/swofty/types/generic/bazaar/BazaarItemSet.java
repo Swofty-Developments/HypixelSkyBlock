@@ -1,7 +1,6 @@
 package net.swofty.types.generic.bazaar;
 
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.List;
 

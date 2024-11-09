@@ -5,7 +5,6 @@ import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.swofty.commons.Configuration;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.types.generic.item.impl.DefaultSoulbound;

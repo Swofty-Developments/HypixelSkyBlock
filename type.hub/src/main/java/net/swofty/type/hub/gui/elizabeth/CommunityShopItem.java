@@ -2,12 +2,12 @@ package net.swofty.type.hub.gui.elizabeth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.ItemType;
 
 @AllArgsConstructor
 @Getter
 public class CommunityShopItem {
-    private ItemTypeLinker itemTypeLinker;
+    private ItemType itemTypeLinker;
     private int price;
     private int amount;
 }

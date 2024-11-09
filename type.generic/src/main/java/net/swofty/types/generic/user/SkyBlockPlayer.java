@@ -35,12 +35,7 @@ import net.swofty.types.generic.event.value.ValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.ArrowImpl;
-import net.swofty.types.generic.item.impl.Sack;
-import net.swofty.types.generic.item.impl.Talisman;
-import net.swofty.types.generic.item.impl.TieredTalisman;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -48,6 +43,9 @@ import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.item.components.ArrowComponent;
+import net.swofty.types.generic.item.components.SackComponent;
+import net.swofty.types.generic.item.components.TalismanComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
@@ -186,7 +184,7 @@ public class SkyBlockPlayer extends Player {
         for (int i = 0; i < 36; i++) {
             ItemStack stack = getInventory().getItemStack(i);
             SkyBlockItem item = new SkyBlockItem(stack);
-            if (item.getGenericInstance() != null && item.getGenericInstance() instanceof ArrowImpl) {
+            if (item.hasComponent(ArrowComponent.class)) {
                 return item;
             }
         }
@@ -215,7 +213,7 @@ public class SkyBlockPlayer extends Player {
         for (int i = 0; i < 36; i++) {
             ItemStack stack = getInventory().getItemStack(i);
             SkyBlockItem item = new SkyBlockItem(stack);
-            if (item.getGenericInstance() != null && item.getGenericInstance() instanceof ArrowImpl) {
+            if (item.hasComponent(ArrowComponent.class)) {
                 if (item.getAmount() > 1) {
                     item.setAmount(item.getAmount() - 1);
                     getInventory().setItemStack(i, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
@@ -248,24 +246,18 @@ public class SkyBlockPlayer extends Player {
         }
     }
 
-    public boolean hasTalisman(Talisman talisman) {
-        return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
+    public boolean hasTalisman(ItemType talisman) {
+        return getTalismans().stream().anyMatch(talisman1 -> talisman1 == talisman);
     }
 
-    public boolean hasTalisman(TieredTalisman talisman) {
-        return getTalismans().stream().anyMatch(talisman1 -> talisman1.getClass() == talisman.getClass());
-    }
+    public List<ItemType> getTalismans() {
+        List<ItemType> inInventory = Stream.of(getAllInventoryItems())
+                .filter(item -> item.hasComponent(TalismanComponent.class))
+                .map(item -> item.getAttributeHandler().getPotentialType()).toList();
 
-    public List<Talisman> getTalismans() {
-        List<Talisman> inInventory = Stream.of(getAllInventoryItems())
-                .filter(item -> item.getGenericInstance() != null)
-                .filter(item -> item.getGenericInstance() instanceof Talisman)
-                .map(item -> (Talisman) item.getGenericInstance()).toList();
-
-        List<Talisman> inAccessoryBag = getAccessoryBag().getAllAccessories().stream()
-                .filter(item -> item.getGenericInstance() != null)
-                .filter(item -> item.getGenericInstance() instanceof Talisman)
-                .map(item -> (Talisman) item.getGenericInstance()).toList();
+        List<ItemType> inAccessoryBag = getAccessoryBag().getAllAccessories().stream()
+                .filter(item -> item.hasComponent(TalismanComponent.class))
+                .map(item -> item.getAttributeHandler().getPotentialType()).toList();
 
         return Stream.concat(inInventory.stream(), inAccessoryBag.stream()).collect(Collectors.toList());
     }
@@ -298,15 +290,15 @@ public class SkyBlockPlayer extends Player {
                 .toArray(SkyBlockItem[]::new);
     }
 
-    public Map<Integer, Integer> getAllOfTypeInInventory(ItemTypeLinker type) {
+    public Map<Integer, Integer> getAllOfTypeInInventory(ItemType type) {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < 36; i++) {
             ItemStack stack = getInventory().getItemStack(i);
             SkyBlockItem item = new SkyBlockItem(stack);
-            if (item.getAttributeHandler().getPotentialClassLinker() == null) continue;
+            if (item.getAttributeHandler().getPotentialType() == null) continue;
 
-            if (item.getAttributeHandler().getPotentialClassLinker() == type) {
+            if (item.getAttributeHandler().getPotentialType() == type) {
                 map.put(i, stack.amount());
             }
         }
@@ -324,10 +316,6 @@ public class SkyBlockPlayer extends Player {
     }
 
     public int getAmountInInventory(ItemType type) {
-        return getAmountInInventory(ItemTypeLinker.fromType(type));
-    }
-
-    public int getAmountInInventory(ItemTypeLinker type) {
         return getAllOfTypeInInventory(type).values().stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -340,10 +328,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public @Nullable ArmorSetRegistry getArmorSet() {
-        ItemTypeLinker helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getPotentialClassLinker();
-        ItemTypeLinker chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getPotentialClassLinker();
-        ItemTypeLinker leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getPotentialClassLinker();
-        ItemTypeLinker boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getPotentialClassLinker();
+        ItemType helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getPotentialType();
+        ItemType chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getPotentialType();
+        ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getPotentialType();
+        ItemType boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getPotentialType();
 
         return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
     }
@@ -357,7 +345,7 @@ public class SkyBlockPlayer extends Player {
 
         for (SkyBlockItem armorItem : armor) {
             if (armorItem == null) continue;
-            if (armorItem.getAttributeHandler().getPotentialClassLinker() == item.getAttributeHandler().getPotentialClassLinker()) {
+            if (armorItem.getAttributeHandler().getPotentialType() == item.getAttributeHandler().getPotentialType()) {
                 return true;
             }
         }
@@ -409,7 +397,7 @@ public class SkyBlockPlayer extends Player {
         addAndUpdateItem(new SkyBlockItem(item));
     }
 
-    public void addAndUpdateItem(ItemTypeLinker item) {
+    public void addAndUpdateItem(ItemType item) {
         addAndUpdateItem(new SkyBlockItem(item));
     }
 
@@ -431,10 +419,6 @@ public class SkyBlockPlayer extends Player {
     }
 
     public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
-        return takeItem(ItemTypeLinker.fromType(type), amount);
-    }
-
-    public @Nullable List<SkyBlockItem> takeItem(ItemTypeLinker type, int amount) {
         List<SkyBlockItem> consumedItems = new ArrayList<>();
         Map<Integer, Integer> map = getAllOfTypeInInventory(type);
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
@@ -475,14 +459,14 @@ public class SkyBlockPlayer extends Player {
     public List<SkyBlockItem> getAllSacks() {
         List<SkyBlockItem> sacks = new ArrayList<>(getSackOfSacks().getAllSacks());
         for (SkyBlockItem item : getAllInventoryItems()) {
-            if (item.getGenericInstance() instanceof Sack) {
+            if (item.hasComponent(SackComponent.class)) {
                 sacks.add(item);
             }
         }
         return sacks;
     }
 
-    public int getMaxSackStorage(ItemTypeLinker sack) {
+    public int getMaxSackStorage(ItemType sack) {
         int maxStorage = 0;
         String sackCategory = "";
 
@@ -495,21 +479,22 @@ public class SkyBlockPlayer extends Player {
         }
 
         for (SkyBlockItem skyBlockItem : getAllSacks()) {
-            matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(skyBlockItem.getAttributeHandler().getPotentialClassLinker().name());
+            matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(skyBlockItem.getAttributeHandler().getTypeAsString());
             if (matcher.find()) {
                 String otherCategory = matcher.group(2);
-                if (sackCategory.equals(otherCategory) && skyBlockItem.getGenericInstance() instanceof Sack sackInstance) {
-                    maxStorage += sackInstance.getMaximumCapacity();
+                if (sackCategory.equals(otherCategory) && skyBlockItem.hasComponent(SackComponent.class)) {
+                    maxStorage += skyBlockItem.getComponent(SackComponent.class).getMaxCapacity();
                 }
             }
         }
         return maxStorage;
     }
 
-    public boolean canInsertItemIntoSacks(ItemTypeLinker item) {
+    public boolean canInsertItemIntoSacks(ItemType item) {
         for (SkyBlockItem sack : getAllSacks()) {
-            if (sack.getGenericInstance() instanceof Sack sackInstance) {
-                for (ItemTypeLinker linker : sackInstance.getSackItems()) {
+            if (sack.hasComponent(SackComponent.class)) {
+                SackComponent sackInstance = sack.getComponent(SackComponent.class);
+                for (ItemType linker : sackInstance.getValidItems()) {
                     if (linker == item) {
                         return true;
                     }
@@ -518,16 +503,17 @@ public class SkyBlockPlayer extends Player {
         }
         return false;
     }
-    public boolean canInsertItemIntoSacks(ItemTypeLinker item, Integer amount) {
+    public boolean canInsertItemIntoSacks(ItemType item, Integer amount) {
         if (!canInsertItemIntoSacks(item)) return false;
 
         List<Map<SkyBlockItem, Integer>> maxStorages = new ArrayList<>();
         for (SkyBlockItem sack : getAllSacks()) {
-            if (sack.getGenericInstance() instanceof Sack sackInstance) {
-                for (ItemTypeLinker linker : sackInstance.getSackItems()) {
+            if (sack.hasComponent(SackComponent.class)) {
+                SackComponent sackInstance = sack.getComponent(SackComponent.class);
+                for (ItemType linker : sackInstance.getValidItems()) {
                     if (linker == item) {
                         if (!maxStorages.contains(sack)) {
-                            maxStorages.add(Map.of(sack, getMaxSackStorage(sack.getAttributeHandler().getPotentialClassLinker())));
+                            maxStorages.add(Map.of(sack, getMaxSackStorage(sack.getAttributeHandler().getPotentialType())));
                         }
                     }
                 }
@@ -554,7 +540,7 @@ public class SkyBlockPlayer extends Player {
     }
 
     public boolean hasCustomCollectionAward(CustomCollectionAward award) {
-        Map.Entry<ItemTypeLinker, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
+        Map.Entry<ItemType, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
         if (entry == null) return false;
 
         return getCollection().get(entry.getKey()) > entry.getValue();

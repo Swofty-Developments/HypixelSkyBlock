@@ -1,6 +1,5 @@
 package net.swofty.types.generic.mission.missions.lumber;
 
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;

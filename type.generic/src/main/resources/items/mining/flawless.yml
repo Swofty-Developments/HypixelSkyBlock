@@ -1,0 +1,57 @@
+items:
+  - id: FLAWLESS_AMBER
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: AMBER
+        skull_texture: 9dce62f70ac046b881113c6cf862987727774e265885501c9a245b180db08c0d
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_AMETHYST
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: AMETHYST
+        skull_texture: d3623521c8111ad29e9dcf7acc56085a9ab07da732d1518976aee61d0b3e3bd6
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_JADE
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: JADE
+        skull_texture: d3623521c8111ad29e9dcf7acc56085a9ab07da732d1518976aee61d0b3e3bd6
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_JASPER
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: JASPER
+        skull_texture: ff993d3a43d40597b474485976160d0cf52ac64d157307d3b1c941db224d0ac6
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_RUBY
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: RUBY
+        skull_texture: 926a248fbbc06cf06e2c920eca1cac8a2c96164d3260494bed142d553026cc6
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_SAPPHIRE
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: SAPPHIRE
+        skull_texture: 957cfa9c75ba584645ee2af6d9867d767ddea4667cdfc72dc1061dd1975ca7d0
+      - id: TRACKED_UNIQUE
+  - id: FLAWLESS_TOPAZ
+    rarity: FLAWLESS
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FLAWLESS
+        gemstone: TOPAZ
+        skull_texture: d10964f3c479ad7d9afaf68a42cab7c107d2d884f575cae2f070ec6f935b3be
+      - id: TRACKED_UNIQUE

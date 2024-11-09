@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

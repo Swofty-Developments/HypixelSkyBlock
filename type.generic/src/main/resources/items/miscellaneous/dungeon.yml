@@ -1,0 +1,15 @@
+items:
+  - id: ANCIENT_ROSE
+    rarity: COMMON
+  - id: ARCHITECTS_FIRST_DRAFT
+    rarity: COMMON
+  - id: KISMET_FEATHER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+  - id: NECRON_HANDLE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: RIGHT_CLICK_RECIPE
+        recipe_item: NECRONS_HANDLE

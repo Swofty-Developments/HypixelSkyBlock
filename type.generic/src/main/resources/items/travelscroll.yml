@@ -1,0 +1,58 @@
+items:
+  - id: HUB_CASTLE_TRAVEL_SCROLL
+    material: PAPER
+    rarity: UNCOMMON
+    components:
+      - id: TRAVEL_SCROLL
+        scroll_type: HUB_CASTLE
+  - id: HUB_MUSEUM_TRAVEL_SCROLL
+    material: PAPER
+    rarity: UNCOMMON
+    components:
+      - id: TRAVEL_SCROLL
+        scroll_type: HUB_MUSEUM
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: SLAYER
+            result:
+              type: HUB_CRYPTS_TRAVEL_SCROLL
+              amount: 1
+            pattern:
+              - "AAA"
+              - "ABA"
+              - "AAA"
+            ingredients:
+              A:
+                type: ENCHANTED_BONE
+                amount: 16
+              B:
+                type: ENCHANTED_ENDER_PEARL
+                amount: 16
+  - id: HUB_CRYPTS_TRAVEL_SCROLL
+    material: PAPER
+    rarity: UNCOMMON
+    components:
+      - id: TRAVEL_SCROLL
+        scroll_type: HUB_CRYPTS
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: SLAYER
+            result:
+              type: HUB_CRYPTS_TRAVEL_SCROLL
+              amount: 1
+            pattern:
+              - "AAA"
+              - "CBC"
+              - "CCC"
+            ingredients:
+              A:
+                type: REVENANT_VISCERA
+                amount: 1
+              B:
+                type: ENCHANTED_ENDER_PEARL
+                amount: 16
+              C:
+                type: ENCHANTED_OBSIDIAN
+                amount: 16

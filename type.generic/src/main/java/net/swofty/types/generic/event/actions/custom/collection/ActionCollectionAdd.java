@@ -14,7 +14,6 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;

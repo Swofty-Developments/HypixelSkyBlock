@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.TieredTalisman;
+import net.swofty.types.generic.item.components.TieredTalismanComponent;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -39,7 +39,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         public DatapointAccessoryBag.PlayerAccessoryBag deserialize(String json) {
             JSONObject obj = new JSONObject(json);
             Map<Integer, SkyBlockItem> map = new HashMap<>();
-            List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
+            List<ItemType> discoveredAccessories = new ArrayList<>();
 
             for (String key : obj.keySet()) {
                 if (key.equals("discoveredAccessories")) {
@@ -47,7 +47,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                     if (obj.get(key) instanceof String) continue;
                     if (obj.getJSONArray(key).isEmpty()) continue;
                     for (Object o : obj.getJSONArray(key)) {
-                        discoveredAccessories.add(ItemTypeLinker.valueOf(o.toString()));
+                        discoveredAccessories.add(ItemType.valueOf(o.toString()));
                     }
                     continue;
                 }
@@ -79,7 +79,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
     @NoArgsConstructor
     public static class PlayerAccessoryBag {
         private Map<Integer, SkyBlockItem> accessoryMap = new HashMap<>();
-        private List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
+        private List<ItemType> discoveredAccessories = new ArrayList<>();
 
         public @Nullable SkyBlockItem getInSlot(int slot) {
             return accessoryMap.get(slot);
@@ -91,18 +91,19 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
 
         public List<SkyBlockItem> getUniqueAccessories() {
             List<SkyBlockItem> accessories = new ArrayList<>(getAllAccessories());
-            Map<ItemTypeLinker, SkyBlockItem> highestTierTalismans = new HashMap<>();
+            Map<ItemType, SkyBlockItem> highestTierTalismans = new HashMap<>();
 
             for (SkyBlockItem accessory : accessories) {
-                if (accessory.getGenericInstance() instanceof TieredTalisman currentTalisman) {
-                    ItemTypeLinker baseTalisman = currentTalisman.getBaseTalismanTier();
-                    TieredTalisman tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? (TieredTalisman) highestTierTalismans.get(baseTalisman).getGenericInstance() : null;
+                if (accessory.hasComponent(TieredTalismanComponent.class)) {
+                    TieredTalismanComponent currentTalisman = accessory.getComponent(TieredTalismanComponent.class);
+                    ItemType baseTalisman = currentTalisman.getBaseTier();
+                    TieredTalismanComponent tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? highestTierTalismans.get(baseTalisman).getComponent(TieredTalismanComponent.class) : null;
 
                     if (tieredTalisman == null || tieredTalisman.getTier() < currentTalisman.getTier()) {
                         highestTierTalismans.put(baseTalisman, accessory);
                     }
                 } else if (!accessory.isAir()) {
-                    highestTierTalismans.put(accessory.getAttributeHandler().getPotentialClassLinker(), accessory);
+                    highestTierTalismans.put(accessory.getAttributeHandler().getPotentialType(), accessory);
                 }
             }
             return List.copyOf(highestTierTalismans.values());
@@ -118,12 +119,12 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
             return talismans;
         }
 
-        public void addDiscoveredAccessory(ItemTypeLinker type) {
+        public void addDiscoveredAccessory(ItemType type) {
             if (discoveredAccessories.contains(type)) return;
             discoveredAccessories.add(type);
         }
 
-        public boolean hasDiscoveredAccessory(ItemTypeLinker type) {
+        public boolean hasDiscoveredAccessory(ItemType type) {
             return discoveredAccessories.contains(type);
         }
 

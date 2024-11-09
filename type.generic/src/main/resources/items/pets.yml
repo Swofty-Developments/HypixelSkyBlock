@@ -1,0 +1,48 @@
+items:
+  - id: BEE_PET
+    material: player_head
+    rarity: EPIC
+    components:
+      - id: PET
+        pet_name: "Bee"
+        george_price:
+          common: 2500
+          uncommon: 5000
+          rare: 25000
+          epic: 100000
+          legendary: 325000
+          rest: 0
+        kat_upgrades:
+          common: null
+          uncommon:
+            time: 3600000
+            coins: 5000
+            item: COAL_BLOCK
+            amount: 128
+          rare:
+            time: 21600000
+            coins: 40000
+            item: GOLD_BLOCK
+            amount: 128
+          epic:
+            time: 86400000
+            coins: 150000
+            item: ENCHANTED_COAL_BLOCK
+            amount: 9
+          legendary:
+            time: 259200000
+            coins: 450000
+            item: ENCHANTED_GOLD_BLOCK
+            amount: 9
+          rest: null
+        base_statistics:
+          strength: 5.0
+        per_level_statistics:
+          speed: 0.1
+          strength: 0.3
+          intelligence: 0.5
+        particle: 3
+        skill_category: FARMING
+        skull_texture: "12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47"
+        handler_id: BEE
+      - id: TRACKED_UNIQUE

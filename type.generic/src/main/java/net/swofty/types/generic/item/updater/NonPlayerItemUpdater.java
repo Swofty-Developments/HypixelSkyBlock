@@ -15,10 +15,10 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.types.generic.item.impl.Enchanted;
-import net.swofty.types.generic.item.impl.GemstoneItem;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.TrackedUniqueItem;
+import net.swofty.types.generic.item.components.EnchantedComponent;
+import net.swofty.types.generic.item.components.GemstoneComponent;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
+import net.swofty.types.generic.item.components.TrackedUniqueComponent;
 import org.json.JSONObject;
 
 import java.util.Base64;
@@ -56,44 +56,45 @@ public class NonPlayerItemUpdater {
         ItemStack.Builder builder = item.getItemStackBuilder();
         ItemStack.Builder stack = updateItemLore(builder);
 
-        if (item.getGenericInstance() != null) {
-            if (item.getGenericInstance() instanceof Enchanted)
-                stack.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
+        if (item.hasComponent(EnchantedComponent.class))
+            stack.set(ItemComponent.ENCHANTMENT_GLINT_OVERRIDE, true);
 
-            if (item.getGenericInstance() instanceof TrackedUniqueItem)
-                stack.setTag(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
+        if (item.hasComponent(TrackedUniqueComponent.class))
+            stack.setTag(Tag.UUID("unique-tracked-id"), UUID.randomUUID());
 
-            if (item.getGenericInstance() instanceof SkullHead skullHead) {
-                JSONObject json = new JSONObject();
-                json.put("isPublic", true);
-                json.put("signatureRequired", false);
-                json.put("textures", new JSONObject().put("SKIN", new JSONObject()
-                        .put("url", "http://textures.minecraft.net/texture/" + skullHead.getSkullTexture(null, item))
-                        .put("metadata", new JSONObject().put("model", "slim"))));
+        if (item.hasComponent(SkullHeadComponent.class)) {
+            SkullHeadComponent component = item.getComponent(SkullHeadComponent.class);
+            JSONObject json = new JSONObject();
+            json.put("isPublic", true);
+            json.put("signatureRequired", false);
+            json.put("textures", new JSONObject().put("SKIN", new JSONObject()
+                    .put("url", "http://textures.minecraft.net/texture/" + component.getSkullTexture(item))
+                    .put("metadata", new JSONObject().put("model", "slim"))));
 
-                String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+            String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
-                stack.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
-            }
+            stack.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
+        }
 
-            if (item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
-                int index = 0;
-                ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
-                for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
-                    if (slot.unlockPrice == 0) {
-                        // Slot should be unlocked by default
-                        if (gemData.hasGem(index)) continue;
-                        item.getAttributeHandler().getGemData().putGem(
-                                new ItemAttributeGemData.GemData.GemSlots(
-                                        index,
-                                        null
-                                )
-                        );
-                    }
-                    index++;
+        if (item.hasComponent(GemstoneComponent.class)) {
+            GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
+
+            int index = 0;
+            ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
+            for (GemstoneComponent.GemstoneSlot slot : gemstoneComponent.getSlots()) {
+                if (slot.unlockPrice() == 0) {
+                    // Slot should be unlocked by default
+                    if (gemData.hasGem(index)) continue;
+                    item.getAttributeHandler().getGemData().putGem(
+                            new ItemAttributeGemData.GemData.GemSlots(
+                                    index,
+                                    null
+                            )
+                    );
                 }
-                item.getAttributeHandler().setGemData(gemData);
+                index++;
             }
+            item.getAttributeHandler().setGemData(gemData);
         }
 
         Color leatherColour = item.getAttributeHandler().getLeatherColour();

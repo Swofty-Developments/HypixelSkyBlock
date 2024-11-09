@@ -1,0 +1,121 @@
+items:
+  - id: CRYSTAL_HOLLOWS_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: a6b46beeb5f6e0006163eda4a50703a40e6591080b0e67779312adcfec46152
+      - id: NOT_FINISHED_YET
+      - id: SACK
+        valid_items:
+          - ASCENSION_ROPE
+          - BOB_OMB
+          - CONTROL_SWITCH
+          - CORLEONITE
+          - ELECTRON_TRANSMITTER
+          - FTX_3070
+          - JUNGLE_KEY
+          - OIL_BARREL
+          - ROBOTRON_REFLECTOR
+          - SLUDGE_JUICE
+          - SUPERLITE_MOTOR
+          - SYNTHETIC_HEART
+          - WISHING_COMPASS
+          - YOGGIE
+        max_capacity: 20160
+        handler_id: CRYSTAL_HOLLOWS_SACK_SACK
+  - id: DUNGEON_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: fb96c585ccd35f073da38d165cb9bb18ff136f1a184eee3f44725354640ebbd4
+      - id: NOT_FINISHED_YET
+      - id: SACK
+        valid_items:
+          - ANCIENT_ROSE
+          - BIGFOOT_LASSO
+          - BONZO_FRAGMENT
+          - DECOY
+          - DUNGEON_CHEST_KEY
+          - FEL_PEARL
+          - HEALING_TISSUE
+          - INFLATABLE_JERRY
+          - JOLLY_PINK_ROCK
+          - KISMET_FEATHER
+          - LASR_EYE
+          - LIVID_FRAGMENT
+          - MIMIC_FRAGMENT
+          - SCARF_FRAGMENT
+          - SPIRIT_LEAP
+          - SUPERBOOM_TNT
+          - THORN_FRAGMENT
+          - TRAP
+          - WITHER_CATALYST
+        max_capacity: 20160
+        handler_id: DUNGEON_SACK_SACK
+  - id: DWARVEN_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: daf9711d231e3abfb6fb744711f0d86e6041ee077dae16ddc703a7b4ea165d58
+      - id: NOT_FINISHED_YET
+      - id: SACK
+        valid_items:
+          - BIOFUEL
+          - GLACITE_JEWEL
+          - GOBLIN_EGG
+          - OIL_BARREL
+          - PLASMA
+          - SORROW
+          - VOLTA
+          - BLUE_GOBLIN_EGG
+          - GREEN_GOBLIN_EGG
+          - RED_GOBLIN_EGG
+          - YELLOW_GOBLIN_EGG
+        max_capacity: 20160
+        handler_id: DWARVEN_SACK_SACK
+  - id: FLOWER_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: afc3b5db9bd99cd12161ed2ea4623795f28e793c6dab67cd3e803ccfaaad7cfd
+      - id: NOT_FINISHED_YET
+      - id: SACK
+        valid_items:
+          - ALLIUM
+          - AZURE_BLUET
+          - BLUE_ORCHID
+          - DANDELION
+          - ENCHANTED_DANDELION
+          - ENCHANTED_POPPY
+          - ENDSTONE_ROSE
+          - LILAC
+          - ORANGE_TULIP
+          - OXEYE_DAISY
+          - PEONY
+          - PINK_TULIP
+          - POPPY
+          - RED_TULIP
+          - ROSE_BUSH
+          - SUNFLOWER
+          - WHITE_TULIP
+        max_capacity: 20160
+        handler_id: FLOWER_SACK_SACK
+  - id: POCKET_SACK_IN_A_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 7442c66f4bf9aa4256fa7b49c6367d4658408ec408477879ac8076794402d95b
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pocket Sack-in-a-Sack
+      - id: NOT_FINISHED_YET
+  - id: RUNE_SACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: e91eb4ee3ecce3447483a1f151c11facc9de25577ab7b51fbf3d9c2b2a4b69fc
+      - id: NOT_FINISHED_YET
+      - id: SACK
+        valid_items:
+          - BLOOD_RUNE
+        max_capacity: 0
+        handler_id: RUNE_SACK_SACK

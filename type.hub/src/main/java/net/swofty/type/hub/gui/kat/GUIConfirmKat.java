@@ -8,8 +8,10 @@ import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.PetComponent;
+import net.swofty.types.generic.item.components.PetItemComponent;
+import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
 import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.items.pet.KatUpgrade;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -30,8 +32,8 @@ public class GUIConfirmKat extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (((Pet) pet.getGenericInstance()).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) return;
-                KatUpgrade katUpgrade = ((Pet) pet.getGenericInstance()).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade());
+                if (pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) return;
+                KatUpgrade katUpgrade = pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade());
                 int coins = katUpgrade.getCoins();
                 long time = katUpgrade.getTime();
 
@@ -43,10 +45,10 @@ public class GUIConfirmKat extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                if (((Pet) pet.getGenericInstance()).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) {
+                if (pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade()) == null) {
                     return ItemStackCreator.getStack("§aSomething went wrong!", Material.RED_TERRACOTTA, 1);
                 }
-                KatUpgrade katUpgrade = ((Pet) pet.getGenericInstance()).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade());
+                KatUpgrade katUpgrade = pet.getComponent(PetComponent.class).getKatUpgrades().getForRarity(pet.getAttributeHandler().getRarity().upgrade());
                 long time = katUpgrade.getTime();
                 return ItemStackCreator.getStack("§aConfirm", Material.GREEN_TERRACOTTA, 1,
                         "§cWARNING: You will not be able to",

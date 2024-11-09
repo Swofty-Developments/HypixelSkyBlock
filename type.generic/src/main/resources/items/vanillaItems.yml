@@ -1,0 +1,4216 @@
+items:
+  - id: ANVIL
+    material: ANVIL
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - B
+              - BBB
+            ingredients:
+              A:
+                type: IRON_BLOCK
+                amount: 1
+              B:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: ANVIL
+              amount: 1
+  - id: BLACK_CARPET
+    material: BLACK_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BLACK_WOOL
+                amount: 1
+            result:
+              type: BLACK_CARPET
+              amount: 1
+  - id: BLUE_CARPET
+    material: BLUE_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BLUE_WOOL
+                amount: 1
+            result:
+              type: BLUE_CARPET
+              amount: 1
+  - id: BROWN_CARPET
+    material: BROWN_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BROWN_WOOL
+                amount: 1
+            result:
+              type: BROWN_CARPET
+              amount: 1
+  - id: CYAN_CARPET
+    material: CYAN_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: CYAN_WOOL
+                amount: 1
+            result:
+              type: CYAN_CARPET
+              amount: 1
+  - id: GRAY_CARPET
+    material: GRAY_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GRAY_WOOL
+                amount: 1
+            result:
+              type: GRAY_CARPET
+              amount: 1
+  - id: GREEN_CARPET
+    material: GREEN_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GREEN_WOOL
+                amount: 1
+            result:
+              type: GREEN_CARPET
+              amount: 1
+  - id: LIGHT_BLUE_CARPET
+    material: LIGHT_BLUE_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIGHT_BLUE_WOOL
+                amount: 1
+            result:
+              type: LIGHT_BLUE_CARPET
+              amount: 1
+  - id: LIGHT_GRAY_CARPET
+    material: LIGHT_GRAY_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIGHT_GRAY_WOOL
+                amount: 1
+            result:
+              type: LIGHT_GRAY_CARPET
+              amount: 1
+  - id: LIME_CARPET
+    material: LIME_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIME_WOOL
+                amount: 1
+            result:
+              type: LIME_CARPET
+              amount: 1
+  - id: MAGENTA_CARPET
+    material: MAGENTA_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: MAGENTA_WOOL
+                amount: 1
+            result:
+              type: MAGENTA_CARPET
+              amount: 1
+  - id: ORANGE_CARPET
+    material: ORANGE_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: ORANGE_WOOL
+                amount: 1
+            result:
+              type: ORANGE_CARPET
+              amount: 1
+  - id: PINK_CARPET
+    material: PINK_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: PINK_WOOL
+                amount: 1
+            result:
+              type: PINK_CARPET
+              amount: 1
+  - id: PURPLE_CARPET
+    material: PURPLE_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: PURPLE_WOOL
+                amount: 1
+            result:
+              type: PURPLE_CARPET
+              amount: 1
+  - id: RED_CARPET
+    material: RED_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: RED_WOOL
+                amount: 1
+            result:
+              type: RED_CARPET
+              amount: 1
+  - id: WHITE_CARPET
+    material: WHITE_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+            result:
+              type: WHITE_CARPET
+              amount: 1
+  - id: YELLOW_CARPET
+    material: YELLOW_CARPET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: YELLOW_WOOL
+                amount: 1
+            result:
+              type: YELLOW_CARPET
+              amount: 1
+  - id: BLACK_STAINED_GLASS
+    material: BLACK_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_STAINED_GLASS
+              amount: 1
+  - id: BLUE_STAINED_GLASS
+    material: BLUE_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_STAINED_GLASS
+              amount: 1
+  - id: BROWN_STAINED_GLASS
+    material: BROWN_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_STAINED_GLASS
+              amount: 1
+  - id: CYAN_STAINED_GLASS
+    material: CYAN_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_STAINED_GLASS
+              amount: 1
+  - id: GLASS
+    material: GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+  - id: GRAY_STAINED_GLASS
+    material: GRAY_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_STAINED_GLASS
+              amount: 1
+  - id: GREEN_STAINED_GLASS
+    material: GREEN_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: CACTUS_GREEN
+                amount: 1
+            result:
+              type: GREEN_STAINED_GLASS
+              amount: 1
+  - id: LIGHT_BLUE_STAINED_GLASS
+    material: LIGHT_BLUE_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_STAINED_GLASS
+              amount: 1
+  - id: LIGHT_GRAY_STAINED_GLASS
+    material: LIGHT_GRAY_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_STAINED_GLASS
+              amount: 1
+  - id: LIME_STAINED_GLASS
+    material: LIME_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_STAINED_GLASS
+              amount: 1
+  - id: MAGENTA_STAINED_GLASS
+    material: MAGENTA_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_STAINED_GLASS
+              amount: 1
+  - id: ORANGE_STAINED_GLASS
+    material: ORANGE_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_STAINED_GLASS
+              amount: 1
+  - id: PINK_STAINED_GLASS
+    material: PINK_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_STAINED_GLASS
+              amount: 1
+  - id: PURPLE_STAINED_GLASS
+    material: PURPLE_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_STAINED_GLASS
+              amount: 1
+  - id: RED_STAINED_GLASS
+    material: RED_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
+            result:
+              type: RED_STAINED_GLASS
+              amount: 1
+  - id: WHITE_STAINED_GLASS
+    material: WHITE_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: WHITE_STAINED_GLASS
+              amount: 1
+  - id: YELLOW_STAINED_GLASS
+    material: YELLOW_STAINED_GLASS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_STAINED_GLASS
+              amount: 1
+  - id: BLACK_STAINED_GLASS_PANE
+    material: BLACK_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BLACK_STAINED_GLASS_PANE
+              amount: 1
+  - id: BLUE_STAINED_GLASS_PANE
+    material: BLUE_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BLUE_STAINED_GLASS_PANE
+              amount: 1
+  - id: BROWN_STAINED_GLASS_PANE
+    material: BROWN_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BROWN_STAINED_GLASS_PANE
+              amount: 1
+  - id: CYAN_STAINED_GLASS_PANE
+    material: CYAN_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: CYAN_STAINED_GLASS_PANE
+              amount: 1
+  - id: GLASS_PANE
+    material: GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+            result:
+              type: GLASS_PANE
+              amount: 1
+  - id: GRAY_STAINED_GLASS_PANE
+    material: GRAY_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: GRAY_STAINED_GLASS_PANE
+              amount: 1
+  - id: GREEN_STAINED_GLASS_PANE
+    material: GREEN_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: GREEN_STAINED_GLASS_PANE
+              amount: 1
+  - id: LIGHT_BLUE_STAINED_GLASS_PANE
+    material: LIGHT_BLUE_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIGHT_BLUE_STAINED_GLASS_PANE
+              amount: 1
+  - id: LIGHT_GRAY_STAINED_GLASS_PANE
+    material: LIGHT_GRAY_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIGHT_GRAY_STAINED_GLASS_PANE
+              amount: 1
+  - id: LIME_STAINED_GLASS_PANE
+    material: LIME_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIME_STAINED_GLASS_PANE
+              amount: 1
+  - id: MAGENTA_STAINED_GLASS_PANE
+    material: MAGENTA_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: MAGENTA_STAINED_GLASS_PANE
+              amount: 1
+  - id: ORANGE_STAINED_GLASS_PANE
+    material: ORANGE_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: ORANGE_STAINED_GLASS_PANE
+              amount: 1
+  - id: PINK_STAINED_GLASS_PANE
+    material: PINK_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: PINK_STAINED_GLASS_PANE
+              amount: 1
+  - id: PURPLE_STAINED_GLASS_PANE
+    material: PURPLE_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: PURPLE_STAINED_GLASS_PANE
+              amount: 1
+  - id: RED_STAINED_GLASS_PANE
+    material: RED_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: RED_STAINED_GLASS_PANE
+              amount: 1
+  - id: WHITE_STAINED_GLASS_PANE
+    material: WHITE_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: WHITE_STAINED_GLASS_PANE
+              amount: 1
+  - id: YELLOW_STAINED_GLASS_PANE
+    material: YELLOW_STAINED_GLASS_PANE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.8
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: YELLOW_STAINED_GLASS_PANE
+              amount: 1
+  - id: BLACK_WOOL
+    material: BLACK_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_WOOL
+              amount: 1
+  - id: BLUE_WOOL
+    material: BLUE_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_WOOL
+              amount: 1
+  - id: BROWN_WOOL
+    material: BROWN_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_WOOL
+              amount: 1
+  - id: CYAN_WOOL
+    material: CYAN_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_WOOL
+              amount: 1
+  - id: GRAY_WOOL
+    material: GRAY_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_WOOL
+              amount: 1
+  - id: GREEN_WOOL
+    material: GREEN_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: CACTUS_GREEN
+                amount: 1
+            result:
+              type: GREEN_WOOL
+              amount: 1
+  - id: LIGHT_BLUE_WOOL
+    material: LIGHT_BLUE_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_WOOL
+              amount: 1
+  - id: LIGHT_GRAY_WOOL
+    material: LIGHT_GRAY_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_WOOL
+              amount: 1
+  - id: LIME_WOOL
+    material: LIME_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_WOOL
+              amount: 1
+  - id: MAGENTA_WOOL
+    material: MAGENTA_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_WOOL
+              amount: 1
+  - id: ORANGE_WOOL
+    material: ORANGE_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_WOOL
+              amount: 1
+  - id: PINK_WOOL
+    material: PINK_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_WOOL
+              amount: 1
+  - id: PURPLE_WOOL
+    material: PURPLE_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_WOOL
+              amount: 1
+  - id: RED_WOOL
+    material: RED_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
+            result:
+              type: RED_WOOL
+              amount: 1
+  - id: WHITE_WOOL
+    material: WHITE_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: STRING
+                amount: 1
+            result:
+              type: WHITE_WOOL
+              amount: 1
+  - id: YELLOW_WOOL
+    material: YELLOW_WOOL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_WOOL
+              amount: 1
+  - id: ANDESITE
+    material: ANDESITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+  - id: ANDESITE_SLAB
+    material: ANDESITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: ANDESITE
+                amount: 1
+            result:
+              type: ANDESITE_SLAB
+              amount: 1
+  - id: ANDESITE_STAIRS
+    material: ANDESITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: ANDESITE
+                amount: 1
+            result:
+              type: ANDESITE_STAIRS
+              amount: 1
+  - id: ANDESITE_WALL
+    material: ANDESITE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ANDESITE
+                amount: 1
+            result:
+              type: ANDESITE_WALL
+              amount: 1
+  - id: POLISHED_ANDESITE
+    material: POLISHED_ANDESITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: ANDESITE
+                amount: 1
+            result:
+              type: POLISHED_ANDESITE
+              amount: 1
+  - id: POLISHED_ANDESITE_SLAB
+    material: POLISHED_ANDESITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_ANDESITE
+                amount: 1
+            result:
+              type: POLISHED_ANDESITE_SLAB
+              amount: 1
+  - id: POLISHED_ANDESITE_STAIRS
+    material: POLISHED_ANDESITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_ANDESITE
+                amount: 1
+            result:
+              type: POLISHED_ANDESITE_STAIRS
+              amount: 1
+  - id: COBBLESTONE
+    material: COBBLESTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+  - id: COBBLESTONE_SLAB
+    material: COBBLESTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+            result:
+              type: COBBLESTONE_SLAB
+              amount: 1
+  - id: COBBLESTONE_STAIRS
+    material: COBBLESTONE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+            result:
+              type: COBBLESTONE_STAIRS
+              amount: 1
+  - id: COBBLESTONE_WALL
+    material: COBBLESTONE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+            result:
+              type: COBBLESTONE_WALL
+              amount: 1
+  - id: DIORITE
+    material: DIORITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+  - id: DIORITE_SLAB
+    material: DIORITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_SLAB
+              amount: 1
+  - id: DIORITE_STAIRS
+    material: DIORITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_STAIRS
+              amount: 1
+  - id: DIORITE_WALL
+    material: DIORITE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_WALL
+              amount: 1
+  - id: POLISHED_DIORITE
+    material: POLISHED_DIORITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: POLISHED_DIORITE
+              amount: 1
+  - id: POLISHED_DIORITE_SLAB
+    material: POLISHED_DIORITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_DIORITE
+                amount: 1
+            result:
+              type: POLISHED_DIORITE_SLAB
+              amount: 1
+  - id: POLISHED_DIORITE_STAIRS
+    material: POLISHED_DIORITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_DIORITE
+                amount: 1
+            result:
+              type: POLISHED_DIORITE_STAIRS
+              amount: 1
+  - id: GRANITE
+    material: GRANITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+  - id: GRANITE_SLAB
+    material: GRANITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: GRANITE
+                amount: 1
+            result:
+              type: GRANITE_SLAB
+              amount: 1
+  - id: GRANITE_STAIRS
+    material: GRANITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: GRANITE
+                amount: 1
+            result:
+              type: GRANITE_STAIRS
+              amount: 1
+  - id: GRANITE_WALL
+    material: GRANITE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GRANITE
+                amount: 1
+            result:
+              type: GRANITE_WALL
+              amount: 1
+  - id: POLISHED_GRANITE
+    material: POLISHED_GRANITE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: GRANITE
+                amount: 1
+            result:
+              type: POLISHED_GRANITE
+              amount: 1
+  - id: POLISHED_GRANITE_SLAB
+    material: POLISHED_GRANITE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_GRANITE
+                amount: 1
+            result:
+              type: POLISHED_GRANITE_SLAB
+              amount: 1
+  - id: POLISHED_GRANITE_STAIRS
+    material: POLISHED_GRANITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: POLISHED_GRANITE
+                amount: 1
+            result:
+              type: POLISHED_GRANITE_STAIRS
+              amount: 1
+  - id: NETHER_BRICK_FENCE
+    material: NETHER_BRICK_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: NETHER_BRICKS
+                amount: 1
+            result:
+              type: NETHER_BRICK_FENCE
+              amount: 1
+  - id: NETHER_BRICKS
+    material: NETHER_BRICKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients: {}
+            result:
+              type: NETHER_BRICKS
+              amount: 1
+  - id: NETHER_BRICK_SLAB
+    material: NETHER_BRICK_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: NETHER_BRICKS
+                amount: 1
+            result:
+              type: NETHER_BRICK_SLAB
+              amount: 1
+  - id: NETHER_BRICK_STAIRS
+    material: NETHER_BRICK_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: NETHER_BRICKS
+                amount: 1
+            result:
+              type: NETHER_BRICK_STAIRS
+              amount: 1
+  - id: NETHER_BRICK_WALL
+    material: NETHER_BRICK_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: NETHER_BRICKS
+                amount: 1
+            result:
+              type: NETHER_BRICK_WALL
+              amount: 1
+  - id: CHISELED_QUARTZ_BLOCK
+    material: CHISELED_QUARTZ_BLOCK
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: QUARTZ_SLAB
+                amount: 1
+            result:
+              type: CHISELED_QUARTZ_BLOCK
+              amount: 1
+  - id: QUARTZ_BLOCK
+    material: QUARTZ_BLOCK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 16.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: QUARTZ
+                amount: 1
+            result:
+              type: QUARTZ_BLOCK
+              amount: 1
+  - id: QUARTZ_PILLAR
+    material: QUARTZ_PILLAR
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: QUARTZ_BLOCK
+                amount: 1
+            result:
+              type: QUARTZ_PILLAR
+              amount: 1
+  - id: QUARTZ_SLAB
+    material: QUARTZ_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: QUARTZ_SLAB
+              amount: 1
+  - id: QUARTZ_STAIRS
+    material: QUARTZ_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: QUARTZ_BLOCK
+                amount: 1
+            result:
+              type: QUARTZ_STAIRS
+              amount: 1
+  - id: CHISELED_RED_SANDSTONE
+    material: CHISELED_RED_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: RED_SANDSTONE_SLAB
+                amount: 1
+            result:
+              type: CHISELED_RED_SANDSTONE
+              amount: 1
+  - id: CHISELED_SANDSTONE
+    material: CHISELED_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: SANDSTONE_SLAB
+                amount: 1
+            result:
+              type: CHISELED_SANDSTONE
+              amount: 1
+  - id: CUT_RED_SANDSTONE
+    material: CUT_RED_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: RED_SANDSTONE
+                amount: 1
+            result:
+              type: CUT_RED_SANDSTONE
+              amount: 1
+  - id: CUT_RED_SANDSTONE_SLAB
+    material: CUT_RED_SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: CUT_RED_SANDSTONE
+                amount: 1
+            result:
+              type: CUT_RED_SANDSTONE_SLAB
+              amount: 1
+  - id: CUT_SANDSTONE
+    material: CUT_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: CUT_SANDSTONE
+              amount: 1
+  - id: CUT_SANDSTONE_SLAB
+    material: CUT_SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: CUT_SANDSTONE
+                amount: 1
+            result:
+              type: CUT_SANDSTONE_SLAB
+              amount: 1
+  - id: RED_SANDSTONE
+    material: RED_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: RED_SAND
+                amount: 1
+            result:
+              type: RED_SANDSTONE
+              amount: 1
+  - id: RED_SANDSTONE_SLAB
+    material: RED_SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: RED_SANDSTONE_SLAB
+              amount: 1
+  - id: RED_SANDSTONE_STAIRS
+    material: RED_SANDSTONE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: RED_SANDSTONE
+                amount: 1
+            result:
+              type: RED_SANDSTONE_STAIRS
+              amount: 1
+  - id: RED_SANDSTONE_WALL
+    material: RED_SANDSTONE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: RED_SANDSTONE
+                amount: 1
+            result:
+              type: RED_SANDSTONE_WALL
+              amount: 1
+  - id: SANDSTONE
+    material: SANDSTONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SAND
+                amount: 1
+            result:
+              type: SANDSTONE
+              amount: 1
+  - id: SANDSTONE_SLAB
+    material: SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: SANDSTONE_SLAB
+              amount: 1
+  - id: SANDSTONE_STAIRS
+    material: SANDSTONE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: SANDSTONE_STAIRS
+              amount: 1
+  - id: SANDSTONE_WALL
+    material: SANDSTONE_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: SANDSTONE_WALL
+              amount: 1
+  - id: SMOOTH_STONE
+    material: SMOOTH_STONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+  - id: SMOOTH_STONE_SLAB
+    material: SMOOTH_STONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: SMOOTH_STONE
+                amount: 1
+            result:
+              type: SMOOTH_STONE_SLAB
+              amount: 1
+  - id: STONE
+    material: STONE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+  - id: STONE_SLAB
+    material: STONE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_SLAB
+              amount: 1
+  - id: STONE_STAIRS
+    material: STONE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_STAIRS
+              amount: 1
+  - id: MOSSY_STONE_BRICKS
+    material: MOSSY_STONE_BRICKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: STONE_BRICKS
+                amount: 1
+            result:
+              type: MOSSY_STONE_BRICKS
+              amount: 1
+  - id: MOSSY_STONE_BRICK_SLAB
+    material: MOSSY_STONE_BRICK_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: MOSSY_STONE_BRICKS
+                amount: 1
+            result:
+              type: MOSSY_STONE_BRICK_SLAB
+              amount: 1
+  - id: MOSSY_STONE_BRICK_STAIRS
+    material: MOSSY_STONE_BRICK_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: MOSSY_STONE_BRICKS
+                amount: 1
+            result:
+              type: MOSSY_STONE_BRICK_STAIRS
+              amount: 1
+  - id: MOSSY_STONE_BRICK_WALL
+    material: MOSSY_STONE_BRICK_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: MOSSY_STONE_BRICKS
+                amount: 1
+            result:
+              type: MOSSY_STONE_BRICK_WALL
+              amount: 1
+  - id: STONE_BRICKS
+    material: STONE_BRICKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_BRICKS
+              amount: 1
+  - id: STONE_BRICK_SLAB
+    material: STONE_BRICK_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: STONE_BRICKS
+                amount: 1
+            result:
+              type: STONE_BRICK_SLAB
+              amount: 1
+  - id: STONE_BRICK_STAIRS
+    material: STONE_BRICK_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: STONE_BRICKS
+                amount: 1
+            result:
+              type: STONE_BRICK_STAIRS
+              amount: 1
+  - id: STONE_BRICK_WALL
+    material: STONE_BRICK_WALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: STONE_BRICKS
+                amount: 1
+            result:
+              type: STONE_BRICK_WALL
+              amount: 1
+  - id: CHEST
+    material: CHEST
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+        block_type: BlockType.CHEST
+      - id: SELLABLE
+        sell_value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: CHEST
+              amount: 1
+  - id: CRAFTING_TABLE
+    material: CRAFTING_TABLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: CRAFTING_TABLE
+              amount: 1
+  - id: LADDER
+    material: LADDER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+            result:
+              type: LADDER
+              amount: 1
+  - id: STICK
+    material: STICK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.2
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: STICK
+              amount: 1
+  - id: ACACIA_DOOR
+    material: ACACIA_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_DOOR
+              amount: 1
+  - id: ACACIA_FENCE
+    material: ACACIA_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: ACACIA_FENCE
+              amount: 1
+  - id: ACACIA_FENCE_GATE
+    material: ACACIA_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_FENCE_GATE
+              amount: 1
+  - id: ACACIA_PLANKS
+    material: ACACIA_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: ACACIA_PLANKS
+              amount: 1
+  - id: ACACIA_PRESSURE_PLATE
+    material: ACACIA_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_PRESSURE_PLATE
+              amount: 1
+  - id: ACACIA_SLAB
+    material: ACACIA_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_SLAB
+              amount: 1
+  - id: ACACIA_STAIRS
+    material: ACACIA_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_STAIRS
+              amount: 1
+  - id: ACACIA_TRAPDOOR
+    material: ACACIA_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ACACIA_PLANKS
+                amount: 1
+            result:
+              type: ACACIA_TRAPDOOR
+              amount: 1
+  - id: BIRCH_DOOR
+    material: BIRCH_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_DOOR
+              amount: 1
+  - id: BIRCH_FENCE
+    material: BIRCH_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: BIRCH_FENCE
+              amount: 1
+  - id: BIRCH_FENCE_GATE
+    material: BIRCH_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_FENCE_GATE
+              amount: 1
+  - id: BIRCH_PLANKS
+    material: BIRCH_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BIRCH_PLANKS
+              amount: 1
+  - id: BIRCH_PRESSURE_PLATE
+    material: BIRCH_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_PRESSURE_PLATE
+              amount: 1
+  - id: BIRCH_SLAB
+    material: BIRCH_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_SLAB
+              amount: 1
+  - id: BIRCH_STAIRS
+    material: BIRCH_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_STAIRS
+              amount: 1
+  - id: BIRCH_TRAPDOOR
+    material: BIRCH_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BIRCH_PLANKS
+                amount: 1
+            result:
+              type: BIRCH_TRAPDOOR
+              amount: 1
+  - id: DARK_OAK_DOOR
+    material: DARK_OAK_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_DOOR
+              amount: 1
+  - id: DARK_OAK_FENCE
+    material: DARK_OAK_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: DARK_OAK_FENCE
+              amount: 1
+  - id: DARK_OAK_FENCE_GATE
+    material: DARK_OAK_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_FENCE_GATE
+              amount: 1
+  - id: DARK_OAK_PLANKS
+    material: DARK_OAK_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: DARK_OAK_PLANKS
+              amount: 1
+  - id: DARK_OAK_PRESSURE_PLATE
+    material: DARK_OAK_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_PRESSURE_PLATE
+              amount: 1
+  - id: DARK_OAK_SLAB
+    material: DARK_OAK_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_SLAB
+              amount: 1
+  - id: DARK_OAK_STAIRS
+    material: DARK_OAK_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_STAIRS
+              amount: 1
+  - id: DARK_OAK_TRAPDOOR
+    material: DARK_OAK_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_TRAPDOOR
+              amount: 1
+  - id: JUNGLE_DOOR
+    material: JUNGLE_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_DOOR
+              amount: 1
+  - id: JUNGLE_FENCE
+    material: JUNGLE_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: JUNGLE_FENCE
+              amount: 1
+  - id: JUNGLE_FENCE_GATE
+    material: JUNGLE_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_FENCE_GATE
+              amount: 1
+  - id: JUNGLE_PLANKS
+    material: JUNGLE_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: JUNGLE_PLANKS
+              amount: 1
+  - id: JUNGLE_PRESSURE_PLATE
+    material: JUNGLE_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_PRESSURE_PLATE
+              amount: 1
+  - id: JUNGLE_SLAB
+    material: JUNGLE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_SLAB
+              amount: 1
+  - id: JUNGLE_STAIRS
+    material: JUNGLE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_STAIRS
+              amount: 1
+  - id: JUNGLE_TRAPDOOR
+    material: JUNGLE_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: JUNGLE_PLANKS
+                amount: 1
+            result:
+              type: JUNGLE_TRAPDOOR
+              amount: 1
+  - id: OAK_DOOR
+    material: OAK_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_DOOR
+              amount: 1
+  - id: OAK_FENCE
+    material: OAK_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: OAK_FENCE
+              amount: 1
+  - id: OAK_FENCE_GATE
+    material: OAK_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_FENCE_GATE
+              amount: 1
+  - id: OAK_PLANKS
+    material: OAK_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: OAK_PLANKS
+              amount: 1
+  - id: OAK_PRESSURE_PLATE
+    material: OAK_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_PRESSURE_PLATE
+              amount: 1
+  - id: OAK_SLAB
+    material: OAK_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_SLAB
+              amount: 1
+  - id: OAK_STAIRS
+    material: OAK_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_STAIRS
+              amount: 1
+  - id: OAK_TRAPDOOR
+    material: OAK_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: OAK_TRAPDOOR
+              amount: 1
+  - id: SPRUCE_DOOR
+    material: SPRUCE_DOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_DOOR
+              amount: 1
+  - id: SPRUCE_FENCE
+    material: SPRUCE_FENCE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: SPRUCE_FENCE
+              amount: 1
+  - id: SPRUCE_FENCE_GATE
+    material: SPRUCE_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_FENCE_GATE
+              amount: 1
+  - id: SPRUCE_PLANKS
+    material: SPRUCE_PLANKS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: SPRUCE_PLANKS
+              amount: 1
+  - id: SPRUCE_PRESSURE_PLATE
+    material: SPRUCE_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_PRESSURE_PLATE
+              amount: 1
+  - id: SPRUCE_SLAB
+    material: SPRUCE_SLAB
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_SLAB
+              amount: 1
+  - id: SPRUCE_STAIRS
+    material: SPRUCE_STAIRS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_STAIRS
+              amount: 1
+  - id: SPRUCE_TRAPDOOR
+    material: SPRUCE_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SPRUCE_PLANKS
+                amount: 1
+            result:
+              type: SPRUCE_TRAPDOOR
+              amount: 1
+  - id: FISHING_ROD
+    material: FISHING_ROD
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - AB
+              - A B
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: STRING
+                amount: 1
+            result:
+              type: FISHING_ROD
+              amount: 1
+    default_statistics:
+      damage: 10.0
+      strength: 5.0
+  - id: DIAMOND_BOOTS
+    material: DIAMOND_BOOTS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: DIAMOND_BOOTS
+              amount: 1
+    default_statistics:
+      defense: 15.0
+  - id: DIAMOND_CHESTPLATE
+    material: DIAMOND_CHESTPLATE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: DIAMOND_CHESTPLATE
+              amount: 1
+    default_statistics:
+      defense: 40.0
+  - id: DIAMOND_HELMET
+    material: DIAMOND_HELMET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: DIAMOND_HELMET
+              amount: 1
+    default_statistics:
+      defense: 15.0
+  - id: DIAMOND_LEGGINGS
+    material: DIAMOND_LEGGINGS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: DIAMOND_LEGGINGS
+              amount: 1
+    default_statistics:
+      defense: 30.0
+  - id: GOLDEN_BOOTS
+    material: GOLDEN_BOOTS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: GOLDEN_BOOTS
+              amount: 1
+    default_statistics:
+      defense: 5.0
+  - id: GOLDEN_CHESTPLATE
+    material: GOLDEN_CHESTPLATE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: GOLDEN_CHESTPLATE
+              amount: 1
+    default_statistics:
+      defense: 25.0
+  - id: GOLDEN_HELMET
+    material: GOLDEN_HELMET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: GOLDEN_HELMET
+              amount: 1
+    default_statistics:
+      defense: 10.0
+  - id: GOLDEN_LEGGINGS
+    material: GOLDEN_LEGGINGS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: GOLDEN_LEGGINGS
+              amount: 1
+    default_statistics:
+      defense: 15.0
+  - id: IRON_BOOTS
+    material: IRON_BOOTS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: IRON_BOOTS
+              amount: 1
+    default_statistics:
+      health: 15.0
+      defense: 10.0
+  - id: IRON_CHESTPLATE
+    material: IRON_CHESTPLATE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: IRON_CHESTPLATE
+              amount: 1
+    default_statistics:
+      health: 15.0
+      defense: 30.0
+  - id: IRON_HELMET
+    material: IRON_HELMET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: IRON_HELMET
+              amount: 1
+    default_statistics:
+      health: 15.0
+      defense: 10.0
+  - id: IRON_LEGGINGS
+    material: IRON_LEGGINGS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: IRON_LEGGINGS
+              amount: 1
+    default_statistics:
+      health: 15.0
+      defense: 25.0
+  - id: LEATHER_BOOTS
+    material: LEATHER_BOOTS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_BOOTS
+              amount: 1
+    default_statistics:
+      defense: 5.0
+  - id: LEATHER_CHESTPLATE
+    material: LEATHER_CHESTPLATE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A A
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_CHESTPLATE
+              amount: 1
+    default_statistics:
+      defense: 15.0
+  - id: LEATHER_HELMET
+    material: LEATHER_HELMET
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_HELMET
+              amount: 1
+    default_statistics:
+      defense: 5.0
+  - id: LEATHER_LEGGINGS
+    material: LEATHER_LEGGINGS
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - A A
+              - A A
+            ingredients:
+              A:
+                type: LEATHER
+                amount: 1
+            result:
+              type: LEATHER_LEGGINGS
+              amount: 1
+    default_statistics:
+      defense: 10.0
+  - id: BOW
+    material: BOW
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+              - A B
+              - AB
+            ingredients:
+              A:
+                type: STRING
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: BOW
+              amount: 1
+    default_statistics:
+      damage: 30.0
+  - id: BLACK_DYE
+    material: BLACK_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BLACK_DYE
+              amount: 1
+  - id: BLUE_DYE
+    material: BLUE_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BLUE_DYE
+              amount: 1
+  - id: BROWN_DYE
+    material: BROWN_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: BROWN_DYE
+              amount: 1
+  - id: CYAN_DYE
+    material: CYAN_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: CYAN_DYE
+              amount: 1
+  - id: GRAY_DYE
+    material: GRAY_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: GRAY_DYE
+              amount: 1
+  - id: LIGHT_BLUE_DYE
+    material: LIGHT_BLUE_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIGHT_BLUE_DYE
+              amount: 1
+  - id: LIGHT_GRAY_DYE
+    material: LIGHT_GRAY_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 1
+  - id: LIME_DYE
+    material: LIME_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: LIME_DYE
+              amount: 1
+  - id: MAGENTA_DYE
+    material: MAGENTA_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: MAGENTA_DYE
+              amount: 1
+  - id: ORANGE_DYE
+    material: ORANGE_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: ORANGE_DYE
+              amount: 1
+  - id: PINK_DYE
+    material: PINK_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: PINK_DYE
+              amount: 1
+  - id: PURPLE_DYE
+    material: PURPLE_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: PURPLE_DYE
+              amount: 1
+  - id: RED_DYE
+    material: RED_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: RED_DYE
+              amount: 1
+  - id: WHITE_DYE
+    material: WHITE_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: WHITE_DYE
+              amount: 1
+  - id: YELLOW_DYE
+    material: YELLOW_DYE
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern: []
+            ingredients: {}
+            result:
+              type: YELLOW_DYE
+              amount: 1
+  - id: DIAMOND_SWORD
+    material: DIAMOND_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 8.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: DIAMOND_SWORD
+              amount: 1
+    default_statistics:
+      damage: 35.0
+  - id: GOLDEN_SWORD
+    material: GOLDEN_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 4.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: GOLDEN_SWORD
+              amount: 1
+    default_statistics:
+      damage: 20.0
+  - id: IRON_SWORD
+    material: IRON_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: IRON_SWORD
+              amount: 1
+    default_statistics:
+      damage: 30.0
+  - id: STONE_SWORD
+    material: STONE_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: STONE_SWORD
+              amount: 1
+    default_statistics:
+      damage: 25.0
+  - id: WOODEN_SWORD
+    material: WOODEN_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        sell_value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: WOODEN_SWORD
+              amount: 1
+    default_statistics:
+      damage: 20.0

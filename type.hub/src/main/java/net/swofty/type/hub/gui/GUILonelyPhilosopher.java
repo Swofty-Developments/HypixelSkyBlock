@@ -6,10 +6,10 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
@@ -30,7 +30,7 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                player.addAndUpdateItem(ItemTypeLinker.HUB_CASTLE_TRAVEL_SCROLL);
+                player.addAndUpdateItem(ItemType.HUB_CASTLE_TRAVEL_SCROLL);
                 player.playSuccessSound();
                 player.setCoins(coins - 150000);
             }

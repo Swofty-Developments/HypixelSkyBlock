@@ -1,7 +1,6 @@
 package net.swofty.type.hub.gui;
 
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 

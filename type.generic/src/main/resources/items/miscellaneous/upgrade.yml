@@ -1,0 +1,37 @@
+items:
+  - id: AUTO_SMELTER
+    rarity: COMMON
+    components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.1
+      - id: NOT_FINISHED_YET
+  - id: COMPACTOR
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: DIAMOND_SPREADING
+    rarity: COMMON
+    components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.1
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 640.0
+  - id: FLY_CATCHER
+    rarity: COMMON
+    components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.1
+      - id: ENCHANTED
+  - id: MINION_EXPANDER
+    rarity: COMMON
+    components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.1
+      - id: ENCHANTED
+  - id: SUPER_COMPACTOR3000
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET

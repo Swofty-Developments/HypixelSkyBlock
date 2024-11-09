@@ -1,0 +1,1031 @@
+items:
+  - id: "ACACIA_LOG"
+    material: "acacia_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "ANCIENT_CLAW"
+    material: "ancient_claw"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+
+  - id: "BAKED_POTATO"
+    material: "baked_potato"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 76800
+
+  - id: "BIRCH_LOG"
+    material: "birch_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "BLAZE_POWDER"
+    material: "blaze_powder"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1440
+
+  - id: "BLAZE_ROD"
+    material: "blaze_rod"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 230400
+
+  - id: "BONE"
+    material: "bone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "BONE_BLOCK"
+    material: "bone_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+
+  - id: "BONE_MEAL"
+    material: "bone_meal"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1
+
+  - id: "BOOKSHELF"
+    material: "bookshelf"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 2700
+
+  - id: "BREAD"
+    material: "bread"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 60
+
+  - id: "BROWN_MUSHROOM"
+    material: "brown_mushroom"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "BROWN_MUSHROOM_BLOCK"
+    material: "brown_mushroom_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 51200
+
+  - id: "CACTUS"
+    material: "cactus"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 76800
+
+  - id: "CACTUS_GREEN"
+    material: "cactus_green"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "CARROT"
+    material: "carrot"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "CHARCOAL"
+    material: "charcoal"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "CLAY"
+    material: "clay"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "CLOWNFISH"
+    material: "clownfish"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 3200
+
+  - id: "COAL"
+    material: "coal"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "COAL_BLOCK"
+    material: "coal_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 51000
+
+  - id: "COBBLESTONE"
+    material: "cobblestone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "COCOA_BEANS"
+    material: "cocoa_beans"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "COOKED_FISH"
+    material: "cooked_fish"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 150000
+
+  - id: "COOKED_MUTTON"
+    material: "cooked_mutton"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 128000
+
+  - id: "COOKED_SALMON"
+    material: "cooked_salmon"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 256000
+
+  - id: "COOKIE"
+    material: "cookie"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 61500
+
+  - id: "DANDELION"
+    material: "dandelion"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "DARK_OAK_LOG"
+    material: "dark_oak_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "DIAMOND"
+    material: "diamond"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1280
+
+  - id: "DIAMOND_BLOCK"
+    material: "diamond_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 204800
+
+  - id: "EGG"
+    material: "egg"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 432
+
+  - id: "EMERALD"
+    material: "emerald"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 960
+
+  - id: "EMERALD_BLOCK"
+    material: "emerald_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 153600
+
+  - id: "ENDER_PEARL"
+    material: "ender_pearl"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 140
+
+  - id: "END_STONE"
+    material: "end_stone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "EYE_OF_ENDER"
+    material: "eye_of_ender"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 3520
+
+  - id: "FEATHER"
+    material: "feather"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "FERMENTED_SPIDER_EYE"
+    material: "fermented_spider_eye"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 31000
+
+  - id: "FIREWORK_ROCKET"
+    material: "firework_rocket"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 41000
+
+  - id: "FLINT"
+    material: "flint"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: MINING
+        item_id: FLINT
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "GHAST_TEAR"
+    material: "ghast_tear"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 80
+
+  - id: "GLISTERING_MELON"
+    material: "glistering_melon"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1000
+
+  - id: "GLOWSTONE"
+    material: "glowstone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 51200
+
+  - id: "GLOWSTONE_DUST"
+    material: "glowstone_dust"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "GOLD"
+    material: "gold"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "GOLD_BLOCK"
+    material: "gold_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 102000
+
+  - id: "GOLDEN_CARROT"
+    material: "golden_carrot"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 61440
+
+  - id: "GRILLED_PORK"
+    material: "grilled_pork"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 128000
+
+  - id: "GUNPOWDER"
+    material: "gunpowder"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "HARDSTONE"
+    material: "hardstone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 576
+
+  - id: "HAY_BALE"
+    material: "hay_bale"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 7776
+
+  - id: "ICE"
+    material: "ice"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 80
+
+  - id: "INK_SAC"
+    material: "ink_sac"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "IRON"
+    material: "iron"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "IRON_BLOCK"
+    material: "iron_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 76800
+
+  - id: "JUNGLE_LOG"
+    material: "jungle_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "LAPIS_LAZULI"
+    material: "lapis_lazuli"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "LAPIS_LAZULI_BLOCK"
+    material: "lapis_lazuli_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 25600
+
+  - id: "LEATHER"
+    material: "leather"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1700
+
+  - id: "LILY_PAD"
+    material: "lily_pad"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "MAGMA_CREAM"
+    material: "magma_cream"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1280
+
+  - id: "MELON"
+    material: "melon"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "MELON_BLOCK"
+    material: "melon_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 51200
+
+  - id: "MITHRIL"
+    material: "mithril"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1280
+
+  - id: "MUTTON"
+    material: "mutton"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "MYCELIUM"
+    material: "mycelium"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "NETHERRACK"
+    material: "netherrack"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "NETHER_WART"
+    material: "nether_wart"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "OAK_LOG"
+    material: "oak_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "OBSIDIAN"
+    material: "obsidian"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1440
+
+  - id: "PACKED_ICE"
+    material: "packed_ice"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 12800
+
+  - id: "PAPER"
+    material: "paper"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 384
+
+  - id: "POISONOUS_POTATO"
+    material: "poisonous_potato"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: COMBAT
+        item_id: POISONOUS_POTATO
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "POPPY"
+    material: "poppy"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 576
+
+  - id: "PORK"
+    material: "pork"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "POTATO"
+    material: "potato"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "PRISMARINE_CRYSTALS"
+    material: "prismarine_crystals"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 400
+
+  - id: "PRISMARINE_SHARD"
+    material: "prismarine_shard"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 400
+
+  - id: "PUFFERFISH"
+    material: "pufferfish"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 2400
+
+  - id: "PUMPKIN"
+    material: "pumpkin"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "QUARTZ"
+    material: "quartz"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "QUARTZ_BLOCK"
+    material: "quartz_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 102400
+
+  - id: "RABBIT_FOOT"
+    material: "rabbit_foot"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "RABBIT_HIDE"
+    material: "rabbit_hide"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 2880
+
+  - id: "RAW_BEEF"
+    material: "raw_beef"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "RAW_CHICKEN"
+    material: "raw_chicken"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "RAW_FISH"
+    material: "raw_fish"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 960
+
+  - id: "RAW_RABBIT"
+    material: "raw_rabbit"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "RAW_SALMON"
+    material: "raw_salmon"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "RED_MUSHROOM"
+    material: "red_mushroom"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "RED_MUSHROOM_BLOCK"
+    material: "red_mushroom_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 51200
+
+  - id: "RED_SAND"
+    material: "red_sand"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "REDSTONE"
+    material: "redstone"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 160
+
+  - id: "REDSTONE_BLOCK"
+    material: "redstone_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 25600
+
+  - id: "ROTTEN_FLESH"
+    material: "rotten_flesh"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "SAND"
+    material: "sand"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "SEEDS"
+    material: "seeds"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "SHARK_FIN"
+    material: "shark_fin"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: FISHING
+        item_id: SHARK_FIN
+
+  - id: "SLIMEBALL"
+    material: "slimeball"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 800
+
+  - id: "SLIME_BLOCK"
+    material: "slime_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: COMBAT
+        item_id: ENCHANTED_SLIME_BALL
+      - id: "SELLABLE"
+        value: 128000
+
+  - id: "SNOW_BLOCK"
+    material: "snow_block"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: MINING
+        item_id: SNOW_BLOCK
+      - id: "SELLABLE"
+        value: 600
+
+  - id: "SPIDER_EYE"
+    material: "spider_eye"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 480
+
+  - id: "SPONGE"
+    material: "sponge"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 2000
+
+  - id: "SPRUCE_LOG"
+    material: "spruce_log"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "STRING"
+    material: "string"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 576
+
+  - id: "SUGAR"
+    material: "sugar"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 640
+
+  - id: "SUGAR_CANE"
+    material: "sugar_cane"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 102400
+
+  - id: "SULPHUR"
+    material: "sulphur"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 1600
+
+  - id: "TITANIUM"
+    material: "titanium"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 3200
+
+  - id: "WET_SPONGE"
+    material: "wet_sponge"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 80000
+
+  - id: "WOOL"
+    material: "wool"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+        recipe_type: FARMING
+        item_id: WHITE_WOOL
+      - id: "SELLABLE"
+        value: 320
+
+  - id: "OMEGA_ENCHANTED_EGG"
+    material: "omega_egg"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+      - id: "SELLABLE"
+        value: 432
+
+  - id: "SUPER_ENCHANTED_EGG"
+    material: "super_egg"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+

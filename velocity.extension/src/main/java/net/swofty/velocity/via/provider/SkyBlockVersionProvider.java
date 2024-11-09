@@ -10,7 +10,6 @@ import net.swofty.velocity.via.injector.SkyBlockViaInjector;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-
 public class SkyBlockVersionProvider extends BaseVersionProvider {
 
     @Override

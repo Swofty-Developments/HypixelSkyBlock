@@ -6,7 +6,7 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.impl.Minion;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;

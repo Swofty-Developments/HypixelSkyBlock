@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
@@ -17,7 +18,6 @@ import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
@@ -28,10 +28,9 @@ import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
+public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
     private final MuseumableItemCategory category;
 
     public GUIMuseumCategory(MuseumableItemCategory category) {
@@ -101,13 +100,13 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
     }
 
     @Override
-    public PaginationList<ItemTypeLinker> fillPaged(SkyBlockPlayer player, PaginationList<ItemTypeLinker> paged) {
+    public PaginationList<ItemType> fillPaged(SkyBlockPlayer player, PaginationList<ItemType> paged) {
         paged.addAll(category.getItems());
         return paged;
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, ItemTypeLinker item) {
+    public boolean shouldFilterFromSearch(String query, ItemType item) {
         return !item.getDisplayName(null).toLowerCase().contains(query.toLowerCase());
     }
 
@@ -155,12 +154,12 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemTypeLinker> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemType> paged) {
         return "Museum -> " + category.toString();
     }
 
     @Override
-    public GUIClickableItem createItemFor(ItemTypeLinker item, int slot, SkyBlockPlayer player) {
+    public GUIClickableItem createItemFor(ItemType item, int slot, SkyBlockPlayer player) {
         DatapointMuseum.MuseumData data = player.getMuseumData();
         SkyBlockItem skyBlockItem = data.getItem(category, item);
         boolean inMuseum = skyBlockItem != null;

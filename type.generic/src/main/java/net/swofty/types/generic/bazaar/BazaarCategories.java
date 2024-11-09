@@ -5,7 +5,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.objects.bazaar.BazaarInitializeProtocolObject;
-import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.*;
 
@@ -156,9 +155,5 @@ public enum BazaarCategories {
             }
         }
         return null;
-    }
-
-    public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemTypeLinker itemType) {
-        return getFromItem(itemType.type);
     }
 }

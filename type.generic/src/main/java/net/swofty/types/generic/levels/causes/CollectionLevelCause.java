@@ -3,7 +3,6 @@ package net.swofty.types.generic.levels.causes;
 import lombok.Getter;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

@@ -27,6 +27,9 @@ public class EndpointAddItem implements ServiceEndpoint<
     @Override
     public AuctionAddItemProtocolObject.AuctionAddItemResponse onMessage(ServiceProxyRequest message, AuctionAddItemProtocolObject.AuctionAddItemMessage messageObject) {
         AuctionItem auctionItem = messageObject.item();
+        UnderstandableSkyBlockItem item = auctionItem.getItem();
+        item.getAttribute("item_type").setValue("HYPERION");
+
         AuctionCategories category = messageObject.category();
         Document document = auctionItem.toDocument();
         document.put("category", category.name());

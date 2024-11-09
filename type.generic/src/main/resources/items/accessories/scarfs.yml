@@ -1,0 +1,19 @@
+items:
+  - id: SCARFS_GRIMOIRE
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: bafb195cc75f31b619a077b7853653254ac18f220dc32d1412982ff437b4d57a
+  - id: SCARFS_STUDIES
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 6de4ab129e137f9f4cbf7060318ee1748dc39da9b5d129a8da0e614e2337693
+  - id: SCARFS_THESIS
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 8ce4c87eb4dde27459e3e7f85921e7e57b11199260caa5ce63f139ee3d188c

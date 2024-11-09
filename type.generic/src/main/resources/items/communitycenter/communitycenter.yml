@@ -1,0 +1,88 @@
+items:
+  - id: ABIPHONE_CONTACTS_TRIO
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: AUTOPET_RULES2_PACK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: c316a8b96cb9aeea5140dd936c6ebb964efcbfd71ae217d9f70888efb14e7c0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Autopet Rules 2-Pack
+      - id: NOT_FINISHED_YET
+  - id: BLOCK_ZAPPER
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: BOOSTER_COOKIE
+    rarity: COMMON
+    components:
+      - id: INTERACTABLE
+        handler_id: BOOSTER_COOKIE_INTERACT
+      - id: ENCHANTED
+      - id: TRACKED_UNIQUE
+      - id: DISABLE_ANIMATION
+        disabled_animations:
+          - EAT
+      - id: NOT_FINISHED_YET
+  - id: BUILDERS_WAND
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: DITTO_BLOB
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: fe6817bd070658e3a5e1e7f55c16ac71a9909b7d0b2c011227a52edf1b0d5b81
+      - id: NOT_FINISHED_YET
+  - id: GOD_POTION
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 60226d4c1d30fbebecae939da900603e4cd0fed8592a1bb3e11f9ac92391a45a
+      - id: INTERACTABLE
+        handler_id: GOD_POTION_INTERACT
+      - id: NOT_FINISHED_YET
+  - id: HEAT_CORE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 59358703ab7727df3324336969e81d6f92b7aa79edb966c0be91ab161bad1f01
+      - id: NOT_FINISHED_YET
+  - id: HOLOGRAM
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 87ee4e4895a9c6e24336e24665c5638272a3feeac955882ff92ae3215ae7f
+      - id: NOT_FINISHED_YET
+  - id: INFERNO_FUEL_BLOCK
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 28a1884ee3f8a6e66692a91ed763cb78d9f2017706d8b42a9263b417b2d715d2
+      - id: NOT_FINISHED_YET
+  - id: MATRIARCHS_PERFUME
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Matriarch's Perfume
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: PORTALIZER
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 2c915db3fc40a79b63c2c453f0c490981e5227c5027501283272138533dea519
+      - id: NOT_FINISHED_YET
+  - id: PURE_BLACK_DYE
+    rarity: COMMON
+    components:
+      - id: NOT_FINISHED_YET
+  - id: PURE_WHITE_DYE
+    rarity: COMMON
+    components:
+      - id: NOT_FINISHED_YET

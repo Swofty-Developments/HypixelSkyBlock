@@ -1,0 +1,24 @@
+items:
+  - id: ENCHANTED_BOOK
+    components:
+      - id: ANVIL_COMBINABLE
+        handler_id: ENCHANTED_BOOK
+      - id: LORE_UPDATE
+        is_absolute: false
+        handler: ENCHANTED_BOOK
+      - id: TRACKED_UNIQUE
+      - id: ENCHANTED
+  - id: HOT_POTATO_BOOK
+    lore:
+      - "§7This item can be applied to an item up to"
+      - "§a10 §7times!"
+    components:
+      - id: ANVIL_COMBINABLE
+        handler_id: HOT_POTATO_BOOK
+      - id: LORE_UPDATE
+        is_absolute: false
+        handler: HOT_POTATO_BOOK
+      - id: SELLABLE
+        value: 38400
+      - id: TRACKED_UNIQUE
+      - id: ENCHANTED

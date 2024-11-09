@@ -3,7 +3,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.levels.causes.NewAccessoryLevelCause;
 

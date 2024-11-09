@@ -12,7 +12,6 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.item.ItemDropChanger;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;

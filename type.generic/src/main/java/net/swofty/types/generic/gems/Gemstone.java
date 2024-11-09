@@ -2,38 +2,33 @@ package net.swofty.types.generic.gems;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.types.generic.item.impl.GemstoneImpl;
-import net.swofty.types.generic.item.impl.GemstoneItem;
-import net.swofty.types.generic.item.items.mining.crystal.gemstones.fine.*;
-import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawed.*;
-import net.swofty.types.generic.item.items.mining.crystal.gemstones.flawless.*;
-import net.swofty.types.generic.item.items.mining.crystal.gemstones.perfect.*;
-import net.swofty.types.generic.item.items.mining.crystal.gemstones.rough.*;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.ChatColor;
+import net.swofty.types.generic.item.components.GemstoneComponent;
+import net.swofty.types.generic.item.components.GemstoneImplComponent;
 
 import java.util.List;
 
 @Getter
 public enum Gemstone {
-    RUBY(List.of(RoughRuby.class, FlawedRuby.class, FineRuby.class, FlawlessRuby.class, PerfectRuby.class), ChatColor.RED, ItemStatistic.HEALTH),
-    AMETHYST(List.of(RoughAmethyst.class, FlawedAmethyst.class, FineAmethyst.class, FlawlessAmethyst.class, PerfectAmethyst.class), ChatColor.DARK_PURPLE, ItemStatistic.DEFENSE),
-    JADE(List.of(RoughJade.class, FlawedJade.class, FineJade.class, FlawlessJade.class, PerfectJade.class), ChatColor.GREEN, null),
-    SAPPHIRE(List.of(RoughSapphire.class, FlawedSapphire.class, FineSapphire.class, FlawlessSapphire.class, PerfectSapphire.class), ChatColor.DARK_AQUA, ItemStatistic.INTELLIGENCE),
-    AMBER(List.of(RoughAmber.class, FlawedAmber.class, FineAmber.class, FlawlessAmber.class, PerfectAmber.class), ChatColor.GOLD, ItemStatistic.MINING_SPEED),
-    TOPAZ(List.of(RoughTopaz.class, FlawedTopaz.class, FineTopaz.class, FlawlessTopaz.class, PerfectTopaz.class), ChatColor.YELLOW, null),
-    JASPER(List.of(RoughJasper.class, FlawedJasper.class, FineJasper.class, FlawlessJasper.class, PerfectJasper.class), ChatColor.LIGHT_PURPLE, ItemStatistic.STRENGTH),
+    RUBY(List.of(ItemType.ROUGH_RUBY_GEM, ItemType.FLAWED_RUBY_GEM, ItemType.FINE_RUBY_GEM, ItemType.FLAWLESS_RUBY_GEM, ItemType.PERFECT_RUBY_GEM), ChatColor.RED, ItemStatistic.HEALTH),
+    AMETHYST(List.of(ItemType.ROUGH_AMETHYST_GEM, ItemType.FLAWED_AMETHYST_GEM, ItemType.FINE_AMETHYST_GEM, ItemType.FLAWLESS_AMETHYST_GEM, ItemType.PERFECT_AMETHYST_GEM), ChatColor.DARK_PURPLE, ItemStatistic.DEFENSE),
+    JADE(List.of(ItemType.ROUGH_JADE_GEM, ItemType.FLAWED_JADE_GEM, ItemType.FINE_JADE_GEM, ItemType.FLAWLESS_JADE_GEM, ItemType.PERFECT_JADE_GEM), ChatColor.GREEN, null),
+    SAPPHIRE(List.of(ItemType.ROUGH_SAPPHIRE_GEM, ItemType.FLAWED_SAPPHIRE_GEM, ItemType.FINE_SAPPHIRE_GEM, ItemType.FLAWLESS_SAPPHIRE_GEM, ItemType.PERFECT_SAPPHIRE_GEM), ChatColor.DARK_AQUA, ItemStatistic.INTELLIGENCE),
+    AMBER(List.of(ItemType.ROUGH_AMBER_GEM, ItemType.FLAWED_AMBER_GEM, ItemType.FINE_AMBER_GEM, ItemType.FLAWLESS_AMBER_GEM, ItemType.PERFECT_AMBER_GEM), ChatColor.GOLD, ItemStatistic.MINING_SPEED),
+    TOPAZ(List.of(ItemType.ROUGH_TOPAZ_GEM, ItemType.FLAWED_TOPAZ_GEM, ItemType.FINE_TOPAZ_GEM, ItemType.FLAWLESS_TOPAZ_GEM, ItemType.PERFECT_TOPAZ_GEM), ChatColor.YELLOW, null),
+    JASPER(List.of(ItemType.ROUGH_JASPER_GEM, ItemType.FLAWED_JASPER_GEM, ItemType.FINE_JASPER_GEM, ItemType.FLAWLESS_JASPER_GEM, ItemType.PERFECT_JASPER_GEM), ChatColor.LIGHT_PURPLE, ItemStatistic.STRENGTH),
     ;
 
-    public final List<Class<?>> clazz;
+    public final List<ItemType> item;
     public final ItemStatistic correspondingStatistic;
     public final ChatColor color;
 
-    Gemstone(List<Class<?>> clazz, ChatColor color, ItemStatistic correspondingStatistic) {
-        this.clazz = clazz;
+    Gemstone(List<ItemType> item, ChatColor color, ItemStatistic correspondingStatistic) {
+        this.item = item;
         this.color = color;
         this.correspondingStatistic = correspondingStatistic;
     }
@@ -41,18 +36,18 @@ public enum Gemstone {
     @SneakyThrows
     public static Integer getExtraStatisticFromGemstone(ItemStatistic statistic, SkyBlockItem item) {
         ItemAttributeGemData.GemData gemData;
-        if (item.getGenericInstance() instanceof GemstoneItem asGemstone)
+        if (item.hasComponent(GemstoneComponent.class))
             gemData = item.getAttributeHandler().getGemData();
         else return 0;
 
         int toReturn = 0;
         for (ItemAttributeGemData.GemData.GemSlots slot : gemData.slots) {
-            ItemTypeLinker gem = ItemTypeLinker.fromType(slot.filledWith);
+            ItemType gem = slot.filledWith;
             if (gem == null) continue;
 
-            GemstoneImpl impl = ((GemstoneImpl) gem.clazz.getDeclaredConstructor().newInstance());
-            GemRarity gemRarity = impl.getAssociatedGemRarity();
-            Gemstone gemstone = impl.getAssociatedGemstone();
+            GemstoneImplComponent impl = new SkyBlockItem(gem).getComponent(GemstoneImplComponent.class);
+            GemRarity gemRarity = impl.getGemRarity();
+            Gemstone gemstone = impl.getGemstone();
             ItemStatistic correspondingStatistic = gemstone.getCorrespondingStatistic();
 
             if (correspondingStatistic != statistic) continue;
@@ -61,15 +56,6 @@ public enum Gemstone {
         }
 
         return toReturn;
-    }
-
-    public static Gemstone getGemFromClazz(Class<?> clazz) {
-        for (Gemstone gemstone : Gemstone.values()) {
-            if (gemstone.clazz.contains(clazz)) {
-                return gemstone;
-            }
-        }
-        return null;
     }
 
     public enum Slots {

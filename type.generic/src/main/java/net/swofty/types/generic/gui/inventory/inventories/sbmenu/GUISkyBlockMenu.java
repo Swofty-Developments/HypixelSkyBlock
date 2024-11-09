@@ -21,7 +21,7 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecip
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkills;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;

@@ -1,0 +1,11 @@
+items:
+  - id: MOVE_JERRY
+    rarity: COMMON
+    components:
+      - id: INTERACTABLE
+        handler_id: MOVE_JERRY_INTERACT
+  - id: SKY_BLOCK_MENU
+    rarity: COMMON
+    components:
+      - id: INTERACTABLE
+        handler_id: SKY_BLOCK_MENU_INTERACT

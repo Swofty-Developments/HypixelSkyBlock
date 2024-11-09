@@ -1,0 +1,118 @@
+items:
+  - id: BOX_OF_SEEDS
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 76800.0
+      - id: SKULL_HEAD
+        texture: 2c3f854bb65265ab3ff2e362669a5f806ab84dc240a4b99f9a62ab7267728ba3
+  - id: CARROT_CRYSTAL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
+      - id: SERVER_ORB
+        valid_blocks:
+          - FARMLAND
+      - id: PLACE_EVENT
+        handler_id: CARROT_CRYSTAL_PLACE
+  - id: COMPOST
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: ba39df36a6665e9dc33f3413717daefafd1f78b97eef24f3cae9e3bbe3c77b9b
+      - id: SELLABLE
+        value: 4.0
+  - id: COMPOST_BUNDLE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: e3c7707c2c41536737e3da50591fde8b73a1bf66684536715ef65b7c0bc8997b
+      - id: SELLABLE
+        value: 10.0
+      - id: TRACKED_UNIQUE
+  - id: DUNG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 100.0
+  - id: FLOWER_CRYSTAL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
+      - id: SERVER_ORB
+        valid_blocks:
+          - GRASS_BLOCK
+      - id: PLACE_EVENT
+        handler_id: FLOWER_CRYSTAL_PLACE
+  - id: HONEY_JAR
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: d8ecd636150837b0d9d0299b64cd0b5b55a6f99158c94600eb90fc5ba677330d
+      - id: SELLABLE
+        value: 100.0
+  - id: MUTANT_NETHER_WART
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 102400.0
+      - id: SKULL_HEAD
+        texture: 111a3cec7aaf904212ccf93bb67a3caf3d649783ba90b8b60bb63c7687eb39f
+  - id: PLANT_MATTER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 100.0
+  - id: POLISHED_PUMPKIN
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 256000.0
+      - id: SKULL_HEAD
+        texture: 8db711ff52eedda59c434bb03169763d7c40b5b89127778feacd63aa94dfc
+  - id: POTATO_CRYSTAL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
+      - id: SERVER_ORB
+        valid_blocks:
+          - FARMLAND
+      - id: PLACE_EVENT
+        handler_id: POTATO_CRYSTAL_PLACE
+  - id: PUMPKIN_AND_MELON_CRYSTAL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
+      - id: SERVER_ORB
+        valid_blocks:
+          - PODZOL
+          - DIRT
+      - id: PLACE_EVENT
+        handler_id: PUMPKIN_AND_MELON_CRYSTAL_PLACE
+  - id: ROOKIE_HOE
+    rarity: COMMON
+  - id: TIGHTLY_TIED_HAY_BALE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: SELLABLE
+        value: 1119744.0
+      - id: SKULL_HEAD
+        texture: f7c33cd0c14ba830da149907f7a6aae835b6a35aea01e0ce073fb3c59cc46326
+  - id: WHEAT_CRYSTAL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
+      - id: SERVER_ORB
+        valid_blocks:
+          - FARMLAND
+      - id: PLACE_EVENT
+        handler_id: WHEAT_CRYSTAL_PLACE

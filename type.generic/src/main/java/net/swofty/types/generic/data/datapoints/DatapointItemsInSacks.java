@@ -2,9 +2,9 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class DatapointItemsInSacks extends Datapoint<DatapointItemsInSacks.Playe
             public String serialize(PlayerItemsInSacks value) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("{");
-                for (Map.Entry<ItemTypeLinker, Integer> entry : value.items.entrySet()) {
+                for (Map.Entry<ItemType, Integer> entry : value.items.entrySet()) {
                     sb.append("\"").append(entry.getKey().toString()).append("\":").append(entry.getValue()).append(",");
                 }
                 if (sb.charAt(sb.length() - 1) == ',') {
@@ -30,9 +30,9 @@ public class DatapointItemsInSacks extends Datapoint<DatapointItemsInSacks.Playe
             @Override
             public PlayerItemsInSacks deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
-                Map<ItemTypeLinker, Integer> sacks = new HashMap<>();
+                Map<ItemType, Integer> sacks = new HashMap<>();
                 for (String key : jsonObject.keySet()) {
-                    sacks.put(ItemTypeLinker.valueOf(key), jsonObject.getInt(key));
+                    sacks.put(ItemType.valueOf(key), jsonObject.getInt(key));
                 }
                 return new PlayerItemsInSacks(sacks);
             }
@@ -51,21 +51,21 @@ public class DatapointItemsInSacks extends Datapoint<DatapointItemsInSacks.Playe
     @Getter
     @AllArgsConstructor
     public static class PlayerItemsInSacks {
-        private Map<ItemTypeLinker, Integer> items;
+        private Map<ItemType, Integer> items;
 
-        public void set(ItemTypeLinker type, int amount) {
+        public void set(ItemType type, int amount) {
             items.put(type, amount);
         }
 
-        public void increase(ItemTypeLinker type, Integer amount) {
+        public void increase(ItemType type, Integer amount) {
             items.put(type, getAmount(type) + amount);
         }
 
-        public void decrease(ItemTypeLinker type, Integer amount) {
+        public void decrease(ItemType type, Integer amount) {
             items.put(type, getAmount(type) - amount);
         }
 
-        public Integer getAmount(ItemTypeLinker item) {
+        public Integer getAmount(ItemType item) {
             return items.getOrDefault(item, 0);
         }
     }

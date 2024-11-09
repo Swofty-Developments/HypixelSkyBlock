@@ -1,0 +1,64 @@
+items:
+  - id: ROUGH_AMBER
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: AMBER
+        skull_texture: da19436f6151a7b66d65ed7624add4325cfbbc2eee815fcf76f4c29ddf08f75b
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_AMETHYST
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: AMETHYST
+        skull_texture: e493c6f540c7001fed97b07f6b4c89128e3a7c37563aa223f0acca314f175515
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_JADE
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: JADE
+        skull_texture: 3b4c2afd544d0a6139e6ae8ef8f0bfc09a9fd837d0cad4f5cd0fe7f607b7d1a0
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_JASPER
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: JASPER
+        skull_texture: 23d064ec150172d05844c11a18619c1421bbfb2ddd1dbb87cdc10e22252b773b
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_RUBY
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: RUBY
+        skull_texture: d159b03243be18a14f3eae763c4565c78f1f339a8742d26fde541be59b7de07
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_SAPPHIRE
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: SAPPHIRE
+        skull_texture: cfcebe54dbc345ea7e22206f703e6b33befbe95b6a918bd1754b76188bc65bb5
+      - id: SELLABLE
+        value: 3.0
+  - id: ROUGH_TOPAZ
+    rarity: ROUGH
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: ROUGH
+        gemstone: TOPAZ
+        skull_texture: 3fd960722ec29c66716ae5ca97b9b6b2628984e1d6f9d2592cd089914206a1b
+      - id: SELLABLE
+        value: 3.0

@@ -13,8 +13,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.item.impl.Runeable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.item.components.RuneableComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIRuneRemoval extends SkyBlockInventoryGUI {
@@ -106,8 +106,7 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
 
         ItemAttributeRuneInfusedWith.RuneData runeData = item.getAttributeHandler().getRuneData();
         if (item.getAmount() > 1 ||
-                item.getGenericInstance() == null ||
-                !(item.getGenericInstance() instanceof Runeable) ||
+                item.hasComponent(RuneableComponent.class) ||
                 runeData == null ||
                 !runeData.hasRune()) {
             set(new GUIItem(22) {

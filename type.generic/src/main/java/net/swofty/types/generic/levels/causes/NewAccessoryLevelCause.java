@@ -1,6 +1,5 @@
 package net.swofty.types.generic.levels.causes;
 
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

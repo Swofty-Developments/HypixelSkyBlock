@@ -1,0 +1,70 @@
+items:
+  - id: GLACITE_JEWEL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: e80e2c206f06b4163dee678162b2d7a3ed6b20c6419fec44f91f6dd001a12a39
+      - id: SELLABLE
+        value: 2000.0
+  - id: GOBLIN_EGG
+    rarity: COMMON
+  - id: MITHRIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 8.0
+  - id: PLASMA
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 20000.0
+      - id: SKULL_HEAD
+        texture: 75aa8332bbec4a958fea2be64b8f1682f5d8247451aa2b7569edd0498437d706
+  - id: REFINED_MITHRIL
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 35a7663300619bb6a156d76351ac05f7b3cafeac31e2ff04c55cc9f236327832
+      - id: SELLABLE
+        value: 204800.0
+  - id: REFINED_TITANIUM
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 704baabf7ef854825aae1992e4a75ff7286ed1654d8f1a08952e7b8669cf692d
+      - id: SELLABLE
+        value: 51200.0
+  - id: SORROW
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 13.0
+  - id: STARFALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 15.0
+  - id: TITANIUM
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 20.0
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 0.0
+      - id: SKULL_HEAD
+        texture: a14c6e41a762d37863a9fff6888c738905b92cc6c3898892a38dfdfe2ac4bf
+  - id: TREASURITE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: be261c6b852dd38e0d51349b1b8132887cd1b69da04d8daf0121af79ad8dd92
+  - id: VOLTA
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1111.0
+      - id: SKULL_HEAD
+        texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
+      - id: EXTRA_UNDER_NAME
+        display: Machine Fuel

@@ -1,8 +1,8 @@
 package net.swofty.types.generic.minion;
 
 import lombok.Getter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 
@@ -25,8 +25,8 @@ public class MinionRecipe {
                 Map<Character, ItemQuantifiable> map = new HashMap<>();
                 map.put('A', new ItemQuantifiable(materials.minionIngredients().get(number).getItem(), materials.minionIngredients().get(number).getAmount()));
                 if (number != 0) {
-                    ItemTypeLinker itemTypeLinker = materials.minionItem();
-                    SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
+                    ItemType itemType = materials.minionItem();
+                    SkyBlockItem item = new SkyBlockItem(itemType);
                     item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(number, 1));
                     map.put('B', new ItemQuantifiable(item, 1));
                 } else {
@@ -44,5 +44,5 @@ public class MinionRecipe {
         }
     }
 
-    public record MinionRecipeData(List<MinionIngredient> minionIngredients, ItemTypeLinker firstBaseItem, ItemTypeLinker minionItem) {}
+    public record MinionRecipeData(List<MinionIngredient> minionIngredients, ItemType firstBaseItem, ItemType minionItem) {}
 }

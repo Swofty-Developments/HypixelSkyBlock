@@ -6,7 +6,6 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerItemPickup implements SkyBlockEventClass {

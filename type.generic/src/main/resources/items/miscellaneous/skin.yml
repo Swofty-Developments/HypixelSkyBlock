@@ -1,0 +1,7 @@
+items:
+  - id: BEE_MINION_SKIN
+    rarity: COMMON
+    components:
+      - id: MINION_SKIN
+      - id: SKULL_HEAD
+        texture: 12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47

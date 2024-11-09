@@ -10,12 +10,12 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.subguis.*;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -47,21 +47,21 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
     };
 
     private enum BitItems {
-        GOD_POTION(ItemTypeLinker.GOD_POTION, 1500, 1),
-        KISMET_FEATHER(ItemTypeLinker.KISMET_FEATHER, 1350, 1),
-        MATRIARCHS_PERFUME(ItemTypeLinker.MATRIARCHS_PERFUME, 1200, 1),
-        HOLOGRAM(ItemTypeLinker.HOLOGRAM, 2000, 1),
-        DITTO_BLOB(ItemTypeLinker.DITTO_BLOB, 600, 1),
-        BUILDERS_WAND(ItemTypeLinker.BUILDERS_WAND, 12000, 1),
-        BLOCK_ZAPPER(ItemTypeLinker.BLOCK_ZAPPER, 5000, 1),
-        BITS_TALISMAN(ItemTypeLinker.BITS_TALISMAN, 15000, 1),
-        PORTALIZER(ItemTypeLinker.PORTALIZER, 4800, 1),
-        AUTOPET_RULES_2_PACK(ItemTypeLinker.AUTOPET_RULES_2_PACK, 21000, 1),
+        GOD_POTION(ItemType.GOD_POTION, 1500, 1),
+        KISMET_FEATHER(ItemType.KISMET_FEATHER, 1350, 1),
+        MATRIARCHS_PERFUME(ItemType.MATRIARCHS_PERFUME, 1200, 1),
+        HOLOGRAM(ItemType.HOLOGRAM, 2000, 1),
+        DITTO_BLOB(ItemType.DITTO_BLOB, 600, 1),
+        BUILDERS_WAND(ItemType.BUILDERS_WAND, 12000, 1),
+        BLOCK_ZAPPER(ItemType.BLOCK_ZAPPER, 5000, 1),
+        BITS_TALISMAN(ItemType.BITS_TALISMAN, 15000, 1),
+        PORTALIZER(ItemType.PORTALIZER, 4800, 1),
+        AUTOPET_RULES_2_PACK(ItemType.AUTOPET_RULES_2_PACK, 21000, 1),
         ;
-        private final ItemTypeLinker item;
+        private final ItemType item;
         private final Integer price;
         private final Integer amount;
-        BitItems(ItemTypeLinker item, Integer price, Integer amount) {
+        BitItems(ItemType item, Integer price, Integer amount) {
             this.item = item;
             this.price = price;
             this.amount = amount;
@@ -73,46 +73,46 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 "§7Reduce the amount of time it takes",
                 "§7to upgrade your pet at §bKat§7.")),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.KAT_FLOWER, 500, 1),
-                        new CommunityShopItem(ItemTypeLinker.KAT_BOUQUET, 2500, 1)
+                        new CommunityShopItem(ItemType.KAT_FLOWER, 500, 1),
+                        new CommunityShopItem(ItemType.KAT_BOUQUET, 2500, 1)
                 )),
         UPGRADE_COMPONENTS("Upgrade Components", new GUIBitsShop(), ItemStackCreator.getStackHead("§cUpgrade Components", "59358703ab7727df3324336969e81d6f92b7aa79edb966c0be91ab161bad1f01", 1,
                 "§7Upgrade many items in SkyBlock",
                 "§7through special crafting",
                 "§7components."),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.HEAT_CORE, 3000, 1),
-                        new CommunityShopItem(ItemTypeLinker.HYPER_CATALYST_UPGRADER, 300, 1),
-                        new CommunityShopItem(ItemTypeLinker.ULTIMATE_CARROT_CANDY_UPGRADE, 8000, 1),
-                        new CommunityShopItem(ItemTypeLinker.COLOSSAL_EXPERIENCE_BOTTLE_UPGRADE, 1200, 1),
-                        new CommunityShopItem(ItemTypeLinker.JUMBO_BACKPACK_UPGRADE, 4000, 1),
-                        new CommunityShopItem(ItemTypeLinker.MINION_STORAGE_EXPANDER, 1500, 1)
+                        new CommunityShopItem(ItemType.HEAT_CORE, 3000, 1),
+                        new CommunityShopItem(ItemType.HYPER_CATALYST_UPGRADER, 300, 1),
+                        new CommunityShopItem(ItemType.ULTIMATE_CARROT_CANDY_UPGRADE, 8000, 1),
+                        new CommunityShopItem(ItemType.COLOSSAL_EXPERIENCE_BOTTLE_UPGRADE, 1200, 1),
+                        new CommunityShopItem(ItemType.JUMBO_BACKPACK_UPGRADE, 4000, 1),
+                        new CommunityShopItem(ItemType.MINION_STORAGE_EXPANDER, 1500, 1)
                 )),
         SACKS("Sacks", new GUIBitsShop(), ItemStackCreator.getStackHead("§5Sacks", "7442c66f4bf9aa4256fa7b49c6367d4658408ec408477879ac8076794402d95b", 1,
                 "§7Obtain sack capacity upgrades as well",
                 "§7as exclusive bits shop sacks."),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.POCKET_SACK_IN_A_SACK, 8000, 1),
-                        new CommunityShopItem(ItemTypeLinker.DUNGEON_SACK, 14000, 1),
-                        new CommunityShopItem(ItemTypeLinker.RUNE_SACK, 14000, 1),
-                        new CommunityShopItem(ItemTypeLinker.FLOWER_SACK, 14000, 1),
-                        new CommunityShopItem(ItemTypeLinker.DWARVEN_SACK, 14000, 1),
-                        new CommunityShopItem(ItemTypeLinker.CRYSTAL_HOLLOWS_SACK, 14000, 1)
+                        new CommunityShopItem(ItemType.POCKET_SACK_IN_A_SACK, 8000, 1),
+                        new CommunityShopItem(ItemType.DUNGEON_SACK, 14000, 1),
+                        new CommunityShopItem(ItemType.RUNE_SACK, 14000, 1),
+                        new CommunityShopItem(ItemType.FLOWER_SACK, 14000, 1),
+                        new CommunityShopItem(ItemType.DWARVEN_SACK, 14000, 1),
+                        new CommunityShopItem(ItemType.CRYSTAL_HOLLOWS_SACK, 14000, 1)
                 )),
         DYES("Dyes", new GUIBitsShop(), ItemStackCreator.getStack("§aD§ey§ce§ds", Material.ORANGE_DYE, 1,
                 "§7Dyes are exceedingly exclusive items",
                 "§7which let you colorize armor pieces."),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.PURE_WHITE_DYE, 250000, 1),
-                        new CommunityShopItem(ItemTypeLinker.PURE_BLACK_DYE, 250000, 1)
+                        new CommunityShopItem(ItemType.PURE_WHITE_DYE, 250000, 1),
+                        new CommunityShopItem(ItemType.PURE_BLACK_DYE, 250000, 1)
                 )),
         INFERNO_FUEL_BLOCKS("Inferno Fuel", new GUIBitsShop(), ItemStackCreator.getStackHead("§9Inferno Fuel Blocks", "28a1884ee3f8a6e66692a91ed763cb78d9f2017706d8b42a9263b417b2d715d2", 1,
                 "§7Use fuel blocks when creating",
                 "§6Inferno §7minion fuel and level up",
                 "§7your §cChili Pepper §7collection!"),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.INFERNO_FUE_BLOCK, 75, 1),
-                        new CommunityShopItem(ItemTypeLinker.INFERNO_FUE_BLOCK, 3600, 64)
+                        new CommunityShopItem(ItemType.INFERNO_FUE_BLOCK, 75, 1),
+                        new CommunityShopItem(ItemType.INFERNO_FUE_BLOCK, 3600, 64)
                 )),
         STACKING_ENCHANTS("Stacking Enchants", new GUIBitsShop(), ItemStackCreator.getStack("§9Stacking Enchants", Material.ENCHANTED_BOOK, 1,
                 "§7Unlock unique §9enchants §7to apply",
@@ -122,11 +122,11 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 "§7stronger as you use the gear it's",
                 "§7on."),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.EXPERTISE, 4000, 1),
-                        new CommunityShopItem(ItemTypeLinker.COMPACT, 4000, 1),
-                        new CommunityShopItem(ItemTypeLinker.CULTIVATING, 4000, 1),
-                        new CommunityShopItem(ItemTypeLinker.CHAMPION, 4000, 1),
-                        new CommunityShopItem(ItemTypeLinker.HECATOMB, 6000, 1)
+                        new CommunityShopItem(ItemType.EXPERTISE, 4000, 1),
+                        new CommunityShopItem(ItemType.COMPACT, 4000, 1),
+                        new CommunityShopItem(ItemType.CULTIVATING, 4000, 1),
+                        new CommunityShopItem(ItemType.CHAMPION, 4000, 1),
+                        new CommunityShopItem(ItemType.HECATOMB, 6000, 1)
                 )),
         ENRICHMENTS("Enrichments", new GUIBitsShop(), ItemStackCreator.getStackHead("§dEnrichments", "32fa8f38c7b22096619c3a6d6498b405530e48d5d4f91e2aacea578844d5c67", 1,
                 "§7Add a §dboost §7of a stat of your choice",
@@ -135,18 +135,18 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 "§7Only one enrichment may be",
                 "§7applied per item."),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.SPEED_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.INTELLIGENCE_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.CRITICAL_DAMAGE_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.CRITICAL_CHANCE_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.STRENGTH_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.DEFENSE_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.HEALTH_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.MAGIC_FIND_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.FEROCITY_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.SEA_CREATURE_CHANCE_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.ATTACK_SPEED_ENRICHMENT, 5000, 1),
-                        new CommunityShopItem(ItemTypeLinker.ACCESSORY_ENRICHMENT_SWAPPER, 200, 1)
+                        new CommunityShopItem(ItemType.SPEED_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.INTELLIGENCE_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.CRITICAL_DAMAGE_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.CRITICAL_CHANCE_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.STRENGTH_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.DEFENSE_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.HEALTH_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.MAGIC_FIND_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.FEROCITY_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.SEA_CREATURE_CHANCE_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.ATTACK_SPEED_ENRICHMENT, 5000, 1),
+                        new CommunityShopItem(ItemType.ACCESSORY_ENRICHMENT_SWAPPER, 200, 1)
                 )),
         ;
 

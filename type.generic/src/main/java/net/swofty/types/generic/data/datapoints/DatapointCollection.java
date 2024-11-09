@@ -7,7 +7,6 @@ import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
@@ -21,7 +20,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             public String serialize(DatapointCollection.PlayerCollection value) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("{");
-                for (Map.Entry<ItemTypeLinker, Integer> entry : value.getItems().entrySet()) {
+                for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
                     sb.append("\"").append(entry.getKey().toString()).append("\":").append(entry.getValue()).append(",");
                 }
                 if (sb.charAt(sb.length() - 1) == ',') {
@@ -34,9 +33,9 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             @Override
             public DatapointCollection.PlayerCollection deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
-                Map<ItemTypeLinker, Integer> items = new HashMap<>();
+                Map<ItemType, Integer> items = new HashMap<>();
                 for (String key : jsonObject.keySet()) {
-                    items.put(ItemTypeLinker.valueOf(key), jsonObject.getInt(key));
+                    items.put(ItemType.valueOf(key), jsonObject.getInt(key));
                 }
                 return new PlayerCollection(items);
             }
@@ -45,7 +44,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             public PlayerCollection clone(PlayerCollection value) {
                 PlayerCollection toReturn = new PlayerCollection(new HashMap<>());
 
-                for (Map.Entry<ItemTypeLinker, Integer> entry : value.getItems().entrySet()) {
+                for (Map.Entry<ItemType, Integer> entry : value.getItems().entrySet()) {
                     toReturn.getItems().put(entry.getKey(), entry.getValue());
                 }
 
@@ -61,7 +60,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
     @Getter
     @AllArgsConstructor
     public static class PlayerCollection {
-        private Map<ItemTypeLinker, Integer> items;
+        private Map<ItemType, Integer> items;
 
         public CollectionCategory.ItemCollectionReward getReward(CollectionCategory.ItemCollection collection) {
             int collected = get(collection.type());
@@ -75,28 +74,20 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             return null;
         }
 
-        public void increase(ItemTypeLinker type) {
+        public void increase(ItemType type) {
             items.put(type, get(type) + 1);
         }
 
-        public void set(ItemTypeLinker type, int amount) {
+        public void set(ItemType type, int amount) {
             items.put(type, amount);
         }
 
         public Integer get(ItemType type) {
-            return items.getOrDefault(ItemTypeLinker.fromType(type), 0);
-        }
-
-        public Integer get(ItemTypeLinker type) {
             return items.getOrDefault(type, 0);
         }
 
         public boolean unlocked(ItemType type) {
             return get(type) > 0;
-        }
-
-        public boolean unlocked(ItemTypeLinker linker) {
-            return get(linker) > 0;
         }
 
         public List<String> getDisplay(List<String> lore) {
@@ -196,7 +187,7 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
         public List<String> getDisplay(List<String> lore, CollectionCategory category) {
             int allCollections = category.getCollections().length;
             int unlockedCollections = (int) items.keySet().stream().filter(
-                    type -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type.getType())
+                    type -> Arrays.stream(category.getCollections()).anyMatch(collection -> collection.type() == type)
             ).filter(this::unlocked).count();
 
             String unlockedPercentage = String.format("%.2f", (unlockedCollections / (double) allCollections) * 100);
@@ -218,11 +209,11 @@ public class DatapointCollection extends Datapoint<DatapointCollection.PlayerCol
             return lore;
         }
 
-        public static Map<ItemTypeLinker, Map.Entry<Integer, Integer>> getDifferentValues(
+        public static Map<ItemType, Map.Entry<Integer, Integer>> getDifferentValues(
                 DatapointCollection.PlayerCollection oldCollection, DatapointCollection.PlayerCollection newCollection) {
-            Map<ItemTypeLinker, Map.Entry<Integer, Integer>> toReturn = new HashMap<>();
+            Map<ItemType, Map.Entry<Integer, Integer>> toReturn = new HashMap<>();
 
-            for (ItemTypeLinker type : ItemTypeLinker.values()) {
+            for (ItemType type : ItemType.values()) {
                 int oldValue = oldCollection.get(type);
                 int newValue = newCollection.get(type);
 

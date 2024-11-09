@@ -3,7 +3,6 @@ package net.swofty.types.generic.event.custom;
 import lombok.Getter;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 @Getter
