@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -54,7 +55,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                                 ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                                 itemStack.amount(amount);
                                 SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
-                                if (!player.getPurchaseConfirmationBits()) {
+                                if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                                     player.addAndUpdateItem(finalItem);
                                     int remainingBits = player.getBits() - price;
                                     player.setBits(remainingBits);

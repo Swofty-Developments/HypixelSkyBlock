@@ -12,6 +12,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.subguis.*;
+import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -230,7 +231,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                             ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
                             itemStack.amount(bitItems.amount);
                             SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
-                            if (!player.getPurchaseConfirmationBits()) {
+                            if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                                 player.addAndUpdateItem(finalItem);
                                 int remainingBits = player.getBits() - bitItems.price;
                                 player.setBits(remainingBits);
@@ -315,14 +316,14 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(48) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.setPurchaseConfirmationBits(!player.getPurchaseConfirmationBits());
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS, false);
                 new GUIBitsShop().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 String status;
-                if (player.getPurchaseConfirmationBits()) {
+                if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                     status = "§aEnabled!";
                 } else {
                     status = "§cOFF";
