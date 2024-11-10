@@ -18,8 +18,8 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Backpack;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.components.BackpackComponent;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -126,7 +126,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
 
                         if (item.isNA()) return;
-                        if (!(item.getGenericInstance() instanceof Backpack)) return;
+                        if (!(item.hasComponent(BackpackComponent.class))) return;
 
                         e.setClickedItem(ItemStack.AIR);
                         e.setCancelled(false);
@@ -137,7 +137,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                         SkyBlockItem item = new SkyBlockItem(e2.getCursorItem());
 
                         if (item.isNA()) return;
-                        if (!(item.getGenericInstance() instanceof Backpack)) return;
+                        if (!(item.hasComponent(BackpackComponent.class))) return;
 
                         backpackItems.put(slot, item.toUnderstandable());
                         player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
@@ -195,10 +195,10 @@ public class GUIStorage extends SkyBlockInventoryGUI {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
-                            ((SkullHead) item.getGenericInstance()).getSkullTexture(player, item), slot,
+                            item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
                             item.getAttributeHandler().getRarity().getColor() +
-                                    item.getAttributeHandler().getPotentialClassLinker().getDisplayName(item),
-                            "§7This backpack has §a" + (((Backpack) item.getGenericInstance()).getRows() * 9) + " §7slots.",
+                                    item.getAttributeHandler().getPotentialType().getDisplayName(),
+                            "§7This backpack has §a" + (item.getComponent(BackpackComponent.class).getRows() * 9) + " §7slots.",
                             " ",
                             "§eLeft-click to open!",
                             "§eRight-click to remove!");
@@ -230,11 +230,7 @@ public class GUIStorage extends SkyBlockInventoryGUI {
         SkyBlockItem item = new SkyBlockItem(stack);
 
         if (item.isNA()) return;
-
-        if (item.getGenericInstance() == null)
-            e.setCancelled(true);
-
-        if (!(item.getGenericInstance() instanceof Backpack))
+        if (!(item.hasComponent(BackpackComponent.class)))
             e.setCancelled(true);
     }
 }

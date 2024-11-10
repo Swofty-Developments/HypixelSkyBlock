@@ -11,8 +11,6 @@ items:
         standard_item_type: BOOTS
       - id: SELLABLE
         value: 480.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Rosetta's Boots
   - id: ROSETTA_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -25,8 +23,6 @@ items:
         standard_item_type: CHESTPLATE
       - id: SELLABLE
         value: 660.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Rosetta's Chestplate
   - id: ROSETTA_HELMET
     rarity: COMMON
     default_statistics:
@@ -39,8 +35,6 @@ items:
         display_name: Rosetta's Helmet
       - id: SELLABLE
         value: 525.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Rosetta's Helmet
   - id: ROSETTA_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -53,5 +47,3 @@ items:
         standard_item_type: LEGGINGS
       - id: SELLABLE
         value: 600.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Rosetta's Leggings

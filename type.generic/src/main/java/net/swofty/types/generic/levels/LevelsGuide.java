@@ -2,6 +2,7 @@ package net.swofty.types.generic.levels;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterSkills;
@@ -33,7 +34,7 @@ public enum LevelsGuide {
                     "§7Obtain unique §aAccessories §7in your",
                     "§aAccessory Bag§7."
                     ))
-                    .cause(SkyBlockLevelCause.getAccessoryCause(ItemTypeLinker.ZOMBIE_TALISMAN), null)
+                    .cause(SkyBlockLevelCause.getAccessoryCause(ItemType.ZOMBIE_TALISMAN), null)
                     .build()
     )),
     ;

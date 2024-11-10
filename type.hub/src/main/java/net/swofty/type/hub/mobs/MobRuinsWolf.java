@@ -6,6 +6,7 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
@@ -77,7 +78,7 @@ public class MobRuinsWolf extends SkyBlockMob implements RegionPopulator {
             @Override
             public @NonNull List<LootRecord> getLootTable() {
                 return List.of(
-                        new LootRecord(ItemTypeLinker.BONE, makeAmountBetween(1, 3), 20)
+                        new LootRecord(ItemType.BONE, makeAmountBetween(1, 3), 20)
                 );
             }
 

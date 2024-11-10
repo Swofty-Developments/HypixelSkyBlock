@@ -1,16 +1,20 @@
 package net.swofty.types.generic.item.components;
 
 import lombok.Getter;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
+import net.swofty.types.generic.item.handlers.lore.LoreConfig;
 import net.swofty.types.generic.minion.MinionIngredient;
 import net.swofty.types.generic.minion.MinionRecipe;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
+import net.swofty.types.generic.minion.SkyBlockMinion;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +24,7 @@ public class MinionComponent extends SkyBlockItemComponent {
     private MinionRegistry minionRegistry;
     private ItemType baseItem;
 
-    public MinionComponent(String minionType, String baseItem,
+    public MinionComponent(String minionType,
                            boolean isByDefaultCraftable, List<MinionIngredient> ingredients) {
         this.minionRegistry = MinionRegistry.valueOf(minionType);
         this.baseItem = minionRegistry.getItemType();
@@ -32,42 +36,83 @@ public class MinionComponent extends SkyBlockItemComponent {
         })));
         addInheritedComponent(new PlaceEventComponent("minion"));
         addInheritedComponent(new TrackedUniqueComponent());
+        addInheritedComponent(new LoreUpdateComponent(
+                new LoreConfig((item, player) -> {
+                    boolean mithrilInfusion = item.getAttributeHandler().isMithrilInfused();
 
-        if (isByDefaultCraftable) {
-            List<SkyBlockRecipe<?>> toReturn = new ArrayList<>();
+                    int percentageSpeed = 0;
+                    if(mithrilInfusion)
+                        percentageSpeed += 10;
 
-            getMinionRegistry().asSkyBlockMinion().getTiers().forEach(tier -> {
-                if (!tier.craftable()) return; // Skip non-craftable tiers
+                    return getLore(item, percentageSpeed);
+                }, (item, player) -> {
+                    return "§9" + getMinionRegistry().getDisplay() + " " +
+                            StringUtility.getAsRomanNumeral(item.getAttributeHandler().getMinionData().tier());
+                }), true
+        ));
 
-                List<String> pattern = new ArrayList<>(Arrays.asList(
-                        "AAA",
-                        "ABA",
-                        "AAA"
-                ));
+        List<SkyBlockRecipe<?>> toReturn = new ArrayList<>();
 
-                SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemType());
-                item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(tier.tier(), 0));
+        getMinionRegistry().asSkyBlockMinion().getTiers().forEach(tier -> {
+            if (!tier.craftable()) return; // Skip non-craftable tiers
 
-                ShapedRecipe recipe = new ShapedRecipe(
-                        SkyBlockRecipe.RecipeType.MINION,
-                        item,
-                        MinionRecipe.fromNumber(tier.tier() - 1).getRecipeFunction().apply(new MinionRecipe.MinionRecipeData(
-                                ingredients,
-                                this.baseItem,
-                                getMinionRegistry().getItemType()
-                        )),
-                        pattern
-                );
-                recipe.addExtraRequirement('B', (minionItem) -> {
-                    if (minionItem.hasComponent(MinionComponent.class))
-                        return minionItem.getAttributeHandler().getMinionData().tier() == Math.max(1, tier.tier() - 1);
-                    return true;
-                });
+            List<String> pattern = new ArrayList<>(Arrays.asList(
+                    "AAA",
+                    "ABA",
+                    "AAA"
+            ));
 
-                toReturn.add(recipe);
+            SkyBlockItem item = new SkyBlockItem(getMinionRegistry().getItemType());
+            item.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(tier.tier(), 0));
+
+            ShapedRecipe recipe = new ShapedRecipe(
+                    SkyBlockRecipe.RecipeType.MINION,
+                    item,
+                    MinionRecipe.fromNumber(tier.tier() - 1).getRecipeFunction().apply(new MinionRecipe.MinionRecipeData(
+                            ingredients,
+                            this.baseItem,
+                            getMinionRegistry().getItemType()
+                    )),
+                    pattern
+            );
+            recipe.addExtraRequirement('B', (minionItem) -> {
+                if (minionItem.hasComponent(MinionComponent.class))
+                    return minionItem.getAttributeHandler().getMinionData().tier() == Math.max(1, tier.tier() - 1);
+                return true;
             });
 
-            addInheritedComponent(new CraftableComponent(toReturn.toArray(new SkyBlockRecipe[0])));
-        }
+            toReturn.add(recipe);
+        });
+
+        addInheritedComponent(new CraftableComponent(toReturn.toArray(new SkyBlockRecipe[0]), isByDefaultCraftable));
+    }
+
+    public static List<String> getLore(SkyBlockItem item, int percentageSpeed){
+        MinionRegistry minionRegistry = item.getComponent(MinionComponent.class).getMinionRegistry();
+
+        List<String> lore = new ArrayList<>(Arrays.asList(
+                "§7Place this minion and it will start",
+                "§7generating and mining " + StringUtility.toNormalCase(minionRegistry.name()) + "!",
+                "§7Requires an open area to place",
+                "§7" + StringUtility.toNormalCase(minionRegistry.name()) + ". Minions also work",
+                "§7you are offline!",
+                ""
+        ));
+
+        SkyBlockMinion minion = item.getAttributeHandler().getMinionType().asSkyBlockMinion();
+        ItemAttributeMinionData.MinionData data = item.getAttributeHandler().getMinionData();
+        SkyBlockMinion.MinionTier tier = minion.getTiers().get(data.tier() - 1);
+
+        double timeBetweenActions = tier.timeBetweenActions() / (1. + percentageSpeed/100.);
+
+        final DecimalFormat formattter = new DecimalFormat("#.##");
+
+        lore.add("§7Time Between Actions: §a" + formattter.format(timeBetweenActions) + "s");
+        lore.add("§7Max Storage: §e" + tier.storage());
+        lore.add("§7Resources Generated: §b" + data.generatedResources());
+
+        lore.add(" ");
+        lore.add("§9§lRARE");
+        return lore;
     }
 }

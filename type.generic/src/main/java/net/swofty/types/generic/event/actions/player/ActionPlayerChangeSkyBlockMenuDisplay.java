@@ -5,6 +5,7 @@ import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.datapoints.DatapointQuiver;
 import net.swofty.types.generic.event.EventNodes;
@@ -12,8 +13,8 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.ArrowImpl;
-import net.swofty.types.generic.item.impl.QuiverDisplayOnHold;
+import net.swofty.types.generic.item.components.ArrowComponent;
+import net.swofty.types.generic.item.components.QuiverDisplayComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,21 +32,21 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
 
     public static void runCheck(SkyBlockPlayer player) {
         SkyBlockItem switchedTo = new SkyBlockItem(player.getItemInMainHand());
-        if (switchedTo.isNA() || switchedTo.getGenericInstance() == null) {
+        if (switchedTo.isNA() || switchedTo.getConfig() == null) {
             setMainMenu(player);
             return;
         }
 
         // Check if item shows quiver
-        if (switchedTo.getGenericInstance() instanceof QuiverDisplayOnHold quiverDisplay) {
+        if (switchedTo.hasComponent(QuiverDisplayComponent.class)) {
             DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
+            QuiverDisplayComponent quiverDisplay = switchedTo.getComponent(QuiverDisplayComponent.class);
 
             // If the bow should not be drawn back then also replace all arrows in inventory with a feather
-            if (!quiverDisplay.shouldBeArrow()) {
+            if (!quiverDisplay.isShouldBeArrow()) {
                 for (int index = 0; index < player.getInventory().getSize(); index++) {
                     SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(index));
-                    if (item.getGenericInstance() != null &&
-                            item.getGenericInstance() instanceof ArrowImpl) {
+                    if (item.hasComponent(ArrowComponent.class)) {
                         player.getInventory().setItemStack(index, ItemStack.builder(Material.FEATHER)
                                 .set(ItemComponent.CUSTOM_DATA, item.getItemStack().get(ItemComponent.CUSTOM_DATA))
                                 .set(ItemComponent.CUSTOM_NAME, Component.text("§cSwitch your held item for this item!"))
@@ -73,14 +74,14 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
             } else {
                 SkyBlockItem item = quiver.getFirstItemInQuiver();
                 builder = ItemStackCreator.getStack("§8Quiver " + StringUtility.stripColor(item.getDisplayName()),
-                        quiverDisplay.shouldBeArrow() ? Material.ARROW : Material.FEATHER,
-                        Math.min(64, quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialClassLinker())),
+                        quiverDisplay.isShouldBeArrow() ? Material.ARROW : Material.FEATHER,
+                        Math.min(64, quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialType())),
                         "§7This item is in your inventory",
                         "§7because you are currently holding a",
                         "§7Bow",
                         " ",
                         "§7Active Arrow: " + item.getDisplayName()
-                                + " §7(§e" + quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialClassLinker()) + "§7)",
+                                + " §7(§e" + quiver.getAmountOfArrows(item.getAttributeHandler().getPotentialType()) + "§7)",
                         " ",
                         "§7Switch away from your Bow to see",
                         "§7the item that was here before.");
@@ -96,8 +97,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
     public static void setMainMenu(SkyBlockPlayer player) {
         for (int index = 0; index < player.getInventory().getSize(); index++) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(index));
-            if (item.getGenericInstance() != null &&
-                    item.getGenericInstance() instanceof ArrowImpl) {
+            if (item.hasComponent(ArrowComponent.class)) {
                 player.getInventory().setItemStack(index,
                         PlayerItemUpdater.playerUpdate(player, item.getItemStack())
                                 .build());
@@ -105,7 +105,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
         }
 
         player.getInventory().setItemStack(8,
-                new NonPlayerItemUpdater(new SkyBlockItem(ItemTypeLinker.SKYBLOCK_MENU).getItemStack())
+                new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
                         .getUpdatedItem().build());
     }
 }

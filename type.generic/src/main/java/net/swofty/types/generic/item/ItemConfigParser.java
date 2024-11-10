@@ -2,9 +2,12 @@ package net.swofty.types.generic.item;
 
 import net.minestom.server.color.Color;
 import net.minestom.server.event.player.PlayerItemAnimationEvent;
+import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.particle.Particle;
+import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.Rarity;
@@ -13,6 +16,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
+import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.components.RuneComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.minion.MinionIngredient;
@@ -20,6 +24,8 @@ import net.swofty.types.generic.item.components.*;
 import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
 import net.swofty.types.generic.utility.RarityValue;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
+import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,16 +35,24 @@ import java.util.Map;
 public class ItemConfigParser {
     public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {
         String id = (String) config.get("id");
+        System.out.println("Parsing " + id);
         Material material = Material.values().stream().filter(loopedMaterial -> {
             return loopedMaterial.namespace().value().equalsIgnoreCase((String) config.get("material"));
         }).findFirst().orElse(Material.AIR);
 
         List<String> lore = (List<String>) config.get("lore");
-        Map<String, Double> statistics = (Map<String, Double>) config.get("default_statistics");
+        Map<String, Double> statistics = new HashMap<>();
+        if (config.containsKey("default_statistics")) {
+            // Convert all the objects to doubles, noting they may be integers
+            for (Map.Entry<String, Object> entry : ((Map<String, Object>) config.get("default_statistics")).entrySet()) {
+                statistics.put(entry.getKey(), Double.parseDouble(entry.getValue().toString()));
+            }
+        }
 
         ConfigurableSkyBlockItem item = new ConfigurableSkyBlockItem(id, material, lore, statistics);
 
         List<Map<String, Object>> components = (List<Map<String, Object>>) config.get("components");
+        if (components == null) components = new ArrayList<>();
         for (Map<String, Object> componentConfig : components) {
             String componentId = (String) componentConfig.get("id");
             SkyBlockItemComponent component = parseComponent(componentId, componentConfig);
@@ -52,7 +66,7 @@ public class ItemConfigParser {
         return item;
     }
 
-    private static SkyBlockItemComponent parseComponent(String id, Map<String, Object> config) {
+    private static @Nullable SkyBlockItemComponent parseComponent(String id, Map<String, Object> config) {
         return switch (id.toUpperCase()) {
             case "ABILITY" -> {
                 List<String> abilities = (List<String>) config.get("abilities");
@@ -77,12 +91,19 @@ public class ItemConfigParser {
             }
             case "BOW" -> {
                 String handlerId = (String) config.get("handler_id");
-                yield new BowComponent(handlerId);
+                boolean shouldBeArrow = (boolean) config.getOrDefault("should-be-arrow", true);
+                yield new BowComponent(handlerId, shouldBeArrow);
             }
             case "CONSTANT_STATISTICS" -> new ConstantStatisticsComponent();
-            case "CRAFTABLE" -> {
+            case "DEFAULT_CRAFTABLE" -> {
                 List<Map<String, Object>> recipes = (List<Map<String, Object>>) config.get("recipes");
-                yield new CraftableComponent(recipes);
+                boolean defaultCraftable = true;
+                if (config.containsKey("default-craftable")) {
+                    defaultCraftable = (boolean) config.get("default-craftable");
+                }
+                CraftableComponent component = new CraftableComponent(recipes);
+                component.setDefaultCraftable(defaultCraftable);
+                yield component;
             }
             case "CUSTOM_DISPLAY_NAME" -> {
                 yield new CustomDisplayNameComponent((item) -> config.get("display_name").toString());
@@ -146,7 +167,12 @@ public class ItemConfigParser {
             }
             case "INTERACTABLE" -> {
                 String handlerId = (String) config.get("handler_id");
-                yield new InteractableComponent(handlerId);
+                try {
+                    yield new InteractableComponent(handlerId);
+                } catch (Exception e) {
+                    Logger.error("Failed to parse InteractableComponent for " + id);
+                    yield null;
+                }
             }
             case "KAT" -> {
                 int reducedDays = (int) config.get("reduced_days");
@@ -177,11 +203,11 @@ public class ItemConfigParser {
                     ));
                 }
 
-                yield new MinionComponent(minionType, baseItem, isByDefaultCraftable, ingredientsMap);
+                yield new MinionComponent(minionType, isByDefaultCraftable, ingredientsMap);
             }
             case "MINION_FUEL" -> {
                 double percentage = (double) config.get("fuel_percentage");
-                long lastTime = (long) config.get("last_time_ms");
+                long lastTime = (int) config.get("last_time_ms");
                 yield new MinionFuelComponent(percentage, lastTime);
             }
             case "MINION_SHIPPING" -> {
@@ -189,29 +215,22 @@ public class ItemConfigParser {
                 yield new MinionShippingComponent(percentage);
             }
             case "MINION_SKIN" -> {
-                String helmet = config.get("helmet").toString();
-                String chestplate = config.get("chestplate").toString();
-                String leggings = config.get("leggings").toString();
-                String boots = config.get("boots").toString();
+                String skinName = (String) config.get("name");
+                Map<String, Object> helmetConfig = (Map<String, Object>) config.get("helmet");
+                Map<String, Object> chestplateConfig = (Map<String, Object>) config.get("chestplate");
+                Map<String, Object> leggingsConfig = (Map<String, Object>) config.get("leggings");
+                Map<String, Object> bootsConfig = (Map<String, Object>) config.get("boots");
 
-                Material helmetMaterial = Material.values().stream()
-                        .filter(material -> helmet.equals(material.namespace().value()))
-                        .findFirst().orElse(Material.AIR);
-                Material chestplateMaterial = Material.values().stream()
-                        .filter(material -> chestplate.equals(material.namespace().value()))
-                        .findFirst().orElse(Material.AIR);
-                Material leggingsMaterial = Material.values().stream()
-                        .filter(material -> leggings.equals(material.namespace().value()))
-                        .findFirst().orElse(Material.AIR);
-                Material bootsMaterial = Material.values().stream()
-                        .filter(material -> boots.equals(material.namespace().value()))
-                        .findFirst().orElse(Material.AIR);
+                MinionSkinComponent.MinionArmorPiece helmet = helmetConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(helmetConfig) :
+                        new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
+                MinionSkinComponent.MinionArmorPiece chestplate = chestplateConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(chestplateConfig) :
+                        new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
+                MinionSkinComponent.MinionArmorPiece leggings = leggingsConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(leggingsConfig) :
+                        new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
+                MinionSkinComponent.MinionArmorPiece boots = bootsConfig != null ? MinionSkinComponent.MinionArmorPiece.fromConfig(bootsConfig) :
+                        new MinionSkinComponent.MinionArmorPiece(Material.AIR, null, null);
 
-                yield new MinionSkinComponent(
-                        ItemStack.of(helmetMaterial),
-                        ItemStack.of(chestplateMaterial),
-                        ItemStack.of(leggingsMaterial),
-                        ItemStack.of(bootsMaterial));
+                yield new MinionSkinComponent(skinName, helmet, chestplate, leggings, boots);
             }
             case "MINION_UPGRADE" -> {
                 double speedIncrease = (double) config.get("speed_increase");
@@ -224,7 +243,7 @@ public class ItemConfigParser {
             case "NOT_FINISHED_YET" -> new NotFinishedYetComponent();
             case "LORE_UPDATE" -> {
                 boolean isAbsolute = (boolean) config.getOrDefault("is_absolute", false);
-                yield new LoreUpdateComponent(config.get("handler_id").toString(), isAbsolute);
+                yield new LoreUpdateComponent(config.get("handler").toString(), isAbsolute);
             }
             case "PET_ITEM" -> new PetItemComponent();
             case "PICKAXE" -> new PickaxeComponent();
@@ -266,8 +285,13 @@ public class ItemConfigParser {
                 yield new SackComponent(items, capacity);
             }
             case "SELLABLE" -> {
-                double value = (double) config.get("value");
-                yield new SellableComponent(value);
+                Object value = config.get("value");
+                if (value instanceof Double) {
+                    yield new SellableComponent((double) value);
+                } else if (value instanceof Integer) {
+                    yield new SellableComponent((int) value);
+                }
+                yield new SellableComponent(1);
             }
             case "SERVER_ORB" -> {
                 String handlerId = (String) config.get("handler_id");
@@ -281,7 +305,8 @@ public class ItemConfigParser {
             case "SHORT_BOW" -> {
                 String handlerId = (String) config.get("handler_id");
                 float cooldown = (float) config.get("cooldown");
-                yield new ShortBowComponent(cooldown, handlerId);
+                boolean shouldBeArrow = (boolean) config.getOrDefault("should-be-arrow", true);
+                yield new ShortBowComponent(cooldown, handlerId, shouldBeArrow);
             }
             case "SHOVEL" -> new ShovelComponent();
             case "SKILLABLE_MINE" -> {

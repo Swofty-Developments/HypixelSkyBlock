@@ -17,13 +17,13 @@ public class LoreUpdateComponent extends SkyBlockItemComponent {
         this.isAbsolute = isAbsolute;
     }
 
-    public LoreUpdateComponent(List<String> lore) {
+    public LoreUpdateComponent(List<String> lore, boolean isAbsolute) {
         handler = new LoreConfig((item, player) -> lore, null);
-        this.isAbsolute = false;
+        this.isAbsolute = isAbsolute;
     }
 
-    public LoreUpdateComponent(LoreConfig handler) {
+    public LoreUpdateComponent(LoreConfig handler, boolean isAbsolute) {
         this.handler = handler;
-        this.isAbsolute = true;
+        this.isAbsolute = isAbsolute;
     }
 }

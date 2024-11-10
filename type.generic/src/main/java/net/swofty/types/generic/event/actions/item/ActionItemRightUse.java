@@ -7,7 +7,8 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Interactable;
+import net.swofty.types.generic.item.components.InteractableComponent;
+import net.swofty.types.generic.item.components.RightClickRecipeComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionItemRightUse implements SkyBlockEventClass {
@@ -19,8 +20,9 @@ public class ActionItemRightUse implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof Interactable interactable) {
-            interactable.onRightInteract(player, item);
+        if (item.hasComponent(InteractableComponent.class)) {
+            InteractableComponent interactableComponent = item.getComponent(InteractableComponent.class);
+            interactableComponent.onRightClick(player, item);
         }
     }
 }

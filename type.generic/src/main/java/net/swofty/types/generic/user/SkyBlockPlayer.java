@@ -655,11 +655,12 @@ public class SkyBlockPlayer extends Player {
     }
 
     public Boolean getPurchaseConfirmationBits() {
-        return getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).getValue();
+        // return getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).getValue();
+        return false;
     }
 
     public void setPurchaseConfirmationBits(boolean enabled) {
-        getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).setValue(enabled);
+        // getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).setValue(enabled);
     }
 
     public Long getBoosterCookieExpirationDate() {

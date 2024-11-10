@@ -10,10 +10,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.PetComponent;
-import net.swofty.types.generic.item.components.PetItemComponent;
 import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
-import net.swofty.types.generic.item.impl.Pet;
-import net.swofty.types.generic.item.items.pet.KatUpgrade;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIConfirmKat extends SkyBlockInventoryGUI {

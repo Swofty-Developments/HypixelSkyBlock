@@ -9,6 +9,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
@@ -75,9 +76,9 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
 
         paged.removeIf(recipe -> recipe.getRecipeType() != type);
 
-        List<ItemTypeLinker> shownItems = new ArrayList<>();
+        List<ItemType> shownItems = new ArrayList<>();
         paged.removeIf(recipe -> {
-            ItemTypeLinker type = recipe.getResult().getAttributeHandler().getPotentialClassLinker();
+            ItemType type = recipe.getResult().getAttributeHandler().getPotentialType();
 
             if (shownItems.contains(type)) {
                 return true;
@@ -178,7 +179,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipe(
-                            item.getResult().getAttributeHandler().getPotentialClassLinker(),
+                            item.getResult().getAttributeHandler().getPotentialType(),
                             GUIRecipeCategory.this).open(player);
                 }
 

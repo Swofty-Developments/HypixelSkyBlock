@@ -3,6 +3,7 @@ package net.swofty.types.generic.command.commands;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.commons.Configuration;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -33,9 +34,9 @@ public class SetItemLoreCommand extends SkyBlockCommand {
             String[] newLore = context.get(lore);
 
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
+            ItemType type = itemInHand.getAttributeHandler().getPotentialType();
 
-            if (type != ItemTypeLinker.SANDBOX_ITEM) {
+            if (type != ItemType.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the lore of sandbox items.");
                 return;
             }

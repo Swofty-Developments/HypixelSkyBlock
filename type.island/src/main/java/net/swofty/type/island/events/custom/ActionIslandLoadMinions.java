@@ -1,5 +1,6 @@
 package net.swofty.type.island.events.custom;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -44,7 +45,7 @@ public class ActionIslandLoadMinions implements SkyBlockEventClass {
             MinionExtensionData extensionData = data.getExtensionData();
 
             long timeBetweenActions = (long) tier.timeBetweenActions();
-            ItemTypeLinker minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypeLinkerPassedIn();
+            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
 
             //Handle percentage speed increase from both fuels and minion upgrades
             double percentageSpeedIncrease = data.getSpeedPercentage();

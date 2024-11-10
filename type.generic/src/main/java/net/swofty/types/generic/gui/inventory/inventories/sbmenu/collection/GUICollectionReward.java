@@ -6,6 +6,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -15,7 +16,7 @@ import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecip
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
@@ -35,13 +36,13 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             9, new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26 }
     ));
 
-    private final ItemTypeLinker item;
+    private final ItemType item;
     private final CollectionCategory.ItemCollection category;
     private final CollectionCategory.ItemCollectionReward reward;
     private final int placement;
 
-    public GUICollectionReward(ItemTypeLinker type, CollectionCategory.ItemCollectionReward reward) {
-        super(type.getDisplayName(null) + " "
+    public GUICollectionReward(ItemType type, CollectionCategory.ItemCollectionReward reward) {
+        super(type.getDisplayName() + " "
                 + StringUtility.getAsRomanNumeral(
                         CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
                 + " Rewards", InventoryType.CHEST_6_ROW);
@@ -62,14 +63,14 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<String> lore = new ArrayList<>(Arrays.asList(
-                        "§7View your " + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
+                        "§7View your " + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
                         " "
                 ));
 
                 player.getCollection().getDisplay(lore, category, reward);
 
-                return ItemStackCreator.getStack("§a" + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(placement),
-                        item.type.material, 1, lore);
+                return ItemStackCreator.getStack("§a" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement),
+                        item.material, 1, lore);
             }
         });
 
@@ -85,10 +86,10 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
                     if (unlock instanceof CollectionCategory.UnlockRecipe) {
                         try {
                             SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
-                            if (skyBlockItem.getGenericInstance() instanceof Minion) {
+                            if (skyBlockItem.hasComponent(MinionComponent.class)) {
                                 new GUIMinionRecipes(skyBlockItem.getAttributeHandler().getMinionType(), new GUICollectionReward(item, reward)).open(player);
                             } else {
-                                new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialClassLinker(), null).open(player);
+                                new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialType(), null).open(player);
                             }
                         } catch (NullPointerException exception) {
                             player.sendMessage("There is no recipe available for this item!");

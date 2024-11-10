@@ -18,7 +18,7 @@ import net.swofty.types.generic.user.categories.Rank;
 public class SetItemTypeCommand extends SkyBlockCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
-        ArgumentEnum<ItemTypeLinker> material = new ArgumentEnum<>("material", ItemTypeLinker.class);
+        ArgumentEnum<ItemType> material = new ArgumentEnum<>("material", ItemType.class);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
@@ -29,20 +29,20 @@ public class SetItemTypeCommand extends SkyBlockCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
+            ItemType type = itemInHand.getAttributeHandler().getPotentialType();
 
-            if (type != ItemTypeLinker.SANDBOX_ITEM) {
+            if (type != ItemType.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the type of sandbox items.");
                 return;
             }
 
-            ItemType newType = context.get(material).type;
+            ItemType newType = context.get(material);
 
             player.updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 item.getAttributeHandler().getSandboxData().setMaterial(newType);
             });
 
-            player.sendMessage("§aUpdated the type of the item in your hand to §e" + context.get(material).getDisplayName(itemInHand) + "§a.");
+            player.sendMessage("§aUpdated the type of the item in your hand to §e" + context.get(material).getDisplayName() + "§a.");
         }, material);
     }
 }

@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -15,7 +16,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -44,8 +45,8 @@ public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     protected PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
-        paged.addAll(Arrays.stream(ItemTypeLinker.values()).map(SkyBlockItem::new).toList());
-        paged.removeIf(item -> !(item.getGenericInstance() instanceof Minion));
+        paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
+        paged.removeIf(item -> !(item.hasComponent(MinionComponent.class)));
         return paged;
     }
 

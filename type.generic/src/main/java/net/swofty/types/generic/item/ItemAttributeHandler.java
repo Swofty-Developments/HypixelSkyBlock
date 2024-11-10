@@ -224,11 +224,7 @@ public class ItemAttributeHandler {
     }
 
     public void setMinionData(ItemAttributeMinionData.MinionData data) {
-        if (item.hasComponent(MinionComponent.class)) {
-            item.getAttribute("minion_tier").setValue(data);
-        } else {
-            throw new RuntimeException("Item is not a minion");
-        }
+        item.getAttribute("minion_tier").setValue(data);
     }
 
     public void setReforge(ReforgeType.Reforge reforge) throws IllegalArgumentException {

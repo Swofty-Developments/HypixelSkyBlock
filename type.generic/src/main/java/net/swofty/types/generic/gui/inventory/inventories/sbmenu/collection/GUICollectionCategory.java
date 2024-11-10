@@ -129,7 +129,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUICollectionItem(ItemTypeLinker.fromType(item.type())).open(player);
+                new GUICollectionItem(item.type()).open(player);
             }
 
             @Override

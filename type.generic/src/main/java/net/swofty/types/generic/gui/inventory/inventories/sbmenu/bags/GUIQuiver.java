@@ -115,20 +115,15 @@ public class GUIQuiver extends SkyBlockInventoryGUI {
     public boolean isItemAllowed(SkyBlockItem item) {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
-        if (item.getGenericInstance() == null) return false;
 
-        if (item.getMaterial() == Material.ARROW) {
-            return true;
-        } else {
-            return false;
-        }
+        return item.getMaterial() == Material.ARROW;
     }
 
     public void save(SkyBlockPlayer player, int slotToSaveUpTo) {
         DatapointQuiver.PlayerQuiver quiver = player.getQuiver();
         for (int i = 0; i < slotToSaveUpTo; i++) {
             SkyBlockItem item = new SkyBlockItem(getInventory().getItemStack(i));
-            if (item.isNA() || item.getGenericInstance() == null) {
+            if (item.isNA()) {
                 quiver.getQuiverMap().remove(i);
             } else {
                 quiver.getQuiverMap().put(i, item);

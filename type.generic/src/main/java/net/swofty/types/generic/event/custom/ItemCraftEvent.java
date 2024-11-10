@@ -5,7 +5,7 @@ import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -22,7 +22,7 @@ public class ItemCraftEvent implements PlayerInstanceEvent {
         this.craftedItem = craftedItem;
         this.recipe = recipe;
 
-        if (craftedItem.getGenericInstance() instanceof Minion) {
+        if (craftedItem.hasComponent(MinionComponent.class)) {
             DatapointMinionData.ProfileMinionData playerData = player.getDataHandler().get(DataHandler.Data.MINION_DATA, DatapointMinionData.class).getValue();
             String name = craftedItem.getAttributeHandler().getMinionType().name();
             Integer tier = craftedItem.getAttributeHandler().getMinionData().tier();

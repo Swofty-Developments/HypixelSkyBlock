@@ -14,8 +14,6 @@ items:
         value: 2.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Sandals
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Sandals
   - id: LEAFLET_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -31,8 +29,6 @@ items:
         value: 4.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Tunic
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Tunic
   - id: LEAFLET_HELMET
     rarity: COMMON
     default_statistics:
@@ -42,8 +38,6 @@ items:
         standard_item_type: HELMET
       - id: SELLABLE
         value: 2.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Hat
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Hat
   - id: LEAFLET_LEGGINGS
@@ -59,7 +53,5 @@ items:
         b: '77'
       - id: SELLABLE
         value: 3.0
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Leaflet Pants
       - id: CUSTOM_DISPLAY_NAME
         display_name: Leaflet Pants

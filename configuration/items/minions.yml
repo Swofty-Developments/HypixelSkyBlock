@@ -1,5 +1,5 @@
 items:
-  - id: Blaze_MINION
+  - id: BLAZE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -19,7 +19,7 @@ items:
           - ENCHANTED_BLAZE_POWDER:32
           - ENCHANTED_BLAZE_POWDER:64
           - ENCHANTED_BLAZE_ROD:1
-  - id: CaveSpider_MINION
+  - id: CAVE_SPIDER_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -39,7 +39,7 @@ items:
           - ENCHANTED_SPIDER_EYE:32
           - ENCHANTED_SPIDER_EYE:64
           - ENCHANTED_FERMENTED_SPIDER_EYE:2
-  - id: Creeper_MINION
+  - id: CREEPER_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -59,7 +59,7 @@ items:
           - ENCHANTED_GUNPOWDER:32
           - ENCHANTED_GUNPOWDER:64
           - ENCHANTED_FIREWORK_ROCKET:2
-  - id: Enderman_MINION
+  - id: ENDERMAN_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -79,7 +79,7 @@ items:
           - ENCHANTED_EYE_OF_ENDER:6
           - ENCHANTED_EYE_OF_ENDER:12
           - ENCHANTED_EYE_OF_ENDER:24
-  - id: Ghast_MINION
+  - id: GHAST_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -99,7 +99,7 @@ items:
           - SILVER_FANG:16
           - SILVER_FANG:32
           - SILVER_FANG:64
-  - id: MagmaCube_MINION
+  - id: MAGMA_CUBE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -119,7 +119,7 @@ items:
           - ENCHANTED_MAGMA_CREAM:16
           - ENCHANTED_MAGMA_CREAM:32
           - ENCHANTED_MAGMA_CREAM:64
-  - id: Skeleton_MINION
+  - id: SKELETON_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -139,7 +139,7 @@ items:
           - ENCHANTED_BONE:16
           - ENCHANTED_BONE:32
           - ENCHANTED_BONE:64
-  - id: Slime_MINION
+  - id: SLIME_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -159,7 +159,7 @@ items:
           - ENCHANTED_SLIME_BALL:32
           - ENCHANTED_SLIME_BALL:64
           - ENCHANTED_SLIME_BLOCK:1
-  - id: Spider_MINION
+  - id: SPIDER_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -179,7 +179,7 @@ items:
           - ENCHANTED_STRING:16
           - ENCHANTED_STRING:32
           - ENCHANTED_STRING:64
-  - id: Zombie_MINION
+  - id: ZOMBIE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -199,7 +199,7 @@ items:
           - ENCHANTED_ROTTEN_FLESH:16
           - ENCHANTED_ROTTEN_FLESH:32
           - ENCHANTED_ROTTEN_FLESH:64
-  - id: Cactus_MINION
+  - id: CACTUS_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -219,7 +219,7 @@ items:
           - ENCHANTED_CACTUS_GREEN:64
           - ENCHANTED_CACTUS:1
           - ENCHANTED_CACTUS:2
-  - id: Carrot_MINION
+  - id: CARROT_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -239,7 +239,7 @@ items:
           - ENCHANTED_CARROT:64
           - ENCHANTED_GOLDEN_CARROT:1
           - ENCHANTED_GOLDEN_CARROT:2
-  - id: Chicken_MINION
+  - id: CHICKEN_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -259,7 +259,7 @@ items:
           - ENCHANTED_RAW_CHICKEN:16
           - ENCHANTED_RAW_CHICKEN:32
           - ENCHANTED_RAW_CHICKEN:64
-  - id: CocoaBeans_MINION
+  - id: COCOA_BEANS_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -279,7 +279,7 @@ items:
           - ENCHANTED_COCOA_BEANS:32
           - ENCHANTED_COCOA_BEANS:64
           - ENCHANTED_COOKIE:1
-  - id: Cow_MINION
+  - id: COW_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -299,7 +299,7 @@ items:
           - ENCHANTED_RAW_BEEF:32
           - ENCHANTED_RAW_BEEF:64
           - ENCHANTED_LEATHER:32
-  - id: Melon_MINION
+  - id: MELON_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -319,7 +319,7 @@ items:
           - ENCHANTED_MELON:64
           - ENCHANTED_MELON_BLOCK:1
           - ENCHANTED_MELON_BLOCK:2
-  - id: Mushroom_MINION
+  - id: MUSHROOM_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -339,7 +339,7 @@ items:
           - ENCHANTED_RED_MUSHROOM:16
           - ENCHANTED_RED_MUSHROOM:32
           - ENCHANTED_RED_MUSHROOM:64
-  - id: NetherWart_MINION
+  - id: NETHER_WART_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -359,7 +359,7 @@ items:
           - ENCHANTED_NETHER_WART:16
           - ENCHANTED_NETHER_WART:32
           - ENCHANTED_NETHER_WART:64
-  - id: Pig_MINION
+  - id: PIG_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -379,7 +379,7 @@ items:
           - ENCHANTED_PORK:32
           - ENCHANTED_PORK:64
           - ENCHANTED_GRILLED_PORK:1
-  - id: Potato_MINION
+  - id: POTATO_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -399,7 +399,7 @@ items:
           - ENCHANTED_POTATO:64
           - ENCHANTED_BAKED_POTATO:1
           - ENCHANTED_BAKED_POTATO:2
-  - id: Pumpkin_MINION
+  - id: PUMPKIN_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -419,7 +419,7 @@ items:
           - ENCHANTED_PUMPKIN:16
           - ENCHANTED_PUMPKIN:32
           - ENCHANTED_PUMPKIN:64
-  - id: Rabbit_MINION
+  - id: RABBIT_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -439,7 +439,7 @@ items:
           - ENCHANTED_RABBIT_FOOT:64
           - ENCHANTED_RABBIT_HIDE:32
           - ENCHANTED_RABBIT_HIDE:64
-  - id: Sheep_MINION
+  - id: SHEEP_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -459,7 +459,7 @@ items:
           - ENCHANTED_MUTTON:32
           - ENCHANTED_MUTTON:64
           - ENCHANTED_COOKED_MUTTON:1
-  - id: SugarCane_MINION
+  - id: SUGAR_CANE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -479,7 +479,7 @@ items:
           - ENCHANTED_SUGAR:64
           - ENCHANTED_SUGAR_CANE:1
           - ENCHANTED_SUGAR_CANE:2
-  - id: Wheat_MINION
+  - id: WHEAT_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -499,7 +499,7 @@ items:
           - ENCHANTED_HAY_BALE:1
           - ENCHANTED_HAY_BALE:2
           - ENCHANTED_HAY_BALE:4
-  - id: Clay_MINION
+  - id: CLAY_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -519,7 +519,7 @@ items:
           - ENCHANTED_CLAY:16
           - ENCHANTED_CLAY:32
           - ENCHANTED_CLAY:64
-  - id: Fishing_MINION
+  - id: FISHING_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -539,7 +539,7 @@ items:
           - ENCHANTED_COD:32
           - ENCHANTED_COD:64
           - ENCHANTED_COOKED_COD:1
-  - id: Acacia_MINION
+  - id: ACACIA_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -559,7 +559,7 @@ items:
           - ENCHANTED_ACACIA_LOG:16
           - ENCHANTED_ACACIA_LOG:32
           - ENCHANTED_ACACIA_LOG:64
-  - id: Birch_MINION
+  - id: BIRCH_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -579,7 +579,7 @@ items:
           - ENCHANTED_BIRCH_LOG:16
           - ENCHANTED_BIRCH_LOG:32
           - ENCHANTED_BIRCH_LOG:64
-  - id: DarkOak_MINION
+  - id: DARK_OAK_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -599,7 +599,7 @@ items:
           - ENCHANTED_DARK_OAK_LOG:16
           - ENCHANTED_DARK_OAK_LOG:32
           - ENCHANTED_DARK_OAK_LOG:64
-  - id: Flower_MINION
+  - id: FLOWER_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -619,7 +619,7 @@ items:
           - ENCHANTED_DANDELION:64
           - ENCHANTED_POPPY:1
           - ENCHANTED_POPPY:2
-  - id: Jungle_MINION
+  - id: JUNGLE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -639,7 +639,7 @@ items:
           - ENCHANTED_JUNGLE_LOG:16
           - ENCHANTED_JUNGLE_LOG:32
           - ENCHANTED_JUNGLE_LOG:64
-  - id: Oak_MINION
+  - id: OAK_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -659,7 +659,7 @@ items:
           - ENCHANTED_OAK_LOG:16
           - ENCHANTED_OAK_LOG:32
           - ENCHANTED_OAK_LOG:64
-  - id: Spruce_MINION
+  - id: SPRUCE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -679,7 +679,7 @@ items:
           - ENCHANTED_SPRUCE_LOG:16
           - ENCHANTED_SPRUCE_LOG:32
           - ENCHANTED_SPRUCE_LOG:64
-  - id: Coal_MINION
+  - id: COAL_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -699,7 +699,7 @@ items:
           - ENCHANTED_COAL:32
           - ENCHANTED_COAL:64
           - ENCHANTED_COAL_BLOCK:1
-  - id: Cobblestone_MINION
+  - id: COBBLESTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -719,7 +719,7 @@ items:
           - ENCHANTED_COBBLESTONE:16
           - ENCHANTED_COBBLESTONE:32
           - ENCHANTED_COBBLESTONE:64
-  - id: Diamond_MINION
+  - id: DIAMOND_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -739,7 +739,7 @@ items:
           - ENCHANTED_DIAMOND:32
           - ENCHANTED_DIAMOND:64
           - ENCHANTED_DIAMOND_BLOCK:1
-  - id: Emerald_MINION
+  - id: EMERALD_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -759,7 +759,7 @@ items:
           - ENCHANTED_EMERALD:32
           - ENCHANTED_EMERALD:64
           - ENCHANTED_EMERALD_BLOCK:1
-  - id: EndStone_MINION
+  - id: ENDSTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -779,7 +779,7 @@ items:
           - ENCHANTED_ENDSTONE:16
           - ENCHANTED_ENDSTONE:32
           - ENCHANTED_ENDSTONE:64
-  - id: Glowstone_MINION
+  - id: GLOWSTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -799,7 +799,7 @@ items:
           - ENCHANTED_GLOWSTONE_DUST:64
           - ENCHANTED_GLOWSTONE:1
           - ENCHANTED_GLOWSTONE:2
-  - id: Gold_MINION
+  - id: GOLD_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -819,7 +819,7 @@ items:
           - ENCHANTED_GOLD_INGOT:32
           - ENCHANTED_GOLD_INGOT:64
           - ENCHANTED_GOLD_BLOCK:1
-  - id: Gravel_MINION
+  - id: GRAVEL_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -839,7 +839,7 @@ items:
           - ENCHANTED_FLINT:16
           - ENCHANTED_FLINT:32
           - ENCHANTED_FLINT:64
-  - id: HardStone_MINION
+  - id: HARDSTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -859,7 +859,7 @@ items:
           - ENCHANTED_HARD_STONE:64
           - CONCENTRATED_STONE:1
           - CONCENTRATED_STONE:2
-  - id: Ice_MINION
+  - id: ICE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -879,7 +879,7 @@ items:
           - ENCHANTED_ICE:16
           - ENCHANTED_ICE:32
           - ENCHANTED_ICE:64
-  - id: Iron_MINION
+  - id: IRON_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -899,7 +899,7 @@ items:
           - ENCHANTED_IRON_INGOT:32
           - ENCHANTED_IRON_INGOT:64
           - ENCHANTED_IRON_BLOCK:1
-  - id: Lapis_MINION
+  - id: LAPIS_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -919,7 +919,7 @@ items:
           - ENCHANTED_LAPIS_LAZULI_BLOCK:1
           - ENCHANTED_LAPIS_LAZULI_BLOCK:2
           - ENCHANTED_LAPIS_LAZULI_BLOCK:4
-  - id: Mithril_MINION
+  - id: MITHRIL_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -939,7 +939,7 @@ items:
           - ENCHANTED_MITHRIL:32
           - ENCHANTED_MITHRIL:64
           - REFINED_MITHRIL:1
-  - id: Obsidian_MINION
+  - id: OBSIDIAN_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -959,7 +959,7 @@ items:
           - ENCHANTED_OBSIDIAN:16
           - ENCHANTED_OBSIDIAN:32
           - ENCHANTED_OBSIDIAN:64
-  - id: Quartz_MINION
+  - id: QUARTZ_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -979,7 +979,7 @@ items:
           - ENCHANTED_QUARTZ:32
           - ENCHANTED_QUARTZ:64
           - ENCHANTED_QUARTZ_BLOCK:1
-  - id: Redstone_MINION
+  - id: REDSTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -999,7 +999,7 @@ items:
           - ENCHANTED_REDSTONE:64
           - ENCHANTED_REDSTONE_BLOCK:1
           - ENCHANTED_REDSTONE_BLOCK:2
-  - id: Sand_MINION
+  - id: SAND_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
@@ -1019,7 +1019,7 @@ items:
           - ENCHANTED_SAND:16
           - ENCHANTED_SAND:32
           - ENCHANTED_SAND:64
-  - id: Snow_MINION
+  - id: SNOW_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:

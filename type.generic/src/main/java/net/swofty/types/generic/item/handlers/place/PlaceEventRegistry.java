@@ -56,6 +56,12 @@ public class PlaceEventRegistry {
                 );
             }
         });
+        register("CARROT_CRYSTAL_PLACE", new PlaceEventHandler() {
+            @Override
+            public void onPlace(PlayerBlockPlaceEvent event, SkyBlockPlayer player, SkyBlockItem item) {
+
+            }
+        });
     }
 
     public static void register(String id, PlaceEventHandler handler) {

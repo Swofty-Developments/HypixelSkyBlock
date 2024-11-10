@@ -118,7 +118,7 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
                     }
                     items.add(item.toUnderstandable().serialize());
                 }
-                jsonObject.put("items", items);
+                jsonObject.put("configuration/items", items);
                 return jsonObject;
             }
 
@@ -126,7 +126,7 @@ public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> 
                 int page = jsonObject.getInt("page");
                 Material display = Material.fromNamespaceId(jsonObject.getString("display"));
                 List<SkyBlockItem> items = new ArrayList<>();
-                for (Object item : jsonObject.getJSONArray("items")) {
+                for (Object item : jsonObject.getJSONArray("configuration/items")) {
                     if (item.equals("null")) {
                         items.add(null);
                         continue;

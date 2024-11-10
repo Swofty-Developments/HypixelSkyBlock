@@ -5,6 +5,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -44,7 +45,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
         for (int slot : displaySlots) {
             if (index < items.size()) {
                 items.forEach(shopItem -> {
-                    ItemTypeLinker item = shopItem.getItemTypeLinker();
+                    ItemType item = shopItem.getItemType();
                     Integer price = shopItem.getPrice();
                     Integer amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {

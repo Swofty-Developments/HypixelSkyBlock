@@ -8,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointSackOfSacks;
@@ -16,7 +17,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Sack;
+import net.swofty.types.generic.item.components.SackComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -63,7 +64,7 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
                         e.setCancelled(true);
                         SkyBlockItem skyBlockItem = new SkyBlockItem(e.getClickedItem());
                         if (skyBlockItem.isNA() || skyBlockItem.isAir()) return;
-                        new GUISack(skyBlockItem.getAttributeHandler().getPotentialClassLinker(), false).open(player);
+                        new GUISack(skyBlockItem.getAttributeHandler().getPotentialType(), false).open(player);
                     }
                 }
 
@@ -111,9 +112,9 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
                 int slot = 0;
                 for (ItemStack itemStack : player.getInventory().getItemStacks()) {
                     SkyBlockItem item = new SkyBlockItem(itemStack);
-                    ItemTypeLinker linker = item.getAttributeHandler().getPotentialClassLinker();
-                    if (player.canInsertItemIntoSacks(linker)) {
-                        player.getSackItems().increase(linker, item.getAmount());
+                    ItemType type = item.getAttributeHandler().getPotentialType();
+                    if (player.canInsertItemIntoSacks(type)) {
+                        player.getSackItems().increase(type, item.getAmount());
                         player.getInventory().setItemStack(slot, ItemStack.AIR);
                     }
                     slot++;
@@ -193,12 +194,7 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
     public boolean isItemAllowed(SkyBlockItem item) {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
-        if (item.getGenericInstance() == null) return false;
 
-        if (item.getGenericInstance() instanceof Sack) {
-            return true;
-        } else {
-            return false;
-        }
+        return item.hasComponent(SackComponent.class);
     }
 }

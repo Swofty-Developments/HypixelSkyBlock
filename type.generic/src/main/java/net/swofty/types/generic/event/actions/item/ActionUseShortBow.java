@@ -5,7 +5,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.BowImpl;
+import net.swofty.types.generic.item.components.BowComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionUseShortBow implements SkyBlockEventClass {
@@ -17,9 +17,9 @@ public class ActionUseShortBow implements SkyBlockEventClass {
 
         if (type.equals(PlayerItemAnimationEvent.ItemAnimationType.BOW)) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemInMainHand());
-            BowImpl bow = (BowImpl) item.getGenericInstance();
+            BowComponent bow = item.getComponent(BowComponent.class);
 
-            if (!bow.shouldBeArrow()) {
+            if (!bow.isShouldBeArrow()) {
                 // Bow is a "shortbow", call event now
                 bow.onBowShoot(player, item);
                 event.setCancelled(true);

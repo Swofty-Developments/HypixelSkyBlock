@@ -20,8 +20,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Minion;
-import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.components.MinionComponent;
+import net.swofty.types.generic.item.components.MinionFuelComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
@@ -82,7 +82,7 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
                 player.addAndUpdateItem(minion.getExtensionData().getMinionSkin());
                 player.addAndUpdateItem(minion.getExtensionData().getAutomatedShipping());
                 if (minion.getExtensionData().getFuel() != null) {
-                    long timeFuelLasts = ((MinionFuelItem)minion.getExtensionData().getFuel().getGenericInstance()).getFuelLastTimeInMS();
+                    long timeFuelLasts = minion.getExtensionData().getFuel().getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
                     if (timeFuelLasts == 0) {
                         player.addAndUpdateItem(minion.getExtensionData().getFuel());
                     }
@@ -150,7 +150,7 @@ public class GUIMinion extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 List<Component> lore = new ArrayList<>();
-                Minion.getLore(minion.asSkyBlockItem(),minion.getSpeedPercentage()).forEach(line -> {
+                MinionComponent.getLore(minion.asSkyBlockItem(), minion.getSpeedPercentage()).forEach(line -> {
                     lore.add(Component.text("§r" + line.replace("&", "§"))
                             .decorations(Collections.singleton(TextDecoration.ITALIC), false));
                 });

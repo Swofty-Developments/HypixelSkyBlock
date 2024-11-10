@@ -1,5 +1,6 @@
 package net.swofty.types.generic.mission.missions.barn;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
@@ -20,7 +21,7 @@ public class MissionCraftWheatMinion extends SkyBlockMission {
             return;
         }
 
-        if (event.getCraftedItem().getAttributeHandler().getPotentialClassLinker() != ItemTypeLinker.WHEAT_MINION) {
+        if (event.getCraftedItem().getAttributeHandler().getPotentialType() != ItemType.WHEAT_MINION) {
             return;
         }
 

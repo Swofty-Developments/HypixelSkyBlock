@@ -14,8 +14,6 @@ items:
         b: '42'
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fancy Tuxedo Oxfords
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Fancy Tuxedo Oxfords
   - id: FANCY_TUXEDO_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -30,8 +28,6 @@ items:
         b: '42'
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fancy Tuxedo Jacket
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Fancy Tuxedo Jacket
   - id: FANCY_TUXEDO_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -44,7 +40,5 @@ items:
         r: '212'
         g: '212'
         b: '212'
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Fancy Tuxedo Pants
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fancy Tuxedo Pants

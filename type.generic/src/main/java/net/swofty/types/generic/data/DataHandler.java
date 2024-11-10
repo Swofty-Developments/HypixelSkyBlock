@@ -11,6 +11,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
@@ -255,7 +256,7 @@ public class DataHandler {
             });
 
             player.getInventory().setItemStack(8,
-                    new NonPlayerItemUpdater(new SkyBlockItem(ItemTypeLinker.SKYBLOCK_MENU).getItemStack())
+                    new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
                             .getUpdatedItem().build());
         }, (player) -> {
             SkyBlockInventory skyBlockInventory = new SkyBlockInventory();

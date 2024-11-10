@@ -7,6 +7,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -16,11 +17,11 @@ import java.util.function.Predicate;
 public class InteractableItemConfig {
     private BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler;
     private BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler;
-    private Predicate<SkyBlockPlayer> inventoryInteractHandler;
+    private BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
 
     public InteractableItemConfig(BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler,
                                   BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler,
-                                  Predicate<SkyBlockPlayer> inventoryInteractHandler) {
+                                  BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
         this.rightClickHandler = rightClickHandler;
         this.leftClickHandler = leftClickHandler;
         this.inventoryInteractHandler = inventoryInteractHandler;
@@ -34,7 +35,7 @@ public class InteractableItemConfig {
         if (leftClickHandler != null) leftClickHandler.accept(player, item);
     }
 
-    public boolean onInventoryInteract(SkyBlockPlayer player) {
-        return inventoryInteractHandler != null && inventoryInteractHandler.test(player);
+    public boolean onInventoryInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        return inventoryInteractHandler != null && inventoryInteractHandler.apply(player, item);
     }
 }

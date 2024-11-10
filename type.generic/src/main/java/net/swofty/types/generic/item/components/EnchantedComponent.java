@@ -15,7 +15,7 @@ public class EnchantedComponent extends SkyBlockItemComponent {
         addInheritedComponent(new CraftableComponent(getStandardEnchantedRecipe(
                 type,
                 ItemType.valueOf(itemId)
-        )));
+        ), true));
     }
 
     public EnchantedComponent() {

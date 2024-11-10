@@ -2,6 +2,7 @@ package net.swofty.types.generic.string;
 
 
 import net.kyori.adventure.text.Component;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,7 +32,7 @@ public enum PlayerTemplates {
     // Collections & Progress
     COLLECTION((player, input) -> {
         String collectionType = input.split(":")[1];
-        return Component.text(player.getCollection().get(ItemTypeLinker.valueOf(collectionType)).toString());
+        return Component.text(player.getCollection().get(ItemType.valueOf(collectionType)).toString());
     }),
     FAIRY_SOULS((player, input) -> Component.text(player.getFairySouls().getAllFairySouls().size())),
 

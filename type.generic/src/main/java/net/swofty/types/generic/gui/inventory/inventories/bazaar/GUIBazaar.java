@@ -165,7 +165,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        ItemTypeLinker type = clickedItem.getAttributeHandler().getPotentialClassLinker();
+        ItemType type = clickedItem.getAttributeHandler().getPotentialType();
         e.setCancelled(true);
 
         if (clickedItem.isNA()) {

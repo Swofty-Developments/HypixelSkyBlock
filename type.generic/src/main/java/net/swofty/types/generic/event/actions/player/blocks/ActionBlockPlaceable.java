@@ -8,7 +8,7 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
+import net.swofty.types.generic.item.components.PlaceableComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionBlockPlaceable implements SkyBlockEventClass {
@@ -19,13 +19,12 @@ public class ActionBlockPlaceable implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() == null) return;
+        if (item.getConfig() == null) return;
 
-        Object instance = item.getGenericInstance();
-
-        if (instance instanceof PlaceableCustomSkyBlockItem placeable){
-            if (placeable.getAssociatedBlockType() == null) return;
-            SkyBlockBlock skyBlockBlock = new SkyBlockBlock(placeable.getAssociatedBlockType());
+        if (item.hasComponent(PlaceableComponent.class)) {
+            PlaceableComponent placeable = item.getComponent(PlaceableComponent.class);
+            if (placeable.getBlockType() == null) return;
+            SkyBlockBlock skyBlockBlock = new SkyBlockBlock(placeable.getBlockType());
             if (skyBlockBlock.getGenericInstance() instanceof BlockPlaceable blockPlaceable){
                 blockPlaceable.onPlace(event , skyBlockBlock);
             }

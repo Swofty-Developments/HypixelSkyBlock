@@ -1,5 +1,6 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
+import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -26,7 +27,7 @@ public class ActionCollectionAdd implements SkyBlockEventClass {
         if (SkyBlockConst.isIslandServer()) return;
 
         SkyBlockPlayer player = event.getPlayer();
-        ItemTypeLinker type = ItemTypeLinker.fromMaterial(event.getMaterial());
+        ItemType type = ItemType.fromMaterial(event.getMaterial());
 
         if (type == null) return;
         int oldAmount = player.getCollection().get(type);

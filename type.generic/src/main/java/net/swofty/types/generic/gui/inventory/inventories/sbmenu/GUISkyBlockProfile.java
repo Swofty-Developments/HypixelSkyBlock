@@ -11,7 +11,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.StandardItem;
+import net.swofty.types.generic.item.components.StandardItemComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -51,7 +51,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                     player.setHelmet(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
-                } else if (item.getGenericInstance() instanceof StandardItem standardItem && standardItem.getStandardItemType() == StandardItem.StandardItemType.HELMET && player.getHelmet().isAir()) {
+                } else if (item.hasComponent(StandardItemComponent.class)
+                        && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.HELMET
+                        && player.getHelmet().isAir()) {
                     player.setHelmet(e.getCursorItem());
                     e.getInventory().setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -76,7 +78,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                     player.setChestplate(ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
-                } else if (item.getGenericInstance() instanceof StandardItem standardItem && standardItem.getStandardItemType() == StandardItem.StandardItemType.CHESTPLATE && player.getChestplate().isAir()) {
+                } else if (item.hasComponent(StandardItemComponent.class)
+                        && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.CHESTPLATE
+                        && player.getChestplate().isAir()) {
                     player.setChestplate(e.getCursorItem());
                     e.getInventory().setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -102,7 +106,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
-                if (item.getGenericInstance() instanceof StandardItem standardItem && standardItem.getStandardItemType() == StandardItem.StandardItemType.LEGGINGS && player.getLeggings().isAir()) {
+                if (item.hasComponent(StandardItemComponent.class)
+                        && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.LEGGINGS
+                        && player.getLeggings().isAir()) {
                     player.setLeggings(e.getCursorItem());
                     e.getInventory().setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
@@ -128,7 +134,9 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
-                if (item.getGenericInstance() instanceof StandardItem standardItem && standardItem.getStandardItemType() == StandardItem.StandardItemType.BOOTS && player.getBoots().isAir()) {
+                if (item.hasComponent(StandardItemComponent.class)
+                        && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.BOOTS
+                        && player.getBoots().isAir()) {
                     player.setBoots(e.getCursorItem());
                     e.getInventory().setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();

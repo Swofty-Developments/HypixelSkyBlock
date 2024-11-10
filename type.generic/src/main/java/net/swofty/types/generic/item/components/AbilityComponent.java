@@ -20,4 +20,11 @@ public class AbilityComponent extends SkyBlockItemComponent {
                 .filter(Objects::nonNull)
                 .toList();
     }
+
+    public RegisteredAbility getAbility(RegisteredAbility.AbilityActivation type) {
+        return getAbilities().stream()
+                .filter(ability -> ability.getActivation() == type)
+                .findFirst()
+                .orElse(null);
+    }
 }

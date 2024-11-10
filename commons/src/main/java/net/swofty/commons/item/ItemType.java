@@ -20,6 +20,9 @@ public enum ItemType {
     QUALITY_MAP(Material.MAP,  Rarity.SPECIAL),
     DEAD_BUSH_OF_LOVE(Material.DEAD_BUSH,  Rarity.SPECIAL),
 
+    CORLEONITE(Material.PLAYER_HEAD, Rarity.EPIC),
+    BONZO_FRAGMENT(Material.RED_MUSHROOM, Rarity.RARE),
+
     /**
      * Accessories
      */
@@ -113,6 +116,10 @@ public enum ItemType {
     SMALL_MINING_SACK(Material.PLAYER_HEAD, Rarity.UNCOMMON),
     MEDIUM_MINING_SACK(Material.PLAYER_HEAD, Rarity.RARE),
     LARGE_MINING_SACK(Material.PLAYER_HEAD, Rarity.EPIC),
+
+    BIGFOOT_LASSO(Material.LEAD, Rarity.UNCOMMON),
+    BIOFUEL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+    ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
 
     /**
      * Runes
@@ -268,6 +275,9 @@ public enum ItemType {
      * Power Stones
      */
     LUXURIOUS_SPOOL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+
+    ASCENSION_ROPE(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
     /**
      * Farming Props
@@ -690,7 +700,7 @@ public enum ItemType {
      */
     HUB_CASTLE_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
     HUB_MUSEUM_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
-    HUB_CRYPT_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
+    HUB_CRYPTS_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
 
     /**
      * Crimson Isles
@@ -1219,7 +1229,7 @@ public enum ItemType {
     ENCHANTED_RAW_RABBIT(Material.RABBIT,  Rarity.UNCOMMON),
     ENCHANTED_SAND(Material.SAND,  Rarity.UNCOMMON),
     ENCHANTED_SEEDS(Material.WHEAT_SEEDS,  Rarity.UNCOMMON),
-    ENCHANTED_SLIMEBALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
+    ENCHANTED_SLIME_BALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
     ENCHANTED_SLIME_BLOCK(Material.SLIME_BLOCK,  Rarity.RARE),
     ENCHANTED_SUGAR_CANE(Material.SUGAR_CANE,  Rarity.RARE),
     ENCHANTED_SULPHUR(Material.GLOWSTONE_DUST,  Rarity.RARE),
@@ -1257,5 +1267,14 @@ public enum ItemType {
 
     public static boolean isVanillaReplaced(String item) {
         return get(item) != null;
+    }
+
+    public static @Nullable ItemType fromMaterial(Material material) {
+        for (ItemType itemType : ItemType.values()) {
+            if (itemType.material == material) {
+                return itemType;
+            }
+        }
+        return null;
     }
 }

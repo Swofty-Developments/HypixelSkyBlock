@@ -6,16 +6,17 @@ import net.swofty.types.generic.item.handlers.interactable.InteractableRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 public class InteractableComponent extends SkyBlockItemComponent {
     private final BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler;
     private final BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler;
-    private final Predicate<SkyBlockPlayer> inventoryInteractHandler;
+    private final BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler;
 
     public InteractableComponent(BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler,
                                  BiConsumer<SkyBlockPlayer, SkyBlockItem> leftClickHandler,
-                                 Predicate<SkyBlockPlayer> inventoryInteractHandler) {
+                                 BiFunction<SkyBlockPlayer, SkyBlockItem, Boolean> inventoryInteractHandler) {
         this.rightClickHandler = rightClickHandler;
         this.leftClickHandler = leftClickHandler;
         this.inventoryInteractHandler = inventoryInteractHandler;
@@ -35,7 +36,7 @@ public class InteractableComponent extends SkyBlockItemComponent {
         if (leftClickHandler != null) leftClickHandler.accept(player, item);
     }
 
-    public boolean onInventoryInteract(SkyBlockPlayer player) {
-        return inventoryInteractHandler != null && inventoryInteractHandler.test(player);
+    public boolean onInventoryInteract(SkyBlockPlayer player, SkyBlockItem item) {
+        return inventoryInteractHandler != null && inventoryInteractHandler.apply(player, item);
     }
 }

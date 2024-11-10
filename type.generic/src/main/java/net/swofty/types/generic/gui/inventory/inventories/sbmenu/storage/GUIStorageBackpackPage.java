@@ -13,7 +13,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Backpack;
+import net.swofty.types.generic.item.components.BackpackComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,9 +31,9 @@ public class GUIStorageBackpackPage extends SkyBlockInventoryGUI {
         super(StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item).getUpdatedItem().build()
                         .get(ItemComponent.CUSTOM_NAME))
                 + " (Slot #" + page + ")",
-                MathUtility.getFromSize(9 + ((Backpack) item.getGenericInstance()).getRows() * 9));
+                MathUtility.getFromSize(9 + item.getComponent(BackpackComponent.class).getRows() * 9));
 
-        this.slots = ((Backpack) item.getGenericInstance()).getRows() * 9;
+        this.slots = item.getComponent(BackpackComponent.class).getRows() * 9;
         this.page = page;
         this.item = item;
     }

@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -37,7 +38,7 @@ public class WheatAndFlowersConfiguration extends SkyBlockMiningConfiguration {
         ArrayList<Material> materials = new ArrayList<>(Collections.singletonList(Material.WHEAT));
 
         if (CrystalDatabase.getFromAround(SkyBlockConst.getTypeLoader().getType(), Pos.fromPoint(point), 15)
-                .stream().anyMatch(crystal -> crystal.itemType == ItemTypeLinker.FLOWER_CRYSTAL)) {
+                .stream().anyMatch(crystal -> crystal.itemType == ItemType.FLOWER_CRYSTAL)) {
             materials.addAll(new ArrayList<>(Groups.FLOWERS));
         }
 

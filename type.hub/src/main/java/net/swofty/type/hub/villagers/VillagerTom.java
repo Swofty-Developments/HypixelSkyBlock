@@ -2,6 +2,7 @@ package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
@@ -47,7 +48,7 @@ public class VillagerTom extends NPCVillagerDialogue {
                 if (System.currentTimeMillis() -
                         (long) data.getMission("speak_to_villagers").getKey().getCustomData().get("last_updated") < 30) {
                     setDialogue(e.player(), "quest-hello").thenRun(() -> {
-                        new GUIRecipe(ItemTypeLinker.PROMISING_AXE, null).open(e.player());
+                        new GUIRecipe(ItemType.PROMISING_AXE, null).open(e.player());
                     });
                 }
             }

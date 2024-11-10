@@ -5,7 +5,7 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.ItemAttributeHandler;
-import net.swofty.types.generic.item.impl.Minion;
+import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -21,7 +21,7 @@ public class MithrilInfuseCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
             SkyBlockPlayer player = ((SkyBlockPlayer) sender);
-            if(!(new SkyBlockItem(player.getInventory().getItemInMainHand()).getGenericInstance() instanceof Minion)){
+            if(!(new SkyBlockItem(player.getInventory().getItemInMainHand()).hasComponent(MinionComponent.class))){
                 player.sendMessage("§cMithril Infusions can only be applied to minions.");
                 return;
             }

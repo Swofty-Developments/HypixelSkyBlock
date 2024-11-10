@@ -9,11 +9,12 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionFuelItem;
+import net.swofty.types.generic.item.components.MinionFuelComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
@@ -29,7 +30,7 @@ public class MinionFuelExtension extends MinionExtension {
     private long insertionTime = 0;
     private int count = 0;
 
-    public MinionFuelExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+    public MinionFuelExtension(@Nullable ItemType itemTypeLinker, @Nullable Object data) {
         super(itemTypeLinker, data);
 
         if (data != null) {
@@ -41,17 +42,17 @@ public class MinionFuelExtension extends MinionExtension {
     public @NonNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
         boolean shouldDisplayItem = true;
 
-        if (getItemTypeLinkerPassedIn() == null) {
+        if (getItemTypePassedIn() == null) {
             shouldDisplayItem = false;
         } else {
-            long timeFuelLasts = ((MinionFuelItem) new SkyBlockItem(getItemTypeLinkerPassedIn()).getGenericInstance()).getFuelLastTimeInMS();
+            long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
             if (System.currentTimeMillis() - insertionTime > timeFuelLasts && timeFuelLasts > 0) {
                 // Time has surpassed the fuel time of 1 of the fuel items
                 count -= 1;
                 if(count <= 0) {
                     // All fuel items have been used
                     shouldDisplayItem = false;
-                    setItemTypeLinkerPassedIn(null);
+                    setItemTypePassedIn(null);
                 }
                 // Set insertion time for now because we've moved onto the next item
                 insertionTime = System.currentTimeMillis();
@@ -65,13 +66,7 @@ public class MinionFuelExtension extends MinionExtension {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
 
-                    if (fuelItem.getGenericInstance() == null) {
-                        player.sendMessage("§cThis item is not a valid Minion Fuel item.");
-                        e.setCancelled(true);
-                        return;
-                    }
-
-                    if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
+                    if (fuelItem.hasComponent(MinionFuelComponent.class)) {
                         e.setClickedItem(ItemStack.AIR);
                         MinionFuelExtension.this.addFuel(minion, slot, fuelItem);
                     } else {
@@ -108,15 +103,15 @@ public class MinionFuelExtension extends MinionExtension {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 SkyBlockItem item = new SkyBlockItem(e.getClickedItem());
-                if(((MinionFuelItem)item.getGenericInstance()).getFuelLastTimeInMS() == 0) {
-                    player.addAndUpdateItem(getItemTypeLinkerPassedIn());
-                    setItemTypeLinkerPassedIn(null);
+                if (item.getComponent(MinionFuelComponent.class).getFuelLastTimeInMS() == 0) {
+                    player.addAndUpdateItem(getItemTypePassedIn());
+                    setItemTypePassedIn(null);
                     minion.getExtensionData().setData(slot, MinionFuelExtension.this);
                     new GUIMinion(minion).open(player);
                     return;
                 }
                 if (e.getClickType() == ClickType.RIGHT_CLICK) {
-                    setItemTypeLinkerPassedIn(null);
+                    setItemTypePassedIn(null);
                     minion.getExtensionData().setData(slot, MinionFuelExtension.this);
                     new GUIMinion(minion).open(player);
                     return;
@@ -124,12 +119,12 @@ public class MinionFuelExtension extends MinionExtension {
                 }
 
                 SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
-                if (!(fuelItem.getGenericInstance() instanceof MinionFuelItem)){
+                if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
                     player.sendMessage("§cYou can only put fuel in this slot.");
                     return;
                 }
 
-                if (getItemTypeLinkerPassedIn() != fuelItem.getAttributeHandler().getPotentialClassLinker())
+                if (getItemTypePassedIn() != fuelItem.getAttributeHandler().getPotentialType())
                     player.sendMessage("§aReplaced your old fuel!");
 
                 int added = MinionFuelExtension.this.addFuel(minion, slot, fuelItem);
@@ -148,9 +143,9 @@ public class MinionFuelExtension extends MinionExtension {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                long timeFuelLasts = ((MinionFuelItem)new SkyBlockItem(getItemTypeLinkerPassedIn()).getGenericInstance()).getFuelLastTimeInMS();
+                long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
 
-                ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypeLinkerPassedIn(), count)).getUpdatedItem();
+                ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
 
                 List<Component> lore = new ArrayList<>(itemBuilder.build().get(ItemComponent.LORE));
 
@@ -174,11 +169,11 @@ public class MinionFuelExtension extends MinionExtension {
 
     // Returns the amount of fuel added
     public int addFuel(IslandMinionData.IslandMinion minion, int slot, SkyBlockItem fuelItem){
-        if (fuelItem.getGenericInstance() instanceof MinionFuelItem) {
+        if (fuelItem.hasComponent(MinionFuelComponent.class)) {
             insertionTime = System.currentTimeMillis();
             int added = fuelItem.getAmount();
 
-            if (getItemTypeLinkerPassedIn() != fuelItem.getAttributeHandler().getPotentialClassLinker()) {
+            if (getItemTypePassedIn() != fuelItem.getAttributeHandler().getPotentialType()) {
                 count = added;
             } else {
                 int together = count + added;
@@ -190,7 +185,7 @@ public class MinionFuelExtension extends MinionExtension {
                 }
             }
 
-            setItemTypeLinkerPassedIn(fuelItem.getAttributeHandler().getPotentialClassLinker());
+            setItemTypePassedIn(fuelItem.getAttributeHandler().getPotentialType());
             minion.getExtensionData().setData(slot, MinionFuelExtension.this);
             return added;
         }
@@ -199,20 +194,20 @@ public class MinionFuelExtension extends MinionExtension {
 
     @Override
     public String toString() {
-        if (getItemTypeLinkerPassedIn() == null) {
+        if (getItemTypePassedIn() == null) {
             return "null";
         }
-        return getItemTypeLinkerPassedIn().toString() + ":" + insertionTime + ":" + count;
+        return getItemTypePassedIn().toString() + ":" + insertionTime + ":" + count;
     }
 
     @Override
     public void fromString(String string) {
         if (string.equals("null")) {
-            setItemTypeLinkerPassedIn(null);
+            setItemTypePassedIn(null);
             return;
         }
         String[] split = string.split(":");
-        setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(split[0]));
+        setItemTypePassedIn(ItemType.valueOf(split[0]));
         insertionTime = Long.parseLong(split[1]);
         if(split.length > 2)
             count = Integer.parseInt(split[2]);

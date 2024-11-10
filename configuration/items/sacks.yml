@@ -13,7 +13,7 @@ items:
           - EMERALD
           - END_STONE
           - FLINT
-          - GLACITE
+          - GLACITE_JEWEL
           - GLOWSTONE_DUST
           - GOLD_INGOT
           - GRAVEL
@@ -54,7 +54,7 @@ items:
           - EMERALD
           - END_STONE
           - FLINT
-          - GLACITE
+          - GLACITE_JEWEL
           - GLOWSTONE_DUST
           - GOLD_INGOT
           - GRAVEL
@@ -95,7 +95,7 @@ items:
           - EMERALD
           - END_STONE
           - FLINT
-          - GLACITE
+          - GLACITE_JEWEL
           - GLOWSTONE_DUST
           - GOLD_INGOT
           - GRAVEL

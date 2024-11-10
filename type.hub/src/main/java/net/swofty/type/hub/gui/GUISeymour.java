@@ -7,6 +7,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -28,9 +29,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 3000000) {
                     return;
                 }
-                player.addAndUpdateItem(ItemTypeLinker.CHEAP_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemTypeLinker.CHEAP_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemTypeLinker.CHEAP_TUXEDO_LEGGINGS);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 3000000);
             }
@@ -65,9 +66,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 20000000) {
                     return;
                 }
-                player.addAndUpdateItem(ItemTypeLinker.FANCY_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemTypeLinker.FANCY_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemTypeLinker.FANCY_TUXEDO_LEGGINGS);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.FANCY_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 20000000);
             }
@@ -103,9 +104,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                 if (coins < 74999999) {
                     return;
                 }
-                player.addAndUpdateItem(ItemTypeLinker.ELEGANT_TUXEDO_CHESTPLATE);
-                player.addAndUpdateItem(ItemTypeLinker.ELEGANT_TUXEDO_BOOTS);
-                player.addAndUpdateItem(ItemTypeLinker.ELEGANT_TUXEDO_LEGGINGS);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_CHESTPLATE);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_BOOTS);
+                player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
                 player.setCoins(coins - 74999999);
             }

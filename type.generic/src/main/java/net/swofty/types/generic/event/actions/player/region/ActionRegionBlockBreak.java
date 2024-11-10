@@ -6,6 +6,7 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
@@ -86,9 +87,9 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
              * Handle block dropping
              */
             SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
-            ItemTypeLinker droppedItemLinker = skyBlockItem.getAttributeHandler().getPotentialClassLinker();
-            if (player.canInsertItemIntoSacks(droppedItemLinker, dropAmount)) {
-                player.getSackItems().increase(droppedItemLinker, dropAmount);
+            ItemType droppedItemType = skyBlockItem.getAttributeHandler().getPotentialType();
+            if (player.canInsertItemIntoSacks(droppedItemType, dropAmount)) {
+                player.getSackItems().increase(droppedItemType, dropAmount);
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);
             } else {

@@ -14,7 +14,12 @@ public class RecipeParser {
     public static SkyBlockRecipe<?> parseRecipe(Map<String, Object> config) {
         String type = (String) config.get("type");
         String recipeType = (String) config.get("recipe-type");
-        SkyBlockRecipe.RecipeType craftingType = SkyBlockRecipe.RecipeType.valueOf(recipeType.toUpperCase());
+        SkyBlockRecipe.RecipeType craftingType = null;
+        try {
+            craftingType = SkyBlockRecipe.RecipeType.valueOf(recipeType.toUpperCase());
+        } catch (NullPointerException e) {
+            craftingType = SkyBlockRecipe.RecipeType.NONE;
+        }
 
         // Parse result
         Map<String, Object> resultConfig = (Map<String, Object>) config.get("result");
@@ -103,7 +108,7 @@ public class RecipeParser {
             if (materialType.startsWith("ITEM_TYPE_")) {
                 recipe.add(ItemType.valueOf(materialType.substring(10)), count);
             } else {
-                recipe.add(ItemTypeLinker.valueOf(materialType), count);
+                recipe.add(ItemType.valueOf(materialType), count);
             }
         }
 
@@ -129,7 +134,7 @@ public class RecipeParser {
             if (materialType.startsWith("ITEM_TYPE_")) {
                 ingredientMap.put(key, new ItemQuantifiable(ItemType.valueOf(materialType.substring(10)), amount));
             } else {
-                ingredientMap.put(key, new ItemQuantifiable(ItemTypeLinker.valueOf(materialType), amount));
+                ingredientMap.put(key, new ItemQuantifiable(ItemType.valueOf(materialType), amount));
             }
         }
 
@@ -162,7 +167,7 @@ public class RecipeParser {
         if (type.startsWith("ITEM_TYPE_")) {
             item = new SkyBlockItem(ItemType.valueOf(type.substring(10)));
         } else {
-            item = new SkyBlockItem(ItemTypeLinker.valueOf(type));
+            item = new SkyBlockItem(ItemType.valueOf(type));
         }
 
         item.setAmount(amount);

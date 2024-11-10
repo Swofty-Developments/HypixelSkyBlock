@@ -38,9 +38,26 @@ items:
         base_statistics:
           strength: 5.0
         per_level_statistics:
-          speed: 0.1
-          strength: 0.3
-          intelligence: 0.5
+          common:
+            speed: 1
+            strength: 3
+            intelligence: 5
+          uncommon:
+            speed: 1.5
+            strength: 4
+            intelligence: 7
+          rare:
+            speed: 2
+            strength: 5
+            intelligence: 10
+          epic:
+            speed: 2.5
+            strength: 6
+            intelligence: 15
+          legendary:
+            speed: 3
+            strength: 7
+            intelligence: 20
         particle: 3
         skill_category: FARMING
         skull_texture: "12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47"

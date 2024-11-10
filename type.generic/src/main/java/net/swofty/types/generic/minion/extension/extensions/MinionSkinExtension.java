@@ -7,11 +7,12 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionSkinItem;
+import net.swofty.types.generic.item.components.MinionSkinComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
@@ -23,27 +24,21 @@ import java.util.stream.Stream;
 
 public class MinionSkinExtension extends MinionExtension {
 
-    public MinionSkinExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+    public MinionSkinExtension(@Nullable ItemType itemTypeLinker, @Nullable Object data) {
         super(itemTypeLinker, data);
     }
 
     @Override
     public @NotNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
-        if (getItemTypeLinkerPassedIn() == null) {
+        if (getItemTypePassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     SkyBlockItem skinItem = new SkyBlockItem(e.getCursorItem());
 
-                    if (skinItem.getGenericInstance() == null) {
-                        player.sendMessage("§cThis item is not a valid Minion Skin.");
-                        e.setCancelled(true);
-                        return;
-                    }
-
-                    if (skinItem.getGenericInstance() instanceof MinionSkinItem) {
+                    if (skinItem.hasComponent(MinionSkinComponent.class)) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypeLinkerPassedIn(skinItem.getAttributeHandler().getPotentialClassLinker());
+                        setItemTypePassedIn(skinItem.getAttributeHandler().getPotentialType());
                         minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                         minion.getMinionEntity().updateMinionDisplay(minion);
                     } else {
@@ -80,8 +75,8 @@ public class MinionSkinExtension extends MinionExtension {
                         return;
                     }
 
-                    player.addAndUpdateItem(getItemTypeLinkerPassedIn());
-                    setItemTypeLinkerPassedIn(null);
+                    player.addAndUpdateItem(getItemTypePassedIn());
+                    setItemTypePassedIn(null);
                     e.setClickedItem(ItemStack.AIR);
                     minion.getExtensionData().setData(slot, MinionSkinExtension.this);
                     minion.getMinionEntity().updateMinionDisplay(minion);
@@ -99,14 +94,14 @@ public class MinionSkinExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypeLinkerPassedIn())).getUpdatedItem();
+                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
                     item.set(ItemComponent.CUSTOM_NAME, Component.text("§aMinion Skin Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(
                             "§7You can insert a Minion Skin",
                             "§7here to change the appearance of",
                             "§7your minion.",
                             " ",
-                            "§7Current Skin: " + getItemTypeLinkerPassedIn().type.rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
+                            "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
                             " ",
                             "§eClick to remove."
                     ).toList());
@@ -119,17 +114,17 @@ public class MinionSkinExtension extends MinionExtension {
 
     @Override
     public String toString() {
-        if (getItemTypeLinkerPassedIn() == null)
+        if (getItemTypePassedIn() == null)
             return "null";
-        return getItemTypeLinkerPassedIn().name();
+        return getItemTypePassedIn().name();
     }
 
     @Override
     public void fromString(String string) {
         if (string.equals("null")) {
-            setItemTypeLinkerPassedIn(null);
+            setItemTypePassedIn(null);
             return;
         }
-        setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(string));
+        setItemTypePassedIn(ItemType.valueOf(string));
     }
 }

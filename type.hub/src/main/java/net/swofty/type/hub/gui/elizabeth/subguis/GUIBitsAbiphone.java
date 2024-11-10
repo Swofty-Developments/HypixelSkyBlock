@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -31,7 +32,7 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
 
         set(new GUIClickableItem(12) {
             Integer price = 6450;
-            ItemTypeLinker item = ItemTypeLinker.ABIPHONE_CONTACTS_TRIO;
+            ItemType item = ItemType.ABIPHONE_CONTACTS_TRIO;
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getBits() >= price) {

@@ -1,6 +1,7 @@
 package net.swofty.types.generic.command.commands;
 
 import net.swofty.commons.Configuration;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -21,7 +22,7 @@ public class SandboxCommand extends SkyBlockCommand {
                 return;
             }
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            player.addAndUpdateItem(ItemTypeLinker.SANDBOX_ITEM);
+            player.addAndUpdateItem(ItemType.SANDBOX_ITEM);
             player.sendMessage("§aAdded a sandbox item to your inventory.");
         });
     }

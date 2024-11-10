@@ -29,6 +29,9 @@ items:
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: shaped
+            result:
+              type: ASPECT_OF_THE_JERRY
+              amount: 1
             pattern:
               - "A"
               - "A"
@@ -118,7 +121,7 @@ items:
           - SPEED_BOOST
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-      - id: UNIQUE_TRACKED_ITEM
+      - id: TRACKED_UNIQUE
 
   - id: SILVER_FANG
     material: IRON_SWORD
@@ -137,7 +140,7 @@ items:
     lore:
       - "Deals §a+100% §7damage to Silverfish,"
       - "Spiders, and Cave Spiders."
-      - "
+      - ""
       - "§4This item is Arachnal Ж!"
     default_statistics:
       damage: 30
@@ -168,20 +171,6 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
 
-  - id: WITHER_BOW
-    material: BOW
-    rarity: UNCOMMON
-    lore:
-      - "Deals §a+100% §7damage to §aWithers §7and"
-      - "§aWither Skeletons§7."
-    default_statistics:
-      damage: 30
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: BOW
-      - id: QUIVER_DISPLAY
-        should_be_arrow: false
-
   - id: HYPERION
     material: IRON_SWORD
     rarity: LEGENDARY
@@ -204,7 +193,7 @@ items:
           - "COMBAT:250000"
       - id: MUSEUM
         museum_category: WEAPONS
-      - id: UNIQUE_TRACKED_ITEM
+      - id: TRACKED_UNIQUE
       - id: NOT_FINISHED_YET
       - id: STANDARD_ITEM
         standard_item_type: SWORD

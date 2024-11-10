@@ -35,15 +35,19 @@ items:
         recipes:
           - type: "shaped"
             result:
-              item: "BLAST_O_LANTERN"
+              type: "BLAST_O_LANTERN"
               amount: 32
             pattern:
               - "AAA"
               - "ABA"
               - "AAA"
             ingredients:
-              A: "GREEN_CANDY"
-              B: "PUMPKIN_GUTS"
+              A:
+                type: GREEN_CANDY
+                amount: 1
+              B:
+                type: PUMPKIN_GUTS
+                amount: 1
 
   - id: "ECTOPLASM"
     material: "ghast_tear"

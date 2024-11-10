@@ -17,7 +17,7 @@ public class GUIShopMineMerchant extends SkyBlockShopGUI{
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.COAL), 2, new CoinShopPrice(8)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.IRON_INGOT), 4, new CoinShopPrice(22)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.GOLD_INGOT), 2, new CoinShopPrice(12)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.ROOKIE_PICKAXE), 1, new CoinShopPrice(12)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ROOKIE_PICKAXE), 1, new CoinShopPrice(12)));
         attachItem(ShopItem.Single(new SkyBlockItem(ItemType.PROMISING_PICKAXE), 1, new CoinShopPrice(35)));
         attachItem(ShopItem.Single(new SkyBlockItem(Material.GOLDEN_PICKAXE), 1, new ItemShopPrice(ItemType.GOLD_INGOT, 3)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.TORCH), 32, new CoinShopPrice(16)));

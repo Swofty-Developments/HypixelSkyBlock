@@ -8,6 +8,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.CommunityShopItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -42,8 +43,8 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
                 " ",
                 "§eClick to view models!"),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.SUMSUNG_G3_ABICASE, 15000, 1),
-                        new CommunityShopItem(ItemTypeLinker.SUMSUNG_GG_ABICASE, 25000, 1)
+                        new CommunityShopItem(ItemType.SUMSUNG_G3_ABICASE, 15000, 1),
+                        new CommunityShopItem(ItemType.SUMSUNG_GG_ABICASE, 25000, 1)
                 )),
         REZAR_ABICASES("Rezar Abicase", new GUIBitsAbicases(), ItemStackCreator.getStackHead("§aRezar® Abicase", "b2128f48d997186563fbc5b47a88c0d0aac92fa2c285cd1fae420c34fa8f2010", 1,
                 "§7Play hard, play fair and do it all in",
@@ -55,7 +56,7 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
                 " ",
                 "§eClick to view THE model!"),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.REZAR_ABICASE, 26000, 1)
+                        new CommunityShopItem(ItemType.REZAR_ABICASE, 26000, 1)
                 )),
         BLUE_ABICASES("Blue™ Abicases", new GUIBitsAbicases(), ItemStackCreator.getStackHead("§9Blue™ Abicases", "a3c153c391c34e2d328a60839e683a9f82ad3048299d8bc6a39e6f915cc5a", 1,
                 "§7Blue Abicases are not all blue.",
@@ -71,11 +72,11 @@ public class GUIBitsAbicases extends SkyBlockInventoryGUI {
                 " ",
                 "§eClick to pick a color!"),
                 List.of(
-                        new CommunityShopItem(ItemTypeLinker.BLUE_BUT_RED_ABICASE, 17000, 1),
-                        new CommunityShopItem(ItemTypeLinker.ACTUALLY_BLUE_ABICASE, 17000, 1),
-                        new CommunityShopItem(ItemTypeLinker.BLUE_BUT_GREEN_ABICASE, 17000, 1),
-                        new CommunityShopItem(ItemTypeLinker.BLUE_BUT_YELLOW_ABICASE, 17000, 1),
-                        new CommunityShopItem(ItemTypeLinker.LIGHTER_BLUE_ABICASE, 17000, 1)
+                        new CommunityShopItem(ItemType.BLUE_BUT_RED_ABICASE, 17000, 1),
+                        new CommunityShopItem(ItemType.ACTUALLY_BLUE_ABICASE, 17000, 1),
+                        new CommunityShopItem(ItemType.BLUE_BUT_GREEN_ABICASE, 17000, 1),
+                        new CommunityShopItem(ItemType.BLUE_BUT_YELLOW_ABICASE, 17000, 1),
+                        new CommunityShopItem(ItemType.LIGHTER_BLUE_ABICASE, 17000, 1)
                 )),
         ;
 

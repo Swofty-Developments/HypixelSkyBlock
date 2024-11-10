@@ -102,9 +102,8 @@ public class SkyBlockItem {
         String id = type.name();
         config = ConfigurableSkyBlockItem.getFromID(id);
         if (config == null) {
-            Logger.warn("No config found for " + id);
             config = new ConfigurableSkyBlockItem(id,
-                    Material.AIR, List.of(), new HashMap<>());
+                    getMaterial(), List.of(), new HashMap<>());
         }
     }
 
@@ -215,6 +214,7 @@ public class SkyBlockItem {
     }
 
     public <T extends SkyBlockItemComponent> boolean hasComponent(Class<T> componentClass) {
+        if (config == null) return false;
         return config.hasComponent(componentClass);
     }
 

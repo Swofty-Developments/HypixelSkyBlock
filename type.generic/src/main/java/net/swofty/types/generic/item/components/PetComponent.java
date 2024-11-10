@@ -60,7 +60,7 @@ public class PetComponent extends SkyBlockItemComponent {
         addInheritedComponent(new InteractableComponent(this::interact, this::interact, null));
         addInheritedComponent(new LoreUpdateComponent(
                 new LoreConfig((item, player) -> getAbsoluteLore(player, item), null)
-        ));
+        , true));
     }
 
     private void interact(SkyBlockPlayer player, SkyBlockItem item) {

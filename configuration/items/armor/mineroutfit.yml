@@ -15,8 +15,6 @@ items:
       - id: SELLABLE
         value: 320.0
       - id: ARMOR
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Miner's Outfit Boots
   - id: MINER_OUTFIT_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -33,8 +31,6 @@ items:
       - id: SELLABLE
         value: 640.0
       - id: ARMOR
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Miner's Outfit Chestplate
   - id: MINER_OUTFIT_HELMET
     rarity: COMMON
     default_statistics:
@@ -51,8 +47,6 @@ items:
       - id: SELLABLE
         value: 400.0
       - id: ARMOR
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Miner's Outfit Helmet
   - id: MINER_OUTFIT_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -69,5 +63,3 @@ items:
       - id: SELLABLE
         value: 560.0
       - id: ARMOR
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Miner's Outfit Leggings

@@ -15,14 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ItemShopPrice implements ShopPrice {
-
     ItemType type;
     int amount;
-
-    public ItemShopPrice(ItemTypeLinker linker, int amount) {
-        this.type = linker.getType();
-        this.amount = amount;
-    }
 
     @Override
     public List<String> getGUIDisplay() {
@@ -31,7 +25,7 @@ public class ItemShopPrice implements ShopPrice {
 
     @Override
     public String getNamePlural() {
-        return "items";
+        return "configuration/items";
     }
 
     @Override

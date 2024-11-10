@@ -6,6 +6,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
@@ -20,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUICollectionItem extends SkyBlockInventoryGUI {
-    private final ItemTypeLinker item;
+    private final ItemType item;
     private CollectionCategory category;
     private CollectionCategory.ItemCollection collection;
 
-    public GUICollectionItem(ItemTypeLinker item) {
-        super(item.getDisplayName(null) + " Collection", InventoryType.CHEST_6_ROW);
+    public GUICollectionItem(ItemType item) {
+        super(item.getDisplayName() + " Collection", InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.category = CollectionCategories.getCategory(item);
@@ -43,8 +44,8 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§e" + item.getDisplayName(null), item.type.material, 1,
-                        "§7View all your " + item.getDisplayName(null) + " Collection",
+                return ItemStackCreator.getStack("§e" + item.getDisplayName(), item.material, 1,
+                        "§7View all your " + item.getDisplayName() + " Collection",
                         "§7progress and rewards!",
                         " ",
                         "§7Total Collected: §e" + player.getCollection().get(item));
@@ -73,7 +74,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
 
                     if (playerCollection.getReward(collection) == null) {
                         return ItemStackCreator.getStack(
-                                "§7" + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
+                                "§7" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
                                 Material.GREEN_STAINED_GLASS_PANE,
                                 1,
                                 lore
@@ -95,7 +96,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
                     }
 
                     return ItemStackCreator.getStack(
-                            colour + item.getDisplayName(null) + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
+                            colour + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
                             material,
                             1,
                             lore

@@ -1,5 +1,6 @@
 package net.swofty.types.generic.item.components;
 
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.swofty.commons.item.ReforgeType;
@@ -12,20 +13,23 @@ import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+@Getter
 public class BowComponent extends SkyBlockItemComponent {
     private final BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler;
+    private final boolean shouldBeArrow;
 
-    public BowComponent(BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler) {
+    public BowComponent(BiConsumer<SkyBlockPlayer, SkyBlockItem> shootHandler, boolean shouldBeArrow) {
         this.shootHandler = shootHandler;
+        this.shouldBeArrow = shouldBeArrow;
         addInheritedComponent(new ExtraRarityComponent("BOW"));
-        addInheritedComponent(new QuiverDisplayComponent(false));
+        addInheritedComponent(new QuiverDisplayComponent(shouldBeArrow));
         addInheritedComponent(new ReforgableComponent(ReforgeType.BOWS));
         addInheritedComponent(new EnchantableComponent(List.of(EnchantItemGroups.BOW), true));
         addInheritedComponent(new RuneableComponent(RuneableComponent.RuneApplicableTo.BOWS));
     }
 
-    public BowComponent(String handlerId) {
-        this(BowRegistry.getHandler(handlerId).getShootHandler());
+    public BowComponent(String handlerId, boolean shouldBeArrow) {
+        this(BowRegistry.getHandler(handlerId).getShootHandler(), shouldBeArrow);
     }
 
     public void onBowShoot(SkyBlockPlayer player, SkyBlockItem item) {

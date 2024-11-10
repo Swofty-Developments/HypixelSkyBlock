@@ -20,9 +20,7 @@ import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
-import net.swofty.commons.Configuration;
-import net.swofty.commons.CustomWorlds;
-import net.swofty.commons.Songs;
+import net.swofty.commons.*;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -84,10 +82,8 @@ import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
-import net.swofty.commons.StringUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -344,23 +340,36 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          */
         ItemAttribute.registerItemAttributes();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        File itemsFolder = new File(getClass().getClassLoader().getResource("items").getFile());
-        if (itemsFolder.exists() && itemsFolder.isDirectory()) {
-            for (File file : itemsFolder.listFiles()) {
-                if (file.getName().endsWith(".yml")) {
-                    try (InputStream input = getClass().getClassLoader().getResourceAsStream("items/" + file.getName())) {
-                        Yaml yaml = new Yaml();
-                        Map<String, Object> data = yaml.load(input);
-                        List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
+        File configDir = new File("./configuration");
+        File itemsDir = new File(configDir, "items");
+        try {
+            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
+            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
+            for (File file : yamlFiles) {
+                Logger.info("Loading " + file.getName());
+                try {
+                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
+                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
 
+                    if (items != null) {
                         for (Map<String, Object> itemConfig : items) {
-                            ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                            try {
+                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse item " + itemConfig.get("id"));
+                                e.printStackTrace();
+                                continue;
+                            }
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } else {
+                        Logger.warn("No items found in " + file.getName());
                     }
+                } catch (IOException e) {
+                    Logger.error("Failed to load " + file.getName(), e);
                 }
             }
+        } catch (IOException e) {
+            Logger.error("Failed to scan for YAML files", e);
         }
 
         /**
@@ -443,6 +452,8 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             SkyBlockItem item = new SkyBlockItem(type);
             if (item.hasComponent(CraftableComponent.class)) {
                 CraftableComponent craftableComponent = item.getComponent(CraftableComponent.class);
+                if (craftableComponent.isDefaultCraftable()) return;
+
                 try {
                     craftableComponent.getRecipes().forEach(SkyBlockRecipe::init);
                 } catch (Exception e) {

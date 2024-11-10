@@ -31,7 +31,7 @@ public class RuneComponent extends SkyBlockItemComponent {
                 "§7Apply this rune to weapons or",
                 "§7fuse two together at the Runic",
                 "§7Pedestal!"
-        )));
+        ), false));
     }
 
     private List<String> getExtraDisplay() {

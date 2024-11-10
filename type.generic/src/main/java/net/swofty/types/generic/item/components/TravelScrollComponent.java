@@ -24,7 +24,7 @@ public class TravelScrollComponent extends SkyBlockItemComponent {
                 "§7destination to your fast travel",
                 "§7options."
         ));
-        addInheritedComponent(new ExtraLoreComponent(lore));
+        addInheritedComponent(new LoreUpdateComponent(lore, false));
         addInheritedComponent(new ExtraRarityComponent("TRAVEL SCROLL"));
         addInheritedComponent(new InteractableComponent(this::onInteract, this::onInteract, null));
         addInheritedComponent(new TrackedUniqueComponent());

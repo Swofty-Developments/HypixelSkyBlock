@@ -118,8 +118,8 @@ public class MinionKillMobAction extends MinionAction {
 
         boolean shouldAllow = false;
         for (ItemQuantifiable item : itemsInMinion) {
-            ItemTypeLinker itemTypeLinker = item.getItem().getAttributeHandler().getPotentialClassLinker();
-            if (lootTableItems.contains(itemTypeLinker.getType())) {
+            ItemType itemType = item.getItem().getAttributeHandler().getPotentialType();
+            if (lootTableItems.contains(itemType)) {
                 if (item.getAmount() != 64) {
                     shouldAllow = true;
                 }

@@ -7,7 +7,7 @@ import net.swofty.commons.item.ItemType;
 @AllArgsConstructor
 @Getter
 public class CommunityShopItem {
-    private ItemType itemTypeLinker;
+    private ItemType itemType;
     private int price;
     private int amount;
 }

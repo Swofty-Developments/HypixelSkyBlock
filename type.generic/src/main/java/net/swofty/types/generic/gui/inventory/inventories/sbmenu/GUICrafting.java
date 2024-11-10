@@ -10,6 +10,7 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -107,12 +108,12 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
-                ItemTypeLinker cursorItemTypeLinker = cursorItem.getAttributeHandler().getPotentialClassLinker();
-                ItemTypeLinker resultItemTypeLinker = finalRecipe.getResult().getAttributeHandler().getPotentialClassLinker();
+                ItemType cursorItemType = cursorItem.getAttributeHandler().getPotentialType();
+                ItemType resultItemType = finalRecipe.getResult().getAttributeHandler().getPotentialType();
                 boolean isShift = e.getClickType().equals(ClickType.START_SHIFT_CLICK);
 
                 if (!e.getCursorItem().isAir() &&
-                        (cursorItemTypeLinker == null || !cursorItemTypeLinker.equals(resultItemTypeLinker))) {
+                        (cursorItemType == null || !cursorItemType.equals(resultItemType))) {
                     e.setCancelled(true);
                     e.getPlayer().sendMessage("§cYou must empty your cursor first!");
                     return;
@@ -141,7 +142,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     player.addAndUpdateItem(e.getClickedItem());
                 }
 
-                if (cursorItemTypeLinker != null && cursorItemTypeLinker.equals(resultItemTypeLinker) && !isShift) {
+                if (cursorItemType != null && cursorItemType.equals(resultItemType) && !isShift) {
                     e.setCancelled(true);
                     player.addAndUpdateItem(cursorItem);
                 }

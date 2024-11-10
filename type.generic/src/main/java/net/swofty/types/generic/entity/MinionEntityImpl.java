@@ -61,10 +61,10 @@ public class MinionEntityImpl extends LivingEntity {
         if (skinExtension.getItemTypePassedIn() != null) {
             MinionSkinComponent skinItem = new SkyBlockItem(skinExtension.getItemTypePassedIn()).getComponent(MinionSkinComponent.class);
 
-            setHelmet(skinItem.getHelmet());
-            setBoots(skinItem.getBoots());
-            setLeggings(skinItem.getLeggings());
-            setChestplate(skinItem.getChestplate());
+            setHelmet(skinItem.getHelmetStack());
+            setBoots(skinItem.getBootsStack());
+            setLeggings(skinItem.getLeggingsStack());
+            setChestplate(skinItem.getChestplateStack());
         } else {
             setHelmet(ItemStackCreator.getStackHead(minionTier.texture()).build());
             setBoots(ItemStack.builder(Material.LEATHER_BOOTS).set(ItemComponent.DYED_COLOR,

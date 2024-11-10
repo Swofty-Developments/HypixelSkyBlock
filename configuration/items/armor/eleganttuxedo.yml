@@ -14,8 +14,6 @@ items:
         b: '25'
       - id: CUSTOM_DISPLAY_NAME
         display_name: Elegant Tuxedo Oxfords
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Elegant Tuxedo Oxfords
   - id: ELEGANT_TUXEDO_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -30,8 +28,6 @@ items:
         b: '25'
       - id: CUSTOM_DISPLAY_NAME
         display_name: Elegant Tuxedo Jacket
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Elegant Tuxedo Jacket
   - id: ELEGANT_TUXEDO_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -44,7 +40,5 @@ items:
         r: '254'
         g: '253'
         b: '252'
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Elegant Tuxedo Pants
       - id: CUSTOM_DISPLAY_NAME
         display_name: Elegant Tuxedo Pants
