@@ -20,7 +20,6 @@ items:
           - SUPERLITE_MOTOR
           - SYNTHETIC_HEART
           - WISHING_COMPASS
-          - YOGGIE
         max_capacity: 20160
         handler_id: CRYSTAL_HOLLOWS_SACK_SACK
   - id: DUNGEON_SACK
@@ -33,23 +32,6 @@ items:
         valid_items:
           - ANCIENT_ROSE
           - BIGFOOT_LASSO
-          - BONZO_FRAGMENT
-          - DECOY
-          - DUNGEON_CHEST_KEY
-          - FEL_PEARL
-          - HEALING_TISSUE
-          - INFLATABLE_JERRY
-          - JOLLY_PINK_ROCK
-          - KISMET_FEATHER
-          - LASR_EYE
-          - LIVID_FRAGMENT
-          - MIMIC_FRAGMENT
-          - SCARF_FRAGMENT
-          - SPIRIT_LEAP
-          - SUPERBOOM_TNT
-          - THORN_FRAGMENT
-          - TRAP
-          - WITHER_CATALYST
         max_capacity: 20160
         handler_id: DUNGEON_SACK_SACK
   - id: DWARVEN_SACK

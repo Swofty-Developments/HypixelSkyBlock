@@ -62,13 +62,13 @@ public class ItemLore {
         }
         String displayRarity = rarity.getDisplay();
 
-        displayName = item.getDisplayName();
+        displayName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
         if (item.hasComponent(LoreUpdateComponent.class)) {
             LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
             if (loreUpdateComponent.isAbsolute()) {
                 LoreConfig loreConfig = loreUpdateComponent.getHandler();
-                String forcedDisplayName = item.getDisplayName();
+                String forcedDisplayName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
                 if (loreConfig.displayNameGenerator() != null) {
                     forcedDisplayName = loreConfig.displayNameGenerator().apply(item, player);
@@ -245,7 +245,7 @@ public class ItemLore {
 
         if (item.hasComponent(ExtraRarityComponent.class)) {
             ExtraRarityComponent extraRarityComponent = item.getComponent(ExtraRarityComponent.class);
-            displayRarity = displayRarity + extraRarityComponent.getExtraRarityDisplay();
+            displayRarity = displayRarity + " " + extraRarityComponent.getExtraRarityDisplay();
         }
 
         if (item.hasComponent(ReforgableComponent.class)) {

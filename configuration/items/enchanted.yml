@@ -1,5 +1,5 @@
 items:
-  - id: "ACACIA_LOG"
+  - id: "ENCHANTED_ACACIA_LOG"
     material: "acacia_log"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -8,14 +8,21 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "ANCIENT_CLAW"
+  - id: "ENCHANTED_ANCIENT_CLAW"
     material: "ancient_claw"
     rarity: "UNCOMMON"
     default_statistics: {}
     components:
       - id: "ENCHANTED"
 
-  - id: "BAKED_POTATO"
+  - id: "ENCHANTED_SLIMEBALL"
+    material: "ENCHANTED_SLIMEBALL"
+    rarity: "UNCOMMON"
+    default_statistics: {}
+    components:
+      - id: "ENCHANTED"
+
+  - id: "ENCHANTED_BAKED_POTATO"
     material: "baked_potato"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -24,7 +31,7 @@ items:
       - id: "SELLABLE"
         value: 76800
 
-  - id: "BIRCH_LOG"
+  - id: "ENCHANTED_BIRCH_LOG"
     material: "birch_log"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -33,7 +40,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "BLAZE_POWDER"
+  - id: "ENCHANTED_BLAZE_POWDER"
     material: "blaze_powder"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -42,7 +49,7 @@ items:
       - id: "SELLABLE"
         value: 1440
 
-  - id: "BLAZE_ROD"
+  - id: "ENCHANTED_BLAZE_ROD"
     material: "blaze_rod"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -51,7 +58,7 @@ items:
       - id: "SELLABLE"
         value: 230400
 
-  - id: "BONE"
+  - id: "ENCHANTED_BONE"
     material: "bone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -60,14 +67,14 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "BONE_BLOCK"
+  - id: "ENCHANTED_BONE_BLOCK"
     material: "bone_block"
     rarity: "UNCOMMON"
     default_statistics: {}
     components:
       - id: "ENCHANTED"
 
-  - id: "BONE_MEAL"
+  - id: "ENCHANTED_BONE_MEAL"
     material: "bone_meal"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -76,7 +83,7 @@ items:
       - id: "SELLABLE"
         value: 1
 
-  - id: "BOOKSHELF"
+  - id: "ENCHANTED_BOOKSHELF"
     material: "bookshelf"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -85,7 +92,7 @@ items:
       - id: "SELLABLE"
         value: 2700
 
-  - id: "BREAD"
+  - id: "ENCHANTED_BREAD"
     material: "bread"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -94,7 +101,7 @@ items:
       - id: "SELLABLE"
         value: 60
 
-  - id: "BROWN_MUSHROOM"
+  - id: "ENCHANTED_BROWN_MUSHROOM"
     material: "brown_mushroom"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -103,7 +110,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "BROWN_MUSHROOM_BLOCK"
+  - id: "ENCHANTED_BROWN_MUSHROOM_BLOCK"
     material: "brown_mushroom_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -112,7 +119,7 @@ items:
       - id: "SELLABLE"
         value: 51200
 
-  - id: "CACTUS"
+  - id: "ENCHANTED_CACTUS"
     material: "cactus"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -121,7 +128,7 @@ items:
       - id: "SELLABLE"
         value: 76800
 
-  - id: "CACTUS_GREEN"
+  - id: "ENCHANTED_CACTUS_GREEN"
     material: "cactus_green"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -130,7 +137,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "CARROT"
+  - id: "ENCHANTED_CARROT"
     material: "carrot"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -139,7 +146,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "CHARCOAL"
+  - id: "ENCHANTED_CHARCOAL"
     material: "charcoal"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -148,7 +155,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "CLAY"
+  - id: "ENCHANTED_CLAY"
     material: "clay"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -157,7 +164,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "CLOWNFISH"
+  - id: "ENCHANTED_CLOWNFISH"
     material: "clownfish"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -166,7 +173,7 @@ items:
       - id: "SELLABLE"
         value: 3200
 
-  - id: "COAL"
+  - id: "ENCHANTED_COAL"
     material: "coal"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -175,7 +182,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "COAL_BLOCK"
+  - id: "ENCHANTED_COAL_BLOCK"
     material: "coal_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -184,7 +191,7 @@ items:
       - id: "SELLABLE"
         value: 51000
 
-  - id: "COBBLESTONE"
+  - id: "ENCHANTED_COBBLESTONE"
     material: "cobblestone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -193,7 +200,7 @@ items:
       - id: "SELLABLE"
         value: 160
 
-  - id: "COCOA_BEANS"
+  - id: "ENCHANTED_COCOA_BEANS"
     material: "cocoa_beans"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -202,7 +209,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "COOKED_FISH"
+  - id: "ENCHANTED_COOKED_FISH"
     material: "cooked_fish"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -211,7 +218,7 @@ items:
       - id: "SELLABLE"
         value: 150000
 
-  - id: "COOKED_MUTTON"
+  - id: "ENCHANTED_COOKED_MUTTON"
     material: "cooked_mutton"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -220,7 +227,7 @@ items:
       - id: "SELLABLE"
         value: 128000
 
-  - id: "COOKED_SALMON"
+  - id: "ENCHANTED_COOKED_SALMON"
     material: "cooked_salmon"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -229,7 +236,7 @@ items:
       - id: "SELLABLE"
         value: 256000
 
-  - id: "COOKIE"
+  - id: "ENCHANTED_COOKIE"
     material: "cookie"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -238,7 +245,7 @@ items:
       - id: "SELLABLE"
         value: 61500
 
-  - id: "DANDELION"
+  - id: "ENCHANTED_DANDELION"
     material: "dandelion"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -265,7 +272,7 @@ items:
       - id: "SELLABLE"
         value: 1280
 
-  - id: "DIAMOND_BLOCK"
+  - id: "ENCHANTED_DIAMOND_BLOCK"
     material: "diamond_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -274,7 +281,7 @@ items:
       - id: "SELLABLE"
         value: 204800
 
-  - id: "EGG"
+  - id: "ENCHANTED_EGG"
     material: "egg"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -283,7 +290,7 @@ items:
       - id: "SELLABLE"
         value: 432
 
-  - id: "EMERALD"
+  - id: "ENCHANTED_EMERALD"
     material: "emerald"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -292,7 +299,7 @@ items:
       - id: "SELLABLE"
         value: 960
 
-  - id: "EMERALD_BLOCK"
+  - id: "ENCHANTED_EMERALD_BLOCK"
     material: "emerald_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -301,7 +308,7 @@ items:
       - id: "SELLABLE"
         value: 153600
 
-  - id: "ENDER_PEARL"
+  - id: "ENCHANTED_ENDER_PEARL"
     material: "ender_pearl"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -310,7 +317,7 @@ items:
       - id: "SELLABLE"
         value: 140
 
-  - id: "END_STONE"
+  - id: "ENCHANTED_END_STONE"
     material: "end_stone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -319,7 +326,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "EYE_OF_ENDER"
+  - id: "ENCHANTED_EYE_OF_ENDER"
     material: "eye_of_ender"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -328,7 +335,7 @@ items:
       - id: "SELLABLE"
         value: 3520
 
-  - id: "FEATHER"
+  - id: "ENCHANTED_FEATHER"
     material: "feather"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -337,7 +344,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "FERMENTED_SPIDER_EYE"
+  - id: "ENCHANTED_FERMENTED_SPIDER_EYE"
     material: "fermented_spider_eye"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -346,7 +353,7 @@ items:
       - id: "SELLABLE"
         value: 31000
 
-  - id: "FIREWORK_ROCKET"
+  - id: "ENCHANTED_FIREWORK_ROCKET"
     material: "firework_rocket"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -355,7 +362,7 @@ items:
       - id: "SELLABLE"
         value: 41000
 
-  - id: "FLINT"
+  - id: "ENCHANTED_FLINT"
     material: "flint"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -366,7 +373,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "GHAST_TEAR"
+  - id: "ENCHANTED_GHAST_TEAR"
     material: "ghast_tear"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -375,7 +382,7 @@ items:
       - id: "SELLABLE"
         value: 80
 
-  - id: "GLISTERING_MELON"
+  - id: "ENCHANTED_GLISTERING_MELON"
     material: "glistering_melon"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -384,7 +391,7 @@ items:
       - id: "SELLABLE"
         value: 1000
 
-  - id: "GLOWSTONE"
+  - id: "ENCHANTED_GLOWSTONE"
     material: "glowstone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -393,7 +400,7 @@ items:
       - id: "SELLABLE"
         value: 51200
 
-  - id: "GLOWSTONE_DUST"
+  - id: "ENCHANTED_GLOWSTONE_DUST"
     material: "glowstone_dust"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -402,7 +409,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "GOLD"
+  - id: "ENCHANTED_GOLD"
     material: "gold"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -411,7 +418,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "GOLD_BLOCK"
+  - id: "ENCHANTED_GOLD_BLOCK"
     material: "gold_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -420,7 +427,7 @@ items:
       - id: "SELLABLE"
         value: 102000
 
-  - id: "GOLDEN_CARROT"
+  - id: "ENCHANTED_GOLDEN_CARROT"
     material: "golden_carrot"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -429,7 +436,7 @@ items:
       - id: "SELLABLE"
         value: 61440
 
-  - id: "GRILLED_PORK"
+  - id: "ENCHANTED_GRILLED_PORK"
     material: "grilled_pork"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -438,7 +445,7 @@ items:
       - id: "SELLABLE"
         value: 128000
 
-  - id: "GUNPOWDER"
+  - id: "ENCHANTED_GUNPOWDER"
     material: "gunpowder"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -447,7 +454,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "HARDSTONE"
+  - id: "ENCHANTED_HARDSTONE"
     material: "hardstone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -456,7 +463,7 @@ items:
       - id: "SELLABLE"
         value: 576
 
-  - id: "HAY_BALE"
+  - id: "ENCHANTED_HAY_BALE"
     material: "hay_bale"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -465,7 +472,7 @@ items:
       - id: "SELLABLE"
         value: 7776
 
-  - id: "ICE"
+  - id: "ENCHANTED_ICE"
     material: "ice"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -474,7 +481,7 @@ items:
       - id: "SELLABLE"
         value: 80
 
-  - id: "INK_SAC"
+  - id: "ENCHANTED_INK_SAC"
     material: "ink_sac"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -483,7 +490,7 @@ items:
       - id: "SELLABLE"
         value: 160
 
-  - id: "IRON"
+  - id: "ENCHANTED_IRON"
     material: "iron"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -492,7 +499,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "IRON_BLOCK"
+  - id: "ENCHANTED_IRON_BLOCK"
     material: "iron_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -500,8 +507,7 @@ items:
       - id: "ENCHANTED"
       - id: "SELLABLE"
         value: 76800
-
-  - id: "JUNGLE_LOG"
+  - id: "ENCHANTED_JUNGLE_LOG"
     material: "jungle_log"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -510,7 +516,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "LAPIS_LAZULI"
+  - id: "ENCHANTED_LAPIS_LAZULI"
     material: "lapis_lazuli"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -519,7 +525,7 @@ items:
       - id: "SELLABLE"
         value: 160
 
-  - id: "LAPIS_LAZULI_BLOCK"
+  - id: "ENCHANTED_LAPIS_LAZULI_BLOCK"
     material: "lapis_lazuli_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -528,7 +534,7 @@ items:
       - id: "SELLABLE"
         value: 25600
 
-  - id: "LEATHER"
+  - id: "ENCHANTED_LEATHER"
     material: "leather"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -537,7 +543,7 @@ items:
       - id: "SELLABLE"
         value: 1700
 
-  - id: "LILY_PAD"
+  - id: "ENCHANTED_LILY_PAD"
     material: "lily_pad"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -546,7 +552,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "MAGMA_CREAM"
+  - id: "ENCHANTED_MAGMA_CREAM"
     material: "magma_cream"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -555,7 +561,7 @@ items:
       - id: "SELLABLE"
         value: 1280
 
-  - id: "MELON"
+  - id: "ENCHANTED_MELON"
     material: "melon"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -564,7 +570,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "MELON_BLOCK"
+  - id: "ENCHANTED_MELON_BLOCK"
     material: "melon_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -573,7 +579,7 @@ items:
       - id: "SELLABLE"
         value: 51200
 
-  - id: "MITHRIL"
+  - id: "ENCHANTED_MITHRIL"
     material: "mithril"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -582,7 +588,7 @@ items:
       - id: "SELLABLE"
         value: 1280
 
-  - id: "MUTTON"
+  - id: "ENCHANTED_MUTTON"
     material: "mutton"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -591,7 +597,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "MYCELIUM"
+  - id: "ENCHANTED_MYCELIUM"
     material: "mycelium"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -600,7 +606,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "NETHERRACK"
+  - id: "ENCHANTED_NETHERRACK"
     material: "netherrack"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -609,7 +615,7 @@ items:
       - id: "SELLABLE"
         value: 160
 
-  - id: "NETHER_WART"
+  - id: "ENCHANTED_NETHER_WART"
     material: "nether_wart"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -618,7 +624,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "OAK_LOG"
+  - id: "ENCHANTED_OAK_LOG"
     material: "oak_log"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -627,7 +633,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "OBSIDIAN"
+  - id: "ENCHANTED_OBSIDIAN"
     material: "obsidian"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -636,7 +642,7 @@ items:
       - id: "SELLABLE"
         value: 1440
 
-  - id: "PACKED_ICE"
+  - id: "ENCHANTED_PACKED_ICE"
     material: "packed_ice"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -645,7 +651,7 @@ items:
       - id: "SELLABLE"
         value: 12800
 
-  - id: "PAPER"
+  - id: "ENCHANTED_PAPER"
     material: "paper"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -654,7 +660,7 @@ items:
       - id: "SELLABLE"
         value: 384
 
-  - id: "POISONOUS_POTATO"
+  - id: "ENCHANTED_POISONOUS_POTATO"
     material: "poisonous_potato"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -665,7 +671,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "POPPY"
+  - id: "ENCHANTED_POPPY"
     material: "poppy"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -674,7 +680,7 @@ items:
       - id: "SELLABLE"
         value: 576
 
-  - id: "PORK"
+  - id: "ENCHANTED_PORK"
     material: "pork"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -683,7 +689,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "POTATO"
+  - id: "ENCHANTED_POTATO"
     material: "potato"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -692,7 +698,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "PRISMARINE_CRYSTALS"
+  - id: "ENCHANTED_PRISMARINE_CRYSTALS"
     material: "prismarine_crystals"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -701,7 +707,7 @@ items:
       - id: "SELLABLE"
         value: 400
 
-  - id: "PRISMARINE_SHARD"
+  - id: "ENCHANTED_PRISMARINE_SHARD"
     material: "prismarine_shard"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -710,7 +716,7 @@ items:
       - id: "SELLABLE"
         value: 400
 
-  - id: "PUFFERFISH"
+  - id: "ENCHANTED_PUFFERFISH"
     material: "pufferfish"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -719,7 +725,7 @@ items:
       - id: "SELLABLE"
         value: 2400
 
-  - id: "PUMPKIN"
+  - id: "ENCHANTED_PUMPKIN"
     material: "pumpkin"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -728,7 +734,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "QUARTZ"
+  - id: "ENCHANTED_QUARTZ"
     material: "quartz"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -737,7 +743,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "QUARTZ_BLOCK"
+  - id: "ENCHANTED_QUARTZ_BLOCK"
     material: "quartz_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -746,7 +752,7 @@ items:
       - id: "SELLABLE"
         value: 102400
 
-  - id: "RABBIT_FOOT"
+  - id: "ENCHANTED_RABBIT_FOOT"
     material: "rabbit_foot"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -755,7 +761,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "RABBIT_HIDE"
+  - id: "ENCHANTED_RABBIT_HIDE"
     material: "rabbit_hide"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -764,7 +770,7 @@ items:
       - id: "SELLABLE"
         value: 2880
 
-  - id: "RAW_BEEF"
+  - id: "ENCHANTED_RAW_BEEF"
     material: "raw_beef"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -773,7 +779,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "RAW_CHICKEN"
+  - id: "ENCHANTED_RAW_CHICKEN"
     material: "raw_chicken"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -782,7 +788,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "RAW_FISH"
+  - id: "ENCHANTED_RAW_FISH"
     material: "raw_fish"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -791,7 +797,7 @@ items:
       - id: "SELLABLE"
         value: 960
 
-  - id: "RAW_RABBIT"
+  - id: "ENCHANTED_RAW_RABBIT"
     material: "raw_rabbit"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -800,7 +806,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "RAW_SALMON"
+  - id: "ENCHANTED_RAW_SALMON"
     material: "raw_salmon"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -809,7 +815,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "RED_MUSHROOM"
+  - id: "ENCHANTED_RED_MUSHROOM"
     material: "red_mushroom"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -818,7 +824,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "RED_MUSHROOM_BLOCK"
+  - id: "ENCHANTED_RED_MUSHROOM_BLOCK"
     material: "red_mushroom_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -827,7 +833,7 @@ items:
       - id: "SELLABLE"
         value: 51200
 
-  - id: "RED_SAND"
+  - id: "ENCHANTED_RED_SAND"
     material: "red_sand"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -836,7 +842,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "REDSTONE"
+  - id: "ENCHANTED_REDSTONE"
     material: "redstone"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -845,7 +851,7 @@ items:
       - id: "SELLABLE"
         value: 160
 
-  - id: "REDSTONE_BLOCK"
+  - id: "ENCHANTED_REDSTONE_BLOCK"
     material: "redstone_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -854,7 +860,7 @@ items:
       - id: "SELLABLE"
         value: 25600
 
-  - id: "ROTTEN_FLESH"
+  - id: "ENCHANTED_ROTTEN_FLESH"
     material: "rotten_flesh"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -863,7 +869,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "SAND"
+  - id: "ENCHANTED_SAND"
     material: "sand"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -872,7 +878,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "SEEDS"
+  - id: "ENCHANTED_SEEDS"
     material: "seeds"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -881,7 +887,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "SHARK_FIN"
+  - id: "ENCHANTED_SHARK_FIN"
     material: "shark_fin"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -890,7 +896,7 @@ items:
         recipe_type: FISHING
         item_id: SHARK_FIN
 
-  - id: "SLIMEBALL"
+  - id: "ENCHANTED_SLIMEBALL"
     material: "slimeball"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -899,7 +905,7 @@ items:
       - id: "SELLABLE"
         value: 800
 
-  - id: "SLIME_BLOCK"
+  - id: "ENCHANTED_SLIME_BLOCK"
     material: "slime_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -910,7 +916,7 @@ items:
       - id: "SELLABLE"
         value: 128000
 
-  - id: "SNOW_BLOCK"
+  - id: "ENCHANTED_SNOW_BLOCK"
     material: "snow_block"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -921,7 +927,7 @@ items:
       - id: "SELLABLE"
         value: 600
 
-  - id: "SPIDER_EYE"
+  - id: "ENCHANTED_SPIDER_EYE"
     material: "spider_eye"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -930,7 +936,7 @@ items:
       - id: "SELLABLE"
         value: 480
 
-  - id: "SPONGE"
+  - id: "ENCHANTED_SPONGE"
     material: "sponge"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -939,7 +945,7 @@ items:
       - id: "SELLABLE"
         value: 2000
 
-  - id: "SPRUCE_LOG"
+  - id: "ENCHANTED_SPRUCE_LOG"
     material: "spruce_log"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -948,7 +954,7 @@ items:
       - id: "SELLABLE"
         value: 320
 
-  - id: "STRING"
+  - id: "ENCHANTED_STRING"
     material: "string"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -957,7 +963,7 @@ items:
       - id: "SELLABLE"
         value: 576
 
-  - id: "SUGAR"
+  - id: "ENCHANTED_SUGAR"
     material: "sugar"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -966,7 +972,7 @@ items:
       - id: "SELLABLE"
         value: 640
 
-  - id: "SUGAR_CANE"
+  - id: "ENCHANTED_SUGAR_CANE"
     material: "sugar_cane"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -975,7 +981,7 @@ items:
       - id: "SELLABLE"
         value: 102400
 
-  - id: "SULPHUR"
+  - id: "ENCHANTED_SULPHUR"
     material: "sulphur"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -984,7 +990,7 @@ items:
       - id: "SELLABLE"
         value: 1600
 
-  - id: "TITANIUM"
+  - id: "ENCHANTED_TITANIUM"
     material: "titanium"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -993,7 +999,7 @@ items:
       - id: "SELLABLE"
         value: 3200
 
-  - id: "WET_SPONGE"
+  - id: "ENCHANTED_WET_SPONGE"
     material: "wet_sponge"
     rarity: "UNCOMMON"
     default_statistics: {}
@@ -1002,7 +1008,7 @@ items:
       - id: "SELLABLE"
         value: 80000
 
-  - id: "WOOL"
+  - id: "ENCHANTED_WOOL"
     material: "wool"
     rarity: "UNCOMMON"
     default_statistics: {}

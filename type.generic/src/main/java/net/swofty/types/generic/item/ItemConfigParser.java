@@ -35,7 +35,6 @@ import java.util.Map;
 public class ItemConfigParser {
     public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {
         String id = (String) config.get("id");
-        System.out.println("Parsing " + id);
         Material material = Material.values().stream().filter(loopedMaterial -> {
             return loopedMaterial.namespace().value().equalsIgnoreCase((String) config.get("material"));
         }).findFirst().orElse(Material.AIR);
@@ -381,12 +380,26 @@ public class ItemConfigParser {
                 Map<Rarity, ItemStatistics> perLevelStatistics = new HashMap<>();
                 for (Map.Entry<String, Object> entry : perLevelStatsMap.entrySet()) {
                     String rarity = entry.getKey();
-                    Map<String, Double> rarityStatsMap = (Map<String, Double>) entry.getValue();
                     ItemStatistics.Builder rarityBuilder = ItemStatistics.builder();
-                    rarityStatsMap.forEach((stat, value) ->
-                            rarityBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value)
-                    );
-                    perLevelStatistics.put(Rarity.valueOf(rarity), rarityBuilder.build());
+                    try {
+                        Map<String, Double> rarityStatsMap = (Map<String, Double>) entry.getValue();
+                        rarityBuilder = ItemStatistics.builder();
+                        for (Map.Entry<String, Double> e : rarityStatsMap.entrySet()) {
+                            String stat = e.getKey();
+                            Double value = e.getValue();
+                            rarityBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value);
+                        }
+                    } catch (ClassCastException e) {
+                        // Per level statistics is a map with an Integer, so we need to convert it to a double
+                        Map<String, Integer> rarityStatsMap = (Map<String, Integer>) entry.getValue();
+                        rarityBuilder = ItemStatistics.builder();
+                        for (Map.Entry<String, Integer> mapEntry : rarityStatsMap.entrySet()) {
+                            String stat = mapEntry.getKey();
+                            Integer value = mapEntry.getValue();
+                            rarityBuilder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), Double.valueOf(value));
+                        }
+                    }
+                    perLevelStatistics.put(Rarity.valueOf(rarity.toUpperCase()), rarityBuilder.build());
                 }
 
                 // Parse other fields

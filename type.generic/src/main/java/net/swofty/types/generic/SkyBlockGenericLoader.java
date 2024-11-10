@@ -346,7 +346,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
             Logger.info("Found " + yamlFiles.size() + " YAML files to load");
             for (File file : yamlFiles) {
-                Logger.info("Loading " + file.getName());
                 try {
                     Map<String, Object> data = YamlFileUtils.loadYaml(file);
                     List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");

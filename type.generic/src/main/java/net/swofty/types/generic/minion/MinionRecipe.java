@@ -34,7 +34,7 @@ public class MinionRecipe {
                 }
                 return map;
             });
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             return new MinionRecipe((materials) -> {
                 Map<Character, ItemQuantifiable> map = new HashMap<>();
                 map.put('A', new ItemQuantifiable(materials.minionIngredients().get(1).getItem(), materials.minionIngredients().get(1).getAmount()));

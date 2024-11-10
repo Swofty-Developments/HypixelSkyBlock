@@ -10,7 +10,7 @@ public class PlaceableComponent extends SkyBlockItemComponent {
     private final @Nullable BlockType blockType;
 
     public PlaceableComponent(@Nullable String blockType) {
-        this.blockType = blockType != null ? BlockType.valueOf(blockType) : null;
+        this.blockType = blockType != null ? BlockType.getFromName(blockType) : null;
     }
 
     public boolean isPlaceable() {

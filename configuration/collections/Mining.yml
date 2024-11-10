@@ -160,7 +160,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: SUPER_COMPACTOR_
+        resultType: SUPER_COMPACTOR_3000
         resultAmount: 1
         pattern: []
         ingredients:
@@ -787,10 +787,6 @@ collections:
     - type: XP
       data:
         xp: 4
-    - type: SPECIAL_UNLOCK
-      data:
-        unlockedItemType: HARD_STONE_MINION
-        isMinionRecipes: true
   - amount: 1000
     rewards:
     - type: XP

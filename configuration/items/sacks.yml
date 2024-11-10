@@ -25,19 +25,10 @@ items:
           - QUARTZ
           - NETHERRACK
           - OBSIDIAN
-          - OIL_BARREL
           - PLASMA
           - RED_SAND
           - REDSTONE
-          - REFINED_MINERAL
           - SAND
-          - STARFALL
-          - STONE
-          - TITANIUM
-          - TREASURITE
-          - TUNGSTEN
-          - UMBER
-          - VOLTA
         max_capacity: 20160
         handler_id: LARGE_MINING_SACK_SACK
   - id: MEDIUM_MINING_SACK
@@ -66,19 +57,8 @@ items:
           - QUARTZ
           - NETHERRACK
           - OBSIDIAN
-          - OIL_BARREL
-          - PLASMA
           - RED_SAND
           - REDSTONE
-          - REFINED_MINERAL
-          - SAND
-          - STARFALL
-          - STONE
-          - TITANIUM
-          - TREASURITE
-          - TUNGSTEN
-          - UMBER
-          - VOLTA
         max_capacity: 6720
         handler_id: MEDIUM_MINING_SACK_SACK
   - id: SMALL_MINING_SACK
@@ -107,18 +87,5 @@ items:
           - QUARTZ
           - NETHERRACK
           - OBSIDIAN
-          - OIL_BARREL
-          - PLASMA
-          - RED_SAND
-          - REDSTONE
-          - REFINED_MINERAL
-          - SAND
-          - STARFALL
-          - STONE
-          - TITANIUM
-          - TREASURITE
-          - TUNGSTEN
-          - UMBER
-          - VOLTA
         max_capacity: 2240
         handler_id: SMALL_MINING_SACK_SACK

@@ -619,6 +619,7 @@ items:
           - ENCHANTED_DANDELION:64
           - ENCHANTED_POPPY:1
           - ENCHANTED_POPPY:2
+          - ENCHANTED_POPPY:4
   - id: JUNGLE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
@@ -1038,3 +1039,4 @@ items:
           - ENCHANTED_SNOW_BLOCK:4
           - ENCHANTED_SNOW_BLOCK:8
           - ENCHANTED_SNOW_BLOCK:16
+          - ENCHANTED_SNOW_BLOCK:32

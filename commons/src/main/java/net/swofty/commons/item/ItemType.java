@@ -1120,7 +1120,8 @@ public enum ItemType {
     ALLIUM(Material.ALLIUM,  Rarity.COMMON),
     AZURE_BLUET(Material.AZURE_BLUET,  Rarity.COMMON),
     OXEYE_DAISY(Material.OXEYE_DAISY,  Rarity.COMMON),
-
+    RAW_BEEF(Material.BEEF,  Rarity.UNCOMMON),
+    RAW_CHICKEN(Material.CHICKEN,  Rarity.UNCOMMON),
 
     /**
      * Enchanted Items
@@ -1128,6 +1129,7 @@ public enum ItemType {
     ENCHANTED_ACACIA_LOG(Material.ACACIA_LOG,  Rarity.UNCOMMON),
     ENCHANTED_BAKED_POTATO(Material.BAKED_POTATO,  Rarity.UNCOMMON),
     ENCHANTED_BIRCH_LOG(Material.BIRCH_LOG,  Rarity.UNCOMMON),
+    ENCHANTED_SLIMEBALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
     ENCHANTED_BLAZE_ROD(Material.BLAZE_ROD,  Rarity.UNCOMMON),
     ENCHANTED_BLAZE_POWDER(Material.BLAZE_POWDER,  Rarity.UNCOMMON),
     ENCHANTED_BONE(Material.BONE,  Rarity.UNCOMMON),
