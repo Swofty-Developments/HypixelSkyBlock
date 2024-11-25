@@ -97,6 +97,13 @@ items:
             result:
               type: CYAN_CARPET
               amount: 1
+  - id: DIRT
+    material: DIRT
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
   - id: GRAY_CARPET
     material: GRAY_CARPET
     rarity: COMMON

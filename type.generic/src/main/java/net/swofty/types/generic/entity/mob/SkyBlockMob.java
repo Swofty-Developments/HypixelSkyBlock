@@ -129,7 +129,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEventHandler.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
+        player.getSkills().increase(player, getSkillCategory(), (double) getSkillXP());
         player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 
         if (getLootTable() == null) return;

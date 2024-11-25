@@ -340,8 +340,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
         public void onSuccess(SkyBlockPlayer player, SkyBlockItem outputItem) {
             int level = outputItem.getAttributeHandler().getRuneLevel();
 
-            player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
-                    player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
+            player.getSkills().increase(player, SkillCategories.RUNECRAFTING, 15D);
 
             sendSuccessMessage(player, "Combining Runes to Level " + level);
         }
@@ -380,8 +379,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
         @Override
         public void onSuccess(SkyBlockPlayer player, SkyBlockItem outputItem) {
-            player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
-                    player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
+            player.getSkills().increase(player, SkillCategories.RUNECRAFTING, 15D);
 
             ItemType appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
             Rarity rarity = appliedRune.rarity;
