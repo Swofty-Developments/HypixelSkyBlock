@@ -25,6 +25,9 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         super(result, type, canCraft);
         this.ingredientMap = ingredientMap;
         this.pattern = pattern;
+        if (pattern.isEmpty()) {
+            throw new IllegalArgumentException("Pattern must have at least one element");
+        }
     }
 
     public ShapedRecipe(RecipeType type,

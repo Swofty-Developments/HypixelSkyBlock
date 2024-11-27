@@ -14,6 +14,7 @@ import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeType;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.commons.statistics.ItemStatistics;
@@ -104,6 +105,10 @@ public class SkyBlockItem {
         if (config == null) {
             config = new ConfigurableSkyBlockItem(id,
                     getMaterial(), List.of(), new HashMap<>());
+        } else {
+            ItemStatistics statistics = config.getDefaultStatistics();
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+            statisticsAttribute.setValue(statistics.clone());
         }
     }
 
@@ -120,6 +125,11 @@ public class SkyBlockItem {
         if (config == null) {
             config = new ConfigurableSkyBlockItem(UUID.randomUUID().toString(),
                     material, List.of(), new HashMap<>());
+        } else {
+            ItemStatistics statistics = config.getDefaultStatistics();
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+
+            statisticsAttribute.setValue(statistics.clone());
         }
     }
 
@@ -138,6 +148,12 @@ public class SkyBlockItem {
         } else {
             Material material = item.material();
             loadAsMaterial(material);
+        }
+
+        ConfigurableSkyBlockItem config = ConfigurableSkyBlockItem.getFromID(itemType);
+        if (config != null) {
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+            statisticsAttribute.setValue(config.getDefaultStatistics());
         }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {

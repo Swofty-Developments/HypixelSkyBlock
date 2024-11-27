@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item.handlers.lore;
 
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.item.PotatoType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 
@@ -61,6 +62,20 @@ public class LoreRegistry {
 
                     return lore;
                 }, null));
+        register("SKYBLOCK_MENU_LORE", new LoreConfig((item, player) -> Arrays.asList(
+                "§7View all of your SkyBlock progress,",
+                "§7including your Skills, Collections,",
+                "§7Recipes, and more!",
+                "§e ",
+                "§eClick to open!"
+        ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
+        register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> {
+            List<String> lore = PotatoType.allLores();
+            lore.add("§7This item can be applied to an item up to");
+            lore.add("§a10 §7times!");
+
+            return lore;
+        }, null));
     }
 
     public static void register(String id, LoreConfig handler) {

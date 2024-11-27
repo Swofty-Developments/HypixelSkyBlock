@@ -1272,8 +1272,12 @@ public enum ItemType {
     }
 
     public static @Nullable ItemType fromMaterial(Material material) {
+        String materialName = material.namespace().value();
+        String formattedItemName = StringUtility.toNormalCase(materialName);
+
         for (ItemType itemType : ItemType.values()) {
-            if (itemType.material == material) {
+            if (itemType.material == material &&
+                    formattedItemName.equals(StringUtility.toNormalCase(itemType.getDisplayName()))) {
                 return itemType;
             }
         }

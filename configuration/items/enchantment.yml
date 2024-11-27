@@ -5,7 +5,7 @@ items:
         handler_id: ENCHANTED_BOOK
       - id: LORE_UPDATE
         is_absolute: false
-        handler: ENCHANTED_BOOK
+        handler_id: ENCHANTED_BOOK
       - id: TRACKED_UNIQUE
       - id: ENCHANTED
   - id: HOT_POTATO_BOOK
@@ -17,7 +17,7 @@ items:
         handler_id: HOT_POTATO_BOOK
       - id: LORE_UPDATE
         is_absolute: false
-        handler: HOT_POTATO_BOOK
+        handler_id: HOT_POTATO_BOOK
       - id: SELLABLE
         value: 38400
       - id: TRACKED_UNIQUE

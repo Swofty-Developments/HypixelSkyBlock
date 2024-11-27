@@ -467,20 +467,24 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 Arrays.stream(collection.rewards()).forEach(reward -> {
                     Arrays.stream(reward.unlocks()).forEach(unlock -> {
                         if (unlock instanceof CollectionCategory.UnlockRecipe recipe) {
-                            List<SkyBlockRecipe<?>> recipeInstances = recipe.getRecipes();
+                            try {
+                                List<SkyBlockRecipe<?>> recipeInstances = recipe.getRecipes();
 
-                            recipeInstances.forEach(recipeInstance -> {
-                                recipeInstance.setCanCraft((player) -> {
-                                    int amount = player.getCollection().get(collection.type());
-                                    return new SkyBlockRecipe.CraftingResult(
-                                            amount >= reward.requirement(),
-                                            new String[]{"§7You must have §c" + collection.type().getDisplayName()
-                                                    + " Collection "
-                                                    + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
-                                    );
+                                recipeInstances.forEach(recipeInstance -> {
+                                    recipeInstance.setCanCraft((player) -> {
+                                        int amount = player.getCollection().get(collection.type());
+                                        return new SkyBlockRecipe.CraftingResult(
+                                                amount >= reward.requirement(),
+                                                new String[]{"§7You must have §c" + collection.type().getDisplayName()
+                                                        + " Collection "
+                                                        + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
+                                        );
+                                    });
+                                    recipes.add(recipeInstance);
                                 });
-                                recipes.add(recipeInstance);
-                            });
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse recipe " + collection.type() + " : " + reward.requirement());
+                            }
                         }
                     });
                 });

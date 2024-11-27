@@ -5,6 +5,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.sets.*;
 import net.swofty.commons.StringUtility;
+import org.jetbrains.annotations.Nullable;
 
 @Getter
 public enum ArmorSetRegistry {
@@ -40,7 +41,8 @@ public enum ArmorSetRegistry {
         return null;
     }
 
-    public static ArmorSetRegistry getArmorSet(ItemType item) {
+    public static @Nullable ArmorSetRegistry getArmorSet(@Nullable ItemType item) {
+        if (item == null) return null;
         for (ArmorSetRegistry armorSetRegistry : values()) {
             if (armorSetRegistry.getBoots() == item
                     || armorSetRegistry.getLeggings() == item

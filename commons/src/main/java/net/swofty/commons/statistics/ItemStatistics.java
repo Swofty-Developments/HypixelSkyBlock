@@ -126,6 +126,11 @@ public class ItemStatistics {
                     new EnumMap<>(this.statisticsAdditive),
                     new EnumMap<>(this.statisticsMultiplicative));
         }
+
+        @Override
+        public String toString() {
+            return "ItemStatistics.Builder(statisticsBase=" + statisticsBase + ", statisticsAdditive=" + statisticsAdditive + ", statisticsMultiplicative=" + statisticsMultiplicative + ")";
+        }
     }
 
     public ItemStatistics addBase(ItemStatistic stat, Double value) {

@@ -19,7 +19,8 @@ public class StandardItemComponent extends SkyBlockItemComponent {
         addInheritedComponent(new ReforgableComponent(this.type.getReforgeType()));
         addInheritedComponent(new EnchantableComponent(this.type.getEnchantGroups(), true));
         addInheritedComponent(new RuneableComponent(this.type.getRuneApplicableTo()));
-        addInheritedComponent(new HotPotatoableComponent(this.type.getPotatoType()));
+        if (this.type.potatoType != null)
+            addInheritedComponent(new HotPotatoableComponent(this.type.getPotatoType()));
     }
 
     @Getter

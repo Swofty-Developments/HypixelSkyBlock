@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-
 public class ConfigurableSkyBlockItem {
     private final static Map<String, ConfigurableSkyBlockItem> CACHED_ITEMS = new HashMap<>();
 
@@ -32,9 +31,11 @@ public class ConfigurableSkyBlockItem {
         this.lore = lore;
 
         ItemStatistics.Builder builder = ItemStatistics.builder();
-        statistics.forEach((stat, value) -> {
-            builder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value);
-        });
+        for (Map.Entry<String, Double> entry : statistics.entrySet()) {
+            String stat = entry.getKey();
+            Double value = entry.getValue();
+            builder = builder.withAdditive(ItemStatistic.valueOf(stat.toUpperCase()), value);
+        }
         this.defaultStatistics = builder.build();
     }
 

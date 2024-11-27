@@ -9,3 +9,6 @@ items:
     components:
       - id: INTERACTABLE
         handler_id: SKYBLOCK_MENU_INTERACT
+      - id: LORE_UPDATE
+        handler_id: SKYBLOCK_MENU_LORE
+        is_absolute: true

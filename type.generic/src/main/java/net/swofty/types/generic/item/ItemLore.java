@@ -62,8 +62,6 @@ public class ItemLore {
         }
         String displayRarity = rarity.getDisplay();
 
-        displayName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
-
         if (item.hasComponent(LoreUpdateComponent.class)) {
             LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
             if (loreUpdateComponent.isAbsolute()) {
@@ -78,6 +76,7 @@ public class ItemLore {
                 }
 
                 this.stack = stack
+                        .with(ItemComponent.LORE, loreLines)
                         .with(ItemComponent.CUSTOM_NAME, Component.text(forcedDisplayName).decoration(TextDecoration.ITALIC, false));
                 return;
             }
@@ -113,6 +112,7 @@ public class ItemLore {
         if (item.hasComponent(ShortBowComponent.class)) {
             ShortBowComponent shortBowComponent = item.getComponent(ShortBowComponent.class);
             addLoreLine("§7Shot Cooldown: §a" + shortBowComponent.getCooldown() + "s");
+            addNextLine = true;
         }
 
         // Handle Gemstone lore
@@ -148,7 +148,10 @@ public class ItemLore {
                 gemstoneLore.append(gemRarity.bracketColor + "[" + gemstoneSlot.symbol + gemRarity.bracketColor + "] ");
             }
 
-            if (!gemstoneLore.toString().trim().isEmpty()) {addLoreLine(gemstoneLore.toString());}
+            if (!gemstoneLore.toString().trim().isEmpty()) {
+                addLoreLine(gemstoneLore.toString());
+                addNextLine = true;
+            }
         }
 
         if (addNextLine) addLoreLine(null);
@@ -193,8 +196,13 @@ public class ItemLore {
         // Handle Custom Item Lore
         if (item.hasComponent(LoreUpdateComponent.class)) {
             LoreUpdateComponent loreUpdateComponent = item.getComponent(LoreUpdateComponent.class);
-            loreUpdateComponent.getHandler().loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
-            addLoreLine(null);
+            if (loreUpdateComponent.getHandler() == null)
+                throw new RuntimeException("Lore update handler is null for " + item.getAttributeHandler().getTypeAsString());
+
+            if (loreUpdateComponent.getHandler().loreGenerator() != null) {
+                loreUpdateComponent.getHandler().loreGenerator().apply(item, player).forEach(line -> addLoreLine("§7" + line));
+                addLoreLine(null);
+            }
         }
 
         // Handle Custom Item Ability
@@ -219,6 +227,7 @@ public class ItemLore {
 
         // Handle full set abilities
         if (ArmorSetRegistry.getArmorSet(handler.getPotentialType()) != null) {
+            System.out.println(handler.getPotentialType() + " is an armor set");
             ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialType()).getClazz().getDeclaredConstructor().newInstance();
 
             int wearingAmount = 0;

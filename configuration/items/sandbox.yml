@@ -5,4 +5,4 @@ items:
         handler_id: SANDBOX_ITEM
       - id: LORE_UPDATE
         is_absolute: true
-        handler: SANDBOX_ITEM
+        handler_id: SANDBOX_ITEM

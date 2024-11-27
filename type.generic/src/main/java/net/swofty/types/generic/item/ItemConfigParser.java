@@ -169,7 +169,7 @@ public class ItemConfigParser {
                 try {
                     yield new InteractableComponent(handlerId);
                 } catch (Exception e) {
-                    Logger.error("Failed to parse InteractableComponent for " + id);
+                    Logger.error("Failed to parse InteractableComponent for " + handlerId);
                     yield null;
                 }
             }
@@ -242,7 +242,7 @@ public class ItemConfigParser {
             case "NOT_FINISHED_YET" -> new NotFinishedYetComponent();
             case "LORE_UPDATE" -> {
                 boolean isAbsolute = (boolean) config.getOrDefault("is_absolute", false);
-                yield new LoreUpdateComponent(config.get("handler").toString(), isAbsolute);
+                yield new LoreUpdateComponent(config.get("handler_id").toString(), isAbsolute);
             }
             case "PET_ITEM" -> new PetItemComponent();
             case "PICKAXE" -> new PickaxeComponent();
