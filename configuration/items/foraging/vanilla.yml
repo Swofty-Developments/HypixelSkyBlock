@@ -1,5 +1,5 @@
 items:
-  - id: ACACIA
+  - id: ACACIA_LOG
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -7,7 +7,8 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 2.0
-  - id: BIRCH
+      - id: PLACEABLE
+  - id: BIRCH_LOG
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -15,12 +16,8 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 2.0
-  - id: DANDELION
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-  - id: DARK_OAK
+      - id: PLACEABLE
+  - id: DARK_OAK_LOG
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -28,6 +25,34 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 2.0
+      - id: PLACEABLE
+  - id: JUNGLE_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+  - id: OAK_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+  - id: SPRUCE_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
   - id: DIAMOND_AXE
     rarity: COMMON
     default_statistics:
@@ -106,30 +131,6 @@ items:
                 amount: 1
       - id: SELLABLE
         value: 4.0
-  - id: JUNGLE
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-  - id: OAK
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-  - id: SPRUCE
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
   - id: STONE_AXE
     rarity: COMMON
     default_statistics:
@@ -180,5 +181,10 @@ items:
               B:
                 type: STICK
                 amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: DANDELION
+    rarity: COMMON
+    components:
       - id: SELLABLE
         value: 1.0

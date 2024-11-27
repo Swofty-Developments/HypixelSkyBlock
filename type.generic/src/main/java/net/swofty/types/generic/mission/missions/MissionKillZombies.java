@@ -45,7 +45,7 @@ public class MissionKillZombies extends SkyBlockProgressMission {
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Combat XP"))).forEach(player::sendMessage);
-        player.getSkills().setRaw(player, SkillCategories.COMBAT, player.getSkills().getRaw(SkillCategories.COMBAT) + 100);
+        player.getSkills().increase(player, SkillCategories.COMBAT, 100D);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
         player.getMissionData().startMission(MissionTalkToBartender.class);
     }

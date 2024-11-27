@@ -145,6 +145,17 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         }
 
         /**
+         * Increases the experience of a specific skill by the given amount.
+         *
+         * @param player   The player whose skills are being updated.
+         * @param category The skill category to update.
+         * @param value    The experience value to add to the existing skill.
+         */
+        public void increase(SkyBlockPlayer player, SkillCategories category, Double value) {
+            setRaw(player, category, getRaw(category) + value);
+        }
+
+        /**
          * Creates and returns a default PlayerSkills instance with all skill categories initialized to 0 experience.
          *
          * @return A default PlayerSkills object with zeroed experience in all categories.

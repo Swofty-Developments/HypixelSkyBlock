@@ -46,7 +46,7 @@ public class MissionCollectWheat extends SkyBlockProgressMission {
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b20 Farming XP"))).forEach(player::sendMessage);
-        player.getSkills().setRaw(player, SkillCategories.FARMING, player.getSkills().getRaw(SkillCategories.FARMING) + 20);
+        player.getSkills().increase(player, SkillCategories.FARMING, 20D);
         player.getMissionData().startMission(MissionTalkToFarmerAgain.class);
     }
 
