@@ -9,7 +9,7 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - B
+              -  B
               - BBB
             ingredients:
               A:
@@ -99,6 +99,34 @@ items:
               amount: 1
   - id: DIRT
     material: DIRT
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: GRASS_BLOCK
+    material: GRASS_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: SHORT_GRASS
+    material: GRASS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: LONG_GRASS
+    material: GRASS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: FERN
+    material: FERN
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -732,11 +760,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BLACK_STAINED_GLASS
+                amount: 1
             result:
               type: BLACK_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BLUE_STAINED_GLASS_PANE
     material: BLUE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -747,11 +780,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BLUE_STAINED_GLASS
+                amount: 1
             result:
               type: BLUE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BROWN_STAINED_GLASS_PANE
     material: BROWN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -762,11 +800,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BROWN_STAINED_GLASS
+                amount: 1
             result:
               type: BROWN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: CYAN_STAINED_GLASS_PANE
     material: CYAN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -777,11 +820,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: CYAN_STAINED_GLASS
+                amount: 1
             result:
               type: CYAN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GLASS_PANE
     material: GLASS_PANE
     rarity: COMMON
@@ -801,7 +849,7 @@ items:
                 amount: 1
             result:
               type: GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GRAY_STAINED_GLASS_PANE
     material: GRAY_STAINED_GLASS_PANE
     rarity: COMMON
@@ -812,11 +860,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GRAY_STAINED_GLASS
+                amount: 1
             result:
               type: GRAY_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GREEN_STAINED_GLASS_PANE
     material: GREEN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -827,11 +880,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GREEN_STAINED_GLASS
+                amount: 1
             result:
               type: GREEN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIGHT_BLUE_STAINED_GLASS_PANE
     material: LIGHT_BLUE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -842,11 +900,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIGHT_BLUE_STAINED_GLASS
+                amount: 1
             result:
               type: LIGHT_BLUE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIGHT_GRAY_STAINED_GLASS_PANE
     material: LIGHT_GRAY_STAINED_GLASS_PANE
     rarity: COMMON
@@ -857,11 +920,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIGHT_GRAY_STAINED_GLASS
+                amount: 1
             result:
               type: LIGHT_GRAY_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIME_STAINED_GLASS_PANE
     material: LIME_STAINED_GLASS_PANE
     rarity: COMMON
@@ -872,11 +940,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIME_STAINED_GLASS
+                amount: 1
             result:
               type: LIME_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: MAGENTA_STAINED_GLASS_PANE
     material: MAGENTA_STAINED_GLASS_PANE
     rarity: COMMON
@@ -887,11 +960,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: MAGENTA_STAINED_GLASS
+                amount: 1
             result:
               type: MAGENTA_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: ORANGE_STAINED_GLASS_PANE
     material: ORANGE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -902,11 +980,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ORANGE_STAINED_GLASS
+                amount: 1
             result:
               type: ORANGE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: PINK_STAINED_GLASS_PANE
     material: PINK_STAINED_GLASS_PANE
     rarity: COMMON
@@ -917,11 +1000,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: PINK_STAINED_GLASS
+                amount: 1
             result:
               type: PINK_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: PURPLE_STAINED_GLASS_PANE
     material: PURPLE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -932,11 +1020,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: PURPLE_STAINED_GLASS
+                amount: 1
             result:
               type: PURPLE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: RED_STAINED_GLASS_PANE
     material: RED_STAINED_GLASS_PANE
     rarity: COMMON
@@ -947,11 +1040,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: RED_STAINED_GLASS
+                amount: 1
             result:
               type: RED_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: WHITE_STAINED_GLASS_PANE
     material: WHITE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -962,11 +1060,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: WHITE_STAINED_GLASS
+                amount: 1
             result:
               type: WHITE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: YELLOW_STAINED_GLASS_PANE
     material: YELLOW_STAINED_GLASS_PANE
     rarity: COMMON
@@ -977,11 +1080,16 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: YELLOW_STAINED_GLASS
+                amount: 1
             result:
               type: YELLOW_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BLACK_WOOL
     material: BLACK_WOOL
     rarity: COMMON
@@ -1939,11 +2047,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: QUARTZ_BLOCK
+                amount: 1
             result:
               type: QUARTZ_SLAB
-              amount: 1
+              amount: 3
   - id: QUARTZ_STAIRS
     material: QUARTZ_STAIRS
     rarity: COMMON
@@ -2113,11 +2225,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: RED_SANDSTONE
+                amount: 1
             result:
               type: RED_SANDSTONE_SLAB
-              amount: 1
+              amount: 3
   - id: RED_SANDSTONE_STAIRS
     material: RED_SANDSTONE_STAIRS
     rarity: COMMON
@@ -2189,11 +2305,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
             result:
               type: SANDSTONE_SLAB
-              amount: 1
+              amount: 3
   - id: SANDSTONE_STAIRS
     material: SANDSTONE_STAIRS
     rarity: COMMON
@@ -2626,11 +2746,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: ACACIA_LOG
+                amount: 1
             result:
               type: ACACIA_PLANKS
-              amount: 1
+              amount: 4
   - id: ACACIA_PRESSURE_PLATE
     material: ACACIA_PRESSURE_PLATE
     rarity: COMMON
@@ -2787,11 +2911,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: BIRCH_LOG
+                amount: 1
             result:
               type: BIRCH_PLANKS
-              amount: 1
+              amount: 4
   - id: BIRCH_PRESSURE_PLATE
     material: BIRCH_PRESSURE_PLATE
     rarity: COMMON
@@ -2948,11 +3076,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: DARK_OAK_LOG
+                amount: 1
             result:
               type: DARK_OAK_PLANKS
-              amount: 1
+              amount: 4
   - id: DARK_OAK_PRESSURE_PLATE
     material: DARK_OAK_PRESSURE_PLATE
     rarity: COMMON
@@ -3109,11 +3241,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: JUNGLE_LOG
+                amount: 1
             result:
               type: JUNGLE_PLANKS
-              amount: 1
+              amount: 4
   - id: JUNGLE_PRESSURE_PLATE
     material: JUNGLE_PRESSURE_PLATE
     rarity: COMMON
@@ -3270,11 +3406,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: OAK_LOG
+                amount: 1
             result:
               type: OAK_PLANKS
-              amount: 1
+              amount: 4
   - id: OAK_PRESSURE_PLATE
     material: OAK_PRESSURE_PLATE
     rarity: COMMON
@@ -3431,11 +3571,15 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: SPRUCE_LOG
+                amount: 1
             result:
               type: SPRUCE_PLANKS
-              amount: 1
+              amount: 4
   - id: SPRUCE_PRESSURE_PLATE
     material: SPRUCE_PRESSURE_PLATE
     rarity: COMMON
@@ -3904,8 +4048,12 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: INK_SAC
+                amount: 1
             result:
               type: BLACK_DYE
               amount: 1
@@ -3917,8 +4065,12 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: LAPIS_LAZULI
+                amount: 1
             result:
               type: BLUE_DYE
               amount: 1
@@ -3930,8 +4082,12 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: COCOA_BEANS
+                amount: 1
             result:
               type: BROWN_DYE
               amount: 1
@@ -3943,11 +4099,18 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: BLUE_DYE
+                amount: 1
+              B:
+                type: GREEN_DYE
+                amount: 1
             result:
               type: CYAN_DYE
-              amount: 1
+              amount: 2
   - id: GRAY_DYE
     material: GRAY_DYE
     rarity: COMMON
@@ -3956,11 +4119,18 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: BLACK_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
             result:
               type: GRAY_DYE
-              amount: 1
+              amount: 2
   - id: LIGHT_BLUE_DYE
     material: LIGHT_BLUE_DYE
     rarity: COMMON
@@ -3969,8 +4139,26 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: BLUE_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_DYE
+              amount: 2
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: BLUE_ORCHID
+                amount: 1
             result:
               type: LIGHT_BLUE_DYE
               amount: 1
@@ -3982,8 +4170,62 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: BLACK_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 2
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 3
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: GRAY_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 2
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: AZURE_BLUET
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: OXEYE_DAISY
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: WHITE_TULIP
+                amount: 1
             result:
               type: LIGHT_GRAY_DYE
               amount: 1
@@ -3995,11 +4237,18 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: GREEN_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
             result:
               type: LIME_DYE
-              amount: 1
+              amount: 2
   - id: MAGENTA_DYE
     material: MAGENTA_DYE
     rarity: COMMON
@@ -4008,11 +4257,76 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: ALLIUM
+                amount: 1
             result:
               type: MAGENTA_DYE
               amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: LILAC
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 2
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: PURPLE_DYE
+                amount: 1
+              B:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 2
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+              -  C
+            ingredients:
+              A:
+                type: BLUE_DYE
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
+              C:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 3
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+              -  C
+            ingredients:
+              A:
+                type: BLUE_DYE
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 2
+              C:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 4
   - id: ORANGE_DYE
     material: ORANGE_DYE
     rarity: COMMON
@@ -4021,11 +4335,29 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: ORANGE_TULIP
+                amount: 1
             result:
               type: ORANGE_DYE
               amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: RED_DYE
+                amount: 1
+              B:
+                type: YELLOW_DYE
+                amount: 1
+            result:
+              type: ORANGE_DYE
+              amount: 2
   - id: PINK_DYE
     material: PINK_DYE
     rarity: COMMON
@@ -4034,11 +4366,40 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: PINK_TULIP
+                amount: 1
             result:
               type: PINK_DYE
               amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: PEONY
+                amount: 1
+            result:
+              type: PINK_DYE
+              amount: 2
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: RED_DYE
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: PINK_DYE
+              amount: 2
   - id: PURPLE_DYE
     material: PURPLE_DYE
     rarity: COMMON
@@ -4047,11 +4408,18 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AB
+            ingredients:
+              A:
+                type: BLUE_DYE
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
             result:
               type: PURPLE_DYE
-              amount: 1
+              amount: 2
   - id: RED_DYE
     material: RED_DYE
     rarity: COMMON
@@ -4060,11 +4428,48 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: POPPY
+                amount: 1
             result:
               type: RED_DYE
               amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: RED_TULIP
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: BEETROOT
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: ROSE_BUSH
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 2
   - id: WHITE_DYE
     material: WHITE_DYE
     rarity: COMMON
@@ -4073,8 +4478,23 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: BONE_MEAL
+                amount: 1
+            result:
+              type: WHITE_DYE
+              amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: LILY_OF_THE_VALLEY
+                amount: 1
             result:
               type: WHITE_DYE
               amount: 1
@@ -4086,11 +4506,26 @@ items:
         recipes:
           - type: shaped
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: DANDELION
+                amount: 1
             result:
               type: YELLOW_DYE
               amount: 1
+          - type: shaped
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: SUNFLOWER
+                amount: 1
+            result:
+              type: YELLOW_DYE
+              amount: 2
   - id: DIAMOND_SWORD
     material: DIAMOND_SWORD
     rarity: COMMON

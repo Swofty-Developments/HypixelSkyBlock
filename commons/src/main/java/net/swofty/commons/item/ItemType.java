@@ -1034,6 +1034,7 @@ public enum ItemType {
     BROWN_DYE(Material.BROWN_DYE,  Rarity.COMMON),
     RED_DYE(Material.RED_DYE,  Rarity.COMMON),
     BLACK_DYE(Material.BLACK_DYE,  Rarity.COMMON),
+    GREEN_DYE(Material.GREEN_DYE, Rarity.COMMON),
     WHITE_WOOL(Material.WHITE_WOOL,  Rarity.COMMON),
     ORANGE_WOOL(Material.ORANGE_WOOL,  Rarity.COMMON),
     MAGENTA_WOOL(Material.MAGENTA_WOOL,  Rarity.COMMON),
