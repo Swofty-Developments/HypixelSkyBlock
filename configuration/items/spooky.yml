@@ -33,10 +33,7 @@ items:
       - id: "NOT_FINISHED_YET"
       - id: "DEFAULT_CRAFTABLE"
         recipes:
-          - type: "shaped"
-            result:
-              type: "BLAST_O_LANTERN"
-              amount: 32
+          - type: "SHAPED"
             pattern:
               - "AAA"
               - "ABA"
@@ -48,6 +45,9 @@ items:
               B:
                 type: PUMPKIN_GUTS
                 amount: 1
+            result:
+              type: "BLAST_O_LANTERN"
+              amount: 32
 
   - id: "ECTOPLASM"
     material: "ghast_tear"

@@ -63,9 +63,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: DIAMOND_AXE
-              amount: 1
             pattern:
               - AA
               - AB
@@ -77,6 +74,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: DIAMOND_AXE
+              amount: 1
       - id: SELLABLE
         value: 12.0
   - id: GOLDEN_AXE
@@ -89,9 +89,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLDEN_AXE
-              amount: 1
             pattern:
               - AA
               - AB
@@ -103,6 +100,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: GOLDEN_AXE
+              amount: 1
       - id: SELLABLE
         value: 6.0
   - id: IRON_AXE
@@ -115,9 +115,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: IRON_AXE
-              amount: 1
             pattern:
               - AA
               - AB
@@ -129,6 +126,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: IRON_AXE
+              amount: 1
       - id: SELLABLE
         value: 4.0
   - id: STONE_AXE
@@ -141,9 +141,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: STONE_AXE
-              amount: 1
             pattern:
               - AA
               - AB
@@ -155,6 +152,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: STONE_AXE
+              amount: 1
       - id: SELLABLE
         value: 2.0
   - id: WOODEN_AXE
@@ -167,9 +167,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: WOODEN_AXE
-              amount: 1
             pattern:
               - AA
               - AB
@@ -181,6 +178,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: WOODEN_AXE
+              amount: 1
       - id: SELLABLE
         value: 1.0
   - id: DANDELION

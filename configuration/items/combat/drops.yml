@@ -45,9 +45,6 @@ items:
         recipes:
           - type: SHAPELESS
             recipe-type: SLAYER
-            result:
-              type: REVENANT_VISCERA
-              amount: 1
             ingredients:
               - type: REVENANT_FLESH
                 amount: 32
@@ -59,6 +56,9 @@ items:
                 amount: 32
               - type: ENCHANTED_STRING
                 amount: 32
+            result:
+              type: REVENANT_VISCERA
+              amount: 1
   - id: SCYTHE_BLADE
     rarity: COMMON
     components:

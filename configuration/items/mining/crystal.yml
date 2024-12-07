@@ -18,30 +18,19 @@ items:
         value: 200000.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPELESS
+          - type: SHAPED
             recipe-type: MINING
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ENCHANTED_HARD_STONE
+                amount: 64
             result:
               type: CONCENTRATED_STONE
               amount: 1
-            ingredients:
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
-              - type: ENCHANTED_HARD_STONE
-                amount: 64
       - id: SKULL_HEAD
         texture: 8c8637bc0628f5710f85b8d0679cc2c19afe0e1089b248b6fdb67f687ae81dc2
   - id: CONTROL_SWITCH
