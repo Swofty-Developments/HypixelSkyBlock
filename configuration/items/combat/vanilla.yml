@@ -6,15 +6,15 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: BLAZE_POWDER
-              amount: 1
             pattern:
               - A
             ingredients:
               A:
                 type: BLAZE_ROD
                 amount: 1
+            result:
+              type: BLAZE_POWDER
+              amount: 1
       - id: SELLABLE
         value: 4.0
   - id: BLAZE_ROD
@@ -34,15 +34,15 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: BONE_MEAL
-              amount: 1
             pattern:
               - A
             ingredients:
               A:
                 type: BONE
                 amount: 1
+            result:
+              type: BONE_MEAL
+              amount: 1
   - id: ENDER_PEARL
     rarity: COMMON
     components:
@@ -55,9 +55,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: EYE_OF_ENDER
-              amount: 1
             pattern:
               - A
               - B
@@ -68,6 +65,9 @@ items:
               B:
                 type: BLAZE_POWDER
                 amount: 1
+            result:
+              type: EYE_OF_ENDER
+              amount: 1
       - id: SELLABLE
         value: 15.0
   - id: FERMENTED_SPIDER_EYE
@@ -79,9 +79,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: FERMENTED_SPIDER_EYE
-              amount: 1
             pattern:
               - AB
               - ' C'
@@ -95,6 +92,9 @@ items:
               C:
                 type: SPIDER_EYE
                 amount: 1
+            result:
+              type: FERMENTED_SPIDER_EYE
+              amount: 1
   - id: GHAST_TEAR
     rarity: COMMON
     components:
@@ -130,9 +130,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: SLIME_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -141,6 +138,9 @@ items:
               A:
                 type: SLIME_BALL
                 amount: 1
+            result:
+              type: SLIME_BLOCK
+              amount: 1
   - id: SPIDER_EYE
     rarity: COMMON
     components:

@@ -28,14 +28,11 @@ items:
         standard_item_type: SWORD
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
-            result:
-              type: ASPECT_OF_THE_JERRY
-              amount: 1
+          - type: SHAPED
             pattern:
-              - "A"
-              - "A"
-              - "B"
+              - A
+              - A
+              - B
             ingredients:
               A:
                 type: MOVE_JERRY
@@ -43,6 +40,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: ASPECT_OF_THE_JERRY
+              amount: 1
 
   - id: END_SWORD
     material: IRON_SWORD
@@ -199,13 +199,10 @@ items:
         standard_item_type: SWORD
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: SLAYER
-            result:
-              type: ZOMBIE_RING
-              amount: 1
             pattern:
-              - "ABA"
+              - ABA
             ingredients:
               A:
                 type: REVENANT_FLESH
@@ -213,6 +210,9 @@ items:
               B:
                 type: ZOMBIE_TALISMAN
                 amount: 1
+            result:
+              type: ZOMBIE_RING
+              amount: 1
             requirements:
               level:
                 left: "%player.SKYBLOCK_LEVEL%"

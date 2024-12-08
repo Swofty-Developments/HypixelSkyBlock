@@ -5,11 +5,9 @@ items:
       - id: KAT
         reduced_days: 5
       - id: ENCHANTED
-      - id: NOT_FINISHED_YET
   - id: KAT_FLOWER
     rarity: COMMON
     components:
       - id: KAT
         reduced_days: 1
       - id: ENCHANTED
-      - id: NOT_FINISHED_YET

@@ -42,13 +42,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: DIAMOND_HOE
-              amount: 1
             pattern:
               - AA
-              - ' B'
-              - ' B'
+              - OB
+              - OB
             ingredients:
               A:
                 type: DIAMOND
@@ -56,6 +53,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_HOE
+              amount: 1
       - id: SELLABLE
         value: 8.0
   - id: EGG
@@ -75,9 +78,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GLISTERING_MELON
-              amount: 1
             pattern:
               - AAA
               - ABA
@@ -89,6 +89,9 @@ items:
               B:
                 type: MELON_SLICE
                 amount: 1
+            result:
+              type: GLISTERING_MELON
+              amount: 1
       - id: SELLABLE
         value: 3.5
   - id: GOLDEN_CARROT
@@ -100,9 +103,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLDEN_CARROT
-              amount: 1
             pattern:
               - AAA
               - ABA
@@ -114,6 +114,9 @@ items:
               B:
                 type: CARROT
                 amount: 1
+            result:
+              type: GOLDEN_CARROT
+              amount: 1
   - id: GOLDEN_HOE
     rarity: COMMON
     components:
@@ -123,13 +126,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLDEN_HOE
-              amount: 1
             pattern:
               - AA
-              - ' B'
-              - ' B'
+              - OB
+              - OB
             ingredients:
               A:
                 type: GOLD_INGOT
@@ -137,6 +137,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_HOE
+              amount: 1
       - id: SELLABLE
         value: 4.0
   - id: HAY_BALE
@@ -149,9 +155,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: HAY_BALE
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -160,6 +163,9 @@ items:
               A:
                 type: WHEAT
                 amount: 1
+            result:
+              type: HAY_BALE
+              amount: 1
   - id: IRON_HOE
     rarity: COMMON
     components:
@@ -169,13 +175,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: IRON_HOE
-              amount: 1
             pattern:
               - AA
-              - ' B'
-              - ' B'
+              - OB
+              - OB
             ingredients:
               A:
                 type: IRON_INGOT
@@ -183,6 +186,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_HOE
+              amount: 1
       - id: SELLABLE
         value: 3.0
   - id: LEATHER
@@ -208,9 +217,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: MELON_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -219,6 +225,9 @@ items:
               A:
                 type: MELON_SLICE
                 amount: 1
+            result:
+              type: MELON_BLOCK
+              amount: 1
   - id: MUSHROOM
     rarity: COMMON
     components:
@@ -300,13 +309,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: STONE_HOE
-              amount: 1
             pattern:
               - AA
-              - ' B'
-              - ' B'
+              - OB
+              - OB
             ingredients:
               A:
                 type: COBBLESTONE
@@ -314,6 +320,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_HOE
+              amount: 1
       - id: SELLABLE
         value: 2.0
   - id: SUGAR
@@ -323,17 +335,14 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
+            ingredients:
+              - type: SUGAR_CANE
+                amount: 1
             result:
               type: SUGAR
               amount: 1
-            pattern:
-              - A
-            ingredients:
-              A:
-                type: SUGAR_CANE
-                amount: 1
   - id: SUGAR_CANE
     rarity: COMMON
     components:
@@ -359,13 +368,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: WOODEN_HOE
-              amount: 1
             pattern:
               - AA
-              - ' B'
-              - ' B'
+              - OB
+              - OB
             ingredients:
               A:
                 type: OAK_PLANKS
@@ -373,5 +379,11 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WOODEN_HOE
+              amount: 1
       - id: SELLABLE
         value: 1.0

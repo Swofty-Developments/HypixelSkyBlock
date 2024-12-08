@@ -179,7 +179,10 @@ collections:
         recipeType: COMBAT
         resultType: ASPECT_OF_THE_END
         resultAmount: 1
-        pattern: []
+        pattern:
+          - A
+          - A
+          - B
         ingredients:
           A:
             type: ENCHANTED_EYE_OF_ENDER
@@ -349,12 +352,15 @@ collections:
         recipeType: NONE
         resultType: SILVER_FANG
         resultAmount: 1
-        pattern: []
+        pattern:
+          - OAO
+          - AAA
+          - OAO
         ingredients:
           A:
             type: ENCHANTED_GHAST_TEAR
             amount: 5
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 10000
@@ -532,12 +538,15 @@ collections:
         recipeType: SLAYER
         resultType: ZOMBIE_HEART
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AAA
         ingredients:
           A:
             type: ENCHANTED_ROTTEN_FLESH
             amount: 32
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 10000

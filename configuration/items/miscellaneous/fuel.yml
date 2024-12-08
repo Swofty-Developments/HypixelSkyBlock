@@ -33,9 +33,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: MAGMA_BUCKET
-              amount: 1
             pattern:
               - ABA
             ingredients:
@@ -45,6 +42,9 @@ items:
               B:
                 type: HEAT_CORE
                 amount: 1
+            result:
+              type: MAGMA_BUCKET
+              amount: 1
   - id: PLASMA_BUCKET
     rarity: COMMON
     components:
@@ -59,9 +59,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: PLASMA_BUCKET
-              amount: 1
             pattern:
               - ABA
             ingredients:
@@ -71,3 +68,6 @@ items:
               B:
                 type: HEAT_CORE
                 amount: 1
+            result:
+              type: PLASMA_BUCKET
+              amount: 1

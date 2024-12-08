@@ -27,7 +27,10 @@ collections:
         recipeType: MINING
         resultType: AUTO_SMELTER
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
           A:
             type: COBBLESTONE
@@ -56,7 +59,10 @@ collections:
         recipeType: MINING
         resultType: COMPACTOR
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - ABA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
@@ -64,7 +70,7 @@ collections:
           B:
             type: ENCHANTED_REDSTONE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 5000
@@ -82,12 +88,14 @@ collections:
         recipeType: MINING
         resultType: MINERS_OUTFIT_BOOTS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AOA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -95,12 +103,15 @@ collections:
         recipeType: MINING
         resultType: MINERS_OUTFIT_CHESTPLATE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -108,12 +119,14 @@ collections:
         recipeType: MINING
         resultType: MINERS_OUTFIT_HELMET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -121,12 +134,15 @@ collections:
         recipeType: MINING
         resultType: MINERS_OUTFIT_LEGGINGS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AOA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 25000
@@ -144,12 +160,15 @@ collections:
         recipeType: MINING
         resultType: HASTE_RING
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AAA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
-            amount: 32
-          ' ':
+            amount: 16
+          O:
             type: AIR
             amount: 1
   - amount: 70000
@@ -162,7 +181,10 @@ collections:
         recipeType: MINING
         resultType: SUPER_COMPACTOR_3000
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - ABA
         ingredients:
           A:
             type: ENCHANTED_COBBLESTONE
@@ -170,7 +192,7 @@ collections:
           B:
             type: ENCHANTED_REDSTONE_BLOCK
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
 - itemType: COAL
@@ -236,7 +258,9 @@ collections:
         recipeType: NONE
         resultType: ENCHANTED_LAVA_BUCKET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - ABA
+          - OAO
         ingredients:
           A:
             type: ENCHANTED_IRON_INGOT
@@ -244,7 +268,7 @@ collections:
           B:
             type: ENCHANTED_COAL_BLOCK
             amount: 2
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 50000
@@ -504,8 +528,17 @@ collections:
         recipeType: MINING
         resultType: DIAMOND_SPREADING
         resultAmount: 1
-        pattern: []
-        ingredients: {}
+        pattern:
+          - AAA
+          - ABA
+          - AAA
+        ingredients:
+          A:
+            type: VINES
+            amount: 1
+          B:
+            type: ENCHANTED_DIAMOND
+            amount: 1
   - amount: 10000
     rewards:
     - type: XP
@@ -947,7 +980,10 @@ collections:
         recipeType: MINING
         resultType: BUDGET_HOPPER
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - ABA
+          - OAO
         ingredients:
           A:
             type: ENCHANTED_IRON_INGOT
@@ -955,7 +991,7 @@ collections:
           B:
             type: CHEST
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 5000
@@ -989,7 +1025,10 @@ collections:
         recipeType: MINING
         resultType: ENCHANTED_HOPPER
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - ABA
+          - OAO
         ingredients:
           A:
             type: ENCHANTED_IRON_BLOCK
@@ -997,7 +1036,7 @@ collections:
           B:
             type: CHEST
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 100000
@@ -1353,7 +1392,10 @@ collections:
         recipeType: NONE
         resultType: EVERBURNING_FLAME
         resultAmount: 1
-        pattern: []
+        pattern:
+          - ABA
+          - CDC
+          - ABA
         ingredients:
           A:
             type: FLAMES

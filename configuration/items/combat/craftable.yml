@@ -9,9 +9,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: AXE_OF_THE_SHREDDED
-              amount: 1
             pattern:
               - ABA
               - BCB
@@ -26,6 +23,9 @@ items:
               C:
                 type: REAPER_FALCHION
                 amount: 1
+            result:
+              type: AXE_OF_THE_SHREDDED
+              amount: 1
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: GEMSTONE
@@ -49,9 +49,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: CRYSTALLIZED_HEART
-              amount: 1
             pattern:
               - AAA
               - ABA
@@ -63,6 +60,9 @@ items:
               B:
                 type: ZOMBIE_HEART
                 amount: 1
+            result:
+              type: CRYSTALLIZED_HEART
+              amount: 1
       - id: NOT_FINISHED_YET
   - id: REAPER_FALCHION
     rarity: COMMON
@@ -75,9 +75,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: REAPER_FALCHION
-              amount: 1
             pattern:
               - ' A '
               - ' B '
@@ -92,6 +89,9 @@ items:
               C:
                 type: REVENANT_FALCHION
                 amount: 1
+            result:
+              type: REAPER_FALCHION
+              amount: 1
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: GEMSTONE
@@ -111,9 +111,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: REAPER_MASK
-              amount: 1
             pattern:
               - A A
               - BCD
@@ -131,6 +128,9 @@ items:
               D:
                 type: REVIVED_HEART
                 amount: 1
+            result:
+              type: REAPER_MASK
+              amount: 1
       - id: GEMSTONE
         gemstones:
           - RUBY:0
@@ -149,9 +149,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: REAPER_SCYTHE
-              amount: 1
             pattern:
               - ABC
               - '  C'
@@ -166,6 +163,9 @@ items:
               C:
                 type: REAPER_FALCHION
                 amount: 1
+            result:
+              type: REAPER_SCYTHE
+              amount: 1
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: NOT_FINISHED_YET
@@ -180,9 +180,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: REAPER_FALCHION
-              amount: 1
             pattern:
               - ' A '
               - ' B '
@@ -197,6 +194,9 @@ items:
               C:
                 type: UNDEAD_SWORD
                 amount: 1
+            result:
+              type: REAPER_FALCHION
+              amount: 1
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: NOT_FINISHED_YET
@@ -214,9 +214,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: REVIVED_HEART
-              amount: 1
             pattern:
               - AAA
               - ABA
@@ -228,6 +225,9 @@ items:
               B:
                 type: CRYSTALLIZED_HEART
                 amount: 1
+            result:
+              type: REVIVED_HEART
+              amount: 1
       - id: STANDARD_ITEM
         standard_item_type: HELMET
       - id: GEMSTONE
@@ -246,9 +246,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
-            result:
-              type: WARDEN_HELMET
-              amount: 1
             pattern:
               - ABA
               - C C
@@ -262,6 +259,9 @@ items:
               C:
                 type: ENCHANTED_IRON_BLOCK
                 amount: 64
+            result:
+              type: WARDEN_HELMET
+              amount: 1
       - id: TRACKED_UNIQUE
       - id: STANDARD_ITEM
         standard_item_type: HELMET

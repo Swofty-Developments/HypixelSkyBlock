@@ -4,7 +4,7 @@ items:
     rarity: EPIC
     components:
       - id: PET
-        pet_name: "Bee"
+        pet_name: Bee
         george_price:
           common: 2500
           uncommon: 5000
@@ -60,6 +60,6 @@ items:
             intelligence: 20.0
         particle: 3
         skill_category: FARMING
-        skull_texture: "12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47"
+        skull_texture: 12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47
         handler_id: BEE
       - id: TRACKED_UNIQUE

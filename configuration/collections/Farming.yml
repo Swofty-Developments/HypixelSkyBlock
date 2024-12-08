@@ -30,12 +30,14 @@ collections:
         recipeType: FARMING
         resultType: FARM_SUIT_HELMET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
         ingredients:
           A:
             type: HAY_BALE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -43,12 +45,15 @@ collections:
         recipeType: FARMING
         resultType: FARM_SUIT_CHESTPLATE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: HAY_BALE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -56,12 +61,15 @@ collections:
         recipeType: FARMING
         resultType: FARM_SUIT_LEGGINGS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AOA
         ingredients:
           A:
             type: HAY_BALE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -69,12 +77,14 @@ collections:
         recipeType: FARMING
         resultType: FARM_SUIT_BOOTS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AOA
         ingredients:
           A:
             type: HAY_BALE
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 500
@@ -87,11 +97,14 @@ collections:
         recipeType: FARMING
         resultType: FARMING_TALISMAN
         resultAmount: 1
-        pattern: []
+        pattern:
+          - ABA
+          - BAB
+          - ABA
         ingredients:
           A:
-            type: HAY_BALE
-            amount: 1
+            type: WHEAT
+            amount: 8
           B:
             type: WHEAT_SEEDS
             amount: 1
@@ -398,11 +411,17 @@ collections:
         recipeType: FARMING
         resultType: SMALL_BACKPACK
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AAA
         ingredients:
-          L:
+          A:
             type: LEATHER
             amount: 10
+          O:
+            type: AIR
+            amount: 1
   - amount: 1000
     rewards:
     - type: XP
@@ -421,12 +440,15 @@ collections:
         xp: 4
     - type: RECIPE
       data:
-        recipeType: FORAGING
+        recipeType: FARMING
         resultType: MEDIUM_BACKPACK
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
-          L:
+          A:
             type: LEATHER
             amount: 64
           B:
@@ -455,12 +477,15 @@ collections:
         xp: 4
     - type: RECIPE
       data:
-        recipeType: FORAGING
+        recipeType: FARMING
         resultType: LARGE_BACKPACK
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
-          L:
+          A:
             type: ENCHANTED_LEATHER
             amount: 2
           B:
@@ -478,12 +503,15 @@ collections:
         xp: 4
     - type: RECIPE
       data:
-        recipeType: FORAGING
+        recipeType: FARMING
         resultType: GREATER_BACKPACK
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
-          L:
+          A:
             type: ENCHANTED_LEATHER
             amount: 4
           B:
@@ -584,12 +612,14 @@ collections:
         recipeType: FARMING
         resultType: MUSHROOM_HELMET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
         ingredients:
           A:
             type: RED_MUSHROOM
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -597,38 +627,15 @@ collections:
         recipeType: FARMING
         resultType: MUSHROOM_CHESTPLATE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: RED_MUSHROOM
             amount: 1
-          ' ':
-            type: AIR
-            amount: 1
-    - type: RECIPE
-      data:
-        recipeType: FARMING
-        resultType: MUSHROOM_HELMET
-        resultAmount: 1
-        pattern: []
-        ingredients:
-          A:
-            type: RED_MUSHROOM
-            amount: 1
-          ' ':
-            type: AIR
-            amount: 1
-    - type: RECIPE
-      data:
-        recipeType: FARMING
-        resultType: MUSHROOM_CHESTPLATE
-        resultAmount: 1
-        pattern: []
-        ingredients:
-          A:
-            type: RED_MUSHROOM
-            amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -636,12 +643,15 @@ collections:
         recipeType: FARMING
         resultType: MUSHROOM_LEGGINGS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AOA
         ingredients:
           A:
             type: RED_MUSHROOM
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -649,12 +659,14 @@ collections:
         recipeType: FARMING
         resultType: MUSHROOM_BOOTS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AOA
         ingredients:
           A:
             type: RED_MUSHROOM
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 1000
@@ -923,12 +935,14 @@ collections:
         recipeType: FARMING
         resultType: HOT_POTATO_BOOK
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AA
+          - AB
         ingredients:
-          P:
+          A:
             type: PAPER
             amount: 1
-          E:
+          B:
             type: ENCHANTED_BAKED_POTATO
             amount: 1
   - amount: 100000
@@ -957,12 +971,14 @@ collections:
         recipeType: FARMING
         resultType: PUMPKIN_HELMET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
         ingredients:
           A:
             type: PUMPKIN
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -970,12 +986,15 @@ collections:
         recipeType: FARMING
         resultType: PUMPKIN_CHESTPLATE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: PUMPKIN
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -983,12 +1002,15 @@ collections:
         recipeType: FARMING
         resultType: PUMPKIN_LEGGINGS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AOA
         ingredients:
           A:
             type: PUMPKIN
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
     - type: RECIPE
@@ -996,12 +1018,14 @@ collections:
         recipeType: FARMING
         resultType: PUMPKIN_BOOTS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AOA
         ingredients:
           A:
             type: PUMPKIN
             amount: 1
-          ' ':
+          O:
             type: AIR
             amount: 1
   - amount: 250
@@ -1322,7 +1346,10 @@ collections:
         recipeType: FARMING
         resultType: SPEED_TALISMAN
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: SUGAR_CANE
@@ -1353,7 +1380,10 @@ collections:
         recipeType: FARMING
         resultType: SPEED_RING
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
           A:
             type: ENCHANTED_SUGAR
@@ -1387,7 +1417,10 @@ collections:
         recipeType: FARMING
         resultType: SPEED_ARTIFACT
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - ABA
+          - AAA
         ingredients:
           A:
             type: ENCHANTED_SUGAR_CANE
