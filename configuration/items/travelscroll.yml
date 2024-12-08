@@ -16,9 +16,9 @@ items:
           - type: SHAPED
             recipe-type: SLAYER
             pattern:
-              - "AAA"
-              - "ABA"
-              - "AAA"
+              - AAA
+              - ABA
+              - AAA
             ingredients:
               A:
                 type: ENCHANTED_BONE
@@ -40,9 +40,9 @@ items:
           - type: SHAPED
             recipe-type: SLAYER
             pattern:
-              - "AAA"
-              - "CBC"
-              - "CCC"
+              - AAA
+              - CBC
+              - CCC
             ingredients:
               A:
                 type: REVENANT_VISCERA

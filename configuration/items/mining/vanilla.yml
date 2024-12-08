@@ -18,6 +18,21 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 18.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: COAL
+                amount: 1
+            result:
+              type: COAL_BLOCK
+              amount: 1
       - id: MINION_FUEL
         fuel_percentage: 5.0
         last_time_ms: 18000000
@@ -64,14 +79,17 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - ' B'
-              - ' B'
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: DIAMOND
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: DIAMOND_PICKAXE
@@ -209,14 +227,17 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - ' B'
-              - ' B'
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: GOLD_INGOT
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: GOLDEN_PICKAXE
@@ -343,14 +364,17 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - ' B'
-              - ' B'
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: IRON_INGOT
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: IRON_PICKAXE
@@ -559,14 +583,17 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - ' B'
-              - ' B'
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: COBBLESTONE
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: STONE_PICKAXE
@@ -613,14 +640,17 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              - ' B'
-              - ' B'
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: WOODEN_PICKAXE

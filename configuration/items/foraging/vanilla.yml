@@ -66,13 +66,16 @@ items:
             pattern:
               - AA
               - AB
-              - ' B'
+              - OB
             ingredients:
               A:
                 type: DIAMOND
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: DIAMOND_AXE
@@ -92,13 +95,16 @@ items:
             pattern:
               - AA
               - AB
-              - ' B'
+              - OB
             ingredients:
               A:
                 type: GOLD_INGOT
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: GOLDEN_AXE
@@ -118,13 +124,16 @@ items:
             pattern:
               - AA
               - AB
-              - ' B'
+              - OB
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: IRON_AXE
@@ -144,13 +153,16 @@ items:
             pattern:
               - AA
               - AB
-              - ' B'
+              - OB
             ingredients:
               A:
                 type: COBBLESTONE
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: STONE_AXE
@@ -170,13 +182,16 @@ items:
             pattern:
               - AA
               - AB
-              - ' B'
+              - OB
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
               B:
                 type: STICK
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: WOODEN_AXE

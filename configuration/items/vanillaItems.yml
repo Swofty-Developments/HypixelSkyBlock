@@ -44,7 +44,7 @@ items:
             recipe-type: NONE
             pattern:
               - AAA
-              -  B
+              - OBO
               - BBB
             ingredients:
               A:
@@ -52,6 +52,9 @@ items:
                 amount: 1
               B:
                 type: IRON_INGOT
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: ANVIL
@@ -4172,18 +4175,12 @@ items:
               amount: 3
           - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
-              -  C
             ingredients:
-              A:
-                type: BLUE_DYE
+              - type: BLUE_DYE
                 amount: 1
-              B:
-                type: RED_DYE
+              - type: RED_DYE
                 amount: 2
-              C:
-                type: WHITE_DYE
+              - type: WHITE_DYE
                 amount: 1
             result:
               type: MAGENTA_DYE

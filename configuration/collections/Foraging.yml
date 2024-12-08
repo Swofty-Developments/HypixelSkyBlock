@@ -27,64 +27,62 @@ collections:
         recipeType: FORAGING
         resultType: LEAFLET_HELMET
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
         ingredients:
           A:
             type: OAK_LEAVES
             amount: 1
-          ' ':
+          O:
             type: AIR
-            amount: 1
-          L:
-            type: OAK_LEAVES
             amount: 1
     - type: RECIPE
       data:
         recipeType: FORAGING
         resultType: LEAFLET_LEGGINGS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AAA
+          - AOA
+          - AOA
         ingredients:
           A:
             type: OAK_LEAVES
             amount: 1
-          ' ':
+          O:
             type: AIR
-            amount: 1
-          L:
-            type: OAK_LEAVES
             amount: 1
     - type: RECIPE
       data:
         recipeType: FORAGING
         resultType: LEAFLET_BOOTS
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AOA
         ingredients:
           A:
             type: OAK_LEAVES
             amount: 1
-          ' ':
+          O:
             type: AIR
-            amount: 1
-          L:
-            type: OAK_LEAVES
             amount: 1
     - type: RECIPE
       data:
         recipeType: FORAGING
         resultType: LEAFLET_CHESTPLATE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - AOA
+          - AAA
+          - AAA
         ingredients:
           A:
             type: OAK_LEAVES
             amount: 1
-          ' ':
+          O:
             type: AIR
-            amount: 1
-          L:
-            type: OAK_LEAVES
             amount: 1
   - amount: 500
     rewards:

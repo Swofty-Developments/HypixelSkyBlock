@@ -30,9 +30,9 @@ items:
         recipes:
           - type: SHAPED
             pattern:
-              - "A"
-              - "A"
-              - "B"
+              - A
+              - A
+              - B
             ingredients:
               A:
                 type: MOVE_JERRY
@@ -202,7 +202,7 @@ items:
           - type: SHAPED
             recipe-type: SLAYER
             pattern:
-              - "ABA"
+              - ABA
             ingredients:
               A:
                 type: REVENANT_FLESH
