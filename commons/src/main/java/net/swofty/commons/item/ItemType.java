@@ -20,8 +20,8 @@ public enum ItemType {
     QUALITY_MAP(Material.MAP,  Rarity.SPECIAL),
     DEAD_BUSH_OF_LOVE(Material.DEAD_BUSH,  Rarity.SPECIAL),
 
-    CORLEONITE(Material.PLAYER_HEAD, Rarity.EPIC),
-    BONZO_FRAGMENT(Material.RED_MUSHROOM, Rarity.RARE),
+    ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
+    BIOFUEL(Material.GREEN_DYE, Rarity.RARE),
 
     /**
      * Accessories
@@ -108,7 +108,7 @@ public enum ItemType {
     CULTIVATING(Material.ENCHANTED_BOOK,  Rarity.COMMON),
     EXPERTISE(Material.ENCHANTED_BOOK,  Rarity.COMMON),
     HECATOMB(Material.ENCHANTED_BOOK,  Rarity.COMMON),
-    INFERNO_FUE_BLOCK(Material.PLAYER_HEAD,  Rarity.RARE),
+    INFERNO_FUEL_BLOCK(Material.PLAYER_HEAD,  Rarity.RARE),
 
     /**
      * Sacks
@@ -116,10 +116,6 @@ public enum ItemType {
     SMALL_MINING_SACK(Material.PLAYER_HEAD, Rarity.UNCOMMON),
     MEDIUM_MINING_SACK(Material.PLAYER_HEAD, Rarity.RARE),
     LARGE_MINING_SACK(Material.PLAYER_HEAD, Rarity.EPIC),
-
-    BIGFOOT_LASSO(Material.LEAD, Rarity.UNCOMMON),
-    BIOFUEL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
-    ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
 
     /**
      * Runes
@@ -462,6 +458,8 @@ public enum ItemType {
     ARCHITECTS_FIRST_DRAFT(Material.PAPER,  Rarity.EPIC),
     KISMET_FEATHER(Material.FEATHER,  Rarity.RARE),
     NECRONS_HANDLE(Material.STICK,  Rarity.EPIC),
+    BIGFOOT_LASSO(Material.LEAD, Rarity.EPIC),
+    BONZO_FRAGMENT(Material.RED_MUSHROOM, Rarity.RARE),
 
     /**
      * Mythological Ritual
@@ -694,6 +692,7 @@ public enum ItemType {
     SORROW(Material.GHAST_TEAR,  Rarity.RARE),
     PLASMA(Material.PLAYER_HEAD,  Rarity.RARE),
     VOLTA(Material.PLAYER_HEAD,  Rarity.RARE),
+    CORLEONITE(Material.PLAYER_HEAD, Rarity.EPIC),
 
     /**
      * Travel Scrolls

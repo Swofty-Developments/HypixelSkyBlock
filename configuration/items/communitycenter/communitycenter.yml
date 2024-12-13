@@ -4,8 +4,8 @@ items:
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
-  - id: AUTOPET_RULES2_PACK
-    rarity: COMMON
+  - id: AUTOPET_RULES_2_PACK
+    rarity: SPECIAL
     components:
       - id: SKULL_HEAD
         texture: c316a8b96cb9aeea5140dd936c6ebb964efcbfd71ae217d9f70888efb14e7c0

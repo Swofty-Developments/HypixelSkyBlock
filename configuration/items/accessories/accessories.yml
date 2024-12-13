@@ -71,3 +71,9 @@ items:
     components:
       - id: DECORATION_HEAD
         texture: 9c11d6c79b8a1f18902d783cdda4bdfb9d47337b73791028a126a6e6cf101def
+  - id: WITHER_RELIC
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 17b8ef7e8e0af19399cc32485f2ee47b2bb4d5802c71b3021f4d5d6b5f3afe03

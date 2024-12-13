@@ -59,7 +59,7 @@ items:
     components:
       - id: SKULL_HEAD
         texture: c9385651845f8bfe186c30da81bacd6971aa51be3b5001fc4ea5cf1af8f23c33
-  - id: F_T_X3070
+  - id: FTX3070
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -151,3 +151,8 @@ items:
     rarity: COMMON
   - id: YELLOW_GOBLIN_EGG
     rarity: COMMON
+  - id: CORLEONITE
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: df52e888b00dd5f3b82d6f9b89375c9e74bbba41d465860b0c09872873cb0f51
