@@ -112,8 +112,8 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 "§6Inferno §7minion fuel and level up",
                 "§7your §cChili Pepper §7collection!"),
                 List.of(
-                        new CommunityShopItem(ItemType.INFERNO_FUE_BLOCK, 75, 1),
-                        new CommunityShopItem(ItemType.INFERNO_FUE_BLOCK, 3600, 64)
+                        new CommunityShopItem(ItemType.INFERNO_FUEL_BLOCK, 75, 1),
+                        new CommunityShopItem(ItemType.INFERNO_FUEL_BLOCK, 3600, 64)
                 )),
         STACKING_ENCHANTS("Stacking Enchants", new GUIBitsShop(), ItemStackCreator.getStack("§9Stacking Enchants", Material.ENCHANTED_BOOK, 1,
                 "§7Unlock unique §9enchants §7to apply",

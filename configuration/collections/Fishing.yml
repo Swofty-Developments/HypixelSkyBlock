@@ -324,7 +324,10 @@ collections:
         recipeType: NONE
         resultType: PRISMARINE_BLADE
         resultAmount: 1
-        pattern: []
+        pattern:
+          - A
+          - A
+          - B
         ingredients:
           A:
             type: PRISMARINE_SHARD

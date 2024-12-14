@@ -46,12 +46,12 @@ public class NPCKat extends SkyBlockNPC {
         DatapointKat.PlayerKat katData = e.player().getKatData();
         SkyBlockItem heldItem = new SkyBlockItem(e.player().getItemInMainHand());
         if (heldItem.hasComponent(KatComponent.class) && katData.getFinishTime() != 0 && katData.getFinishTime() > System.currentTimeMillis()) {
-            int reducedTime = heldItem.getComponent(KatComponent.class).getReducedDays();
-            katData.setFinishedTime((long) reducedTime);
+            long reducedTime = (long) heldItem.getComponent(KatComponent.class).getReducedDays() * 86400000;
+            katData.setFinishedTime(katData.getFinishTime() - reducedTime);
             e.player().setItemInMainHand(ItemStack.AIR);
         } else if (katData.getPet() != null) {
             if (katData.getFinishTime() > System.currentTimeMillis()) {
-                e.player().sendMessage("Kat didnt upgrade ur pet yet");
+                e.player().sendMessage("Kat didn't upgrade ur pet yet");
             } else {
                 SkyBlockItem pet = katData.getPet();
                 pet.getAttributeHandler().getRarity().upgrade();

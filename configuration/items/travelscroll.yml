@@ -13,15 +13,12 @@ items:
         scroll_type: HUB_MUSEUM
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: SLAYER
-            result:
-              type: HUB_CRYPTS_TRAVEL_SCROLL
-              amount: 1
             pattern:
-              - "AAA"
-              - "ABA"
-              - "AAA"
+              - AAA
+              - ABA
+              - AAA
             ingredients:
               A:
                 type: ENCHANTED_BONE
@@ -29,6 +26,9 @@ items:
               B:
                 type: ENCHANTED_ENDER_PEARL
                 amount: 16
+            result:
+              type: HUB_CRYPTS_TRAVEL_SCROLL
+              amount: 1
   - id: HUB_CRYPTS_TRAVEL_SCROLL
     material: PAPER
     rarity: UNCOMMON
@@ -37,15 +37,12 @@ items:
         scroll_type: HUB_CRYPTS
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: SLAYER
-            result:
-              type: HUB_CRYPTS_TRAVEL_SCROLL
-              amount: 1
             pattern:
-              - "AAA"
-              - "CBC"
-              - "CCC"
+              - AAA
+              - CBC
+              - CCC
             ingredients:
               A:
                 type: REVENANT_VISCERA
@@ -56,3 +53,6 @@ items:
               C:
                 type: ENCHANTED_OBSIDIAN
                 amount: 16
+            result:
+              type: HUB_CRYPTS_TRAVEL_SCROLL
+              amount: 1

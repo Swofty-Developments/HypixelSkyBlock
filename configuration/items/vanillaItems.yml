@@ -1,15 +1,50 @@
 items:
+  - id: DIRT
+    material: DIRT
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: GRASS_BLOCK
+    material: GRASS_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: SHORT_GRASS
+    material: GRASS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: LONG_GRASS
+    material: GRASS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: FERN
+    material: FERN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
   - id: ANVIL
     material: ANVIL
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
-              - B
+              - OBO
               - BBB
             ingredients:
               A:
@@ -17,6 +52,9 @@ items:
                 amount: 1
               B:
                 type: IRON_INGOT
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: ANVIL
@@ -29,7 +67,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -39,7 +77,7 @@ items:
                 amount: 1
             result:
               type: BLACK_CARPET
-              amount: 1
+              amount: 3
   - id: BLUE_CARPET
     material: BLUE_CARPET
     rarity: COMMON
@@ -48,7 +86,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -58,7 +96,7 @@ items:
                 amount: 1
             result:
               type: BLUE_CARPET
-              amount: 1
+              amount: 3
   - id: BROWN_CARPET
     material: BROWN_CARPET
     rarity: COMMON
@@ -67,7 +105,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -77,7 +115,7 @@ items:
                 amount: 1
             result:
               type: BROWN_CARPET
-              amount: 1
+              amount: 3
   - id: CYAN_CARPET
     material: CYAN_CARPET
     rarity: COMMON
@@ -86,7 +124,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -96,14 +134,7 @@ items:
                 amount: 1
             result:
               type: CYAN_CARPET
-              amount: 1
-  - id: DIRT
-    material: DIRT
-    rarity: COMMON
-    components:
-      - id: PLACEABLE
-      - id: SELLABLE
-        value: 1.0
+              amount: 3
   - id: GRAY_CARPET
     material: GRAY_CARPET
     rarity: COMMON
@@ -112,7 +143,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -122,7 +153,7 @@ items:
                 amount: 1
             result:
               type: GRAY_CARPET
-              amount: 1
+              amount: 3
   - id: GREEN_CARPET
     material: GREEN_CARPET
     rarity: COMMON
@@ -131,7 +162,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -141,7 +172,7 @@ items:
                 amount: 1
             result:
               type: GREEN_CARPET
-              amount: 1
+              amount: 3
   - id: LIGHT_BLUE_CARPET
     material: LIGHT_BLUE_CARPET
     rarity: COMMON
@@ -150,7 +181,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -160,7 +191,7 @@ items:
                 amount: 1
             result:
               type: LIGHT_BLUE_CARPET
-              amount: 1
+              amount: 3
   - id: LIGHT_GRAY_CARPET
     material: LIGHT_GRAY_CARPET
     rarity: COMMON
@@ -169,7 +200,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -179,7 +210,7 @@ items:
                 amount: 1
             result:
               type: LIGHT_GRAY_CARPET
-              amount: 1
+              amount: 3
   - id: LIME_CARPET
     material: LIME_CARPET
     rarity: COMMON
@@ -188,7 +219,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -198,7 +229,7 @@ items:
                 amount: 1
             result:
               type: LIME_CARPET
-              amount: 1
+              amount: 3
   - id: MAGENTA_CARPET
     material: MAGENTA_CARPET
     rarity: COMMON
@@ -207,7 +238,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -217,7 +248,7 @@ items:
                 amount: 1
             result:
               type: MAGENTA_CARPET
-              amount: 1
+              amount: 3
   - id: ORANGE_CARPET
     material: ORANGE_CARPET
     rarity: COMMON
@@ -226,7 +257,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -236,7 +267,7 @@ items:
                 amount: 1
             result:
               type: ORANGE_CARPET
-              amount: 1
+              amount: 3
   - id: PINK_CARPET
     material: PINK_CARPET
     rarity: COMMON
@@ -245,7 +276,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -255,7 +286,7 @@ items:
                 amount: 1
             result:
               type: PINK_CARPET
-              amount: 1
+              amount: 3
   - id: PURPLE_CARPET
     material: PURPLE_CARPET
     rarity: COMMON
@@ -264,7 +295,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -274,7 +305,7 @@ items:
                 amount: 1
             result:
               type: PURPLE_CARPET
-              amount: 1
+              amount: 3
   - id: RED_CARPET
     material: RED_CARPET
     rarity: COMMON
@@ -283,7 +314,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -293,7 +324,7 @@ items:
                 amount: 1
             result:
               type: RED_CARPET
-              amount: 1
+              amount: 3
   - id: WHITE_CARPET
     material: WHITE_CARPET
     rarity: COMMON
@@ -302,7 +333,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -312,7 +343,7 @@ items:
                 amount: 1
             result:
               type: WHITE_CARPET
-              amount: 1
+              amount: 3
   - id: YELLOW_CARPET
     material: YELLOW_CARPET
     rarity: COMMON
@@ -321,7 +352,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -331,7 +362,7 @@ items:
                 amount: 1
             result:
               type: YELLOW_CARPET
-              amount: 1
+              amount: 3
   - id: BLACK_STAINED_GLASS
     material: BLACK_STAINED_GLASS
     rarity: COMMON
@@ -340,7 +371,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -355,7 +386,7 @@ items:
                 amount: 1
             result:
               type: BLACK_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: BLUE_STAINED_GLASS
     material: BLUE_STAINED_GLASS
     rarity: COMMON
@@ -364,7 +395,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -379,7 +410,7 @@ items:
                 amount: 1
             result:
               type: BLUE_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: BROWN_STAINED_GLASS
     material: BROWN_STAINED_GLASS
     rarity: COMMON
@@ -388,7 +419,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -403,7 +434,7 @@ items:
                 amount: 1
             result:
               type: BROWN_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: CYAN_STAINED_GLASS
     material: CYAN_STAINED_GLASS
     rarity: COMMON
@@ -412,7 +443,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -427,7 +458,7 @@ items:
                 amount: 1
             result:
               type: CYAN_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: GLASS
     material: GLASS
     rarity: COMMON
@@ -442,7 +473,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -457,7 +488,7 @@ items:
                 amount: 1
             result:
               type: GRAY_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: GREEN_STAINED_GLASS
     material: GREEN_STAINED_GLASS
     rarity: COMMON
@@ -466,7 +497,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -481,7 +512,7 @@ items:
                 amount: 1
             result:
               type: GREEN_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: LIGHT_BLUE_STAINED_GLASS
     material: LIGHT_BLUE_STAINED_GLASS
     rarity: COMMON
@@ -490,7 +521,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -505,7 +536,7 @@ items:
                 amount: 1
             result:
               type: LIGHT_BLUE_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: LIGHT_GRAY_STAINED_GLASS
     material: LIGHT_GRAY_STAINED_GLASS
     rarity: COMMON
@@ -514,7 +545,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -529,7 +560,7 @@ items:
                 amount: 1
             result:
               type: LIGHT_GRAY_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: LIME_STAINED_GLASS
     material: LIME_STAINED_GLASS
     rarity: COMMON
@@ -538,7 +569,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -553,7 +584,7 @@ items:
                 amount: 1
             result:
               type: LIME_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: MAGENTA_STAINED_GLASS
     material: MAGENTA_STAINED_GLASS
     rarity: COMMON
@@ -562,7 +593,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -577,7 +608,7 @@ items:
                 amount: 1
             result:
               type: MAGENTA_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: ORANGE_STAINED_GLASS
     material: ORANGE_STAINED_GLASS
     rarity: COMMON
@@ -586,7 +617,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -601,7 +632,7 @@ items:
                 amount: 1
             result:
               type: ORANGE_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: PINK_STAINED_GLASS
     material: PINK_STAINED_GLASS
     rarity: COMMON
@@ -610,7 +641,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -625,7 +656,7 @@ items:
                 amount: 1
             result:
               type: PINK_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: PURPLE_STAINED_GLASS
     material: PURPLE_STAINED_GLASS
     rarity: COMMON
@@ -634,7 +665,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -649,7 +680,7 @@ items:
                 amount: 1
             result:
               type: PURPLE_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: RED_STAINED_GLASS
     material: RED_STAINED_GLASS
     rarity: COMMON
@@ -658,7 +689,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -673,7 +704,7 @@ items:
                 amount: 1
             result:
               type: RED_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: WHITE_STAINED_GLASS
     material: WHITE_STAINED_GLASS
     rarity: COMMON
@@ -682,7 +713,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -697,7 +728,7 @@ items:
                 amount: 1
             result:
               type: WHITE_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: YELLOW_STAINED_GLASS
     material: YELLOW_STAINED_GLASS
     rarity: COMMON
@@ -706,7 +737,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -721,7 +752,7 @@ items:
                 amount: 1
             result:
               type: YELLOW_STAINED_GLASS
-              amount: 1
+              amount: 8
   - id: BLACK_STAINED_GLASS_PANE
     material: BLACK_STAINED_GLASS_PANE
     rarity: COMMON
@@ -730,13 +761,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BLACK_STAINED_GLASS
+                amount: 1
             result:
               type: BLACK_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BLUE_STAINED_GLASS_PANE
     material: BLUE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -745,13 +781,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BLUE_STAINED_GLASS
+                amount: 1
             result:
               type: BLUE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BROWN_STAINED_GLASS_PANE
     material: BROWN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -760,13 +801,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: BROWN_STAINED_GLASS
+                amount: 1
             result:
               type: BROWN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: CYAN_STAINED_GLASS_PANE
     material: CYAN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -775,13 +821,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: CYAN_STAINED_GLASS
+                amount: 1
             result:
               type: CYAN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GLASS_PANE
     material: GLASS_PANE
     rarity: COMMON
@@ -790,7 +841,7 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -801,7 +852,7 @@ items:
                 amount: 1
             result:
               type: GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GRAY_STAINED_GLASS_PANE
     material: GRAY_STAINED_GLASS_PANE
     rarity: COMMON
@@ -810,13 +861,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GRAY_STAINED_GLASS
+                amount: 1
             result:
               type: GRAY_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: GREEN_STAINED_GLASS_PANE
     material: GREEN_STAINED_GLASS_PANE
     rarity: COMMON
@@ -825,13 +881,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: GREEN_STAINED_GLASS
+                amount: 1
             result:
               type: GREEN_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIGHT_BLUE_STAINED_GLASS_PANE
     material: LIGHT_BLUE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -840,13 +901,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIGHT_BLUE_STAINED_GLASS
+                amount: 1
             result:
               type: LIGHT_BLUE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIGHT_GRAY_STAINED_GLASS_PANE
     material: LIGHT_GRAY_STAINED_GLASS_PANE
     rarity: COMMON
@@ -855,13 +921,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIGHT_GRAY_STAINED_GLASS
+                amount: 1
             result:
               type: LIGHT_GRAY_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: LIME_STAINED_GLASS_PANE
     material: LIME_STAINED_GLASS_PANE
     rarity: COMMON
@@ -870,13 +941,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: LIME_STAINED_GLASS
+                amount: 1
             result:
               type: LIME_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: MAGENTA_STAINED_GLASS_PANE
     material: MAGENTA_STAINED_GLASS_PANE
     rarity: COMMON
@@ -885,13 +961,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: MAGENTA_STAINED_GLASS
+                amount: 1
             result:
               type: MAGENTA_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: ORANGE_STAINED_GLASS_PANE
     material: ORANGE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -900,13 +981,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: ORANGE_STAINED_GLASS
+                amount: 1
             result:
               type: ORANGE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: PINK_STAINED_GLASS_PANE
     material: PINK_STAINED_GLASS_PANE
     rarity: COMMON
@@ -915,13 +1001,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: PINK_STAINED_GLASS
+                amount: 1
             result:
               type: PINK_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: PURPLE_STAINED_GLASS_PANE
     material: PURPLE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -930,13 +1021,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: PURPLE_STAINED_GLASS
+                amount: 1
             result:
               type: PURPLE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: RED_STAINED_GLASS_PANE
     material: RED_STAINED_GLASS_PANE
     rarity: COMMON
@@ -945,13 +1041,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: RED_STAINED_GLASS
+                amount: 1
             result:
               type: RED_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: WHITE_STAINED_GLASS_PANE
     material: WHITE_STAINED_GLASS_PANE
     rarity: COMMON
@@ -960,13 +1061,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: WHITE_STAINED_GLASS
+                amount: 1
             result:
               type: WHITE_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: YELLOW_STAINED_GLASS_PANE
     material: YELLOW_STAINED_GLASS_PANE
     rarity: COMMON
@@ -975,13 +1081,18 @@ items:
         value: 0.8
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: YELLOW_STAINED_GLASS
+                amount: 1
             result:
               type: YELLOW_STAINED_GLASS_PANE
-              amount: 1
+              amount: 16
   - id: BLACK_WOOL
     material: BLACK_WOOL
     rarity: COMMON
@@ -990,16 +1101,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: BLACK_DYE
+              - type: BLACK_DYE
                 amount: 1
             result:
               type: BLACK_WOOL
@@ -1012,16 +1119,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: BLUE_DYE
+              - type: BLUE_DYE
                 amount: 1
             result:
               type: BLUE_WOOL
@@ -1034,16 +1137,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: BROWN_DYE
+              - type: BROWN_DYE
                 amount: 1
             result:
               type: BROWN_WOOL
@@ -1056,16 +1155,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: CYAN_DYE
+              - type: CYAN_DYE
                 amount: 1
             result:
               type: CYAN_WOOL
@@ -1078,16 +1173,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: GRAY_DYE
+              - type: GRAY_DYE
                 amount: 1
             result:
               type: GRAY_WOOL
@@ -1100,16 +1191,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: CACTUS_GREEN
+              - type: CACTUS_GREEN
                 amount: 1
             result:
               type: GREEN_WOOL
@@ -1122,16 +1209,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: LIGHT_BLUE_DYE
+              - type: LIGHT_BLUE_DYE
                 amount: 1
             result:
               type: LIGHT_BLUE_WOOL
@@ -1144,16 +1227,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: LIGHT_GRAY_DYE
+              - type: LIGHT_GRAY_DYE
                 amount: 1
             result:
               type: LIGHT_GRAY_WOOL
@@ -1166,16 +1245,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: LIME_DYE
+              - type: LIME_DYE
                 amount: 1
             result:
               type: LIME_WOOL
@@ -1188,16 +1263,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: MAGENTA_DYE
+              - type: MAGENTA_DYE
                 amount: 1
             result:
               type: MAGENTA_WOOL
@@ -1210,16 +1281,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: ORANGE_DYE
+              - type: ORANGE_DYE
                 amount: 1
             result:
               type: ORANGE_WOOL
@@ -1232,16 +1299,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: PINK_DYE
+              - type: PINK_DYE
                 amount: 1
             result:
               type: PINK_WOOL
@@ -1254,16 +1317,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: PURPLE_DYE
+              - type: PURPLE_DYE
                 amount: 1
             result:
               type: PURPLE_WOOL
@@ -1276,16 +1335,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: RED_DYE
+              - type: RED_DYE
                 amount: 1
             result:
               type: RED_WOOL
@@ -1298,7 +1353,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1318,16 +1373,12 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
             ingredients:
-              A:
-                type: WHITE_WOOL
+              - type: WHITE_WOOL
                 amount: 1
-              B:
-                type: YELLOW_DYE
+              - type: YELLOW_DYE
                 amount: 1
             result:
               type: YELLOW_WOOL
@@ -1346,7 +1397,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1365,7 +1416,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1386,7 +1437,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1406,7 +1457,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1426,7 +1477,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1445,7 +1496,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1472,7 +1523,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1491,7 +1542,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1512,7 +1563,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1538,7 +1589,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1557,7 +1608,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1578,7 +1629,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1598,7 +1649,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1618,7 +1669,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1637,7 +1688,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1664,7 +1715,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1683,7 +1734,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1704,7 +1755,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1724,7 +1775,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1744,7 +1795,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1763,7 +1814,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1784,7 +1835,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -1804,7 +1855,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1821,7 +1872,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1840,7 +1891,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1861,7 +1912,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -1879,7 +1930,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1899,7 +1950,7 @@ items:
         value: 16.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -1917,7 +1968,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1937,13 +1988,17 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: QUARTZ_BLOCK
+                amount: 1
             result:
               type: QUARTZ_SLAB
-              amount: 1
+              amount: 3
   - id: QUARTZ_STAIRS
     material: QUARTZ_STAIRS
     rarity: COMMON
@@ -1952,7 +2007,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1973,7 +2028,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -1993,7 +2048,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2013,7 +2068,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2033,7 +2088,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2052,7 +2107,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2072,7 +2127,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2091,7 +2146,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2111,13 +2166,17 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: RED_SANDSTONE
+                amount: 1
             result:
               type: RED_SANDSTONE_SLAB
-              amount: 1
+              amount: 3
   - id: RED_SANDSTONE_STAIRS
     material: RED_SANDSTONE_STAIRS
     rarity: COMMON
@@ -2126,7 +2185,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2147,7 +2206,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2167,7 +2226,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2187,13 +2246,17 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
             result:
               type: SANDSTONE_SLAB
-              amount: 1
+              amount: 3
   - id: SANDSTONE_STAIRS
     material: SANDSTONE_STAIRS
     rarity: COMMON
@@ -2202,7 +2265,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2223,7 +2286,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2249,7 +2312,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2274,7 +2337,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2293,7 +2356,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2314,7 +2377,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AB
@@ -2333,7 +2396,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2352,7 +2415,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2373,7 +2436,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2393,7 +2456,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2413,7 +2476,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2432,7 +2495,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2453,7 +2516,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2475,7 +2538,7 @@ items:
         value: 2.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2496,7 +2559,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2516,7 +2579,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -2537,7 +2600,7 @@ items:
         value: 0.2
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2557,7 +2620,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2578,7 +2641,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2601,7 +2664,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2624,13 +2687,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: ACACIA_LOG
+                amount: 1
             result:
               type: ACACIA_PLANKS
-              amount: 1
+              amount: 4
   - id: ACACIA_PRESSURE_PLATE
     material: ACACIA_PRESSURE_PLATE
     rarity: COMMON
@@ -2639,7 +2703,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2658,7 +2722,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2677,7 +2741,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2698,7 +2762,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2718,7 +2782,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2739,7 +2803,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2762,7 +2826,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2785,13 +2849,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BIRCH_LOG
+                amount: 1
             result:
               type: BIRCH_PLANKS
-              amount: 1
+              amount: 4
   - id: BIRCH_PRESSURE_PLATE
     material: BIRCH_PRESSURE_PLATE
     rarity: COMMON
@@ -2800,7 +2865,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2819,7 +2884,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2838,7 +2903,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -2859,7 +2924,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2879,7 +2944,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2900,7 +2965,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2923,7 +2988,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -2946,13 +3011,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: DARK_OAK_LOG
+                amount: 1
             result:
               type: DARK_OAK_PLANKS
-              amount: 1
+              amount: 4
   - id: DARK_OAK_PRESSURE_PLATE
     material: DARK_OAK_PRESSURE_PLATE
     rarity: COMMON
@@ -2961,7 +3027,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -2980,7 +3046,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -2999,7 +3065,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -3020,7 +3086,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3040,7 +3106,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3061,7 +3127,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3084,7 +3150,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3107,13 +3173,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: JUNGLE_LOG
+                amount: 1
             result:
               type: JUNGLE_PLANKS
-              amount: 1
+              amount: 4
   - id: JUNGLE_PRESSURE_PLATE
     material: JUNGLE_PRESSURE_PLATE
     rarity: COMMON
@@ -3122,7 +3189,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3141,7 +3208,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3160,7 +3227,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -3181,7 +3248,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3201,7 +3268,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3222,7 +3289,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3245,7 +3312,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3268,13 +3335,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: OAK_LOG
+                amount: 1
             result:
               type: OAK_PLANKS
-              amount: 1
+              amount: 4
   - id: OAK_PRESSURE_PLATE
     material: OAK_PRESSURE_PLATE
     rarity: COMMON
@@ -3283,7 +3351,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3302,7 +3370,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3321,7 +3389,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -3342,7 +3410,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3362,7 +3430,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3383,7 +3451,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3406,7 +3474,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - ABA
@@ -3429,13 +3497,14 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: SPRUCE_LOG
+                amount: 1
             result:
               type: SPRUCE_PLANKS
-              amount: 1
+              amount: 4
   - id: SPRUCE_PRESSURE_PLATE
     material: SPRUCE_PRESSURE_PLATE
     rarity: COMMON
@@ -3444,7 +3513,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AA
@@ -3463,7 +3532,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3482,7 +3551,7 @@ items:
         value: 0.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -3503,7 +3572,7 @@ items:
         value: 1.5
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3521,7 +3590,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -3546,7 +3615,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3566,7 +3635,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3587,7 +3656,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3607,7 +3676,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3628,7 +3697,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3648,7 +3717,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3669,7 +3738,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3689,7 +3758,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3710,7 +3779,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3731,7 +3800,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3753,7 +3822,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3774,7 +3843,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3796,7 +3865,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3816,7 +3885,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A A
@@ -3837,7 +3906,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3857,7 +3926,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AAA
@@ -3878,7 +3947,7 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - AB
@@ -3902,10 +3971,11 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: INK_SAC
+                amount: 1
             result:
               type: BLACK_DYE
               amount: 1
@@ -3915,10 +3985,11 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: LAPIS_LAZULI
+                amount: 1
             result:
               type: BLUE_DYE
               amount: 1
@@ -3928,10 +3999,11 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: COCOA_BEANS
+                amount: 1
             result:
               type: BROWN_DYE
               amount: 1
@@ -3941,36 +4013,53 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BLUE_DYE
+                amount: 1
+              - type: GREEN_DYE
+                amount: 1
             result:
               type: CYAN_DYE
-              amount: 1
+              amount: 2
   - id: GRAY_DYE
     material: GRAY_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BLACK_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
             result:
               type: GRAY_DYE
-              amount: 1
+              amount: 2
   - id: LIGHT_BLUE_DYE
     material: LIGHT_BLUE_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BLUE_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_DYE
+              amount: 2
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BLUE_ORCHID
+                amount: 1
             result:
               type: LIGHT_BLUE_DYE
               amount: 1
@@ -3980,10 +4069,47 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BLACK_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 2
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 3
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: GRAY_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 2
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: AZURE_BLUET
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: OXEYE_DAISY
+                amount: 1
+            result:
+              type: LIGHT_GRAY_DYE
+              amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_TULIP
+                amount: 1
             result:
               type: LIGHT_GRAY_DYE
               amount: 1
@@ -3993,88 +4119,201 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: GREEN_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
             result:
               type: LIME_DYE
-              amount: 1
+              amount: 2
   - id: MAGENTA_DYE
     material: MAGENTA_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: ALLIUM
+                amount: 1
             result:
               type: MAGENTA_DYE
               amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: LILAC
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 2
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PURPLE_DYE
+                amount: 1
+              - type: PINK_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 2
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BLUE_DYE
+                amount: 1
+              - type: RED_DYE
+                amount: 1
+              - type: PINK_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 3
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BLUE_DYE
+                amount: 1
+              - type: RED_DYE
+                amount: 2
+              - type: WHITE_DYE
+                amount: 1
+            result:
+              type: MAGENTA_DYE
+              amount: 4
   - id: ORANGE_DYE
     material: ORANGE_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: ORANGE_TULIP
+                amount: 1
             result:
               type: ORANGE_DYE
               amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: RED_DYE
+                amount: 1
+              - type: YELLOW_DYE
+                amount: 1
+            result:
+              type: ORANGE_DYE
+              amount: 2
   - id: PINK_DYE
     material: PINK_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: PINK_TULIP
+                amount: 1
             result:
               type: PINK_DYE
               amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PEONY
+                amount: 1
+            result:
+              type: PINK_DYE
+              amount: 2
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: RED_DYE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
+            result:
+              type: PINK_DYE
+              amount: 2
   - id: PURPLE_DYE
     material: PURPLE_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BLUE_DYE
+                amount: 1
+              - type: RED_DYE
+                amount: 1
             result:
               type: PURPLE_DYE
-              amount: 1
+              amount: 2
   - id: RED_DYE
     material: RED_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: POPPY
+                amount: 1
             result:
               type: RED_DYE
               amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: RED_TULIP
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: BEETROOT
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: ROSE_BUSH
+                amount: 1
+            result:
+              type: RED_DYE
+              amount: 2
   - id: WHITE_DYE
     material: WHITE_DYE
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: BONE_MEAL
+                amount: 1
+            result:
+              type: WHITE_DYE
+              amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: LILY_OF_THE_VALLEY
+                amount: 1
             result:
               type: WHITE_DYE
               amount: 1
@@ -4084,13 +4323,22 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern: []
-            ingredients: {}
+            ingredients:
+              - type: DANDELION
+                amount: 1
             result:
               type: YELLOW_DYE
               amount: 1
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: SUNFLOWER
+                amount: 1
+            result:
+              type: YELLOW_DYE
+              amount: 2
   - id: DIAMOND_SWORD
     material: DIAMOND_SWORD
     rarity: COMMON
@@ -4099,7 +4347,7 @@ items:
         value: 8.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -4125,7 +4373,7 @@ items:
         value: 4.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -4151,7 +4399,7 @@ items:
         value: 3.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -4177,7 +4425,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A
@@ -4203,7 +4451,7 @@ items:
         value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: shaped
+          - type: SHAPED
             recipe-type: NONE
             pattern:
               - A

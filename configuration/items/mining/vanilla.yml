@@ -18,6 +18,21 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 18.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: COAL
+                amount: 1
+            result:
+              type: COAL_BLOCK
+              amount: 1
       - id: MINION_FUEL
         fuel_percentage: 5.0
         last_time_ms: 18000000
@@ -39,9 +54,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: DIAMOND_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -50,6 +62,9 @@ items:
               A:
                 type: DIAMOND
                 amount: 1
+            result:
+              type: DIAMOND_BLOCK
+              amount: 1
   - id: DIAMOND_PICKAXE
     rarity: COMMON
     default_statistics:
@@ -62,13 +77,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: DIAMOND_PICKAXE
-              amount: 1
             pattern:
               - AAA
-              - ' B '
-              - ' B '
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: DIAMOND
@@ -76,6 +88,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_PICKAXE
+              amount: 1
       - id: SELLABLE
         value: 12.0
   - id: DIAMOND_SHOVEL
@@ -88,9 +106,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: DIAMOND_SHOVEL
-              amount: 1
             pattern:
               - A
               - B
@@ -102,6 +117,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: DIAMOND_SHOVEL
+              amount: 1
       - id: SELLABLE
         value: 4.0
   - id: EMERALD
@@ -122,9 +140,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: EMERALD_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -133,6 +148,9 @@ items:
               A:
                 type: EMERALD
                 amount: 1
+            result:
+              type: EMERALD_BLOCK
+              amount: 1
   - id: END_STONE
     rarity: COMMON
     components:
@@ -156,9 +174,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GLOWSTONE
-              amount: 1
             pattern:
               - AA
               - AA
@@ -166,6 +181,9 @@ items:
               A:
                 type: GLOWSTONE_DUST
                 amount: 1
+            result:
+              type: GLOWSTONE
+              amount: 1
   - id: GLOWSTONE_DUST
     rarity: COMMON
     components:
@@ -184,9 +202,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLD_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -195,6 +210,9 @@ items:
               A:
                 type: GOLD_INGOT
                 amount: 1
+            result:
+              type: GOLD_BLOCK
+              amount: 1
   - id: GOLDEN_PICKAXE
     rarity: COMMON
     default_statistics:
@@ -207,13 +225,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLDEN_PICKAXE
-              amount: 1
             pattern:
               - AAA
-              - ' B '
-              - ' B '
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: GOLD_INGOT
@@ -221,6 +236,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_PICKAXE
+              amount: 1
       - id: SELLABLE
         value: 6.0
   - id: GOLDEN_SHOVEL
@@ -233,9 +254,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: GOLDEN_SHOVEL
-              amount: 1
             pattern:
               - A
               - B
@@ -247,6 +265,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: GOLDEN_SHOVEL
+              amount: 1
       - id: SELLABLE
         value: 3.0
   - id: GOLD_INGOT
@@ -264,17 +285,14 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
+            ingredients:
+              - type: GOLD_INGOT
+                amount: 1
             result:
               type: GOLD_NUGGET
               amount: 1
-            pattern:
-              - A
-            ingredients:
-              A:
-                type: GOLD_INGOT
-                amount: 1
       - id: SELLABLE
         value: 0.4
   - id: GOLD_ORE
@@ -308,9 +326,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: IRON_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -319,6 +334,9 @@ items:
               A:
                 type: IRON_INGOT
                 amount: 1
+            result:
+              type: IRON_BLOCK
+              amount: 1
   - id: IRON_INGOT
     rarity: COMMON
     components:
@@ -344,13 +362,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: IRON_PICKAXE
-              amount: 1
             pattern:
               - AAA
-              - ' B '
-              - ' B '
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: IRON_INGOT
@@ -358,6 +373,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_PICKAXE
+              amount: 1
       - id: SELLABLE
         value: 4.0
   - id: IRON_SHOVEL
@@ -370,9 +391,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: IRON_SHOVEL
-              amount: 1
             pattern:
               - A
               - B
@@ -384,6 +402,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: IRON_SHOVEL
+              amount: 1
       - id: SELLABLE
         value: 2.0
   - id: LAPIS_LAZULI
@@ -404,9 +425,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: LAPIS_LAZULI_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -415,6 +433,9 @@ items:
               A:
                 type: LAPIS_LAZULI
                 amount: 1
+            result:
+              type: LAPIS_LAZULI_BLOCK
+              amount: 1
   - id: MYCELIUM
     rarity: COMMON
     components:
@@ -432,6 +453,7 @@ items:
         mining_value: 0.5
       - id: SELLABLE
         value: 1.0
+      - id: PLACEABLE
   - id: OBSIDIAN
     rarity: COMMON
     components:
@@ -440,6 +462,7 @@ items:
         mining_value: 20.0
       - id: SELLABLE
         value: 7.0
+      - id: PLACEABLE
   - id: PACKED_ICE
     rarity: COMMON
     components:
@@ -450,9 +473,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: PACKED_ICE
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -461,6 +481,9 @@ items:
               A:
                 type: ICE
                 amount: 1
+            result:
+              type: PACKED_ICE
+              amount: 1
   - id: QUARTZ
     rarity: COMMON
     components:
@@ -496,9 +519,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: REDSTONE_BLOCK
-              amount: 1
             pattern:
               - AAA
               - AAA
@@ -507,6 +527,9 @@ items:
               A:
                 type: REDSTONE
                 amount: 1
+            result:
+              type: REDSTONE_BLOCK
+              amount: 1
   - id: SAND
     rarity: COMMON
     components:
@@ -520,6 +543,7 @@ items:
     components:
       - id: SELLABLE
         value: 2.0
+      - id: PLACEABLE
   - id: SNOWBALL
     rarity: COMMON
     components:
@@ -535,9 +559,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: SNOW_BLOCK
-              amount: 1
             pattern:
               - AA
               - AA
@@ -545,6 +566,9 @@ items:
               A:
                 type: SNOWBALL
                 amount: 1
+            result:
+              type: SNOW_BLOCK
+              amount: 1
   - id: STONE_PICKAXE
     rarity: COMMON
     default_statistics:
@@ -557,13 +581,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: STONE_PICKAXE
-              amount: 1
             pattern:
               - AAA
-              - ' B '
-              - ' B '
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: COBBLESTONE
@@ -571,6 +592,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_PICKAXE
+              amount: 1
       - id: SELLABLE
         value: 1.0
   - id: STONE_SHOVEL
@@ -583,9 +610,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: STONE_SHOVEL
-              amount: 1
             pattern:
               - A
               - B
@@ -597,6 +621,9 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: STONE_SHOVEL
+              amount: 1
       - id: SELLABLE
         value: 1.0
   - id: WOODEN_PICKAXE
@@ -611,13 +638,10 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: WOODEN_PICKAXE
-              amount: 1
             pattern:
               - AAA
-              - ' B '
-              - ' B '
+              - OBO
+              - OBO
             ingredients:
               A:
                 type: OAK_PLANKS
@@ -625,6 +649,12 @@ items:
               B:
                 type: STICK
                 amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WOODEN_PICKAXE
+              amount: 1
       - id: SELLABLE
         value: 1.0
   - id: WOODEN_SHOVEL
@@ -637,9 +667,6 @@ items:
         recipes:
           - type: SHAPED
             recipe-type: NONE
-            result:
-              type: WOODEN_SHOVEL
-              amount: 1
             pattern:
               - A
               - B
@@ -651,5 +678,8 @@ items:
               B:
                 type: STICK
                 amount: 1
+            result:
+              type: WOODEN_SHOVEL
+              amount: 1
       - id: SELLABLE
         value: 1.0

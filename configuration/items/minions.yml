@@ -840,7 +840,7 @@ items:
           - ENCHANTED_FLINT:16
           - ENCHANTED_FLINT:32
           - ENCHANTED_FLINT:64
-  - id: HARDSTONE_MINION
+  - id: HARD_STONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON
     components:
