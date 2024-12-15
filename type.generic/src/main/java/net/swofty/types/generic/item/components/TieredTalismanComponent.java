@@ -10,8 +10,7 @@ public class TieredTalismanComponent extends TalismanComponent {
     private final ItemType baseTier;
     private final int tier;
 
-    public TieredTalismanComponent(List<String> talismanDisplay, ItemType baseTier, int tier) {
-        super(talismanDisplay);
+    public TieredTalismanComponent(ItemType baseTier, int tier) {
         this.baseTier = baseTier;
         this.tier = tier;
     }

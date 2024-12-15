@@ -8,12 +8,9 @@ import java.util.List;
 
 public class TalismanComponent extends SkyBlockItemComponent {
     @Getter
-    private final List<String> talismanDisplay;
-    @Getter
     private final ItemStatistics statistics;
 
-    public TalismanComponent(List<String> talismanDisplay) {
-        this.talismanDisplay = talismanDisplay;
+    public TalismanComponent() {
         this.statistics = ItemStatistics.empty();
         addInheritedComponent(new ExtraRarityComponent("ACCESSORY"));
         addInheritedComponent(new TrackedUniqueComponent());
