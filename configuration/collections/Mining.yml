@@ -685,7 +685,7 @@ collections:
     - type: XP
       data:
         xp: 4
-- itemType: FINE_JASPER_GEM
+- itemType: FINE_JASPER_GEMSTONE
   rewards:
   - amount: 100
     rewards:
@@ -702,7 +702,7 @@ collections:
         unlockedItemType: FLAWED_RUBY
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ROUGH_RUBY_GEM
+        resultType: ROUGH_RUBY_GEMSTONE
   - amount: 1000
     rewards:
     - type: XP
@@ -723,7 +723,7 @@ collections:
         unlockedItemType: FINE_RUBY
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: FLAWED_RUBY_GEM
+        resultType: FLAWED_RUBY_GEMSTONE
   - amount: 25000
     rewards:
     - type: XP
@@ -749,7 +749,7 @@ collections:
         unlockedItemType: FLAWLESS_RUBY
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: FINE_RUBY_GEM
+        resultType: FINE_RUBY_GEMSTONE
   - amount: 1000000
     rewards:
     - type: XP

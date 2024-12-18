@@ -4,17 +4,14 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - A
             ingredients:
-              A:
-                type: BLAZE_ROD
+              - type: BLAZE_ROD
                 amount: 1
             result:
               type: BLAZE_POWDER
-              amount: 1
+              amount: 2
       - id: SELLABLE
         value: 4.0
   - id: BLAZE_ROD
@@ -32,17 +29,14 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - A
             ingredients:
-              A:
-                type: BONE
+              - type: BONE
                 amount: 1
             result:
               type: BONE_MEAL
-              amount: 1
+              amount: 3
   - id: ENDER_PEARL
     rarity: COMMON
     components:
@@ -53,17 +47,12 @@ items:
     components:
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - A
-              - B
             ingredients:
-              A:
-                type: ENDER_PEARL
+              - type: ENDER_PEARL
                 amount: 1
-              B:
-                type: BLAZE_POWDER
+              - type: BLAZE_POWDER
                 amount: 1
             result:
               type: EYE_OF_ENDER
@@ -77,20 +66,14 @@ items:
         value: 10.0
       - id: DEFAULT_CRAFTABLE
         recipes:
-          - type: SHAPED
+          - type: SHAPELESS
             recipe-type: NONE
-            pattern:
-              - AB
-              - ' C'
             ingredients:
-              A:
-                type: BROWN_MUSHROOM
+              - type: BROWN_MUSHROOM
                 amount: 1
-              B:
-                type: SUGAR
+              - type: SUGAR
                 amount: 1
-              C:
-                type: SPIDER_EYE
+              - type: SPIDER_EYE
                 amount: 1
             result:
               type: FERMENTED_SPIDER_EYE

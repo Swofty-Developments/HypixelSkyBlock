@@ -73,11 +73,11 @@ public class ItemAttributeHandler {
     }
 
     public boolean isPet() {
-        return item.hasComponent(PetItemComponent.class);
+        return item.hasComponent(PetComponent.class);
     }
 
     public ItemAttributePetData.PetData getPetData() {
-        if (item.hasComponent(PetItemComponent.class)) {
+        if (item.hasComponent(PetComponent.class)) {
             return ((ItemAttributePetData) item.getAttribute("pet_data")).getValue();
         } else {
             throw new RuntimeException("Item is not a pet");

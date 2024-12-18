@@ -1,5 +1,5 @@
 items:
-  - id: PERFECT_AMBER
+  - id: PERFECT_AMBER_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -7,7 +7,7 @@ items:
         gemstone: AMBER
         skull_texture: 37ae236cdec3f2a6f51eae15e2c8f6228b34f137da1569fec9e803f9cd81759d
       - id: TRACKED_UNIQUE
-  - id: PERFECT_AMETHYST
+  - id: PERFECT_AMETHYST_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -15,7 +15,7 @@ items:
         gemstone: AMETHYST
         skull_texture: d886e0f41185b18a3afd89488d2ee4caa0735009247cccf039ced6aed752ff1a
       - id: TRACKED_UNIQUE
-  - id: PERFECT_JADE
+  - id: PERFECT_JADE_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -23,7 +23,7 @@ items:
         gemstone: JADE
         skull_texture: 3fced7977382bf71d4ee17ff5b919e0eb7972083c4cccfa175c8753ae40ba006
       - id: TRACKED_UNIQUE
-  - id: PERFECT_JASPER
+  - id: PERFECT_JASPER_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -31,7 +31,7 @@ items:
         gemstone: JASPER
         skull_texture: 263f991b8e038e46b8ed7632f44ca2e30c15f42977070a8c8d8728e3fc04fc7c
       - id: TRACKED_UNIQUE
-  - id: PERFECT_RUBY
+  - id: PERFECT_RUBY_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -39,7 +39,7 @@ items:
         gemstone: RUBY
         skull_texture: 39b6e047d3b2bca85e8cc49e5480f9774d8a0eafe6dfa9559530590283715142
       - id: TRACKED_UNIQUE
-  - id: PERFECT_SAPPHIRE
+  - id: PERFECT_SAPPHIRE_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL
@@ -47,7 +47,7 @@ items:
         gemstone: SAPPHIRE
         skull_texture: 8e93ebacb60b71793355fde0d4bba43a9c5ec09c3f38897c48c1f857523a0a29
       - id: TRACKED_UNIQUE
-  - id: PERFECT_TOPAZ
+  - id: PERFECT_TOPAZ_GEMSTONE
     rarity: PERFECT
     components:
       - id: GEMSTONE_IMPL

@@ -76,9 +76,9 @@ items:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
             pattern:
-              - ' A '
-              - ' B '
-              - ' C '
+              - A
+              - B
+              - C
             ingredients:
               A:
                 type: REVIVED_HEART
@@ -112,9 +112,9 @@ items:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
             pattern:
-              - A A
+              - AOA
               - BCD
-              - A A
+              - AOA
             ingredients:
               A:
                 type: REVENANT_VISCERA
@@ -127,6 +127,9 @@ items:
                 amount: 32
               D:
                 type: REVIVED_HEART
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: REAPER_MASK
@@ -151,8 +154,8 @@ items:
             recipe-type: REVENANT_HORROR
             pattern:
               - ABC
-              - '  C'
-              - '  C'
+              - OOC
+              - OOC
             ingredients:
               A:
                 type: SCYTHE_BLADE
@@ -162,6 +165,9 @@ items:
                 amount: 64
               C:
                 type: REAPER_FALCHION
+                amount: 1
+              O:
+                type: AIR
                 amount: 1
             result:
               type: REAPER_SCYTHE
@@ -181,9 +187,9 @@ items:
           - type: SHAPED
             recipe-type: REVENANT_HORROR
             pattern:
-              - ' A '
-              - ' B '
-              - ' C '
+              - A
+              - B
+              - C
             ingredients:
               A:
                 type: CRYSTALLIZED_HEART
@@ -248,7 +254,7 @@ items:
             recipe-type: REVENANT_HORROR
             pattern:
               - ABA
-              - C C
+              - COC
             ingredients:
               A:
                 type: REVIVED_HEART
@@ -259,6 +265,9 @@ items:
               C:
                 type: ENCHANTED_IRON_BLOCK
                 amount: 64
+              O:
+                type: AIR
+                amount: 1
             result:
               type: WARDEN_HELMET
               amount: 1

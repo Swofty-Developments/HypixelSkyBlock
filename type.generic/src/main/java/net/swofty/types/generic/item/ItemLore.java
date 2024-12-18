@@ -227,7 +227,6 @@ public class ItemLore {
 
         // Handle full set abilities
         if (ArmorSetRegistry.getArmorSet(handler.getPotentialType()) != null) {
-            System.out.println(handler.getPotentialType() + " is an armor set");
             ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialType()).getClazz().getDeclaredConstructor().newInstance();
 
             int wearingAmount = 0;

@@ -1,5 +1,5 @@
 items:
-  - id: ANCIENT_FRUIT
+  - id: DECORATION_ANCIENT_FRUIT
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -8,7 +8,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Ancient Fruit
-  - id: APPALLED_PUMPKIN
+  - id: DECORATION_APPALLED_PUMPKIN
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -17,7 +17,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Appalled Pumpkin
-  - id: APPLE
+  - id: DECORATION_APPLE
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -26,7 +26,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Apple
-  - id: BANANA_BUNCH
+  - id: DECORATION_BANANA_BUNCH
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -35,7 +35,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Banana Bunch
-  - id: BEETROOT
+  - id: DECORATION_BEETROOT
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -44,7 +44,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Beetroot
-  - id: BERRY
+  - id: DECORATION_BERRY
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -53,7 +53,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Berry
-  - id: BERRY_BUSH
+  - id: DECORATION_BERRY_BUSH
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -62,7 +62,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Berry Bush
-  - id: BLUE_CORN
+  - id: DECORATION_BLUE_CORN
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -71,7 +71,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Blue Corn
-  - id: BROWN_MUSHROOM
+  - id: DECORATION_BROWN_MUSHROOM
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -80,7 +80,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Brown Mushroom
-  - id: BUSH
+  - id: DECORATION_BUSH
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -89,7 +89,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Bush
-  - id: CACTUS
+  - id: DECORATION_CACTUS
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -98,7 +98,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Cactus
-  - id: CHESTO_BERRY
+  - id: DECORATION_CHESTO_BERRY
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -107,7 +107,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Chesto Berry
-  - id: CORN
+  - id: DECORATION_CORN
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -116,7 +116,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Corn
-  - id: KIWI
+  - id: DECORATION_KIWI
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -125,7 +125,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Kiwi
-  - id: LEMON
+  - id: DECORATION_LEMON
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -134,7 +134,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Lemon
-  - id: LETTUCE
+  - id: DECORATION_LETTUCE
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -143,7 +143,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Lettuce
-  - id: LILAC_FRUIT
+  - id: DECORATION_LILAC_FRUIT
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -152,7 +152,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Lilac Fruit
-  - id: MELON
+  - id: DECORATION_MELON
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -161,7 +161,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Melon
-  - id: ONION
+  - id: DECORATION_ONION
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -170,7 +170,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Onion
-  - id: ORANGE
+  - id: DECORATION_ORANGE
     rarity: COMMON
     components:
       - id: DECORATION_HEAD
@@ -179,7 +179,7 @@ items:
         display: Decoration item
       - id: CUSTOM_DISPLAY_NAME
         display_name: Orange
-  - id: PINK_BERRY
+  - id: DECORATION_PINK_BERRY
     rarity: COMMON
     components:
       - id: DECORATION_HEAD

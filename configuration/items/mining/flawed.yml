@@ -1,5 +1,5 @@
 items:
-  - id: FLAWED_AMBER
+  - id: FLAWED_AMBER_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -8,7 +8,7 @@ items:
         skull_texture: 173bcfc39eb85df1848535985214060a1bd1b3bb47defe4201476edc31671744
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_AMETHYST
+  - id: FLAWED_AMETHYST_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -17,7 +17,7 @@ items:
         skull_texture: 71db59260895578d37e59505880602de940b088e5fff8da3e65201d739c86e84
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_JADE
+  - id: FLAWED_JADE_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -26,7 +26,7 @@ items:
         skull_texture: 82282c6bb8343e0f0d61ee0747dada75344f332e9ff0acaa3adcdf09321d3dd
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_JASPER
+  - id: FLAWED_JASPER_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -35,7 +35,7 @@ items:
         skull_texture: a73511e504c316b139edb35febe73ef591c0f455e8caf9ee353bc12b6c14a922
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_RUBY
+  - id: FLAWED_RUBY_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -44,7 +44,7 @@ items:
         skull_texture: 46d81068cbdf4a364231a26453d6cd660a0095f9cd8795307c5be667427712e
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_SAPPHIRE
+  - id: FLAWED_SAPPHIRE_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
@@ -53,7 +53,7 @@ items:
         skull_texture: 8a0af99e8d8703194a847a55268cf5ef4ac4eb3b24c0ed86551339d10b646529
       - id: SELLABLE
         value: 240.0
-  - id: FLAWED_TOPAZ
+  - id: FLAWED_TOPAZ_GEMSTONE
     rarity: FLAWED
     components:
       - id: GEMSTONE_IMPL
