@@ -325,14 +325,12 @@ public class ItemConfigParser {
                 yield new CustomStatisticsComponent(handlerId);
             }
             case "TALISMAN" -> {
-                List<String> display = (List<String>) config.get("talisman_display");
-                yield new TalismanComponent(display);
+                yield new TalismanComponent();
             }
             case "TIERED_TALISMAN" -> {
-                List<String> display = (List<String>) config.get("talisman_display");
                 ItemType baseTier = ItemType.valueOf((String) config.get("base_tier"));
                 int tier = (int) config.get("tier");
-                yield new TieredTalismanComponent(display, baseTier, tier);
+                yield new TieredTalismanComponent(baseTier, tier);
             }
             case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
             case "TRAVEL_SCROLL" -> {
