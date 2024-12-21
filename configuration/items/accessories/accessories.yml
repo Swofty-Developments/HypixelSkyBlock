@@ -9,7 +9,7 @@ items:
     components:
       - id: SKULL_HEAD
         texture: 9e99deef919db66ac2bd28d6302756ccd57c7f8b12b9dca8f41c3e0a04ac1cc
-      - id: TALISMAN
+      - id: ACCESSORY
   - id: BITS_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
@@ -87,4 +87,4 @@ items:
     components:
       - id: SKULL_HEAD
         texture: 17b8ef7e8e0af19399cc32485f2ee47b2bb4d5802c71b3021f4d5d6b5f3afe03
-      - id: TALISMAN
+      - id: ACCESSORY

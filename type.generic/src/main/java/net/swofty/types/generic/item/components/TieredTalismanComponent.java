@@ -6,7 +6,7 @@ import net.swofty.commons.item.ItemType;
 import java.util.List;
 
 @Getter
-public class TieredTalismanComponent extends TalismanComponent {
+public class TieredTalismanComponent extends AccessoryComponent {
     private final ItemType baseTier;
     private final int tier;
 

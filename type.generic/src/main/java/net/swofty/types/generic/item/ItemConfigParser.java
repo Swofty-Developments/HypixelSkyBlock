@@ -71,7 +71,7 @@ public class ItemConfigParser {
                 List<String> abilities = (List<String>) config.get("abilities");
                 yield new AbilityComponent(abilities);
             }
-            case "ACCESSORY" -> new AccessoryComponent();
+            case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
             case "ANVIL_COMBINABLE" -> {
                 String handlerId = (String) config.get("handler_id");
                 yield new AnvilCombinableComponent(handlerId);
@@ -323,9 +323,6 @@ public class ItemConfigParser {
             case "CUSTOM_STATISTICS" -> {
                 String handlerId = (String) config.get("handler_id");
                 yield new CustomStatisticsComponent(handlerId);
-            }
-            case "TALISMAN" -> {
-                yield new TalismanComponent();
             }
             case "TIERED_TALISMAN" -> {
                 ItemType baseTier = ItemType.valueOf((String) config.get("base_tier"));

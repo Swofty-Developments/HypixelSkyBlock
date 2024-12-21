@@ -7,7 +7,7 @@ items:
         display_name: Actually Blue™ Abicase
       - id: SKULL_HEAD
         texture: a3c153c391c34e2d328a60839e683a9f82ad3048299d8bc6a39e6f915cc5a
-      - id: TALISMAN
+      - id: ACCESSORY
   - id: BLUE_BUT_GREEN_ABICASE
     material: PLAYER_HEAD
     rarity: COMMON
