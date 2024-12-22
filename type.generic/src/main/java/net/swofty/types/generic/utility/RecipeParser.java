@@ -96,7 +96,8 @@ public class RecipeParser {
                                                         SkyBlockItem result,
                                                         List<RequirementCheck> requirements) {
         List<Map<String, Object>> ingredients = (List<Map<String, Object>>) config.get("ingredients");
-        int amount = (int) config.getOrDefault("amount", 1);
+        int amount = (int) ((Map<String, Object>) config.get("result")).get("amount");
+        result.setAmount(amount);
 
         ShapelessRecipe recipe = new ShapelessRecipe(craftingType, result, amount,
                 (player) -> checkRequirements(player, requirements));
@@ -138,6 +139,8 @@ public class RecipeParser {
             }
         }
 
+        result.setAmount((Integer) ((Map<String, Object>) config.get("result")).get("amount"));
+
         return new ShapedRecipe(craftingType, result, ingredientMap, pattern,
                 (player) -> checkRequirements(player, requirements));
     }
@@ -165,9 +168,9 @@ public class RecipeParser {
 
         SkyBlockItem item;
         if (type.startsWith("ITEM_TYPE_")) {
-            item = new SkyBlockItem(ItemType.valueOf(type.substring(10)));
+            item = new SkyBlockItem(ItemType.valueOf(type.substring(10)), amount);
         } else {
-            item = new SkyBlockItem(ItemType.valueOf(type));
+            item = new SkyBlockItem(ItemType.valueOf(type), amount);
         }
 
         item.setAmount(amount);

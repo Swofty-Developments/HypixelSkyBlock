@@ -119,7 +119,6 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     return;
                 }
 
-
                 ItemStack craftedItem = PlayerItemUpdater.playerUpdate(
                         player,
                         finalRecipe.getResult().getItemStack()).amount(amount).build();

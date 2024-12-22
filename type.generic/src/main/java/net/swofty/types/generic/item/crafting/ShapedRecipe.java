@@ -3,6 +3,7 @@ package net.swofty.types.generic.item.crafting;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -28,6 +29,9 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         if (pattern.isEmpty()) {
             throw new IllegalArgumentException("Pattern must have at least one element");
         }
+
+        // By default, all ' ' are treated as air
+        ingredientMap.put(' ', new ItemQuantifiable(ItemType.AIR, 0));
     }
 
     public ShapedRecipe(RecipeType type,
@@ -277,5 +281,17 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ShapedRecipe{" +
+                "recipeType=" + recipeType +
+                ", result=" + result +
+                ", ingredientMap=" + ingredientMap +
+                ", pattern=" + pattern +
+                ", canCraft=" + canCraft +
+                ", amount=" + amount +
+                '}';
     }
 }

@@ -56,11 +56,13 @@ public abstract class SkyBlockRecipe<T> {
         ShapedRecipe.CACHED_RECIPES.forEach(recipe -> {
             ItemType itemType = recipe.getResult().getAttributeHandler().getPotentialType();
             if (itemType != null && itemType == type) {
+                System.out.println("Found recipe for " + itemType);
                 recipes.add(recipe);
             }
         });
         ShapelessRecipe.CACHED_RECIPES.forEach(recipe -> {
             ItemType itemType = recipe.getResult().getAttributeHandler().getPotentialType();
+            System.out.println("Found recipe for " + itemType);
             if (itemType != null && itemType == type) {
                 recipes.add(recipe);
             }
@@ -153,5 +155,15 @@ public abstract class SkyBlockRecipe<T> {
     }
 
     public record CraftingResult(boolean allowed, String[] errorMessage) {
+    }
+
+    @Override
+    public String toString() {
+        return "SkyBlockRecipe{" +
+                "result=" + result +
+                ", recipeType=" + recipeType +
+                ", canCraft=" + canCraft +
+                ", amount=" + amount +
+                '}';
     }
 }

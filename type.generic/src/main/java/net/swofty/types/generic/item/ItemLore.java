@@ -278,6 +278,7 @@ public class ItemLore {
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
         this.stack = stack.with(ItemComponent.LORE, loreLines)
+                .withAmount(item.getAmount())
                 .with(ItemComponent.CUSTOM_NAME, Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
     }

@@ -22,6 +22,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -173,7 +174,7 @@ public class SkyBlockItem {
         return attributes.stream().filter(attribute -> attribute.getKey().equals(key)).findFirst().orElse(null);
     }
 
-    public ConfigurableSkyBlockItem getConfig() {
+    public @Nullable ConfigurableSkyBlockItem getConfig() {
         String type = getAttributeHandler().getTypeAsString();
         return ConfigurableSkyBlockItem.getFromID(type);
     }

@@ -1860,7 +1860,10 @@ items:
             pattern:
               - AA
               - AA
-            ingredients: {}
+            ingredients:
+              A:
+                type: NETHER_BRICK
+                amount: 1
             result:
               type: NETHER_BRICKS
               amount: 1
@@ -2611,7 +2614,7 @@ items:
                 amount: 1
             result:
               type: STICK
-              amount: 1
+              amount: 4
   - id: ACACIA_DOOR
     material: ACACIA_DOOR
     rarity: COMMON
@@ -2744,9 +2747,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: ACACIA_PLANKS
@@ -3068,9 +3071,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: DARK_OAK_PLANKS
@@ -3230,9 +3233,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: JUNGLE_PLANKS
@@ -3392,16 +3395,16 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
             result:
               type: OAK_STAIRS
-              amount: 1
+              amount: 6
   - id: OAK_TRAPDOOR
     material: OAK_TRAPDOOR
     rarity: COMMON
@@ -3554,9 +3557,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: SPRUCE_PLANKS

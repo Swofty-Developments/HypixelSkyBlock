@@ -7,6 +7,11 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 public abstract class SkyBlockCommand {
     public static final String COMMAND_SUFFIX = "Command";
 
@@ -20,7 +25,17 @@ public abstract class SkyBlockCommand {
     protected SkyBlockCommand() {
         this.params = this.getClass().getAnnotation(CommandParameters.class);
         this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase();
-        this.command = new MinestomCommand(this);
+
+        List<String> aliases = new ArrayList<>();
+        if (params.aliases() != null && !params.aliases().trim().isEmpty()) {
+            aliases.addAll(Arrays.asList(params.aliases().split(" ")));
+        }
+
+        if (aliases.isEmpty()) {
+            this.command = new MinestomCommand(this);
+        } else {
+            this.command = new MinestomCommand(this, aliases.toArray(new String[0]));
+        }
     }
 
     public abstract void registerUsage(MinestomCommand command);
@@ -41,7 +56,29 @@ public abstract class SkyBlockCommand {
     public static class MinestomCommand extends Command {
 
         public MinestomCommand(SkyBlockCommand command) {
-            super(command.getName(), command.getParams().aliases().split(" ").length == 0 ? null : command.getParams().aliases().split(" "));
+            super(command.getName());
+
+            setDefaultExecutor((sender, context) -> {
+                sender.sendMessage("§cUsage: " + command.getParams().usage());
+            });
+
+            setCondition((commandSender, string) -> {
+                if (commandSender.isConsole()) {
+                    return command.getParams().allowsConsole();
+                }
+
+                SkyBlockPlayer player = (SkyBlockPlayer) commandSender;
+                DataHandler dataHandler = player.getDataHandler();
+
+                if (!player.hasAuthenticated) return false;
+                return dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue().isEqualOrHigherThan(command.getParams().permission());
+            });
+
+            command.registerUsage(this);
+        }
+
+        public MinestomCommand(SkyBlockCommand command, String... aliases) {
+            super(command.getName(), aliases);
 
             setDefaultExecutor((sender, context) -> {
                 sender.sendMessage("§cUsage: " + command.getParams().usage());

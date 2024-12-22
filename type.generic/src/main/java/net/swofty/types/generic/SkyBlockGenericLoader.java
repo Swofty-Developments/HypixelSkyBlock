@@ -155,7 +155,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             try {
                 MinecraftServer.getCommandManager().register(command.getCommand());
             } catch (Exception e) {
-                Logger.error("Failed to register command " + command.getCommand().getName());
+                Logger.error("Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
                 e.printStackTrace();
             }
         });
@@ -451,7 +451,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             SkyBlockItem item = new SkyBlockItem(type);
             if (item.hasComponent(CraftableComponent.class)) {
                 CraftableComponent craftableComponent = item.getComponent(CraftableComponent.class);
-                if (craftableComponent.isDefaultCraftable()) return;
+                if (!craftableComponent.isDefaultCraftable()) return;
 
                 try {
                     craftableComponent.getRecipes().forEach(SkyBlockRecipe::init);
