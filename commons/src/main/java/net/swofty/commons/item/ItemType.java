@@ -362,6 +362,8 @@ public enum ItemType {
     /**
      * Spider Slayer
      */
+
+    /*
     TARANTULA_WEB(Material.STRING,  Rarity.UNCOMMON),
     TOXIC_ARROW_POISON(Material.LIME_DYE,  Rarity.UNCOMMON),
     SPIDER_CATALYST(Material.PLAYER_HEAD,  Rarity.RARE),
@@ -372,10 +374,13 @@ public enum ItemType {
     MOSQUITO_BOW(Material.BOW,  Rarity.LEGENDARY),
     SCORPION_BOW(Material.BOW,  Rarity.EPIC),
     SCORPION_FOIL(Material.WOODEN_SWORD,  Rarity.EPIC),
+     */
 
     /**
      * Wolf Slayer
      */
+
+    /*
     WOLF_TOOTH(Material.GHAST_TEAR,  Rarity.UNCOMMON),
     HAMSTER_WHEEL(Material.OAK_TRAPDOOR,  Rarity.RARE),
     RED_CLAW_EGG(Material.MOOSHROOM_SPAWN_EGG,  Rarity.EPIC),
@@ -386,10 +391,13 @@ public enum ItemType {
     POOCH_SWORD(Material.GOLDEN_SWORD,  Rarity.LEGENDARY),
     EDIBLE_MACE(Material.MUTTON,  Rarity.RARE),
     WEIRD_TUBA(Material.HOPPER,  Rarity.RARE),
+     */
 
     /**
      * Enderman Slayer
      */
+
+    /*
     NULL_SPHERE(Material.FIREWORK_STAR,  Rarity.UNCOMMON),
     TWILIGHT_ARROW_POISON(Material.PURPLE_DYE,  Rarity.UNCOMMON),
     SUMMONING_EYE(Material.PLAYER_HEAD,  Rarity.EPIC),
@@ -415,10 +423,13 @@ public enum ItemType {
     SOUL_ESOWARD(Material.BIRCH_SAPLING,  Rarity.RARE),
     GLOOMLOCK_GRIMOIRE(Material.WRITTEN_BOOK,  Rarity.EPIC),
     ETHERWARP_CONDUIT(Material.PLAYER_HEAD,  Rarity.EPIC),
+    */
 
     /**
      * Blaze Slayer
      */
+
+    /*
     DERELICT_ASHE(Material.GUNPOWDER,  Rarity.UNCOMMON),
     BUNDLE_OF_MAGMA_ARROWS(Material.PLAYER_HEAD,  Rarity.EPIC),
     MANA_DISINTEGRATOR(Material.PLAYER_HEAD,  Rarity.RARE),
@@ -433,6 +444,7 @@ public enum ItemType {
     HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
     WILSON_ENGINEERING_PLANS(Material.PAPER,  Rarity.LEGENDARY),
     SUBZERO_INVERTER(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    */
 
     /**
      * BrewingItem
@@ -480,7 +492,7 @@ public enum ItemType {
      * Spooky Festival
      */
     GREEN_CANDY(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    PRUPLE_CANDY(Material.PLAYER_HEAD,  Rarity.EPIC),
+    PURPLE_CANDY(Material.PLAYER_HEAD,  Rarity.EPIC),
     WEREWOLF_SKIN(Material.ROTTEN_FLESH,  Rarity.RARE),
     SOUL_FRAGMENT(Material.PLAYER_HEAD,  Rarity.EPIC),
     ECTOPLASM(Material.PRISMARINE_CRYSTALS,  Rarity.RARE),
