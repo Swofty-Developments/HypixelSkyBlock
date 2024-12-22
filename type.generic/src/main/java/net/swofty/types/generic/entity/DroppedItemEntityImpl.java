@@ -31,7 +31,6 @@ public class DroppedItemEntityImpl extends Entity {
         meta.setItem(new NonPlayerItemUpdater(item.getItemStack()).getUpdatedItem().build());
 
         setAutoViewable(false);
-
         this.scheduleRemove(Duration.ofSeconds(60));
 
         droppedItems.computeIfPresent(player, (key, value) -> {
@@ -42,6 +41,12 @@ public class DroppedItemEntityImpl extends Entity {
             return value;
         });
         droppedItems.putIfAbsent(player, new ArrayList<>(List.of(this)));
+    }
+
+    @Override
+    public void spawn() {
+        super.spawn();
+        addViewer(player);
     }
 
     public SkyBlockItem getItem() {

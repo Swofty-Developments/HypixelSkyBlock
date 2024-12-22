@@ -18,6 +18,7 @@ public class ActionRegionBlockPlace implements SkyBlockEventClass {
         if (player.isBypassBuild()) {
             return;
         }
+
         if (SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND) {
             Integer islandSizePlus = (int) Math.floor((double) 161/2);
             Integer islandSizeMinus = -islandSizePlus;
