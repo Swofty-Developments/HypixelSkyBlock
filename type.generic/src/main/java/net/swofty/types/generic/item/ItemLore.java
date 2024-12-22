@@ -205,6 +205,11 @@ public class ItemLore {
             }
         }
 
+        if (item.getConfigLore() != null && !item.getConfigLore().isEmpty()) {
+            item.getConfigLore().forEach(line -> addLoreLine("§7" + line));
+            addLoreLine(null);
+        }
+
         // Handle Custom Item Ability
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
