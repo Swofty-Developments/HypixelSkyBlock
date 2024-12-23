@@ -313,29 +313,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         }
 
         /**
-         * Spawn server crystals
-         */
-        if (SkyBlockConst.getInstanceContainer() != null) {
-            Thread.startVirtualThread(() -> {
-                CrystalDatabase.getAllCrystals().forEach(crystal -> {
-                    if (crystal.serverType != SkyBlockConst.getTypeLoader().getType()) return;
-
-                    ItemType type = crystal.itemType;
-                    SkyBlockItem item = new SkyBlockItem(type);
-                    ServerOrbComponent asCrystal = item.getComponent(ServerOrbComponent.class);
-                    ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
-                            asCrystal.getSpawnMaterialFunction(),
-                            crystal.url,
-                            asCrystal.getValidBlocks()
-                    );
-
-                    crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
-                            new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
-                });
-            });
-        }
-
-        /**
          * Register items
          */
         ItemAttribute.registerItemAttributes();
@@ -369,6 +346,29 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             }
         } catch (IOException e) {
             Logger.error("Failed to scan for YAML files", e);
+        }
+
+        /**
+         * Spawn server crystals
+         */
+        if (SkyBlockConst.getInstanceContainer() != null) {
+            Thread.startVirtualThread(() -> {
+                CrystalDatabase.getAllCrystals().forEach(crystal -> {
+                    if (crystal.serverType != SkyBlockConst.getTypeLoader().getType()) return;
+
+                    ItemType type = crystal.itemType;
+                    SkyBlockItem item = new SkyBlockItem(type);
+                    ServerOrbComponent asCrystal = item.getComponent(ServerOrbComponent.class);
+                    ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
+                            asCrystal.getSpawnMaterialFunction(),
+                            crystal.url,
+                            asCrystal.getValidBlocks()
+                    );
+
+                    crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
+                            new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
+                });
+            });
         }
 
         /**

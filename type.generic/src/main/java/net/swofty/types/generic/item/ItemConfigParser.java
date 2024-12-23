@@ -294,9 +294,11 @@ public class ItemConfigParser {
             }
             case "SERVER_ORB" -> {
                 String handlerId = (String) config.get("handler_id");
-                List<String> blockStrings = (List<String>) config.getOrDefault("valid_blocks", List.of());
+                List<String> blockStrings = ((List<String>) config.getOrDefault("valid_blocks", List.of())).stream().map(
+                        String::toLowerCase
+                ).toList();
                 List<Material> materials = Material.values().stream()
-                        .filter(material -> blockStrings.contains(material.namespace().value()))
+                        .filter(material -> blockStrings.contains(material.namespace().value().toLowerCase()))
                         .toList();
 
                 yield new ServerOrbComponent(handlerId, materials);
