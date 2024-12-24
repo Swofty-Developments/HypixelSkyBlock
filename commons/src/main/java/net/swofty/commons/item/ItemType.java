@@ -1134,7 +1134,8 @@ public enum ItemType {
     OXEYE_DAISY(Material.OXEYE_DAISY,  Rarity.COMMON),
     RAW_BEEF(Material.BEEF,  Rarity.UNCOMMON),
     RAW_CHICKEN(Material.CHICKEN,  Rarity.UNCOMMON),
-
+    BREWING_STAND(Material.BREWING_STAND, Rarity.COMMON),
+    ENCHANTING_TABLE(Material.ENCHANTING_TABLE, Rarity.COMMON),
     /**
      * Enchanted Items
      */

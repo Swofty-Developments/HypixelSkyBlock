@@ -154,6 +154,7 @@ items:
   - id: END_STONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 3.0
@@ -298,6 +299,7 @@ items:
   - id: GOLD_ORE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 5.0
@@ -306,6 +308,7 @@ items:
   - id: GRAVEL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 5.0
@@ -314,6 +317,7 @@ items:
   - id: ICE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
   - id: IRON_BLOCK
@@ -345,6 +349,7 @@ items:
   - id: IRON_ORE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 5.0
@@ -533,6 +538,7 @@ items:
   - id: SAND
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 3.0
