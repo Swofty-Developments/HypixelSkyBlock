@@ -26,7 +26,7 @@ public class ActionBlockPlaceable implements SkyBlockEventClass {
             if (placeable.getBlockType() == null) return;
             SkyBlockBlock skyBlockBlock = new SkyBlockBlock(placeable.getBlockType());
             if (skyBlockBlock.getGenericInstance() instanceof BlockPlaceable blockPlaceable){
-                blockPlaceable.onPlace(event , skyBlockBlock);
+                blockPlaceable.onPlace(event, skyBlockBlock);
             }
         }
     }

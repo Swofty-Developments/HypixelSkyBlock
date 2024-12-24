@@ -196,4 +196,14 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return "ShapelessRecipe{" +
+                "recipeType=" + recipeType +
+                ", result=" + result +
+                ", ingredientList=" + ingredientList +
+                ", canCraft=" + canCraft +
+                ", amount=" + amount;
+    }
 }

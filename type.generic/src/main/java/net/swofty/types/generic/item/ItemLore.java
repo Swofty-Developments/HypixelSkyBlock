@@ -205,6 +205,11 @@ public class ItemLore {
             }
         }
 
+        if (item.getConfigLore() != null && !item.getConfigLore().isEmpty()) {
+            item.getConfigLore().forEach(line -> addLoreLine("§7" + line));
+            addLoreLine(null);
+        }
+
         // Handle Custom Item Ability
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
@@ -227,7 +232,6 @@ public class ItemLore {
 
         // Handle full set abilities
         if (ArmorSetRegistry.getArmorSet(handler.getPotentialType()) != null) {
-            System.out.println(handler.getPotentialType() + " is an armor set");
             ArmorSet armorSet = ArmorSetRegistry.getArmorSet(handler.getPotentialType()).getClazz().getDeclaredConstructor().newInstance();
 
             int wearingAmount = 0;
@@ -279,6 +283,7 @@ public class ItemLore {
         displayName = rarity.getColor() + displayName;
         addLoreLine(displayRarity);
         this.stack = stack.with(ItemComponent.LORE, loreLines)
+                .withAmount(item.getAmount())
                 .with(ItemComponent.CUSTOM_NAME, Component.text(displayName)
                         .decoration(TextDecoration.ITALIC, false));
     }

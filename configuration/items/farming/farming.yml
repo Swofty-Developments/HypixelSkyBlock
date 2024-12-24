@@ -13,6 +13,7 @@ items:
       - id: SKULL_HEAD
         texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
       - id: SERVER_ORB
+        handler_id: CARROT_CRYSTAL_ORB_HANDLER
         valid_blocks:
           - FARMLAND
       - id: PLACE_EVENT
@@ -43,6 +44,7 @@ items:
       - id: SKULL_HEAD
         texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
       - id: SERVER_ORB
+        handler_id: FLOWER_CRYSTAL_ORB_HANDLER
         valid_blocks:
           - GRASS_BLOCK
       - id: PLACE_EVENT
@@ -81,6 +83,7 @@ items:
       - id: SKULL_HEAD
         texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
       - id: SERVER_ORB
+        handler_id: POTATO_CRYSTAL_ORB_HANDLER
         valid_blocks:
           - FARMLAND
       - id: PLACE_EVENT
@@ -91,6 +94,7 @@ items:
       - id: SKULL_HEAD
         texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
       - id: SERVER_ORB
+        handler_id: PUMPKIN_AND_MELON_CRYSTAL_ORB_HANDLER
         valid_blocks:
           - PODZOL
           - DIRT
@@ -112,6 +116,7 @@ items:
       - id: SKULL_HEAD
         texture: 9265f96f54b78885c46e7d2f86b1c1dbfe643c6060fc7fcc9834c3e3fd595135
       - id: SERVER_ORB
+        handler_id: WHEAT_CRYSTAL_ORB_HANDLER
         valid_blocks:
           - FARMLAND
       - id: PLACE_EVENT

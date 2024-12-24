@@ -4,17 +4,19 @@ import lombok.Data;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.CraftableComponent;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
 import net.swofty.types.generic.item.crafting.ShapelessRecipe;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
+import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 @Data
 public class CollectionLoader {
@@ -24,6 +26,7 @@ public class CollectionLoader {
     public static class CollectionConfig {
         public String name;
         public String displayIcon;
+        public @Nullable String displayColor;
         public List<CollectionEntry> collections;
     }
 
@@ -96,7 +99,8 @@ public class CollectionLoader {
 
                 @Override
                 public String getName() {
-                    return config.name;
+                    return (config.displayColor == null ? "" : "§" + config.displayColor) +
+                            config.name;
                 }
 
                 @Override

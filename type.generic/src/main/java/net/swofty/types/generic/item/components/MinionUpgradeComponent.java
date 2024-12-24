@@ -9,7 +9,6 @@ public class MinionUpgradeComponent extends SkyBlockItemComponent {
 
     public MinionUpgradeComponent(double speedIncrease) {
         addInheritedComponent(new TrackedUniqueComponent());
-        addInheritedComponent(new ExtraRarityComponent("MINION SKIN"));
 
         this.speedIncrease = speedIncrease;
     }

@@ -6,12 +6,11 @@ import net.swofty.commons.item.ItemType;
 import java.util.List;
 
 @Getter
-public class TieredTalismanComponent extends TalismanComponent {
+public class TieredTalismanComponent extends AccessoryComponent {
     private final ItemType baseTier;
     private final int tier;
 
-    public TieredTalismanComponent(List<String> talismanDisplay, ItemType baseTier, int tier) {
-        super(talismanDisplay);
+    public TieredTalismanComponent(ItemType baseTier, int tier) {
         this.baseTier = baseTier;
         this.tier = tier;
     }

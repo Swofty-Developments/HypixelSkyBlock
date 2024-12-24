@@ -36,6 +36,7 @@ import net.swofty.types.generic.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.AccessoryComponent;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -45,7 +46,6 @@ import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.item.components.ArrowComponent;
 import net.swofty.types.generic.item.components.SackComponent;
-import net.swofty.types.generic.item.components.TalismanComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
@@ -252,11 +252,11 @@ public class SkyBlockPlayer extends Player {
 
     public List<ItemType> getTalismans() {
         List<ItemType> inInventory = Stream.of(getAllInventoryItems())
-                .filter(item -> item.hasComponent(TalismanComponent.class))
+                .filter(item -> item.hasComponent(AccessoryComponent.class))
                 .map(item -> item.getAttributeHandler().getPotentialType()).toList();
 
         List<ItemType> inAccessoryBag = getAccessoryBag().getAllAccessories().stream()
-                .filter(item -> item.hasComponent(TalismanComponent.class))
+                .filter(item -> item.hasComponent(AccessoryComponent.class))
                 .map(item -> item.getAttributeHandler().getPotentialType()).toList();
 
         return Stream.concat(inInventory.stream(), inAccessoryBag.stream()).collect(Collectors.toList());

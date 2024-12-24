@@ -38,6 +38,7 @@ items:
     material: ANVIL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -63,6 +64,7 @@ items:
     material: BLACK_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -82,6 +84,7 @@ items:
     material: BLUE_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -101,6 +104,7 @@ items:
     material: BROWN_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -120,6 +124,7 @@ items:
     material: CYAN_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -139,6 +144,7 @@ items:
     material: GRAY_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -158,6 +164,7 @@ items:
     material: GREEN_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -177,6 +184,7 @@ items:
     material: LIGHT_BLUE_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -196,6 +204,7 @@ items:
     material: LIGHT_GRAY_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -215,6 +224,7 @@ items:
     material: LIME_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -234,6 +244,7 @@ items:
     material: MAGENTA_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -253,6 +264,7 @@ items:
     material: ORANGE_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -272,6 +284,7 @@ items:
     material: PINK_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -291,6 +304,7 @@ items:
     material: PURPLE_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -310,6 +324,7 @@ items:
     material: RED_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -329,6 +344,7 @@ items:
     material: WHITE_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -348,6 +364,7 @@ items:
     material: YELLOW_CARPET
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -367,6 +384,7 @@ items:
     material: BLACK_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -391,6 +409,7 @@ items:
     material: BLUE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -415,6 +434,7 @@ items:
     material: BROWN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -439,6 +459,7 @@ items:
     material: CYAN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -463,12 +484,14 @@ items:
     material: GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
   - id: GRAY_STAINED_GLASS
     material: GRAY_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -493,6 +516,7 @@ items:
     material: GREEN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -517,6 +541,7 @@ items:
     material: LIGHT_BLUE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -541,6 +566,7 @@ items:
     material: LIGHT_GRAY_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -565,6 +591,7 @@ items:
     material: LIME_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -589,6 +616,7 @@ items:
     material: MAGENTA_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -613,6 +641,7 @@ items:
     material: ORANGE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -637,6 +666,7 @@ items:
     material: PINK_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -661,6 +691,7 @@ items:
     material: PURPLE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -685,6 +716,7 @@ items:
     material: RED_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -709,6 +741,7 @@ items:
     material: WHITE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -733,6 +766,7 @@ items:
     material: YELLOW_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -757,6 +791,7 @@ items:
     material: BLACK_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -777,6 +812,7 @@ items:
     material: BLUE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -797,6 +833,7 @@ items:
     material: BROWN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -817,6 +854,7 @@ items:
     material: CYAN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -837,6 +875,7 @@ items:
     material: GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -857,6 +896,7 @@ items:
     material: GRAY_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -877,6 +917,7 @@ items:
     material: GREEN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -897,6 +938,7 @@ items:
     material: LIGHT_BLUE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -917,6 +959,7 @@ items:
     material: LIGHT_GRAY_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -937,6 +980,7 @@ items:
     material: LIME_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -957,6 +1001,7 @@ items:
     material: MAGENTA_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -977,6 +1022,7 @@ items:
     material: ORANGE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -997,6 +1043,7 @@ items:
     material: PINK_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -1017,6 +1064,7 @@ items:
     material: PURPLE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -1037,6 +1085,7 @@ items:
     material: RED_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -1057,6 +1106,7 @@ items:
     material: WHITE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -1077,6 +1127,7 @@ items:
     material: YELLOW_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
       - id: DEFAULT_CRAFTABLE
@@ -1097,6 +1148,7 @@ items:
     material: BLACK_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1115,6 +1167,7 @@ items:
     material: BLUE_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1133,6 +1186,7 @@ items:
     material: BROWN_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1151,6 +1205,7 @@ items:
     material: CYAN_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1169,6 +1224,7 @@ items:
     material: GRAY_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1187,6 +1243,7 @@ items:
     material: GREEN_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1205,6 +1262,7 @@ items:
     material: LIGHT_BLUE_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1223,6 +1281,7 @@ items:
     material: LIGHT_GRAY_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1241,6 +1300,7 @@ items:
     material: LIME_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1259,6 +1319,7 @@ items:
     material: MAGENTA_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1277,6 +1338,7 @@ items:
     material: ORANGE_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1295,6 +1357,7 @@ items:
     material: PINK_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1313,6 +1376,7 @@ items:
     material: PURPLE_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1331,6 +1395,7 @@ items:
     material: RED_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1349,6 +1414,7 @@ items:
     material: WHITE_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1369,6 +1435,7 @@ items:
     material: YELLOW_WOOL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1387,12 +1454,14 @@ items:
     material: ANDESITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
   - id: ANDESITE_SLAB
     material: ANDESITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1412,6 +1481,7 @@ items:
     material: ANDESITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1433,6 +1503,7 @@ items:
     material: ANDESITE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1453,6 +1524,7 @@ items:
     material: POLISHED_ANDESITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1473,6 +1545,7 @@ items:
     material: POLISHED_ANDESITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1492,6 +1565,7 @@ items:
     material: POLISHED_ANDESITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1513,12 +1587,14 @@ items:
     material: COBBLESTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
   - id: COBBLESTONE_SLAB
     material: COBBLESTONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1538,6 +1614,7 @@ items:
     material: COBBLESTONE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1559,6 +1636,7 @@ items:
     material: COBBLESTONE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1579,12 +1657,14 @@ items:
     material: DIORITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
   - id: DIORITE_SLAB
     material: DIORITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1604,6 +1684,7 @@ items:
     material: DIORITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1625,6 +1706,7 @@ items:
     material: DIORITE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1645,6 +1727,7 @@ items:
     material: POLISHED_DIORITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1665,6 +1748,7 @@ items:
     material: POLISHED_DIORITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1684,6 +1768,7 @@ items:
     material: POLISHED_DIORITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1705,12 +1790,14 @@ items:
     material: GRANITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
   - id: GRANITE_SLAB
     material: GRANITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1730,6 +1817,7 @@ items:
     material: GRANITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1751,6 +1839,7 @@ items:
     material: GRANITE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1771,6 +1860,7 @@ items:
     material: POLISHED_GRANITE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1791,6 +1881,7 @@ items:
     material: POLISHED_GRANITE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1810,6 +1901,7 @@ items:
     material: POLISHED_GRANITE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -1831,6 +1923,7 @@ items:
     material: NETHER_BRICK_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1851,6 +1944,7 @@ items:
     material: NETHER_BRICKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1860,7 +1954,10 @@ items:
             pattern:
               - AA
               - AA
-            ingredients: {}
+            ingredients:
+              A:
+                type: NETHER_BRICK
+                amount: 1
             result:
               type: NETHER_BRICKS
               amount: 1
@@ -1868,6 +1965,7 @@ items:
     material: NETHER_BRICK_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1887,6 +1985,7 @@ items:
     material: NETHER_BRICK_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -1908,6 +2007,7 @@ items:
     material: NETHER_BRICK_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -1928,6 +2028,7 @@ items:
     material: CHISELED_QUARTZ_BLOCK
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -1946,6 +2047,7 @@ items:
     material: QUARTZ_BLOCK
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 16.0
       - id: DEFAULT_CRAFTABLE
@@ -1966,6 +2068,7 @@ items:
     material: QUARTZ_PILLAR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -1984,6 +2087,7 @@ items:
     material: QUARTZ_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2003,6 +2107,7 @@ items:
     material: QUARTZ_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -2024,6 +2129,7 @@ items:
     material: CHISELED_RED_SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2044,6 +2150,7 @@ items:
     material: CHISELED_SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2064,6 +2171,7 @@ items:
     material: CUT_RED_SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2084,6 +2192,7 @@ items:
     material: CUT_RED_SANDSTONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2103,6 +2212,7 @@ items:
     material: CUT_SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2123,6 +2233,7 @@ items:
     material: CUT_SANDSTONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2142,6 +2253,7 @@ items:
     material: RED_SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2162,6 +2274,7 @@ items:
     material: RED_SANDSTONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2181,6 +2294,7 @@ items:
     material: RED_SANDSTONE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -2202,6 +2316,7 @@ items:
     material: RED_SANDSTONE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2222,6 +2337,7 @@ items:
     material: SANDSTONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
       - id: DEFAULT_CRAFTABLE
@@ -2242,6 +2358,7 @@ items:
     material: SANDSTONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2261,6 +2378,7 @@ items:
     material: SANDSTONE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
@@ -2282,6 +2400,7 @@ items:
     material: SANDSTONE_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2302,12 +2421,14 @@ items:
     material: SMOOTH_STONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
   - id: SMOOTH_STONE_SLAB
     material: SMOOTH_STONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2327,12 +2448,14 @@ items:
     material: STONE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
   - id: STONE_SLAB
     material: STONE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2352,6 +2475,7 @@ items:
     material: STONE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2373,6 +2497,7 @@ items:
     material: MOSSY_STONE_BRICKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2392,6 +2517,7 @@ items:
     material: MOSSY_STONE_BRICK_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2411,6 +2537,7 @@ items:
     material: MOSSY_STONE_BRICK_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2432,6 +2559,7 @@ items:
     material: MOSSY_STONE_BRICK_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2452,6 +2580,7 @@ items:
     material: STONE_BRICKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2472,6 +2601,7 @@ items:
     material: STONE_BRICK_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2491,6 +2621,7 @@ items:
     material: STONE_BRICK_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2512,6 +2643,7 @@ items:
     material: STONE_BRICK_WALL
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2555,6 +2687,7 @@ items:
     material: CRAFTING_TABLE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2575,6 +2708,7 @@ items:
     material: LADDER
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2611,11 +2745,12 @@ items:
                 amount: 1
             result:
               type: STICK
-              amount: 1
+              amount: 4
   - id: ACACIA_DOOR
     material: ACACIA_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2637,6 +2772,7 @@ items:
     material: ACACIA_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2660,6 +2796,7 @@ items:
     material: ACACIA_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2683,6 +2820,7 @@ items:
     material: ACACIA_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2699,6 +2837,7 @@ items:
     material: ACACIA_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2718,6 +2857,7 @@ items:
     material: ACACIA_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2737,6 +2877,7 @@ items:
     material: ACACIA_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2744,9 +2885,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: ACACIA_PLANKS
@@ -2758,6 +2899,7 @@ items:
     material: ACACIA_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -2778,6 +2920,7 @@ items:
     material: BIRCH_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2799,6 +2942,7 @@ items:
     material: BIRCH_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2822,6 +2966,7 @@ items:
     material: BIRCH_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2845,6 +2990,7 @@ items:
     material: BIRCH_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2861,6 +3007,7 @@ items:
     material: BIRCH_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2880,6 +3027,7 @@ items:
     material: BIRCH_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2899,6 +3047,7 @@ items:
     material: BIRCH_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -2920,6 +3069,7 @@ items:
     material: BIRCH_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -2940,6 +3090,7 @@ items:
     material: DARK_OAK_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2961,6 +3112,7 @@ items:
     material: DARK_OAK_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -2984,6 +3136,7 @@ items:
     material: DARK_OAK_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3007,6 +3160,7 @@ items:
     material: DARK_OAK_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3023,6 +3177,7 @@ items:
     material: DARK_OAK_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3042,6 +3197,7 @@ items:
     material: DARK_OAK_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3061,6 +3217,7 @@ items:
     material: DARK_OAK_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3068,9 +3225,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: DARK_OAK_PLANKS
@@ -3082,6 +3239,7 @@ items:
     material: DARK_OAK_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -3102,6 +3260,7 @@ items:
     material: JUNGLE_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3123,6 +3282,7 @@ items:
     material: JUNGLE_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3146,6 +3306,7 @@ items:
     material: JUNGLE_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3169,6 +3330,7 @@ items:
     material: JUNGLE_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3185,6 +3347,7 @@ items:
     material: JUNGLE_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3204,6 +3367,7 @@ items:
     material: JUNGLE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3223,6 +3387,7 @@ items:
     material: JUNGLE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3230,9 +3395,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: JUNGLE_PLANKS
@@ -3244,6 +3409,7 @@ items:
     material: JUNGLE_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -3264,6 +3430,7 @@ items:
     material: OAK_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3285,6 +3452,7 @@ items:
     material: OAK_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3308,6 +3476,7 @@ items:
     material: OAK_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3331,6 +3500,7 @@ items:
     material: OAK_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3347,6 +3517,7 @@ items:
     material: OAK_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3366,6 +3537,7 @@ items:
     material: OAK_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3385,6 +3557,7 @@ items:
     material: OAK_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3392,20 +3565,21 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
             result:
               type: OAK_STAIRS
-              amount: 1
+              amount: 6
   - id: OAK_TRAPDOOR
     material: OAK_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -3426,6 +3600,7 @@ items:
     material: SPRUCE_DOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3447,6 +3622,7 @@ items:
     material: SPRUCE_FENCE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3470,6 +3646,7 @@ items:
     material: SPRUCE_FENCE_GATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3493,6 +3670,7 @@ items:
     material: SPRUCE_PLANKS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3509,6 +3687,7 @@ items:
     material: SPRUCE_PRESSURE_PLATE
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
       - id: DEFAULT_CRAFTABLE
@@ -3528,6 +3707,7 @@ items:
     material: SPRUCE_SLAB
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3547,6 +3727,7 @@ items:
     material: SPRUCE_STAIRS
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 0.5
       - id: DEFAULT_CRAFTABLE
@@ -3554,9 +3735,9 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - A
-              - AA
-              - AAA
+              - "A  "
+              - "AA "
+              - "AAA"
             ingredients:
               A:
                 type: SPRUCE_PLANKS
@@ -3568,6 +3749,7 @@ items:
     material: SPRUCE_TRAPDOOR
     rarity: COMMON
     components:
+      - id: PLACEABLE
       - id: SELLABLE
         value: 1.5
       - id: DEFAULT_CRAFTABLE
@@ -4469,3 +4651,9 @@ items:
               amount: 1
     default_statistics:
       damage: 20.0
+  - id: BREWING_STAND
+    components:
+      - id: PLACEABLE
+  - id: ENCHANTING_TABLE
+    components:
+      - id: PLACEABLE

@@ -71,7 +71,7 @@ public class ItemConfigParser {
                 List<String> abilities = (List<String>) config.get("abilities");
                 yield new AbilityComponent(abilities);
             }
-            case "ACCESSORY" -> new AccessoryComponent();
+            case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
             case "ANVIL_COMBINABLE" -> {
                 String handlerId = (String) config.get("handler_id");
                 yield new AnvilCombinableComponent(handlerId);
@@ -294,9 +294,11 @@ public class ItemConfigParser {
             }
             case "SERVER_ORB" -> {
                 String handlerId = (String) config.get("handler_id");
-                List<String> blockStrings = (List<String>) config.getOrDefault("valid_blocks", List.of());
+                List<String> blockStrings = ((List<String>) config.getOrDefault("valid_blocks", List.of())).stream().map(
+                        String::toLowerCase
+                ).toList();
                 List<Material> materials = Material.values().stream()
-                        .filter(material -> blockStrings.contains(material.namespace().value()))
+                        .filter(material -> blockStrings.contains(material.namespace().value().toLowerCase()))
                         .toList();
 
                 yield new ServerOrbComponent(handlerId, materials);
@@ -324,15 +326,10 @@ public class ItemConfigParser {
                 String handlerId = (String) config.get("handler_id");
                 yield new CustomStatisticsComponent(handlerId);
             }
-            case "TALISMAN" -> {
-                List<String> display = (List<String>) config.get("talisman_display");
-                yield new TalismanComponent(display);
-            }
             case "TIERED_TALISMAN" -> {
-                List<String> display = (List<String>) config.get("talisman_display");
                 ItemType baseTier = ItemType.valueOf((String) config.get("base_tier"));
                 int tier = (int) config.get("tier");
-                yield new TieredTalismanComponent(display, baseTier, tier);
+                yield new TieredTalismanComponent(baseTier, tier);
             }
             case "TRACKED_UNIQUE" -> new TrackedUniqueComponent();
             case "TRAVEL_SCROLL" -> {
