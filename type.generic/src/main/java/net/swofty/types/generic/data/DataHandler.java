@@ -375,6 +375,10 @@ public class DataHandler {
         USED_SCROLLS("used_scrolls", false, false, false, DatapointStringList.class, new DatapointStringList("used_scrolls")),
         BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false, DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
         KAT("kat", false, false, false, DatapointKat.class, new DatapointKat("kat")),
+        HOTBAR_SLOT("hotbar_slot", true, false, false, DatapointByte.class, new DatapointByte("hotbar_slot", (byte) 1), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            player.setHeldItemSlot((Byte) datapoint.getValue());
+        }, (player) -> new DatapointByte("hotbar_slot", player.getHeldSlot())), // For some idiotic reason the hotbar slot is a byte.
         ;
 
         @Getter
