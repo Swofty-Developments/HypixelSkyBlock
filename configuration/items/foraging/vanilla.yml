@@ -80,6 +80,25 @@ items:
             result:
               type: DIAMOND_AXE
               amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAA
+              - OBA
+              - OBO
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_AXE
+              amount: 1
       - id: SELLABLE
         value: 12.0
   - id: GOLDEN_AXE
@@ -96,6 +115,25 @@ items:
               - AA
               - AB
               - OB
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAA
+              - OBA
+              - OBO
             ingredients:
               A:
                 type: GOLD_INGOT
@@ -127,7 +165,26 @@ items:
               - OB
             ingredients:
               A:
-                type: OAK_PLANKS
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAA
+              - OBA
+              - OBO
+            ingredients:
+              A:
+                type: IRON_INGOT
                 amount: 1
               B:
                 type: STICK
@@ -167,6 +224,25 @@ items:
             result:
               type: STONE_AXE
               amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAA
+              - OBA
+              - OBO
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_AXE
+              amount: 1
       - id: SELLABLE
         value: 2.0
   - id: WOODEN_AXE
@@ -183,6 +259,25 @@ items:
               - AA
               - AB
               - OB
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WOODEN_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAA
+              - OBA
+              - OBO
             ingredients:
               A:
                 type: OAK_PLANKS
