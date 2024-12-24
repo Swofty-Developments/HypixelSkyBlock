@@ -23,7 +23,7 @@ public class ActionItemAbilityRightUse implements SkyBlockEventClass {
 
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
-            RegisteredAbility ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.LEFT_CLICK);
+            RegisteredAbility ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
             if (ability != null) {
                 if (!ability.getCost().canUse(player)) {
                     ability.getCost().onFail(player);
@@ -38,7 +38,6 @@ public class ActionItemAbilityRightUse implements SkyBlockEventClass {
                 }
 
                 abilityHandler.startAbilityCooldown(item);
-                ability.getCost().onUse(player, ability);
                 ability.execute(player, item);
             }
         }

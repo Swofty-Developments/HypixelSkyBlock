@@ -3,7 +3,8 @@ package net.swofty.types.generic.item.handlers.ability;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbilityRegistry {
+public class
+AbilityRegistry {
     private static final Map<String, RegisteredAbility> REGISTERED_ABILITIES = new HashMap<>();
 
     static {

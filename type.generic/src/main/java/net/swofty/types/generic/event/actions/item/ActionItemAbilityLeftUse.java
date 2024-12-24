@@ -38,7 +38,6 @@ public class ActionItemAbilityLeftUse implements SkyBlockEventClass {
                 }
 
                 abilityHandler.startAbilityCooldown(item);
-                ability.getCost().onUse(player, ability);
                 ability.execute(player, item);
             }
         }
