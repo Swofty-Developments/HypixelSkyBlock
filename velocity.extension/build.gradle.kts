@@ -24,18 +24,18 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
-    api(files("velocity-proxy-3.3.0-SNAPSHOT.jar"))
+    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    api(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
 
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
     // implementation("net.swofty:AtlasRedisAPI:1.1.4")
     implementation(project(":commons"))
 
-    implementation("net.raphimc:ViaLoader:3.0.1")
-    implementation("com.viaversion:viabackwards-common:5.0.1")
-    implementation("com.viaversion:viarewind-common:4.0.0")
-    implementation("com.viaversion:viaversion:5.0.1")
+    implementation("net.raphimc:ViaLoader:3.0.4")
+    implementation("com.viaversion:viabackwards-common:5.1.1")
+    implementation("com.viaversion:viarewind-common:4.0.3")
+    implementation("com.viaversion:viaversion:5.1.1")
     implementation("io.netty:netty-all:4.1.110.Final")
 
     implementation("net.bytebuddy:byte-buddy:1.14.16")

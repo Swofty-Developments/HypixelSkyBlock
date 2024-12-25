@@ -1,0 +1,13 @@
+items:
+  - id: KAT_BOUQUET
+    rarity: COMMON
+    components:
+      - id: KAT
+        reduced_days: 5
+      - id: ENCHANTED
+  - id: KAT_FLOWER
+    rarity: COMMON
+    components:
+      - id: KAT
+        reduced_days: 1
+      - id: ENCHANTED

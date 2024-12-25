@@ -1,0 +1,190 @@
+items:
+  - id: DECORATION_ANCIENT_FRUIT
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: af072bcf2be6f3c5ffb52d2875e41294f21dd57cee3f428c7986a189714ad79f
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Ancient Fruit
+  - id: DECORATION_APPALLED_PUMPKIN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 107da572a8e9dad5782b1665b74f911d21fb1a723a97da7c8ec494b75ec9db84
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Appalled Pumpkin
+  - id: DECORATION_APPLE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 921127d22675c5c769a0c08b572018d299c83046f8e1f943ed9d51be03b07
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Apple
+  - id: DECORATION_BANANA_BUNCH
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 20aaa1425d2b99383697d57193f27d872442bcb995508f42d19de4af1f8612
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Banana Bunch
+  - id: DECORATION_BEETROOT
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 18f36ea228c4fd9afed5add6d0526de71b7ac0559eabfc2f60de6c4aa733f5
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Beetroot
+  - id: DECORATION_BERRY
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 523555b0fd7df59172e92d896e67ad3d8ed14504983de65dff835ed110416a0f
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Berry
+  - id: DECORATION_BERRY_BUSH
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: b4ec3fcd557269a1a0b9bfa8a02dae1a39fa0ee8ff40e0cb8a96479be04b6609
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Berry Bush
+  - id: DECORATION_BLUE_CORN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: fd541581b0d24b1b5ab1dad4f51e383d03b9b0bcb4cf86f1345145468efd1c5a
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Blue Corn
+  - id: DECORATION_BROWN_MUSHROOM
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 849b3337885dc998186a1d58a6d2d9d11299d4e1ebfa2f7b6567713b736ea075
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Brown Mushroom
+  - id: DECORATION_BUSH
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 85ce40eef869be2cf88889da9268cfde6d9319b3778589ad47e9d35aaa8f1d
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bush
+  - id: DECORATION_CACTUS
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 297138ff5a74fb7379ccca7972669871b209b91bf6c7b07e76929285c8fb3
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cactus
+  - id: DECORATION_CHESTO_BERRY
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 436f4ff183cbaa49122455614911b84942b5f92d4d82cc3b890bcc7d57c6
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Chesto Berry
+  - id: DECORATION_CORN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: d391dffbea2fc3f2ad78a623f49bf7e1121694112c3759feed4156fc2ba46c0
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Corn
+  - id: DECORATION_KIWI
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: d9317f48e257fd6887491f7ba9e2aaa41c91fcfd4461ae772a32d27839c13
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Kiwi
+  - id: DECORATION_LEMON
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 957fd56ca15978779324df519354b6639a8d9bc1192c7c3de925a329baef6c
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lemon
+  - id: DECORATION_LETTUCE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 9979fe7b32fb7fc9746e157471f975f31afcb58fd8b5acb8bf53ec350f4d5c2
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lettuce
+  - id: DECORATION_LILAC_FRUIT
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: e356f7e7df6cd9b450db4b7ba2294b93cb6f1871d15a40d60e7f14ec6899cf76
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Lilac Fruit
+  - id: DECORATION_MELON
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: d58670551f7ff13afab239318a10bad2327ee742e157837ea1785ef443d3a576
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Melon
+  - id: DECORATION_ONION
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: b134ab145bd17676ac10a6f5b6554dd41256ce3b8239f87c0591b105aa9e086
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Onion
+  - id: DECORATION_ORANGE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 3c2d8e8ec2737b599a48fc07ea58b806969e6021802019992dda32a653794df6
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Orange
+  - id: DECORATION_PINK_BERRY
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 778308fe4dda1bb8a96f5b226b32542f49fd65bc55b44bbc31343eb400cf5e2
+      - id: EXTRA_UNDER_NAME
+        display: Decoration item
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pink Berry

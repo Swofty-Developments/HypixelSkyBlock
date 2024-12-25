@@ -15,8 +15,8 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.item.impl.RuneItem;
-import net.swofty.types.generic.item.impl.Runeable;
+import net.swofty.types.generic.item.components.RuneComponent;
+import net.swofty.types.generic.item.components.RuneableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -322,7 +322,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
         @Override
         public boolean isValidType(SkyBlockItem itemOnLeft, SkyBlockItem itemOnRight) {
-            if (!(itemOnLeft.getGenericInstance() instanceof RuneItem) || !(itemOnRight.getGenericInstance() instanceof RuneItem)) {
+            if (!(itemOnLeft.hasComponent(RuneComponent.class)) || !(itemOnRight.hasComponent(RuneComponent.class))) {
                 return false;
             }
             String runeTypeOnLeft = itemOnLeft.getAttributeHandler().getTypeAsString();
@@ -340,8 +340,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
         public void onSuccess(SkyBlockPlayer player, SkyBlockItem outputItem) {
             int level = outputItem.getAttributeHandler().getRuneLevel();
 
-            player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
-                    player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
+            player.getSkills().increase(player, SkillCategories.RUNECRAFTING, 15D);
 
             sendSuccessMessage(player, "Combining Runes to Level " + level);
         }
@@ -350,8 +349,8 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
     public static class RuneWithItemRunicMerge extends RunicMerge {
         @Override
         public SkyBlockItem merge(SkyBlockItem itemOnLeft, SkyBlockItem itemOnRight) {
-            SkyBlockItem runeItem = itemOnLeft.getGenericInstance() instanceof RuneItem ? itemOnLeft : itemOnRight;
-            SkyBlockItem item = itemOnLeft.getGenericInstance() instanceof RuneItem ? itemOnRight : itemOnLeft;
+            SkyBlockItem runeItem = itemOnLeft.hasComponent(RuneComponent.class) ? itemOnLeft : itemOnRight;
+            SkyBlockItem item = itemOnLeft.hasComponent(RuneComponent.class) ? itemOnRight : itemOnLeft;
 
             SkyBlockItem toReturn = item.clone();
             ItemAttributeRuneInfusedWith.RuneData runeData = toReturn.getAttributeHandler().getRuneData();
@@ -363,16 +362,16 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
         @Override
         public boolean isValidType(SkyBlockItem itemOnLeft, SkyBlockItem itemOnRight) {
-            if (!(itemOnLeft.getGenericInstance() instanceof RuneItem) && !(itemOnLeft.getGenericInstance() instanceof Runeable))
+            if (!(itemOnLeft.hasComponent(RuneComponent.class)) && !(itemOnLeft.hasComponent(RuneableComponent.class)))
                 return false;
-            if (!(itemOnRight.getGenericInstance() instanceof RuneItem) && !(itemOnRight.getGenericInstance() instanceof Runeable))
+            if (!(itemOnRight.hasComponent(RuneComponent.class)) && !(itemOnRight.hasComponent(RuneableComponent.class)))
                 return false;
-            if (itemOnLeft.getGenericInstance() instanceof RuneItem && itemOnRight.getGenericInstance() instanceof RuneItem)
+            if (itemOnLeft.hasComponent(RuneComponent.class) && itemOnRight.hasComponent(RuneComponent.class))
                 return false;
-            if (itemOnLeft.getGenericInstance() instanceof Runeable && itemOnRight.getGenericInstance() instanceof Runeable)
+            if (itemOnLeft.hasComponent(RuneableComponent.class) && itemOnRight.hasComponent(RuneableComponent.class))
                 return false;
 
-            SkyBlockItem runableItem = itemOnLeft.getGenericInstance() instanceof Runeable ? itemOnLeft : itemOnRight;
+            SkyBlockItem runableItem = itemOnLeft.hasComponent(RuneableComponent.class) ? itemOnLeft : itemOnRight;
             ItemAttributeRuneInfusedWith.RuneData runeData = runableItem.getAttributeHandler().getRuneData();
 
             return !runeData.hasRune();
@@ -380,8 +379,7 @@ public class GUIRunicPedestal extends SkyBlockInventoryGUI {
 
         @Override
         public void onSuccess(SkyBlockPlayer player, SkyBlockItem outputItem) {
-            player.getSkills().setRaw(player, SkillCategories.RUNECRAFTING,
-                    player.getSkills().getRaw(SkillCategories.RUNECRAFTING) + 15);
+            player.getSkills().increase(player, SkillCategories.RUNECRAFTING, 15D);
 
             ItemType appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
             Rarity rarity = appliedRune.rarity;

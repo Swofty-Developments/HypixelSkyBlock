@@ -4,12 +4,12 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;
@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class GUIBazaarBuyAmountSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
     private CompletableFuture<Double> future = new CompletableFuture<>();
 
-    public GUIBazaarBuyAmountSelection(SkyBlockInventoryGUI previousGUI, ItemTypeLinker itemTypeLinker) {
+    public GUIBazaarBuyAmountSelection(SkyBlockInventoryGUI previousGUI, ItemType itemTypeLinker) {
         super("How many do you want?", InventoryType.CHEST_4_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));

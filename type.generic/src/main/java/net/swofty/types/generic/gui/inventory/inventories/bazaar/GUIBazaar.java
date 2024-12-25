@@ -17,11 +17,9 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -167,7 +165,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        ItemTypeLinker type = clickedItem.getAttributeHandler().getPotentialClassLinker();
+        ItemType type = clickedItem.getAttributeHandler().getPotentialType();
         e.setCancelled(true);
 
         if (clickedItem.isNA()) {

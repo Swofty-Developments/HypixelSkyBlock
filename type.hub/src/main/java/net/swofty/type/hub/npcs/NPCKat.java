@@ -7,7 +7,7 @@ import net.swofty.types.generic.data.datapoints.DatapointKat;
 import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.KatItem;
+import net.swofty.types.generic.item.components.KatComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NPCKat extends SkyBlockNPC {
@@ -45,13 +45,13 @@ public class NPCKat extends SkyBlockNPC {
     public void onClick(PlayerClickNPCEvent e) {
         DatapointKat.PlayerKat katData = e.player().getKatData();
         SkyBlockItem heldItem = new SkyBlockItem(e.player().getItemInMainHand());
-        if (heldItem.getGenericInstance() instanceof KatItem katItem && katData.getFinishTime() != 0 && katData.getFinishTime() > System.currentTimeMillis()) {
-            Long reducedTime = katItem.reducedDays().longValue();
-            katData.setFinishedTime(reducedTime);
+        if (heldItem.hasComponent(KatComponent.class) && katData.getFinishTime() != 0 && katData.getFinishTime() > System.currentTimeMillis()) {
+            long reducedTime = (long) heldItem.getComponent(KatComponent.class).getReducedDays() * 86400000;
+            katData.setFinishedTime(katData.getFinishTime() - reducedTime);
             e.player().setItemInMainHand(ItemStack.AIR);
         } else if (katData.getPet() != null) {
             if (katData.getFinishTime() > System.currentTimeMillis()) {
-                e.player().sendMessage("Kat didnt upgrade ur pet yet");
+                e.player().sendMessage("Kat didn't upgrade ur pet yet");
             } else {
                 SkyBlockItem pet = katData.getPet();
                 pet.getAttributeHandler().getRarity().upgrade();

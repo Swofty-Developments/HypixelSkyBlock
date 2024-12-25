@@ -17,11 +17,9 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -76,27 +74,27 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
         List<CompletableFuture> futures = new ArrayList<>();
 
         int i = 0;
-        for (ItemType itemTypeLinker : itemSet.items) {
+        for (ItemType itemType : itemSet.items) {
             CompletableFuture future = new CompletableFuture();
             futures.add(future);
             int slot = SLOTS.get(itemSet.items.size())[i];
 
             Thread.startVirtualThread(() -> {
                 BazaarGetItemProtocolObject.BazaarGetItemMessage message =
-                        new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemTypeLinker.name());
+                        new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name());
                 CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = new ProxyService(ServiceType.BAZAAR).handleRequest(message);
                 BazaarItem item = futureBazaar.join().item();
 
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIBazaarItem(ItemTypeLinker.fromType(itemTypeLinker)).open(player);
+                        new GUIBazaarItem(itemType).open(player);
                     }
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
                         List<String> lore = new ArrayList<>();
-                        lore.add("§8" + StringUtility.toNormalCase(itemTypeLinker.rarity.name()) + " commodity");
+                        lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                         lore.add(" ");
 
                         lore.add("§7Buy price: §6" +
@@ -116,8 +114,8 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                         lore.add("§eClick to view details!");
 
                         return ItemStackCreator.getStack(
-                                itemTypeLinker.rarity.getColor() + itemTypeLinker.getDisplayName(),
-                                itemTypeLinker.material, 1, lore);
+                                itemType.rarity.getColor() + itemType.getDisplayName(),
+                                itemType.material, 1, lore);
                     }
                 });
 
@@ -149,7 +147,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
     @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        ItemTypeLinker type = clickedItem.getAttributeHandler().getPotentialClassLinker();
+        ItemType type = clickedItem.getAttributeHandler().getPotentialType();
         e.setCancelled(true);
 
         if (clickedItem.isNA()) {

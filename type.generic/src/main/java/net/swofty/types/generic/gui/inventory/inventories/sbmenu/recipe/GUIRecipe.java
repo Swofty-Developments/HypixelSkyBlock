@@ -9,19 +9,18 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.DefaultCraftable;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.components.CraftableComponent;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GUIRecipe extends SkyBlockInventoryGUI {
@@ -31,7 +30,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     SkyBlockInventoryGUI previousGUI;
     int recipeIndex;
 
-    public GUIRecipe(ItemTypeLinker type, SkyBlockInventoryGUI previousGUI) {
+    public GUIRecipe(ItemType type, SkyBlockInventoryGUI previousGUI) {
         this(new SkyBlockItem(type), previousGUI, 0);
     }
 
@@ -40,7 +39,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     }
 
     public GUIRecipe(SkyBlockItem item, SkyBlockInventoryGUI previousGUI, int recipeIndex) {
-        super(item.getAttributeHandler().getPotentialClassLinker().getDisplayName(item) + " Recipe", InventoryType.CHEST_6_ROW);
+        super(item.getAttributeHandler().getPotentialType().getDisplayName() + " Recipe", InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.previousGUI = previousGUI;
@@ -66,8 +65,8 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
             }
         });
 
-        ItemTypeLinker itemTypeLinker = item.getAttributeHandler().getPotentialClassLinker();
-        if (itemTypeLinker == null) {
+        ItemType itemTypeLinker = item.getAttributeHandler().getPotentialType();
+        if (item.getConfig() == null) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;
@@ -142,7 +141,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                     set(new GUIClickableItem(craftSlot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                            if (!(ingredient.getGenericInstance() instanceof DefaultCraftable))
+                            if (!(ingredient.hasComponent(CraftableComponent.class)))
                                 return;
 
                             new GUIRecipe(
@@ -156,7 +155,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
                         public ItemStack.Builder getItem(SkyBlockPlayer player) {
                             ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(player, ingredient.getItemStack());
 
-                            if (ingredient.getGenericInstance() instanceof DefaultCraftable) {
+                            if (ingredient.hasComponent(CraftableComponent.class)) {
                                 ArrayList<Component> lore = new ArrayList<>(builder.build().get(ItemComponent.LORE));
                                 lore.add(Component.text(" "));
                                 lore.add(Component.text("§eClick to view recipe!"));

@@ -7,12 +7,12 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionUpgradeItem;
+import net.swofty.types.generic.item.components.MinionUpgradeComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
@@ -24,34 +24,28 @@ import java.util.stream.Stream;
 
 public class MinionUpgradeExtension extends MinionExtension {
 
-    public MinionUpgradeExtension(@Nullable ItemTypeLinker itemTypeLinker, @Nullable Object data) {
+    public MinionUpgradeExtension(@Nullable ItemType itemTypeLinker, @Nullable Object data) {
         super(itemTypeLinker, data);
     }
 
     @Override
     public @NotNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
-        if (getItemTypeLinkerPassedIn() == null) {
+        if (getItemTypePassedIn() == null) {
             return new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     SkyBlockItem upgradeItem = new SkyBlockItem(e.getCursorItem());
 
-                    if (upgradeItem.getGenericInstance() == null) {
-                        player.sendMessage("§cThis item is not a valid Minion Upgrade.");
-                        e.setCancelled(true);
-                        return;
-                    }
-
-                    ItemTypeLinker itemTypeLinker = upgradeItem.getAttributeHandler().getPotentialClassLinker();
+                    ItemType itemTypeLinker = upgradeItem.getAttributeHandler().getPotentialType();
                     if (minion.getExtensionData().hasMinionUpgrade(itemTypeLinker)) {
                         player.sendMessage("§cThis upgrade is already applied to your minion.");
                         e.setCancelled(true);
                         return;
                     }
 
-                    if (upgradeItem.getGenericInstance() instanceof MinionUpgradeItem) {
+                    if (upgradeItem.hasComponent(MinionUpgradeComponent.class)) {
                         e.setClickedItem(ItemStack.AIR);
-                        setItemTypeLinkerPassedIn(itemTypeLinker);
+                        setItemTypePassedIn(itemTypeLinker);
                         minion.getExtensionData().setData(slot, MinionUpgradeExtension.this);
                     } else {
                         player.sendMessage("§cThis item is not a valid Minion Upgrade.");
@@ -87,8 +81,8 @@ public class MinionUpgradeExtension extends MinionExtension {
                         return;
                     }
 
-                    player.addAndUpdateItem(getItemTypeLinkerPassedIn());
-                    setItemTypeLinkerPassedIn(null);
+                    player.addAndUpdateItem(getItemTypePassedIn());
+                    setItemTypePassedIn(null);
                     e.setClickedItem(ItemStack.AIR);
                     minion.getExtensionData().setData(slot, MinionUpgradeExtension.this);
                 }
@@ -105,14 +99,14 @@ public class MinionUpgradeExtension extends MinionExtension {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypeLinkerPassedIn())).getUpdatedItem();
+                    ItemStack.Builder item = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn())).getUpdatedItem();
                    item.set(ItemComponent.CUSTOM_NAME, Component.text("§aUpgrade Slot").decoration(TextDecoration.ITALIC, false));
                     item = ItemStackCreator.updateLore(item, Stream.of(
                             "§7You can improve your minion by",
                             "§7adding a minion upgrade item",
                             "§7here.",
                             " ",
-                            "§7Current Upgrade: " + getItemTypeLinkerPassedIn().type.rarity.getColor() + getItemTypeLinkerPassedIn().getDisplayName(null),
+                            "§7Current Upgrade: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
                             " ",
                             "§eClick to remove."
                     ).toList());
@@ -125,17 +119,17 @@ public class MinionUpgradeExtension extends MinionExtension {
 
     @Override
     public String toString() {
-        if (getItemTypeLinkerPassedIn() == null)
+        if (getItemTypePassedIn() == null)
             return "null";
-        return getItemTypeLinkerPassedIn().name();
+        return getItemTypePassedIn().name();
     }
 
     @Override
     public void fromString(String string) {
         if (string.equals("null")) {
-            setItemTypeLinkerPassedIn(null);
+            setItemTypePassedIn(null);
             return;
         }
-        setItemTypeLinkerPassedIn(ItemTypeLinker.valueOf(string));
+        setItemTypePassedIn(ItemType.valueOf(string));
     }
 }

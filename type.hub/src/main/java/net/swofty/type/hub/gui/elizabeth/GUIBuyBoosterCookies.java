@@ -11,11 +11,11 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
@@ -92,7 +92,7 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getGems() >= cookieCost) {
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
                     Integer remainingGems = (int) (player.getGems() - cookieCost);
                     player.setGems(remainingGems);
                     new GUIBuyBoosterCookies().open(player);
@@ -164,12 +164,12 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getGems() >= cookieCost*boosterCookieAmount) {
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
                     Integer remainingGems = player.getGems() - cookieCost*boosterCookieAmount;
                     player.setGems(remainingGems);
                     new GUIBuyBoosterCookies().open(player);
@@ -241,18 +241,18 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getGems() >= cookieCost*boosterCookieAmount) {
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemTypeLinker.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
                     Integer remainingGems = player.getGems() - cookieCost*boosterCookieAmount;
                     player.setGems(remainingGems);
                     new GUIBuyBoosterCookies().open(player);

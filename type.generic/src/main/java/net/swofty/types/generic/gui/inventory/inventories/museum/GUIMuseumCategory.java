@@ -10,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
@@ -17,7 +18,6 @@ import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
@@ -28,10 +28,9 @@ import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
+public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
     private final MuseumableItemCategory category;
 
     public GUIMuseumCategory(MuseumableItemCategory category) {
@@ -52,22 +51,22 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
         ItemStack item = e.getClickedItem();
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
 
-        if (skyBlockItem.getAttributeHandler().getPotentialClassLinker() == null) {
+        if (skyBlockItem.getAttributeHandler().getPotentialType() == null) {
             return;
         }
 
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
-        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null) {
-            player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getPotentialClassLinker().getDisplayName(null) + " in your Museum!");
+        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
+            player.sendMessage("§cYou already have a " + skyBlockItem.getDisplayName() + " in your Museum!");
             return;
         }
 
-        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker()) != null) {
+        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
             UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
             UUID previouslyInMuseumUUID = UUID.fromString(
-                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialClassLinker())
+                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType())
                             .getAttributeHandler().getUniqueTrackedID()
             );
 
@@ -77,7 +76,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
             }
         }
 
-        if (category.contains(skyBlockItem.getAttributeHandler().getPotentialClassLinker())) {
+        if (category.contains(skyBlockItem.getAttributeHandler().getPotentialType())) {
             skyBlockItem.getAttributeHandler().setSoulBound(true);
             data.add(skyBlockItem);
             player.setMuseumData(data);
@@ -86,7 +85,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumCategory(category).open(player);
-            player.sendMessage("§aYou donated your " + skyBlockItem.getAttributeHandler().getPotentialClassLinker().getDisplayName(null) + " to the Museum!");
+            player.sendMessage("§aYou donated your " + skyBlockItem.getDisplayName() + " to the Museum!");
         }
     }
 
@@ -101,14 +100,14 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
     }
 
     @Override
-    public PaginationList<ItemTypeLinker> fillPaged(SkyBlockPlayer player, PaginationList<ItemTypeLinker> paged) {
+    public PaginationList<ItemType> fillPaged(SkyBlockPlayer player, PaginationList<ItemType> paged) {
         paged.addAll(category.getItems());
         return paged;
     }
 
     @Override
-    public boolean shouldFilterFromSearch(String query, ItemTypeLinker item) {
-        return !item.getDisplayName(null).toLowerCase().contains(query.toLowerCase());
+    public boolean shouldFilterFromSearch(String query, ItemType item) {
+        return !item.getDisplayName().toLowerCase().contains(query.toLowerCase());
     }
 
     @Override
@@ -127,11 +126,11 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
 
         for (int i = 0; i < 36; i++) {
             SkyBlockItem item = new SkyBlockItem(player.getInventory().getItemStack(i));
-            if (item.getGenericInstance() == null) {
+            if (item.getAttributeHandler().getPotentialType() == null) {
                 continue;
             }
 
-            if (category.contains(item.getAttributeHandler().getPotentialClassLinker())) {
+            if (category.contains(item.getAttributeHandler().getPotentialType())) {
                 TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
@@ -155,12 +154,12 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemTypeLinker> paged) {
+    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<ItemType> paged) {
         return "Museum -> " + category.toString();
     }
 
     @Override
-    public GUIClickableItem createItemFor(ItemTypeLinker item, int slot, SkyBlockPlayer player) {
+    public GUIClickableItem createItemFor(ItemType item, int slot, SkyBlockPlayer player) {
         DatapointMuseum.MuseumData data = player.getMuseumData();
         SkyBlockItem skyBlockItem = data.getItem(category, item);
         boolean inMuseum = skyBlockItem != null;
@@ -173,7 +172,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
                     return;
                 }
 
-                player.sendMessage("§aYou retrieved your " + item.getDisplayName(null) + " from the Museum. It still counts towards your Museum progress, but not towards your total item value.");
+                player.sendMessage("§aYou retrieved your " + item.getDisplayName() + " from the Museum. It still counts towards your Museum progress, but not towards your total item value.");
                 player.sendMessage("§aYou can return or replace the item in your Museum at any time!");
 
                 data.getPreviouslyInMuseum().add(skyBlockItem);
@@ -190,7 +189,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (!inMuseum) {
-                    return ItemStackCreator.getStack("§c" + item.getDisplayName(null),
+                    return ItemStackCreator.getStack("§c" + item.getDisplayName(),
                             Material.GRAY_DYE, 1,
                             "§7Click on this item in your inventory to",
                             "§7add it to your §9Museum§7!");
@@ -239,8 +238,8 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemTypeLinker> {
                     lore.add("§eClick to retrieve item!");
                 }
 
-                return ItemStackCreator.getStack("§a" + item.getDisplayName(null),
-                       hasTakenItOut ? Material.LIME_DYE : item.type.material, 1, lore);
+                return ItemStackCreator.getStack("§a" + item.getDisplayName(),
+                       hasTakenItOut ? Material.LIME_DYE : item.material, 1, lore);
             }
         };
     }

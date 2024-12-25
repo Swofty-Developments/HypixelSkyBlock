@@ -8,7 +8,7 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 
@@ -22,11 +22,9 @@ public class DecorationEntityImpl extends EntityCreature {
         armorStandMeta.setHasNoGravity(true);
         armorStandMeta.setNotifyAboutChanges(false);
 
-        SkullHead decorationHead = (SkullHead) item.getGenericInstance();
+        SkullHeadComponent decorationHead = item.getComponent(SkullHeadComponent.class);
 
-        setHelmet(
-                ItemStackCreator.getStackHead(decorationHead.getSkullTexture(player , item)).build()
-        );
+        setHelmet(ItemStackCreator.getStackHead(decorationHead.getSkullTexture(item)).build());
     }
 
     public void spawn(Instance instance, Point pos) {

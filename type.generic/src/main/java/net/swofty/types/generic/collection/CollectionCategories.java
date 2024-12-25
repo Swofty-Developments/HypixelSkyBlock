@@ -2,45 +2,44 @@ package net.swofty.types.generic.collection;
 
 import lombok.Getter;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.collection.collections.*;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Getter
 public enum CollectionCategories {
-    FARMING(FarmingCollection.class),
-    MINING(MiningCollection.class),
-    COMBAT(CombatCollection.class),
-    FORAGING(ForagingCollection.class),
-    FISHING(FishingCollection.class),
-    BOSS(BossCollection.class),
+    FARMING("Farming"),
+    MINING("Mining"),
+    COMBAT("Combat"),
+    FORAGING("Foraging"),
+    FISHING("Fishing"),
+    BOSS("Boss"),
     ;
 
-    private final Class<? extends CollectionCategory> clazz;
+    private final String file;
+    private CollectionCategory category;
 
-    CollectionCategories(Class<? extends CollectionCategory> clazz) {
-        this.clazz = clazz;
+    CollectionCategories(String file) {
+        this.file = file;
+
+        getCategory();
     }
 
-    public static @Nullable CollectionCategory getCategory(ItemTypeLinker type) {
+    public CollectionCategory getCategory() {
+        if (category == null) {
+            category = CollectionLoader.loadFromFile(file);
+        }
+        return category;
+    }
+
+    public static @Nullable CollectionCategory getCategory(ItemType type) {
         return getCategories().stream().filter(category -> Arrays.stream(category.getCollections()).anyMatch(collection ->
-                collection.type() == type.getType())).findFirst().orElse(null);
+                collection.type() == type)).findFirst().orElse(null);
     }
 
     public static ArrayList<CollectionCategory> getCategories() {
-        return new ArrayList<>(Arrays.stream(values()).map(CollectionCategories::getClazz).map(clazz -> {
-            try {
-                return clazz.getDeclaredConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).collect(Collectors.toList()));
+        return Arrays.stream(values()).map(CollectionCategories::getCategory).collect(Collectors.toCollection(ArrayList::new));
     }
 }

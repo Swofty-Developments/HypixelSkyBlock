@@ -20,16 +20,19 @@ public enum ItemType {
     QUALITY_MAP(Material.MAP,  Rarity.SPECIAL),
     DEAD_BUSH_OF_LOVE(Material.DEAD_BUSH,  Rarity.SPECIAL),
 
+    ENDSTONE_ROSE(Material.POPPY, Rarity.RARE),
+    BIOFUEL(Material.GREEN_DYE, Rarity.RARE),
+
     /**
      * Accessories
      */
-    ZOMBIE_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ZOMBIE_TALISMAN(Material.ZOMBIE_HEAD,  Rarity.COMMON),
     ZOMBIE_RING(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
     ZOMBIE_ARTIFACT(Material.PLAYER_HEAD,  Rarity.RARE),
     SPEED_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
     SPEED_RING(Material.PLAYER_HEAD, Rarity.UNCOMMON),
     SPEED_ARTIFACT(Material.PLAYER_HEAD, Rarity.RARE),
-    SKELETON_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
+    SKELETON_TALISMAN(Material.SKELETON_SKULL,  Rarity.COMMON),
     HASTE_RING(Material.PLAYER_HEAD,  Rarity.RARE),
     FARMING_TALISMAN(Material.PLAYER_HEAD,  Rarity.COMMON),
     LAVA_TALISMAN(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
@@ -105,7 +108,7 @@ public enum ItemType {
     CULTIVATING(Material.ENCHANTED_BOOK,  Rarity.COMMON),
     EXPERTISE(Material.ENCHANTED_BOOK,  Rarity.COMMON),
     HECATOMB(Material.ENCHANTED_BOOK,  Rarity.COMMON),
-    INFERNO_FUE_BLOCK(Material.PLAYER_HEAD,  Rarity.RARE),
+    INFERNO_FUEL_BLOCK(Material.PLAYER_HEAD,  Rarity.RARE),
 
     /**
      * Sacks
@@ -269,6 +272,9 @@ public enum ItemType {
      */
     LUXURIOUS_SPOOL(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
+
+    ASCENSION_ROPE(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
     /**
      * Farming Props
      */
@@ -356,6 +362,8 @@ public enum ItemType {
     /**
      * Spider Slayer
      */
+
+    /*
     TARANTULA_WEB(Material.STRING,  Rarity.UNCOMMON),
     TOXIC_ARROW_POISON(Material.LIME_DYE,  Rarity.UNCOMMON),
     SPIDER_CATALYST(Material.PLAYER_HEAD,  Rarity.RARE),
@@ -366,10 +374,13 @@ public enum ItemType {
     MOSQUITO_BOW(Material.BOW,  Rarity.LEGENDARY),
     SCORPION_BOW(Material.BOW,  Rarity.EPIC),
     SCORPION_FOIL(Material.WOODEN_SWORD,  Rarity.EPIC),
+     */
 
     /**
      * Wolf Slayer
      */
+
+    /*
     WOLF_TOOTH(Material.GHAST_TEAR,  Rarity.UNCOMMON),
     HAMSTER_WHEEL(Material.OAK_TRAPDOOR,  Rarity.RARE),
     RED_CLAW_EGG(Material.MOOSHROOM_SPAWN_EGG,  Rarity.EPIC),
@@ -380,10 +391,13 @@ public enum ItemType {
     POOCH_SWORD(Material.GOLDEN_SWORD,  Rarity.LEGENDARY),
     EDIBLE_MACE(Material.MUTTON,  Rarity.RARE),
     WEIRD_TUBA(Material.HOPPER,  Rarity.RARE),
+     */
 
     /**
      * Enderman Slayer
      */
+
+    /*
     NULL_SPHERE(Material.FIREWORK_STAR,  Rarity.UNCOMMON),
     TWILIGHT_ARROW_POISON(Material.PURPLE_DYE,  Rarity.UNCOMMON),
     SUMMONING_EYE(Material.PLAYER_HEAD,  Rarity.EPIC),
@@ -409,10 +423,13 @@ public enum ItemType {
     SOUL_ESOWARD(Material.BIRCH_SAPLING,  Rarity.RARE),
     GLOOMLOCK_GRIMOIRE(Material.WRITTEN_BOOK,  Rarity.EPIC),
     ETHERWARP_CONDUIT(Material.PLAYER_HEAD,  Rarity.EPIC),
+    */
 
     /**
      * Blaze Slayer
      */
+
+    /*
     DERELICT_ASHE(Material.GUNPOWDER,  Rarity.UNCOMMON),
     BUNDLE_OF_MAGMA_ARROWS(Material.PLAYER_HEAD,  Rarity.EPIC),
     MANA_DISINTEGRATOR(Material.PLAYER_HEAD,  Rarity.RARE),
@@ -427,6 +444,7 @@ public enum ItemType {
     HIGH_CLASS_ARCHFIEND_DICE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
     WILSON_ENGINEERING_PLANS(Material.PAPER,  Rarity.LEGENDARY),
     SUBZERO_INVERTER(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    */
 
     /**
      * BrewingItem
@@ -452,6 +470,8 @@ public enum ItemType {
     ARCHITECTS_FIRST_DRAFT(Material.PAPER,  Rarity.EPIC),
     KISMET_FEATHER(Material.FEATHER,  Rarity.RARE),
     NECRONS_HANDLE(Material.STICK,  Rarity.EPIC),
+    BIGFOOT_LASSO(Material.LEAD, Rarity.EPIC),
+    BONZO_FRAGMENT(Material.RED_MUSHROOM, Rarity.RARE),
 
     /**
      * Mythological Ritual
@@ -472,7 +492,7 @@ public enum ItemType {
      * Spooky Festival
      */
     GREEN_CANDY(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    PRUPLE_CANDY(Material.PLAYER_HEAD,  Rarity.EPIC),
+    PURPLE_CANDY(Material.PLAYER_HEAD,  Rarity.EPIC),
     WEREWOLF_SKIN(Material.ROTTEN_FLESH,  Rarity.RARE),
     SOUL_FRAGMENT(Material.PLAYER_HEAD,  Rarity.EPIC),
     ECTOPLASM(Material.PRISMARINE_CRYSTALS,  Rarity.RARE),
@@ -603,41 +623,41 @@ public enum ItemType {
     /**
      * Mining Materials
      */
-    ROUGH_AMBER_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_TOPAZ_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_SAPPHIRE_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_AMETHYST_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_JASPER_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_RUBY_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    ROUGH_JADE_GEM(Material.PLAYER_HEAD,  Rarity.COMMON),
-    FLAWED_AMBER_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_TOPAZ_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_SAPPHIRE_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_AMETHYST_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_JASPER_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_RUBY_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FLAWED_JADE_GEM(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
-    FINE_AMBER_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_TOPAZ_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_SAPPHIRE_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_AMETHYST_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_JASPER_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_RUBY_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FINE_JADE_GEM(Material.PLAYER_HEAD,  Rarity.RARE),
-    FLAWLESS_AMBER_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_TOPAZ_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_SAPPHIRE_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_AMETHYST_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_JASPER_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_RUBY_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    FLAWLESS_JADE_GEM(Material.PLAYER_HEAD,  Rarity.EPIC),
-    PERFECT_AMBER_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_TOPAZ_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_SAPPHIRE_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_AMETHYST_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_JASPER_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_RUBY_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
-    PERFECT_JADE_GEM(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    ROUGH_AMBER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_TOPAZ_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_SAPPHIRE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_AMETHYST_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_JASPER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_RUBY_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    ROUGH_JADE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.COMMON),
+    FLAWED_AMBER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_TOPAZ_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_SAPPHIRE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_AMETHYST_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_JASPER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_RUBY_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FLAWED_JADE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.UNCOMMON),
+    FINE_AMBER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_TOPAZ_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_SAPPHIRE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_AMETHYST_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_JASPER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_RUBY_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FINE_JADE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.RARE),
+    FLAWLESS_AMBER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_TOPAZ_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_SAPPHIRE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_AMETHYST_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_JASPER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_RUBY_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    FLAWLESS_JADE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.EPIC),
+    PERFECT_AMBER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_TOPAZ_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_SAPPHIRE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_AMETHYST_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_JASPER_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_RUBY_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
+    PERFECT_JADE_GEMSTONE(Material.PLAYER_HEAD,  Rarity.LEGENDARY),
     HARD_STONE(Material.STONE,  Rarity.COMMON),
     MITHRIL(Material.PRISMARINE_CRYSTALS,  Rarity.COMMON),
     TITANIUM(Material.PLAYER_HEAD,  Rarity.RARE),
@@ -684,18 +704,19 @@ public enum ItemType {
     SORROW(Material.GHAST_TEAR,  Rarity.RARE),
     PLASMA(Material.PLAYER_HEAD,  Rarity.RARE),
     VOLTA(Material.PLAYER_HEAD,  Rarity.RARE),
+    CORLEONITE(Material.PLAYER_HEAD, Rarity.EPIC),
 
     /**
      * Travel Scrolls
      */
     HUB_CASTLE_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
     HUB_MUSEUM_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
-    HUB_CRYPT_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
+    HUB_CRYPTS_TRAVEL_SCROLL(Material.MAP,  Rarity.EPIC),
 
     /**
      * Crimson Isles
      */
-    FLAMES(Material.RED_SAND,  Rarity.COMMON),
+    FLAMES(Material.BLAZE_POWDER,  Rarity.RARE),
 
     /**
      * Vanilla Items
@@ -1024,6 +1045,7 @@ public enum ItemType {
     BROWN_DYE(Material.BROWN_DYE,  Rarity.COMMON),
     RED_DYE(Material.RED_DYE,  Rarity.COMMON),
     BLACK_DYE(Material.BLACK_DYE,  Rarity.COMMON),
+    GREEN_DYE(Material.GREEN_DYE, Rarity.COMMON),
     WHITE_WOOL(Material.WHITE_WOOL,  Rarity.COMMON),
     ORANGE_WOOL(Material.ORANGE_WOOL,  Rarity.COMMON),
     MAGENTA_WOOL(Material.MAGENTA_WOOL,  Rarity.COMMON),
@@ -1110,14 +1132,17 @@ public enum ItemType {
     ALLIUM(Material.ALLIUM,  Rarity.COMMON),
     AZURE_BLUET(Material.AZURE_BLUET,  Rarity.COMMON),
     OXEYE_DAISY(Material.OXEYE_DAISY,  Rarity.COMMON),
-
-
+    RAW_BEEF(Material.BEEF,  Rarity.UNCOMMON),
+    RAW_CHICKEN(Material.CHICKEN,  Rarity.UNCOMMON),
+    BREWING_STAND(Material.BREWING_STAND, Rarity.COMMON),
+    ENCHANTING_TABLE(Material.ENCHANTING_TABLE, Rarity.COMMON),
     /**
      * Enchanted Items
      */
     ENCHANTED_ACACIA_LOG(Material.ACACIA_LOG,  Rarity.UNCOMMON),
     ENCHANTED_BAKED_POTATO(Material.BAKED_POTATO,  Rarity.UNCOMMON),
     ENCHANTED_BIRCH_LOG(Material.BIRCH_LOG,  Rarity.UNCOMMON),
+    ENCHANTED_SLIMEBALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
     ENCHANTED_BLAZE_ROD(Material.BLAZE_ROD,  Rarity.UNCOMMON),
     ENCHANTED_BLAZE_POWDER(Material.BLAZE_POWDER,  Rarity.UNCOMMON),
     ENCHANTED_BONE(Material.BONE,  Rarity.UNCOMMON),
@@ -1219,7 +1244,7 @@ public enum ItemType {
     ENCHANTED_RAW_RABBIT(Material.RABBIT,  Rarity.UNCOMMON),
     ENCHANTED_SAND(Material.SAND,  Rarity.UNCOMMON),
     ENCHANTED_SEEDS(Material.WHEAT_SEEDS,  Rarity.UNCOMMON),
-    ENCHANTED_SLIMEBALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
+    ENCHANTED_SLIME_BALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
     ENCHANTED_SLIME_BLOCK(Material.SLIME_BLOCK,  Rarity.RARE),
     ENCHANTED_SUGAR_CANE(Material.SUGAR_CANE,  Rarity.RARE),
     ENCHANTED_SULPHUR(Material.GLOWSTONE_DUST,  Rarity.RARE),
@@ -1257,5 +1282,18 @@ public enum ItemType {
 
     public static boolean isVanillaReplaced(String item) {
         return get(item) != null;
+    }
+
+    public static @Nullable ItemType fromMaterial(Material material) {
+        String materialName = material.namespace().value();
+        String formattedItemName = StringUtility.toNormalCase(materialName);
+
+        for (ItemType itemType : ItemType.values()) {
+            if (itemType.material == material &&
+                    formattedItemName.equals(StringUtility.toNormalCase(itemType.getDisplayName()))) {
+                return itemType;
+            }
+        }
+        return null;
     }
 }

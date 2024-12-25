@@ -25,14 +25,6 @@ public class ItemQuantifiable {
         this.amount = amount;
     }
 
-    public ItemQuantifiable(ItemTypeLinker material, int amount) {
-        this(material.type, amount);
-    }
-
-    public ItemQuantifiable(ItemTypeLinker material) {
-        this(material, 1);
-    }
-
     public ItemQuantifiable(@NonNull ItemQuantifiable itemQuantifiable) {
         this(itemQuantifiable.item, itemQuantifiable.amount);
     }
@@ -42,10 +34,6 @@ public class ItemQuantifiable {
         SkyBlockItem item = this.item.clone();
         item.setAmount(amount);
         return item;
-    }
-
-    public ItemQuantifiable setMaterial(@NonNull ItemTypeLinker material) {
-        return setMaterial(material.type);
     }
 
     public ItemQuantifiable setMaterial(@NonNull ItemType material) {
@@ -95,7 +83,7 @@ public class ItemQuantifiable {
         return materials;
     }
 
-    public static ItemQuantifiable one(ItemTypeLinker type) {
+    public static ItemQuantifiable one(ItemType type) {
         return new ItemQuantifiable(type, 1);
     }
 }

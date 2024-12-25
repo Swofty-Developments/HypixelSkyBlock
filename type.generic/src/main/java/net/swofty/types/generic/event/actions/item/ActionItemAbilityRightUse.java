@@ -7,7 +7,8 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockAbility;
+import net.swofty.types.generic.item.components.AbilityComponent;
+import net.swofty.types.generic.item.handlers.ability.RegisteredAbility;
 import net.swofty.types.generic.user.PlayerAbilityHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -20,11 +21,12 @@ public class ActionItemAbilityRightUse implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() != null && item.getGenericInstance() instanceof CustomSkyBlockAbility abilityClass) {
-            CustomSkyBlockAbility.Ability ability = abilityClass.getFromActivation(CustomSkyBlockAbility.AbilityActivation.RIGHT_CLICK);
+        if (item.hasComponent(AbilityComponent.class)) {
+            AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
+            RegisteredAbility ability = abilityComponent.getAbility(RegisteredAbility.AbilityActivation.RIGHT_CLICK);
             if (ability != null) {
-                if (!ability.getAbilityCost().canUse(player)) {
-                    ability.getAbilityCost().onFail(player);
+                if (!ability.getCost().canUse(player)) {
+                    ability.getCost().onFail(player);
                     return;
                 }
 
@@ -36,8 +38,7 @@ public class ActionItemAbilityRightUse implements SkyBlockEventClass {
                 }
 
                 abilityHandler.startAbilityCooldown(item);
-                ability.getAbilityCost().onUse(player, ability);
-                ability.onUse(player, item);
+                ability.execute(player, item);
             }
         }
     }

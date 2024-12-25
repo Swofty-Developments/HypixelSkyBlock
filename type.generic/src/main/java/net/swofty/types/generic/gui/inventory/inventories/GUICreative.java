@@ -10,12 +10,12 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.TrackedUniqueItem;
+import net.swofty.types.generic.item.components.TrackedUniqueComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -42,10 +42,10 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public PaginationList<SkyBlockItem> fillPaged(SkyBlockPlayer player, PaginationList<SkyBlockItem> paged) {
-        paged.addAll(Arrays.stream(ItemTypeLinker.values()).map(SkyBlockItem::new).toList());
+        paged.addAll(Arrays.stream(ItemType.values()).map(SkyBlockItem::new).toList());
 
         List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
-        vanilla.removeIf((element) -> ItemTypeLinker.isVanillaReplaced(element.getAttributeHandler().getTypeAsString()));
+        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.getAttributeHandler().getTypeAsString()));
         paged.addAll(vanilla);
         return paged;
     }
@@ -80,8 +80,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 player, skyBlockItem.getItemStack()
         );
 
-        boolean stackable = skyBlockItem.getGenericInstance() == null
-                || !(skyBlockItem.getGenericInstance() instanceof TrackedUniqueItem);
+        boolean stackable = !(skyBlockItem.hasComponent(TrackedUniqueComponent.class));
 
         return new GUIClickableItem(slot) {
             @Override

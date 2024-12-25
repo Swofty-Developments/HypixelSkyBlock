@@ -14,7 +14,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.components.PetComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
@@ -33,17 +33,17 @@ public class PetEntityImpl extends LivingEntity {
     public PetEntityImpl(@NotNull SkyBlockPlayer player, @NotNull String url, @NotNull SkyBlockItem pet) {
         super(EntityType.ARMOR_STAND);
 
-        this.hasCollision = false;
+        this.collidesWithEntities = false;
         this.hasPhysics = false;
 
         this.player = player;
         this.url = url;
-        this.particle = ((Pet) pet.getGenericInstance()).particleId();
+        this.particle = pet.getComponent(PetComponent.class).getParticleId();
 
         getEntityMeta().setCustomName(Component.text("§8[§7Lvl" +
                 pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity()) + "§8] "
                 + pet.getAttributeHandler().getRarity().getColor() + player.getUsername() + "'s " +
-                ((Pet) pet.getGenericInstance()).getPetName()));
+                pet.getComponent(PetComponent.class).getPetName()));
     }
 
     @Override

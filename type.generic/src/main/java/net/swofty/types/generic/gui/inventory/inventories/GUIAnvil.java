@@ -12,7 +12,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.AnvilCombinable;
+import net.swofty.types.generic.item.components.AnvilCombinableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -199,8 +199,8 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         boolean isUpgradeItemValid = !(upgradeItem.isAir() || upgradeItem.isNA());
         boolean isSacrificeItemValid = !(sacrificeItem.isAir() || sacrificeItem.isNA());
 
-        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.getGenericInstance() instanceof AnvilCombinable) &&
-                ((AnvilCombinable) sacrificeItem.getGenericInstance()).canApply(getPlayer(), upgradeItem, sacrificeItem);
+        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.hasComponent(AnvilCombinableComponent.class)) &&
+                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply(getPlayer(), upgradeItem, sacrificeItem);
 
         updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
         updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
@@ -239,7 +239,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
 
         SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
 
-        ((AnvilCombinable) sacrificeItem.getGenericInstance()).apply(result, sacrificeItem);
+        sacrificeItem.getComponent(AnvilCombinableComponent.class).apply(result, sacrificeItem);
 
         set(new GUIItem(13) {
             @Override
@@ -248,11 +248,10 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
             }
         });
 
-        int levelCost = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels(
+        int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
                 upgradeItem,
                 sacrificeItem,
-                getPlayer()
-        );
+                getPlayer());
         List<String> lore = new ArrayList<String>();
         lore.add("§7Combine the items in the slots to the");
         lore.add("§7left and right below.");
@@ -284,7 +283,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
 
     public void craftResult(SkyBlockPlayer player){
         SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
-        int requiredLevels = ((AnvilCombinable) sacrificeItem.getGenericInstance()).applyCostLevels(
+        int requiredLevels = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
                 new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot)),
                 sacrificeItem,
                 player

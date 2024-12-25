@@ -8,14 +8,14 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.block.impl.BlockBreakable;
 import net.swofty.types.generic.block.impl.BlockPlaceable;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.BlockUtility;
 
@@ -44,11 +44,9 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() == null) return;
-
-        Object itemGenericInstance = item.getGenericInstance();
-        if (!(itemGenericInstance instanceof SkullHead skullHead)) return;
-        String texture = skullHead.getSkullTexture(player, item);
+        if (item.getAttributeHandler().getPotentialType() == null) return;
+        if (!(item.hasComponent(SkullHeadComponent.class))) return;
+        String texture = item.getComponent(SkullHeadComponent.class).getSkullTexture(item);
 
         Instance instance = event.getInstance();
         Point position = event.getBlockPosition();
@@ -71,7 +69,7 @@ public class BlockDecoration implements CustomSkyBlockBlock, BlockPlaceable, Blo
 
         event.setResultBlock(Block.AIR);
 
-        SkyBlockItem skyBlockItem = new SkyBlockItem(ItemTypeLinker.valueOf(type));
+        SkyBlockItem skyBlockItem = new SkyBlockItem(ItemType.valueOf(type));
 
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         player.addAndUpdateItem(skyBlockItem);

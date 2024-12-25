@@ -75,6 +75,7 @@ public abstract class Datapoint<T> {
 
     @SneakyThrows
     public void setValue(T value) {
+        if (value == this.value) return;
         this.value = value;
 
         Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(dataHandler.getUuid());

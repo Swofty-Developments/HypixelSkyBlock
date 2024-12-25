@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.SharedInstance;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.entity.MinionEntityImpl;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
-import net.swofty.types.generic.item.impl.MinionFuelItem;
-import net.swofty.types.generic.item.impl.recipes.MinionUpgradeSpeedItem;
+import net.swofty.types.generic.item.components.MinionFuelComponent;
+import net.swofty.types.generic.item.components.MinionUpgradeComponent;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.types.generic.user.SkyBlockIsland;
@@ -105,7 +105,7 @@ public class IslandMinionData {
         }
 
         public SkyBlockItem asSkyBlockItem() {
-            SkyBlockItem toReturn = new SkyBlockItem(getMinion().getItemTypeLinker());
+            SkyBlockItem toReturn = new SkyBlockItem(getMinion().getItemType());
             toReturn.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(
                     getTier(),
                     getGeneratedItems()
@@ -122,15 +122,15 @@ public class IslandMinionData {
                 percentageSpeedIncrease += 10;
 
             //Handle Minion Fuel
-            ItemTypeLinker minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypeLinkerPassedIn();
+            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
             if (minionFuel != null) {
-                percentageSpeedIncrease += ((MinionFuelItem) new SkyBlockItem(minionFuel).getGenericInstance()).getMinionFuelPercentage();
+                percentageSpeedIncrease += new SkyBlockItem(minionFuel).getComponent(MinionFuelComponent.class).getFuelPercentage();
             }
 
             //Handle speed increases from minion upgrades
             for (SkyBlockItem item : extensionData.getMinionUpgrades()) {
-                if (item != null && item.getGenericInstance() instanceof MinionUpgradeSpeedItem) {
-                    percentageSpeedIncrease += (((MinionUpgradeSpeedItem) item.getGenericInstance()).getPercentageSpeedIncrease());
+                if (item != null && item.hasComponent(MinionUpgradeComponent.class)) {
+                    percentageSpeedIncrease += (int) item.getComponent(MinionUpgradeComponent.class).getSpeedIncrease();
                 }
             }
 
@@ -139,7 +139,7 @@ public class IslandMinionData {
 
         public int getBonusRange() {
             int range = 0;
-            range += extensionData.getMinionUpgradeCount(ItemTypeLinker.MINION_EXPANDER);
+            range += extensionData.getMinionUpgradeCount(ItemType.MINION_EXPANDER);
             return range;
         }
 

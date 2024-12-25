@@ -7,6 +7,7 @@ import org.reflections.Reflections;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -42,13 +43,19 @@ public abstract class ItemAttribute<T> {
     }
 
     public static Collection<ItemAttribute> getPossibleAttributes() {
-        return (Collection<ItemAttribute>) attributes.stream().map(attributeClass -> {
+        // Create a new list to store the results
+        List<ItemAttribute> result = new ArrayList<>();
+
+        // Iterate safely using a traditional for loop
+        for (ItemAttribute attribute : attributes) {
             try {
-                return attributeClass.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+                result.add(attribute.getClass().getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
-        }).toList();
+        }
+
+        return result;
     }
 
     public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {

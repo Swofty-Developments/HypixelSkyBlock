@@ -1,8 +1,8 @@
 package net.swofty.type.hub.gui;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
@@ -20,15 +20,15 @@ public class GUIShopLumberMerchant extends SkyBlockShopGUI {
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.ACACIA_LOG), 5, new CoinShopPrice(25)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.JUNGLE_LOG), 5, new CoinShopPrice(25)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.STICK), 32, new CoinShopPrice(20)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.ROOKIE_AXE), 1, new CoinShopPrice(12)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.PROMISING_AXE), 1, new CoinShopPrice(35)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.ROOKIE_AXE), 1, new CoinShopPrice(12)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.PROMISING_AXE), 1, new CoinShopPrice(35)));
         attachItem(ShopItem.Stackable(new SkyBlockItem(Material.PODZOL), 1, new CoinShopPrice(20)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.SWEET_AXE), 1, new CoinShopPrice(100)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.EFFICIENT_AXE), 1, new CoinShopPrice(100)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WOODEN_SWORD), 1, new CoinShopPrice(5)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WOODEN_PICKAXE), 1, new CoinShopPrice(5)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WOODEN_SHOVEL), 1, new CoinShopPrice(5)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WOODEN_HOE), 1, new CoinShopPrice(5)));
-        attachItem(ShopItem.Single(new SkyBlockItem(ItemTypeLinker.WOODEN_AXE), 1, new CoinShopPrice(5)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.SWEET_AXE), 1, new CoinShopPrice(100)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.EFFICIENT_AXE), 1, new CoinShopPrice(100)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WOODEN_SWORD), 1, new CoinShopPrice(5)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WOODEN_PICKAXE), 1, new CoinShopPrice(5)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WOODEN_SHOVEL), 1, new CoinShopPrice(5)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WOODEN_HOE), 1, new CoinShopPrice(5)));
+        attachItem(ShopItem.Single(new SkyBlockItem(ItemType.WOODEN_AXE), 1, new CoinShopPrice(5)));
     }
 }

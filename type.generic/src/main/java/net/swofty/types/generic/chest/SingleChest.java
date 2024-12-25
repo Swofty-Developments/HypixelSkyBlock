@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SingleChest implements Chest {
 
-    private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("items").list();
+    private static final Tag<List<ItemStack>> ITEMS_TAG = Tag.ItemStack("configuration/items").list();
 
     private final Instance instance;
     private final Point position;

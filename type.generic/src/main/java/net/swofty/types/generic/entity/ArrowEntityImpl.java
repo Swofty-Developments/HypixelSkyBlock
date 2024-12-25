@@ -28,7 +28,7 @@ public class ArrowEntityImpl extends LivingEntity {
     public ArrowEntityImpl(Entity player, SkyBlockItem arrowItem) {
         super(EntityType.ARROW);
 
-        this.hasCollision = false;
+        this.collidesWithEntities = false;
         this.hasPhysics = false;
 
         this.shooter = player;

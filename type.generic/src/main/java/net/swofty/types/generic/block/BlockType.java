@@ -14,4 +14,13 @@ public enum BlockType {
     BlockType(Class<? extends CustomSkyBlockBlock> clazz) {
         this.clazz = clazz;
     }
+
+    public static BlockType getFromName(String name) {
+        for (BlockType blockType : values()) {
+            if (blockType.name().equalsIgnoreCase(name)) {
+                return blockType;
+            }
+        }
+        return null;
+    }
 }

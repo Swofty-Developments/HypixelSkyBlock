@@ -1,0 +1,1042 @@
+items:
+  - id: BLAZE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: BLAZE
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - BLAZE_ROD:10
+          - BLAZE_ROD:20
+          - BLAZE_ROD:40
+          - BLAZE_ROD:64
+          - ENCHANTED_BLAZE_POWDER:1
+          - ENCHANTED_BLAZE_POWDER:3
+          - ENCHANTED_BLAZE_POWDER:8
+          - ENCHANTED_BLAZE_POWDER:16
+          - ENCHANTED_BLAZE_POWDER:32
+          - ENCHANTED_BLAZE_POWDER:64
+          - ENCHANTED_BLAZE_ROD:1
+  - id: CAVE_SPIDER_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CAVE_SPIDER
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - SPIDER_EYE:10
+          - SPIDER_EYE:20
+          - SPIDER_EYE:40
+          - SPIDER_EYE:64
+          - ENCHANTED_SPIDER_EYE:1
+          - ENCHANTED_SPIDER_EYE:3
+          - ENCHANTED_SPIDER_EYE:8
+          - ENCHANTED_SPIDER_EYE:16
+          - ENCHANTED_SPIDER_EYE:32
+          - ENCHANTED_SPIDER_EYE:64
+          - ENCHANTED_FERMENTED_SPIDER_EYE:2
+  - id: CREEPER_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CREEPER
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - GUNPOWDER:10
+          - GUNPOWDER:20
+          - GUNPOWDER:40
+          - GUNPOWDER:64
+          - ENCHANTED_GUNPOWDER:1
+          - ENCHANTED_GUNPOWDER:3
+          - ENCHANTED_GUNPOWDER:8
+          - ENCHANTED_GUNPOWDER:16
+          - ENCHANTED_GUNPOWDER:32
+          - ENCHANTED_GUNPOWDER:64
+          - ENCHANTED_FIREWORK_ROCKET:2
+  - id: ENDERMAN_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: ENDERMAN
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - ENDER_PEARL:8
+          - ENDER_PEARL:16
+          - ENCHANTED_ENDER_PEARL:1
+          - ENCHANTED_ENDER_PEARL:3
+          - ENCHANTED_ENDER_PEARL:6
+          - ENCHANTED_ENDER_PEARL:12
+          - ENCHANTED_EYE_OF_ENDER:1
+          - ENCHANTED_EYE_OF_ENDER:3
+          - ENCHANTED_EYE_OF_ENDER:6
+          - ENCHANTED_EYE_OF_ENDER:12
+          - ENCHANTED_EYE_OF_ENDER:24
+  - id: GHAST_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: GHAST
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - GHAST_TEAR:8
+          - GHAST_TEAR:16
+          - GHAST_TEAR:32
+          - GHAST_TEAR:64
+          - ENCHANTED_GHAST_TEAR:32
+          - ENCHANTED_GHAST_TEAR:64
+          - SILVER_FANG:4
+          - SILVER_FANG:8
+          - SILVER_FANG:16
+          - SILVER_FANG:32
+          - SILVER_FANG:64
+  - id: MAGMA_CUBE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: MAGMA_CUBE
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - MAGMA_CREAM:10
+          - MAGMA_CREAM:20
+          - MAGMA_CREAM:40
+          - MAGMA_CREAM:64
+          - ENCHANTED_MAGMA_CREAM:1
+          - ENCHANTED_MAGMA_CREAM:2
+          - ENCHANTED_MAGMA_CREAM:4
+          - ENCHANTED_MAGMA_CREAM:8
+          - ENCHANTED_MAGMA_CREAM:16
+          - ENCHANTED_MAGMA_CREAM:32
+          - ENCHANTED_MAGMA_CREAM:64
+  - id: SKELETON_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SKELETON
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - BONE:10
+          - BONE:20
+          - BONE:40
+          - BONE:64
+          - ENCHANTED_BONE:1
+          - ENCHANTED_BONE:2
+          - ENCHANTED_BONE:4
+          - ENCHANTED_BONE:8
+          - ENCHANTED_BONE:16
+          - ENCHANTED_BONE:32
+          - ENCHANTED_BONE:64
+  - id: SLIME_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SLIME
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - SLIME_BALL:10
+          - SLIME_BALL:20
+          - SLIME_BALL:40
+          - SLIME_BALL:64
+          - ENCHANTED_SLIME_BALL:1
+          - ENCHANTED_SLIME_BALL:3
+          - ENCHANTED_SLIME_BALL:8
+          - ENCHANTED_SLIME_BALL:16
+          - ENCHANTED_SLIME_BALL:32
+          - ENCHANTED_SLIME_BALL:64
+          - ENCHANTED_SLIME_BLOCK:1
+  - id: SPIDER_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SPIDER
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - STRING:10
+          - STRING:20
+          - STRING:40
+          - STRING:64
+          - ENCHANTED_STRING:1
+          - ENCHANTED_STRING:2
+          - ENCHANTED_STRING:4
+          - ENCHANTED_STRING:8
+          - ENCHANTED_STRING:16
+          - ENCHANTED_STRING:32
+          - ENCHANTED_STRING:64
+  - id: ZOMBIE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: ZOMBIE
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - ROTTEN_FLESH:10
+          - ROTTEN_FLESH:20
+          - ROTTEN_FLESH:40
+          - ROTTEN_FLESH:64
+          - ENCHANTED_ROTTEN_FLESH:1
+          - ENCHANTED_ROTTEN_FLESH:2
+          - ENCHANTED_ROTTEN_FLESH:4
+          - ENCHANTED_ROTTEN_FLESH:8
+          - ENCHANTED_ROTTEN_FLESH:16
+          - ENCHANTED_ROTTEN_FLESH:32
+          - ENCHANTED_ROTTEN_FLESH:64
+  - id: CACTUS_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CACTUS
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - CACTUS:16
+          - CACTUS:32
+          - CACTUS:64
+          - ENCHANTED_CACTUS_GREEN:1
+          - ENCHANTED_CACTUS_GREEN:3
+          - ENCHANTED_CACTUS_GREEN:8
+          - ENCHANTED_CACTUS_GREEN:16
+          - ENCHANTED_CACTUS_GREEN:32
+          - ENCHANTED_CACTUS_GREEN:64
+          - ENCHANTED_CACTUS:1
+          - ENCHANTED_CACTUS:2
+  - id: CARROT_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CARROT
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - CARROT:16
+          - CARROT:32
+          - CARROT:64
+          - ENCHANTED_CARROT:1
+          - ENCHANTED_CARROT:3
+          - ENCHANTED_CARROT:8
+          - ENCHANTED_CARROT:16
+          - ENCHANTED_CARROT:32
+          - ENCHANTED_CARROT:64
+          - ENCHANTED_GOLDEN_CARROT:1
+          - ENCHANTED_GOLDEN_CARROT:2
+  - id: CHICKEN_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CHICKEN
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - RAW_CHICKEN:8
+          - RAW_CHICKEN:16
+          - RAW_CHICKEN:32
+          - RAW_CHICKEN:64
+          - ENCHANTED_RAW_CHICKEN:1
+          - ENCHANTED_RAW_CHICKEN:2
+          - ENCHANTED_RAW_CHICKEN:4
+          - ENCHANTED_RAW_CHICKEN:8
+          - ENCHANTED_RAW_CHICKEN:16
+          - ENCHANTED_RAW_CHICKEN:32
+          - ENCHANTED_RAW_CHICKEN:64
+  - id: COCOA_BEANS_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: COCOA_BEANS
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - COCOA_BEANS:10
+          - COCOA_BEANS:20
+          - COCOA_BEANS:40
+          - COCOA_BEANS:64
+          - ENCHANTED_COCOA_BEANS:1
+          - ENCHANTED_COCOA_BEANS:3
+          - ENCHANTED_COCOA_BEANS:8
+          - ENCHANTED_COCOA_BEANS:16
+          - ENCHANTED_COCOA_BEANS:32
+          - ENCHANTED_COCOA_BEANS:64
+          - ENCHANTED_COOKIE:1
+  - id: COW_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: COW
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - RAW_BEEF:8
+          - RAW_BEEF:16
+          - RAW_BEEF:32
+          - RAW_BEEF:64
+          - ENCHANTED_RAW_BEEF:1
+          - ENCHANTED_RAW_BEEF:3
+          - ENCHANTED_RAW_BEEF:8
+          - ENCHANTED_RAW_BEEF:16
+          - ENCHANTED_RAW_BEEF:32
+          - ENCHANTED_RAW_BEEF:64
+          - ENCHANTED_LEATHER:32
+  - id: MELON_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: MELON
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - MELON_SLICE:32
+          - MELON_SLICE:64
+          - MELON_BLOCK:16
+          - MELON_BLOCK:32
+          - MELON_BLOCK:64
+          - ENCHANTED_MELON:8
+          - ENCHANTED_MELON:16
+          - ENCHANTED_MELON:32
+          - ENCHANTED_MELON:64
+          - ENCHANTED_MELON_BLOCK:1
+          - ENCHANTED_MELON_BLOCK:2
+  - id: MUSHROOM_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: MUSHROOM
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - RED_MUSHROOM:10
+          - RED_MUSHROOM:20
+          - RED_MUSHROOM:40
+          - RED_MUSHROOM:64
+          - ENCHANTED_RED_MUSHROOM:1
+          - ENCHANTED_RED_MUSHROOM:2
+          - ENCHANTED_RED_MUSHROOM:4
+          - ENCHANTED_RED_MUSHROOM:8
+          - ENCHANTED_RED_MUSHROOM:16
+          - ENCHANTED_RED_MUSHROOM:32
+          - ENCHANTED_RED_MUSHROOM:64
+  - id: NETHER_WART_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: NETHER_WART
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - NETHER_WART:10
+          - NETHER_WART:20
+          - NETHER_WART:40
+          - NETHER_WART:64
+          - ENCHANTED_NETHER_WART:1
+          - ENCHANTED_NETHER_WART:2
+          - ENCHANTED_NETHER_WART:4
+          - ENCHANTED_NETHER_WART:8
+          - ENCHANTED_NETHER_WART:16
+          - ENCHANTED_NETHER_WART:32
+          - ENCHANTED_NETHER_WART:64
+  - id: PIG_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: PIG
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - PORKCHOP:8
+          - PORKCHOP:16
+          - PORKCHOP:32
+          - PORKCHOP:64
+          - ENCHANTED_PORK:1
+          - ENCHANTED_PORK:3
+          - ENCHANTED_PORK:8
+          - ENCHANTED_PORK:16
+          - ENCHANTED_PORK:32
+          - ENCHANTED_PORK:64
+          - ENCHANTED_GRILLED_PORK:1
+  - id: POTATO_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: POTATO
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - POTATO:16
+          - POTATO:32
+          - POTATO:64
+          - ENCHANTED_POTATO:1
+          - ENCHANTED_POTATO:3
+          - ENCHANTED_POTATO:8
+          - ENCHANTED_POTATO:16
+          - ENCHANTED_POTATO:32
+          - ENCHANTED_POTATO:64
+          - ENCHANTED_BAKED_POTATO:1
+          - ENCHANTED_BAKED_POTATO:2
+  - id: PUMPKIN_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: PUMPKIN
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - PUMPKIN:10
+          - PUMPKIN:20
+          - PUMPKIN:40
+          - PUMPKIN:64
+          - ENCHANTED_PUMPKIN:1
+          - ENCHANTED_PUMPKIN:2
+          - ENCHANTED_PUMPKIN:4
+          - ENCHANTED_PUMPKIN:8
+          - ENCHANTED_PUMPKIN:16
+          - ENCHANTED_PUMPKIN:32
+          - ENCHANTED_PUMPKIN:64
+  - id: RABBIT_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: RABBIT
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - RABBIT:8
+          - RABBIT:16
+          - RABBIT:32
+          - RABBIT:64
+          - ENCHANTED_RABBIT_FOOT:4
+          - ENCHANTED_RABBIT_FOOT:8
+          - ENCHANTED_RABBIT_FOOT:16
+          - ENCHANTED_RABBIT_FOOT:32
+          - ENCHANTED_RABBIT_FOOT:64
+          - ENCHANTED_RABBIT_HIDE:32
+          - ENCHANTED_RABBIT_HIDE:64
+  - id: SHEEP_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SHEEP
+        base_item: WOODEN_SWORD
+        is_craftable: false
+        ingredients:
+          - MUTTON:8
+          - MUTTON:16
+          - MUTTON:32
+          - MUTTON:64
+          - ENCHANTED_MUTTON:1
+          - ENCHANTED_MUTTON:3
+          - ENCHANTED_MUTTON:8
+          - ENCHANTED_MUTTON:16
+          - ENCHANTED_MUTTON:32
+          - ENCHANTED_MUTTON:64
+          - ENCHANTED_COOKED_MUTTON:1
+  - id: SUGAR_CANE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SUGAR_CANE
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - SUGAR_CANE:16
+          - SUGAR_CANE:32
+          - SUGAR_CANE:64
+          - ENCHANTED_SUGAR:1
+          - ENCHANTED_SUGAR:3
+          - ENCHANTED_SUGAR:8
+          - ENCHANTED_SUGAR:16
+          - ENCHANTED_SUGAR:32
+          - ENCHANTED_SUGAR:64
+          - ENCHANTED_SUGAR_CANE:1
+          - ENCHANTED_SUGAR_CANE:2
+  - id: WHEAT_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: WHEAT
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - WHEAT:10
+          - WHEAT:20
+          - WHEAT:40
+          - WHEAT:64
+          - HAY_BALE:12
+          - HAY_BALE:24
+          - HAY_BALE:48
+          - HAY_BALE:64
+          - ENCHANTED_HAY_BALE:1
+          - ENCHANTED_HAY_BALE:2
+          - ENCHANTED_HAY_BALE:4
+  - id: CLAY_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: CLAY
+        base_item: WOODEN_SHOVEL
+        is_craftable: false
+        ingredients:
+          - CLAY_BALL:10
+          - CLAY_BALL:20
+          - CLAY_BALL:40
+          - CLAY_BALL:64
+          - ENCHANTED_CLAY:1
+          - ENCHANTED_CLAY:2
+          - ENCHANTED_CLAY:4
+          - ENCHANTED_CLAY:8
+          - ENCHANTED_CLAY:16
+          - ENCHANTED_CLAY:32
+          - ENCHANTED_CLAY:64
+  - id: FISHING_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: FISHING
+        base_item: FISHING_ROD
+        is_craftable: false
+        ingredients:
+          - COD:8
+          - COD:16
+          - COD:32
+          - COD:64
+          - ENCHANTED_COD:1
+          - ENCHANTED_COD:3
+          - ENCHANTED_COD:8
+          - ENCHANTED_COD:16
+          - ENCHANTED_COD:32
+          - ENCHANTED_COD:64
+          - ENCHANTED_COOKED_COD:1
+  - id: ACACIA_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: ACACIA
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - ACACIA_LOG:10
+          - ACACIA_LOG:20
+          - ACACIA_LOG:40
+          - ACACIA_LOG:64
+          - ENCHANTED_ACACIA_LOG:1
+          - ENCHANTED_ACACIA_LOG:2
+          - ENCHANTED_ACACIA_LOG:4
+          - ENCHANTED_ACACIA_LOG:8
+          - ENCHANTED_ACACIA_LOG:16
+          - ENCHANTED_ACACIA_LOG:32
+          - ENCHANTED_ACACIA_LOG:64
+  - id: BIRCH_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: BIRCH
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - BIRCH_LOG:10
+          - BIRCH_LOG:20
+          - BIRCH_LOG:40
+          - BIRCH_LOG:64
+          - ENCHANTED_BIRCH_LOG:1
+          - ENCHANTED_BIRCH_LOG:2
+          - ENCHANTED_BIRCH_LOG:4
+          - ENCHANTED_BIRCH_LOG:8
+          - ENCHANTED_BIRCH_LOG:16
+          - ENCHANTED_BIRCH_LOG:32
+          - ENCHANTED_BIRCH_LOG:64
+  - id: DARK_OAK_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: DARK_OAK
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - DARK_OAK_LOG:10
+          - DARK_OAK_LOG:20
+          - DARK_OAK_LOG:40
+          - DARK_OAK_LOG:64
+          - ENCHANTED_DARK_OAK_LOG:1
+          - ENCHANTED_DARK_OAK_LOG:2
+          - ENCHANTED_DARK_OAK_LOG:4
+          - ENCHANTED_DARK_OAK_LOG:8
+          - ENCHANTED_DARK_OAK_LOG:16
+          - ENCHANTED_DARK_OAK_LOG:32
+          - ENCHANTED_DARK_OAK_LOG:64
+  - id: FLOWER_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: FLOWER
+        base_item: WOODEN_HOE
+        is_craftable: false
+        ingredients:
+          - DANDELION:20
+          - DANDELION:40
+          - DANDELION:64
+          - ENCHANTED_DANDELION:1
+          - ENCHANTED_DANDELION:3
+          - ENCHANTED_DANDELION:8
+          - ENCHANTED_DANDELION:16
+          - ENCHANTED_DANDELION:32
+          - ENCHANTED_DANDELION:64
+          - ENCHANTED_POPPY:1
+          - ENCHANTED_POPPY:2
+          - ENCHANTED_POPPY:4
+  - id: JUNGLE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: JUNGLE
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - JUNGLE_LOG:10
+          - JUNGLE_LOG:20
+          - JUNGLE_LOG:40
+          - JUNGLE_LOG:64
+          - ENCHANTED_JUNGLE_LOG:1
+          - ENCHANTED_JUNGLE_LOG:2
+          - ENCHANTED_JUNGLE_LOG:4
+          - ENCHANTED_JUNGLE_LOG:8
+          - ENCHANTED_JUNGLE_LOG:16
+          - ENCHANTED_JUNGLE_LOG:32
+          - ENCHANTED_JUNGLE_LOG:64
+  - id: OAK_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: OAK
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - OAK_LOG:10
+          - OAK_LOG:20
+          - OAK_LOG:40
+          - OAK_LOG:64
+          - ENCHANTED_OAK_LOG:1
+          - ENCHANTED_OAK_LOG:2
+          - ENCHANTED_OAK_LOG:4
+          - ENCHANTED_OAK_LOG:8
+          - ENCHANTED_OAK_LOG:16
+          - ENCHANTED_OAK_LOG:32
+          - ENCHANTED_OAK_LOG:64
+  - id: SPRUCE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SPRUCE
+        base_item: WOODEN_AXE
+        is_craftable: false
+        ingredients:
+          - SPRUCE_LOG:10
+          - SPRUCE_LOG:20
+          - SPRUCE_LOG:40
+          - SPRUCE_LOG:64
+          - ENCHANTED_SPRUCE_LOG:1
+          - ENCHANTED_SPRUCE_LOG:2
+          - ENCHANTED_SPRUCE_LOG:4
+          - ENCHANTED_SPRUCE_LOG:8
+          - ENCHANTED_SPRUCE_LOG:16
+          - ENCHANTED_SPRUCE_LOG:32
+          - ENCHANTED_SPRUCE_LOG:64
+  - id: COAL_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: COAL
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - COAL:10
+          - COAL:20
+          - COAL:40
+          - COAL:64
+          - ENCHANTED_COAL:1
+          - ENCHANTED_COAL:3
+          - ENCHANTED_COAL:8
+          - ENCHANTED_COAL:16
+          - ENCHANTED_COAL:32
+          - ENCHANTED_COAL:64
+          - ENCHANTED_COAL_BLOCK:1
+  - id: COBBLESTONE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: COBBLESTONE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - COBBLESTONE:10
+          - COBBLESTONE:20
+          - COBBLESTONE:40
+          - COBBLESTONE:64
+          - ENCHANTED_COBBLESTONE:1
+          - ENCHANTED_COBBLESTONE:2
+          - ENCHANTED_COBBLESTONE:4
+          - ENCHANTED_COBBLESTONE:8
+          - ENCHANTED_COBBLESTONE:16
+          - ENCHANTED_COBBLESTONE:32
+          - ENCHANTED_COBBLESTONE:64
+  - id: DIAMOND_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: DIAMOND
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - DIAMOND:10
+          - DIAMOND:20
+          - DIAMOND:40
+          - DIAMOND:64
+          - ENCHANTED_DIAMOND:1
+          - ENCHANTED_DIAMOND:3
+          - ENCHANTED_DIAMOND:8
+          - ENCHANTED_DIAMOND:16
+          - ENCHANTED_DIAMOND:32
+          - ENCHANTED_DIAMOND:64
+          - ENCHANTED_DIAMOND_BLOCK:1
+  - id: EMERALD_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: EMERALD
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - EMERALD:10
+          - EMERALD:20
+          - EMERALD:40
+          - EMERALD:64
+          - ENCHANTED_EMERALD:1
+          - ENCHANTED_EMERALD:3
+          - ENCHANTED_EMERALD:8
+          - ENCHANTED_EMERALD:16
+          - ENCHANTED_EMERALD:32
+          - ENCHANTED_EMERALD:64
+          - ENCHANTED_EMERALD_BLOCK:1
+  - id: ENDSTONE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: ENDSTONE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - END_STONE:10
+          - END_STONE:20
+          - END_STONE:40
+          - END_STONE:64
+          - ENCHANTED_ENDSTONE:1
+          - ENCHANTED_ENDSTONE:2
+          - ENCHANTED_ENDSTONE:4
+          - ENCHANTED_ENDSTONE:8
+          - ENCHANTED_ENDSTONE:16
+          - ENCHANTED_ENDSTONE:32
+          - ENCHANTED_ENDSTONE:64
+  - id: GLOWSTONE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: GLOWSTONE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - GLOWSTONE_DUST:16
+          - GLOWSTONE_DUST:32
+          - GLOWSTONE_DUST:64
+          - ENCHANTED_GLOWSTONE_DUST:1
+          - ENCHANTED_GLOWSTONE_DUST:3
+          - ENCHANTED_GLOWSTONE_DUST:8
+          - ENCHANTED_GLOWSTONE_DUST:16
+          - ENCHANTED_GLOWSTONE_DUST:32
+          - ENCHANTED_GLOWSTONE_DUST:64
+          - ENCHANTED_GLOWSTONE:1
+          - ENCHANTED_GLOWSTONE:2
+  - id: GOLD_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: GOLD
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - GOLD_INGOT:10
+          - GOLD_INGOT:20
+          - GOLD_INGOT:40
+          - GOLD_INGOT:64
+          - ENCHANTED_GOLD_INGOT:1
+          - ENCHANTED_GOLD_INGOT:3
+          - ENCHANTED_GOLD_INGOT:8
+          - ENCHANTED_GOLD_INGOT:16
+          - ENCHANTED_GOLD_INGOT:32
+          - ENCHANTED_GOLD_INGOT:64
+          - ENCHANTED_GOLD_BLOCK:1
+  - id: GRAVEL_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: GRAVEL
+        base_item: WOODEN_SHOVEL
+        is_craftable: false
+        ingredients:
+          - GRAVEL:10
+          - GRAVEL:20
+          - GRAVEL:40
+          - GRAVEL:64
+          - ENCHANTED_FLINT:1
+          - ENCHANTED_FLINT:2
+          - ENCHANTED_FLINT:4
+          - ENCHANTED_FLINT:8
+          - ENCHANTED_FLINT:16
+          - ENCHANTED_FLINT:32
+          - ENCHANTED_FLINT:64
+  - id: HARD_STONE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: HARD_STONE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - HARD_STONE:32
+          - HARD_STONE:64
+          - ENCHANTED_HARD_STONE:1
+          - ENCHANTED_HARD_STONE:2
+          - ENCHANTED_HARD_STONE:4
+          - ENCHANTED_HARD_STONE:8
+          - ENCHANTED_HARD_STONE:16
+          - ENCHANTED_HARD_STONE:32
+          - ENCHANTED_HARD_STONE:64
+          - CONCENTRATED_STONE:1
+          - CONCENTRATED_STONE:2
+  - id: ICE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: ICE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - ICE:10
+          - ICE:20
+          - ICE:40
+          - ICE:64
+          - PACKED_ICE:16
+          - PACKED_ICE:32
+          - PACKED_ICE:64
+          - ENCHANTED_ICE:8
+          - ENCHANTED_ICE:16
+          - ENCHANTED_ICE:32
+          - ENCHANTED_ICE:64
+  - id: IRON_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: IRON
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - IRON_INGOT:10
+          - IRON_INGOT:20
+          - IRON_INGOT:40
+          - IRON_INGOT:64
+          - ENCHANTED_IRON_INGOT:1
+          - ENCHANTED_IRON_INGOT:3
+          - ENCHANTED_IRON_INGOT:8
+          - ENCHANTED_IRON_INGOT:16
+          - ENCHANTED_IRON_INGOT:32
+          - ENCHANTED_IRON_INGOT:64
+          - ENCHANTED_IRON_BLOCK:1
+  - id: LAPIS_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: LAPIS
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - LAPIS_LAZULI:32
+          - LAPIS_LAZULI:64
+          - ENCHANTED_LAPIS_LAZULI:1
+          - ENCHANTED_LAPIS_LAZULI:3
+          - ENCHANTED_LAPIS_LAZULI:8
+          - ENCHANTED_LAPIS_LAZULI:16
+          - ENCHANTED_LAPIS_LAZULI:32
+          - ENCHANTED_LAPIS_LAZULI:64
+          - ENCHANTED_LAPIS_LAZULI_BLOCK:1
+          - ENCHANTED_LAPIS_LAZULI_BLOCK:2
+          - ENCHANTED_LAPIS_LAZULI_BLOCK:4
+  - id: MITHRIL_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: MITHRIL
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - MITHRIL:10
+          - MITHRIL:20
+          - MITHRIL:40
+          - MITHRIL:64
+          - ENCHANTED_MITHRIL:1
+          - ENCHANTED_MITHRIL:3
+          - ENCHANTED_MITHRIL:8
+          - ENCHANTED_MITHRIL:16
+          - ENCHANTED_MITHRIL:32
+          - ENCHANTED_MITHRIL:64
+          - REFINED_MITHRIL:1
+  - id: OBSIDIAN_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: OBSIDIAN
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - OBSIDIAN:10
+          - OBSIDIAN:20
+          - OBSIDIAN:40
+          - OBSIDIAN:64
+          - ENCHANTED_OBSIDIAN:1
+          - ENCHANTED_OBSIDIAN:2
+          - ENCHANTED_OBSIDIAN:4
+          - ENCHANTED_OBSIDIAN:8
+          - ENCHANTED_OBSIDIAN:16
+          - ENCHANTED_OBSIDIAN:32
+          - ENCHANTED_OBSIDIAN:64
+  - id: QUARTZ_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: QUARTZ
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - QUARTZ:10
+          - QUARTZ:20
+          - QUARTZ:40
+          - QUARTZ:64
+          - ENCHANTED_QUARTZ:1
+          - ENCHANTED_QUARTZ:3
+          - ENCHANTED_QUARTZ:8
+          - ENCHANTED_QUARTZ:16
+          - ENCHANTED_QUARTZ:32
+          - ENCHANTED_QUARTZ:64
+          - ENCHANTED_QUARTZ_BLOCK:1
+  - id: REDSTONE_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: REDSTONE
+        base_item: WOODEN_PICKAXE
+        is_craftable: false
+        ingredients:
+          - REDSTONE:16
+          - REDSTONE:32
+          - REDSTONE:64
+          - ENCHANTED_REDSTONE:1
+          - ENCHANTED_REDSTONE:3
+          - ENCHANTED_REDSTONE:8
+          - ENCHANTED_REDSTONE:16
+          - ENCHANTED_REDSTONE:32
+          - ENCHANTED_REDSTONE:64
+          - ENCHANTED_REDSTONE_BLOCK:1
+          - ENCHANTED_REDSTONE_BLOCK:2
+  - id: SAND_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SAND
+        base_item: WOODEN_SHOVEL
+        is_craftable: false
+        ingredients:
+          - SAND:10
+          - SAND:20
+          - SAND:40
+          - SAND:64
+          - ENCHANTED_SAND:1
+          - ENCHANTED_SAND:2
+          - ENCHANTED_SAND:4
+          - ENCHANTED_SAND:8
+          - ENCHANTED_SAND:16
+          - ENCHANTED_SAND:32
+          - ENCHANTED_SAND:64
+  - id: SNOW_MINION
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: MINION
+        minion_type: SNOW
+        base_item: WOODEN_SHOVEL
+        is_craftable: false
+        ingredients:
+          - SNOW_BLOCK:4
+          - SNOW_BLOCK:8
+          - SNOW_BLOCK:16
+          - SNOW_BLOCK:32
+          - SNOW_BLOCK:64
+          - ENCHANTED_SNOW_BLOCK:1
+          - ENCHANTED_SNOW_BLOCK:2
+          - ENCHANTED_SNOW_BLOCK:4
+          - ENCHANTED_SNOW_BLOCK:8
+          - ENCHANTED_SNOW_BLOCK:16
+          - ENCHANTED_SNOW_BLOCK:32

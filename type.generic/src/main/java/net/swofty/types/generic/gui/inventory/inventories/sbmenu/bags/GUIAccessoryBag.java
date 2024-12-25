@@ -16,8 +16,8 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Accessory;
-import net.swofty.types.generic.item.impl.TieredTalisman;
+import net.swofty.types.generic.item.components.AccessoryComponent;
+import net.swofty.types.generic.item.components.TieredTalismanComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -210,14 +210,13 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
     public boolean isItemAllowed(SkyBlockItem item) {
         if (item.isNA()) return true;
         if (item.getMaterial().equals(Material.AIR)) return true;
-        if (item.getGenericInstance() == null) return false;
 
-        if (item.getGenericInstance() instanceof Accessory || item.getGenericInstance() instanceof TieredTalisman) {
+        if (item.hasComponent(AccessoryComponent.class) || item.hasComponent(TieredTalismanComponent.class)) {
             DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
-            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialClassLinker());
+            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialType());
 
             getPlayer().getSkyBlockExperience().addExperience(
-                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialClassLinker())
+                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialType())
             );
 
             return true;

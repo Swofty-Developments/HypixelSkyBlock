@@ -8,14 +8,14 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Pet;
-import net.swofty.types.generic.item.items.pet.KatUpgrade;
+import net.swofty.types.generic.item.components.PetComponent;
+import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -103,7 +103,7 @@ public class GUIKat extends SkyBlockInventoryGUI {
             }
         });
 
-        if (item.getAmount() > 1 || item.getGenericInstance() == null || !(item.getGenericInstance() instanceof Pet)) {
+        if (item.getAmount() > 1 || !(item.hasComponent(PetComponent.class))) {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -120,11 +120,11 @@ public class GUIKat extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(22) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) return;
-                KatUpgrade katUpgrade = ((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
+                if (item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) return;
+                KatUpgrade katUpgrade = item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
                 int coins = katUpgrade.getCoins();
                 long time = katUpgrade.getTime();
-                ItemTypeLinker upgradeItem = katUpgrade.getItem();
+                ItemType upgradeItem = katUpgrade.getItem();
                 Integer itemAmount = katUpgrade.getAmount();
 
                 if (player.getCoins() < coins) return;
@@ -135,13 +135,13 @@ public class GUIKat extends SkyBlockInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                if (((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) {
+                if (item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade()) == null) {
                     return ItemStackCreator.getStack("§aSomething went wrong!", Material.RED_TERRACOTTA, 1);
                 }
-                KatUpgrade katUpgrade = ((Pet) item.getGenericInstance()).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
+                KatUpgrade katUpgrade = item.getComponent(PetComponent.class).getKatUpgrades().getForRarity(item.getAttributeHandler().getRarity().upgrade());
                 int coins = katUpgrade.getCoins();
                 long time = katUpgrade.getTime();
-                ItemTypeLinker upgradeItem = katUpgrade.getItem();
+                ItemType upgradeItem = katUpgrade.getItem();
                 Integer itemAmount = katUpgrade.getAmount();
                 ArrayList<String> lore = new ArrayList<>();
                 Material material = Material.RED_TERRACOTTA;

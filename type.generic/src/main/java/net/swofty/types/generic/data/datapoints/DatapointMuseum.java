@@ -4,10 +4,10 @@ import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
@@ -62,15 +62,15 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
                     ));
         }
 
-        public @Nullable SkyBlockItem getTypeInMuseum(ItemTypeLinker type) {
+        public @Nullable SkyBlockItem getTypeInMuseum(ItemType type) {
             return currentlyInMuseum.stream()
-                    .filter(item -> item.getAttributeHandler().getPotentialClassLinker().equals(type))
+                    .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst().orElse(null);
         }
 
-        public @Nullable SkyBlockItem getTypePreviouslyInMuseum(ItemTypeLinker type) {
+        public @Nullable SkyBlockItem getTypePreviouslyInMuseum(ItemType type) {
             return previouslyInMuseum.stream()
-                    .filter(item -> item.getAttributeHandler().getPotentialClassLinker().equals(type))
+                    .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst().orElse(null);
         }
 
@@ -95,13 +95,13 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
         public List<SkyBlockItem> getAllItems(MuseumableItemCategory category) {
             return getAllItems().stream()
-                    .filter(item -> category.getItems().contains(item.getAttributeHandler().getPotentialClassLinker()))
+                    .filter(item -> category.getItems().contains(item.getAttributeHandler().getPotentialType()))
                     .collect(Collectors.toList());
         }
 
-        public @Nullable SkyBlockItem getItem(MuseumableItemCategory category, ItemTypeLinker type) {
+        public @Nullable SkyBlockItem getItem(MuseumableItemCategory category, ItemType type) {
             return getAllItems(category).stream()
-                    .filter(item -> item.getAttributeHandler().getPotentialClassLinker().equals(type))
+                    .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst()
                     .orElse(null);
         }
@@ -129,8 +129,8 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
         public void add(SkyBlockItem item) {
             // Remove any other item with the same type
-            currentlyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialClassLinker().equals(item.getAttributeHandler().getPotentialClassLinker()));
-            previouslyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialClassLinker().equals(item.getAttributeHandler().getPotentialClassLinker()));
+            currentlyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(item.getAttributeHandler().getPotentialType()));
+            previouslyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(item.getAttributeHandler().getPotentialType()));
 
             currentlyInMuseum.add(item);
             UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());

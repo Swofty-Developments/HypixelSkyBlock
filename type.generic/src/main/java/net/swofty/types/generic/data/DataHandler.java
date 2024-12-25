@@ -11,11 +11,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
@@ -256,7 +256,7 @@ public class DataHandler {
             });
 
             player.getInventory().setItemStack(8,
-                    new NonPlayerItemUpdater(new SkyBlockItem(ItemTypeLinker.SKYBLOCK_MENU).getItemStack())
+                    new NonPlayerItemUpdater(new SkyBlockItem(ItemType.SKYBLOCK_MENU).getItemStack())
                             .getUpdatedItem().build());
         }, (player) -> {
             SkyBlockInventory skyBlockInventory = new SkyBlockInventory();
@@ -375,6 +375,10 @@ public class DataHandler {
         USED_SCROLLS("used_scrolls", false, false, false, DatapointStringList.class, new DatapointStringList("used_scrolls")),
         BOOSTER_COOKIE_EXPIRATION_DATE("booster_cookie_expiration_date", false, false, false, DatapointLong.class, new DatapointLong("booster_cookie_expiration_date", 1L)),
         KAT("kat", false, false, false, DatapointKat.class, new DatapointKat("kat")),
+        HOTBAR_SLOT("hotbar_slot", true, false, false, DatapointByte.class, new DatapointByte("hotbar_slot", (byte) 1), (player, datapoint) -> {
+        }, (player, datapoint) -> {
+            player.setHeldItemSlot((Byte) datapoint.getValue());
+        }, (player) -> new DatapointByte("hotbar_slot", player.getHeldSlot())), // For some idiotic reason the hotbar slot is a byte.
         ;
 
         @Getter

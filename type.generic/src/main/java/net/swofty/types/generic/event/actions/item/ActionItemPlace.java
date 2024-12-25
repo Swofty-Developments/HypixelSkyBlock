@@ -8,9 +8,8 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.PlaceEvent;
-import net.swofty.types.generic.item.impl.PlaceableCustomSkyBlockItem;
+import net.swofty.types.generic.item.components.PlaceEventComponent;
+import net.swofty.types.generic.item.components.PlaceableComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionItemPlace implements SkyBlockEventClass {
@@ -22,21 +21,18 @@ public class ActionItemPlace implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getGenericInstance() == null) return;
-
-        Object instance = item.getGenericInstance();
-
-        if (instance instanceof PlaceEvent placeEvent) {
-            placeEvent.onPlace(event, player, item);
+        if (item.hasComponent(PlaceEventComponent.class)) {
+            PlaceEventComponent placeEvent = item.getComponent(PlaceEventComponent.class);
+            placeEvent.handlePlace(event, player, item);
             return;
         }
 
-        if (instance instanceof CustomSkyBlockItem && !((CustomSkyBlockItem) instance).isPlaceable()) {
+        if (!item.hasComponent(PlaceableComponent.class)) {
             event.setCancelled(true);
         } else {
-            PlaceableCustomSkyBlockItem placeableItem = (PlaceableCustomSkyBlockItem) instance;
-            if (placeableItem.getAssociatedBlockType() != null) {
-                event.setBlock(new SkyBlockBlock(placeableItem.getAssociatedBlockType()).toBlock());
+            PlaceableComponent placeableItem = item.getComponent(PlaceableComponent.class);
+            if (placeableItem.getBlockType() != null) {
+                event.setBlock(new SkyBlockBlock(placeableItem.getBlockType()).toBlock());
             }
         }
     }

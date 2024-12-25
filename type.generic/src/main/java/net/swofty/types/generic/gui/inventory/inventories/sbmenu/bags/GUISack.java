@@ -8,12 +8,12 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Sack;
+import net.swofty.types.generic.item.components.SackComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -22,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class GUISack extends SkyBlockInventoryGUI {
-    ItemTypeLinker itemTypeLinker;
+    ItemType itemTypeLinker;
     Boolean closeGUIButton;
 
     private static final List<SackSize> SACK_SIZES = List.of(
@@ -36,12 +36,13 @@ public class GUISack extends SkyBlockInventoryGUI {
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44))
     );
 
-    private static SackSize getSackSize(ItemTypeLinker sack) {
+    private static SackSize getSackSize(ItemType sack) {
         int sackItemSize = 0;
         SkyBlockItem item = new SkyBlockItem(sack);
 
-        if (item.getGenericInstance() instanceof Sack sackInstance) {
-            sackItemSize = sackInstance.getSackItems().size();
+        if (item.hasComponent(SackComponent.class)) {
+            SackComponent sackInstance = item.getComponent(SackComponent.class);
+            sackItemSize = sackInstance.getValidItems().size();
         }
 
         final int finalSackItemSize = sackItemSize;
@@ -54,7 +55,7 @@ public class GUISack extends SkyBlockInventoryGUI {
         return nearestSackSize;
     }
 
-    public GUISack(ItemTypeLinker sack, Boolean closeGUIButton) {
+    public GUISack(ItemType sack, Boolean closeGUIButton) {
         super(StringUtility.toNormalCase(sack.name()), getSackSize(sack).getInventoryType());
         this.itemTypeLinker = sack;
         this.closeGUIButton = closeGUIButton;
@@ -81,8 +82,9 @@ public class GUISack extends SkyBlockInventoryGUI {
         List<SkyBlockItem> sackItems = new ArrayList<>();
         SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
 
-        if (item.getGenericInstance() instanceof Sack sackInstance) {
-            for (ItemTypeLinker linker : sackInstance.getSackItems()) {
+        if (item.hasComponent(SackComponent.class)) {
+            SackComponent sackInstance = item.getComponent(SackComponent.class);
+            for (ItemType linker : sackInstance.getValidItems()) {
                 sackItems.add(new SkyBlockItem(linker));
             }
         }
@@ -94,7 +96,7 @@ public class GUISack extends SkyBlockInventoryGUI {
 
             if (finalIndex < sackItems.size()) {
                 SkyBlockItem skyBlockItem = sackItems.get(index);
-                ItemTypeLinker linker = skyBlockItem.getAttributeHandler().getPotentialClassLinker();
+                ItemType linker = skyBlockItem.getAttributeHandler().getPotentialType();
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

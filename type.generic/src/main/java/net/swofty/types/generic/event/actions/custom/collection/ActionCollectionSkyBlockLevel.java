@@ -13,9 +13,9 @@ public class ActionCollectionSkyBlockLevel implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(CollectionUpdateEvent event) {
-        if (CollectionCategories.getCategory(event.getItemTypeLinker()) == null) return;
+        if (CollectionCategories.getCategory(event.getItemType()) == null) return;
 
-        CollectionCategory.ItemCollection collection = CollectionCategories.getCategory(event.getItemTypeLinker()).getCollection(event.getItemTypeLinker());
+        CollectionCategory.ItemCollection collection = CollectionCategories.getCategory(event.getItemType()).getCollection(event.getItemType());
         CollectionCategory.ItemCollectionReward newReward = event.getPlayer().getCollection().getReward(collection);
         CollectionCategory.ItemCollectionReward oldReward = null;
 
@@ -30,7 +30,7 @@ public class ActionCollectionSkyBlockLevel implements SkyBlockEventClass {
 
         if (newReward != null) {
             event.getPlayer().getSkyBlockExperience().addExperience(
-                    SkyBlockLevelCause.getCollectionCause(event.getItemTypeLinker(), collection.getPlacementOf(newReward))
+                    SkyBlockLevelCause.getCollectionCause(event.getItemType(), collection.getPlacementOf(newReward))
             );
         }
     }

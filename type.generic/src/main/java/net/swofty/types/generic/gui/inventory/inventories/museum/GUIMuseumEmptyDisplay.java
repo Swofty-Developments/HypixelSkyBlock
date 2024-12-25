@@ -63,7 +63,7 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
         List<SkyBlockItem> items = data.getInMuseumThatAreNotInDisplay();
 
         items.removeIf(item -> {
-            MuseumableItemCategory itemCategory = MuseumableItemCategory.getFromItem(item.getAttributeHandler().getPotentialClassLinker());
+            MuseumableItemCategory itemCategory = MuseumableItemCategory.getFromItem(item.getAttributeHandler().getPotentialType());
             return !display.getAllowedItemCategories().contains(itemCategory);
         });
 

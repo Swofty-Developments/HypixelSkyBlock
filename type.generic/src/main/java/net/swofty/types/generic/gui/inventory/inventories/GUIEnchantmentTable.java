@@ -11,6 +11,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
@@ -18,10 +19,9 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.ItemAttributeHandler;
-import net.swofty.types.generic.item.impl.Enchantable;
+import net.swofty.types.generic.item.components.EnchantableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
@@ -168,10 +168,10 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             }
         });
 
-        ItemTypeLinker type = item.getAttributeHandler().getPotentialClassLinker();
+        ItemType type = item.getAttributeHandler().getPotentialType();
         if (item.getItemStack().amount() > 1 ||
                 type == null ||
-                !(type.clazz.newInstance() instanceof Enchantable)) {
+                !(item.hasComponent(EnchantableComponent.class))) {
             set(new GUIItem(23) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -186,7 +186,7 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
             return;
         }
 
-        List<EnchantItemGroups> enchantItemGroups = ((Enchantable) type.clazz.newInstance()).getEnchantItemGroups();
+        List<EnchantItemGroups> enchantItemGroups = item.getComponent(EnchantableComponent.class).getEnchantItemGroups();
         List<EnchantmentType> enchantments = Arrays.stream(EnchantmentType.values())
                 .filter(enchantmentType -> enchantmentType.getEnch().getGroups().stream().anyMatch(enchantItemGroups::contains))
                 .filter(enchantmentType -> enchantmentType.getEnchFromTable() != null)

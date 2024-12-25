@@ -16,41 +16,32 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeType;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
-    public Class<? extends CustomSkyBlockItem> clazz = null;
-    private Object instance = null;
     @Getter
     @Setter
     private int amount = 1;
-
-    @SneakyThrows
-    public SkyBlockItem(ItemTypeLinker typeLinker, int amount) {
-        loadAsLinker(typeLinker);
-        setAmount(amount);
-    }
+    private ConfigurableSkyBlockItem config = null;
 
     public SkyBlockItem(UnderstandableSkyBlockItem item) {
         if (item.itemKey() == null) {
             loadAsMaterial(item.material());
         } else {
-            ItemTypeLinker linker = ItemTypeLinker.fromType(item.itemKey());
-            if (linker != null) {
-                loadAsLinker(linker);
-            } else {
-                loadAsItemType(item.itemKey());
-            }
+            loadAsItemType(item.itemKey());
         }
         setAmount(item.amount());
 
@@ -64,38 +55,19 @@ public class SkyBlockItem {
         String materialName = material.namespace().value();
         ItemType itemType = ItemType.get(materialName);
         if (itemType != null) {
-            ItemTypeLinker linker = ItemTypeLinker.fromType(itemType);
-            if (linker != null) {
-                loadAsLinker(linker);
-            } else {
-                loadAsItemType(itemType);
-            }
+            loadAsItemType(itemType);
         } else {
             loadAsMaterial(material);
         }
     }
 
-    public SkyBlockItem(ItemTypeLinker type) {
-        this(type, 1);
-    }
-
     public SkyBlockItem(ItemType type, int amount) {
-        ItemTypeLinker linker = ItemTypeLinker.fromType(type);
-        if (linker != null) {
-            loadAsLinker(linker);
-        } else {
-            loadAsItemType(type);
-        }
+        loadAsItemType(type);
         setAmount(amount);
     }
 
     public SkyBlockItem(ItemType type) {
-        ItemTypeLinker linker = ItemTypeLinker.fromType(type);
-        if (linker != null) {
-            loadAsLinker(linker);
-        } else {
-            loadAsItemType(type);
-        }
+        loadAsItemType(type);
     }
 
     public SkyBlockItem(String type) {
@@ -105,41 +77,12 @@ public class SkyBlockItem {
             loadAsMaterial(material);
             return;
         }
-        ItemTypeLinker linker = ItemTypeLinker.fromType(itemType);
-        if (linker != null) {
-            loadAsLinker(linker);
-        } else {
-            loadAsItemType(itemType);
-        }
+        loadAsItemType(itemType);
     }
 
     public SkyBlockItem(ItemStack item) {
         loadAsStack(item);
         setAmount(item.amount());
-    }
-
-    @SneakyThrows
-    private void loadAsLinker(ItemTypeLinker linker) {
-        clazz = linker.clazz;
-        ItemStatistics statistics = clazz.newInstance().getStatistics(null);
-
-        for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
-            attribute.setValue(attribute.getDefaultValue(statistics));
-            attributes.add(attribute);
-        }
-
-        ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
-        typeAttribute.setValue(linker.name());
-
-        ItemAttributeRarity rarityAttribute = (ItemAttributeRarity) getAttribute("rarity");
-        try {
-            rarityAttribute.setValue(linker.type.rarity);
-        } catch (IllegalArgumentException e) {
-            rarityAttribute.setValue(Rarity.COMMON);
-        }
-
-        ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
-        statisticsAttribute.setValue(linker.clazz.newInstance().getStatistics(this));
     }
 
     private void loadAsItemType(ItemType type) {
@@ -157,6 +100,17 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException e) {
             rarityAttribute.setValue(Rarity.COMMON);
         }
+
+        String id = type.name();
+        config = ConfigurableSkyBlockItem.getFromID(id);
+        if (config == null) {
+            config = new ConfigurableSkyBlockItem(id,
+                    getMaterial(), List.of(), new HashMap<>());
+        } else {
+            ItemStatistics statistics = config.getDefaultStatistics();
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+            statisticsAttribute.setValue(statistics.clone());
+        }
     }
 
     private void loadAsMaterial(Material material) {
@@ -167,6 +121,17 @@ public class SkyBlockItem {
 
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         typeAttribute.setValue(material.namespace().asString());
+
+        config = ConfigurableSkyBlockItem.getFromID(material.namespace().value());
+        if (config == null) {
+            config = new ConfigurableSkyBlockItem(UUID.randomUUID().toString(),
+                    material, List.of(), new HashMap<>());
+        } else {
+            ItemStatistics statistics = config.getDefaultStatistics();
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+
+            statisticsAttribute.setValue(statistics.clone());
+        }
     }
 
     @SneakyThrows
@@ -179,18 +144,17 @@ public class SkyBlockItem {
         ItemStatistics statistics = ItemStatistics.empty();
 
         ItemType type = ItemType.get(itemType);
-        ItemTypeLinker linker = null;
         if (type != null) {
-            linker = ItemTypeLinker.fromType(type);
-            if (linker != null) {
-                loadAsLinker(linker);
-                statistics = linker.clazz.newInstance().getStatistics(null);
-            } else {
-                loadAsItemType(type);
-            }
+            loadAsItemType(type);
         } else {
             Material material = item.material();
             loadAsMaterial(material);
+        }
+
+        ConfigurableSkyBlockItem config = ConfigurableSkyBlockItem.getFromID(itemType);
+        if (config != null) {
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+            statisticsAttribute.setValue(config.getDefaultStatistics());
         }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
@@ -204,40 +168,22 @@ public class SkyBlockItem {
                 attributes.add(attribute);
             }
         }
-
-        if (linker != null) {
-            // All items re-retrieve their base stats when loaded from an itemstack
-            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
-            statisticsAttribute.setValue(linker.clazz.newInstance().getStatistics(this));
-        }
     }
 
     public ItemAttribute getAttribute(String key) {
         return attributes.stream().filter(attribute -> attribute.getKey().equals(key)).findFirst().orElse(null);
     }
 
-    public Object getGenericInstance() {
-        if (instance != null)
-            return instance;
-
-        try {
-            instance = clazz.newInstance();
-            return instance;
-        } catch (Exception e) {}
-
-        try {
-            instance = getAttributeHandler().getPotentialClassLinker().clazz.newInstance();
-            return instance;
-        } catch (Exception e) {}
-
-        return null;
+    public @Nullable ConfigurableSkyBlockItem getConfig() {
+        String type = getAttributeHandler().getTypeAsString();
+        return ConfigurableSkyBlockItem.getFromID(type);
     }
 
     @Override
     public SkyBlockItem clone() {
         SkyBlockItem item = new SkyBlockItem(getMaterial());
         List<ItemAttribute> attributesForClone = new ArrayList<>();
-        item.clazz = clazz;
+        item.config = config;
         item.amount = amount;
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
             attribute.setValue(getAttribute(attribute.getKey()).getValue());
@@ -245,6 +191,10 @@ public class SkyBlockItem {
         });
         item.attributes = attributesForClone;
         return item;
+    }
+
+    public List<String> getConfigLore() {
+        return config.getLore();
     }
 
     public Material getMaterial() {
@@ -278,6 +228,16 @@ public class SkyBlockItem {
 
         itemStackBuilder.set(ItemComponent.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         return itemStackBuilder;
+    }
+
+    public <T extends SkyBlockItemComponent> boolean hasComponent(Class<T> componentClass) {
+        if (config == null) return false;
+        return config.hasComponent(componentClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends SkyBlockItemComponent> T getComponent(Class<T> componentClass) {
+        return config.getComponent(componentClass);
     }
 
     public boolean isSimilar(SkyBlockItem item) {
@@ -335,7 +295,7 @@ public class SkyBlockItem {
         return "SkyBlockItem{" +
                 "type=" + getMaterial().name() +
                 ", itemType=" + getAttributeHandler().getTypeAsString() +
-                ", clazz=" + clazz +
+                ", config=" + config +
                 ", amount=" + amount +
                 ", attributes=" + attributes.stream().map(attribute -> attribute.getKey() + "=" + attribute.getValue()).reduce((s, s2) -> s + ", " + s2).orElse("null") +
                 '}';

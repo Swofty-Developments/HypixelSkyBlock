@@ -1,0 +1,53 @@
+items:
+  - id: CLAY_BALL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: COD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 6.0
+  - id: INK_SAC
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+  - id: LILY_PAD
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 10.0
+  - id: PRISMARINE_CRYSTALS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: PRISMARINE_SHARD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: PUFFERFISH
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 15.0
+  - id: SALMON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 10.0
+  - id: SPONGE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 50.0
+  - id: TROPICAL_FISH
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 20.0

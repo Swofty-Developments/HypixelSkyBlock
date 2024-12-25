@@ -9,15 +9,15 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapedRecipe;
-import net.swofty.types.generic.item.impl.recipes.ShapelessRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.types.generic.item.crafting.ShapedRecipe;
+import net.swofty.types.generic.item.crafting.ShapelessRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -76,9 +76,9 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
 
         paged.removeIf(recipe -> recipe.getRecipeType() != type);
 
-        List<ItemTypeLinker> shownItems = new ArrayList<>();
+        List<ItemType> shownItems = new ArrayList<>();
         paged.removeIf(recipe -> {
-            ItemTypeLinker type = recipe.getResult().getAttributeHandler().getPotentialClassLinker();
+            ItemType type = recipe.getResult().getAttributeHandler().getPotentialType();
 
             if (shownItems.contains(type)) {
                 return true;
@@ -179,7 +179,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipe(
-                            item.getResult().getAttributeHandler().getPotentialClassLinker(),
+                            item.getResult().getAttributeHandler().getPotentialType(),
                             GUIRecipeCategory.this).open(player);
                 }
 

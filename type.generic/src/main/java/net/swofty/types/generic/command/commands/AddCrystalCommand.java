@@ -1,15 +1,14 @@
 package net.swofty.types.generic.command.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.mongodb.CrystalDatabase;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.CustomSkyBlockItem;
-import net.swofty.types.generic.item.impl.ServerOrb;
-import net.swofty.types.generic.item.impl.SkullHead;
+import net.swofty.types.generic.item.components.ServerOrbComponent;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -21,30 +20,26 @@ import net.swofty.types.generic.user.categories.Rank;
 public class AddCrystalCommand extends SkyBlockCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
-        ArgumentEnum<ItemTypeLinker> itemType = new ArgumentEnum<>("itemType", ItemTypeLinker.class);
+        ArgumentEnum<ItemType> itemType = new ArgumentEnum<>("itemType", ItemType.class);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ItemTypeLinker type = context.get(itemType);
-            try {
-                CustomSkyBlockItem item = type.clazz.newInstance();
+            ItemType type = context.get(itemType);
+            SkyBlockItem item = new SkyBlockItem(type);
 
-                // Spawn the orb
-                ServerOrb asOrb = (ServerOrb) item;
-                ServerCrystalImpl crystal = new ServerCrystalImpl(
-                        asOrb.getOrbSpawnMaterial(),
-                        ((SkullHead) item).getSkullTexture(null, new SkyBlockItem(type)),
-                        asOrb.getBlocksToPlaceOn()
-                );
-                crystal.setInstance(((SkyBlockPlayer) sender).getInstance(), ((SkyBlockPlayer) sender).getPosition());
+            // Spawn the orb
+            ServerOrbComponent asOrb = item.getComponent(ServerOrbComponent.class);
+            ServerCrystalImpl crystal = new ServerCrystalImpl(
+                    asOrb.getSpawnMaterialFunction(),
+                    item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
+                    asOrb.getValidBlocks()
+            );
+            crystal.setInstance(((SkyBlockPlayer) sender).getInstance(), ((SkyBlockPlayer) sender).getPosition());
 
-                new CrystalDatabase().addCrystal(((SkullHead) item).getSkullTexture(null, new SkyBlockItem(type)),
-                        ((SkyBlockPlayer) sender).getPosition(),
-                        type);
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            new CrystalDatabase().addCrystal(item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
+                    ((SkyBlockPlayer) sender).getPosition(),
+                    type);
         }, itemType);
     }
 }

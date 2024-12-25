@@ -1,10 +1,11 @@
 package net.swofty.types.generic.levels;
 
 import lombok.SneakyThrows;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
-import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.impl.Accessory;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.AccessoryComponent;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.levels.causes.*;
 import net.swofty.types.generic.mission.MissionData;
@@ -31,9 +32,8 @@ public class SkyBlockLevelCause {
         }
 
         // Register all accessory causes
-        for (ItemTypeLinker itemTypeLinker : ItemTypeLinker.values()) {
-            if (itemTypeLinker.clazz == null) continue;
-            if (itemTypeLinker.clazz.newInstance() instanceof Accessory) {
+        for (ItemType itemTypeLinker : ItemType.values()) {
+            if (new SkyBlockItem(itemTypeLinker).hasComponent(AccessoryComponent.class)) {
                 CAUSES.put("accessory-" + itemTypeLinker.name(), new NewAccessoryLevelCause(itemTypeLinker));
             }
         }
@@ -44,7 +44,7 @@ public class SkyBlockLevelCause {
         }
 
         // Register all collection causes
-        for (ItemTypeLinker itemTypeLinker : ItemTypeLinker.values()) {
+        for (ItemType itemTypeLinker : ItemType.values()) {
             CollectionCategory category = CollectionCategories.getCategory(itemTypeLinker);
             if (category == null) continue;
 
@@ -117,7 +117,7 @@ public class SkyBlockLevelCause {
         return null;
     }
 
-    public static CollectionLevelCause getCollectionCause(ItemTypeLinker itemTypeLinker, int level) {
+    public static CollectionLevelCause getCollectionCause(ItemType itemTypeLinker, int level) {
         for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof CollectionLevelCause collectionCause) {
                 if (collectionCause.getType() == itemTypeLinker && collectionCause.getLevel() == level) {
@@ -143,7 +143,7 @@ public class SkyBlockLevelCause {
         return null;
     }
 
-    public static NewAccessoryLevelCause getAccessoryCause(ItemTypeLinker itemTypeLinker) {
+    public static NewAccessoryLevelCause getAccessoryCause(ItemType itemTypeLinker) {
         for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
             if (cause instanceof NewAccessoryLevelCause accessoryCause) {
                 if (accessoryCause.itemTypeLinker == itemTypeLinker) {

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.Collections;
@@ -129,12 +128,6 @@ public abstract class SkyBlockLootTable {
         private final int amount;
         private final double chancePercent;
         private Function<SkyBlockPlayer, Boolean> shouldCalculate = player -> true;
-
-        public LootRecord(ItemTypeLinker itemTypeLinker, int amount, double chancePercent) {
-            this.itemType = itemTypeLinker.getType();
-            this.amount = amount;
-            this.chancePercent = chancePercent;
-        }
 
         public static LootRecord none(int chance) {
             return new LootRecord(ItemType.AIR, 0, chance, player -> true);

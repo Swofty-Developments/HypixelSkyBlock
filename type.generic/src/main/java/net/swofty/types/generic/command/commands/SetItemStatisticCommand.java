@@ -3,12 +3,12 @@ package net.swofty.types.generic.command.commands;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.swofty.commons.Configuration;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
-import net.swofty.types.generic.item.impl.DefaultSoulbound;
+import net.swofty.types.generic.item.components.DefaultSoulboundComponent;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -35,9 +35,9 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
 
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
             SkyBlockItem itemInHand = new SkyBlockItem(player.getItemInMainHand());
-            ItemTypeLinker type = itemInHand.getAttributeHandler().getPotentialClassLinker();
+            ItemType type = itemInHand.getAttributeHandler().getPotentialType();
 
-            if (type != ItemTypeLinker.SANDBOX_ITEM) {
+            if (type != ItemType.SANDBOX_ITEM) {
                 player.sendMessage("§cYou can only set the lore of sandbox items.");
                 return;
             }
@@ -61,8 +61,7 @@ public class SetItemStatisticCommand extends SkyBlockCommand {
                 player.sendMessage("§7Checking minimum requirements for statistic amount of §e" + stat.getDisplayName() + "§7...");
 
                 for (SkyBlockItem item : player.getAllInventoryItems()) {
-                    if (item.getGenericInstance() == null) continue;
-                    if (item.getGenericInstance() instanceof DefaultSoulbound) {
+                    if (item.hasComponent(DefaultSoulboundComponent.class)) {
                         if (item.getAttributeHandler().getStatistics().getOverall(stat) > cap) {
                             cap = item.getAttributeHandler().getStatistics().getOverall(stat);
                         }

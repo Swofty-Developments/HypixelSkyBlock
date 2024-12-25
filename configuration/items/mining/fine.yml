@@ -1,0 +1,64 @@
+items:
+  - id: FINE_AMBER_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: AMBER
+        skull_texture: 4b1cce22de19ed6727abc5e6c2d57864c871a44c956bbe2eb3960269b686b8b3
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_AMETHYST_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: AMETHYST
+        skull_texture: 7a1ee5ffce04eb7da592d42414ff35e1bf38194d6b82e310dbc6261b47fb9c91
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_JADE_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: JADE
+        skull_texture: b28f1c0c5092e12d33770df45c5845a9610886039b34abe93a16c5e942dfc8e4
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_JASPER_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: JASPER
+        skull_texture: aac15f6fcf2ce963ef4ca71f1a8685adb97eb769e1d11194cbbd2e964a88978c
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_RUBY_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: RUBY
+        skull_texture: e672959028f274b379d430f068f0f15a4f793eac12afb94ae0b4e50cf895df0f
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_SAPPHIRE_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: SAPPHIRE
+        skull_texture: 36161daa3589ec9c8187459ac36fd4dd2646c040678d3bfacb72a2210c6c801c
+      - id: SELLABLE
+        value: 19200.0
+  - id: FINE_TOPAZ_GEMSTONE
+    rarity: FINE
+    components:
+      - id: GEMSTONE_IMPL
+        rarity: FINE
+        gemstone: TOPAZ
+        skull_texture: 92cb6e51c461e7359526bea5e06209cddde7c6469a819f3405cf0a038c159502
+      - id: SELLABLE
+        value: 19200.0

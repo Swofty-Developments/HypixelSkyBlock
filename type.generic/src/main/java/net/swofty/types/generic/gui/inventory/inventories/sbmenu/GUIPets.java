@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
-import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.components.PetComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -79,15 +79,15 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 break;
             case ALPHABETICAL:
                 pets.sort((pet1, pet2) -> {
-                    String name1 = ((Pet) pet1.getGenericInstance()).getPetName();
-                    String name2 = ((Pet) pet2.getGenericInstance()).getPetName();
+                    String name1 = pet1.getComponent(PetComponent.class).getPetName();
+                    String name2 = pet2.getComponent(PetComponent.class).getPetName();
                     return name1.compareTo(name2);
                 });
                 break;
             case SKILL:
                 pets.sort((pet1, pet2) -> {
-                    SkillCategories skill1 = ((Pet) pet1.getGenericInstance()).getSkillCategory();
-                    SkillCategories skill2 = ((Pet) pet2.getGenericInstance()).getSkillCategory();
+                    SkillCategories skill1 = pet1.getComponent(PetComponent.class).getSkillCategory();
+                    SkillCategories skill2 = pet2.getComponent(PetComponent.class).getSkillCategory();
                     return Integer.compare(skill2.ordinal(), skill1.ordinal());
                 });
                 break;
@@ -246,7 +246,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
                 if (convertToItem) {
                     player.addAndUpdateItem(item);
-                    player.getPetData().removePet(item.getAttributeHandler().getPotentialClassLinker());
+                    player.getPetData().removePet(item.getAttributeHandler().getPotentialType());
                     GUIPets guiPets = new GUIPets();
                     guiPets.setSortType(sortType);
                     guiPets.setConvertToItem(convertToItem);
@@ -255,7 +255,7 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
                     return;
                 }
 
-                player.getPetData().setEnabled(item.getAttributeHandler().getPotentialClassLinker(), true);
+                player.getPetData().setEnabled(item.getAttributeHandler().getPotentialType(), true);
                 player.getPetData().updatePetEntityImpl(player);
                 player.sendMessage("§aSelected pet " + item.getDisplayName() + "§a!");
                 GUIPets guiPets = new GUIPets();

@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.TieredTalisman;
+import net.swofty.types.generic.item.components.TieredTalismanComponent;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -39,7 +39,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
         public DatapointAccessoryBag.PlayerAccessoryBag deserialize(String json) {
             JSONObject obj = new JSONObject(json);
             Map<Integer, SkyBlockItem> map = new HashMap<>();
-            List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
+            List<ItemType> discoveredAccessories = new ArrayList<>();
 
             for (String key : obj.keySet()) {
                 if (key.equals("discoveredAccessories")) {
@@ -47,7 +47,7 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
                     if (obj.get(key) instanceof String) continue;
                     if (obj.getJSONArray(key).isEmpty()) continue;
                     for (Object o : obj.getJSONArray(key)) {
-                        discoveredAccessories.add(ItemTypeLinker.valueOf(o.toString()));
+                        discoveredAccessories.add(ItemType.valueOf(o.toString()));
                     }
                     continue;
                 }
@@ -79,61 +79,38 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
     @NoArgsConstructor
     public static class PlayerAccessoryBag {
         private Map<Integer, SkyBlockItem> accessoryMap = new HashMap<>();
-        private List<ItemTypeLinker> discoveredAccessories = new ArrayList<>();
+        private List<ItemType> discoveredAccessories = new ArrayList<>();
 
-        /**
-         * Retrieves the accessory item located in the specified slot.
-         *
-         * @param slot the slot index of the accessory
-         * @return the {@link SkyBlockItem} in the specified slot, or {@code null} if no item exists
-         */
         public @Nullable SkyBlockItem getInSlot(int slot) {
             return accessoryMap.get(slot);
         }
 
-        /**
-         * Retrieves a list of all accessories currently in the accessory map.
-         *
-         * @return an unmodifiable list of {@link SkyBlockItem} representing all accessories
-         */
         public List<SkyBlockItem> getAllAccessories() {
             return List.copyOf(accessoryMap.values());
         }
 
-        /**
-         * Retrieves a list of unique accessories, ensuring that only the highest tier version
-         * of each accessory type is included.
-         *
-         * @return an unmodifiable list of unique {@link SkyBlockItem} accessories
-         */
         public List<SkyBlockItem> getUniqueAccessories() {
             List<SkyBlockItem> accessories = new ArrayList<>(getAllAccessories());
-            Map<ItemTypeLinker, SkyBlockItem> highestTierTalismans = new HashMap<>();
+            Map<ItemType, SkyBlockItem> highestTierTalismans = new HashMap<>();
 
             for (SkyBlockItem accessory : accessories) {
-                if (accessory.getGenericInstance() instanceof TieredTalisman currentTalisman) {
-                    ItemTypeLinker baseTalisman = currentTalisman.getBaseTalismanTier();
-                    TieredTalisman tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? (TieredTalisman) highestTierTalismans.get(baseTalisman).getGenericInstance() : null;
+                if (accessory.hasComponent(TieredTalismanComponent.class)) {
+                    TieredTalismanComponent currentTalisman = accessory.getComponent(TieredTalismanComponent.class);
+                    ItemType baseTalisman = currentTalisman.getBaseTier();
+                    TieredTalismanComponent tieredTalisman = highestTierTalismans.containsKey(baseTalisman) ? highestTierTalismans.get(baseTalisman).getComponent(TieredTalismanComponent.class) : null;
 
-                    // Update the highest tier talisman if necessary
                     if (tieredTalisman == null || tieredTalisman.getTier() < currentTalisman.getTier()) {
                         highestTierTalismans.put(baseTalisman, accessory);
                     }
                 } else if (!accessory.isAir()) {
-                    highestTierTalismans.put(accessory.getAttributeHandler().getPotentialClassLinker(), accessory);
+                    highestTierTalismans.put(accessory.getAttributeHandler().getPotentialType(), accessory);
                 }
             }
             return List.copyOf(highestTierTalismans.values());
         }
 
-        /**
-         * Retrieves a list of unique accessories filtered by the specified rarity.
-         *
-         * @param rarity the {@link Rarity} to filter the accessories by
-         * @return an unmodifiable list of unique {@link SkyBlockItem} accessories matching the specified rarity
-         */
         public List<SkyBlockItem> getUniqueAccessories(Rarity rarity) {
-            List<SkyBlockItem> talismans = new ArrayList<>();
+            List<SkyBlockItem> talismans = new ArrayList<>(List.of());
             for (SkyBlockItem item : getUniqueAccessories()) {
                 if (rarity == item.getAttributeHandler().getRarity()) {
                     talismans.add(item);
@@ -142,41 +119,19 @@ public class DatapointAccessoryBag extends Datapoint<DatapointAccessoryBag.Playe
             return talismans;
         }
 
-        /**
-         * Adds a discovered accessory type to the list of discovered accessories.
-         *
-         * @param type the {@link ItemTypeLinker} representing the accessory type to add
-         */
-        public void addDiscoveredAccessory(ItemTypeLinker type) {
+        public void addDiscoveredAccessory(ItemType type) {
             if (discoveredAccessories.contains(type)) return;
             discoveredAccessories.add(type);
         }
 
-        /**
-         * Checks if the specified accessory type has been discovered.
-         *
-         * @param type the {@link ItemTypeLinker} representing the accessory type to check
-         * @return {@code true} if the accessory type has been discovered; {@code false} otherwise
-         */
-        public boolean hasDiscoveredAccessory(ItemTypeLinker type) {
+        public boolean hasDiscoveredAccessory(ItemType type) {
             return discoveredAccessories.contains(type);
         }
 
-        /**
-         * Removes the accessory item from the specified slot.
-         *
-         * @param slot the slot index of the accessory to remove
-         */
         public void removeFromSlot(int slot) {
             accessoryMap.remove(slot);
         }
 
-        /**
-         * Sets the specified accessory item in the given slot.
-         *
-         * @param slot the slot index where the accessory should be placed
-         * @param item the {@link SkyBlockItem} to place in the specified slot
-         */
         public void setInSlot(int slot, SkyBlockItem item) {
             accessoryMap.put(slot, item);
         }

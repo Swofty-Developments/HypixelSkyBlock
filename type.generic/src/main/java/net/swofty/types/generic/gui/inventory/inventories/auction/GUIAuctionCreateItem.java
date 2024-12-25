@@ -23,7 +23,7 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
+import net.swofty.types.generic.item.components.AuctionCategoryComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
@@ -166,8 +166,8 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     String itemName = StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME));
 
                     AuctionCategories category = AuctionCategories.TOOLS;
-                    if (escrow.getItem().getGenericInstance() != null && escrow.getItem().getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
-                        category = instanceCategory.getAuctionCategory();
+                    if (escrow.getItem().hasComponent(AuctionCategoryComponent.class))
+                        category = escrow.getItem().getComponent(AuctionCategoryComponent.class).getCategory();
 
                     player.getDataHandler().get(DataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
                     player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());

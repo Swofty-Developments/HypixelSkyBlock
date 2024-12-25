@@ -27,7 +27,8 @@ public class AdminMeCommand extends SkyBlockCommand {
             "Swofty",
             "Foodzz",
             "Hamza_dev",
-            "ItzKatze"
+            "ItzKatze",
+            "Maploop"
     );
 
     @Override

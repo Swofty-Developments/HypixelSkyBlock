@@ -1,0 +1,16 @@
+items:
+  - id: PIONEERS_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 1.0
+      breaking_power: 1.0
+    components:
+      - id: PICKAXE
+  - id: ROOKIE_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 150.0
+      breaking_power: 2.0
+      damage: 15.0
+    components:
+      - id: PICKAXE

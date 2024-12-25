@@ -2,11 +2,11 @@ package net.swofty.types.generic.event.actions.item;
 
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.CollectItemPacket;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionPlayerItemPickup implements SkyBlockEventClass {
@@ -24,7 +24,7 @@ public class ActionPlayerItemPickup implements SkyBlockEventClass {
                     player.sendPacket(new CollectItemPacket(item.getEntityId(), player.getEntityId(),
                             item.getItem().getAmount()));
 
-                    ItemTypeLinker type = item.getItem().getAttributeHandler().getPotentialClassLinker();
+                    ItemType type = item.getItem().getAttributeHandler().getPotentialType();
                     int amount = item.getItem().getAmount();
 
                     if (player.canInsertItemIntoSacks(type, amount)) {

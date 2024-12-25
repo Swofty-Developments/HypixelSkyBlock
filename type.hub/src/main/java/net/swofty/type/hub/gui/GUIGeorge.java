@@ -16,8 +16,9 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Pet;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
+import net.swofty.types.generic.item.components.PetComponent;
+import net.swofty.types.generic.item.components.PetItemComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIGeorge extends SkyBlockInventoryGUI {
@@ -99,7 +100,7 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
             }
         });
 
-        if (item.getAmount() > 1 || item.getGenericInstance() == null || !(item.getGenericInstance() instanceof Pet)) {
+        if (item.getAmount() > 1 || item.hasComponent(PetItemComponent.class)) {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -118,7 +119,8 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
                 Rarity rarity = item.getAttributeHandler().getRarity();
-                Integer price = ((Pet) item.getGenericInstance()).getGeorgePrice().getForRarity(rarity);
+                PetComponent petComponent = item.getComponent(PetComponent.class);
+                Integer price = petComponent.getGeorgePrice().getForRarity(rarity);
 
                 if (price == 0) return;
                 coins.setValue(coins.getValue() + price);
@@ -134,7 +136,7 @@ public class GUIGeorge extends SkyBlockInventoryGUI {
                         "§7your pet!",
                         "",
                         "§9Offer:",
-                        "§6" + StringUtility.commaify(((Pet) item.getGenericInstance()).getGeorgePrice().getForRarity(item.getAttributeHandler().getRarity())),
+                        "§6" + StringUtility.commaify(item.getComponent(PetComponent.class).getGeorgePrice().getForRarity(item.getAttributeHandler().getRarity())),
                         "",
                         "§7§cWARNING: This will permanently",
                         "§cremove your pet.",

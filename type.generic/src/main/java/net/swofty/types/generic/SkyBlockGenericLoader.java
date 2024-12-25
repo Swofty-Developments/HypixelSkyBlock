@@ -15,15 +15,13 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.item.Material;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
-import net.swofty.commons.Configuration;
-import net.swofty.commons.CustomWorlds;
-import net.swofty.commons.Songs;
+import net.swofty.commons.*;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.block.attribute.BlockAttribute;
@@ -47,8 +45,10 @@ import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
-import net.swofty.types.generic.item.ItemTypeLinker;
-import net.swofty.types.generic.item.impl.*;
+import net.swofty.types.generic.item.ConfigurableSkyBlockItem;
+import net.swofty.types.generic.item.ItemConfigParser;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.MuseumableSet;
 import net.swofty.types.generic.item.set.impl.SetRepeatable;
@@ -61,6 +61,9 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
+import net.swofty.types.generic.item.components.CraftableComponent;
+import net.swofty.types.generic.item.components.MuseumComponent;
+import net.swofty.types.generic.item.components.ServerOrbComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
@@ -79,10 +82,10 @@ import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
-import net.swofty.commons.StringUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
@@ -152,7 +155,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             try {
                 MinecraftServer.getCommandManager().register(command.getCommand());
             } catch (Exception e) {
-                Logger.error("Failed to register command " + command.getCommand().getName());
+                Logger.error("Failed to register command " + command.getCommand().getName() + " in class " + command.getClass().getSimpleName());
                 e.printStackTrace();
             }
         });
@@ -310,6 +313,42 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         }
 
         /**
+         * Register items
+         */
+        ItemAttribute.registerItemAttributes();
+        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+        File configDir = new File("./configuration");
+        File itemsDir = new File(configDir, "items");
+        try {
+            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
+            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
+            for (File file : yamlFiles) {
+                try {
+                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
+                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
+
+                    if (items != null) {
+                        for (Map<String, Object> itemConfig : items) {
+                            try {
+                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse item " + itemConfig.get("id"));
+                                e.printStackTrace();
+                                continue;
+                            }
+                        }
+                    } else {
+                        Logger.warn("No items found in " + file.getName());
+                    }
+                } catch (IOException e) {
+                    Logger.error("Failed to load " + file.getName(), e);
+                }
+            }
+        } catch (IOException e) {
+            Logger.error("Failed to scan for YAML files", e);
+        }
+
+        /**
          * Spawn server crystals
          */
         if (SkyBlockConst.getInstanceContainer() != null) {
@@ -317,29 +356,20 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 CrystalDatabase.getAllCrystals().forEach(crystal -> {
                     if (crystal.serverType != SkyBlockConst.getTypeLoader().getType()) return;
 
-                    ItemTypeLinker type = crystal.itemTypeLinker;
-                    try {
-                        ServerOrb asCrystal = (ServerOrb) type.clazz.newInstance();
-                        ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
-                                asCrystal.getOrbSpawnMaterial(),
-                                crystal.url,
-                                asCrystal.getBlocksToPlaceOn()
-                        );
+                    ItemType type = crystal.itemType;
+                    SkyBlockItem item = new SkyBlockItem(type);
+                    ServerOrbComponent asCrystal = item.getComponent(ServerOrbComponent.class);
+                    ServerCrystalImpl crystalImpl = new ServerCrystalImpl(
+                            asCrystal.getSpawnMaterialFunction(),
+                            crystal.url,
+                            asCrystal.getValidBlocks()
+                    );
 
-                        crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
-                                new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
-                    } catch (InstantiationException | IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+                    crystalImpl.setInstance(SkyBlockConst.getInstanceContainer(),
+                            new Pos(crystal.position.x(), crystal.position.y(), crystal.position.z()));
                 });
             });
         }
-
-        /**
-         * Register items
-         */
-        ItemAttribute.registerItemAttributes();
-        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
 
         /**
          * Register blocks
@@ -357,7 +387,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.event.custom", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.event.actions", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
-        loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
+        loopThroughPackage("net.swofty.types.generic.item.events", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         loopThroughPackage("net.swofty.types.generic.mission.missions", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
         typeLoader.getTraditionalEvents().forEach(SkyBlockEventHandler::registerEventMethods);
         typeLoader.getCustomEvents().forEach(SkyBlockEventHandler::registerEventMethods);
@@ -379,7 +409,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 .forEach(SkyBlockValueEvent::cacheEvent);
         loopThroughPackage("net.swofty.types.generic.item.set.sets", SkyBlockValueEvent.class)
                 .forEach(SkyBlockValueEvent::cacheEvent);
-        loopThroughPackage("net.swofty.types.generic.item.items", SkyBlockValueEvent.class)
+        loopThroughPackage("net.swofty.types.generic.item.events", SkyBlockValueEvent.class)
                 .forEach(SkyBlockValueEvent::cacheEvent);
         SkyBlockValueEvent.register();
         CustomEventCaller.start();
@@ -397,7 +427,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                         Arrays.stream(reward.unlocks()).forEach(unlock -> {
                             if (unlock instanceof CollectionCategory.UnlockCustomAward award) {
                                 CustomCollectionAward.AWARD_CACHE.put(award.getAward(),
-                                        Map.entry(ItemTypeLinker.fromType(collection.type()), reward.requirement()));
+                                        Map.entry(collection.type(), reward.requirement()));
                             }
                         });
                     });
@@ -417,32 +447,44 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Load item recipes
          */
-        loopThroughPackage("net.swofty.types.generic.item.items", DefaultCraftable.class)
-                .forEach(recipe -> {
-                    try {
-                        recipe.getRecipes().forEach(SkyBlockRecipe::init);
-                    } catch (Exception e) {}
-                });
+        Arrays.stream(ItemType.values()).forEach(type -> {
+            SkyBlockItem item = new SkyBlockItem(type);
+            if (item.hasComponent(CraftableComponent.class)) {
+                CraftableComponent craftableComponent = item.getComponent(CraftableComponent.class);
+                if (!craftableComponent.isDefaultCraftable()) return;
+
+                try {
+                    craftableComponent.getRecipes().forEach(SkyBlockRecipe::init);
+                } catch (Exception e) {
+                    Logger.error("Failed to initialize recipe for " + type.name());
+                    e.printStackTrace();
+                }
+            }
+        });
         CollectionCategories.getCategories().forEach(category -> {
             Arrays.stream(category.getCollections()).forEach(collection -> {
                 List<SkyBlockRecipe<?>> recipes = new ArrayList<>();
                 Arrays.stream(collection.rewards()).forEach(reward -> {
                     Arrays.stream(reward.unlocks()).forEach(unlock -> {
                         if (unlock instanceof CollectionCategory.UnlockRecipe recipe) {
-                            List<SkyBlockRecipe<?>> recipeInstances = recipe.getRecipes();
+                            try {
+                                List<SkyBlockRecipe<?>> recipeInstances = recipe.getRecipes();
 
-                            recipeInstances.forEach(recipeInstance -> {
-                                recipeInstance.setCanCraft((player) -> {
-                                    int amount = player.getCollection().get(collection.type());
-                                    return new SkyBlockRecipe.CraftingResult(
-                                            amount >= reward.requirement(),
-                                            new String[]{"§7You must have §c" + collection.type().getDisplayName()
-                                                    + " Collection "
-                                                    + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
-                                    );
+                                recipeInstances.forEach(recipeInstance -> {
+                                    recipeInstance.setCanCraft((player) -> {
+                                        int amount = player.getCollection().get(collection.type());
+                                        return new SkyBlockRecipe.CraftingResult(
+                                                amount >= reward.requirement(),
+                                                new String[]{"§7You must have §c" + collection.type().getDisplayName()
+                                                        + " Collection "
+                                                        + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward))}
+                                        );
+                                    });
+                                    recipes.add(recipeInstance);
                                 });
-                                recipes.add(recipeInstance);
-                            });
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse recipe " + collection.type() + " : " + reward.requirement());
+                            }
                         }
                     });
                 });
@@ -453,17 +495,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register Museum items
          */
-        Arrays.stream(ItemTypeLinker.values()).forEach(itemType -> {
-            try {
-                if (itemType.clazz == null) return;
-                if (itemType.clazz.newInstance() instanceof Museumable museumable) {
-                    if (!(itemType.clazz.newInstance() instanceof TrackedUniqueItem))
-                        Logger.error("Item " + itemType + " is not a tracked item, but is being registered as a museum item.");
-
-                    MuseumableItemCategory.addItem(museumable.getMuseumCategory(), itemType);
-                }
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+        Arrays.stream(ItemType.values()).forEach(itemType -> {
+            SkyBlockItem item = new SkyBlockItem(itemType);
+            if (item.hasComponent(MuseumComponent.class)) {
+                MuseumComponent museumComponent = item.getComponent(MuseumComponent.class);
+                MuseumableItemCategory.addItem(museumComponent.getCategory(), itemType);
             }
         });
         Arrays.stream(ArmorSetRegistry.values()).forEach(armorSet -> {

@@ -1,0 +1,26 @@
+items:
+  - id: CHAMPION
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: COMPACT
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: CULTIVATING
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: EXPERTISE
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET
+  - id: HECATOMB
+    rarity: COMMON
+    components:
+      - id: ENCHANTED
+      - id: NOT_FINISHED_YET

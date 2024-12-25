@@ -17,7 +17,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.ItemLore;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Reforgable;
+import net.swofty.types.generic.item.components.ReforgableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
@@ -119,8 +119,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
         });
 
         if (item.getAmount() > 1 ||
-                item.getGenericInstance() == null ||
-                !(item.getGenericInstance() instanceof Reforgable)) {
+                !(item.hasComponent(ReforgableComponent.class))) {
             set(new GUIItem(22) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
@@ -148,7 +147,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
 
                 coins.setValue(coins.getValue() - cost);
 
-                ReforgeType reforgeType = ((Reforgable) item.getGenericInstance()).getReforgeType();
+                ReforgeType reforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
                 ReforgeType.Reforge reforge = reforgeType.getReforges().get(MathUtility.random(0, reforgeType.getReforges().size() - 1));
                 String oldPrefix = item.getAttributeHandler().getReforge() == null ? "" :
                         " " + item.getAttributeHandler().getReforge().prefix();

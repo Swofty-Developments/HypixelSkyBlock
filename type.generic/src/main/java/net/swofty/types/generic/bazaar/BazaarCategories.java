@@ -5,7 +5,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.objects.bazaar.BazaarInitializeProtocolObject;
-import net.swofty.types.generic.item.ItemTypeLinker;
 
 import java.util.*;
 
@@ -103,7 +102,7 @@ public enum BazaarCategories {
             new BazaarItemSet(ItemType.GHAST_TEAR, "Ghast Tear",
                     ItemType.GHAST_TEAR, ItemType.ENCHANTED_GHAST_TEAR),
             new BazaarItemSet(ItemType.SLIME_BALL, "Slime Drops",
-                    ItemType.SLIME_BALL, ItemType.ENCHANTED_SLIMEBALL, ItemType.ENCHANTED_SLIME_BLOCK, ItemType.MAGMA_CREAM, ItemType.ENCHANTED_MAGMA_CREAM, ItemType.WHIPPED_MAGMA_CREAM),
+                    ItemType.SLIME_BALL, ItemType.ENCHANTED_SLIME_BALL, ItemType.ENCHANTED_SLIME_BLOCK, ItemType.MAGMA_CREAM, ItemType.ENCHANTED_MAGMA_CREAM, ItemType.WHIPPED_MAGMA_CREAM),
             new BazaarItemSet(ItemType.BLAZE_ROD, "Blaze Rod",
                     ItemType.BLAZE_ROD, ItemType.ENCHANTED_BLAZE_POWDER, ItemType.ENCHANTED_BLAZE_ROD),
             new BazaarItemSet(ItemType.FEATHER, "Mythological",
@@ -156,9 +155,5 @@ public enum BazaarCategories {
             }
         }
         return null;
-    }
-
-    public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemTypeLinker itemType) {
-        return getFromItem(itemType.type);
     }
 }

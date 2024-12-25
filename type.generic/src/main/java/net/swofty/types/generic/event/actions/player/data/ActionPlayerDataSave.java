@@ -24,7 +24,6 @@ import java.util.UUID;
 
 public class ActionPlayerDataSave implements SkyBlockEventClass {
 
-
     @SneakyThrows
     @SkyBlockEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
     public void run(PlayerDisconnectEvent event) {

@@ -24,7 +24,6 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.loottable.LootAffector;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
@@ -130,7 +129,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEventHandler.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().setRaw(player, getSkillCategory(), player.getSkills().getRaw(getSkillCategory()) + getSkillXP());
+        player.getSkills().increase(player, getSkillCategory(), (double) getSkillXP());
         player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 
         if (getLootTable() == null) return;
@@ -146,7 +145,7 @@ public abstract class SkyBlockMob extends EntityCreature {
             if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
 
             SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
-            ItemTypeLinker droppedItemLinker = item.getAttributeHandler().getPotentialClassLinker();
+            ItemType droppedItemLinker = item.getAttributeHandler().getPotentialType();
             if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
                 player.getSackItems().increase(droppedItemLinker, record.getAmount());
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {

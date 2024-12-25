@@ -53,7 +53,7 @@ public class GUIMinionRecipes extends SkyBlockInventoryGUI {
         for (SkyBlockMinion.MinionTier minionTier : craftableMinionTiers) {
             int slot = slots[i];
             i++;
-            SkyBlockItem minion = new SkyBlockItem(minionRegistry.getItemTypeLinker());
+            SkyBlockItem minion = new SkyBlockItem(minionRegistry.getItemType());
             minion.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(minionTier.tier(), 0));
 
             set(new GUIClickableItem(slot) {

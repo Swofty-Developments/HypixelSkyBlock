@@ -11,7 +11,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.MinionSkinItem;
+import net.swofty.types.generic.item.components.MinionSkinComponent;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.extension.extensions.MinionSkinExtension;
@@ -32,7 +32,7 @@ public class MinionEntityImpl extends LivingEntity {
     public MinionEntityImpl(IslandMinionData.IslandMinion islandMinion, SkyBlockMinion minion) {
         super(EntityType.ARMOR_STAND);
 
-        this.hasCollision = false;
+        this.collidesWithEntities = false;
         this.hasPhysics = false;
 
         this.islandMinion = islandMinion;
@@ -58,13 +58,13 @@ public class MinionEntityImpl extends LivingEntity {
 
         MinionSkinExtension skinExtension = (MinionSkinExtension) updatedMinion.getExtensionData().getOfType(MinionSkinExtension.class);
 
-        if (skinExtension.getItemTypeLinkerPassedIn() != null) {
-            MinionSkinItem skinItem = (MinionSkinItem) new SkyBlockItem(skinExtension.getItemTypeLinkerPassedIn()).getGenericInstance();
+        if (skinExtension.getItemTypePassedIn() != null) {
+            MinionSkinComponent skinItem = new SkyBlockItem(skinExtension.getItemTypePassedIn()).getComponent(MinionSkinComponent.class);
 
-            setHelmet(skinItem.getHelmet());
-            setBoots(skinItem.getBoots());
-            setLeggings(skinItem.getLeggings());
-            setChestplate(skinItem.getChestplate());
+            setHelmet(skinItem.getHelmetStack());
+            setBoots(skinItem.getBootsStack());
+            setLeggings(skinItem.getLeggingsStack());
+            setChestplate(skinItem.getChestplateStack());
         } else {
             setHelmet(ItemStackCreator.getStackHead(minionTier.texture()).build());
             setBoots(ItemStack.builder(Material.LEATHER_BOOTS).set(ItemComponent.DYED_COLOR,

@@ -1,13 +1,13 @@
 package net.swofty.types.generic.levels.causes;
 
-import net.swofty.types.generic.item.ItemTypeLinker;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NewAccessoryLevelCause extends SkyBlockLevelCauseAbstr {
-    public ItemTypeLinker itemTypeLinker;
+    public ItemType itemTypeLinker;
 
-    public NewAccessoryLevelCause(ItemTypeLinker itemTypeLinker) {
+    public NewAccessoryLevelCause(ItemType itemTypeLinker) {
         this.itemTypeLinker = itemTypeLinker;
     }
 

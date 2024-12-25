@@ -6,11 +6,12 @@ import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BalanceConfigurations {
-    public static Map<ServerType, List<BalanceConfiguration>> configurations = Map.of(
+    public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.of(
             ServerType.HUB, List.of(
                     new LowestPlayerCount()
             ),
@@ -20,7 +21,7 @@ public class BalanceConfigurations {
             ServerType.ISLAND, List.of(
                     new IslandCheck(),
                     new LowestPlayerCount()
-            )
+            ))
     );
 
     public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {

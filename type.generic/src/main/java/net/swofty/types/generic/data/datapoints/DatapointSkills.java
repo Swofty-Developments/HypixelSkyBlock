@@ -81,7 +81,7 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
     @Getter
     @AllArgsConstructor
     public static class PlayerSkills {
-        private Map<SkillCategories, Double> skills;
+        private HashMap<SkillCategories, Double> skills;
         private ItemStatistics skillStatistics = ItemStatistics.empty();
 
         /**
@@ -145,19 +145,29 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
         }
 
         /**
+         * Increases the experience of a specific skill by the given amount.
+         *
+         * @param player   The player whose skills are being updated.
+         * @param category The skill category to update.
+         * @param value    The experience value to add to the existing skill.
+         */
+        public void increase(SkyBlockPlayer player, SkillCategories category, Double value) {
+            setRaw(player, category, getRaw(category) + value);
+        }
+
+        /**
          * Creates and returns a default PlayerSkills instance with all skill categories initialized to 0 experience.
          *
          * @return A default PlayerSkills object with zeroed experience in all categories.
          */
         public static PlayerSkills getDefault() {
-            return new PlayerSkills(Map.of(
-                    SkillCategories.COMBAT, 0.0,
-                    SkillCategories.FARMING, 0.0,
-                    SkillCategories.FISHING, 0.0,
-                    SkillCategories.MINING, 0.0,
-                    SkillCategories.FORAGING, 0.0,
-                    SkillCategories.ENCHANTING, 0.0
-            ), ItemStatistics.empty());
+            HashMap<SkillCategories, Double> skills = new HashMap<>();
+
+            for (SkillCategories category : SkillCategories.values()) {
+                skills.put(category, 0.0);
+            }
+
+            return new PlayerSkills(skills, ItemStatistics.empty());
         }
 
         /**

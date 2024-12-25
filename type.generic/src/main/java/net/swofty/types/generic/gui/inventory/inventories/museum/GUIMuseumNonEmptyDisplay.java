@@ -31,7 +31,7 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
     private final int position;
 
     public GUIMuseumNonEmptyDisplay(SkyBlockItem item, MuseumDisplays display, int position) {
-        super(item.getAttributeHandler().getPotentialClassLinker().getDisplayName(null),
+        super(item.getAttributeHandler().getPotentialType().getDisplayName(),
                 InventoryType.CHEST_4_ROW);
 
         this.item = item;

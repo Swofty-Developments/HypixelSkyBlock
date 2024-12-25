@@ -16,14 +16,13 @@ import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.ItemLore;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.ItemAttributeHandler;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.types.generic.item.impl.GemstoneItem;
-import net.swofty.types.generic.item.impl.SkullHead;
-import net.swofty.types.generic.item.impl.TrackedUniqueItem;
+import net.swofty.types.generic.item.components.GemstoneComponent;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
+import net.swofty.types.generic.item.components.TrackedUniqueComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
@@ -100,28 +99,27 @@ public class PlayerItemUpdater {
                     new Color(leatherColour.red(), leatherColour.green(), leatherColour.blue()), false));
         }
 
-        if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof TrackedUniqueItem
+        if (item.hasComponent(TrackedUniqueComponent.class)
                 && handler.getUniqueTrackedID() == null
                 && isOwnedByPlayer) {
             UUID randomUUID = UUID.randomUUID();
 
             handler.setUniqueTrackedID(randomUUID.toString(), player);
             toReturn.set(Tag.String("unique-tracked-id"), randomUUID.toString());
-        } else if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof TrackedUniqueItem
+        } else if (item.hasComponent(TrackedUniqueComponent.class)
                 && handler.getUniqueTrackedID() != null
                 && isOwnedByPlayer) {
             handler.setUniqueTrackedID(handler.getUniqueTrackedID(), player);
         }
 
-        if (item.getGenericInstance() != null
-                && item.getGenericInstance() instanceof SkullHead skullHead) {
+        if (item.hasComponent(SkullHeadComponent.class)) {
+            SkullHeadComponent skullHeadComponent = item.getComponent(SkullHeadComponent.class);
+
             JSONObject json = new JSONObject();
             json.put("isPublic", true);
             json.put("signatureRequired", false);
             json.put("textures", new JSONObject().put("SKIN", new JSONObject()
-                    .put("url", "http://textures.minecraft.net/texture/" + skullHead.getSkullTexture(player, item))
+                    .put("url", "http://textures.minecraft.net/texture/" + skullHeadComponent.getSkullTexture(item))
                     .put("metadata", new JSONObject().put("model", "slim"))));
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
@@ -129,12 +127,14 @@ public class PlayerItemUpdater {
             toReturn.set(ItemComponent.PROFILE, new HeadProfile(new PlayerSkin(texturesEncoded, null)));
         }
 
-        if (item.getGenericInstance() != null &&
-                item.getGenericInstance() instanceof GemstoneItem gemstoneItem) {
+        if (item.hasComponent(GemstoneComponent.class)) {
+            GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
+
+
             int index = 0;
             ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
-            for (GemstoneItem.GemstoneItemSlot slot : gemstoneItem.getGemstoneSlots()) {
-                if (slot.unlockPrice == 0) {
+            for (GemstoneComponent.GemstoneSlot slot : gemstoneComponent.getSlots()) {
+                if (slot.unlockPrice() == 0) {
                     // Slot should be unlocked by default
                     if (gemData.hasGem(index)) continue;
                     gemData.putGem(

@@ -6,7 +6,7 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
-import net.swofty.types.generic.item.impl.Pet;
+import net.swofty.types.generic.item.components.PetComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionSkillPetLevel implements SkyBlockEventClass {
@@ -21,7 +21,7 @@ public class ActionSkillPetLevel implements SkyBlockEventClass {
         SkyBlockItem enabledPet = player.getPetData().getEnabledPet();
 
         if (enabledPet == null) return;
-        Pet pet = (Pet) enabledPet.getGenericInstance();
+        PetComponent pet = enabledPet.getComponent(PetComponent.class);
         if (pet.getSkillCategory() != event.getSkillCategory()) return;
 
         ItemAttributePetData.PetData petData = enabledPet.getAttributeHandler().getPetData();

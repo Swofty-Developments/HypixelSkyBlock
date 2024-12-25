@@ -4,7 +4,7 @@ import net.swofty.commons.item.ReforgeType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.item.ItemAttributeHandler;
-import net.swofty.types.generic.item.impl.Reforgable;
+import net.swofty.types.generic.item.components.ReforgableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -23,7 +23,7 @@ public class ReforgeCommand extends SkyBlockCommand {
 
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
-                ReforgeType reforgeType = ((Reforgable) item.getGenericInstance()).getReforgeType();
+                ReforgeType reforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
                 ReforgeType.Reforge reforge = reforgeType.getReforges().get(MathUtility.random(0, reforgeType.getReforges().size() - 1));
                 try {
                     itemAttributeHandler.setReforge(reforge);

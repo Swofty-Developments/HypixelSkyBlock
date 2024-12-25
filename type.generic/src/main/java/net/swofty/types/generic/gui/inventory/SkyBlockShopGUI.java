@@ -20,7 +20,7 @@ import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.gui.inventory.inventories.shop.GUIGenericTradingOptions;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Sellable;
+import net.swofty.types.generic.item.components.SellableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -114,12 +114,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
             if (stack.material().equals(Material.AIR)) continue;
 
             SkyBlockItem item = new SkyBlockItem(stack);
-            if (item.getGenericInstance() instanceof Sellable sellable) {
+            if (item.hasComponent(SellableComponent.class)) {
                 ItemStack.Builder toReplace = PlayerItemUpdater.playerUpdate(
                         getPlayer(), stack
                 );
 
-                double sellPrice = sellable.getSellValue() * stack.amount();
+                double sellPrice = item.getComponent(SellableComponent.class).getSellValue() * stack.amount();
                 List<String> lore = new ArrayList<>(toReplace.build().get(ItemComponent.LORE)
                         .stream()
                         .map(StringUtility::getTextFromComponent)
@@ -186,8 +186,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                 );
                 itemStack.amount(amountOfLast);
 
-                double value = (last.getGenericInstance() instanceof Sellable ? ((Sellable) last.getGenericInstance()).getSellValue() : 1)
-                        * amountOfLast;
+                double value = last.getComponent(SellableComponent.class).getSellValue() * amountOfLast;
 
                 double playerCoins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (playerCoins < value) {
@@ -216,7 +215,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
                         player, last.getItemStackBuilder().build()
                 );
 
-                double buyBackPrice = ((Sellable) last.getGenericInstance()).getSellValue() * amountOfLast;
+                double buyBackPrice = last.getComponent(SellableComponent.class).getSellValue() * amountOfLast;
 
                 List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
                         .stream()
@@ -323,9 +322,9 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
         if (stack.material().equals(Material.AIR)) return;
         SkyBlockItem item = new SkyBlockItem(stack);
 
-        Sellable sellable;
-        if (item.getGenericInstance() instanceof Sellable sellableInstance) {
-            sellable = sellableInstance;
+        SellableComponent sellable;
+        if (item.hasComponent(SellableComponent.class)) {
+            sellable = item.getComponent(SellableComponent.class);
         } else {
             e.getPlayer().sendMessage("§cYou can't sell this item!");
             return;

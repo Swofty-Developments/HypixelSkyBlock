@@ -6,12 +6,12 @@ import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -77,7 +77,7 @@ public class MobGraveyardZombie extends SkyBlockMob implements RegionPopulator {
         return new SkyBlockLootTable() {
             @Override
             public @NonNull List<LootRecord> getLootTable() {
-                return List.of(new LootRecord(ItemTypeLinker.ROTTEN_FLESH, makeAmountBetween(1, 3), 20));
+                return List.of(new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20));
             }
 
             @Override

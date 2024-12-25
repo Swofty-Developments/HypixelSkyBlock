@@ -14,7 +14,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Interactable;
+import net.swofty.types.generic.item.components.InteractableComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
@@ -32,8 +32,8 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
             return;
         }
 
-        if (clickedItem.getGenericInstance() != null &&
-                clickedItem.getGenericInstance() instanceof Interactable interactable) {
+        if (clickedItem.hasComponent(InteractableComponent.class)) {
+            InteractableComponent interactable = clickedItem.getComponent(InteractableComponent.class);
             if (interactable.onInventoryInteract(player, clickedItem)) {
                 event.setCancelled(true);
                 return;

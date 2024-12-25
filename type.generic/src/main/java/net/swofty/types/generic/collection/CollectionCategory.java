@@ -6,14 +6,14 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.Minion;
-import net.swofty.types.generic.item.impl.SkyBlockRecipe;
+import net.swofty.types.generic.item.components.MinionComponent;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +25,6 @@ public abstract class CollectionCategory {
     public abstract String getName();
 
     public abstract ItemCollection[] getCollections();
-
-    public ItemCollection getCollection(ItemTypeLinker type) {
-        return getCollection(type.type);
-    }
 
     public ItemCollection getCollection(ItemType type) {
         for (ItemCollection collection : getCollections()) {
@@ -102,7 +98,7 @@ public abstract class CollectionCategory {
             SkyBlockItem skyBlockItem = getRecipes().getFirst().getResult();
             ItemStack.Builder updatedItem = new NonPlayerItemUpdater(getRecipes().getFirst().getResult()).getUpdatedItem();
             ArrayList<String> lore = new ArrayList<>(updatedItem.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-            if (skyBlockItem.getGenericInstance() instanceof Minion) {
+            if (skyBlockItem.hasComponent(MinionComponent.class)) {
                 String material = StringUtility.toNormalCase(skyBlockItem.getAttributeHandler().getMinionType().toString());
                 updatedItem.customName(Component.text("§r§9" + material + " Minion Recipes"));
                 lore.clear();

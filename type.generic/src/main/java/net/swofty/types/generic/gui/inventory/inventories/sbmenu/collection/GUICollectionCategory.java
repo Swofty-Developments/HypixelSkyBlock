@@ -12,7 +12,6 @@ import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 
@@ -130,7 +129,7 @@ public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCatego
         return new GUIClickableItem(slot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUICollectionItem(ItemTypeLinker.fromType(item.type())).open(player);
+                new GUICollectionItem(item.type()).open(player);
             }
 
             @Override

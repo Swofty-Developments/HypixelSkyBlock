@@ -24,7 +24,7 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.impl.SpecificAuctionCategory;
+import net.swofty.types.generic.item.components.AuctionCategoryComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
@@ -230,8 +230,8 @@ public class AuctionViewThirdNormal implements AuctionView {
                 player.closeInventory();
 
                 AuctionCategories category;
-                if (new SkyBlockItem(item.getItem()).getGenericInstance() != null && new SkyBlockItem(item.getItem()).getGenericInstance() instanceof SpecificAuctionCategory instanceCategory)
-                    category = instanceCategory.getAuctionCategory();
+                if (new SkyBlockItem(item.getItem()).hasComponent(AuctionCategoryComponent.class))
+                    category = new SkyBlockItem(item.getItem()).getComponent(AuctionCategoryComponent.class).getCategory();
                 else {
                     category = AuctionCategories.TOOLS;
                 }

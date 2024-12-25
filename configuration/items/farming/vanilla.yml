@@ -1,0 +1,389 @@
+items:
+  - id: BAKED_POTATO
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: CACTUS
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 2.0
+      - id: SELLABLE
+        value: 3.0
+  - id: CACTUS_GREEN
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: CARROT
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+  - id: COCOA_BEAN
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+  - id: DIAMOND_HOE
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HOE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - OB
+              - OB
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_HOE
+              amount: 1
+      - id: SELLABLE
+        value: 8.0
+  - id: EGG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: FEATHER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: GLISTERING_MELON
+    rarity: COMMON
+    components:
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_NUGGET
+                amount: 1
+              B:
+                type: MELON_SLICE
+                amount: 1
+            result:
+              type: GLISTERING_MELON
+              amount: 1
+      - id: SELLABLE
+        value: 3.5
+  - id: GOLDEN_CARROT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: GOLD_NUGGET
+                amount: 1
+              B:
+                type: CARROT
+                amount: 1
+            result:
+              type: GOLDEN_CARROT
+              amount: 1
+  - id: GOLDEN_HOE
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HOE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - OB
+              - OB
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_HOE
+              amount: 1
+      - id: SELLABLE
+        value: 4.0
+  - id: HAY_BALE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 54.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: WHEAT
+                amount: 1
+            result:
+              type: HAY_BALE
+              amount: 1
+  - id: IRON_HOE
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HOE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - OB
+              - OB
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_HOE
+              amount: 1
+      - id: SELLABLE
+        value: 3.0
+  - id: LEATHER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: MELON
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 2.0
+  - id: MELON_BLOCK
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 18.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: MELON_SLICE
+                amount: 1
+            result:
+              type: MELON_BLOCK
+              amount: 1
+  - id: MUSHROOM
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 10.0
+  - id: MUTTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: NETHER_WART
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 4.0
+  - id: POTATO
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+  - id: PUMPKIN
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.5
+      - id: SELLABLE
+        value: 10.0
+  - id: RABBIT_FOOT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: RABBIT_HIDE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: RAW_BEEF
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+  - id: RAW_CHICKEN
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+  - id: RAW_PORKCHOP
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+  - id: RAW_RABBIT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+  - id: SEEDS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: STONE_HOE
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HOE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - OB
+              - OB
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_HOE
+              amount: 1
+      - id: SELLABLE
+        value: 2.0
+  - id: SUGAR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: SUGAR_CANE
+                amount: 1
+            result:
+              type: SUGAR
+              amount: 1
+  - id: SUGAR_CANE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 2.0
+      - id: SELLABLE
+        value: 4.0
+  - id: WHEAT
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 6.0
+  - id: WOODEN_HOE
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HOE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - OB
+              - OB
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WOODEN_HOE
+              amount: 1
+      - id: SELLABLE
+        value: 1.0

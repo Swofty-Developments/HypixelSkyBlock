@@ -1,0 +1,121 @@
+items:
+  - id: BITTER_ICE_TEA
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: e6f4e84795c16daa3df79538f2eb7a9db6bc2488f21533133b266a5ff9d2b1f1
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Bitter Iced Tea
+      - id: NOT_FINISHED_YET
+  - id: BLACK_COFFEE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 194221a0de936bac5ce895f2acad19c64795c18ce5555b971594205bd3ec
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Black Coffee
+      - id: NOT_FINISHED_YET
+  - id: CHEAP_COFFEE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 194221a0de936bac5ce895f2acad19c64795c18ce5555b971594205bd3ec
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Cheap Coffee
+      - id: NOT_FINISHED_YET
+  - id: DECENT_COFFEE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 7ea0f7757185be9df5b2fc9d85d40642ea4fdb4515f314da18f59c696e5be9
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Decent Coffee
+      - id: NOT_FINISHED_YET
+  - id: END_PORTAL_FUMES
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 12ccb84f9c0cbb2eb7b9abbb7a4fc7b3186150d5e7db01852ac6d495de17e812
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: End Portal Fumes
+      - id: NOT_FINISHED_YET
+  - id: GABAGOEY_MIXIN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 41e813a3a380e3eb201c24b9661f6edb39bdf42a88989f81a90f771997d6f5cd
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Gabagoey Mixin
+      - id: NOT_FINISHED_YET
+  - id: KNOCKOFF_COLA
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: c14befd4d3797a8a6ab53ceedebab3c12b7b1f03440bf0085010025c35717628
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: KnockOff™ Cola
+      - id: NOT_FINISHED_YET
+  - id: PULPOUS_ORANGE_JUICE
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 61b35f7077ecf98ef3eba0f35d93a9813030f9b8b8e426aeb68dab38f1116
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Pulpous Orange Juice
+      - id: NOT_FINISHED_YET
+  - id: SPIDER_EGG_MIXIN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: a5ac5e39ea511af1e7ab1c5956d1615f7ebb6f226a4ed3394c6a0b4c6a6d106f
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Spider Egg Mixin
+      - id: NOT_FINISHED_YET
+  - id: TEPID_GREEN_TEA
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: d2168dfc513c31b1e1c2d853e8169015381c8378eee224ae6dbb1e12485e9a98
+      - id: EXTRA_UNDER_NAME
+        display: Basic Brew
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Tepid Green Tea
+      - id: NOT_FINISHED_YET
+  - id: WOLF_FUR_MIXIN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: 595231147189ac4b9f53487ce35ba0205bf377f3986c0e5ceb942e77f1c39cc
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Wolf Fur Mixin
+      - id: NOT_FINISHED_YET
+  - id: ZOMBIE_BRAIN_MIXIN
+    rarity: COMMON
+    components:
+      - id: DECORATION_HEAD
+        texture: dcedb2f4c97016cae7b89e4c6d6978d22ac3476c815c5a09a6792450dd918b6c
+      - id: EXTRA_UNDER_NAME
+        display: Brewing Ingredient
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Zombie Brain Mixin
+      - id: NOT_FINISHED_YET

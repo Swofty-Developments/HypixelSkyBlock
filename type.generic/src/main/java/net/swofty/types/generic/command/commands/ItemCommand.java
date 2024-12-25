@@ -3,9 +3,9 @@ package net.swofty.types.generic.command.commands;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
@@ -18,13 +18,13 @@ import net.swofty.types.generic.user.categories.Rank;
 public class ItemCommand extends SkyBlockCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
-        ArgumentEnum<ItemTypeLinker> itemArgument = ArgumentType.Enum("item", ItemTypeLinker.class);
+        ArgumentEnum<ItemType> itemArgument = ArgumentType.Enum("item", ItemType.class);
         ArgumentInteger amountArgument = ArgumentType.Integer("amount");
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            final ItemTypeLinker itemTypeLinker = context.get(itemArgument);
+            final ItemType itemTypeLinker = context.get(itemArgument);
 
             SkyBlockItem item = new SkyBlockItem(itemTypeLinker);
             ((SkyBlockPlayer) sender).addAndUpdateItem(item);
@@ -33,7 +33,7 @@ public class ItemCommand extends SkyBlockCommand {
         }, itemArgument);
 
         command.addSyntax((sender, context) -> {
-            final ItemTypeLinker itemTypeLinker = context.get(itemArgument);
+            final ItemType itemTypeLinker = context.get(itemArgument);
             final int amount = context.get(amountArgument);
 
             SkyBlockItem item = new SkyBlockItem(itemTypeLinker);

@@ -47,7 +47,7 @@ public class MissionTalkToFarmHand extends SkyBlockMission {
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§b5 SkyBlock XP", "§3100 §7Farming Experience"))).forEach(player::sendMessage);
-        player.getSkills().setRaw(player, SkillCategories.FARMING, player.getSkills().getRaw(SkillCategories.FARMING) + 100);
+        player.getSkills().increase(player, SkillCategories.FARMING, 100D);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
         player.getMissionData().startMission(MissionCraftWheatMinion.class);
     }

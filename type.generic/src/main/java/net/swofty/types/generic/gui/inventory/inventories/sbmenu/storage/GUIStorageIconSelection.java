@@ -6,13 +6,13 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 import net.swofty.commons.StringUtility;
@@ -66,7 +66,7 @@ public class GUIStorageIconSelection extends SkyBlockPaginatedGUI<Material> {
         paged.add(Material.BARRIER);
 
         List<Material> vanilla = new ArrayList<>(Material.values().stream().toList());
-        vanilla.removeIf((element) -> ItemTypeLinker.isVanillaReplaced(element.name()));
+        vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.name()));
         paged.addAll(vanilla);
 
         return paged;

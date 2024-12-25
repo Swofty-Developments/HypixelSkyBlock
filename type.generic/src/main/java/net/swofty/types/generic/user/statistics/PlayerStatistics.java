@@ -26,13 +26,12 @@ import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.item.impl.ConstantStatistics;
-import net.swofty.types.generic.item.impl.Pet;
-import net.swofty.types.generic.item.impl.StandardItem;
+import net.swofty.types.generic.item.components.ConstantStatisticsComponent;
+import net.swofty.types.generic.item.components.PetComponent;
+import net.swofty.types.generic.item.components.StandardItemComponent;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
@@ -104,9 +103,8 @@ public class PlayerStatistics {
 
         ItemStatistics total = ItemStatistics.builder().build();
         for (SkyBlockItem item : armorPieces) {
-            if (item.getGenericInstance() != null)
-                if (item.getGenericInstance() instanceof ConstantStatistics)
-                    continue;
+            if (item.hasComponent(ConstantStatisticsComponent.class))
+                continue;
 
             total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(), calculateExtraItemStatisticsToAdd(
                     item,
@@ -161,12 +159,12 @@ public class PlayerStatistics {
     public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
 
-        if (item.getGenericInstance() != null) {
-            if (item.getGenericInstance() instanceof ConstantStatistics)
+        if (item.hasComponent(ConstantStatisticsComponent.class))
+            return ItemStatistics.empty();
+        if (item.hasComponent(StandardItemComponent.class)) {
+            StandardItemComponent standardItem = item.getComponent(StandardItemComponent.class);
+            if (standardItem.getType().isArmor())
                 return ItemStatistics.empty();
-            if (item.getGenericInstance() instanceof StandardItem standardItem)
-                if (standardItem.getStandardItemType().isArmor())
-                    return ItemStatistics.empty();
         }
 
         return ItemStatistics.add(item.getAttributeHandler().getStatistics(),
@@ -180,8 +178,8 @@ public class PlayerStatistics {
     public ItemStatistics petStatistics() {
         SkyBlockItem pet = player.getPetData().getEnabledPet();
         if (pet == null) return ItemStatistics.empty();
-        ItemStatistics baseStatistics = ((Pet) pet.getGenericInstance()).getBaseStatistics();
-        ItemStatistics perLevelStatistics = ((Pet) pet.getGenericInstance()).getPerLevelStatistics(
+        ItemStatistics baseStatistics = pet.getComponent(PetComponent.class).getBaseStatistics();
+        ItemStatistics perLevelStatistics = pet.getComponent(PetComponent.class).getPerLevelStatistics(
                 pet.getAttributeHandler().getRarity()
         );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
@@ -232,16 +230,15 @@ public class PlayerStatistics {
     }
 
     public void updateAccessoryStatistics() {
-        List<ItemTypeLinker> usedAccessories = new ArrayList<>();
+        List<ItemType> usedAccessories = new ArrayList<>();
         ItemStatistics total = ItemStatistics.builder().build();
         for (ItemStack itemStack : player.getInventory().getItemStacks()) {
             if (SkyBlockItem.isSkyBlockItem(itemStack)) {
                 SkyBlockItem item = new SkyBlockItem(itemStack);
-                if (item.getGenericInstance() == null) continue;
-                if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
-                if (usedAccessories.contains(item.getAttributeHandler().getPotentialClassLinker())) continue;
+                if (!(item.hasComponent(ConstantStatisticsComponent.class))) continue;
+                if (usedAccessories.contains(item.getAttributeHandler().getPotentialType())) continue;
 
-                usedAccessories.add(item.getAttributeHandler().getPotentialClassLinker());
+                usedAccessories.add(item.getAttributeHandler().getPotentialType());
                 total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                         calculateExtraItemStatisticsToAdd(
                             item,
@@ -252,11 +249,10 @@ public class PlayerStatistics {
         }
         for (SkyBlockItem item : player.getAccessoryBag().getAllAccessories()) {
             if (item == null) continue;
-            if (item.getGenericInstance() == null) continue;
-            if (!(item.getGenericInstance() instanceof ConstantStatistics)) continue;
-            if (usedAccessories.contains(item.getAttributeHandler().getPotentialClassLinker())) continue;
+            if (!(item.hasComponent(ConstantStatisticsComponent.class))) continue;
+            if (usedAccessories.contains(item.getAttributeHandler().getPotentialType())) continue;
 
-            usedAccessories.add(item.getAttributeHandler().getPotentialClassLinker());
+            usedAccessories.add(item.getAttributeHandler().getPotentialType());
             total = ItemStatistics.add(total, ItemStatistics.add(item.getAttributeHandler().getStatistics(),
                     calculateExtraItemStatisticsToAdd(
                         item,

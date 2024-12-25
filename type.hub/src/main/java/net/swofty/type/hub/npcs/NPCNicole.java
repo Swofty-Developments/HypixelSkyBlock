@@ -1,9 +1,9 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.item.ItemTypeLinker;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -43,9 +43,9 @@ public class NPCNicole extends NPCDialogue {
     @Override
     public void onClick(PlayerClickNPCEvent e) {
         if (isInDialogue(e.player())) return;
-        ItemTypeLinker itemTypeLinker = new SkyBlockItem(e.player().getItemInMainHand()).getAttributeHandler().getPotentialClassLinker();
+        ItemType itemTypeLinker = new SkyBlockItem(e.player().getItemInMainHand()).getAttributeHandler().getPotentialType();
         // check if the item is cheap coffee ItemType
-        if (itemTypeLinker == ItemTypeLinker.CHEAP_COFFEE || itemTypeLinker == ItemTypeLinker.DECENT_COFFEE || itemTypeLinker == ItemTypeLinker.BLACK_COFFEE) {
+        if (itemTypeLinker == ItemType.CHEAP_COFFEE || itemTypeLinker == ItemType.DECENT_COFFEE || itemTypeLinker == ItemType.BLACK_COFFEE) {
             setDialogue(e.player(), "coffee-hello");
         } else {
             setDialogue(e.player(), "hello");

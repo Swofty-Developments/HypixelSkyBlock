@@ -1,0 +1,691 @@
+name: Combat
+displayIcon: STONE_SWORD
+collections:
+- itemType: BLAZE_ROD
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: BLAZE_MINION
+        isMinionRecipes: true
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_BLAZE_POWDER
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: BLAZE_ROD
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_BLAZE_ROD
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: ENCHANTED_BLAZE_POWDER
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: STRING
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: SPIDER_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: QUIVER
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_STRING
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: STRING
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: QUIVER_UPGRADE_1
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: QUIVER_UPGRADE_2
+- itemType: ENDER_PEARL
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENDERMAN_MINION
+        isMinionRecipes: true
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: ENDER_SLAYER_DISCOUNT
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 15000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: RECIPE
+      data:
+        recipeType: COMBAT
+        resultType: ASPECT_OF_THE_END
+        resultAmount: 1
+        pattern:
+          - A
+          - A
+          - B
+        ingredients:
+          A:
+            type: ENCHANTED_EYE_OF_ENDER
+            amount: 16
+          B:
+            type: ENCHANTED_DIAMOND
+            amount: 1
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: BONE
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: SKELETON_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_BONE
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: BONE
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 150000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_BONE_BLOCK
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: ENCHANTED_BONE
+- itemType: CHILI_PEPPER
+  rewards:
+  - amount: 10
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 75
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: STUFFED_CHILI_PEPPER
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: CHILI_PEPPER
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 20000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: GHAST_TEAR
+  rewards:
+  - amount: 20
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: GHAST_MINION
+        isMinionRecipes: true
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: RECIPE
+      data:
+        recipeType: NONE
+        resultType: SILVER_FANG
+        resultAmount: 1
+        pattern:
+          - OAO
+          - AAA
+          - OAO
+        ingredients:
+          A:
+            type: ENCHANTED_GHAST_TEAR
+            amount: 5
+          O:
+            type: AIR
+            amount: 1
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: GUNPOWDER
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: CREEPER_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_GUNPOWDER
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: GUNPOWDER
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: MAGMA_CREAM
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: MAGMA_CUBE_MINION
+        isMinionRecipes: true
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_MAGMA_CREAM
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: MAGMA_CREAM
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: WHIPPED_MAGMA_CREAM
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: ENCHANTED_MAGMA_CREAM
+- itemType: ROTTEN_FLESH
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ZOMBIE_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: SMITE_DISCOUNT
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_ROTTEN_FLESH
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: ROTTEN_FLESH
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: RECIPE
+      data:
+        recipeType: SLAYER
+        resultType: ZOMBIE_HEART
+        resultAmount: 1
+        pattern:
+          - AAA
+          - AOA
+          - AAA
+        ingredients:
+          A:
+            type: ENCHANTED_ROTTEN_FLESH
+            amount: 32
+          O:
+            type: AIR
+            amount: 1
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 100000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: SLIME_BALL
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: SLIME_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_SLIMEBALL
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: SLIME_BALL
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_SLIME_BLOCK
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: ENCHANTED_SLIMEBALL
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+- itemType: SPIDER_EYE
+  rewards:
+  - amount: 50
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: CAVE_SPIDER_MINION
+        isMinionRecipes: true
+  - amount: 100
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 250
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 1000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+    - type: SPECIAL_UNLOCK
+      data:
+        unlockedItemType: ENCHANTED_SPIDER_EYE
+        isEnchantedRecipe: true
+        recipeType: COMBAT
+        resultType: SPIDER_EYE
+  - amount: 2500
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 5000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 10000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 25000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
+  - amount: 50000
+    rewards:
+    - type: XP
+      data:
+        xp: 4
