@@ -514,6 +514,7 @@ items:
         mining_value: 5.0
       - id: SELLABLE
         value: 1.0
+      - id: PLACEABLE
   - id: REDSTONE_BLOCK
     rarity: COMMON
     components:
