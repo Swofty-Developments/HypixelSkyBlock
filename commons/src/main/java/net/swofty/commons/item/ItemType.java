@@ -359,7 +359,7 @@ public enum ItemType {
     AXE_OF_THE_SHREDDED(Material.DIAMOND_AXE,  Rarity.LEGENDARY),
     REAPER_SCYTHE(Material.DIAMOND_HOE,  Rarity.LEGENDARY),
 
-    /**
+    /*
      * Spider Slayer
      */
 
@@ -376,7 +376,7 @@ public enum ItemType {
     SCORPION_FOIL(Material.WOODEN_SWORD,  Rarity.EPIC),
      */
 
-    /**
+    /*
      * Wolf Slayer
      */
 
@@ -393,7 +393,7 @@ public enum ItemType {
     WEIRD_TUBA(Material.HOPPER,  Rarity.RARE),
      */
 
-    /**
+    /*
      * Enderman Slayer
      */
 
@@ -425,7 +425,7 @@ public enum ItemType {
     ETHERWARP_CONDUIT(Material.PLAYER_HEAD,  Rarity.EPIC),
     */
 
-    /**
+    /*
      * Blaze Slayer
      */
 
@@ -797,7 +797,7 @@ public enum ItemType {
     REDSTONE(Material.REDSTONE,  Rarity.COMMON),
     REDSTONE_BLOCK(Material.REDSTONE_BLOCK,  Rarity.COMMON),
     ROTTEN_FLESH(Material.ROTTEN_FLESH,  Rarity.COMMON),
-    SLIME_BALL(Material.SLIME_BALL,  Rarity.COMMON),
+    SLIMEBALL(Material.SLIME_BALL,  Rarity.COMMON),
     SPONGE(Material.SPONGE,  Rarity.COMMON),
     SPRUCE_WOOD(Material.SPRUCE_WOOD,  Rarity.COMMON),
     STRING(Material.STRING,  Rarity.COMMON),
@@ -881,6 +881,9 @@ public enum ItemType {
     PUFFERFISH(Material.PUFFERFISH,  Rarity.COMMON),
     COD(Material.COD,  Rarity.COMMON),
     SALMON(Material.SALMON,  Rarity.COMMON),
+    TORCH(Material.TORCH,  Rarity.COMMON),
+    RAW_BEEF(Material.BEEF,  Rarity.UNCOMMON),
+    RAW_CHICKEN(Material.CHICKEN,  Rarity.UNCOMMON),
     SPIDER_EYE(Material.SPIDER_EYE,  Rarity.COMMON),
     CACTUS_GREEN(Material.GREEN_DYE,  Rarity.COMMON),
     DANDELION(Material.DANDELION,  Rarity.COMMON),
@@ -1028,6 +1031,7 @@ public enum ItemType {
     NETHER_BRICK_STAIRS(Material.NETHER_BRICK_STAIRS,  Rarity.COMMON),
     NETHER_BRICK_WALL(Material.NETHER_BRICK_WALL,  Rarity.COMMON),
     NETHER_BRICK_FENCE(Material.NETHER_BRICK_FENCE,  Rarity.COMMON),
+
     WHITE_DYE(Material.WHITE_DYE,  Rarity.COMMON),
     ORANGE_DYE(Material.ORANGE_DYE,  Rarity.COMMON),
     MAGENTA_DYE(Material.MAGENTA_DYE,  Rarity.COMMON),
@@ -1044,6 +1048,7 @@ public enum ItemType {
     RED_DYE(Material.RED_DYE,  Rarity.COMMON),
     BLACK_DYE(Material.BLACK_DYE,  Rarity.COMMON),
     GREEN_DYE(Material.GREEN_DYE, Rarity.COMMON),
+
     WHITE_WOOL(Material.WHITE_WOOL,  Rarity.COMMON),
     ORANGE_WOOL(Material.ORANGE_WOOL,  Rarity.COMMON),
     MAGENTA_WOOL(Material.MAGENTA_WOOL,  Rarity.COMMON),
@@ -1060,6 +1065,7 @@ public enum ItemType {
     GREEN_WOOL(Material.GREEN_WOOL,  Rarity.COMMON),
     RED_WOOL(Material.RED_WOOL,  Rarity.COMMON),
     BLACK_WOOL(Material.BLACK_WOOL,  Rarity.COMMON),
+
     WHITE_CARPET(Material.WHITE_CARPET,  Rarity.COMMON),
     ORANGE_CARPET(Material.ORANGE_CARPET,  Rarity.COMMON),
     MAGENTA_CARPET(Material.MAGENTA_CARPET,  Rarity.COMMON),
@@ -1159,7 +1165,6 @@ public enum ItemType {
     WHITE_TULIP(Material.WHITE_TULIP,  Rarity.COMMON),
     ROSE_BUSH(Material.ROSE_BUSH,  Rarity.COMMON),
     TORCHFLOWER(Material.TORCHFLOWER,  Rarity.COMMON),
-    TORCH(Material.TORCH,  Rarity.COMMON),
     PITCHER_PLANT(Material.PITCHER_PLANT,  Rarity.COMMON),
     BLUE_ORCHID(Material.BLUE_ORCHID,  Rarity.COMMON),
     PEONY(Material.PEONY,  Rarity.COMMON),
@@ -1168,10 +1173,33 @@ public enum ItemType {
     ALLIUM(Material.ALLIUM,  Rarity.COMMON),
     AZURE_BLUET(Material.AZURE_BLUET,  Rarity.COMMON),
     OXEYE_DAISY(Material.OXEYE_DAISY,  Rarity.COMMON),
-    RAW_BEEF(Material.BEEF,  Rarity.UNCOMMON),
-    RAW_CHICKEN(Material.CHICKEN,  Rarity.UNCOMMON),
+
     BREWING_STAND(Material.BREWING_STAND, Rarity.COMMON),
     ENCHANTING_TABLE(Material.ENCHANTING_TABLE, Rarity.COMMON),
+    FURNACE(Material.FURNACE, Rarity.COMMON),
+    REDSTONE_TORCH(Material.REDSTONE_TORCH, Rarity.COMMON),
+    REPEATER(Material.REPEATER, Rarity.COMMON),
+    COMPARATOR(Material.COMPARATOR, Rarity.COMMON),
+    LEVER(Material.LEVER, Rarity.COMMON),
+    STONE_BUTTON(Material.STONE_BUTTON, Rarity.COMMON),
+    STONE_PRESSURE_PLATE(Material.STONE_PRESSURE_PLATE, Rarity.COMMON),
+    LIGHT_WEIGHTED_PRESSURE_PLATE(Material.LIGHT_WEIGHTED_PRESSURE_PLATE, Rarity.COMMON),
+    HEAVY_WEIGHTED_PRESSURE_PLATE(Material.HEAVY_WEIGHTED_PRESSURE_PLATE, Rarity.COMMON),
+    TRIPWIRE_HOOK(Material.TRIPWIRE_HOOK, Rarity.COMMON),
+    PISTON(Material.PISTON, Rarity.COMMON),
+    STICKY_PISTON(Material.STICKY_PISTON, Rarity.COMMON),
+    DISPENSER(Material.DISPENSER, Rarity.COMMON),
+    DROPPER(Material.DROPPER, Rarity.COMMON),
+    HOPPER(Material.HOPPER, Rarity.COMMON),
+    NOTE_BLOCK(Material.NOTE_BLOCK, Rarity.COMMON),
+    RAIL(Material.RAIL, Rarity.COMMON),
+    ACTIVATOR_RAIL(Material.ACTIVATOR_RAIL, Rarity.COMMON),
+    DETECTOR_RAIL(Material.DETECTOR_RAIL, Rarity.COMMON),
+    POWERED_RAIL(Material.POWERED_RAIL, Rarity.COMMON),
+    TNT(Material.TNT, Rarity.COMMON),
+    DAYLIGHT_DETECTOR(Material.DAYLIGHT_DETECTOR, Rarity.COMMON),
+    JUKEBOX(Material.JUKEBOX, Rarity.COMMON),
+
     /**
      * Enchanted Items
      */
@@ -1280,7 +1308,6 @@ public enum ItemType {
     ENCHANTED_RAW_RABBIT(Material.RABBIT,  Rarity.UNCOMMON),
     ENCHANTED_SAND(Material.SAND,  Rarity.UNCOMMON),
     ENCHANTED_SEEDS(Material.WHEAT_SEEDS,  Rarity.UNCOMMON),
-    ENCHANTED_SLIME_BALL(Material.SLIME_BALL,  Rarity.UNCOMMON),
     ENCHANTED_SLIME_BLOCK(Material.SLIME_BLOCK,  Rarity.RARE),
     ENCHANTED_SUGAR_CANE(Material.SUGAR_CANE,  Rarity.RARE),
     ENCHANTED_SULPHUR(Material.GLOWSTONE_DUST,  Rarity.RARE),

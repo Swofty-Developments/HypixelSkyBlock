@@ -569,7 +569,7 @@ collections:
     - type: XP
       data:
         xp: 4
-- itemType: SLIME_BALL
+- itemType: SLIMEBALL
   rewards:
   - amount: 50
     rewards:
@@ -605,7 +605,7 @@ collections:
         unlockedItemType: ENCHANTED_SLIMEBALL
         isEnchantedRecipe: true
         recipeType: COMBAT
-        resultType: SLIME_BALL
+        resultType: SLIMEBALL
   - amount: 5000
     rewards:
     - type: XP
