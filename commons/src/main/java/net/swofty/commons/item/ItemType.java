@@ -1199,6 +1199,11 @@ public enum ItemType {
     TNT(Material.TNT, Rarity.COMMON),
     DAYLIGHT_DETECTOR(Material.DAYLIGHT_DETECTOR, Rarity.COMMON),
     JUKEBOX(Material.JUKEBOX, Rarity.COMMON),
+    MINECART(Material.MINECART, Rarity.COMMON),
+    CHEST_MINECART(Material.CHEST_MINECART, Rarity.COMMON),
+    HOPPER_MINECART(Material.HOPPER_MINECART, Rarity.COMMON),
+    TNT_MINECART(Material.TNT_MINECART, Rarity.COMMON),
+    FURNACE_MINECART(Material.FURNACE_MINECART, Rarity.COMMON),
 
     /**
      * Enchanted Items
