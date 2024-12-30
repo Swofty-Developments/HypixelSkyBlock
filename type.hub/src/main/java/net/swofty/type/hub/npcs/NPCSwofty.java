@@ -49,7 +49,7 @@ public class NPCSwofty extends NPCDialogue {
         return Stream.of(
                 NPCDialogue.DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Make sure to check out our discord server at discord.gg/atlasmc!",
+                                "Make sure to check out our discord server at discord.gg/paper!",
                                 "Feel free to create a pull request to help us :)"
                         }).build()
         ).toArray(NPCDialogue.DialogueSet[]::new);
