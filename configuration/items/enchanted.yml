@@ -912,7 +912,7 @@ items:
     components:
       - id: ENCHANTED
         recipe_type: COMBAT
-        item_id: ENCHANTED_SLIME_BALL
+        item_id: ENCHANTED_SLIMEBALL
       - id: SELLABLE
         value: 128000
 

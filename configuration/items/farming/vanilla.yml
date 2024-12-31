@@ -199,17 +199,19 @@ items:
     components:
       - id: SELLABLE
         value: 3.0
-  - id: MELON
+  - id: MELON_SLICE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Melon
+  - id: MELON_BLOCK
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
         category: FARMING
         mining_value: 4.0
-      - id: SELLABLE
-        value: 2.0
-  - id: MELON_BLOCK
-    rarity: COMMON
-    components:
       - id: PLACEABLE
       - id: SELLABLE
         value: 18.0

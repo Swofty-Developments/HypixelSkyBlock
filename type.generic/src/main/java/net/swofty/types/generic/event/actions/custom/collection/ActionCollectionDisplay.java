@@ -21,7 +21,7 @@ public class ActionCollectionDisplay implements SkyBlockEventClass {
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(CollectionUpdateEvent event) {
 
-        if (event.getOldValue() == 0) {
+        if (event.getOldValue() == 0 && CollectionCategories.getCategory(event.getItemType()) != null) {
             event.getPlayer().sendMessage(Component.text("  §6§lCOLLECTION UNLOCKED §e" + event.getItemType().getDisplayName())
                     .hoverEvent(Component.text("§eClick to view your " + event.getItemType().getDisplayName() + " Collection!"))
                     .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewcollection " + event.getItemType().name()))

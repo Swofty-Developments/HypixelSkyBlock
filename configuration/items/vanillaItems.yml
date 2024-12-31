@@ -1144,6 +1144,555 @@ items:
             result:
               type: YELLOW_STAINED_GLASS_PANE
               amount: 16
+  - id: TERRACOTTA
+    material: TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: WHITE_TERRACOTTA
+    material: WHITE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: WHITE_TERRACOTTA
+              amount: 8
+  - id: ORANGE_TERRACOTTA
+    material: ORANGE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_TERRACOTTA
+              amount: 8
+
+  - id: MAGENTA_TERRACOTTA
+    material: MAGENTA_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_TERRACOTTA
+              amount: 8
+
+  - id: LIGHT_BLUE_TERRACOTTA
+    material: LIGHT_BLUE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_TERRACOTTA
+              amount: 8
+
+  - id: YELLOW_TERRACOTTA
+    material: YELLOW_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_TERRACOTTA
+              amount: 8
+
+  - id: LIME_TERRACOTTA
+    material: LIME_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_TERRACOTTA
+              amount: 8
+
+  - id: PINK_TERRACOTTA
+    material: PINK_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_TERRACOTTA
+              amount: 8
+
+  - id: GRAY_TERRACOTTA
+    material: GRAY_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_TERRACOTTA
+              amount: 8
+
+  - id: LIGHT_GRAY_TERRACOTTA
+    material: LIGHT_GRAY_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_TERRACOTTA
+              amount: 8
+
+  - id: CYAN_TERRACOTTA
+    material: CYAN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_TERRACOTTA
+              amount: 8
+
+  - id: PURPLE_TERRACOTTA
+    material: PURPLE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_TERRACOTTA
+              amount: 8
+
+  - id: BLUE_TERRACOTTA
+    material: BLUE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_TERRACOTTA
+              amount: 8
+
+  - id: BROWN_TERRACOTTA
+    material: BROWN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_TERRACOTTA
+              amount: 8
+
+  - id: GREEN_TERRACOTTA
+    material: GREEN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: GREEN_DYE
+                amount: 1
+            result:
+              type: GREEN_TERRACOTTA
+              amount: 8
+
+  - id: RED_TERRACOTTA
+    material: RED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
+            result:
+              type: RED_TERRACOTTA
+              amount: 8
+
+  - id: BLACK_TERRACOTTA
+    material: BLACK_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_TERRACOTTA
+              amount: 8
+  - id: WHITE_GLAZED_TERRACOTTA
+    material: WHITE_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: ORANGE_GLAZED_TERRACOTTA
+    material: ORANGE_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: MAGENTA_GLAZED_TERRACOTTA
+    material: MAGENTA_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: LIGHT_BLUE_GLAZED_TERRACOTTA
+    material: LIGHT_BLUE_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: YELLOW_GLAZED_TERRACOTTA
+    material: YELLOW_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: LIME_GLAZED_TERRACOTTA
+    material: LIME_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: PINK_GLAZED_TERRACOTTA
+    material: PINK_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: GRAY_GLAZED_TERRACOTTA
+    material: GRAY_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: LIGHT_GRAY_GLAZED_TERRACOTTA
+    material: LIGHT_GRAY_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: CYAN_GLAZED_TERRACOTTA
+    material: CYAN_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: PURPLE_GLAZED_TERRACOTTA
+    material: PURPLE_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: BLUE_GLAZED_TERRACOTTA
+    material: BLUE_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: BROWN_GLAZED_TERRACOTTA
+    material: BROWN_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: GREEN_GLAZED_TERRACOTTA
+    material: GREEN_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: RED_GLAZED_TERRACOTTA
+    material: RED_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: BLACK_GLAZED_TERRACOTTA
+    material: BLACK_GLAZED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
   - id: BLACK_WOOL
     material: BLACK_WOOL
     rarity: COMMON
@@ -4657,3 +5206,1874 @@ items:
   - id: ENCHANTING_TABLE
     components:
       - id: PLACEABLE
+  - id: FURNACE
+    material: FURNACE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: FURNACE
+              amount: 1
+  - id: REDSTONE_TORCH
+    material: REDSTONE_TORCH
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: REDSTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: REDSTONE_TORCH
+              amount: 1
+  - id: REPEATER
+    material: REPEATER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - CCC
+            ingredients:
+              A:
+                type: REDSTONE_TORCH
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+              C:
+                type: STONE
+                amount: 1
+            result:
+              type: REPEATER
+              amount: 1
+  - id: COMPARATOR
+    material: COMPARATOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - OAO
+              - ABA
+              - CCC
+            ingredients:
+              A:
+                type: REDSTONE_TORCH
+                amount: 1
+              B:
+                type: QUARTZ
+                amount: 1
+              C:
+                type: STONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: COMPARATOR
+              amount: 1
+  - id: LEVER
+    material: LEVER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: COBBLESTONE
+                amount: 1
+            result:
+              type: LEVER
+              amount: 1
+  - id: STONE_BUTTON
+    material: STONE_BUTTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_BUTTON
+              amount: 1
+  - id: STONE_PRESSURE_PLATE
+    material: STONE_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: STONE
+                amount: 1
+            result:
+              type: STONE_PRESSURE_PLATE
+              amount: 1
+  - id: LIGHT_WEIGHTED_PRESSURE_PLATE
+    material: LIGHT_WEIGHTED_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+            result:
+              type: LIGHT_WEIGHTED_PRESSURE_PLATE
+              amount: 1
+  - id: HEAVY_WEIGHTED_PRESSURE_PLATE
+    material: HEAVY_WEIGHTED_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+            result:
+              type: HEAVY_WEIGHTED_PRESSURE_PLATE
+              amount: 1
+  - id: TRIPWIRE_HOOK
+    material: TRIPWIRE_HOOK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+              - C
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: TRIPWIRE_HOOK
+              amount: 2
+  - id: PISTON
+    material: PISTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BCB
+              - BDB
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: COBBLESTONE
+                amount: 1
+              C:
+                type: IRON_INGOT
+                amount: 1
+              D:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: PISTON
+              amount: 1
+  - id: STICKY_PISTON
+    material: STICKY_PISTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PISTON
+                amount: 1
+              - type: SLIMEBALL
+                amount: 1
+            result:
+              type: STICKY_PISTON
+              amount: 1
+  - id: DISPENSER
+    material: DISPENSER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: BOW
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: DISPENSER
+              amount: 1
+  - id: DROPPER
+    material: DROPPER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AOA
+              - ABA
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DROPPER
+              amount: 1
+  - id: HOPPER
+    material: HOPPER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - OAO
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: CHEST
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: HOPPER
+              amount: 1
+  - id: NOTE_BLOCK
+    material: NOTE_BLOCK
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: REDSTONE
+                amount: 1
+            result:
+              type: NOTE_BLOCK
+              amount: 1
+  - id: RAIL
+    material: RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - AOA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: RAIL
+              amount: 16
+  - id: ACTIVATOR_RAIL
+    material: ACTIVATOR_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ACA
+              - ABA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: REDSTONE_TORCH
+                amount: 1
+            result:
+              type: ACTIVATOR_RAIL
+              amount: 6
+  - id: DETECTOR_RAIL
+    material: DETECTOR_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STONE_PRESSURE_PLATE
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DETECTOR_RAIL
+              amount: 6
+  - id: POWERED_RAIL
+    material: POWERED_RAIL
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - ABA
+              - ACA
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              C:
+                type: REDSTONE
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: POWERED_RAIL
+              amount: 6
+  - id: MINECART
+    material: MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MINECART
+              amount: 1
+  - id: CHEST_MINECART
+    material: CHEST_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: CHEST
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: CHEST_MINECART
+              amount: 1
+  - id: HOPPER_MINECART
+    material: HOPPER_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: HOPPER
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: HOPPER_MINECART
+              amount: 1
+  - id: TNT_MINECART
+    material: TNT_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: TNT
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: TNT_MINECART
+              amount: 1
+  - id: FURNACE_MINECART
+    material: FURNACE_MINECART
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: FURNACE
+                amount: 1
+              B:
+                type: MINECART
+                amount: 1
+            result:
+              type: FURNACE_MINECART
+              amount: 1
+  - id: TNT
+    material: TNT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - BAB
+              - ABA
+            ingredients:
+              A:
+                type: GUNPOWDER
+                amount: 1
+              B:
+                type: SAND
+                amount: 1
+            result:
+              type: TNT
+              amount: 1
+  - id: DAYLIGHT_DETECTOR
+    material: DAYLIGHT_DETECTOR
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+              - CCC
+            ingredients:
+              A:
+                type: GLASS
+                amount: 1
+              B:
+                type: QUARTZ
+                amount: 1
+              C:
+                type: OAK_SLAB
+                amount: 1
+            result:
+              type: DAYLIGHT_DETECTOR
+              amount: 1
+  - id: JUKEBOX
+    material: JUKEBOX
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: DIAMOND
+                amount: 1
+            result:
+              type: JUKEBOX
+              amount: 1
+  - id: WHITE_BED
+    material: WHITE_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: WHITE_BED
+              amount: 1
+  - id: ORANGE_BED
+    material: ORANGE_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: ORANGE_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: ORANGE_BED
+              amount: 1
+  - id: MAGENTA_BED
+    material: MAGENTA_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: MAGENTA_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: MAGENTA_BED
+              amount: 1
+  - id: LIGHT_BLUE_BED
+    material: LIGHT_BLUE_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: LIGHT_BLUE_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: LIGHT_BLUE_BED
+              amount: 1
+  - id: YELLOW_BED
+    material: YELLOW_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: YELLOW_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: YELLOW_BED
+              amount: 1
+  - id: LIME_BED
+    material: LIME_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: LIME_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: LIME_BED
+              amount: 1
+  - id: PINK_BED
+    material: PINK_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: PINK_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: PINK_BED
+              amount: 1
+  - id: GRAY_BED
+    material: GRAY_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: GRAY_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: GRAY_BED
+              amount: 1
+  - id: LIGHT_GRAY_BED
+    material: LIGHT_GRAY_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: LIGHT_GRAY_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: LIGHT_GRAY_BED
+              amount: 1
+  - id: CYAN_BED
+    material: CYAN_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: CYAN_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: CYAN_BED
+              amount: 1
+  - id: PURPLE_BED
+    material: PURPLE_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: PURPLE_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: PURPLE_BED
+              amount: 1
+  - id: BLUE_BED
+    material: BLUE_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: BLUE_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: BLUE_BED
+              amount: 1
+  - id: BROWN_BED
+    material: BROWN_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: BROWN_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: BROWN_BED
+              amount: 1
+  - id: GREEN_BED
+    material: GREEN_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: GREEN_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: GREEN_BED
+              amount: 1
+  - id: RED_BED
+    material: RED_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: RED_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: RED_BED
+              amount: 1
+  - id: BLACK_BED
+    material: BLACK_BED
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - BBB
+            ingredients:
+              A:
+                type: BLACK_WOOL
+                amount: 1
+              B:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: BLACK_BED
+              amount: 1
+  - id: WHITE_BANNER
+    material: WHITE_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WHITE_BANNER
+              amount: 1
+  - id: ORANGE_BANNER
+    material: ORANGE_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: ORANGE_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: ORANGE_BANNER
+              amount: 1
+  - id: MAGENTA_BANNER
+    material: MAGENTA_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: MAGENTA_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: MAGENTA_BANNER
+              amount: 1
+  - id: LIGHT_BLUE_BANNER
+    material: LIGHT_BLUE_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: LIGHT_BLUE_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LIGHT_BLUE_BANNER
+              amount: 1
+  - id: YELLOW_BANNER
+    material: YELLOW_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: YELLOW_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: YELLOW_BANNER
+              amount: 1
+  - id: LIME_BANNER
+    material: LIME_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: LIME_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LIME_BANNER
+              amount: 1
+  - id: PINK_BANNER
+    material: PINK_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: PINK_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PINK_BANNER
+              amount: 1
+  - id: GRAY_BANNER
+    material: GRAY_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: GRAY_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GRAY_BANNER
+              amount: 1
+  - id: LIGHT_GRAY_BANNER
+    material: LIGHT_GRAY_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: LIGHT_GRAY_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: LIGHT_GRAY_BANNER
+              amount: 1
+  - id: CYAN_BANNER
+    material: CYAN_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: CYAN_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CYAN_BANNER
+              amount: 1
+  - id: PURPLE_BANNER
+    material: PURPLE_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: PURPLE_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PURPLE_BANNER
+              amount: 1
+  - id: BLUE_BANNER
+    material: BLUE_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: BLUE_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: BLUE_BANNER
+              amount: 1
+  - id: BROWN_BANNER
+    material: BROWN_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: BROWN_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: BROWN_BANNER
+              amount: 1
+  - id: GREEN_BANNER
+    material: GREEN_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: GREEN_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GREEN_BANNER
+              amount: 1
+  - id: RED_BANNER
+    material: RED_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: RED_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: RED_BANNER
+              amount: 1
+  - id: BLACK_BANNER
+    material: BLACK_BANNER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: BLACK_WOOL
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: BLACK_BANNER
+              amount: 1
+  - id: CANDLE
+    material: CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: STRING
+                amount: 1
+              B:
+                type: HONEYCOMB
+                amount: 1
+            result:
+              type: CANDLE
+              amount: 1
+  - id: WHITE_CANDLE
+    material: WHITE_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: WHITE_DYE
+                amount: 1
+            result:
+              type: WHITE_CANDLE
+              amount: 1
+  - id: ORANGE_CANDLE
+    material: ORANGE_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_CANDLE
+              amount: 1
+  - id: MAGENTA_CANDLE
+    material: MAGENTA_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_CANDLE
+              amount: 1
+  - id: LIGHT_BLUE_CANDLE
+    material: LIGHT_BLUE_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_CANDLE
+              amount: 1
+  - id: YELLOW_CANDLE
+    material: YELLOW_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_CANDLE
+              amount: 1
+  - id: LIME_CANDLE
+    material: LIME_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_CANDLE
+              amount: 1
+  - id: PINK_CANDLE
+    material: PINK_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_CANDLE
+              amount: 1
+  - id: GRAY_CANDLE
+    material: GRAY_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_CANDLE
+              amount: 1
+  - id: LIGHT_GRAY_CANDLE
+    material: LIGHT_GRAY_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_CANDLE
+              amount: 1
+  - id: CYAN_CANDLE
+    material: CYAN_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_CANDLE
+              amount: 1
+  - id: PURPLE_CANDLE
+    material: PURPLE_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_CANDLE
+              amount: 1
+  - id: BLUE_CANDLE
+    material: BLUE_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_CANDLE
+              amount: 1
+  - id: BROWN_CANDLE
+    material: BROWN_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_CANDLE
+              amount: 1
+  - id: GREEN_CANDLE
+    material: GREEN_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: GREEN_DYE
+                amount: 1
+            result:
+              type: GREEN_CANDLE
+              amount: 1
+  - id: RED_CANDLE
+    material: RED_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: RED_DYE
+                amount: 1
+            result:
+              type: RED_CANDLE
+              amount: 1
+  - id: BLACK_CANDLE
+    material: BLACK_CANDLE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: PLACEABLE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CANDLE
+                amount: 1
+              - type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_CANDLE
+              amount: 1
+
+
