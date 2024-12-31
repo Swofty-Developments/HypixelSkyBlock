@@ -2,6 +2,8 @@ package net.swofty.types.generic.item.handlers.ability;
 
 import lombok.Getter;
 import lombok.NonNull;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.instance.block.BlockFace;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -31,24 +33,30 @@ public class RegisteredAbility {
     }
 
     public void execute(SkyBlockPlayer player, SkyBlockItem item) {
+        execute(player, item, null, null);
+    }
+
+    public void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace) {
         if (!cost.canUse(player)) {
             cost.onFail(player);
             return;
         }
 
         cost.onUse(player, this);
-        action.execute(player, item);
+        action.execute(player, item, targetedBlock, blockFace);
     }
 
     @FunctionalInterface
     public interface AbilityAction {
-        void execute(SkyBlockPlayer player, SkyBlockItem item);
+        void execute(SkyBlockPlayer player, SkyBlockItem item, Point targetedBlock, BlockFace blockFace);
     }
 
     @Getter
     public enum AbilityActivation {
         RIGHT_CLICK("RIGHT CLICK"),
         LEFT_CLICK("LEFT CLICK"),
+        LEFT_CLICK_BLOCK("LEFT CLICK"),
+        RIGHT_CLICK_BLOCK("RIGHT CLICK"),
         ;
 
         private final @NonNull String display;

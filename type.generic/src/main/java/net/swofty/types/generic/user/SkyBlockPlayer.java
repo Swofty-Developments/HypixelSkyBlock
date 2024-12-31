@@ -56,6 +56,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -403,6 +404,12 @@ public class SkyBlockPlayer extends Player {
 
     public void addAndUpdateItem(ItemStack item) {
         addAndUpdateItem(new SkyBlockItem(item));
+    }
+
+    public int countItem(ItemType item) {
+        AtomicInteger count = new AtomicInteger();
+        getAllOfTypeInInventory(item).forEach((stack, meow) -> count.addAndGet(meow));
+        return count.get();
     }
 
     public boolean takeItem(SkyBlockItem itemToTake) {
