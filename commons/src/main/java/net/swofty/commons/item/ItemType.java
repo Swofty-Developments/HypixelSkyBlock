@@ -1118,6 +1118,7 @@ public enum ItemType {
     RED_BANNER(Material.RED_BANNER, Rarity.COMMON),
     BLACK_BANNER(Material.BLACK_BANNER, Rarity.COMMON),
 
+    CANDLE(Material.CANDLE, Rarity.COMMON),
     WHITE_CANDLE(Material.WHITE_CANDLE, Rarity.COMMON),
     ORANGE_CANDLE(Material.ORANGE_CANDLE, Rarity.COMMON),
     MAGENTA_CANDLE(Material.MAGENTA_CANDLE, Rarity.COMMON),
