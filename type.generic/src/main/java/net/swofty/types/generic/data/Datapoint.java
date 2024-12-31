@@ -9,9 +9,11 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
+import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.categories.Rank;
 import org.bson.Document;
 
 import java.util.ArrayList;

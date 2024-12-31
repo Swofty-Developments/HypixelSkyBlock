@@ -2,6 +2,8 @@ package net.swofty.service.bazaar.endpoints;
 
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRecombobulated;
 import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocolObject;
 import net.swofty.service.bazaar.BazaarService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
