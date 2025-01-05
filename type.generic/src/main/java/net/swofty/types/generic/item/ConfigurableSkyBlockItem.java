@@ -8,6 +8,7 @@ import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ConfigurableSkyBlockItem {
     private final static Map<String, ConfigurableSkyBlockItem> CACHED_ITEMS = new HashMap<>();
@@ -115,7 +116,7 @@ public class ConfigurableSkyBlockItem {
     }
 
     public <T extends SkyBlockItemComponent> boolean hasComponent(Class<T> componentClass) {
-        return components.containsKey(componentClass);
+        return components.containsKey(componentClass) || explicitComponents.contains(componentClass);
     }
 
     @SuppressWarnings("unchecked")
@@ -150,6 +151,16 @@ public class ConfigurableSkyBlockItem {
         public ComponentConflictException(String message) {
             super(message);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigurableSkyBlockItem{" +
+                "id='" + id + '\'' +
+                ", components=" + components.entrySet().stream().map(componentEntry -> {
+                    return componentEntry.getKey() + ":" + componentEntry.getValue().source;
+                }).collect(Collectors.joining(",")) +
+                '}';
     }
 
     public static class ComponentNotFoundException extends RuntimeException {

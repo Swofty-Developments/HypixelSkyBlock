@@ -143,6 +143,42 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         CrystalDatabase.connect(mongoClient);
 
         /**
+         * Register items
+         */
+        ItemAttribute.registerItemAttributes();
+        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+        File configDir = new File("./configuration");
+        File itemsDir = new File(configDir, "items");
+        try {
+            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
+            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
+            for (File file : yamlFiles) {
+                try {
+                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
+                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
+
+                    if (items != null) {
+                        for (Map<String, Object> itemConfig : items) {
+                            try {
+                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse item " + itemConfig.get("id"));
+                                e.printStackTrace();
+                                continue;
+                            }
+                        }
+                    } else {
+                        Logger.warn("No items found in " + file.getName());
+                    }
+                } catch (IOException e) {
+                    Logger.error("Failed to load " + file.getName(), e);
+                }
+            }
+        } catch (IOException e) {
+            Logger.error("Failed to scan for YAML files", e);
+        }
+
+        /**
          * Register commands
          */
         MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, command) -> {
@@ -310,42 +346,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             String zone = typeLoader.getType().toString();
             FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer(), FairySoulZone.valueOf(zone));
-        }
-
-        /**
-         * Register items
-         */
-        ItemAttribute.registerItemAttributes();
-        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        File configDir = new File("./configuration");
-        File itemsDir = new File(configDir, "items");
-        try {
-            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
-            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
-            for (File file : yamlFiles) {
-                try {
-                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
-                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
-
-                    if (items != null) {
-                        for (Map<String, Object> itemConfig : items) {
-                            try {
-                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
-                            } catch (Exception e) {
-                                Logger.error("Failed to parse item " + itemConfig.get("id"));
-                                e.printStackTrace();
-                                continue;
-                            }
-                        }
-                    } else {
-                        Logger.warn("No items found in " + file.getName());
-                    }
-                } catch (IOException e) {
-                    Logger.error("Failed to load " + file.getName(), e);
-                }
-            }
-        } catch (IOException e) {
-            Logger.error("Failed to scan for YAML files", e);
         }
 
         /**

@@ -41,7 +41,7 @@ public class PlaceEventRegistry {
                     return;
                 }
 
-                MinionComponent component = item.getConfig().getComponent(MinionComponent.class);
+                MinionComponent component = item.toConfigurableItem().getComponent(MinionComponent.class);
 
                 IslandMinionData.IslandMinion minion = minionData.initializeMinion(Pos.fromPoint(event.getBlockPosition()),
                         component.getMinionRegistry(),
