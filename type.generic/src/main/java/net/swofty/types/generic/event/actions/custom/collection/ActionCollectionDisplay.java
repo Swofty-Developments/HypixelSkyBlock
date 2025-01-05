@@ -43,7 +43,7 @@ public class ActionCollectionDisplay implements SkyBlockEventClass {
 
         if (oldReward == newReward) return;
 
-        if (oldReward != null) {
+        if (oldReward != null && newReward != null) {
             SkyBlockPlayer player = event.getPlayer();
 
             player.sendMessage("§e§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
@@ -57,7 +57,7 @@ public class ActionCollectionDisplay implements SkyBlockEventClass {
                 );
             } else {
                 player.sendMessage(Component.text("  §6§lCOLLECTION LEVEL UP §e" + event.getItemType().getDisplayName() + " §8" +
-                                StringUtility.getAsRomanNumeral(collection.getPlacementOf(oldReward)) + ">§e" +
+                                StringUtility.getAsRomanNumeral(collection.getPlacementOf(oldReward)) + "➜§e" +
                                 StringUtility.getAsRomanNumeral(collection.getPlacementOf(newReward)))
                         .hoverEvent(Component.text("§eClick to view your " + event.getItemType().getDisplayName() + " Collection!"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewcollection " + event.getItemType().name()))

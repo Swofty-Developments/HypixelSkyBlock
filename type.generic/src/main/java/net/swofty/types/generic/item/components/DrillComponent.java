@@ -11,5 +11,6 @@ public class DrillComponent extends SkyBlockItemComponent {
         addInheritedComponent(new EnchantableComponent(List.of(EnchantItemGroups.DRILL), true));
         addInheritedComponent(new ReforgableComponent(ReforgeType.PICKAXES));
         addInheritedComponent(new ExtraRarityComponent("DRILL"));
+        addInheritedComponent(new TrackedUniqueComponent());
     }
 }

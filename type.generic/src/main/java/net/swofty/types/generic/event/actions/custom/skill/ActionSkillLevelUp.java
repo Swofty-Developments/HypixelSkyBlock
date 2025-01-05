@@ -32,7 +32,7 @@ public class ActionSkillLevelUp implements SkyBlockEventClass {
 
         player.sendMessage("§3§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         player.sendMessage(Component.text("  §b§lSKILL LEVEL UP §3" + skillCategory + " §8" +
-                        (oldLevelDisplay.isEmpty() ? "§e" : oldLevelDisplay + ">§e") +
+                        (oldLevelDisplay.isEmpty() ? "§e" : oldLevelDisplay + "➜§e") +
                         StringUtility.getAsRomanNumeral(newLevel))
                 .hoverEvent(Component.text("§eClick to view your " + skillCategory + " Skill progress!"))
                 .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewskill " + skillCategory.toString().toUpperCase()))
