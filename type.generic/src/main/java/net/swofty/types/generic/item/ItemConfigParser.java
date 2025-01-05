@@ -185,7 +185,6 @@ public class ItemConfigParser {
                 Color color = new Color(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b));
                 yield new LeatherColorComponent(color);
             }
-            case "LEGGINGS" -> new LeggingsComponent();
             case "MINION" -> {
                 String minionType = (String) config.get("minion_type");
                 String baseItem = (String) config.get("base_item");

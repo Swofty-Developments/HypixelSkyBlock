@@ -36,7 +36,6 @@ public class MinionSkinComponent extends SkyBlockItemComponent {
         this.boots = boots;
 
         addInheritedComponent(new ExtraRarityComponent("COSMETIC"));
-        addInheritedComponent(new TrackedUniqueComponent());
         addInheritedComponent(new LoreUpdateComponent(getSkinLore(skinName), false));
     }
 

@@ -59,6 +59,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
         Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>(this.ingredientMap);
         ingredientMap.remove(' ');
+        ingredientMap.remove('O');
 
         Map<Character, ItemQuantifiable> materialsToConsume = new HashMap<>(ingredientMap);
         SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length);

@@ -36,6 +36,23 @@ public enum ItemStatistic {
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
 
+    // Sub-Gathering Stats
+    ORE_FORTUNE("Ore Fortune", "§a", "§6", false, "☘"),
+    BLOCK_FORTUNE("Block Fortune", "§a", "§6", false, "☘"),
+    DWARVEN_METAL_FORTUNE("Dwarven Metal Fortune", "§a", "§6", false, "☘"),
+    GEMSTONE_FORTUNE("Gemstone Fortune", "§a", "§6", false, "☘"),
+
+    WHEAT_FORTUNE("Wheat Fortune", "§a", "§6", false, "☘"),
+    POTATO_FORTUNE("Potato Fortune", "§a", "§6", false, "☘"),
+    CARROT_FORTUNE("Carrot Fortune", "§a", "§6", false, "☘"),
+    PUMPKIN_FORTUNE("Pumpkin Fortune", "§a", "§6", false, "☘"),
+    MELON_FORTUNE("Melon Fortune", "§a", "§6", false, "☘"),
+    CACTUS_FORTUNE("Cactus Fortune", "§a", "§6", false, "☘"),
+    NETHER_WART_FORTUNE("Nether Wart Fortune", "§a", "§6", false, "☘"),
+    COCOA_BEANS_FORTUNE("Cocoa Beans Fortune", "§a", "§6", false, "☘"),
+    MUSHROOM_FORTUNE("Mushroom Fortune", "§a", "§6", false, "☘"),
+    SUGAR_CANE_FORTUNE("Sugar Cane Fortune", "§a", "§6", false, "☘"),
+
     // Misc Stats
     SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D),
     MAGIC_FIND("Magic Find", "§a", "§b", false, "✯"),

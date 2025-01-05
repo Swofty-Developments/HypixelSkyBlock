@@ -9,5 +9,6 @@ public class ShovelComponent extends SkyBlockItemComponent {
     public ShovelComponent() {
         addInheritedComponent(new ExtraRarityComponent("SHOVEL"));
         addInheritedComponent(new EnchantableComponent(List.of(EnchantItemGroups.TOOLS), true));
+        addInheritedComponent(new TrackedUniqueComponent());
     }
 }

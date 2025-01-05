@@ -83,8 +83,10 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             int dropAmount;
             try {
                 MineableBlock mineableBlock = MineableBlock.get(block);
-                Double fortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getFortuneType());
-                Double dropMultiplicator = (1 + (fortune * 0.01));
+                double baseFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().baseSkillFortune()); //might need to return 100 if null
+                double specificFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().specificBlockFortune());
+                double fortune = baseFortune + specificFortune;
+                double dropMultiplicator = (1 + (fortune * 0.01));
                 dropAmount = mineableBlock.getDrops().getAmount(dropMultiplicator);
             } catch (NullPointerException e) {
                 dropAmount = 1;

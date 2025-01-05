@@ -9,5 +9,6 @@ public class KatComponent extends SkyBlockItemComponent {
 
     public KatComponent(int reducedDays) {
         this.reducedDays = reducedDays;
+        addInheritedComponent(new TrackedUniqueComponent());
     }
 }
