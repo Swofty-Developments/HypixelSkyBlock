@@ -1,6 +1,5 @@
 package net.swofty.type.island.events.traditional;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.swofty.types.generic.event.EventNodes;

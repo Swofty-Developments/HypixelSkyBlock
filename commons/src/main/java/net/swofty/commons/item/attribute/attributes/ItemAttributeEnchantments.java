@@ -1,12 +1,12 @@
 package net.swofty.commons.item.attribute.attributes;
 
 import net.swofty.commons.item.UnderstandableSkyBlockEnchantment;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.swofty.commons.item.attribute.ItemAttribute;
 
 public class ItemAttributeEnchantments extends ItemAttribute<UnderstandableSkyBlockEnchantment.ItemEnchantments> {
 

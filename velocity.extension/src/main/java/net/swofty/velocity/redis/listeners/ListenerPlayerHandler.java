@@ -9,7 +9,6 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.redis.ChannelListener;

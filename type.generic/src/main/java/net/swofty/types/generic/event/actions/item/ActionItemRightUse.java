@@ -9,7 +9,6 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.InteractableComponent;
-import net.swofty.types.generic.item.components.RightClickRecipeComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionItemRightUse implements SkyBlockEventClass {

@@ -8,8 +8,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 @Getter
 @Setter

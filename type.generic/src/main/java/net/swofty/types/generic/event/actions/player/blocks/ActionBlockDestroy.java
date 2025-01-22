@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.blocks;
 
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.tag.Tag;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.block.impl.BlockBreakable;
 import net.swofty.types.generic.event.EventNodes;

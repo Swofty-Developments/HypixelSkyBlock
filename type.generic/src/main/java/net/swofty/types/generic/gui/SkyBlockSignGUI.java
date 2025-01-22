@@ -10,7 +10,6 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.BlockChangePacket;
 import net.minestom.server.network.packet.server.play.BlockEntityDataPacket;
 import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
-import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

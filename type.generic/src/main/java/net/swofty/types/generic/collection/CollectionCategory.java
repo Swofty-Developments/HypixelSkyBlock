@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -11,7 +12,6 @@ import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,7 +2,6 @@ package net.swofty.types.generic.event.actions.item;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;

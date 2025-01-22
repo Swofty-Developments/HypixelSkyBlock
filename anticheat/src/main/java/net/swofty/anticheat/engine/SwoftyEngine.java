@@ -1,15 +1,15 @@
 package net.swofty.anticheat.engine;
 
-import javassist.tools.reflect.Reflection;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.flag.FlagType;
 import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.loader.SwoftyAnticheat;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
-import org.reflections.Reflections;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class SwoftyEngine {
     public static void startSchedulers(Loader loader) {

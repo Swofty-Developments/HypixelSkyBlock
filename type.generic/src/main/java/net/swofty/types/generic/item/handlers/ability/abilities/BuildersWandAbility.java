@@ -1,17 +1,14 @@
 package net.swofty.types.generic.item.handlers.ability.abilities;
 
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.item.Material;
-import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.handlers.ability.RegisteredAbility;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;

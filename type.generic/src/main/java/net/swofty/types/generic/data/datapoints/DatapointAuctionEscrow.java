@@ -8,8 +8,6 @@ import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.item.SkyBlockItem;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 public class DatapointAuctionEscrow extends Datapoint<DatapointAuctionEscrow.AuctionEscrow> {
 
     public DatapointAuctionEscrow(String key, DatapointAuctionEscrow.AuctionEscrow value) {

@@ -1,10 +1,10 @@
 package net.swofty.types.generic.item.set;
 
 import lombok.Getter;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.set.impl.ArmorSet;
 import net.swofty.types.generic.item.set.sets.*;
-import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 @Getter

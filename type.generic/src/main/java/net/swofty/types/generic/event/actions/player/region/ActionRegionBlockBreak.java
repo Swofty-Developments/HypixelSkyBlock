@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.region;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
@@ -96,18 +95,47 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
             ItemType droppedItemType = skyBlockItem.getAttributeHandler().getPotentialType();
 
-            // Handle item distribution based on player conditions
+// Handle item distribution based on player conditions
             if (player.canInsertItemIntoSacks(droppedItemType, dropAmount)) {
                 player.getSackItems().increase(droppedItemType, dropAmount);
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
                 player.addAndUpdateItem(skyBlockItem);
             } else {
-                // Drop item in world if can't be added to inventory
+                // Determine nearest air block between ore and player
+                Pos orePos = Pos.fromPoint(event.getBlockPosition());
+                Pos playerPos = player.getPosition();
+
+                Pos[] offsets = {
+                        new Pos(1, 0, 0), new Pos(-1, 0, 0),
+                        new Pos(0, 1, 0), new Pos(0, -1, 0),
+                        new Pos(0, 0, 1), new Pos(0, 0, -1)
+                };
+
+                Pos nearestAirBlock = null;
+                double closestDistanceSquared = Double.MAX_VALUE;
+
+                for (Pos offset : offsets) {
+                    Pos adjacentPos = orePos.add(offset);
+                    Block block2 = player.getInstance().getBlock(adjacentPos);
+
+                    if (block2.isAir()) {
+                        double distanceSquared = adjacentPos.distanceSquared(playerPos);
+                        if (distanceSquared < closestDistanceSquared) {
+                            closestDistanceSquared = distanceSquared;
+                            nearestAirBlock = adjacentPos;
+                        }
+                    }
+                }
+
+                // Use the nearest air block or fallback to default position
+                Pos dropPos = (nearestAirBlock != null) ? nearestAirBlock.add(0.5, 0.5, 0.5) : orePos.add(0.5, 1.5, 0.5);
+
+                // Spawn the item
                 DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(skyBlockItem, player);
-                Pos pos = Pos.fromPoint(event.getBlockPosition()).add(0.5, 0.5, 0.5); // Center of block
-                droppedItem.setInstance(player.getInstance(), pos);
+                droppedItem.setInstance(player.getInstance(), dropPos);
                 droppedItem.addViewer(player);
             }
+
         }
     }
 }

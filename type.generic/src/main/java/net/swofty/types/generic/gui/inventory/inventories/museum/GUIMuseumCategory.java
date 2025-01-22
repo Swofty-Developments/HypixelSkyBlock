@@ -9,6 +9,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
@@ -24,7 +25,6 @@ import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 import net.swofty.types.generic.utility.PaginationList;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

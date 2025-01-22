@@ -5,8 +5,6 @@ import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
-import net.swofty.types.generic.levels.SkyBlockLevelCause;
-import net.swofty.types.generic.museum.MuseumRewards;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 

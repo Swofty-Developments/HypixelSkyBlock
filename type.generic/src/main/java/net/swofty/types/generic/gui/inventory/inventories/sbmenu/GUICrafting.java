@@ -10,6 +10,7 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.ItemCraftEvent;
@@ -21,7 +22,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

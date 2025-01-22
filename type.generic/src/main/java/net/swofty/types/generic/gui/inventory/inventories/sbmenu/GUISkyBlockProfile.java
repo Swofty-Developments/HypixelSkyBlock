@@ -6,6 +6,8 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -14,9 +16,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.StandardItemComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

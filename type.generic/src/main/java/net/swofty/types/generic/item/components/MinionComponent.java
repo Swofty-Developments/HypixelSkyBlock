@@ -5,13 +5,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.types.generic.item.SkyBlockItemComponent;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.handlers.lore.LoreConfig;
 import net.swofty.types.generic.minion.MinionIngredient;
 import net.swofty.types.generic.minion.MinionRecipe;
 import net.swofty.types.generic.minion.MinionRegistry;
-import net.swofty.types.generic.item.SkyBlockItemComponent;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 
 import java.text.DecimalFormat;

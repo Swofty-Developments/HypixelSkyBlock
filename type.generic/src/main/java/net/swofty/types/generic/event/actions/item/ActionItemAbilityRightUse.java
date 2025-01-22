@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -12,7 +11,6 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.AbilityComponent;
 import net.swofty.types.generic.item.handlers.ability.RegisteredAbility;
 import net.swofty.types.generic.user.PlayerAbilityHandler;
-import net.swofty.types.generic.user.PlayerEnchantmentHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class ActionItemAbilityRightUse implements SkyBlockEventClass {

@@ -3,7 +3,6 @@ package net.swofty.commons.protocol.objects.bazaar;
 import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 public class BazaarGetItemProtocolObject extends ProtocolObject<
         BazaarGetItemProtocolObject.BazaarGetItemMessage,

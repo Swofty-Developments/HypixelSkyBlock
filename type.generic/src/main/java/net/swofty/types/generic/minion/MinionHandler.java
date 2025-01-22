@@ -17,7 +17,6 @@ import net.swofty.types.generic.minion.extension.extensions.MinionShippingExtens
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 

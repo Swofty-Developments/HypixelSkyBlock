@@ -1,7 +1,6 @@
 package net.swofty.anticheat.world;
 
 import lombok.Getter;
-import net.minestom.server.instance.block.Block;
 
 @Getter
 public class BoundingBox {

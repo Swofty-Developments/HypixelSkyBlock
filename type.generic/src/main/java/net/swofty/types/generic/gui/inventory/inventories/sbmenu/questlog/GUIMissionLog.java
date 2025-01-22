@@ -7,6 +7,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -19,7 +20,6 @@ import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

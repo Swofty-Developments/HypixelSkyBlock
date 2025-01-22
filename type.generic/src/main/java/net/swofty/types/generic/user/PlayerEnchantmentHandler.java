@@ -1,6 +1,6 @@
 package net.swofty.types.generic.user;
 
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -37,7 +37,7 @@ public record PlayerEnchantmentHandler(SkyBlockPlayer player) {
 
     public enum EnchantedItemSource {
         HAND(player -> {
-            return List.of(new SkyBlockItem(player.getItemInHand(Player.Hand.MAIN)));
+            return List.of(new SkyBlockItem(player.getItemInHand(PlayerHand.MAIN)));
         }),
         ARMOR(player -> {
             return List.of(

@@ -6,21 +6,25 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import net.swofty.commons.MinecraftVersion;
+import net.swofty.commons.PlayerShopData;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
-import net.swofty.commons.PlayerShopData;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
@@ -37,6 +41,8 @@ import net.swofty.types.generic.event.value.events.MiningValueUpdateEvent;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.AccessoryComponent;
+import net.swofty.types.generic.item.components.ArrowComponent;
+import net.swofty.types.generic.item.components.SackComponent;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -44,8 +50,6 @@ import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.types.generic.mission.MissionData;
-import net.swofty.types.generic.item.components.ArrowComponent;
-import net.swofty.types.generic.item.components.SackComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
@@ -89,8 +93,8 @@ public class SkyBlockPlayer extends Player {
     @Getter
     private PlayerHookManager hookManager;
 
-    public SkyBlockPlayer(@NotNull UUID uuid, @NotNull String username, @NotNull PlayerConnection playerConnection) {
-        super(uuid, username, playerConnection);
+    public SkyBlockPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
+        super(playerConnection, gameProfile);
 
         joined = System.currentTimeMillis();
         hookManager = new PlayerHookManager(this, new HashMap<>());
@@ -309,11 +313,11 @@ public class SkyBlockPlayer extends Player {
 
     public void setItemInHand(@Nullable SkyBlockItem item) {
         if (item == null) {
-            getInventory().setItemInHand(Hand.MAIN, ItemStack.of(Material.AIR));
+            setItemInHand(PlayerHand.MAIN, ItemStack.of(Material.AIR));
             return;
         }
 
-        getInventory().setItemInHand(Hand.MAIN, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
+        setItemInHand(PlayerHand.MAIN, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
     }
 
     public int getAmountInInventory(ItemType type) {
@@ -329,10 +333,10 @@ public class SkyBlockPlayer extends Player {
     }
 
     public @Nullable ArmorSetRegistry getArmorSet() {
-        ItemType helmet = new SkyBlockItem(getInventory().getHelmet()).getAttributeHandler().getPotentialType();
-        ItemType chestplate = new SkyBlockItem(getInventory().getChestplate()).getAttributeHandler().getPotentialType();
-        ItemType leggings = new SkyBlockItem(getInventory().getLeggings()).getAttributeHandler().getPotentialType();
-        ItemType boots = new SkyBlockItem(getInventory().getBoots()).getAttributeHandler().getPotentialType();
+        ItemType helmet = new SkyBlockItem(getHelmet()).getAttributeHandler().getPotentialType();
+        ItemType chestplate = new SkyBlockItem(getChestplate()).getAttributeHandler().getPotentialType();
+        ItemType leggings = new SkyBlockItem(getLeggings()).getAttributeHandler().getPotentialType();
+        ItemType boots = new SkyBlockItem(getBoots()).getAttributeHandler().getPotentialType();
 
         return ArmorSetRegistry.getArmorSet(boots, leggings, chestplate, helmet);
     }
@@ -356,10 +360,10 @@ public class SkyBlockPlayer extends Player {
 
     public SkyBlockItem[] getArmor() {
         return new SkyBlockItem[] {
-                new SkyBlockItem(getInventory().getHelmet()),
-                new SkyBlockItem(getInventory().getChestplate()),
-                new SkyBlockItem(getInventory().getLeggings()),
-                new SkyBlockItem(getInventory().getBoots())
+                new SkyBlockItem(getHelmet()),
+                new SkyBlockItem(getChestplate()),
+                new SkyBlockItem(getLeggings()),
+                new SkyBlockItem(getBoots())
         };
     }
 
@@ -741,7 +745,7 @@ public class SkyBlockPlayer extends Player {
 
     @Override
     public void closeInventory() {
-        Inventory tempInv = this.getOpenInventory();
+        Inventory tempInv = (Inventory) this.getOpenInventory();
         super.closeInventory();
         if (SkyBlockInventoryGUI.GUI_MAP.containsKey(this.getUuid())) {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());

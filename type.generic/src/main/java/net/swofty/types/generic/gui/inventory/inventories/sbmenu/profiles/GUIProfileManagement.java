@@ -7,6 +7,7 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBoolean;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
@@ -21,7 +22,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.user.PlayerProfiles;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

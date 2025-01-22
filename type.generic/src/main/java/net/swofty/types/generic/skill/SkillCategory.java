@@ -1,15 +1,15 @@
 package net.swofty.types.generic.skill;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.commons.StringUtility;
 
 import java.util.Arrays;
 import java.util.List;
