@@ -2,6 +2,7 @@ package net.swofty.type.island.events.traditional;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.island.gui.GUIJerry;
@@ -18,7 +19,7 @@ public class ActionPlayerClickedJerryNPC implements SkyBlockEventClass {
     public void run(PlayerEntityInteractEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (event.getHand() != Player.Hand.MAIN) return;
+        if (event.getHand() != PlayerHand.MAIN) return;
 
         if (event.getTarget().getEntityType() != EntityType.VILLAGER) return;
 
