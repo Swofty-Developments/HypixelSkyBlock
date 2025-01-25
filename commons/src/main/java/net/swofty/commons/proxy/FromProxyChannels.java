@@ -2,7 +2,6 @@ package net.swofty.commons.proxy;
 
 import lombok.Getter;
 import net.swofty.commons.proxy.requirements.from.*;
-
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 

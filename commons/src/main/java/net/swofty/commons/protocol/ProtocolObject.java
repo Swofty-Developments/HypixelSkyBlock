@@ -1,7 +1,5 @@
 package net.swofty.commons.protocol;
 
-import org.json.JSONObject;
-
 public abstract class ProtocolObject<T, R> {
     public abstract Serializer<T> getSerializer();
     public abstract Serializer<R> getReturnSerializer();

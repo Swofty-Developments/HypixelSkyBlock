@@ -2,7 +2,9 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.type.AnvilInventory;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.types.generic.event.EventNodes;
@@ -28,7 +30,7 @@ public class ActionPlayerInventoryClickAnvil implements SkyBlockEventClass {
                 event.setCancelled(true);
                 return;
             }
-            if (event.getInventory().getInventoryType().equals(InventoryType.ANVIL)) {
+            if (event.getInventory().getClass().equals(AnvilInventory.class)) {
                 if (event.getSlot() == 2) {
                     SkyBlockAnvilGUI.anvilGUIs.get(player).getValue().complete(SkyBlockAnvilGUI.anvilGUIs.get(player).getKey());
                     SkyBlockAnvilGUI.anvilGUIs.remove(player);

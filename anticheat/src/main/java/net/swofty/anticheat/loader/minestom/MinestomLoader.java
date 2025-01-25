@@ -1,33 +1,26 @@
 package net.swofty.anticheat.loader.minestom;
 
-import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.event.player.PlayerPacketOutEvent;
-import net.minestom.server.instance.Instance;
-import net.minestom.server.listener.manager.PacketPlayListenerConsumer;
 import net.minestom.server.network.packet.client.ClientPacket;
-import net.minestom.server.network.packet.client.common.ClientPingRequestPacket;
 import net.minestom.server.network.packet.client.common.ClientPongPacket;
-import net.minestom.server.network.packet.client.play.*;
 import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.network.packet.server.ServerPacket;
-import net.minestom.server.network.packet.server.common.PingPacket;
-import net.minestom.server.network.packet.server.play.BlockChangePacket;
-import net.minestom.server.network.packet.server.play.ChunkDataPacket;
-import net.minestom.server.network.packet.server.play.data.ChunkData;
 import net.swofty.anticheat.event.SwoftyEventHandler;
 import net.swofty.anticheat.event.events.AnticheatPacketEvent;
 import net.swofty.anticheat.event.packet.*;
+import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
 import net.swofty.anticheat.loader.managers.SwoftySchedulerManager;
-import net.swofty.anticheat.loader.Loader;
 import net.swofty.anticheat.loader.minestom.packets.*;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MinestomLoader extends Loader {
     @Override
@@ -48,8 +41,6 @@ public class MinestomLoader extends Loader {
 
         registerPacketHandler(PositionAndRotationPacket.class,
                 new MinestomHandlerPositionAndRotationPacket());
-        registerPacketHandler(IsOnGroundPacket.class,
-                new MinestomHandlerClientPacket());
         registerPacketHandler(PositionPacket.class,
                 new MinestomHandlerPositionPacket());
         registerPacketHandler(RotationPacket.class,

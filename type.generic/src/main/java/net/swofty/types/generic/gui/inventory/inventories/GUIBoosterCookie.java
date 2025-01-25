@@ -44,7 +44,7 @@ public class GUIBoosterCookie extends SkyBlockInventoryGUI {
                 time += 345600000; //4d
                 player.setBoosterCookieExpirationDate(time);
                 player.setBits(player.getBits() + 4000);
-                player.getInventory().setItemInMainHand(ItemStack.AIR);
+                player.setItemInMainHand(ItemStack.AIR);
                 player.closeInventory();
             }
 

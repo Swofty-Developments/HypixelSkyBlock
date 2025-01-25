@@ -101,7 +101,8 @@ public abstract class TablistManager {
                                             0,
                                             GameMode.CREATIVE,
                                             Component.text(entry.content()),
-                                            null)))
+                                            null,
+                                            1)))
                             );
                         });
                     } catch (Exception e) {}

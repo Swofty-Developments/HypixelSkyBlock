@@ -4,9 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.PingProtocolObject;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import org.json.JSONObject;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 

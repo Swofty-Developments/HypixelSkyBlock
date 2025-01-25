@@ -1,15 +1,13 @@
 package net.swofty.service.auction.endpoints;
 
+import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.auction.AuctionInactiveDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.commons.auctions.AuctionItem;
 import org.bson.Document;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class EndpointFetchItem implements ServiceEndpoint<

@@ -48,6 +48,9 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ConfigurableSkyBlockItem;
 import net.swofty.types.generic.item.ItemConfigParser;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.CraftableComponent;
+import net.swofty.types.generic.item.components.MuseumComponent;
+import net.swofty.types.generic.item.components.ServerOrbComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.MuseumableSet;
@@ -61,9 +64,6 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.types.generic.item.components.CraftableComponent;
-import net.swofty.types.generic.item.components.MuseumComponent;
-import net.swofty.types.generic.item.components.ServerOrbComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
@@ -85,7 +85,8 @@ import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
@@ -518,8 +519,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Handle ConnectionManager
          */
-        MinecraftServer.getConnectionManager().setPlayerProvider((uuid, username, playerConnection) -> {
-            SkyBlockPlayer player = new SkyBlockPlayer(uuid, username, playerConnection);
+        MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
+            SkyBlockPlayer player = new SkyBlockPlayer(playerConnection, gameProfile);
+
+            UUID uuid = gameProfile.getPlayer().getUuid();
+            String username = gameProfile.getPlayer().getUsername();
 
             Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);

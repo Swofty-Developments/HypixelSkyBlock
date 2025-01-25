@@ -1,10 +1,7 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.network.packet.client.play.ClientPlayerPacket;
-import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerRotationPacket;
 import net.swofty.anticheat.engine.SwoftyPlayer;
-import net.swofty.anticheat.event.packet.PositionPacket;
 import net.swofty.anticheat.event.packet.RotationPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
@@ -29,7 +26,7 @@ public class MinestomHandlerRotationPacket
         return new ClientPlayerRotationPacket(
                 ((RotationPacket) packet).getYaw(),
                 ((RotationPacket) packet).getPitch(),
-                ((RotationPacket) packet).isOnGround()
+                (byte) (((RotationPacket) packet).isOnGround() ? 1 : 0)
         );
     }
 

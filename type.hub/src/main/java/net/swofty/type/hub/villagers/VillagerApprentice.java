@@ -3,7 +3,7 @@ package net.swofty.type.hub.villagers;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.minestom.server.entity.VillagerProfession;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 
@@ -26,8 +26,8 @@ public class VillagerApprentice extends SkyBlockVillagerNPC {
             }
 
             @Override
-            public VillagerMeta.Profession profession() {
-                return VillagerMeta.Profession.BUTCHER;
+            public VillagerProfession profession() {
+                return VillagerProfession.BUTCHER;
             }
         });
     }

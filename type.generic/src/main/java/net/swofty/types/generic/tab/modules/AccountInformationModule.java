@@ -1,5 +1,8 @@
 package net.swofty.types.generic.tab.modules;
 
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
 import net.swofty.types.generic.data.datapoints.DatapointSkillCategory;
@@ -9,9 +12,6 @@ import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.TablistSkinRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,6 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.Serializer;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
@@ -14,9 +13,7 @@ import net.swofty.service.generic.redis.ServiceRedisManager;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public class ServiceInitializer {

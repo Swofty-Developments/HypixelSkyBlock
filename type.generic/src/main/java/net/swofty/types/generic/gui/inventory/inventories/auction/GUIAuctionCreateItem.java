@@ -9,10 +9,11 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionCategories;
+import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
@@ -26,9 +27,10 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.AuctionCategoryComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements RefreshingGUI {

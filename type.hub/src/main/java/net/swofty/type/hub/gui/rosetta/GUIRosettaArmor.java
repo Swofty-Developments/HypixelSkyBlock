@@ -4,8 +4,8 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.ItemAttributeHandler;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 
 import java.util.Map;

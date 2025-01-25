@@ -15,6 +15,8 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -27,8 +29,6 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.item.components.ConstantStatisticsComponent;
 import net.swofty.types.generic.item.components.PetComponent;
 import net.swofty.types.generic.item.components.StandardItemComponent;
@@ -440,7 +440,7 @@ public class PlayerStatistics {
             SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                 Thread.startVirtualThread(() -> {
                     double speed = player.getStatistics().allStatistics().getOverall(ItemStatistic.SPEED);
-                    player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
+                    player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) (speed / 1000));
                 });
             });
             return TaskSchedule.tick(4);

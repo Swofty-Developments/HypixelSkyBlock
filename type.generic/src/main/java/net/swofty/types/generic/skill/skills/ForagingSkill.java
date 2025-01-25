@@ -1,9 +1,9 @@
 package net.swofty.types.generic.skill.skills;
 
 import net.minestom.server.item.Material;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategory;
-import net.swofty.commons.statistics.ItemStatistic;
 
 import java.util.List;
 

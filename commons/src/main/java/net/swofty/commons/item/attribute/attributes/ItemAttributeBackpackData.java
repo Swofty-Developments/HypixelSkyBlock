@@ -3,7 +3,6 @@ package net.swofty.commons.item.attribute.attributes;
 import lombok.SneakyThrows;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.item.attribute.ItemAttribute;
-import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;

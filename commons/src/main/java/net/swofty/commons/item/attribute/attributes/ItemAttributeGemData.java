@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import net.swofty.commons.item.attribute.ItemAttribute;
 
 public class ItemAttributeGemData extends ItemAttribute<ItemAttributeGemData.GemData> {
 
