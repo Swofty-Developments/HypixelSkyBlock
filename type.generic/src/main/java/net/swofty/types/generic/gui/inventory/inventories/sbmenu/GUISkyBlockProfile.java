@@ -4,6 +4,7 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.condition.InventoryCondition;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -55,7 +56,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.HELMET
                         && player.getHelmet().isAir()) {
                     player.setHelmet(e.getCursorItem());
-                    e.getInventory().setCursorItem(player, ItemStack.AIR);
+                    ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
@@ -82,7 +83,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.CHESTPLATE
                         && player.getChestplate().isAir()) {
                     player.setChestplate(e.getCursorItem());
-                    e.getInventory().setCursorItem(player, ItemStack.AIR);
+                    ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
@@ -96,6 +97,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                 }
             }
         });
+
         set(new GUIClickableItem(29) { //Leggings
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -106,15 +108,17 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
+
                 if (item.hasComponent(StandardItemComponent.class)
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.LEGGINGS
                         && player.getLeggings().isAir()) {
                     player.setLeggings(e.getCursorItem());
-                    e.getInventory().setCursorItem(player, ItemStack.AIR);
+                    ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
             }
+
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (!player.getLeggings().isAir()) {
@@ -138,7 +142,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
                         && item.getComponent(StandardItemComponent.class).getType() == StandardItemComponent.StandardItemType.BOOTS
                         && player.getBoots().isAir()) {
                     player.setBoots(e.getCursorItem());
-                    e.getInventory().setCursorItem(player, ItemStack.AIR);
+                    ((Inventory) e.getInventory()).setCursorItem(player, ItemStack.AIR);
                     GUISkyBlockProfile guiSkyBlockProfile = new GUISkyBlockProfile();
                     guiSkyBlockProfile.open(player);
                 }
@@ -157,6 +161,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 new GUIPets().open(player);
             }
+
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (player.getPetData().getEnabledPet() != null && !player.getPetData().getEnabledPet().getItemStack().isAir()) {
