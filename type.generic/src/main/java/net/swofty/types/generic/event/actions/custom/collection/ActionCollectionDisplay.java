@@ -3,6 +3,7 @@ package net.swofty.types.generic.event.actions.custom.collection;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.event.EventNodes;
@@ -11,7 +12,6 @@ import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.CollectionUpdateEvent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.Arrays;
 

@@ -4,20 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
     private static final Serializer<PlayerSkills> serializer = new Serializer<>() {

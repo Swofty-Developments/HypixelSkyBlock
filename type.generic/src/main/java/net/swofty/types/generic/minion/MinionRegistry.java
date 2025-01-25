@@ -1,6 +1,7 @@
 package net.swofty.types.generic.minion;
 
 import lombok.Getter;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.minion.minions.combat.*;
 import net.swofty.types.generic.minion.minions.farming.*;
@@ -8,7 +9,6 @@ import net.swofty.types.generic.minion.minions.fishing.MinionClay;
 import net.swofty.types.generic.minion.minions.fishing.MinionFishing;
 import net.swofty.types.generic.minion.minions.foraging.*;
 import net.swofty.types.generic.minion.minions.mining.*;
-import net.swofty.commons.StringUtility;
 
 public enum MinionRegistry {
     COBBLESTONE(MinionCobblestone.class, ItemType.COBBLESTONE_MINION),

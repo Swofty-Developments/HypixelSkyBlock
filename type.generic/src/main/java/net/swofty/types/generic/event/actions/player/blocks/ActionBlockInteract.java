@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player.blocks;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.swofty.types.generic.block.SkyBlockBlock;
 import net.swofty.types.generic.block.impl.BlockInteractable;

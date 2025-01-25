@@ -6,6 +6,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
@@ -19,11 +20,8 @@ import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
 
 public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
     private final SkyBlockItem item;

@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player.authentication;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.data.mongodb.AuthenticationDatabase;
@@ -30,7 +29,7 @@ public class PlayerChatAuthentication implements SkyBlockEventClass {
         cooldowns.put(player.getUuid(), System.currentTimeMillis());
 
         event.setCancelled(true);
-        String[] args = event.getMessage().split(" ");
+        String[] args = event.getRawMessage().split(" ");
 
         AuthenticationDatabase.AuthenticationData data = new AuthenticationDatabase(player.getUuid()).getAuthenticationData();
         if (data == null) {

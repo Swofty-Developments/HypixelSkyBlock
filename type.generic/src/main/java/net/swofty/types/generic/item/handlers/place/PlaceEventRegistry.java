@@ -7,8 +7,8 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.item.components.MinionComponent;
+import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.HashMap;

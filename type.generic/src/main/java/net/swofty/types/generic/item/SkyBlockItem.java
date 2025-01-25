@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
@@ -16,9 +17,8 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeType;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();

@@ -2,9 +2,9 @@ package net.swofty.types.generic.museum;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.HashMap;

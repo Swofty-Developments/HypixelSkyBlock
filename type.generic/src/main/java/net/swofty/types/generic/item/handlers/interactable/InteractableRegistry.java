@@ -1,15 +1,13 @@
 package net.swofty.types.generic.item.handlers.interactable;
 
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
-
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.hologram.ServerHolograms;
-import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.user.SkyBlockIsland;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.JerryInformation;
+
 import java.util.HashMap;
 import java.util.Map;
 

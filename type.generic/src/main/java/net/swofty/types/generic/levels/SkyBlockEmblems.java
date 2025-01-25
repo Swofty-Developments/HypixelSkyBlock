@@ -2,10 +2,10 @@ package net.swofty.types.generic.levels;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.levels.causes.LevelCause;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;

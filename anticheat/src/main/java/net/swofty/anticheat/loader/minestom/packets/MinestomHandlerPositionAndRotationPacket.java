@@ -35,7 +35,7 @@ public class MinestomHandlerPositionAndRotationPacket
                         ((PositionAndRotationPacket) packet).getPos().yaw(),
                         ((PositionAndRotationPacket) packet).getPos().pitch()
                 ),
-                ((PositionAndRotationPacket) packet).isOnGround()
+                (byte) (((PositionAndRotationPacket) packet).isOnGround() ? 1 : 0)
         );
     }
 

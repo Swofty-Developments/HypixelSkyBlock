@@ -9,6 +9,7 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags.GUIYourBags;
@@ -25,7 +26,6 @@ import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
-import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

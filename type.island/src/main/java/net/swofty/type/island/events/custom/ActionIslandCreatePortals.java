@@ -1,11 +1,10 @@
 package net.swofty.type.island.events.custom;
 
-import net.minestom.server.event.Event;
 import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.structure.structures.IslandPortal;
 import net.swofty.types.generic.event.SkyBlockEvent;
+import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.IslandFetchedFromDatabaseEvent;
+import net.swofty.types.generic.structure.structures.IslandPortal;
 
 public class ActionIslandCreatePortals implements SkyBlockEventClass {
 

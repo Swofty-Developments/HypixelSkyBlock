@@ -1,15 +1,14 @@
 package net.swofty.commons.auctions;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import net.minestom.server.item.ItemComponent;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import org.bson.Document;
 
-import java.beans.Transient;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter

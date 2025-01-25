@@ -1,7 +1,7 @@
 package net.swofty.types.generic.skill;
 
-import net.swofty.types.generic.skill.skills.*;
 import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.skill.skills.*;
 
 public enum SkillCategories {
     COMBAT(CombatSkill.class),

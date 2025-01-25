@@ -1,7 +1,6 @@
 package net.swofty.anticheat.math;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

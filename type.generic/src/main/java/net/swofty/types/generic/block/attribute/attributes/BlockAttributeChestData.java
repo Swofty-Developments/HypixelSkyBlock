@@ -5,7 +5,6 @@ import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.block.impl.CustomSkyBlockBlock;
 import net.swofty.types.generic.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,8 +3,8 @@ package net.swofty.types.generic.item.components;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.utility.RecipeParser;
 import org.tinylog.Logger;
 

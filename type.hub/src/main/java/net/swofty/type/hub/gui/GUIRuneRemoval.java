@@ -7,14 +7,14 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.item.components.RuneableComponent;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIRuneRemoval extends SkyBlockInventoryGUI {

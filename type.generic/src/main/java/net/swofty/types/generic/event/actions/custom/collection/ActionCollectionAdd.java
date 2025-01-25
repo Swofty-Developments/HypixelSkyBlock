@@ -1,10 +1,7 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
-import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;

@@ -1,10 +1,10 @@
 package net.swofty.types.generic.loottable;
 
 import lombok.Getter;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.impl.EnchantmentLuck;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistic;
 
 import java.util.Map;
 import java.util.function.BiFunction;

@@ -2,6 +2,7 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.type.AnvilInventory;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -15,7 +16,7 @@ public class ActionPlayerInventoryCloseAnvil implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (SkyBlockAnvilGUI.anvilGUIs.containsKey(player)) {
-            if (event.getInventory().getInventoryType().equals(InventoryType.ANVIL)) {
+            if (event.getInventory() instanceof AnvilInventory) {
                 SkyBlockAnvilGUI.anvilGUIs.get(player).getValue().complete(SkyBlockAnvilGUI.anvilGUIs.get(player).getKey());
                 SkyBlockAnvilGUI.anvilGUIs.remove(player);
             }

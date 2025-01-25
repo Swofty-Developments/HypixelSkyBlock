@@ -2,13 +2,13 @@ package net.swofty.types.generic.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.minestom.server.item.ItemComponent;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.beans.Transient;
 import java.util.ArrayList;

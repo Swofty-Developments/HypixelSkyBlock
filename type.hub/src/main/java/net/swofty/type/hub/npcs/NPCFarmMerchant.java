@@ -1,10 +1,10 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.hub.gui.GUIShopFarmMerchant;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.type.hub.gui.GUIShopFarmMerchant;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class NPCFarmMerchant extends NPCDialogue {

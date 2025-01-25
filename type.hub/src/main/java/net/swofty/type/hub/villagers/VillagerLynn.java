@@ -1,7 +1,7 @@
 package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.minestom.server.entity.VillagerProfession;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
 import net.swofty.types.generic.mission.MissionData;
@@ -27,8 +27,8 @@ public class VillagerLynn extends NPCVillagerDialogue {
             }
 
             @Override
-            public VillagerMeta.Profession profession() {
-                return VillagerMeta.Profession.NONE;
+            public VillagerProfession profession() {
+                return VillagerProfession.NONE;
             }
         });
     }

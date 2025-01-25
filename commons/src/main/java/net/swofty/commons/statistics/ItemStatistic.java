@@ -76,7 +76,7 @@ public enum ItemStatistic {
     private Double baseMultiplicativeValue = 1D;
 
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                   @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue) {
         this.displayName = displayName;
         this.loreColor = loreColor;

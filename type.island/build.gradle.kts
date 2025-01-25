@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
-    implementation("net.minestom:minestom-snapshots:f71ab6d851") {
+    implementation("net.minestom:minestom-snapshots:807a887fbd") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

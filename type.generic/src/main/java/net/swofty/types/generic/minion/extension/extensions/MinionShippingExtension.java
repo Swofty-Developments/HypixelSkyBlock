@@ -6,6 +6,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
@@ -15,7 +16,6 @@ import net.swofty.types.generic.item.components.MinionShippingComponent;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.extension.MinionExtension;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

@@ -7,7 +7,8 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatapointKat extends Datapoint<DatapointKat.PlayerKat> {
     public static Serializer<PlayerKat> serializer = new Serializer<>() {

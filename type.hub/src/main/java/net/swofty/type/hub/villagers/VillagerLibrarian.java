@@ -1,10 +1,10 @@
 package net.swofty.type.hub.villagers;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.minestom.server.entity.VillagerProfession;
+import net.swofty.type.hub.gui.GUIShopLibrarian;
 import net.swofty.types.generic.entity.villager.NPCVillagerDialogue;
 import net.swofty.types.generic.entity.villager.NPCVillagerParameters;
-import net.swofty.type.hub.gui.GUIShopLibrarian;
 import net.swofty.types.generic.mission.MissionData;
 
 import java.util.stream.Stream;
@@ -28,8 +28,8 @@ public class VillagerLibrarian extends NPCVillagerDialogue {
             }
 
             @Override
-            public VillagerMeta.Profession profession() {
-                return VillagerMeta.Profession.LIBRARIAN;
+            public VillagerProfession profession() {
+                return VillagerProfession.LIBRARIAN;
             }
         });
     }

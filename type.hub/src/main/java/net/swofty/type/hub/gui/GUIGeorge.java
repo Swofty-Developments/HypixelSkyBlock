@@ -16,9 +16,9 @@ import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.item.components.PetComponent;
 import net.swofty.types.generic.item.components.PetItemComponent;
+import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 public class GUIGeorge extends SkyBlockInventoryGUI {

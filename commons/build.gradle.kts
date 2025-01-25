@@ -17,7 +17,7 @@ java {
 dependencies {
     implementation("org.yaml:snakeyaml:2.2")
     implementation(project(":packer"))
-    implementation("net.minestom:minestom-snapshots:f71ab6d851") {
+    implementation("net.minestom:minestom-snapshots:807a887fbd") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 }

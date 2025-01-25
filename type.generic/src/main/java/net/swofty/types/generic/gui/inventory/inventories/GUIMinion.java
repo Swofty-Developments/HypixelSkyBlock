@@ -9,6 +9,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
@@ -30,7 +31,6 @@ import net.swofty.types.generic.minion.extension.MinionExtension;
 import net.swofty.types.generic.minion.extension.MinionExtensionData;
 import net.swofty.types.generic.minion.extension.MinionExtensions;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

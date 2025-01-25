@@ -1,23 +1,19 @@
 package net.swofty.types.generic.minion.actions;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.utils.Direction;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.IslandMinionData;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter

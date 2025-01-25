@@ -26,7 +26,7 @@ public class ActionPlayerChat implements SkyBlockEventClass {
         DataHandler dataHandler = player.getDataHandler();
         if (dataHandler == null) return;
 
-        String message = event.getMessage();
+        String message = event.getRawMessage();
         Rank rank = dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue();
 
         // Sanitize message to remove any special unicode characters

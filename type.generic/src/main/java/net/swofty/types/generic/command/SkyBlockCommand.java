@@ -10,7 +10,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class SkyBlockCommand {
     public static final String COMMAND_SUFFIX = "Command";

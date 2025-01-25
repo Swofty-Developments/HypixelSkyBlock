@@ -1,6 +1,7 @@
 package net.swofty.types.generic.event.actions.custom;
 
 import net.swofty.commons.Songs;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -10,7 +11,6 @@ import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockActionBar;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.List;
 

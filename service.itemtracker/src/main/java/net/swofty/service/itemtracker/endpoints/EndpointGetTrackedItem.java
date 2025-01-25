@@ -6,8 +6,6 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtoc
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.itemtracker.TrackedItemsDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class EndpointGetTrackedItem implements ServiceEndpoint<

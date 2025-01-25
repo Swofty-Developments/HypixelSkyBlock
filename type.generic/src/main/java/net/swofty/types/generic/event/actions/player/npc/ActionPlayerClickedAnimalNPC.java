@@ -1,6 +1,6 @@
 package net.swofty.types.generic.event.actions.player.npc;
 
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.animalnpc.NPCAnimalEntityImpl;
@@ -16,7 +16,7 @@ public class ActionPlayerClickedAnimalNPC implements SkyBlockEventClass {
     public void run(PlayerEntityInteractEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (event.getHand() != Player.Hand.MAIN) return;
+        if (event.getHand() != PlayerHand.MAIN) return;
         if (SkyBlockConst.isIslandServer()) return;
 
         if (event.getTarget() instanceof NPCAnimalEntityImpl npcImpl) {

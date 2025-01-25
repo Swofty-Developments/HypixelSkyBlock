@@ -1,7 +1,6 @@
 package net.swofty.type.island.events.custom;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.chest.ChestBuilder;

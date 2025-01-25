@@ -1,9 +1,9 @@
 package net.swofty.commons.item.attribute.attributes;
 
 import net.swofty.commons.item.Rarity;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
-import net.swofty.commons.item.attribute.ItemAttribute;
 
 public class ItemAttributeRarity extends ItemAttribute<Rarity> {
     @Override
