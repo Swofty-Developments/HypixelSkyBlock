@@ -67,6 +67,7 @@ import net.swofty.types.generic.museum.MuseumableItemCategory;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
+import net.swofty.types.generic.block.placement.BlockPlacementManager;
 import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.redis.RedisOriginServer;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -229,6 +230,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
         SkyBlockServerAttributes.loadAttributes(AttributeDatabase.getDocument("attributes"));
         SkyBlockServerAttributes.saveAttributeLoop();
+
+        /**
+         * Register Placement Rules
+         */
+        BlockPlacementManager.register();
 
         /**
          * Start data loop
