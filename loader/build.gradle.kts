@@ -34,7 +34,7 @@ dependencies {
     implementation("net.minestom:minestom-snapshots:807a887fbd") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation("dev.hollowcube:polar:1.10.0")
+    implementation("dev.hollowcube:polar:1.12.1")
 }
 
 application {
