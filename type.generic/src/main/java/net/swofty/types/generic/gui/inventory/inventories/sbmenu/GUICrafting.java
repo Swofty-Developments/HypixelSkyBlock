@@ -37,8 +37,6 @@ public class GUICrafting extends SkyBlockAbstractInventory {
     private static final int[] CRAFT_SLOTS = new int[]{10, 11, 12, 19, 20, 21, 28, 29, 30};
     private static final int RESULT_SLOT = 23;
 
-    private SkyBlockRecipe<?> currentRecipe;
-
     public GUICrafting() {
         super(InventoryType.CHEST_6_ROW);
         startLoop("refresh", 5, () -> refreshItems(owner));
@@ -76,7 +74,6 @@ public class GUICrafting extends SkyBlockAbstractInventory {
 
     private void refreshItems(SkyBlockPlayer player) {
         SkyBlockRecipe<?> recipe = SkyBlockRecipe.parseRecipe(getCurrentRecipe());
-        currentRecipe = recipe;
 
         if (recipe == null) {
             doAction(new RemoveStateAction(STATE_VALID_RECIPE));

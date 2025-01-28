@@ -1,15 +1,17 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeMinionData;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.minion.SkyBlockMinion;
@@ -20,29 +22,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMinionRecipes extends SkyBlockInventoryGUI {
+public class GUIMinionRecipes extends SkyBlockAbstractInventory {
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
             10, new int[] { 11, 12, 13, 14, 15, 20, 21, 22, 23, 24 },
             11, new int[] { 11, 12, 13, 14, 15, 21, 22, 23, 30, 31, 32 }
     ));
 
-    SkyBlockInventoryGUI previousGUI;
-    MinionRegistry minionRegistry;
+    private final SkyBlockAbstractInventory previousGUI;
+    private final MinionRegistry minionRegistry;
 
-    public GUIMinionRecipes(MinionRegistry minionRegistry, SkyBlockInventoryGUI previousGUI) {
-        super(StringUtility.toNormalCase(minionRegistry.toString()) + " Minion Recipes", InventoryType.CHEST_6_ROW);
+    public GUIMinionRecipes(MinionRegistry minionRegistry, SkyBlockAbstractInventory previousGUI) {
+        super(InventoryType.CHEST_6_ROW);
         this.previousGUI = previousGUI;
         this.minionRegistry = minionRegistry;
+        doAction(new SetTitleAction(Component.text(StringUtility.toNormalCase(minionRegistry.toString()) + " Minion Recipes")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, previousGUI));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + previousGUI.getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(previousGUI);
+                    return true;
+                })
+                .build());
 
         List<SkyBlockMinion.MinionTier> craftableMinionTiers = new ArrayList<>();
-
         for (SkyBlockMinion.MinionTier minionTier : minionRegistry.asSkyBlockMinion().getTiers()) {
             if (minionTier.craftable()) craftableMinionTiers.add(minionTier);
         }
@@ -55,40 +74,32 @@ public class GUIMinionRecipes extends SkyBlockInventoryGUI {
             SkyBlockItem minion = new SkyBlockItem(minionRegistry.getItemType());
             minion.getAttributeHandler().setMinionData(new ItemAttributeMinionData.MinionData(minionTier.tier(), 0));
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIRecipe(minion, new GUIMinionRecipes(minionRegistry, previousGUI), minionTier.tier() - 1).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStackHead(minion.getDisplayName(), minionTier.texture(), 1,
-                            minion.getLore());
-                }
-            });
+            attachItem(GUIItem.builder(slot)
+                    .item(ItemStackCreator.getStackHead(minion.getDisplayName(),
+                            minionTier.texture(), 1, minion.getLore()).build())
+                    .onClick((ctx, item) -> {
+                        ctx.player().openInventory(new GUIRecipe(minion,
+                                new GUIMinionRecipes(minionRegistry, previousGUI),
+                                minionTier.tier() - 1));
+                        return true;
+                    })
+                    .build());
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {}
+
+    @Override
+    protected boolean allowHotkeying() {
         return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
     }
 }

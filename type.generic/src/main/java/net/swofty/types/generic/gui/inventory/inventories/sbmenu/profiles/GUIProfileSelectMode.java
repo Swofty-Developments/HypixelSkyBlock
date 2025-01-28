@@ -1,31 +1,40 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.profiles;
 
-import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
+public class GUIProfileSelectMode extends SkyBlockAbstractInventory {
+
     public GUIProfileSelectMode() {
-        super("Choose a SkyBlock Mode", InventoryType.CHEST_4_ROW);
+        super(InventoryType.CHEST_4_ROW);
+        doAction(new SetTitleAction(Component.text("Choose a SkyBlock Mode")));
     }
 
-    @SneakyThrows
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(31, new GUIProfileManagement()));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        set(new GUIClickableItem(11) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, 1,
+        // Back button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Profile Management").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIProfileManagement());
+                    return true;
+                })
+                .build());
+
+        // Classic profile button
+        attachItem(GUIItem.builder(11)
+                .item(ItemStackCreator.getStack("§aClassic Profile", Material.GRASS_BLOCK, 1,
                         "§8SkyBlock Mode",
                         "",
                         "§7A SkyBlock adventure with the",
@@ -37,54 +46,41 @@ public class GUIProfileSelectMode extends SkyBlockInventoryGUI {
                         "§agreatest player§7 in the",
                         "§7universe!",
                         "",
-                        "§eClick to play this mode!"
-                );
-            }
+                        "§eClick to play this mode!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIProfileCreate());
+                    return true;
+                })
+                .build());
 
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIProfileCreate().open(player);
-            }
-        });
-
-        set(new GUIClickableItem(15) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, 1,
+        // Special modes button
+        attachItem(GUIItem.builder(15)
+                .item(ItemStackCreator.getStack("§6Special Modes", Material.BLAZE_POWDER, 1,
                         "§7Choose a SkyBlock mode with",
                         "§7special rules and unique",
                         "§7mechanics.",
                         "",
-                        "§eClick to choose a mode!"
-                );
-            }
-
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cSpecial Modes in SkyBlock are currently unavailable. Please check back another time.");
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+                        "§eClick to choose a mode!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().sendMessage("§cSpecial Modes in SkyBlock are currently unavailable. Please check back another time.");
+                    return true;
+                })
+                .build());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    protected void onSuddenQuit(SkyBlockPlayer player) {}
 }

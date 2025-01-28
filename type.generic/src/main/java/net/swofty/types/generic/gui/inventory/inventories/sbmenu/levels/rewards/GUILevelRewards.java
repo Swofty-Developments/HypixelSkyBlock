@@ -1,14 +1,17 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.rewards;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.GUISkyBlockLevels;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
@@ -19,153 +22,174 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GUILevelRewards extends SkyBlockInventoryGUI {
+public class GUILevelRewards extends SkyBlockAbstractInventory {
+
     public GUILevelRewards() {
-        super("Leveling Rewards", InventoryType.CHEST_4_ROW);
+        super(InventoryType.CHEST_4_ROW);
+        doAction(new SetTitleAction(Component.text("Leveling Rewards")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(31));
-        set(GUIClickableItem.getGoBackItem(30, new GUISkyBlockLevels()));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getPlayer().getSkyBlockExperience();
+        // Close button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(11) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUILevelFeatureRewards().open(player);
-            }
+        // Back button
+        attachItem(GUIItem.builder(30)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + new GUISkyBlockLevels().getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkyBlockLevels());
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7Specific game features such as the");
-                lore.add("§7Bazaar or Community Shop.");
-                lore.add(" ");
-                lore.add("§7Next Reward:");
+        setupFeatureRewardsItem(player);
+        setupPrefixRewardsItem(player);
+        setupEmblemRewardsItem(player);
+        setupStatisticRewardsItem(player);
+    }
 
-                Map.Entry<Integer, List<CustomLevelAward>> nextAward = CustomLevelAward.getNextReward(
-                        experience.getLevel().asInt()
-                );
-                if (nextAward == null) {
-                    lore.add("§cNo more rewards!");
-                } else {
-                    nextAward.getValue().forEach(award -> {
-                        lore.add("§7" + award.getDisplay());
-                    });
-                    lore.add("§8at Level " + nextAward.getKey());
-                }
+    private void setupFeatureRewardsItem(SkyBlockPlayer player) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
 
-                lore.add(" ");
-                lore.addAll(getAsDisplay(CustomLevelAward.getFromLevel(experience.getLevel().asInt()).size(),
-                        CustomLevelAward.getTotalLevelAwards()));
-                lore.add(" ");
-                lore.add("§eClick to view!");
+        attachItem(GUIItem.builder(11)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7Specific game features such as the");
+                    lore.add("§7Bazaar or Community Shop.");
+                    lore.add(" ");
+                    lore.add("§7Next Reward:");
 
-                return ItemStackCreator.getStack("§aFeature Rewards",
-                        Material.NETHER_STAR, 1, lore);
-            }
-        });
-        set(new GUIClickableItem(12) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUILevelPrefixRewards().open(player);
-            }
+                    Map.Entry<Integer, List<CustomLevelAward>> nextAward = CustomLevelAward.getNextReward(
+                            experience.getLevel().asInt()
+                    );
+                    if (nextAward == null) {
+                        lore.add("§cNo more rewards!");
+                    } else {
+                        nextAward.getValue().forEach(award -> lore.add("§7" + award.getDisplay()));
+                        lore.add("§8at Level " + nextAward.getKey());
+                    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7New colors for your level prefix");
-                lore.add("§7shown in TAB and in chat!");
-                lore.add(" ");
-                lore.add("§7Next Reward:");
+                    lore.add(" ");
+                    lore.addAll(getAsDisplay(CustomLevelAward.getFromLevel(experience.getLevel().asInt()).size(),
+                            CustomLevelAward.getTotalLevelAwards()));
+                    lore.add(" ");
+                    lore.add("§eClick to view!");
 
-                Map.Entry<SkyBlockLevelRequirement, String> nextPrefix = player.getSkyBlockExperience()
-                        .getLevel().getNextPrefixChange();
-                if (nextPrefix == null) {
-                    lore.add("§cNo more rewards!");
-                } else {
-                    lore.add(nextPrefix.getValue() + nextPrefix.getKey().getPrefixDisplay());
-                    lore.add("§8at Level " + nextPrefix.getKey().asInt());
-                }
-                lore.add(" ");
-                lore.addAll(getAsDisplay(
-                        player.getSkyBlockExperience().getLevel().getPreviousPrefixChanges().size(),
-                        SkyBlockLevelRequirement.getAllPrefixChanges().size()
-                ));
-                lore.add(" ");
-                lore.add("§eClick to view!");
+                    return ItemStackCreator.getStack("§aFeature Rewards", Material.NETHER_STAR, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUILevelFeatureRewards());
+                    return true;
+                })
+                .build());
+    }
 
-                return ItemStackCreator.getStack("§aPrefix Color Rewards",
-                        Material.GRAY_DYE, 1, lore);
-            }
-        });
-        set(new GUIClickableItem(13) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUILevelEmblemRewards().open(player);
-            }
+    private void setupPrefixRewardsItem(SkyBlockPlayer player) {
+        attachItem(GUIItem.builder(12)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7New colors for your level prefix");
+                    lore.add("§7shown in TAB and in chat!");
+                    lore.add(" ");
+                    lore.add("§7Next Reward:");
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7Emblems to show next to your name");
-                lore.add("§7that signify special achievements.");
-                lore.add(" ");
-                lore.add("§7Next Reward:");
+                    Map.Entry<SkyBlockLevelRequirement, String> nextPrefix = player.getSkyBlockExperience()
+                            .getLevel().getNextPrefixChange();
+                    if (nextPrefix == null) {
+                        lore.add("§cNo more rewards!");
+                    } else {
+                        lore.add(nextPrefix.getValue() + nextPrefix.getKey().getPrefixDisplay());
+                        lore.add("§8at Level " + nextPrefix.getKey().asInt());
+                    }
+                    lore.add(" ");
+                    lore.addAll(getAsDisplay(
+                            player.getSkyBlockExperience().getLevel().getPreviousPrefixChanges().size(),
+                            SkyBlockLevelRequirement.getAllPrefixChanges().size()
+                    ));
+                    lore.add(" ");
+                    lore.add("§eClick to view!");
 
-                List<SkyBlockEmblems.SkyBlockEmblem> levelEmblems = SkyBlockEmblems.getEmblemsWithLevelCause();
-                SkyBlockEmblems.SkyBlockEmblem nextEmblem = null;
-                for (SkyBlockEmblems.SkyBlockEmblem emblem : levelEmblems) {
-                    if (player.getSkyBlockExperience().hasExperienceFor(emblem.cause())) continue;
-                    nextEmblem = emblem;
-                    break;
-                }
+                    return ItemStackCreator.getStack("§aPrefix Color Rewards", Material.GRAY_DYE, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUILevelPrefixRewards());
+                    return true;
+                })
+                .build());
+    }
 
-                if (nextEmblem == null) {
-                    lore.add("§cNo more rewards!");
-                } else {
-                    lore.add("§f" + nextEmblem.displayName() + " " + nextEmblem.emblem());
-                    lore.add("§8at Level " + ((LevelCause) nextEmblem.cause()).getLevel());
-                }
+    private void setupEmblemRewardsItem(SkyBlockPlayer player) {
+        attachItem(GUIItem.builder(13)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7Emblems to show next to your name");
+                    lore.add("§7that signify special achievements.");
+                    lore.add(" ");
+                    lore.add("§7Next Reward:");
 
-                lore.add(" ");
-                lore.addAll(getAsDisplay(
-                        player.getSkyBlockExperience().getOfType(LevelCause.class).size(),
-                        levelEmblems.size()
-                ));
-                lore.add(" ");
-                lore.add("§eClick to view!");
+                    List<SkyBlockEmblems.SkyBlockEmblem> levelEmblems = SkyBlockEmblems.getEmblemsWithLevelCause();
+                    SkyBlockEmblems.SkyBlockEmblem nextEmblem = null;
+                    for (SkyBlockEmblems.SkyBlockEmblem emblem : levelEmblems) {
+                        if (player.getSkyBlockExperience().hasExperienceFor(emblem.cause())) continue;
+                        nextEmblem = emblem;
+                        break;
+                    }
 
-                return ItemStackCreator.getStack("§aEmblem Rewards",
-                        Material.NAME_TAG, 1, lore);
-            }
-        });
-        set(new GUIItem(14) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
+                    if (nextEmblem == null) {
+                        lore.add("§cNo more rewards!");
+                    } else {
+                        lore.add("§f" + nextEmblem.displayName() + " " + nextEmblem.emblem());
+                        lore.add("§8at Level " + ((LevelCause) nextEmblem.cause()).getLevel());
+                    }
 
-                return ItemStackCreator.getStack("§aStatistic Rewards",
-                        Material.DIAMOND_HELMET, 1,
-                        "§7Statistic bonuses that will power you",
-                        "§7up as you level up.",
-                        " ",
-                        "§7Next Reward:",
-                        "§8+§a5 §cHealth",
-                        "§8at Level " + (nextLevel == null ? "§cMAX" : nextLevel.asInt()),
-                        " ",
-                        "§7For every level:",
-                        "§8+§a5 §cHealth",
-                        " ",
-                        "§7For every 5 levels:",
-                        "§8+§a1 §cStrength");
-            }
-        });
+                    lore.add(" ");
+                    lore.addAll(getAsDisplay(
+                            player.getSkyBlockExperience().getOfType(LevelCause.class).size(),
+                            levelEmblems.size()
+                    ));
+                    lore.add(" ");
+                    lore.add("§eClick to view!");
 
-        updateItemStacks(getInventory(), getPlayer());
+                    return ItemStackCreator.getStack("§aEmblem Rewards", Material.NAME_TAG, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUILevelEmblemRewards());
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupStatisticRewardsItem(SkyBlockPlayer player) {
+        attachItem(GUIItem.builder(14)
+                .item(() -> {
+                    SkyBlockLevelRequirement nextLevel = player.getSkyBlockExperience().getLevel().getNextLevel();
+
+                    return ItemStackCreator.getStack("§aStatistic Rewards",
+                            Material.DIAMOND_HELMET, 1,
+                            "§7Statistic bonuses that will power you",
+                            "§7up as you level up.",
+                            " ",
+                            "§7Next Reward:",
+                            "§8+§a5 §cHealth",
+                            "§8at Level " + (nextLevel == null ? "§cMAX" : nextLevel.asInt()),
+                            " ",
+                            "§7For every level:",
+                            "§8+§a5 §cHealth",
+                            " ",
+                            "§7For every 5 levels:",
+                            "§8+§a1 §cStrength").build();
+                })
+                .build());
     }
 
     public static int getTotalAwards() {
@@ -195,9 +219,9 @@ public class GUILevelRewards extends SkyBlockInventoryGUI {
         int completedLength = (int) ((unlocked / (double) total) * maxBarLength);
 
         String completedLoadingBar = "§b§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
-        int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
+        int formattingCodeLength = 4;
         String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
+                completedLoadingBar.length() - formattingCodeLength,
                 maxBarLength
         ));
 
@@ -206,12 +230,22 @@ public class GUILevelRewards extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No special cleanup needed
+    }
+
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {
+        // No special cleanup needed
     }
 }

@@ -2,15 +2,18 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.rewards
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -19,53 +22,80 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class GUILevelFeatureRewards extends SkyBlockInventoryGUI {
+public class GUILevelFeatureRewards extends SkyBlockAbstractInventory {
+    private static final String STATE_FEATURE_UNLOCKED = "feature_unlocked";
+    private static final String STATE_FEATURE_LOCKED = "feature_locked";
+
     private static final int[] SLOTS = new int[]{
             19, 20, 21, 22, 23, 24, 25,
-                        31
+            31
     };
 
     public GUILevelFeatureRewards() {
-        super("Feature Rewards", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Feature Rewards")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUILevelRewards()));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
-        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = getPlayer().getSkyBlockExperience();
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§7Specific game features such as the");
-                lore.add("§7Bazaar or Community Shop.");
-                lore.add(" ");
-                lore.add("§7Next Reward:");
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + new GUILevelRewards().getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUILevelRewards());
+                    return true;
+                })
+                .build());
 
-                Map.Entry<Integer, List<CustomLevelAward>> nextAward = CustomLevelAward.getNextReward(
-                        experience.getLevel().asInt()
-                );
-                if (nextAward == null) {
-                    lore.add("§cNo more rewards!");
-                } else {
-                    nextAward.getValue().forEach(award -> {
-                        lore.add("§7" + award.getDisplay());
-                    });
-                    lore.add("§8at Level " + nextAward.getKey());
-                }
+        setupInfoItem(player);
+        setupFeatureItems(player);
+    }
 
-                lore.add(" ");
-                lore.addAll(GUILevelRewards.getAsDisplay(CustomLevelAward.getFromLevel(experience.getLevel().asInt()).size(),
-                        CustomLevelAward.getTotalLevelAwards()));
+    private void setupInfoItem(SkyBlockPlayer player) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
 
-                return ItemStackCreator.getStack("§aFeature Rewards",
-                        Material.NETHER_STAR, 1, lore);
-            }
-        });
+        attachItem(GUIItem.builder(4)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§7Specific game features such as the");
+                    lore.add("§7Bazaar or Community Shop.");
+                    lore.add(" ");
+                    lore.add("§7Next Reward:");
+
+                    Map.Entry<Integer, List<CustomLevelAward>> nextAward = CustomLevelAward.getNextReward(
+                            experience.getLevel().asInt()
+                    );
+                    if (nextAward == null) {
+                        lore.add("§cNo more rewards!");
+                    } else {
+                        nextAward.getValue().forEach(award -> lore.add("§7" + award.getDisplay()));
+                        lore.add("§8at Level " + nextAward.getKey());
+                    }
+
+                    lore.add(" ");
+                    lore.addAll(GUILevelRewards.getAsDisplay(CustomLevelAward.getFromLevel(experience.getLevel().asInt()).size(),
+                            CustomLevelAward.getTotalLevelAwards()));
+
+                    return ItemStackCreator.getStack("§aFeature Rewards",
+                            Material.NETHER_STAR, 1, lore).build();
+                })
+                .build());
+    }
+
+    private void setupFeatureItems(SkyBlockPlayer player) {
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
 
         for (Map.Entry<CustomLevelAward, Integer> entry : CustomLevelAward.getAwards().entrySet()) {
             CustomLevelAward award = entry.getKey();
@@ -73,39 +103,55 @@ public class GUILevelFeatureRewards extends SkyBlockInventoryGUI {
             int slot = SLOTS[award.ordinal()];
             boolean unlocked = experience.getLevel().asInt() >= level;
 
-            set(new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder item = award.getItem();
-                    List<String> lore = new ArrayList<>(Arrays.asList(
-                            "§8Level " + level,
-                            " "
-                    ));
+            if (unlocked) {
+                doAction(new AddStateAction(STATE_FEATURE_UNLOCKED + "_" + award.ordinal()));
+            } else {
+                doAction(new AddStateAction(STATE_FEATURE_LOCKED + "_" + award.ordinal()));
+            }
 
-                    if (unlocked) {
-                        lore.add("§aYou have unlocked this reward!");
-                    } else {
-                        lore.add("§7Levels left to Unlock: §3" + (level - experience.getLevel().asInt()));
-                    }
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        ItemStack.Builder item = award.getItem();
+                        List<String> lore = new ArrayList<>(Arrays.asList(
+                                "§8Level " + level,
+                                " "
+                        ));
 
-                    return ItemStackCreator.updateLore(item, lore).set(
-                            ItemComponent.CUSTOM_NAME,
-                            Component.text(award.getDisplay()).decoration(TextDecoration.ITALIC, false)
-                    );
-                }
-            });
+                        if (unlocked) {
+                            lore.add("§aYou have unlocked this reward!");
+                        } else {
+                            lore.add("§7Levels left to Unlock: §3" + (level - experience.getLevel().asInt()));
+                        }
+
+                        return ItemStackCreator.updateLore(item, lore)
+                                .set(ItemComponent.CUSTOM_NAME,
+                                        Component.text(award.getDisplay())
+                                                .decoration(TextDecoration.ITALIC, false))
+                                .build();
+                    })
+                    .requireState(unlocked ? STATE_FEATURE_UNLOCKED + "_" + award.ordinal() :
+                            STATE_FEATURE_LOCKED + "_" + award.ordinal())
+                    .build());
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No special cleanup needed
+    }
 
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {
+        // No special cleanup needed
     }
 }

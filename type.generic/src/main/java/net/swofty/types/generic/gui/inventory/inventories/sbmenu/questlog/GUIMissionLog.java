@@ -3,17 +3,19 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.RemoveStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionSet;
 import net.swofty.types.generic.mission.SkyBlockMission;
@@ -25,102 +27,137 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMissionLog extends SkyBlockInventoryGUI {
+public class GUIMissionLog extends SkyBlockAbstractInventory {
+    private static final String STATE_COMPLETED = "completed";
     private static final int[] MISSION_SLOTS = {
-                11, 12, 13, 14, 15, 16,
+            11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
             28, 29, 30, 31, 32, 33, 34,
             37, 38, 39, 40, 41, 42, 43
     };
 
     public GUIMissionLog() {
-        super("Quest Log", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Quest Log")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
-        display(false);
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build(), 0, 8);
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build(), 45, 53);
+
+        setupNavigationButtons();
+        setupMissionDisplay();
+        refreshDisplay();
     }
 
-    public void display(boolean completed) {
-        getInventory().setTitle(Component.text("Quest Log " + (completed ? "(Completed)" : "")));
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aQuest Log " + (completed ? "(Completed)" : ""), Material.WRITABLE_BOOK, 1, "§7View your active quests,", "§7progress, and rewards.");
-            }
-        });
-        set(new GUIClickableItem(10) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIFairySoulsGuide().open(player);
-            }
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStackHead("§eFind all Fairy Souls", "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
+    private void setupNavigationButtons() {
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To SkyBlock Menu").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkyBlockMenu());
+                    return true;
+                })
+                .build());
+
+        // Quest log header
+        attachItem(GUIItem.builder(4)
+                .item(() -> ItemStackCreator.getStack(
+                        "§aQuest Log " + (hasState(STATE_COMPLETED) ? "(Completed)" : ""),
+                        Material.WRITABLE_BOOK, 1,
+                        "§7View your active quests,",
+                        "§7progress, and rewards.").build())
+                .build());
+
+        // Toggle completed/ongoing button
+        attachItem(GUIItem.builder(50)
+                .item(() -> {
+                    if (hasState(STATE_COMPLETED)) {
+                        return ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, 1,
+                                "§7View quests you are currently",
+                                "§7working towards.",
+                                "§7 ",
+                                "§eClick to view!").build();
+                    } else {
+                        return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, 1,
+                                "§7Take a peek at the past and",
+                                "§7browse quests you've,",
+                                "§7already completed.",
+                                "§f ",
+                                "§7Completed: §a" + owner.getMissionData().getCompletedMissions().size(),
+                                "§7 ",
+                                "§eClick to view!").build();
+                    }
+                })
+                .onClick((ctx, item) -> {
+                    if (hasState(STATE_COMPLETED)) {
+                        doAction(new RemoveStateAction(STATE_COMPLETED));
+                    } else {
+                        doAction(new AddStateAction(STATE_COMPLETED));
+                    }
+                    refreshDisplay();
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupMissionDisplay() {
+        // Fairy souls button
+        attachItem(GUIItem.builder(10)
+                .item(() -> ItemStackCreator.getStackHead("§eFind all Fairy Souls",
+                        "b96923ad247310007f6ae5d326d847ad53864cf16c3565a181dc8e6b20be2387", 1,
                         "",
-                        "  §c✖ §eFound: " + player.getFairySoulHandler().getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
+                        "  §c✖ §eFound: " + owner.getFairySoulHandler().getTotalFoundFairySouls() + "/" + FairySoulDatabase.getAllSouls().size(),
                         "",
                         "§7Forever ongoing quest...",
                         "",
-                        "§eClick to view details!");
-            }
-        });
-        if (completed) {
-            set(new GUIClickableItem(50) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    display(false);
-                }
+                        "§eClick to view details!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIFairySoulsGuide());
+                    return true;
+                })
+                .build());
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aOngoing Quests", Material.BOOK, 1,
-                            "§7View quests you are currently",
-                            "§7working towards.",
-                            "§7 ",
-                            "§eClick to view!");
-                }
-            });
-        } else {
-            set(new GUIClickableItem(50) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    display(true);
-                }
+        // Clear mission slots
+        Arrays.stream(MISSION_SLOTS).forEach(slot ->
+                attachItem(GUIItem.builder(slot).item(ItemStack.AIR).build()));
+    }
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aCompleted Quests", Material.BOOK, 1,
-                            "§7Take a peek at the past and",
-                            "§7browse quests you've,",
-                            "§7already completed.",
-                            "§f ",
-                            "§7Completed: §a" + player.getMissionData().getCompletedMissions().size(),
-                            "§7 ",
-                            "§eClick to view!");
-                }
-            });
+    private void refreshDisplay() {
+        doAction(new SetTitleAction(Component.text("Quest Log " + (hasState(STATE_COMPLETED) ? "(Completed)" : ""))));
+
+        MissionData missionData = owner.getMissionData();
+        List<MissionSet> missions = getMissionsToShow(missionData);
+
+        for (int i = 0; i < missions.size(); i++) {
+            MissionSet missionSet = missions.get(i);
+            attachItem(createMissionItem(MISSION_SLOTS[i], missionSet, missionData));
         }
+    }
 
-        MissionData missionData = getPlayer().getMissionData();
-
+    private List<MissionSet> getMissionsToShow(MissionData missionData) {
         List<MissionSet> completedMissions = new ArrayList<>();
         List<MissionSet> activeMissions = new ArrayList<>();
 
         for (MissionSet set : MissionSet.values()) {
             boolean completedSet = true;
-
             for (Class<? extends SkyBlockMission> mission : set.getMissions()) {
                 if (missionData.getMission(mission) == null || !missionData.getMission(mission).getValue()) {
                     completedSet = false;
                     break;
                 }
             }
-
             if (completedSet) {
                 completedMissions.add(set);
             } else {
@@ -128,87 +165,81 @@ public class GUIMissionLog extends SkyBlockInventoryGUI {
             }
         }
 
-        Arrays.stream(MISSION_SLOTS).forEach(slot -> {
-            set(slot, ItemStack.builder(Material.AIR));
-        });
+        return hasState(STATE_COMPLETED) ? completedMissions : activeMissions;
+    }
 
-        List<MissionSet> toShow = completed ? completedMissions : activeMissions;
-
-        for (int i = 0; i < toShow.size(); i++) {
-            MissionSet missionSet = toShow.get(i);
-            set(new GUIItem(MISSION_SLOTS[i]) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+    private GUIItem createMissionItem(int slot, MissionSet missionSet, MissionData missionData) {
+        return GUIItem.builder(slot)
+                .item(() -> {
                     List<String> lore = new ArrayList<>(List.of("§7 "));
-
-                    Arrays.stream(missionSet.getMissions()).forEach(mission -> {
-                        Map.Entry<MissionData.ActiveMission, Boolean> activeMission = missionData.getMission(mission);
-
-                        if (activeMission == null) {
-                            try {
-                                lore.add(" §c✗§e " + mission.newInstance().getName() + ".");
-                            } catch (InstantiationException | IllegalAccessException e) {
-                                throw new RuntimeException(e);
-                            }
-                            return;
-                        }
-
-                        SkyBlockMission skyBlockMission = MissionData.getMissionClass(activeMission.getKey().getMissionID());
-                        SkyBlockProgressMission progressMission = missionData.getAsProgressMission(skyBlockMission.getID());
-
-                        lore.add(" " + (activeMission.getValue() ? "§a✓§f " : "§c✗§e ") + skyBlockMission.getName()
-                                + (progressMission != null ? ". §7(§b" + activeMission.getKey().getMissionProgress()
-                                + "§7/§b" + progressMission.getMaxProgress() + ")" : "."));
-                    });
-
-                    lore.add("§7 ");
-                    Map.Entry<MissionData.ActiveMission, Boolean> firstMissionInSetEntry = missionData.getMission(missionSet.getMissions()[0]);
-                    if (firstMissionInSetEntry != null) {
-                        MissionData.ActiveMission firstMissionInSet = firstMissionInSetEntry.getKey();
-
-                        lore.add("§7Started:");
-                        lore.add("§f  " + SkyBlockCalendar.getMonthName(
-                                SkyBlockCalendar.getMonth(firstMissionInSet.getMissionStarted()))
-                                + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionStarted())));
-                        lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionStarted()));
-                        if (completed) {
-                            lore.add("§7 ");
-                            lore.add("§7Completed:");
-                            lore.add("§f  " + SkyBlockCalendar.getMonthName(
-                                    SkyBlockCalendar.getMonth(firstMissionInSet.getMissionEnded()))
-                                    + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMissionInSet.getMissionEnded())));
-                            lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMissionInSet.getMissionEnded()));
-                        }
-                    } else {
-                        lore.add("§7Not Yet Started");
-                    }
+                    addMissionProgress(lore, missionSet, missionData);
+                    addMissionTimes(lore, missionSet, missionData);
 
                     return ItemStackCreator.enchant(
                             ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(missionSet.name()),
                                     Material.PAPER, 1,
-                                    lore));
-                }
-            });
-        }
+                                    lore)).build();
+                })
+                .build();
+    }
 
-        updateItemStacks(getInventory(), getPlayer());
+    private void addMissionProgress(List<String> lore, MissionSet missionSet, MissionData missionData) {
+        Arrays.stream(missionSet.getMissions()).forEach(mission -> {
+            Map.Entry<MissionData.ActiveMission, Boolean> activeMission = missionData.getMission(mission);
+
+            if (activeMission == null) {
+                try {
+                    lore.add(" §c✗§e " + mission.newInstance().getName() + ".");
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+
+            SkyBlockMission skyBlockMission = MissionData.getMissionClass(activeMission.getKey().getMissionID());
+            SkyBlockProgressMission progressMission = missionData.getAsProgressMission(skyBlockMission.getID());
+
+            lore.add(" " + (activeMission.getValue() ? "§a✓§f " : "§c✗§e ") + skyBlockMission.getName()
+                    + (progressMission != null ? ". §7(§b" + activeMission.getKey().getMissionProgress()
+                    + "§7/§b" + progressMission.getMaxProgress() + ")" : "."));
+        });
+        lore.add("§7 ");
+    }
+
+    private void addMissionTimes(List<String> lore, MissionSet missionSet, MissionData missionData) {
+        Map.Entry<MissionData.ActiveMission, Boolean> firstMissionEntry = missionData.getMission(missionSet.getMissions()[0]);
+        if (firstMissionEntry != null) {
+            MissionData.ActiveMission firstMission = firstMissionEntry.getKey();
+            lore.add("§7Started:");
+            lore.add("§f  " + SkyBlockCalendar.getMonthName(SkyBlockCalendar.getMonth(firstMission.getMissionStarted()))
+                    + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMission.getMissionStarted())));
+            lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMission.getMissionStarted()));
+
+            if (hasState(STATE_COMPLETED)) {
+                lore.add("§7 ");
+                lore.add("§7Completed:");
+                lore.add("§f  " + SkyBlockCalendar.getMonthName(SkyBlockCalendar.getMonth(firstMission.getMissionEnded()))
+                        + " " + StringUtility.ntify(SkyBlockCalendar.getDay(firstMission.getMissionEnded())));
+                lore.add("§7  " + SkyBlockCalendar.getDisplay(firstMission.getMissionEnded()));
+            }
+        } else {
+            lore.add("§7Not Yet Started");
+        }
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    protected void onSuddenQuit(SkyBlockPlayer player) {}
 }

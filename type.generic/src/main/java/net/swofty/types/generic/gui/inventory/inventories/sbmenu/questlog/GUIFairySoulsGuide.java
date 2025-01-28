@@ -1,22 +1,22 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.questlog;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 
-public class GUIFairySoulsGuide extends SkyBlockInventoryGUI {
-
-    private final int[] LOCATION_SLOTS = {
-                11, 12, 13, 14, 15, 16,
+public class GUIFairySoulsGuide extends SkyBlockAbstractInventory {
+    private static final int[] LOCATION_SLOTS = {
+            11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24
     };
 
@@ -33,8 +33,8 @@ public class GUIFairySoulsGuide extends SkyBlockInventoryGUI {
         SPIDERS_DEN("Spider's Den", "c754318a3376f470e481dfcd6c83a59aa690ad4b4dd7577fdad1c2ef08d8aee6", FairySoulZone.SPIDERS_DEN),
         THE_RIFT("The Rift", "f26192609d6c46ade73e807fc40dbc3a1a1afbb456ae165785b0fe834dd1cb57", FairySoulZone.THE_RIFT),
         GOLD_MINE("Gold Mine", "73bc965d579c3c6039f0a17eb7c2e6faf538c7a5de8e60ec7a719360d0a857a9", FairySoulZone.GOLD_MINE),
-        THE_PARK("The Park", "a221f813dacee0fef8c59f76894dbb26415478d9ddfc44c2e708a6d3b7549b", FairySoulZone.THE_PARK),
-        ;
+        THE_PARK("The Park", "a221f813dacee0fef8c59f76894dbb26415478d9ddfc44c2e708a6d3b7549b", FairySoulZone.THE_PARK);
+
         private final String regionName;
         private final String texture;
         private final FairySoulZone zone;
@@ -47,59 +47,84 @@ public class GUIFairySoulsGuide extends SkyBlockInventoryGUI {
     }
 
     public GUIFairySoulsGuide() {
-        super("Fairy Souls Guide", InventoryType.CHEST_5_ROW);
+        super(InventoryType.CHEST_5_ROW);
+        doAction(new SetTitleAction(Component.text("Fairy Souls Guide")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(40));
-        set(GUIClickableItem.getGoBackItem(39, new GUIMissionLog()));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        set(new GUIItem(10) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                int x = player.getFairySoulHandler().getFound(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getFound(FairySoulZone.MISC_PLACEABLE);
-                int y = player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN) + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE);
-                return ItemStackCreator.getStackHead("§dMiscellaneous", "126ec1ca185b47aad39f931db8b0a8500ded86a127a204886ed4b3783ad1775c", 1,
-                        "§7Fairy Souls: §e" + x + "§7/§d" + y,
-                        " §7Dungeon: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS),
-                        " §7Fishing: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING),
-                        " §7Garden: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN),
-                        " §7Placeable: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE));
-            }
-        });
+        // Close and back buttons
+        attachItem(GUIItem.builder(40)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        attachItem(GUIItem.builder(39)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Mission Log").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIMissionLog());
+                    return true;
+                })
+                .build());
+
+        // Miscellaneous fairy souls
+        attachItem(GUIItem.builder(10)
+                .item(() -> {
+                    int found = player.getFairySoulHandler().getFound(FairySoulZone.MISC_DUNGEONS) +
+                            player.getFairySoulHandler().getFound(FairySoulZone.MISC_FISHING) +
+                            player.getFairySoulHandler().getFound(FairySoulZone.MISC_GARDEN) +
+                            player.getFairySoulHandler().getFound(FairySoulZone.MISC_PLACEABLE);
+                    int max = player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS) +
+                            player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING) +
+                            player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN) +
+                            player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE);
+
+                    return ItemStackCreator.getStackHead("§dMiscellaneous",
+                            "126ec1ca185b47aad39f931db8b0a8500ded86a127a204886ed4b3783ad1775c",
+                            1,
+                            "§7Fairy Souls: §e" + found + "§7/§d" + max,
+                            " §7Dungeon: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_DUNGEONS),
+                            " §7Fishing: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_FISHING),
+                            " §7Garden: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_GARDEN),
+                            " §7Placeable: §d" + player.getFairySoulHandler().getMax(FairySoulZone.MISC_PLACEABLE)).build();
+                })
+                .build());
+
+        // Location-specific fairy souls
         FairySouls[] allFairySouls = FairySouls.values();
-        int index = 0;
-        for (int slot : LOCATION_SLOTS) {
-            FairySouls fairySouls = allFairySouls[index];
+        for (int i = 0; i < LOCATION_SLOTS.length; i++) {
+            if (i >= allFairySouls.length) break;
 
-            set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStackHead("§d" + fairySouls.regionName, fairySouls.texture, 1,
-                            "§7Fairy Souls: §e" + player.getFairySoulHandler().getFound(fairySouls.zone) + "§7/§d" + player.getFairySoulHandler().getMax(fairySouls.zone));
-                }
-            });
-            index++;
+            FairySouls fairySoul = allFairySouls[i];
+            attachItem(GUIItem.builder(LOCATION_SLOTS[i])
+                    .item(() -> ItemStackCreator.getStackHead("§d" + fairySoul.regionName,
+                            fairySoul.texture,
+                            1,
+                            "§7Fairy Souls: §e" + player.getFairySoulHandler().getFound(fairySoul.zone) +
+                                    "§7/§d" + player.getFairySoulHandler().getMax(fairySoul.zone)).build())
+                    .build());
         }
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    protected void onSuddenQuit(SkyBlockPlayer player) {}
 }

@@ -1,12 +1,14 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.levels.SkyBlockLevelUnlock;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GUISkyBlockLevel extends SkyBlockInventoryGUI {
+public class GUISkyBlockLevel extends SkyBlockAbstractInventory {
     private static final Map<Integer, List<Integer>> SLOTS_MAP = new HashMap<>(
             Map.of(
                     1, List.of(13),
@@ -29,40 +31,60 @@ public class GUISkyBlockLevel extends SkyBlockInventoryGUI {
     private final SkyBlockLevelRequirement levelRequirement;
 
     public GUISkyBlockLevel(SkyBlockLevelRequirement levelRequirement) {
-        super("Level " + levelRequirement.asInt() + " Rewards", InventoryType.CHEST_4_ROW);
-
+        super(InventoryType.CHEST_4_ROW);
         this.levelRequirement = levelRequirement;
+        doAction(new SetTitleAction(Component.text("Level " + levelRequirement.asInt() + " Rewards")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(31));
-        set(GUIClickableItem.getGoBackItem(30, new GUISkyBlockLevels()));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
+        // Navigation buttons
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        attachItem(GUIItem.builder(30)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To SkyBlock Levels").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkyBlockLevels());
+                    return true;
+                })
+                .build());
+
+        // Unlock rewards
         List<SkyBlockLevelUnlock> unlocks = levelRequirement.getUnlocks();
         List<Integer> slots = SLOTS_MAP.get(unlocks.size());
 
         for (int i = 0; i < unlocks.size(); i++) {
             SkyBlockLevelUnlock unlock = unlocks.get(i);
-            set(new GUIItem(slots.get(i)) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return unlock.getItemDisplay(player, levelRequirement.asInt());
-                }
-            });
-        }
+            final int index = i;
 
-        updateItemStacks(e.inventory(), e.player());
+            attachItem(GUIItem.builder(slots.get(index))
+                    .item(() -> unlock.getItemDisplay(owner, levelRequirement.asInt()))
+                    .build());
+        }
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
+    @Override
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {}
 }
