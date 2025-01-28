@@ -13,7 +13,6 @@ import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointSackOfSacks;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;

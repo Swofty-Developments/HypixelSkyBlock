@@ -12,8 +12,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
@@ -29,11 +27,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
+public class InventoryRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
     private final SkyBlockRecipe.RecipeType type;
     private final SkyBlockInventoryGUI previousGUI;
 
-    protected GUIRecipeCategory(SkyBlockRecipe.RecipeType type, SkyBlockInventoryGUI previousGUI) {
+    protected InventoryRecipeCategory(SkyBlockRecipe.RecipeType type, SkyBlockInventoryGUI previousGUI) {
         super(InventoryType.CHEST_6_ROW);
         this.type = type;
         this.previousGUI = previousGUI;
@@ -180,7 +178,7 @@ public class GUIRecipeCategory extends SkyBlockPaginatedGUI<SkyBlockRecipe> {
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     new GUIRecipe(
                             item.getResult().getAttributeHandler().getPotentialType(),
-                            GUIRecipeCategory.this).open(player);
+                            InventoryRecipeCategory.this).open(player);
                 }
 
                 @Override

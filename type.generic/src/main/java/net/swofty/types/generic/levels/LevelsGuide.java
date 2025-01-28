@@ -3,7 +3,6 @@ package net.swofty.types.generic.levels;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterSkills;
 import net.swofty.types.generic.skill.SkillCategories;

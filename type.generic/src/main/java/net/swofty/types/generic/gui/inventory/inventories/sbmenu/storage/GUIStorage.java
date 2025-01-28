@@ -3,7 +3,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
@@ -12,11 +11,11 @@ import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.BackpackComponent;
 import net.swofty.types.generic.item.components.SkullHeadComponent;
@@ -25,212 +24,210 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.Map;
 
-public class GUIStorage extends SkyBlockInventoryGUI {
+public class GUIStorage extends SkyBlockAbstractInventory {
+
     public GUIStorage() {
-        super("Storage", InventoryType.CHEST_6_ROW);
-
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
-
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
-                        "§7Store global items you can",
-                        "§7access anywhere in your ender",
-                        "§7chest.");
-            }
-        });
-        set(new GUIItem(22) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
-                        "§7Place backpack items in these slots",
-                        "§7to use them as additional storage",
-                        "§7that can be accessed anywhere.");
-            }
-        });
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Storage")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        DatapointStorage.PlayerStorage storage = getPlayer().getDataHandler().get(
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+
+        // Close and back buttons
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To SkyBlock Menu").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkyBlockMenu());
+                    return true;
+                })
+                .build());
+
+        // Header items
+        attachItem(GUIItem.builder(4)
+                .item(ItemStackCreator.getStack("§aEnder Chest", Material.ENDER_CHEST, 1,
+                        "§7Store global items you can",
+                        "§7access anywhere in your ender",
+                        "§7chest.").build())
+                .build());
+
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§aBackpacks", Material.CHEST, 1,
+                        "§7Place backpack items in these slots",
+                        "§7to use them as additional storage",
+                        "§7that can be accessed anywhere.").build())
+                .build());
+
+        setupEnderChestSlots(player);
+        setupBackpackSlots(player);
+    }
+
+    private void setupEnderChestSlots(SkyBlockPlayer player) {
+        DatapointStorage.PlayerStorage storage = player.getDataHandler().get(
                 DataHandler.Data.STORAGE, DatapointStorage.class
         ).getValue();
 
-        // Initialize empty storages
         if (!storage.hasPage(1)) {
             storage.addPage(1);
             storage.addPage(2);
         }
 
         for (int ender_slot = 9; ender_slot < 18; ender_slot++) {
-            int page = ender_slot - 8;
+            final int page = ender_slot - 8;
 
-            set(new GUIClickableItem(ender_slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (!storage.hasPage(page)) return;
+            attachItem(GUIItem.builder(ender_slot)
+                    .item(() -> {
+                        if (!storage.hasPage(page))
+                            return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
+                                    "§7Unlock more Ender Chest pages in",
+                                    "§7the community shop!").build();
 
-                    if (e.getClickType() == ClickType.RIGHT_CLICK) {
-                        new GUIStorageIconSelection(page, GUIStorage.this).open(player);
-                    } else {
-                        new GUIStoragePage(page).open(player);
-                    }
-                }
+                        Material material = storage.getPage(page).display;
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (!storage.hasPage(page))
-                        return ItemStackCreator.getStack("§cLocked Page", Material.RED_STAINED_GLASS_PANE, 1,
-                                "§7Unlock more Ender Chest pages in",
-                                "§7the community shop!");
+                        return ItemStackCreator.getStack("§aEnder Chest Page " + page, material, page,
+                                " ",
+                                "§eLeft-click to open!",
+                                "§eRight-click to change icon!").build();
+                    })
+                    .onClick((ctx, item) -> {
+                        if (!storage.hasPage(page)) return true;
 
-                    Material material = storage.getPage(page).display;
-
-                    return ItemStackCreator.getStack("§aEnder Chest Page " + (page), material, page,
-                            " ",
-                            "§eLeft-click to open!",
-                            "§eRight-click to change icon!");
-                }
-            });
+                        if (ctx.clickType() == ClickType.RIGHT_CLICK) {
+                            ctx.player().openInventory(new GUIInventoryStorageIconSelection(page, this));
+                        } else {
+                            ctx.player().openInventory(new GUIStoragePage(page));
+                        }
+                        return true;
+                    })
+                    .build());
         }
+    }
 
-        DatapointBackpacks.PlayerBackpacks backpacks = getPlayer().getDataHandler().get(
+    private void setupBackpackSlots(SkyBlockPlayer player) {
+        DatapointBackpacks.PlayerBackpacks backpacks = player.getDataHandler().get(
                 DataHandler.Data.BACKPACKS, DatapointBackpacks.class
         ).getValue();
 
         Map<Integer, UnderstandableSkyBlockItem> backpackItems = backpacks.getBackpacks();
 
         for (int backpack_slot = 27; backpack_slot <= 44; backpack_slot++) {
-            int slot = backpack_slot - 26;
+            final int slot = backpack_slot - 26;
 
             if (backpacks.getUnlockedSlots() < slot) {
-                set(new GUIItem(backpack_slot) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
+                attachItem(GUIItem.builder(backpack_slot)
+                        .item(ItemStackCreator.getStack("§cLocked Backpack Slot " + slot,
                                 Material.GRAY_DYE, 1,
                                 "§7Talk to Tia the Fairy to unlock more",
-                                "§7Backpack Slots!");
-                    }
-                });
+                                "§7Backpack Slots!").build())
+                        .build());
                 continue;
             }
 
             if (!backpackItems.containsKey(slot)) {
-                set(new GUIClickableItem(backpack_slot) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        SkyBlockItem item = new SkyBlockItem(e.getCursorItem());
-
-                        if (item.isNA()) return;
-                        if (!(item.hasComponent(BackpackComponent.class))) return;
-
-                        e.setClickedItem(ItemStack.AIR);
-                        e.setCancelled(false);
-                    }
-
-                    @Override
-                    public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
-                        SkyBlockItem item = new SkyBlockItem(e2.getCursorItem());
-
-                        if (item.isNA()) return;
-                        if (!(item.hasComponent(BackpackComponent.class))) return;
-
-                        backpackItems.put(slot, item.toUnderstandable());
-                        player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
-                                new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
-                        );
-
-                        player.sendMessage("§ePlacing backpack in slot " + slot + "...");
-                        player.sendMessage("§aSuccess!");
-
-                        onOpen(e);
-                    }
-
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
-                                Material.BROWN_STAINED_GLASS_PANE, slot,
-                                " ",
-                                "§eLeft-click a backpack item on this",
-                                "§eslot to place it!");
-                    }
-                });
+                attachEmptyBackpackSlot(backpack_slot, slot, backpacks, backpackItems);
                 continue;
             }
 
-            SkyBlockItem item = new SkyBlockItem(backpackItems.get(slot));
+            attachFilledBackpackSlot(backpack_slot, slot, backpackItems.get(slot), backpackItems);
+        }
+    }
 
-            set(new GUIClickableItem(backpack_slot) {
-                @Override
-                public void run(InventoryPreClickEvent e2, SkyBlockPlayer player) {
-                    if (e2.getClickType() == ClickType.RIGHT_CLICK) {
-                        if (!item.getAttributeHandler().getBackpackData().items().isEmpty()
-                                && !item.getAttributeHandler().getBackpackData().items()
-                                    .stream()
-                                    .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
-                            player.sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
-                            return;
-                        }
+    private void attachEmptyBackpackSlot(int backpack_slot, int slot,
+                                         DatapointBackpacks.PlayerBackpacks backpacks,
+                                         Map<Integer, UnderstandableSkyBlockItem> backpackItems) {
+        attachItem(GUIItem.builder(backpack_slot)
+                .item(ItemStackCreator.getStack("§eEmpty Backpack Slot " + slot,
+                        Material.BROWN_STAINED_GLASS_PANE, slot,
+                        " ",
+                        "§eLeft-click a backpack item on this",
+                        "§eslot to place it!").build())
+                .onClick((ctx, clickedItem) -> {
+                    SkyBlockItem item = new SkyBlockItem(ctx.cursorItem());
 
-                        player.sendMessage("§aRemoved backpack from slot " + slot + "!");
-                        e2.setClickedItem(PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build());
-                        e2.setCancelled(false);
-
-                        backpackItems.remove(slot);
-                        return;
+                    if (item.isNA() || !item.hasComponent(BackpackComponent.class)) {
+                        return true;
                     }
 
-                    new GUIStorageBackpackPage(slot, item).open(player);
-                }
+                    backpackItems.put(slot, item.toUnderstandable());
+                    ctx.player().getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
+                            new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
+                    );
 
-                @Override
-                public void runPost(InventoryClickEvent e2, SkyBlockPlayer player) {
-                    onOpen(e);
-                }
+                    ctx.player().sendMessage("§ePlacing backpack in slot " + slot + "...");
+                    ctx.player().sendMessage("§aSuccess!");
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
-                            item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
-                            item.getAttributeHandler().getRarity().getColor() +
-                                    item.getAttributeHandler().getPotentialType().getDisplayName(),
-                            "§7This backpack has §a" + (item.getComponent(BackpackComponent.class).getRows() * 9) + " §7slots.",
-                            " ",
-                            "§eLeft-click to open!",
-                            "§eRight-click to remove!");
-                }
-            });
-        }
+                    handleOpen(ctx.player());
+                    return false;
+                })
+                .build());
+    }
 
-        updateItemStacks(getInventory(), getPlayer());
+    private void attachFilledBackpackSlot(int backpack_slot, int slot, UnderstandableSkyBlockItem backpackItem,
+                                          Map<Integer, UnderstandableSkyBlockItem> backpackItems) {
+        SkyBlockItem item = new SkyBlockItem(backpackItem);
+
+        attachItem(GUIItem.builder(backpack_slot)
+                .item(() -> ItemStackCreator.getStackHead("§6Backpack Slot " + slot,
+                        item.getComponent(SkullHeadComponent.class).getSkullTexture(item), slot,
+                        item.getAttributeHandler().getRarity().getColor() +
+                                item.getAttributeHandler().getPotentialType().getDisplayName(),
+                        "§7This backpack has §a" + (item.getComponent(BackpackComponent.class).getRows() * 9) + " §7slots.",
+                        " ",
+                        "§eLeft-click to open!",
+                        "§eRight-click to remove!").build())
+                .onClick((ctx, clickedItem) -> {
+                    if (ctx.clickType() == ClickType.RIGHT_CLICK) {
+                        if (!item.getAttributeHandler().getBackpackData().items().isEmpty()
+                                && !item.getAttributeHandler().getBackpackData().items()
+                                .stream()
+                                .map(SkyBlockItem::new).allMatch(SkyBlockItem::isNA)) {
+                            ctx.player().sendMessage("§cThe backpack in slot " + slot + " is not empty! Please empty it before removing it.");
+                            return true;
+                        }
+
+                        ctx.player().sendMessage("§aRemoved backpack from slot " + slot + "!");
+                        setItemStack(backpack_slot, PlayerItemUpdater.playerUpdate(ctx.player(), item.getItemStack()).build());
+                        backpackItems.remove(slot);
+                        return false;
+                    }
+
+                    ctx.player().openInventory(new GUIStorageBackpackPage(slot, item));
+                    return true;
+                })
+                .build());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // Empty implementation
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    protected void onSuddenQuit(SkyBlockPlayer player) {
+        // Empty implementation
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        ItemStack stack = e.getClickedItem();
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        ItemStack stack = event.getClickedItem();
         SkyBlockItem item = new SkyBlockItem(stack);
 
         if (item.isNA()) return;
-        if (!(item.hasComponent(BackpackComponent.class)))
-            e.setCancelled(true);
+        if (!item.hasComponent(BackpackComponent.class))
+            event.setCancelled(true);
     }
 }

@@ -1,16 +1,16 @@
 package net.swofty.types.generic.gui.inventory.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.AnvilCombinableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -19,10 +19,9 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIAnvil  extends SkyBlockInventoryGUI {
-
+public class GUIAnvil extends SkyBlockAbstractInventory {
     private final int[] borderSlots = {
-            45, 46, 47,48,50,51,52,53
+            45, 46, 47, 48, 50, 51, 52, 53
     };
 
     private final int upgradeItemSlot = 29;
@@ -38,333 +37,282 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
     private final int resultSlot = 13;
 
     public GUIAnvil() {
-        super("Anvil", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Anvil")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+        fill(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE, "").build(), 45, 53);
 
-        fill(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE, ""), 45 , 53);
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-        set(GUIClickableItem.getCloseItem(49));
-        set(new GUIItem(resultSlot) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
-            }
-        });
+        // Result slot
+        attachItem(GUIItem.builder(resultSlot)
+                .item(ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
+                        "§7Place a target item in the left slot",
+                        "§7and a sacrifice item in the right slot",
+                        "§7to combine them!").build())
+                .build());
 
-        set(new GUIItem(22) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
-            }
-        });
+        // Combine items text
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
+                        "§7Combine the items in the slots to the",
+                        "§7left and right below.").build())
+                .build());
 
         updateItemToUpgrade(null);
         updateItemToSacrifice(null);
-
         updateItemToCraft();
     }
 
-    public void updateItemToUpgrade(SkyBlockItem item) {
+    private void updateItemToUpgrade(SkyBlockItem item) {
         if (item == null) {
-            set(new GUIClickableItem(upgradeItemSlot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    ItemStack stack = e.getCursorItem();
+            attachItem(GUIItem.builder(upgradeItemSlot)
+                    .item(ItemStack.AIR)
+                    .onClick((ctx, clickedItem) -> {
+                        ItemStack stack = ctx.cursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
-                        updateItemToUpgrade(null);
-                        return;
-                    }
+                        if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                            updateItemToUpgrade(null);
+                            return true;
+                        }
 
-                    giveResult((Inventory) e.getInventory(), player);
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateItemToUpgrade(item);
-                }
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
+                        giveResult(ctx.player());
+                        updateItemToUpgrade(new SkyBlockItem(stack));
+                        return true;
+                    })
+                    .build());
 
             updateItemToCraft();
             return;
         }
 
-        set(new GUIClickableItem(upgradeItemSlot) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
-            }
+        attachItem(GUIItem.builder(upgradeItemSlot)
+                .item(() -> PlayerItemUpdater.playerUpdate(owner, item.getItemStack()).build())
+                .onClick((ctx, clickedItem) -> {
+                    if (clickedItem.isAir()) return true;
 
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                ItemStack stack = e.getClickedItem();
-
-                if (stack.isAir()) return;
-
-                updateItemToUpgrade(null);
-                player.addAndUpdateItem(stack);
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+                    updateItemToUpgrade(null);
+                    ctx.player().addAndUpdateItem(new SkyBlockItem(clickedItem));
+                    return true;
+                })
+                .build());
 
         updateItemToCraft();
     }
 
-    public void updateItemToUpgradeValid(Material material){
-        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Upgrade", material, 1, "§7The item you want to upgrade should", "§7be placed in the slot on this side.");
-        for (int i : upgradeItemSlots) {
-            set(i, stack);
+    private void updateItemToUpgradeValid(Material material) {
+        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Upgrade", material, 1,
+                "§7The item you want to upgrade should",
+                "§7be placed in the slot on this side.");
+
+        for (int slot : upgradeItemSlots) {
+            attachItem(GUIItem.builder(slot)
+                    .item(stack.build())
+                    .build());
         }
     }
 
-    public void updateItemToSacrifice(SkyBlockItem item) {
+    private void updateItemToSacrifice(SkyBlockItem item) {
         if (item == null) {
-            set(new GUIClickableItem(sacrificeItemSlot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    ItemStack stack = e.getCursorItem();
+            attachItem(GUIItem.builder(sacrificeItemSlot)
+                    .item(ItemStack.AIR)
+                    .onClick((ctx, clickedItem) -> {
+                        ItemStack stack = ctx.cursorItem();
 
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
-                        updateItemToSacrifice(null);
-                        return;
-                    }
+                        if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                            updateItemToSacrifice(null);
+                            return true;
+                        }
 
-                    giveResult((Inventory) e.getInventory(), player);
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateItemToSacrifice(item);
-                }
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-
-            updateItemStacks(getInventory(), getPlayer());
+                        giveResult(ctx.player());
+                        updateItemToSacrifice(new SkyBlockItem(stack));
+                        return true;
+                    })
+                    .build());
 
             updateItemToCraft();
             return;
         }
 
-        set(new GUIClickableItem(sacrificeItemSlot) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
-            }
+        attachItem(GUIItem.builder(sacrificeItemSlot)
+                .item(() -> PlayerItemUpdater.playerUpdate(owner, item.getItemStack()).build())
+                .onClick((ctx, clickedItem) -> {
+                    if (clickedItem.isAir()) return true;
 
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                ItemStack stack = e.getClickedItem();
-
-                if (stack.isAir()) return;
-
-                updateItemToSacrifice(null);
-                player.addAndUpdateItem(stack);
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+                    updateItemToSacrifice(null);
+                    ctx.player().addAndUpdateItem(new SkyBlockItem(clickedItem));
+                    return true;
+                })
+                .build());
 
         updateItemToCraft();
     }
 
-    public void updateItemToSacrificeValid(Material material){
-        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Sacrifice", material, 1, "§7The item you are sacrificing in order", "§7to upgrade the item on the left", "§7should be placed in the slot on this", "§7side.");
-        for (int i : sacrificeItemSlots) {
-            set(i, stack);
+    private void updateItemToSacrificeValid(Material material) {
+        ItemStack.Builder stack = ItemStackCreator.getStack("§6Item to Sacrifice", material, 1,
+                "§7The item you are sacrificing in order",
+                "§7to upgrade the item on the left",
+                "§7should be placed in the slot on this",
+                "§7side.");
+
+        for (int slot : sacrificeItemSlots) {
+            attachItem(GUIItem.builder(slot)
+                    .item(stack.build())
+                    .build());
         }
     }
 
-    public void updateItemToCraft(){
-        SkyBlockItem upgradeItem = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
-        SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
+    private void updateItemToCraft() {
+        SkyBlockItem upgradeItem = new SkyBlockItem(getItemStack(upgradeItemSlot));
+        SkyBlockItem sacrificeItem = new SkyBlockItem(getItemStack(sacrificeItemSlot));
 
         boolean isUpgradeItemValid = !(upgradeItem.isAir() || upgradeItem.isNA());
         boolean isSacrificeItemValid = !(sacrificeItem.isAir() || sacrificeItem.isNA());
 
-        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid && (sacrificeItem.hasComponent(AnvilCombinableComponent.class)) &&
-                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply(getPlayer(), upgradeItem, sacrificeItem);
+        boolean canCraft = isUpgradeItemValid && isSacrificeItemValid &&
+                sacrificeItem.hasComponent(AnvilCombinableComponent.class) &&
+                sacrificeItem.getComponent(AnvilCombinableComponent.class).canApply(owner, upgradeItem, sacrificeItem);
 
-        updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
-        updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
+        updateItemToSacrificeValid(canCraft || (isSacrificeItemValid && !isUpgradeItemValid) ?
+                Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
+        updateItemToUpgradeValid(canCraft || (!isSacrificeItemValid && isUpgradeItemValid) ?
+                Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE);
 
-        if(canCraft)
-            border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
-        else
-            border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
+        for (int slot : borderSlots) {
+            attachItem(GUIItem.builder(slot)
+                    .item(ItemStackCreator.createNamedItemStack(
+                            canCraft ? Material.LIME_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE).build())
+                    .build());
+        }
 
-        if(!canCraft){
-            if (isUpgradeItemValid && isSacrificeItemValid)
-                set(new GUIItem(13) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§cError!", Material.BARRIER, 1, "§7You can not combine those Items");
-                    }
-                });
-            else
-                set(new GUIItem(13) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
-                    }
-                });
+        if (!canCraft) {
+            attachItem(GUIItem.builder(13)
+                    .item(ItemStackCreator.getStack(
+                            isUpgradeItemValid && isSacrificeItemValid ? "§cError!" : "§cAnvil",
+                            Material.BARRIER, 1,
+                            isUpgradeItemValid && isSacrificeItemValid ?
+                                    "§7You can not combine those Items" :
+                                    "§7Place a target item in the left slot",
+                            "§7and a sacrifice item in the right slot",
+                            "§7to combine them!").build())
+                    .build());
 
-            set(new GUIItem(22) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, "§7Combine the items in the slots to the", "§7left and right below.");
-                }
-            });
-
-            updateItemStacks(getInventory(), getPlayer());
+            attachItem(GUIItem.builder(22)
+                    .item(ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1,
+                            "§7Combine the items in the slots to the",
+                            "§7left and right below.").build())
+                    .build());
             return;
         }
 
-        SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot));
-
+        SkyBlockItem result = new SkyBlockItem(getItemStack(upgradeItemSlot));
         sacrificeItem.getComponent(AnvilCombinableComponent.class).apply(result, sacrificeItem);
 
-        set(new GUIItem(13) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
-            }
-        });
+        attachItem(GUIItem.builder(13)
+                .item(() -> PlayerItemUpdater.playerUpdate(owner, result.getItemStack()).build())
+                .build());
 
-        int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
-                upgradeItem,
-                sacrificeItem,
-                getPlayer());
-        List<String> lore = new ArrayList<String>();
+        int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class)
+                .applyCostLevels(upgradeItem, sacrificeItem, owner);
+
+        List<String> lore = new ArrayList<>();
         lore.add("§7Combine the items in the slots to the");
         lore.add("§7left and right below.");
-        if(levelCost > 0)
-        {
+        if (levelCost > 0) {
             lore.add("");
             lore.add("§7Cost");
             lore.add("§9" + levelCost + " Exp Levels");
         }
-
         lore.add("");
         lore.add("§eClick to combine!");
-        ItemStack.Builder applyItemStack = ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, lore);
 
-        set(new GUIClickableItem(22) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                craftResult(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return applyItemStack;
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§aCombine Items", Material.ANVIL, 1, lore).build())
+                .onClick((ctx, clickedItem) -> {
+                    craftResult(ctx.player());
+                    return true;
+                })
+                .build());
     }
 
-    public void craftResult(SkyBlockPlayer player){
-        SkyBlockItem sacrificeItem = new SkyBlockItem(getInventory().getItemStack(sacrificeItemSlot));
-        int requiredLevels = sacrificeItem.getComponent(AnvilCombinableComponent.class).applyCostLevels(
-                new SkyBlockItem(getInventory().getItemStack(upgradeItemSlot)),
-                sacrificeItem,
-                player
-        );
-        if (player.getLevel() < requiredLevels){
+    private void craftResult(SkyBlockPlayer player) {
+        SkyBlockItem sacrificeItem = new SkyBlockItem(getItemStack(sacrificeItemSlot));
+        int requiredLevels = sacrificeItem.getComponent(AnvilCombinableComponent.class)
+                .applyCostLevels(new SkyBlockItem(getItemStack(upgradeItemSlot)), sacrificeItem, player);
+
+        if (player.getLevel() < requiredLevels) {
             player.sendMessage("§cYou don't have enough Experience Levels!");
             return;
         }
 
         player.setLevel(player.getLevel() - requiredLevels);
-        SkyBlockItem result = new SkyBlockItem(getInventory().getItemStack(resultSlot));
+        SkyBlockItem result = new SkyBlockItem(getItemStack(resultSlot));
 
         updateItemToUpgrade(null);
         updateItemToSacrifice(null);
 
-        set(new GUIItem(22) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1, "§7Claim the result item above!");
-            }
-        });
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§aAnvil", Material.OAK_SIGN, 1,
+                        "§7Claim the result item above!").build())
+                .build());
 
-        set(new GUIClickableItem(resultSlot) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                giveResult((Inventory) e.getInventory(),player);
-                new GUIAnvil().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , result.getItemStack());
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+        attachItem(GUIItem.builder(resultSlot)
+                .item(() -> PlayerItemUpdater.playerUpdate(owner, result.getItemStack()).build())
+                .onClick((ctx, clickedItem) -> {
+                    giveResult(ctx.player());
+                    player.openInventory(new GUIAnvil());
+                    return true;
+                })
+                .build());
     }
 
-    public void giveResult(Inventory inventory, SkyBlockPlayer player){
-        if(get(resultSlot) instanceof GUIClickableItem){
-            player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(resultSlot)));
-            set(new GUIItem(resultSlot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1, "§7Place a target item in the left slot", "§7and a sacrifice item in the right slot", "§7to combine them!");
-                }
-            });
+    private void giveResult(SkyBlockPlayer player) {
+        List<GUIItem> items = getItemsInSlot(resultSlot);
+        if (!items.isEmpty() && items.get(0).getStateRequirements().isEmpty()) {
+            player.addAndUpdateItem(new SkyBlockItem(getItemStack(resultSlot)));
+
+            attachItem(GUIItem.builder(resultSlot)
+                    .item(ItemStackCreator.getStack("§cAnvil", Material.BARRIER, 1,
+                            "§7Place a target item in the left slot",
+                            "§7and a sacrifice item in the right slot",
+                            "§7to combine them!").build())
+                    .build());
         }
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(sacrificeItemSlot)));
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(upgradeItemSlot)));
-
-        giveResult((Inventory) e.getInventory(), (SkyBlockPlayer) e.getPlayer());
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(sacrificeItemSlot)));
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(upgradeItemSlot)));
-
-        giveResult(inventory, player);
-    }
-
-    @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(sacrificeItemSlot)));
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(upgradeItemSlot)));
+        giveResult(player);
     }
 
     @Override
-    public void border(ItemStack.Builder stack) {
-        for (int i : borderSlots) {
-            set(i, stack);
-        }
-        updateItemStacks(getInventory(), getPlayer());
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(false);
+    }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(sacrificeItemSlot)));
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(upgradeItemSlot)));
+        giveResult(player);
     }
 }

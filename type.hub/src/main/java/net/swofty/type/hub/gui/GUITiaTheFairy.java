@@ -10,7 +10,6 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBackpacks;
 import net.swofty.types.generic.data.datapoints.DatapointFairySouls;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.user.SkyBlockPlayer;

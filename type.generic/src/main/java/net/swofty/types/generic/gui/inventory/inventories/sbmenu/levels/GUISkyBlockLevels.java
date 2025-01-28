@@ -6,7 +6,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.emblem.GUIEmblems;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.rewards.GUILevelRewards;

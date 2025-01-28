@@ -13,7 +13,6 @@ import net.swofty.types.generic.event.actions.player.ActionPlayerStrayTooFar;
 import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.types.generic.server.eventcaller.CustomEventCaller;

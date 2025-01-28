@@ -7,8 +7,6 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.RefreshingGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 

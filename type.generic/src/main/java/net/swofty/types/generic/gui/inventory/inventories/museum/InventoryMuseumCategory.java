@@ -17,7 +17,6 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.museum.MuseumDisplays;
@@ -30,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
+public class InventoryMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
     private final MuseumableItemCategory category;
 
-    public GUIMuseumCategory(MuseumableItemCategory category) {
+    public InventoryMuseumCategory(MuseumableItemCategory category) {
         super(InventoryType.CHEST_6_ROW);
 
         this.category = category;
@@ -84,7 +83,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
             player.closeInventory();
             MuseumDisplays.updateDisplay(player);
 
-            new GUIMuseumCategory(category).open(player);
+            new InventoryMuseumCategory(category).open(player);
             player.sendMessage("§aYou donated your " + skyBlockItem.getDisplayName() + " to the Museum!");
         }
     }
@@ -183,7 +182,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
 
                 player.closeInventory();
                 player.addAndUpdateItem(skyBlockItem.getItemStack());
-                new GUIMuseumCategory(category).open(player);
+                new InventoryMuseumCategory(category).open(player);
             }
 
             @Override

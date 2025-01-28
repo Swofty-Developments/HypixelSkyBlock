@@ -5,7 +5,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
@@ -33,7 +32,7 @@ public class GUIEmblems extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(SLOTS[emblem.ordinal()]) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIEmblem(emblem).open(player);
+                    new InventoryEmblem(emblem).open(player);
                 }
 
                 @Override

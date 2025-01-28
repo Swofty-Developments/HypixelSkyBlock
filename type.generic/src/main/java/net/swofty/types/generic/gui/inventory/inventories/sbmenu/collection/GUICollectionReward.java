@@ -11,7 +11,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;

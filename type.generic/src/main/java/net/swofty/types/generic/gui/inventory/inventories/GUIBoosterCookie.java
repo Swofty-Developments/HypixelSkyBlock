@@ -1,82 +1,81 @@
 package net.swofty.types.generic.gui.inventory.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIBoosterCookie extends SkyBlockInventoryGUI {
+public class GUIBoosterCookie extends SkyBlockAbstractInventory {
+
     public GUIBoosterCookie() {
-        super("Consume Booster Cookie?", InventoryType.CHEST_3_ROW);
+        super(InventoryType.CHEST_3_ROW);
+        doAction(new SetTitleAction(Component.text("Consume Booster Cookie?")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        set(new GUIClickableItem(15) {
+    protected void handleOpen(SkyBlockPlayer player2) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE,1,
-                        "§7I'm not hungry...");
-            }
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.closeInventory();
-            }
-        });
+        // Cancel button
+        attachItem(GUIItem.builder(15)
+                .item(ItemStackCreator.getStack("§cCancel", Material.RED_CONCRETE, 1,
+                        "§7I'm not hungry...").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(11) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                long time = 0;
-                if (player.getBoosterCookieExpirationDate() - System.currentTimeMillis() > System.currentTimeMillis()) {
-                    time = player.getBoosterCookieExpirationDate() - System.currentTimeMillis() + System.currentTimeMillis();
-                } else {
-                    time = System.currentTimeMillis();
-                }
-                time += 345600000; //4d
-                player.setBoosterCookieExpirationDate(time);
-                player.setBits(player.getBits() + 4000);
-                player.setItemInMainHand(ItemStack.AIR);
-                player.closeInventory();
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE,1,
+        // Consume cookie button
+        attachItem(GUIItem.builder(11)
+                .item(ItemStackCreator.getStack("§eConsume Cookie", Material.COOKIE, 1,
                         "§7Gain the §dCookie Buff§!",
                         " ",
                         "§7Duration: §b4 days§!",
                         " ",
                         "§7You will be able to gain",
                         "§b4,000 Bits §7from this",
-                        "§7cookie."
-                );
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+                        "§7cookie.").build())
+                .onClick((ctx, item) -> {
+                    SkyBlockPlayer player = ctx.player();
+                    long time = 0;
+                    if (player.getBoosterCookieExpirationDate() - System.currentTimeMillis() > System.currentTimeMillis()) {
+                        time = player.getBoosterCookieExpirationDate() - System.currentTimeMillis() + System.currentTimeMillis();
+                    } else {
+                        time = System.currentTimeMillis();
+                    }
+                    time += 345600000; // 4 days
+                    player.setBoosterCookieExpirationDate(time);
+                    player.setBits(player.getBits() + 4000);
+                    player.setItemInMainHand(ItemStack.AIR);
+                    player.closeInventory();
+                    return true;
+                })
+                .build());
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {}
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    protected void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

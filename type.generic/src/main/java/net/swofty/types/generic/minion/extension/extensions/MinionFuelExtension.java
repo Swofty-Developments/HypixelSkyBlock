@@ -11,9 +11,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetCursorItemAction;
 import net.swofty.types.generic.gui.inventory.inventories.GUIMinion;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.MinionFuelComponent;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
@@ -39,7 +41,7 @@ public class MinionFuelExtension extends MinionExtension {
     }
 
     @Override
-    public @NonNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
+    public @NonNull GUIItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot, SkyBlockAbstractInventory inventory) {
         boolean shouldDisplayItem = true;
 
         if (getItemTypePassedIn() == null) {
@@ -61,110 +63,90 @@ public class MinionFuelExtension extends MinionExtension {
         }
 
         if (!shouldDisplayItem)
-            return new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
-
-                    if (fuelItem.hasComponent(MinionFuelComponent.class)) {
-                        e.setClickedItem(ItemStack.AIR);
-                        MinionFuelExtension.this.addFuel(minion, slot, fuelItem);
-                    } else {
-                        player.sendMessage("§cThis item is not a valid Minion Fuel item.");
-                        e.setCancelled(true);
-                    }
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
-                    new GUIMinion(minion).open(player);
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aFuel", Material.ORANGE_STAINED_GLASS_PANE, 1,
+            return GUIItem.builder(slot)
+                    .item(ItemStackCreator.getStack("§aFuel", Material.ORANGE_STAINED_GLASS_PANE, 1,
                             "§7Increase the speed of your",
                             "§7minion by adding minion fuel",
                             "§7items here.",
                             " ",
                             "§cNote: §7You can't take fuel",
                             "§7back out after you place it",
-                            "§7here.");
-                }
-            };
+                            "§7here."))
+                    .onClick((ctx, itemClicked) -> {
+                        SkyBlockItem fuelItem = new SkyBlockItem(ctx.cursorItem());
 
-        return new GUIClickableItem(slot) {
+                        if (fuelItem.hasComponent(MinionFuelComponent.class)) {
+                            new SetCursorItemAction(ctx, ItemStack.AIR).execute(inventory);
+                            addFuel(minion, slot, fuelItem);
+                            return true;
+                        } else {
+                            ctx.player().sendMessage("§cThis item is not a valid Minion Fuel item.");
+                            return false;
+                        }
+                    })
+                    .build();
 
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                SkyBlockItem item = new SkyBlockItem(e.getClickedItem());
-                if (item.getComponent(MinionFuelComponent.class).getFuelLastTimeInMS() == 0) {
-                    player.addAndUpdateItem(getItemTypePassedIn());
-                    setItemTypePassedIn(null);
-                    minion.getExtensionData().setData(slot, MinionFuelExtension.this);
-                    new GUIMinion(minion).open(player);
-                    return;
-                }
-                if (e.getClickType() == ClickType.RIGHT_CLICK) {
-                    setItemTypePassedIn(null);
-                    minion.getExtensionData().setData(slot, MinionFuelExtension.this);
-                    new GUIMinion(minion).open(player);
-                    return;
+        return GUIItem.builder(slot)
+                .item(() -> {
+                    long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
 
-                }
+                    ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
 
-                SkyBlockItem fuelItem = new SkyBlockItem(e.getCursorItem());
-                if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
-                    player.sendMessage("§cYou can only put fuel in this slot.");
-                    return;
-                }
+                    List<Component> lore = new ArrayList<>(itemBuilder.build().get(ItemComponent.LORE));
 
-                if (getItemTypePassedIn() != fuelItem.getAttributeHandler().getPotentialType())
-                    player.sendMessage("§aReplaced your old fuel!");
+                    if(timeFuelLasts > 0) {
+                        lore.add(Component.text(""));
+                        lore.add(Component.text("§7Time Remaining: §b" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)))
+                                .decorations(Collections.singleton(TextDecoration.ITALIC), false));
+                        lore.add(Component.text(""));
+                        lore.add(Component.text("§cRight Click to destroy this fuel.")
+                                .decorations(Collections.singleton(TextDecoration.ITALIC), false));
+                    }else{
+                        lore.add(Component.text(""));
+                        lore.add(Component.text("§eClick to take fuel out.")
+                                .decorations(Collections.singleton(TextDecoration.ITALIC), false));
+                    }
 
-                int added = MinionFuelExtension.this.addFuel(minion, slot, fuelItem);
-                if (added > 0)
-                    fuelItem.setAmount(fuelItem.getAmount() - added);
+                    return itemBuilder.set(ItemComponent.LORE, lore).build();
+                })
+                .onClick((ctx, itemstack) -> {
+                    SkyBlockPlayer player = ctx.player();
+                    SkyBlockItem item = new SkyBlockItem(itemstack);
 
-                if (fuelItem.getAmount() > 0) {
-                    e.setCursorItem(new NonPlayerItemUpdater(fuelItem.getItemStack()).getUpdatedItem().build());
-                } else e.setCursorItem(ItemStack.AIR);
-            }
+                    if (item.getComponent(MinionFuelComponent.class).getFuelLastTimeInMS() == 0) {
+                        player.addAndUpdateItem(getItemTypePassedIn());
+                        setItemTypePassedIn(null);
+                        minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                        player.openInventory(new GUIMinion(minion));
+                        return false;
+                    }
+                    if (ctx.clickType() == ClickType.RIGHT_CLICK) {
+                        setItemTypePassedIn(null);
+                        minion.getExtensionData().setData(slot, MinionFuelExtension.this);
+                        player.openInventory(new GUIMinion(minion));
+                        return false;
+                    }
 
-            @Override
-            public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
-                new GUIMinion(minion).open(player);
-            }
+                    SkyBlockItem fuelItem = new SkyBlockItem(ctx.cursorItem());
+                    if (!(fuelItem.hasComponent(MinionFuelComponent.class))){
+                        player.sendMessage("§cYou can only put fuel in this slot.");
+                        return false;
+                    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
+                    if (getItemTypePassedIn() != fuelItem.getAttributeHandler().getPotentialType())
+                        player.sendMessage("§aReplaced your old fuel!");
 
-                ItemStack.Builder itemBuilder = new NonPlayerItemUpdater(new SkyBlockItem(getItemTypePassedIn(), count)).getUpdatedItem();
+                    int added = addFuel(minion, slot, fuelItem);
+                    if (added > 0)
+                        fuelItem.setAmount(fuelItem.getAmount() - added);
 
-                List<Component> lore = new ArrayList<>(itemBuilder.build().get(ItemComponent.LORE));
+                    if (fuelItem.getAmount() > 0) {
+                        new SetCursorItemAction(ctx, new NonPlayerItemUpdater(fuelItem.getItemStack()).getUpdatedItem().build()).execute(inventory);
+                    } else new SetCursorItemAction(ctx, ItemStack.AIR).execute(inventory);
 
-                if(timeFuelLasts > 0) {
-                    lore.add(Component.text(""));
-                    lore.add(Component.text("§7Time Remaining: §b" + StringUtility.formatTimeLeft(timeFuelLasts * count - (System.currentTimeMillis() - insertionTime)))
-                            .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-                    lore.add(Component.text(""));
-                    lore.add(Component.text("§cRight Click to destroy this fuel.")
-                            .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-                }else{
-                    lore.add(Component.text(""));
-                    lore.add(Component.text("§eClick to take fuel out.")
-                            .decorations(Collections.singleton(TextDecoration.ITALIC), false));
-                }
-
-                return itemBuilder.set(ItemComponent.LORE, lore);
-            }
-        };
+                    return true;
+                })
+                .build();
     }
 
     // Returns the amount of fuel added

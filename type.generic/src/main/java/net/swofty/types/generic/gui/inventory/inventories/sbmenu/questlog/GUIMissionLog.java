@@ -11,7 +11,6 @@ import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.mongodb.FairySoulDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;

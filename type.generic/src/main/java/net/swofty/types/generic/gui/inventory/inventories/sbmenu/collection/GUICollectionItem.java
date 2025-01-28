@@ -12,7 +12,6 @@ import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -37,7 +36,7 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUICollectionCategory(
+        set(GUIClickableItem.getGoBackItem(48, new InventoryCollectionCategory(
                 category,
                 getPlayer().getCollection().getDisplay(new ArrayList<>(), category)
         )));

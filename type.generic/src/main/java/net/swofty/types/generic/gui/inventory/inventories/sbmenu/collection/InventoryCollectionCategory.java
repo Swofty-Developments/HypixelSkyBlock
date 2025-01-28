@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -19,11 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GUICollectionCategory extends SkyBlockPaginatedGUI<CollectionCategory.ItemCollection> {
+public class InventoryCollectionCategory extends SkyBlockPaginatedGUI<CollectionCategory.ItemCollection> {
     private final CollectionCategory type;
     private final List<String> display;
 
-    public GUICollectionCategory(CollectionCategory category, List<String> display) {
+    public InventoryCollectionCategory(CollectionCategory category, List<String> display) {
         super(InventoryType.CHEST_6_ROW);
 
         this.type = category;

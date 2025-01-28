@@ -11,9 +11,9 @@ import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedInventory;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.TrackedUniqueComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
+public class GUIInventoryCreative extends SkyBlockPaginatedInventory<SkyBlockItem> {
 
-    public GUICreative() {
+    public GUIInventoryCreative() {
         super(InventoryType.CHEST_6_ROW);
     }
 
@@ -57,59 +57,63 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     protected void performSearch(SkyBlockPlayer player, String query, int page, int maxPage) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
-        set(GUIClickableItem.getCloseItem(50));
-        set(createSearchItem(this, 48, query));
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+
+        attachItem(GUIItem.builder(50)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        attachItem(createSearchItem(48, query));
 
         if (page > 1) {
-            set(createNavigationButton(this, 45, query, page, false));
+            attachItem(createNavigationButton(45, query, page, false));
         }
         if (page < maxPage) {
-            set(createNavigationButton(this, 53, query, page, true));
+            attachItem(createNavigationButton(53, query, page, true));
         }
     }
 
     @Override
-    public String getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
-        return "Creative Menu | Page " + page + "/" + paged.getPageCount();
+    protected Component getTitle(SkyBlockPlayer player, String query, int page, PaginationList<SkyBlockItem> paged) {
+        return Component.text("Creative Menu | Page " + page + "/" + paged.getPageCount());
     }
 
     @Override
-    protected GUIClickableItem createItemFor(SkyBlockItem skyBlockItem, int slot, SkyBlockPlayer player) {
+    protected GUIItem createItemFor(SkyBlockItem skyBlockItem, int slot, SkyBlockPlayer player) {
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
                 player, skyBlockItem.getItemStack()
         );
 
-        boolean stackable = !(skyBlockItem.hasComponent(TrackedUniqueComponent.class));
+        boolean stackable = !skyBlockItem.hasComponent(TrackedUniqueComponent.class);
 
-        return new GUIClickableItem(slot) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
+        return GUIItem.builder(slot)
+                .item(() -> {
+                    ArrayList<String> lore = new ArrayList<>(skyBlockItem.getLore());
+                    lore.add(" ");
+                    if (stackable)
+                        lore.add("§bRight Click for §7x64 §eof this item.");
+                    lore.add("§eLeft Click for §7x1 §eof this item.");
+                    return ItemStackCreator.updateLore(itemStack, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    ctx.player().playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK) && stackable) {
-                    skyBlockItem.setAmount(64);
-                    player.addAndUpdateItem(skyBlockItem);
-                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                    player.sendMessage(Component.text("§aYou have been given §7x64 " + skyBlockItem.getDisplayName() + "§a."));
-                } else {
-                    skyBlockItem.setAmount(1);
-                    player.addAndUpdateItem(skyBlockItem);
-                    player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-                    player.sendMessage(Component.text("§aYou have been given §7x1 " + skyBlockItem.getDisplayName() + "§a."));
-                }
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                ArrayList<String> lore = new ArrayList<>(skyBlockItem.getLore());
-                lore.add(" ");
-                if (stackable)
-                    lore.add("§bRight Click for §7x64 §eof this item.");
-                lore.add("§eLeft Click for §7x1 §eof this item.");
-                return ItemStackCreator.updateLore(itemStack, lore);
-            }
-        };
+                    if (ctx.clickType().equals(ClickType.RIGHT_CLICK) && stackable) {
+                        skyBlockItem.setAmount(64);
+                        ctx.player().addAndUpdateItem(skyBlockItem);
+                        ctx.player().sendMessage(Component.text("§aYou have been given §7x64 " + skyBlockItem.getDisplayName() + "§a."));
+                    } else {
+                        skyBlockItem.setAmount(1);
+                        ctx.player().addAndUpdateItem(skyBlockItem);
+                        ctx.player().sendMessage(Component.text("§aYou have been given §7x1 " + skyBlockItem.getDisplayName() + "§a."));
+                    }
+                    return true;
+                })
+                .build();
     }
 
     @Override
@@ -119,11 +123,6 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
     }
 
     @Override

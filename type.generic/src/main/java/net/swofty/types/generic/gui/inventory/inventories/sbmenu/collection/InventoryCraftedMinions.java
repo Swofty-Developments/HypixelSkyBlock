@@ -11,8 +11,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMinionData;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -24,11 +22,11 @@ import net.swofty.types.generic.utility.PaginationList;
 
 import java.util.*;
 
-public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
+public class InventoryCraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
     SkyBlockInventoryGUI previousGUI;
 
-    public GUICraftedMinions(SkyBlockInventoryGUI previousGUI) {
+    public InventoryCraftedMinions(SkyBlockInventoryGUI previousGUI) {
         super(InventoryType.CHEST_6_ROW);
         this.previousGUI = previousGUI;
     }
@@ -81,7 +79,7 @@ public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (e.getClickedItem().material() != Material.GRAY_DYE) {
-                    new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new GUICraftedMinions(new GUICollections())).open(player);
+                    new GUIMinionRecipes(item.getAttributeHandler().getMinionType(), new InventoryCraftedMinions(new GUICollections())).open(player);
                 }
             }
 

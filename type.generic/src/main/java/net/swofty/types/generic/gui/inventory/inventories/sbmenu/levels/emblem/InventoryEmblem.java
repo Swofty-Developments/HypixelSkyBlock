@@ -5,7 +5,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.levels.SkyBlockEmblems;
 import net.swofty.types.generic.levels.abstr.CauseEmblem;
@@ -15,10 +14,10 @@ import net.swofty.types.generic.utility.PaginationList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIEmblem extends SkyBlockPaginatedGUI<SkyBlockEmblems.SkyBlockEmblem> {
+public class InventoryEmblem extends SkyBlockPaginatedGUI<SkyBlockEmblems.SkyBlockEmblem> {
     private final SkyBlockEmblems emblemCategory;
 
-    public GUIEmblem(SkyBlockEmblems emblemCategory) {
+    public InventoryEmblem(SkyBlockEmblems emblemCategory) {
         super(InventoryType.CHEST_5_ROW);
 
         this.emblemCategory = emblemCategory;

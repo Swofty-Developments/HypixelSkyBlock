@@ -10,7 +10,6 @@ import net.swofty.commons.StringUtility;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -132,8 +131,8 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (category == MuseumableItemCategory.ARMOR_SETS)
-                        new GUIMuseumArmorCategory().open(player);
-                    else new GUIMuseumCategory(category).open(player);
+                        new InventoryMuseumArmorCategory().open(player);
+                    else new InventoryMuseumCategory(category).open(player);
                 }
 
                 @Override

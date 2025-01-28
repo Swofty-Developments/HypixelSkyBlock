@@ -3,7 +3,7 @@ package net.swofty.types.generic.command.commands;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.gui.inventory.inventories.GUICreative;
+import net.swofty.types.generic.gui.inventory.inventories.GUIInventoryCreative;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -18,7 +18,7 @@ public class ItemListCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            new GUICreative().open((SkyBlockPlayer) sender);
+            new GUIInventoryCreative().open((SkyBlockPlayer) sender);
         });
 
         ArgumentString lookup = new ArgumentString("lookup");
@@ -26,7 +26,7 @@ public class ItemListCommand extends SkyBlockCommand {
             if (!permissionCheck(sender)) return;
 
             String lookupValue = context.get(lookup);
-            new GUICreative().open((SkyBlockPlayer) sender, lookupValue, 1);
+            new GUIInventoryCreative().open((SkyBlockPlayer) sender, lookupValue, 1);
         }, lookup);
     }
 }

@@ -12,8 +12,6 @@ import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObje
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.RefreshingGUI;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewSelfBIN;
 import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewSelfNormal;
 import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewThirdBin;

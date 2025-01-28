@@ -12,7 +12,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;

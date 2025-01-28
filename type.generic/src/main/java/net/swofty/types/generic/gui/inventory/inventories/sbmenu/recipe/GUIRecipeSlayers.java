@@ -8,7 +8,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
@@ -61,7 +60,7 @@ public class GUIRecipeSlayers extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIRecipeCategory(type, new GUIRecipeSlayers()).open(player);
+                    new InventoryRecipeCategory(type, new GUIRecipeSlayers()).open(player);
                 }
 
                 @Override

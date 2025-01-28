@@ -5,7 +5,6 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBanker;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBankerDeposit;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBankerWithdraw;

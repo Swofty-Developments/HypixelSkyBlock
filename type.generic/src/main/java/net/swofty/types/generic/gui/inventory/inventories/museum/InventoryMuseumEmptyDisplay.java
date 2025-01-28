@@ -11,7 +11,6 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtoc
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockPaginatedGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
@@ -25,11 +24,11 @@ import net.swofty.types.generic.utility.PaginationList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
+public class InventoryMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
     private final MuseumDisplays display;
     private final int position;
 
-    public GUIMuseumEmptyDisplay(MuseumDisplays display, int position) {
+    public InventoryMuseumEmptyDisplay(MuseumDisplays display, int position) {
         super(InventoryType.CHEST_6_ROW);
 
         this.display = display;

@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
@@ -59,7 +58,7 @@ public class GUICollections extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUICraftedMinions(new GUICollections()).open(player);
+                new InventoryCraftedMinions(new GUICollections()).open(player);
             }
 
             @Override
@@ -82,7 +81,7 @@ public class GUICollections extends SkyBlockInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUICollectionCategory(category, display).open(player);
+                    new InventoryCollectionCategory(category, display).open(player);
                 }
 
                 @Override

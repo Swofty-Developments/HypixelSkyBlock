@@ -1,64 +1,67 @@
 package net.swofty.types.generic.gui.inventory.inventories;
 
-
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.AbstractInventory;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.types.generic.chest.Chest;
 import net.swofty.types.generic.chest.ChestAnimationType;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.stream.IntStream;
 
-public class GUIChest extends SkyBlockInventoryGUI {
+public class GUIChest extends SkyBlockAbstractInventory {
 
     private final Chest chest;
 
     public GUIChest(Chest chest) {
-        super(chest.getName(), chest.getSize());
+        super(chest.getSize());
         this.chest = chest;
+        doAction(new SetTitleAction(Component.text(chest.getName())));
     }
 
     @Override
-    public void setItems(InventoryGUIOpenEvent e) {
-        IntStream.range(0 , chest.getItems().size()).forEach(index->{
-            set(new GUIItem(index) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getFromStack(chest.getItem(index));
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-            });
+    protected void handleOpen(SkyBlockPlayer player) {
+        IntStream.range(0, chest.getItems().size()).forEach(index -> {
+            attachItem(GUIItem.builder(index)
+                    .item(() -> ItemStackCreator.getFromStack(chest.getItem(index)).build())
+                    .onClick((ctx, item) -> {
+                        // Return true to allow picking up the item
+                        return true;
+                    })
+                    .build());
         });
-
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        e.getPlayer().playSound(Sound.sound(SoundEvent.BLOCK_CHEST_CLOSE, Sound.Source.RECORD, 1f, 1f));
+    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+        event.getPlayer().playSound(Sound.sound(SoundEvent.BLOCK_CHEST_CLOSE, Sound.Source.RECORD, 1f, 1f));
         ChestAnimationType.CLOSE.play(chest.getInstance(), chest.getPosition());
 
-        AbstractInventory inventory = e.getInventory();
-        IntStream.range(0, inventory.getItemStacks().length).forEach(i -> chest.setItem(i, inventory.getItemStack(i)));
+        // Save the items back to the chest
+        ItemStack[] items = getItemStacks();
+        IntStream.range(0, items.length)
+                .forEach(i -> chest.setItem(i, items[i]));
     }
 
     @Override
-    public boolean allowHotkeying() {
+    protected boolean allowHotkeying() {
         return true;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    protected void onBottomClick(InventoryPreClickEvent event) {
+        // Allow interactions with the player's inventory
+        event.setCancelled(false);
+    }
+
+    @Override
+    protected void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

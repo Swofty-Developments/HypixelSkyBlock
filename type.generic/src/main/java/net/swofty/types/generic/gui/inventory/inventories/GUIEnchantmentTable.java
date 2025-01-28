@@ -16,10 +16,10 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.enchantment.EnchantmentSource;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.ItemAttributeHandler;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.EnchantableComponent;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
+public class GUIEnchantmentTable extends SkyBlockAbstractInventory {
     private static final int[] PAGINATED_SLOTS_LIST_ENCHANTS = new int[]{
             12, 13, 14, 15, 16,
             21, 22, 23, 24, 25,
@@ -45,21 +45,25 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
     private final int bookshelfPower;
 
     public GUIEnchantmentTable(Instance instance, Pos enchantmentTable) {
-        super("Enchantment Table", InventoryType.CHEST_6_ROW);
-
+        super(InventoryType.CHEST_6_ROW);
         this.bookshelfPower = getBookshelfPower(instance, enchantmentTable);
+        doAction(new SetTitleAction(Component.text("Enchantment Table")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        set(GUIClickableItem.getCloseItem(49));
+    protected void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
 
-        set(new GUIItem(48) {
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack(
                         "§dBookshelf Power", Material.BOOKSHELF, 1,
                         "§7Stronger enchantments require",
                         "§7more bookshelf power which can",
@@ -67,122 +71,70 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                         "§7bookshelves nearby.",
                         "§a ",
                         "§7Current Bookshelf Power:",
-                        "§d" + bookshelfPower);
-            }
-        });
-        set(new GUIItem(50) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(
+                        "§d" + bookshelfPower).build())
+                .build());
+
+        attachItem(GUIItem.builder(50)
+                .item(ItemStackCreator.getStack(
                         "§aEnchantments Guide", Material.BOOK, 1,
                         "§7View a complete list of all",
                         "§7enchantments and their",
                         "§7requirements.",
                         "§a ",
-                        "§eClick to view!");
-            }
-        });
-        set(new GUIItem(28) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(
+                        "§eClick to view!").build())
+                .build());
+
+        attachItem(GUIItem.builder(28)
+                .item(ItemStackCreator.getStack(
                         "§aEnchant Item", Material.ENCHANTING_TABLE, 1,
                         "§7Add and remove enchantments from",
-                        "§7the time in the slot above!"
-                );
-            }
-        });
+                        "§7the time in the slot above!").build())
+                .build());
 
         updateFromItem(null, null);
     }
 
     @SneakyThrows
     public void updateFromItem(SkyBlockItem item, EnchantmentType selected) {
-        getInventory().setTitle(Component.text(
-                "Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())))
+        doAction(new SetTitleAction(Component.text(
+                "Enchant Item " + (selected == null ? "" : "-> " + StringUtility.toNormalCase(selected.name())))));
+
+        Arrays.stream(PAGINATED_SLOTS_LIST_ENCHANTS).forEach(slot ->
+                attachItem(GUIItem.builder(slot)
+                        .item(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "§7 ").build())
+                        .build())
         );
 
-        Arrays.stream(PAGINATED_SLOTS_LIST_ENCHANTS).forEach(slot -> set(slot, ItemStackCreator.createNamedItemStack(
-                Material.BLACK_STAINED_GLASS_PANE, "§7 "
-        )));
-        set(45, ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "§7 "));
+        attachItem(GUIItem.builder(45)
+                .item(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "§7 ").build())
+                .build());
 
         if (item == null) {
-            set(new GUIItem(23) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§cEnchant Item", Material.GRAY_DYE, 1,
-                            "§7Place an item in the open slot",
-                            "§7to enchant it!"
-                    );
-                }
-            });
-            set(new GUIClickableItem(19) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    ItemStack stack = e.getCursorItem();
-
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) return;
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateFromItem(item, null);
-                }
-
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
+            handleEmptyItem();
             return;
         }
 
-        set(new GUIClickableItem(19) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                ItemStack stack = e.getCursorItem();
+        attachItem(GUIItem.builder(19)
+                .item(() -> PlayerItemUpdater.playerUpdate(owner, item.getItemStack()).build())
+                .onClick((ctx, clickedItem) -> {
+                    ItemStack stack = ctx.cursorItem();
 
-                if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
-                    updateFromItem(null, null);
-                    return;
-                }
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
+                        updateFromItem(null, null);
+                        return true;
+                    }
 
-                SkyBlockItem item = new SkyBlockItem(stack);
-                updateFromItem(item, null);
-            }
-
-            @Override
-            public boolean canPickup() {
-                return true;
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
-            }
-        });
+                    SkyBlockItem newItem = new SkyBlockItem(stack);
+                    updateFromItem(newItem, null);
+                    return true;
+                })
+                .build());
 
         ItemType type = item.getAttributeHandler().getPotentialType();
         if (item.getItemStack().amount() > 1 ||
                 type == null ||
                 !(item.hasComponent(EnchantableComponent.class))) {
-            set(new GUIItem(23) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§cInvalid Item!", Material.RED_DYE, 1,
-                            "§7You cannot enchant stacked items!"
-                    );
-                }
-            });
-
-            updateItemStacks(getInventory(), getPlayer());
+            handleInvalidItem();
             return;
         }
 
@@ -193,101 +145,140 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                 .toList();
 
         if (enchantments.isEmpty()) {
-            set(new GUIItem(23) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§cCannot Enchant Item!", Material.RED_DYE, 1,
-                            "§7This item cannot be enchanted!"
-                    );
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
+            handleNonEnchantableItem();
             return;
         }
 
         if (selected == null) {
-            enchantments = enchantments.stream().limit(15).toList();
-            int i = 0;
-            for (EnchantmentType enchantmentType : enchantments) {
-                assert enchantmentType.getEnchFromTable() != null;
-                int finalI = i;
-                set(new GUIClickableItem(PAGINATED_SLOTS_LIST_ENCHANTS[finalI]) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            player.sendMessage("§cThis enchantment requires " +
-                                    enchantmentType.getEnchFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
-                            return;
-                        }
-
-                        updateFromItem(item, enchantmentType);
-                    }
-
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
-
-                        List<String> lore = new ArrayList<>();
-                        StringUtility.splitByWordAndLength(enchantmentType.getDescription(1, player), 30)
-                                .forEach(line -> lore.add("§7" + line));
-                        lore.add("§a ");
-
-                        if (itemAttributeHandler.hasEnchantment(enchantmentType)) {
-                            lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " " +
-                                    StringUtility.getAsRomanNumeral(itemAttributeHandler.getEnchantment(enchantmentType).level())
-                                    + " §l✓");
-                        } else {
-                            lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✖");
-                        }
-
-                        lore.add("§a ");
-                        if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
-                            lore.add("§cRequires " + enchantmentType.getEnchFromTable().getRequiredBookshelfPower()
-                                    + " Bookshelf Power!");
-                        } else {
-                            lore.add("§eClick to view!");
-                        }
-
-                        return ItemStackCreator.getStack(
-                                "§a" + StringUtility.toNormalCase(enchantmentType.name()),
-                                Material.ENCHANTED_BOOK, 1,
-                                lore
-                        );
-                    }
-                });
-                i++;
-            }
-            updateItemStacks(getInventory(), getPlayer());
+            handleEnchantmentSelection(item, enchantments);
             return;
         }
 
-        int minLevel = selected.getEnch().getSources(getPlayer()).stream().filter(source ->
-                        source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+        handleEnchantmentLevels(item, selected, type);
+    }
+
+    private void handleEmptyItem() {
+        attachItem(GUIItem.builder(23)
+                .item(ItemStackCreator.getStack(
+                        "§cEnchant Item", Material.GRAY_DYE, 1,
+                        "§7Place an item in the open slot",
+                        "§7to enchant it!").build())
+                .build());
+
+        attachItem(GUIItem.builder(19)
+                .item(ItemStack.AIR)
+                .onClick((ctx, clickedItem) -> {
+                    ItemStack stack = ctx.cursorItem();
+                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) return true;
+                    updateFromItem(new SkyBlockItem(stack), null);
+                    return true;
+                })
+                .build());
+    }
+
+    private void handleInvalidItem() {
+        attachItem(GUIItem.builder(23)
+                .item(ItemStackCreator.getStack(
+                        "§cInvalid Item!", Material.RED_DYE, 1,
+                        "§7You cannot enchant stacked items!").build())
+                .build());
+    }
+
+    private void handleNonEnchantableItem() {
+        attachItem(GUIItem.builder(23)
+                .item(ItemStackCreator.getStack(
+                        "§cCannot Enchant Item!", Material.RED_DYE, 1,
+                        "§7This item cannot be enchanted!").build())
+                .build());
+    }
+
+    private void handleEnchantmentSelection(SkyBlockItem item, List<EnchantmentType> enchantments) {
+        enchantments = enchantments.stream().limit(15).toList();
+        int i = 0;
+        for (EnchantmentType enchantmentType : enchantments) {
+            int finalI = i;
+            attachItem(createEnchantmentDisplayItem(item, enchantmentType, PAGINATED_SLOTS_LIST_ENCHANTS[finalI]));
+            i++;
+        }
+    }
+
+    private void handleEnchantmentLevels(SkyBlockItem item, EnchantmentType selected, ItemType type) {
+        int minLevel = selected.getEnch().getSources(owner).stream()
+                .filter(source -> source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.minLevel).findAny().orElse(0);
-        int maxLevel = selected.getEnch().getSources(getPlayer()).stream().filter(source ->
-                        source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
+        int maxLevel = selected.getEnch().getSources(owner).stream()
+                .filter(source -> source.getSource().equals(EnchantmentSource.SourceType.ENCHANTMENT_TABLE.toString()))
                 .mapToInt(value -> value.maxLevel).findAny().orElse(0);
 
-        int hasLevel = 0;
-        if (item.getAttributeHandler().hasEnchantment(selected)) {
-            hasLevel = item.getAttributeHandler().getEnchantment(selected).level();
-        }
+        int hasLevel = item.getAttributeHandler().hasEnchantment(selected) ?
+                item.getAttributeHandler().getEnchantment(selected).level() : 0;
 
         for (int level = minLevel; level <= maxLevel; level++) {
-            int finalLevel = level;
-            int finalHasLevel = hasLevel;
-            set(new GUIClickableItem(PAGINATED_SLOTS_LIST_LEVELS[finalLevel - 1]) {
+            attachItem(createEnchantmentLevelItem(item, selected, type, level, hasLevel));
+        }
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel);
+        attachItem(GUIItem.builder(45)
+                .item(ItemStackCreator.createNamedItemStack(Material.ARROW, "§aGo Back").build())
+                .onClick((ctx, clickedItem) -> {
+                    updateFromItem(item, null);
+                    return true;
+                })
+                .build());
+    }
+
+    private GUIItem createEnchantmentDisplayItem(SkyBlockItem item, EnchantmentType enchantmentType, int slot) {
+        return GUIItem.builder(slot)
+                .item(() -> {
+                    ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
                     List<String> lore = new ArrayList<>();
-                    StringUtility.splitByWordAndLength(selected.getDescription(finalLevel, player), 30)
+                    StringUtility.splitByWordAndLength(enchantmentType.getDescription(1, owner), 30)
+                            .forEach(line -> lore.add("§7" + line));
+                    lore.add("§a ");
+
+                    if (itemAttributeHandler.hasEnchantment(enchantmentType)) {
+                        lore.add("§a  " + StringUtility.toNormalCase(enchantmentType.name()) + " " +
+                                StringUtility.getAsRomanNumeral(itemAttributeHandler.getEnchantment(enchantmentType).level())
+                                + " §l✓");
+                    } else {
+                        lore.add("§c  " + StringUtility.toNormalCase(enchantmentType.name()) + " §l✖");
+                    }
+
+                    lore.add("§a ");
+                    if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
+                        lore.add("§cRequires " + enchantmentType.getEnchFromTable().getRequiredBookshelfPower()
+                                + " Bookshelf Power!");
+                    } else {
+                        lore.add("§eClick to view!");
+                    }
+
+                    return ItemStackCreator.getStack(
+                            "§a" + StringUtility.toNormalCase(enchantmentType.name()),
+                            Material.ENCHANTED_BOOK, 1,
+                            lore).build();
+                })
+                .onClick((ctx, clickedItem) -> {
+                    if (bookshelfPower < enchantmentType.getEnchFromTable().getRequiredBookshelfPower()) {
+                        ctx.player().sendMessage("§cThis enchantment requires " +
+                                enchantmentType.getEnchFromTable().getRequiredBookshelfPower() + " Bookshelf Power!");
+                        return true;
+                    }
+                    updateFromItem(item, enchantmentType);
+                    return true;
+                })
+                .build();
+    }
+
+    private GUIItem createEnchantmentLevelItem(SkyBlockItem item, EnchantmentType selected,
+                                               ItemType type, int level, int hasLevel) {
+        return GUIItem.builder(PAGINATED_SLOTS_LIST_LEVELS[level - 1])
+                .item(() -> {
+                    int levelCost = selected.getEnchFromTable().getLevelsFromTableToApply(owner).get(level);
+                    List<String> lore = new ArrayList<>();
+                    StringUtility.splitByWordAndLength(selected.getDescription(level, owner), 30)
                             .forEach(line -> lore.add("§7" + line));
 
                     lore.add("§a ");
-                    if (finalHasLevel == finalLevel) {
+                    if (hasLevel == level) {
                         lore.add("§cThis enchantment is already present");
                         lore.add("§cand can be removed.");
                         lore.add("§a ");
@@ -295,28 +286,28 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
 
                     lore.add("§7Cost");
 
-                    if (finalHasLevel > finalLevel) {
-                        if (levelCost > player.getLevel())
+                    if (hasLevel > level) {
+                        if (levelCost > owner.getLevel())
                             lore.add("§3" + levelCost + " Exp Levels §c§l✖");
-                        else lore.add("§3" + levelCost + " Exp Levels §a§l✓");
+                        else
+                            lore.add("§3" + levelCost + " Exp Levels §a§l✓");
 
                         lore.add("§a ");
                         lore.add("§cHigher level already present!");
                         return ItemStackCreator.getStack(
-                                "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
+                                "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(level),
                                 Material.GRAY_DYE, 1,
-                                lore
-                        );
+                                lore).build();
                     }
 
-                    if (levelCost > player.getLevel()) {
+                    if (levelCost > owner.getLevel()) {
                         lore.add("§3" + levelCost + " Exp Levels §c§l✖");
                         lore.add("§a ");
                         lore.add("§cYou have insufficient levels!");
                     } else {
                         lore.add("§3" + levelCost + " Exp Levels §a§l✓");
                         lore.add("§a ");
-                        if (finalHasLevel >= finalLevel) {
+                        if (hasLevel >= level) {
                             lore.add("§eClick to remove!");
                         } else {
                             lore.add("§eClick to enchant!");
@@ -324,38 +315,33 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                     }
 
                     return ItemStackCreator.getStack(
-                            "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(finalLevel),
+                            "§9" + selected.getName() + " " + StringUtility.getAsRomanNumeral(level),
                             Material.ENCHANTED_BOOK, 1,
-                            lore
-                    );
-                }
+                            lore).build();
+                })
+                .onClick((ctx, clickedItem) -> {
+                    SkyBlockPlayer player = ctx.player();
+                    if (clickedItem.material() == Material.GRAY_DYE)
+                        return true;
 
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (e.getClickedItem().material() == Material.GRAY_DYE)
-                        return;
-
-                    // TODO if someone know how to get the itemstack name, do it
-                    // I can't find it, I keep getting null...
-                    // Because it should be, let's say, "§6Heroic Hyperion", and not "Hyperion"
                     String itemName = StringUtility.toNormalCase(type.name());
 
-                    if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel)) {
+                    if (player.getLevel() < selected.getEnchFromTable().getLevelsFromTableToApply(player).get(level)) {
                         player.sendMessage("§cYou have insufficient levels!");
-                        return;
+                        return true;
                     }
 
                     item.getAttributeHandler().removeEnchantment(selected);
-                    if (finalHasLevel < finalLevel) {
+                    if (hasLevel < level) {
                         item.getAttributeHandler().addEnchantment(
-                                new SkyBlockEnchantment(selected, finalLevel)
+                                new SkyBlockEnchantment(selected, level)
                         );
 
-                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
+                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(level));
                         player.sendMessage("§aYou enchanted your " + itemName + " §awith " +
-                                StringUtility.toNormalCase(selected.name()) + " " + StringUtility.getAsRomanNumeral(finalLevel) + "!");
+                                StringUtility.toNormalCase(selected.name()) + " " + StringUtility.getAsRomanNumeral(level) + "!");
                     } else {
-                        int difference = finalHasLevel - finalLevel;
+                        int difference = hasLevel - level;
 
                         if (difference > 0) {
                             item.getAttributeHandler().addEnchantment(
@@ -363,30 +349,14 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
                             );
                         }
 
-                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(finalLevel));
+                        player.setLevel(player.getLevel() - selected.getEnchFromTable().getLevelsFromTableToApply(player).get(level));
                         player.sendMessage("§cYou removed " + StringUtility.toNormalCase(selected.name()) + " from your " + itemName + "§c!");
                     }
 
                     updateFromItem(item, selected);
-                }
-            });
-        }
-
-        set(new GUIClickableItem(45) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                updateFromItem(item, null);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.createNamedItemStack(
-                        Material.ARROW, "§aGo Back"
-                );
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+                    return true;
+                })
+                .build();
     }
 
     @Override
@@ -400,8 +370,8 @@ public class GUIEnchantmentTable extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(19)));
+    protected void onSuddenQuit(SkyBlockPlayer player) {
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(19)));
     }
 
     @Override

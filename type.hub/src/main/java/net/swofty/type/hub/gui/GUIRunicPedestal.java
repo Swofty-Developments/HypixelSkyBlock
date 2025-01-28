@@ -12,7 +12,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
