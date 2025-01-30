@@ -3,7 +3,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -31,7 +30,7 @@ public class GUISkyBlockProfile extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
         // Back and Close buttons
@@ -319,18 +318,18 @@ public class GUISkyBlockProfile extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(false);
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {}
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

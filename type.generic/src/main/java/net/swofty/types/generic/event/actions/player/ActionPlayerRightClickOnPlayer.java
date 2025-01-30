@@ -15,7 +15,7 @@ public class ActionPlayerRightClickOnPlayer implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (event.getTarget() instanceof SkyBlockPlayer skyBlockPlayer) {
-            new GUIViewPlayerProfile(skyBlockPlayer).open(player);
+            player.openInventory(new GUIViewPlayerProfile(skyBlockPlayer));
         }
     }
 }

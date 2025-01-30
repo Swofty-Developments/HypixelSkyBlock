@@ -60,7 +60,7 @@ public class BlockChest implements CustomSkyBlockBlock, BlockInteractable, Block
         ChestAnimationType.OPEN.play(chest.getInstance() , chest.getPosition());
         player.playSound(Sound.sound(SoundEvent.BLOCK_CHEST_OPEN, Sound.Source.RECORD, 1f, 1f));
 
-        new GUIChest(chest).open(player);
+        player.openInventory(new GUIChest(chest));
     }
 
 

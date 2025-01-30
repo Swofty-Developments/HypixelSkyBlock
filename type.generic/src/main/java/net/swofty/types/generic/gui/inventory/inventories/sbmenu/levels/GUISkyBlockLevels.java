@@ -1,6 +1,7 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
@@ -28,7 +29,7 @@ public class GUISkyBlockLevels extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
         setupNavigationButtons();
@@ -246,18 +247,18 @@ public class GUISkyBlockLevels extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(true);
     }
 
     @Override
-    protected void onClose(net.minestom.server.event.inventory.InventoryCloseEvent event, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {}
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

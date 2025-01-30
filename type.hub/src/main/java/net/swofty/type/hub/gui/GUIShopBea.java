@@ -3,6 +3,8 @@ package net.swofty.type.hub.gui;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributePetData;
+import net.swofty.types.generic.gui.inventory.SkyBlockShopGUI;
+import net.swofty.types.generic.gui.inventory.shop.ShopItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.shop.type.CoinShopPrice;
 import net.swofty.types.generic.shop.type.CombinedShopPrice;

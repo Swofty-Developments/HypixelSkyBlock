@@ -25,6 +25,6 @@ public class ActionPlayerInteractWithCrafting implements SkyBlockEventClass {
         event.setCancelled(true);
         event.setCursorItem(ItemStack.AIR);
         player.getInventory().setCursorItem(ItemStack.AIR);
-        new GUICrafting().open((SkyBlockPlayer) event.getPlayer());
+        event.getPlayer().openInventory(new GUICrafting());
     }
 }

@@ -3,6 +3,7 @@ package net.swofty.types.generic.levels;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterAccessories;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.levels.starter.GUIStarterSkills;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -17,21 +18,21 @@ public enum LevelsGuide {
     STARTER("§8New Player", "§7You are starting on your journey through SkyBlock. Complete these tasks to get acquainted with the game",
             Material.LIME_STAINED_GLASS_PANE, List.of(
             TasksSet.builder(ItemStack.builder(Material.DIAMOND_SWORD).build(), new GUIStarterSkills(), (player) -> List.of(
-                    "§7Level up your Skills.",
-                    " ",
-                    player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 4 ? "§aFarming Skill IV" : "§cFarming Skill IV",
-                    player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 4 ? "§aMining Skill IV" : "§cMining Skill IV",
-                    player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 4 ? "§aCombat Skill IV" : "§cCombat Skill IV",
-                    player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 4 ? "§aForaging Skill IV" : "§cForaging Skill IV",
-                    player.getSkills().getCurrentLevel(SkillCategories.FISHING) >= 4 ? "§aFishing Skill IV" : "§cFishing Skill IV",
-                    player.getSkills().getCurrentLevel(SkillCategories.ENCHANTING) >= 4 ? "§aEnchanting Skill IV" : "§cEnchanting Skill IV"
+                            "§7Level up your Skills.",
+                            " ",
+                            player.getSkills().getCurrentLevel(SkillCategories.FARMING) >= 4 ? "§aFarming Skill IV" : "§cFarming Skill IV",
+                            player.getSkills().getCurrentLevel(SkillCategories.MINING) >= 4 ? "§aMining Skill IV" : "§cMining Skill IV",
+                            player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 4 ? "§aCombat Skill IV" : "§cCombat Skill IV",
+                            player.getSkills().getCurrentLevel(SkillCategories.FORAGING) >= 4 ? "§aForaging Skill IV" : "§cForaging Skill IV",
+                            player.getSkills().getCurrentLevel(SkillCategories.FISHING) >= 4 ? "§aFishing Skill IV" : "§cFishing Skill IV",
+                            player.getSkills().getCurrentLevel(SkillCategories.ENCHANTING) >= 4 ? "§aEnchanting Skill IV" : "§cEnchanting Skill IV"
                     ))
                     .cause(SkyBlockLevelCause.getSkillCauses(SkillCategories.COMBAT, 6), null)
                     .cause(SkyBlockLevelCause.getSkillCause(SkillCategories.COMBAT, 7), "Combat Skill IV")
                     .build(),
             TasksSet.builder(ItemStack.builder(Material.SKELETON_SKULL).build(), new GUIStarterAccessories(), (player) -> List.of(
-                    "§7Obtain unique §aAccessories §7in your",
-                    "§aAccessory Bag§7."
+                            "§7Obtain unique §aAccessories §7in your",
+                            "§aAccessory Bag§7."
                     ))
                     .cause(SkyBlockLevelCause.getAccessoryCause(ItemType.ZOMBIE_TALISMAN), null)
                     .build()
@@ -50,25 +51,24 @@ public enum LevelsGuide {
         this.tasksSets = tasksSets;
     }
 
-
     public static class TasksSet {
         private Map<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr, String> causes;
         private String name;
         private ItemStack material;
-        private SkyBlockInventoryGUI guiToOpen;
+        private SkyBlockAbstractInventory guiToOpen;
         private Function<SkyBlockPlayer, List<String>> display;
 
-        public static Builder builder(ItemStack material, SkyBlockInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+        public static Builder builder(ItemStack material, SkyBlockAbstractInventory guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
             return new Builder(material, guiToOpen, display);
         }
 
         public static class Builder {
             private Map<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr, String> causes;
             private ItemStack material;
-            private SkyBlockInventoryGUI guiToOpen;
+            private SkyBlockAbstractInventory guiToOpen;
             private Function<SkyBlockPlayer, List<String>> display;
 
-            public Builder(ItemStack material, SkyBlockInventoryGUI guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
+            public Builder(ItemStack material, SkyBlockAbstractInventory guiToOpen, Function<SkyBlockPlayer, List<String>> display) {
                 this.material = material;
                 this.guiToOpen = guiToOpen;
                 this.display = display;

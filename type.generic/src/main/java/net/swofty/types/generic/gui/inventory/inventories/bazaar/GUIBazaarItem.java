@@ -1,5 +1,7 @@
 package net.swofty.types.generic.gui.inventory.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -12,252 +14,282 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarPriceSelection;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.*;
 
-public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
+public class GUIBazaarItem extends SkyBlockAbstractInventory {
+    private static final String STATE_ORDERS_AVAILABLE = "orders_available";
+    private static final String STATE_NO_ORDERS = "no_orders";
+    private static final String STATE_HAS_INVENTORY = "has_inventory";
+    private static final String STATE_NO_INVENTORY = "no_inventory";
+
     private final ItemType itemType;
-    public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getKey() + " -> " + itemType.getDisplayName(),
-                InventoryType.CHEST_4_ROW);
+    private BazaarItem currentBazaarItem;
 
+    public GUIBazaarItem(ItemType itemType) {
+        super(InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(30, new GUIBazaarItemSet(
-                BazaarCategories.getFromItem(this.itemType).getKey(),
-                BazaarCategories.getFromItem(this.itemType).getValue())));
-        set(new GUIClickableItem(31) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBazaar(BazaarCategories.getFromItem(GUIBazaarItem.this.itemType).getKey()).open(player);
-            }
+        doAction(new SetTitleAction(Component.text(BazaarCategories.getFromItem(itemType).getKey() +
+                " -> " + itemType.getDisplayName())));
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStackHead("§6Go Back",
-                        "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7",
-                        1, "§7To Bazaar");
-            }
+        startLoop("refresh", 10, () -> refreshItems(owner));
+    }
+
+    @Override
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+        setupNavigationButtons();
+        setupItemDisplay();
+
+        Thread.startVirtualThread(() -> {
+            BazaarGetItemProtocolObject.BazaarGetItemResponse response =
+                    (BazaarGetItemProtocolObject.BazaarGetItemResponse) new ProxyService(ServiceType.BAZAAR)
+                            .handleRequest(new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name()))
+                            .join();
+
+            currentBazaarItem = response.item();
+            updateBazaarState();
+            setupTradeButtons();
         });
-        set(new GUIClickableItem(32) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBazaarOrders().open(player);
-            }
+    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
+    private void setupNavigationButtons() {
+        // Back to category button
+        attachItem(GUIItem.builder(30)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + BazaarCategories.getFromItem(itemType).getKey()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBazaarItemSet(
+                            BazaarCategories.getFromItem(itemType).getKey(),
+                            BazaarCategories.getFromItem(itemType).getValue()));
+                    return true;
+                })
+                .build());
+
+        // Back to main bazaar button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.getStackHead("§6Go Back",
+                        "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7",
+                        1, "§7To Bazaar").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBazaar(
+                            BazaarCategories.getFromItem(itemType).getKey()));
+                    return true;
+                })
+                .build());
+
+        // Manage orders button
+        attachItem(GUIItem.builder(32)
+                .item(ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
                         "§7You don't have any ongoing orders.",
                         " ",
-                        "§eClick to manage!");
-            }
-        });
-        set(new GUIItem(13) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return new NonPlayerItemUpdater(new SkyBlockItem(GUIBazaarItem.this.itemType)).getUpdatedItem();
-            }
-        });
+                        "§eClick to manage!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBazaarOrders());
+                    return true;
+                })
+                .build());
     }
 
-
-    @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        Thread.startVirtualThread(() -> {
-            BazaarGetItemProtocolObject.BazaarGetItemResponse response = (BazaarGetItemProtocolObject.BazaarGetItemResponse) new ProxyService(ServiceType.BAZAAR).handleRequest(
-                    new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name())
-            ).join();
-
-            BazaarItem item = response.item();
-            updateItems(item);
-        });
+    private void setupItemDisplay() {
+        attachItem(GUIItem.builder(13)
+                .item(() -> new NonPlayerItemUpdater(new SkyBlockItem(itemType))
+                        .getUpdatedItem().build())
+                .build());
     }
 
-    public void updateItems(BazaarItem item) {
-        set(new GUIClickableItem(10) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+    private void updateBazaarState() {
+        if (!currentBazaarItem.getSellOrders().isEmpty()) {
+            doAction(new AddStateAction(STATE_ORDERS_AVAILABLE));
+        } else {
+            doAction(new AddStateAction(STATE_NO_ORDERS));
+        }
 
-            }
+        Map<Integer, Integer> inventory = owner.getAllOfTypeInInventory(itemType);
+        if (!inventory.isEmpty()) {
+            doAction(new AddStateAction(STATE_HAS_INVENTORY));
+        } else {
+            doAction(new AddStateAction(STATE_NO_INVENTORY));
+        }
+    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
-                lore.add(" ");
+    private void setupTradeButtons() {
+        setupBuyInstantlyButton();
+        setupSellInstantlyButton();
+        setupCreateSellOfferButton();
+    }
 
-                if (!item.getSellOrders().isEmpty()) {
-                    double pricePerUnit = item.getSellStatistics().getLowestOrder();
-                    lore.add("§7Price per unit: §6" + pricePerUnit + " coins");
-                    lore.add("§7Stack price: §6" + (pricePerUnit * 64) + " coins");
-                    lore.add(" ");
-                    lore.add("§eClick to pick amount!");
-                } else {
-                    lore.add("§cNo sell orders available.");
-                    lore.add(" ");
-                    lore.add("§8Cannot buy instantly");
-                }
-
-                return ItemStackCreator.getStack("§aBuy Instantly", Material.GOLDEN_HORSE_ARMOR,
-                        1, lore);
-            }
-        });
-        set(new GUIClickableItem(11) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
-                lore.add(" ");
-
-                int amountInInventory = player.getAllOfTypeInInventory(itemType).size();
-
-                if (amountInInventory == 0) {
-                    lore.add("§7Inventory: §cNone!");
-                    lore.add(" ");
-                    lore.add("§7Price Per Unit: §6" + item.getBuyStatistics().getHighestOrder() + " coins");
-                    lore.add(" ");
-                    lore.add("§8None to sell in your inventory!");
-                } else {
-                    lore.add("§7Inventory: §a" + amountInInventory + "configuration/items");
+    private void setupBuyInstantlyButton() {
+        attachItem(GUIItem.builder(10)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§8" + itemType.getDisplayName());
                     lore.add(" ");
 
-                    if (!item.getBuyOrders().isEmpty()) {
-                        double pricePerUnit = item.getBuyStatistics().getHighestOrder();
-                        lore.add("§7Amount: §a" + amountInInventory + "§7x");
-                        lore.add("§7Total price: §6" + (pricePerUnit * amountInInventory) + " coins");
+                    if (!currentBazaarItem.getSellOrders().isEmpty()) {
+                        double pricePerUnit = currentBazaarItem.getSellStatistics().getLowestOrder();
+                        lore.add("§7Price per unit: §6" + pricePerUnit + " coins");
+                        lore.add("§7Stack price: §6" + (pricePerUnit * 64) + " coins");
                         lore.add(" ");
-                        lore.add("§eClick to sell!");
+                        lore.add("§eClick to pick amount!");
                     } else {
-                        lore.add("§cNo buy orders available.");
+                        lore.add("§cNo sell orders available.");
                         lore.add(" ");
-                        lore.add("§8Cannot sell instantly");
+                        lore.add("§8Cannot buy instantly");
                     }
-                }
 
-                return ItemStackCreator.getStack("§6Sell Instantly", Material.HOPPER,
-                        1, lore);
-            }
-        });
+                    return ItemStackCreator.getStack("§aBuy Instantly",
+                            Material.GOLDEN_HORSE_ARMOR, 1, lore).build();
+                })
+                .build());
+    }
 
-        set(new GUIClickableItem(16) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
-                if (itemInInventory.isEmpty()) {
-                    player.sendMessage("§cYou don't have any §e" + itemType.getDisplayName() + "§c in your inventory!");
-                    return;
-                }
+    private void setupSellInstantlyButton() {
+        attachItem(GUIItem.builder(11)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§8" + itemType.getDisplayName());
+                    lore.add(" ");
 
-                new GUIBazaarPriceSelection(GUIBazaarItem.this,
-                        itemInInventory.size(),
-                        item.getSellStatistics().getLowestOrder(),
-                        item.getSellStatistics().getHighestOrder(),
-                        itemType, true).openPriceSelection(player).thenAccept(price -> {
-                            if (price <= 0) {
-                                if (player.isOnline())
-                                    player.sendMessage("§cYou can only sell for a positive amount of coins!");
-                                return;
-                            }
+                    int amountInInventory = owner.getAllOfTypeInInventory(itemType).size();
 
-                            player.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
+                    if (amountInInventory == 0) {
+                        lore.add("§7Inventory: §cNone!");
+                        lore.add(" ");
+                        lore.add("§7Price Per Unit: §6" + currentBazaarItem.getBuyStatistics().getHighestOrder() + " coins");
+                        lore.add(" ");
+                        lore.add("§8None to sell in your inventory!");
+                    } else {
+                        lore.add("§7Inventory: §a" + amountInInventory + "configuration/items");
+                        lore.add(" ");
 
-                            int amountInInventory = player.getAmountInInventory(itemType);
-                            Map<Integer, Integer> inInventory = player.getAllOfTypeInInventory(itemType);
-                            inInventory.forEach((slot, amount) -> {
-                                player.getInventory().setItemStack(slot, ItemStack.AIR);
-                            });
+                        if (!currentBazaarItem.getBuyOrders().isEmpty()) {
+                            double pricePerUnit = currentBazaarItem.getBuyStatistics().getHighestOrder();
+                            lore.add("§7Amount: §a" + amountInInventory + "§7x");
+                            lore.add("§7Total price: §6" + (pricePerUnit * amountInInventory) + " coins");
+                            lore.add(" ");
+                            lore.add("§eClick to sell!");
+                        } else {
+                            lore.add("§cNo buy orders available.");
+                            lore.add(" ");
+                            lore.add("§8Cannot sell instantly");
+                        }
+                    }
 
-                            ProxyService bazaar = new ProxyService(ServiceType.BAZAAR);
-                            Map<String, Object> requestParam = new HashMap<>();
-                            requestParam.put("item-name", itemType.name());
-                            requestParam.put("amount", amountInInventory);
-                            requestParam.put("price", price);
-                            requestParam.put("player-uuid", player.getUuid());
+                    return ItemStackCreator.getStack("§6Sell Instantly",
+                            Material.HOPPER, 1, lore).build();
+                })
+                .build());
+    }
 
-                            player.sendMessage("§6[Bazaar] §7Submitting sell order...");
+    private void setupCreateSellOfferButton() {
+        attachItem(GUIItem.builder(16)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>();
+                    lore.add("§8" + itemType.getDisplayName());
+                    lore.add(" ");
+                    lore.add("§6Top Offers:");
 
-                            BazaarSellProtocolObject.BazaarSellMessage message =
-                                    new BazaarSellProtocolObject.BazaarSellMessage(itemType.name(), player.getUuid(), price, amountInInventory);
-                            CompletableFuture<BazaarSellProtocolObject.BazaarSellResponse> future = bazaar.handleRequest(message);
-                            future.thenAccept(response -> {
-                                if (response.successful) {
-                                    player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory + "x §e" + itemType.getDisplayName() + "§a for §e" + price + " coins each!");
-                                } else {
-                                    player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
-                                    player.sendMessage("§c[Bazaar] §cYou cannot place orders on items you already have orders on!");
-                                }
-                            });
+                    if (currentBazaarItem.getSellOrders().isEmpty()) {
+                        lore.add("§cNo sell orders available.");
+                        lore.add(" ");
+                        Map<Integer, Integer> itemInInventory = owner.getAllOfTypeInInventory(itemType);
+                        if (!itemInInventory.isEmpty()) {
+                            lore.add("§7You have §e" + owner.getAmountInInventory(itemType) + "§7x in your inventory.");
+                            lore.add("§eClick to setup Sell Order");
+                        } else {
+                            lore.add("§8None in inventory!");
+                        }
+                    } else {
+                        currentBazaarItem.getSellStatistics().getTop(7, true).forEach((order) -> {
+                            lore.add("§7- §6" + order.totalCoins() + " coins §7each | §a" + order.totalItems() +
+                                    "§7x in §f" + order.numberOfOrders() + "§7 orders");
+                        });
+                        lore.add(" ");
+
+                        Map<Integer, Integer> itemInInventory = owner.getAllOfTypeInInventory(itemType);
+                        if (!itemInInventory.isEmpty()) {
+                            lore.add("§7You have §e" + owner.getAmountInInventory(itemType) + "§7x in your inventory.");
+                            lore.add("§eClick to setup Sell Order");
+                        } else {
+                            lore.add("§8None in inventory!");
+                        }
+                    }
+
+                    return ItemStackCreator.getStack("§6Create Sell Offer",
+                            Material.PAPER, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    Map<Integer, Integer> itemInInventory = ctx.player().getAllOfTypeInInventory(itemType);
+                    if (itemInInventory.isEmpty()) {
+                        ctx.player().sendMessage("§cYou don't have any §e" + itemType.getDisplayName() +
+                                "§c in your inventory!");
+                        return true;
+                    }
+
+                    handleSellOffer(ctx.player(), itemInInventory);
+                    return true;
+                })
+                .build());
+    }
+
+    private void handleSellOffer(SkyBlockPlayer player, Map<Integer, Integer> itemInInventory) {
+        new GUIBazaarPriceSelection(this, itemInInventory.size(),
+                currentBazaarItem.getSellStatistics().getLowestOrder(),
+                currentBazaarItem.getSellStatistics().getHighestOrder(),
+                itemType, true)
+                .openPriceSelection(player)
+                .thenAccept(price -> processSellOffer(player, price, itemInInventory));
+    }
+
+    private void processSellOffer(SkyBlockPlayer player, double price, Map<Integer, Integer> itemInInventory) {
+        if (price <= 0) {
+            if (player.isOnline())
+                player.sendMessage("§cYou can only sell for a positive amount of coins!");
+            return;
+        }
+
+        player.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
+
+        int amountInInventory = player.getAmountInInventory(itemType);
+        itemInInventory.forEach((slot, amount) ->
+                player.getInventory().setItemStack(slot, ItemStack.AIR));
+
+        player.sendMessage("§6[Bazaar] §7Submitting sell order...");
+
+        BazaarSellProtocolObject.BazaarSellMessage message =
+                new BazaarSellProtocolObject.BazaarSellMessage(
+                        itemType.name(), player.getUuid(), price, amountInInventory);
+
+        new ProxyService(ServiceType.BAZAAR)
+                .handleRequest(message)
+                .thenAccept(response -> {
+                    BazaarSellProtocolObject.BazaarSellResponse bazaarResponse = (BazaarSellProtocolObject.BazaarSellResponse) response;
+                    if (bazaarResponse.successful) {
+                        player.sendMessage("§6[Bazaar] §eSell Order Setup! §a" + amountInInventory +
+                                "x §e" + itemType.getDisplayName() + "§a for §e" + price + " coins each!");
+                    } else {
+                        player.sendMessage("§c[Bazaar] §cFailed to submit buy order!");
+                        player.sendMessage("§c[Bazaar] §cYou cannot place orders on items you " +
+                                "already have orders on!");
+                    }
                 });
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
-                lore.add(" ");
-                lore.add("§6Top Offers:");
-
-                if (item.getSellOrders().isEmpty()) {
-                    lore.add("§cNo sell orders available.");
-                    lore.add(" ");
-                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
-                    if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
-                        lore.add("§eClick to setup Sell Order");
-                    } else {
-                        lore.add("§8None in inventory!");
-                    }
-                } else {
-                    item.getSellStatistics().getTop(7, true).forEach((order) -> {
-                        lore.add("§7- §6" + order.totalCoins() + " coins §7each | §a" + order.totalItems() + "§7x in §f" + order.numberOfOrders() + "§7 orders");
-                    });
-                    lore.add(" ");
-
-                    Map<Integer, Integer> itemInInventory = player.getAllOfTypeInInventory(itemType);
-                    if (!itemInInventory.isEmpty()) {
-                        lore.add("§7You have §e" + player.getAmountInInventory(itemType) + "§7x in your inventory.");
-                        lore.add("§eClick to setup Sell Order");
-                    } else {
-                        lore.add("§8None in inventory!");
-                    }
-                }
-
-                return ItemStackCreator.getStack("§6Create Sell Offer",
-                        Material.PAPER, 1, lore);
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    private void refreshItems(SkyBlockPlayer player) {
         if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }
-    }
-
-    @Override
-    public int refreshRate() {
-        return 10;
     }
 
     @Override
@@ -266,7 +298,15 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+    }
+
+    @Override
+    public void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

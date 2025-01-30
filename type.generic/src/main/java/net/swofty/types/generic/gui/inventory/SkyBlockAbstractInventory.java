@@ -70,7 +70,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
     @Override
     public boolean removeViewer(@NotNull Player player) {
         if (this.viewers.remove(player)) {
-            onClose(new InventoryCloseEvent(this, player), CloseReason.PLAYER_EXITED);
+            onClose(new InventoryCloseEvent(this, player), CloseReason.SERVER_EXITED);
             stopAllLoops();
             GUI_MAP.remove(player.getUuid());
         }
@@ -82,11 +82,15 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
         activeLoops.clear();
     }
 
-    protected abstract void handleOpen(SkyBlockPlayer player);
-    protected abstract void onClose(InventoryCloseEvent event, CloseReason reason);
-    protected abstract void onBottomClick(InventoryPreClickEvent event);
-    protected abstract void onSuddenQuit(SkyBlockPlayer player);
-    protected abstract boolean allowHotkeying();
+    public abstract void handleOpen(SkyBlockPlayer player);
+    public abstract void onClose(InventoryCloseEvent event, CloseReason reason);
+    public abstract void onBottomClick(InventoryPreClickEvent event);
+    public abstract void onSuddenQuit(SkyBlockPlayer player);
+    public abstract boolean allowHotkeying();
+
+    public void open(SkyBlockPlayer player) {
+        player.openInventory(this);
+    }
 
     // Fill methods
     protected void fill(ItemStack item) {
@@ -270,7 +274,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
     }
 
     // Item Management
-    protected void attachItem(GUIItem item) {
+    public void attachItem(GUIItem item) {
         items.computeIfAbsent(item.getSlot(), k -> new ArrayList<>()).add(item);
         doAction(new RefreshSlotAction(item.getSlot()));
     }

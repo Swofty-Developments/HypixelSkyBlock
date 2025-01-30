@@ -1,94 +1,86 @@
 package net.swofty.type.island.gui;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIJerry extends SkyBlockInventoryGUI {
+public class GUIJerry extends SkyBlockAbstractInventory {
     public GUIJerry() {
-        super("Jerry The Assistant", InventoryType.CHEST_4_ROW);
+        super(InventoryType.CHEST_4_ROW);
+        doAction(new SetTitleAction(Component.text("Jerry The Assistant")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(31));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        set(new GUIClickableItem(11) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIPatchNotes().open(player);
-            }
+        // Close button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, 1,
+        // Patch Notes button
+        attachItem(GUIItem.builder(11)
+                .item(ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, 1,
                         "§7View the latest features and",
                         "§7changes to the game.",
                         "",
-                        "§eClick to open!"
-                );
-            }
-        });
+                        "§eClick to open!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIPatchNotes());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(13) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.sendMessage("§cNo new deliveries.");
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, 1,
+        // Deliveries button
+        attachItem(GUIItem.builder(13)
+                .item(ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, 1,
                         "§7Any items that may be delivered to",
                         "§7yourself or your island will appear",
                         "§7here for collection!",
                         "",
-                        "§eClick to open!"
-                );
-            }
-        });
+                        "§eClick to open!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().sendMessage("§cNo new deliveries.");
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(15) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIGuests().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, 1,
+        // Visits button
+        attachItem(GUIItem.builder(15)
+                .item(ItemStackCreator.getStack("§aVisits and Guestings", Material.EMERALD, 1,
                         "§7Learn all about how to §a/visit",
                         "§7players across the SkyBlock universe!",
                         " ",
-                        "§eClick to learn!"
-                );
-            }
-        });
+                        "§eClick to learn!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIGuests());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(35) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.closeInventory();
-                player.sendMessage("§aI have given you an egg, place this where you would like me to move to!");
-
-                player.addAndUpdateItem(ItemType.MOVE_JERRY);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.createNamedItemStack(Material.BEDROCK, "§aMove Jerry");
-            }
-        });
-
-        updateItemStacks(getInventory(), getPlayer());
+        // Move Jerry button
+        attachItem(GUIItem.builder(35)
+                .item(ItemStackCreator.createNamedItemStack(Material.BEDROCK, "§aMove Jerry").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    ctx.player().sendMessage("§aI have given you an egg, place this where you would like me to move to!");
+                    ctx.player().addAndUpdateItem(ItemType.MOVE_JERRY);
+                    return true;
+                })
+                .build());
     }
 
     @Override
@@ -97,17 +89,17 @@ public class GUIJerry extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No cleanup needed
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        // No cleanup needed
     }
 }

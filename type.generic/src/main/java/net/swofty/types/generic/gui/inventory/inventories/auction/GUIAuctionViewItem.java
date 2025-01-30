@@ -1,23 +1,22 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewSelfBIN;
-import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewSelfNormal;
-import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewThirdBin;
-import net.swofty.types.generic.gui.inventory.inventories.auction.view.AuctionViewThirdNormal;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.RemoveStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
+import net.swofty.types.generic.gui.inventory.inventories.auction.view.*;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -25,75 +24,98 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements RefreshingGUI {
+public class GUIAuctionViewItem extends SkyBlockAbstractInventory {
+    private static final String STATE_SELF_BIN = "self_bin";
+    private static final String STATE_SELF_NORMAL = "self_normal";
+    private static final String STATE_THIRD_BIN = "third_bin";
+    private static final String STATE_THIRD_NORMAL = "third_normal";
+
     public final UUID auctionID;
-    public final SkyBlockInventoryGUI previousGUI;
+    public final SkyBlockAbstractInventory previousGUI;
     public long bidAmount = 0;
     public long minimumBidAmount = 0;
 
-    public GUIAuctionViewItem(UUID auctionID, SkyBlockInventoryGUI previousGUI) {
-        super("Auction View", InventoryType.CHEST_6_ROW);
-
+    public GUIAuctionViewItem(UUID auctionID, SkyBlockAbstractInventory previousGUI) {
+        super(InventoryType.CHEST_6_ROW);
         this.auctionID = auctionID;
         this.previousGUI = previousGUI;
 
-        Thread.startVirtualThread(this::updateItems);
+        doAction(new SetTitleAction(Component.text("Auction View")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+
+        // Back button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + previousGUI.getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(previousGUI);
+                    return true;
+                })
+                .build());
+
+        Thread.startVirtualThread(() -> updateItems(player));
+        startLoop("refresh", 10, () -> checkAuctionHouse(player));
     }
 
-    public void updateItems() {
+    private void checkAuctionHouse(SkyBlockPlayer player) {
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage("§cAuction House is currently offline!");
+                player.closeInventory();
+                return;
+            }
+            updateItems(player);
+        });
+    }
+
+    private void updateItems(SkyBlockPlayer player) {
         AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
                 new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(auctionID);
         CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
                 new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
         AuctionItem item = future.join().item();
 
-        set(GUIClickableItem.getGoBackItem(49, previousGUI));
-
-        set(new GUIItem(13) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.updateLore(
+        // Auction Item Display
+        attachItem(GUIItem.builder(13)
+                .item(() -> ItemStackCreator.updateLore(
                         PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
-                        new AuctionItemLoreHandler(item).getLore(player)
-                );
-            }
-        });
+                        new AuctionItemLoreHandler(item).getLore(player)).build())
+                .build());
 
-        if (!item.getOriginator().equals(getPlayer().getUuid())) {
+        // Set appropriate view state and open corresponding interface
+        if (item.getOriginator().equals(player.getUuid())) {
             if (item.isBin()) {
-                new AuctionViewThirdBin().open(this, item, getPlayer());
-                return;
+                doAction(new AddStateAction(STATE_SELF_BIN));
+                doAction(new RemoveStateAction(STATE_SELF_NORMAL));
+                doAction(new RemoveStateAction(STATE_THIRD_BIN));
+                doAction(new RemoveStateAction(STATE_THIRD_NORMAL));
+                new AuctionViewSelfBIN().open(this, item, player);
+            } else {
+                doAction(new AddStateAction(STATE_SELF_NORMAL));
+                doAction(new RemoveStateAction(STATE_SELF_BIN));
+                doAction(new RemoveStateAction(STATE_THIRD_BIN));
+                doAction(new RemoveStateAction(STATE_THIRD_NORMAL));
+                new AuctionViewSelfNormal().open(this, item, player);
             }
-
-            new AuctionViewThirdNormal().open(this, item, getPlayer());
         } else {
             if (item.isBin()) {
-                new AuctionViewSelfBIN().open(this, item, getPlayer());
-                return;
+                doAction(new AddStateAction(STATE_THIRD_BIN));
+                doAction(new RemoveStateAction(STATE_SELF_BIN));
+                doAction(new RemoveStateAction(STATE_SELF_NORMAL));
+                doAction(new RemoveStateAction(STATE_THIRD_NORMAL));
+                new AuctionViewThirdBin().open(this, item, player);
+            } else {
+                doAction(new AddStateAction(STATE_THIRD_NORMAL));
+                doAction(new RemoveStateAction(STATE_SELF_BIN));
+                doAction(new RemoveStateAction(STATE_SELF_NORMAL));
+                doAction(new RemoveStateAction(STATE_THIRD_BIN));
+                new AuctionViewThirdNormal().open(this, item, player);
             }
-
-            new AuctionViewSelfNormal().open(this, item, getPlayer());
         }
-    }
-
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
-            player.closeInventory();
-        }
-
-        updateItems();
-    }
-
-    @Override
-    public int refreshRate() {
-        return 10;
     }
 
     @Override
@@ -102,17 +124,13 @@ public class GUIAuctionViewItem extends SkyBlockInventoryGUI implements Refreshi
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

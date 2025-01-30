@@ -1,56 +1,76 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingGUI {
-    public GUIAuctionHouse() {
-        super("Auction House", InventoryType.CHEST_4_ROW);
+public class GUIAuctionHouse extends SkyBlockAbstractInventory {
+    private static final String STATE_HAS_ACTIVE_AUCTIONS = "has_active_auctions";
+    private static final String STATE_HAS_ACTIVE_BIDS = "has_active_bids";
+    private static final String STATE_OFFLINE = "offline";
 
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
-            fill(Material.BLACK_STAINED_GLASS_PANE, "§cAuction House is currently offline!");
+    public GUIAuctionHouse() {
+        super(InventoryType.CHEST_4_ROW);
+        doAction(new SetTitleAction(Component.text("Auction House")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        set(GUIClickableItem.getCloseItem(31));
-        set(new GUIClickableItem(32) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIAuctionHouseStats().open(player);
-            }
+    public void handleOpen(SkyBlockPlayer player) {
+        // Check if auction house is online
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+            doAction(new AddStateAction(STATE_OFFLINE));
+            fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "§cAuction House is currently offline!").build());
+            return;
+        }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aAuction Stats", Material.PAPER, 1,
+        // Set states based on player data
+        if (!player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
+            doAction(new AddStateAction(STATE_HAS_ACTIVE_AUCTIONS));
+        }
+        if (!player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
+            doAction(new AddStateAction(STATE_HAS_ACTIVE_BIDS));
+        }
+
+        // Basic setup
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+
+        // Close button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Stats button
+        attachItem(GUIItem.builder(32)
+                .item(ItemStackCreator.getStack("§aAuction Stats", Material.PAPER, 1,
                         "§7View various statistics about you and",
                         "§7the Auction House.",
                         " ",
-                        "§eClick to view!");
-            }
-        });
+                        "§eClick to view!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIAuctionHouseStats());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(11) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIAuctionBrowser().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§6Auctions Browser", Material.GOLD_BLOCK, 1,
+        // Browser button
+        attachItem(GUIItem.builder(11)
+                .item(ItemStackCreator.getStack("§6Auctions Browser", Material.GOLD_BLOCK, 1,
                         "§7Find items for sale by players",
                         "§7across Hypixel SkyBlock!",
                         " ",
@@ -58,60 +78,62 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
                         "§7meaning you have to place the top",
                         "§7bid to acquire them!",
                         " ",
-                        "§eClick to browse!");
-            }
-        });
+                        "§eClick to browse!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIAuctionBrowser());
+                    return true;
+                })
+                .build());
 
-        if (getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
-            set(new GUIClickableItem(15) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIAuctionCreateItem(GUIAuctionHouse.this).open(player);
-                }
+        // Create/Manage Auctions button
+        attachItem(GUIItem.builder(15)
+                .item(() -> {
+                    if (hasState(STATE_HAS_ACTIVE_AUCTIONS)) {
+                        return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
+                                "§7You own §e" + player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
+                                "§7which recently ended.",
+                                " ",
+                                "§eClick to manage!").build();
+                    } else {
+                        return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
+                                "§7Set your own items on auction for",
+                                "§7other players to purchase.",
+                                " ",
+                                "§eClick to become rich!").build();
+                    }
+                })
+                .onClick((ctx, item) -> {
+                    if (hasState(STATE_HAS_ACTIVE_AUCTIONS)) {
+                        ctx.player().openInventory(new GUIManageAuctions());
+                    } else {
+                        ctx.player().openInventory(new GUIAuctionCreateItem(this));
+                    }
+                    return true;
+                })
+                .build());
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aCreate Auction", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7Set your own items on auction for",
-                            "§7other players to purchase.",
-                            " ",
-                            "§eClick to become rich!");
-                }
-            });
-        } else {
-            set(new GUIClickableItem(15) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIManageAuctions().open(player);
-                }
+        // View Bids button
+        attachItem(GUIItem.builder(13)
+                .item(ItemStackCreator.getStack("§aView Bids", Material.GOLDEN_CARROT, 1,
+                        "§7You've placed bids, check up on",
+                        "§7them here!",
+                        " ",
+                        "§eClick to view!").build())
+                .requireState(STATE_HAS_ACTIVE_BIDS)
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIViewBids());
+                    return true;
+                })
+                .build());
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7You own §e" + player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
-                            "§7which recently ended.",
-                            " ",
-                            "§eClick to manage!");
-                }
-            });
-        }
+        // Start refresh loop
+        startLoop("refresh", 20, () -> refreshItems(player));
+    }
 
-        if (!getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
-            set(new GUIClickableItem(13) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIViewBids().open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aView Bids", Material.GOLDEN_CARROT, 1,
-                            "§7You've placed bids, check up on",
-                            "§7them here!",
-                            " ",
-                            "§eClick to view!");
-                }
-            });
+    private void refreshItems(SkyBlockPlayer player) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+            player.sendMessage("§cAuction House is currently offline!");
+            player.closeInventory();
         }
     }
 
@@ -121,30 +143,17 @@ public class GUIAuctionHouse extends SkyBlockInventoryGUI implements RefreshingG
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No cleanup needed
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
-
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
-            player.closeInventory();
-        }
-    }
-
-    @Override
-    public int refreshRate() {
-        return 20;
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        // No cleanup needed
     }
 }

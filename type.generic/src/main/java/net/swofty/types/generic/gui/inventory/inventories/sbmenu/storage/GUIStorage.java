@@ -1,6 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.storage;
 
-import net.minestom.server.event.inventory.InventoryClickEvent;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -32,7 +32,7 @@ public class GUIStorage extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
         // Close and back buttons
@@ -207,22 +207,22 @@ public class GUIStorage extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         // Empty implementation
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         // Empty implementation
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         ItemStack stack = event.getClickedItem();
         SkyBlockItem item = new SkyBlockItem(stack);
 

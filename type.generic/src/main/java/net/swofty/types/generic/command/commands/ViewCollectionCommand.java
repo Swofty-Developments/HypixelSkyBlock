@@ -31,7 +31,7 @@ public class ViewCollectionCommand extends SkyBlockCommand {
                 return;
             }
 
-            new GUICollectionItem(itemTypeLinker).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openInventory(new GUICollectionItem(itemTypeLinker));
         }, itemArgument);
     }
 }

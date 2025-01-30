@@ -50,7 +50,7 @@ public class GUIRecipe extends SkyBlockAbstractInventory {
 
     @SneakyThrows
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
         if (previousGUI != null) {
@@ -184,18 +184,18 @@ public class GUIRecipe extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(true);
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {}
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

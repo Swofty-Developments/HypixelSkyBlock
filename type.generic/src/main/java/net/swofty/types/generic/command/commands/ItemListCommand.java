@@ -18,7 +18,7 @@ public class ItemListCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            new GUIInventoryCreative().open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openInventory(new GUIInventoryCreative());
         });
 
         ArgumentString lookup = new ArgumentString("lookup");

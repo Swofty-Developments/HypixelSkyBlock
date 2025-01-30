@@ -3,35 +3,41 @@ package net.swofty.type.hub.gui;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIJamie extends SkyBlockInventoryGUI {
+public class GUIJamie extends SkyBlockAbstractInventory {
+    private static final String STATE_UNCLAIMED = "unclaimed";
+    private static final String STATE_CLAIMED = "claimed";
+
     public GUIJamie() {
-        super("Claim Reward", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Claim Reward")));
     }
 
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
+    @Override
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
-        set(new GUIClickableItem(22) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.addAndUpdateItem(ItemType.ROGUE_SWORD);
-                player.closeInventory();
-                player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
-            }
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
+        // Reward item
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§fRogue Sword", Material.GOLDEN_SWORD, 1,
                         "§7Damage: §c+20",
                         "",
                         "§6Ability: Speed Boost §e§lRIGHT CLICK",
@@ -42,25 +48,33 @@ public class GUIJamie extends SkyBlockInventoryGUI {
                         "§8This item can be reforged!",
                         "§f§lCOMMON SWORD",
                         "",
-                        "§eClick to claim!");
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+                        "§eClick to claim!").build())
+                .onClick((ctx, item) -> {
+                    player.addAndUpdateItem(ItemType.ROGUE_SWORD);
+                    player.closeInventory();
+                    player.sendMessage(Component.text("§aYou claimed a §fRogue Sword§a!"));
+                    return true;
+                })
+                .build());
     }
+
     @Override
     public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No special cleanup needed
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        // No special cleanup needed
     }
 }

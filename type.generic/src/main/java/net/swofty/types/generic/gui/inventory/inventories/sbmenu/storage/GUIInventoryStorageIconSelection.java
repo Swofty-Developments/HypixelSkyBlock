@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
@@ -126,16 +125,16 @@ public class GUIInventoryStorageIconSelection extends SkyBlockPaginatedInventory
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(true);
     }
 }

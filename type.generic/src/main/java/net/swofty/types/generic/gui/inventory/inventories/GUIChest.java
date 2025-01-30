@@ -27,7 +27,7 @@ public class GUIChest extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         IntStream.range(0, chest.getItems().size()).forEach(index -> {
             attachItem(GUIItem.builder(index)
                     .item(() -> ItemStackCreator.getFromStack(chest.getItem(index)).build())
@@ -40,7 +40,7 @@ public class GUIChest extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         event.getPlayer().playSound(Sound.sound(SoundEvent.BLOCK_CHEST_CLOSE, Sound.Source.RECORD, 1f, 1f));
         ChestAnimationType.CLOSE.play(chest.getInstance(), chest.getPosition());
 
@@ -51,17 +51,17 @@ public class GUIChest extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return true;
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         // Allow interactions with the player's inventory
         event.setCancelled(false);
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

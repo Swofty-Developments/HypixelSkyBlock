@@ -45,7 +45,7 @@ public class GUIReforge extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
         attachItem(GUIItem.builder(40)
                 .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
@@ -169,7 +169,8 @@ public class GUIReforge extends SkyBlockAbstractInventory {
                 .build());
     }
 
-    private void border(ItemStack stack) {
+    @Override
+    protected void border(ItemStack stack) {
         for (int slot : borderSlots) {
             attachItem(GUIItem.builder(slot)
                     .item(stack)
@@ -193,7 +194,7 @@ public class GUIReforge extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(13)));
     }
 }

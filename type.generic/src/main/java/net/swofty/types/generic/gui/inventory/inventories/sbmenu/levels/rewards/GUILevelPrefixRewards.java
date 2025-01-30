@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.gui.inventory.GUIItem;
@@ -34,7 +33,7 @@ public class GUILevelPrefixRewards extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
         // Close button
@@ -122,22 +121,22 @@ public class GUILevelPrefixRewards extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         // No special cleanup needed
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(true);
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         // No special cleanup needed
     }
 }

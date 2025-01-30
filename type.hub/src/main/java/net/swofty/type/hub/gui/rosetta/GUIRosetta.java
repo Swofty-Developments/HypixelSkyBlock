@@ -1,118 +1,111 @@
 package net.swofty.type.hub.gui.rosetta;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIRosetta extends SkyBlockInventoryGUI {
+public class GUIRosetta extends SkyBlockAbstractInventory {
     public GUIRosetta() {
-        super("Rosetta's Starter Gear", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Rosetta's Starter Gear")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        set(new GUIClickableItem(19) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIRosettaIronArmor().open(player);
-            }
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eIron Armor", Material.IRON_HELMET, 1,
+        // Iron Armor
+        attachItem(GUIItem.builder(19)
+                .item(ItemStackCreator.getStack("§eIron Armor", Material.IRON_HELMET, 1,
                         "§7Plain old iron armor.",
                         "",
-                        "§eClick to view set!");
-            }
-        });
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIRosettaIronArmor());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(21) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIRosettaArmor().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eRosetta's Armor", Material.DIAMOND_HELMET, 1,
+        // Rosetta's Armor
+        attachItem(GUIItem.builder(21)
+                .item(ItemStackCreator.getStack("§eRosetta's Armor", Material.DIAMOND_HELMET, 1,
                         "§7Custom-designed and",
                         "§7hand-crafted diamond armor.",
                         "",
-                        "§eClick to view set!");
-            }
-        });
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIRosettaArmor());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(14) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUISquireArmor().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eSquire Armor", Material.CHAINMAIL_HELMET, 1,
+        // Squire Armor
+        attachItem(GUIItem.builder(14)
+                .item(ItemStackCreator.getStack("§eSquire Armor", Material.CHAINMAIL_HELMET, 1,
                         "§7Solid set to venture into the",
                         "§7deep caverns.",
                         "",
-                        "§eClick to view set!");
-            }
-        });
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISquireArmor());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(16) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIMercenaryArmor().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eMercenary Armor", Material.IRON_HELMET, 1,
+        // Mercenary Armor
+        attachItem(GUIItem.builder(16)
+                .item(ItemStackCreator.getStack("§eMercenary Armor", Material.IRON_HELMET, 1,
                         "§7Kickstart your warrior",
                         "§7journey!",
                         "",
-                        "§eClick to view set!");
-            }
-        });
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIMercenaryArmor());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(32) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUICelesteArmor().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eCeleste Armor", Material.LEATHER_HELMET, 1,
+        // Celeste Armor
+        attachItem(GUIItem.builder(32)
+                .item(ItemStackCreator.getStack("§eCeleste Armor", Material.LEATHER_HELMET, 1,
                         "§7Dip a toe into the world of",
                         "§7magic.",
                         "",
-                        "§eClick to view set!");
-            }
-        });
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUICelesteArmor());
+                    return true;
+                })
+                .build());
 
-        set(new GUIClickableItem(34) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIStarlightArmor().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§eStarlight Armor", Material.GOLDEN_HELMET, 1,
+        // Starlight Armor
+        attachItem(GUIItem.builder(34)
+                .item(ItemStackCreator.getStack("§eStarlight Armor", Material.GOLDEN_HELMET, 1,
                         "§7This set was designed with the",
                         "§7help of Barry the Wizard.",
                         "",
-                        "§eClick to view set!");
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+                        "§eClick to view set!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIStarlightArmor());
+                    return true;
+                })
+                .build());
     }
 
     @Override
@@ -121,7 +114,15 @@ public class GUIRosetta extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+    }
 
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    public void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

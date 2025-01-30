@@ -33,9 +33,9 @@ public class CoopCheckCommand extends SkyBlockCommand {
             }
 
             if (coop.isOriginator(player.getUuid())) {
-                new GUICoopInviteSender(coop).open(player);
+                player.openInventory(new GUICoopInviteSender(coop));
             } else {
-                new GUICoopInviteTarget(coop).open(player);
+                player.openInventory(new GUICoopInviteTarget(coop));
             }
         });
     }

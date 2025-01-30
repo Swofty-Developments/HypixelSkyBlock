@@ -22,7 +22,7 @@ public class ActionEnchantmentTableClick implements SkyBlockEventClass {
 
         event.setBlockingItemUse(true);
 
-        new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(event.getBlockPosition())).open(player);
+        player.openInventory(new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(event.getBlockPosition())));
     }
 }
 

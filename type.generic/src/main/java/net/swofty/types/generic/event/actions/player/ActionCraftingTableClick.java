@@ -23,7 +23,7 @@ public class ActionCraftingTableClick implements SkyBlockEventClass {
 
         event.setBlockingItemUse(true);
 
-        new GUICrafting().open(player);
+        player.openInventory(new GUICrafting());
     }
 }
 

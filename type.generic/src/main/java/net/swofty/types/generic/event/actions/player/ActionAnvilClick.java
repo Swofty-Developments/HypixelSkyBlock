@@ -16,6 +16,6 @@ public class ActionAnvilClick implements SkyBlockEventClass {
 
         if (!event.getBlock().name().equals("minecraft:anvil")) return;
 
-        new GUIAnvil().open(player);
+        player.openInventory(new GUIAnvil());
     }
 }

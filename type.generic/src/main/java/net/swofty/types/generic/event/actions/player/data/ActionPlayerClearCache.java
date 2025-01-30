@@ -13,6 +13,7 @@ import net.swofty.types.generic.event.actions.player.ActionPlayerStrayTooFar;
 import net.swofty.types.generic.event.actions.player.fall.ActionPlayerFall;
 import net.swofty.types.generic.gui.SkyBlockAnvilGUI;
 import net.swofty.types.generic.gui.SkyBlockSignGUI;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
 import net.swofty.types.generic.item.updater.PlayerItemOrigin;
 import net.swofty.types.generic.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.types.generic.server.eventcaller.CustomEventCaller;
@@ -47,11 +48,9 @@ public class ActionPlayerClearCache implements SkyBlockEventClass {
             SkyBlockAnvilGUI.anvilGUIs.get(player).getValue().complete(null);
             SkyBlockAnvilGUI.anvilGUIs.remove(player);
         }
-        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
-            SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).suddenlyQuit(
-                    SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid()).getInventory(),
-                    player);
-            SkyBlockInventoryGUI.GUI_MAP.remove(player.getUuid());
+        if (SkyBlockAbstractInventory.GUI_MAP.containsKey(player.getUuid())) {
+            SkyBlockAbstractInventory.GUI_MAP.get(player.getUuid()).onSuddenQuit(player);
+            SkyBlockAbstractInventory.GUI_MAP.remove(player.getUuid());
         }
         PlayerItemOrigin.clearCache(player.getUuid());
         PacketListenerAirJump.playerData.remove(player);

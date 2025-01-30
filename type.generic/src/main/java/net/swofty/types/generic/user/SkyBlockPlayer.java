@@ -740,20 +740,6 @@ public class SkyBlockPlayer extends Player {
         super.sendMessage(message.replace("&", "§"));
     }
 
-    @Override
-    public void closeInventory() {
-        Inventory tempInv = (Inventory) this.getOpenInventory();
-        super.closeInventory();
-        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(this.getUuid())) {
-            SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());
-
-            if (gui == null) return;
-
-            gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
-            SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
-        }
-    }
-
     public static String getDisplayName(UUID uuid) {
         if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
             return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getFullDisplayName();

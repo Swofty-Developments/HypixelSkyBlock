@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointStorage;
@@ -28,7 +27,7 @@ public class GUIStoragePage extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         int highestPage = player.getDataHandler().get(DataHandler.Data.STORAGE, DatapointStorage.class)
                 .getValue().getHighestPage();
 
@@ -124,21 +123,21 @@ public class GUIStoragePage extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         saveInventoryItems((SkyBlockPlayer) event.getPlayer());
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         saveInventoryItems(player);
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return true;
     }
 

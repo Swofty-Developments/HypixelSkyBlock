@@ -1,27 +1,24 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.skills.GUISkillCategory;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-
-public class GUIBestiary extends SkyBlockInventoryGUI {
-
+public class GUIBestiary extends SkyBlockAbstractInventory {
     private static final int[] displaySlots = {
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25,
-                    30, 31, 32
-
+            30, 31, 32
     };
 
     @Getter
@@ -42,8 +39,8 @@ public class GUIBestiary extends SkyBlockInventoryGUI {
         FISHING("§3Fishing", Material.FISHING_ROD, "", "§7View all of the §3Sea Creatures §7that", "§7you've killed while fishing."),
         MYTHOLOGICAL_CREATURES("§bMythological Creatures", Material.PLAYER_HEAD, "83cc1cf672a4b2540be346ead79ac2d9ed19d95b6075bf95be0b6d0da61377be", "§7View all of the §bMythological", "§bCreatures §7that you've killed."),
         JERRY("§6Jerry", Material.PLAYER_HEAD, "45f729736996a38e186fe9fe7f5a04b387ed03f3871ecc82fa78d8a2bdd31109", "§7View all of the mobs that you've", "§7found and killed while fighting §6Jerry§7."),
-        KUUDRA("§cKuudra", Material.PLAYER_HEAD, "5051c83d9ebf69013f1ec8c9efc979ec2d925a921cc877ff64abe09aadd2f6cc", "§7View all of the mobs that you've", "§7found and killed while fighting §cKuudra§7."),
-        ;
+        KUUDRA("§cKuudra", Material.PLAYER_HEAD, "5051c83d9ebf69013f1ec8c9efc979ec2d925a921cc877ff64abe09aadd2f6cc", "§7View all of the mobs that you've", "§7found and killed while fighting §cKuudra§7.");
+
         private final String regionName;
         private final Material material;
         private final String texture;
@@ -58,18 +55,36 @@ public class GUIBestiary extends SkyBlockInventoryGUI {
     }
 
     public GUIBestiary() {
-        super("Bestiary", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Bestiary")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(40, new GUISkillCategory(SkillCategories.COMBAT, 0)));
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1,
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(40)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Combat").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkillCategory(SkillCategories.COMBAT, 0));
+                    return true;
+                })
+                .build());
+
+        // Bestiary info
+        attachItem(GUIItem.builder(4)
+                .item(ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1,
                         "§7The Bestiary is a compendium of",
                         "§7mobs in SkyBlock. It contains detailed",
                         "§7information on loot drops, your mob",
@@ -82,26 +97,27 @@ public class GUIBestiary extends SkyBlockInventoryGUI {
                         " ",
                         "§c§lHERE PROGRESS BAR",
                         " ",
-                        "§eClick to view!"
-                );
-            }
-        });
+                        "§eClick to view!").build())
+                .build());
+
+        // Setup bestiary regions
+        setupBestiaryRegions();
+    }
+
+    private void setupBestiaryRegions() {
         BestiaryRegions[] allBestiaryRegions = BestiaryRegions.values();
         int index = 0;
         for (int slot : displaySlots) {
-            BestiaryRegions bestiaryRegion = allBestiaryRegions[index];
-            set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (bestiaryRegion.material == Material.PLAYER_HEAD) {
-                        return ItemStackCreator.getStackHead(bestiaryRegion.regionName, bestiaryRegion.texture, 1, bestiaryRegion.lore);
-                    } else {
-                        return ItemStackCreator.getStack(bestiaryRegion.regionName, bestiaryRegion.material, 1, bestiaryRegion.lore);
-                    }
-                }
-            });
+            if (index >= allBestiaryRegions.length) break;
+
+            BestiaryRegions region = allBestiaryRegions[index];
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> region.material == Material.PLAYER_HEAD ?
+                            ItemStackCreator.getStackHead(region.regionName, region.texture, 1, region.lore).build() :
+                            ItemStackCreator.getStack(region.regionName, region.material, 1, region.lore).build())
+                    .build());
             index++;
         }
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
@@ -110,17 +126,15 @@ public class GUIBestiary extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    public void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

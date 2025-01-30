@@ -1,10 +1,9 @@
 package net.swofty.types.generic.gui.inventory.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
@@ -14,8 +13,10 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements RefreshingGUI {
+public class GUIBazaarItemSet extends SkyBlockAbstractInventory {
     private static final Map<Integer, int[]> SLOTS = Map.of(
             1, new int[]{13},
             2, new int[]{12, 14},
@@ -43,32 +44,54 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
     private final BazaarItemSet itemSet;
 
     public GUIBazaarItemSet(BazaarCategories category, BazaarItemSet itemSet) {
-        super(StringUtility.toNormalCase(category.name()) + " -> " + itemSet.displayName, InventoryType.CHEST_4_ROW);
-
+        super(InventoryType.CHEST_4_ROW);
         this.category = category;
         this.itemSet = itemSet;
 
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(31));
-        set(GUIClickableItem.getGoBackItem(30, new GUIBazaar(category)));
-        set(new GUIClickableItem(32) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBazaarOrders().open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
-                        "§7You don't have any ongoing orders.",
-                        " ",
-                        "§eClick to manage!");
-            }
-        });
+        doAction(new SetTitleAction(Component.text(
+                StringUtility.toNormalCase(category.name()) + " -> " + itemSet.displayName)));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+
+        // Close button
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(30)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + new GUIBazaar(category).getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBazaar(category));
+                    return true;
+                })
+                .build());
+
+        // Manage Orders button
+        attachItem(GUIItem.builder(32)
+                .item(ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
+                        "§7You don't have any ongoing orders.",
+                        " ",
+                        "§eClick to manage!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBazaarOrders());
+                    return true;
+                })
+                .build());
+
+        setupBazaarItems(player);
+        startLoop("refresh", 10, () -> refreshItems(player));
+    }
+
+    private void setupBazaarItems(SkyBlockPlayer player) {
         List<CompletableFuture> futures = new ArrayList<>();
 
         int i = 0;
@@ -80,42 +103,41 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
             Thread.startVirtualThread(() -> {
                 BazaarGetItemProtocolObject.BazaarGetItemMessage message =
                         new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name());
-                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = new ProxyService(ServiceType.BAZAAR).handleRequest(message);
+                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar =
+                        new ProxyService(ServiceType.BAZAAR).handleRequest(message);
                 BazaarItem item = futureBazaar.join().item();
 
-                set(new GUIClickableItem(slot) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIBazaarItem(itemType).open(player);
-                    }
+                attachItem(GUIItem.builder(slot)
+                        .item(() -> {
+                            List<String> lore = new ArrayList<>();
+                            lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
+                            lore.add(" ");
 
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        List<String> lore = new ArrayList<>();
-                        lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
-                        lore.add(" ");
+                            lore.add("§7Buy price: §6" +
+                                    new DecimalFormat("#,###").format(item.getSellStatistics().getLowestOrder())
+                                    + " coins");
+                            lore.add("§8" + StringUtility.shortenNumber(item.getSellStatistics().getHighestOrder())
+                                    + " in " + item.getSellOrders().size() + " offers");
 
-                        lore.add("§7Buy price: §6" +
-                                new DecimalFormat("#,###").format(item.getSellStatistics().getLowestOrder())
-                                + " coins");
-                        lore.add("§8" + StringUtility.shortenNumber(item.getSellStatistics().getHighestOrder())
-                                + " in " + item.getSellOrders().size() + " offers");
+                            lore.add(" ");
+                            lore.add("§7Sell price: §6" +
+                                    new DecimalFormat("#,###").format(item.getBuyStatistics().getHighestOrder())
+                                    + " coins");
+                            lore.add("§8" + StringUtility.shortenNumber(item.getBuyStatistics().getLowestOrder())
+                                    + " in " + item.getBuyOrders().size() + " offers");
 
-                        lore.add(" ");
-                        lore.add("§7Sell price: §6" +
-                                new DecimalFormat("#,###").format(item.getBuyStatistics().getHighestOrder())
-                                + " coins");
-                        lore.add("§8" + StringUtility.shortenNumber(item.getBuyStatistics().getLowestOrder())
-                                + " in " + item.getBuyOrders().size() + " offers");
+                            lore.add(" ");
+                            lore.add("§eClick to view details!");
 
-                        lore.add(" ");
-                        lore.add("§eClick to view details!");
-
-                        return ItemStackCreator.getStack(
-                                itemType.rarity.getColor() + itemType.getDisplayName(),
-                                itemType.material, 1, lore);
-                    }
-                });
+                            return ItemStackCreator.getStack(
+                                    itemType.rarity.getColor() + itemType.getDisplayName(),
+                                    itemType.material, 1, lore).build();
+                        })
+                        .onClick((ctx, clickedItem) -> {
+                            ctx.player().openInventory(new GUIBazaarItem(itemType));
+                            return true;
+                        })
+                        .build());
 
                 future.complete(null);
             });
@@ -123,8 +145,13 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
         }
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    }
 
-        updateItemStacks(getInventory(), getPlayer());
+    private void refreshItems(SkyBlockPlayer player) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
+            player.sendMessage("§cThe Bazaar is currently offline!");
+            player.closeInventory();
+        }
     }
 
     @Override
@@ -133,50 +160,29 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
-    }
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
 
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
+        SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
         ItemType type = clickedItem.getAttributeHandler().getPotentialType();
-        e.setCancelled(true);
 
-        if (clickedItem.isNA()) {
-            return;
-        }
-
-        if (type == null) {
+        if (clickedItem.isNA() || type == null) {
             return;
         }
 
         Map.Entry<BazaarCategories, BazaarItemSet> entry = BazaarCategories.getFromItem(type);
-
         if (entry == null) {
             return;
         }
 
         Thread.startVirtualThread(() -> {
-            new GUIBazaarItemSet(entry.getKey(), entry.getValue()).open((SkyBlockPlayer) e.getPlayer());
+            event.getPlayer().openInventory(new GUIBazaarItemSet(entry.getKey(), entry.getValue()));
         });
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
-            player.sendMessage("§cThe Bazaar is currently offline!");
-            player.closeInventory();
-        }
-    }
-
-    @Override
-    public int refreshRate() {
-        return 10;
-    }
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

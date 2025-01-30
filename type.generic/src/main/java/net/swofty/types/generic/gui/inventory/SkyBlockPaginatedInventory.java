@@ -1,7 +1,6 @@
 package net.swofty.types.generic.gui.inventory;
 
 import net.kyori.adventure.text.Component;
-import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -10,7 +9,6 @@ import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +33,7 @@ public abstract class SkyBlockPaginatedInventory<T> extends SkyBlockAbstractInve
     public void onSuddenQuit(SkyBlockPlayer player) {}
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         open(player, "", 1);
     }
 

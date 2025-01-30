@@ -1,24 +1,77 @@
 package net.swofty.type.hub.gui.elizabeth.subguis;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.hub.gui.elizabeth.GUICityProjects;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIPreviousCityProjects extends SkyBlockInventoryGUI {
-
-    private final int[] projectSlots = {
+public class GUIPreviousCityProjects extends SkyBlockAbstractInventory {
+    private static final int[] PROJECT_SLOTS = {
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 15,
             28, 29, 30, 31, 32, 33, 34
     };
+
+    public GUIPreviousCityProjects() {
+        super(InventoryType.CHEST_5_ROW);
+        doAction(new SetTitleAction(Component.text("Previous City Projects")));
+    }
+
+    @Override
+    public void handleOpen(SkyBlockPlayer player) {
+        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build(), 0, 44);
+
+        // Back button
+        attachItem(GUIItem.builder(40)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To City Projects").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUICityProjects());
+                    return true;
+                })
+                .build());
+
+        // Setup project items
+        setupProjectItems();
+    }
+
+    private void setupProjectItems() {
+        CityProjects[] cityProjects = CityProjects.values();
+        for (int i = 0; i < PROJECT_SLOTS.length && i < cityProjects.length; i++) {
+            CityProjects project = cityProjects[i];
+            int slot = PROJECT_SLOTS[i];
+
+            attachItem(GUIItem.builder(slot)
+                    .item(project.item.build())
+                    .build());
+        }
+    }
+
+    @Override
+    public boolean allowHotkeying() {
+        return false;
+    }
+
+    @Override
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+    }
+
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
+    }
+
+    @Override
+    public void onSuddenQuit(SkyBlockPlayer player) {
+    }
 
     private enum CityProjects {
         FARM_MERCHANTS_DWELLING(ItemStackCreator.getStack("§aCity project: §eFarm Merchant's Dwelling", Material.HAY_BLOCK, 1,
@@ -33,7 +86,8 @@ public class GUIPreviousCityProjects extends SkyBlockInventoryGUI {
                 "§7▶ §b8§7: 2 days headstart",
                 "§7▶ §b16§7: §65% discount §7at farm merchant",
                 "§7▶ §b24§7: §610% discount §7at farm merchant")),
-        BARTENDERS_BREWERY(ItemStackCreator.getStackHead("§aCity project: §eBartender's Brewery", "d672c57f4c7b9e962b45b55dd7bd7886880d7eef26db6c2cce03c8ff8c48", 1,
+        BARTENDERS_BREWERY(ItemStackCreator.getStackHead("§aCity project: §eBartender's Brewery",
+                "d672c57f4c7b9e962b45b55dd7bd7886880d7eef26db6c2cce03c8ff8c48", 1,
                 "§8Released March 2021",
                 " ",
                 "§7Upgrade the Bartender's brewery,",
@@ -95,55 +149,12 @@ public class GUIPreviousCityProjects extends SkyBlockInventoryGUI {
                 "§7§7Introduces §dPet Care§7, adding ways to",
                 "§7train and level up your §apets§7!",
                 " ",
-                "§7Bonuses:")),
-        ;
+                "§7Bonuses:"));
 
         private final ItemStack.Builder item;
 
         CityProjects(ItemStack.Builder item) {
             this.item = item;
         }
-    }
-
-    public GUIPreviousCityProjects() {
-        super("Previous City Projects", InventoryType.CHEST_5_ROW);
-    }
-
-    public void onOpen(InventoryGUIOpenEvent e) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(40, new GUICityProjects()));
-
-        CityProjects[] cityProjects = CityProjects.values();
-        int index = 0;
-        for (int slot : projectSlots) {
-            if (index < cityProjects.length) {
-                CityProjects cityProject = cityProjects[index];
-                set(new GUIItem(slot) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return cityProject.item;
-                    }
-                });
-                index++;
-            }
-        }
-        updateItemStacks(getInventory(), getPlayer());
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
     }
 }

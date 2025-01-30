@@ -256,15 +256,15 @@ public class GUIInventoryPets extends SkyBlockPaginatedInventory<SkyBlockItem> {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(true);
     }
 

@@ -2,7 +2,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bags;
 
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -11,9 +10,11 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointAccessoryBag;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.AccessoryComponent;
 import net.swofty.types.generic.item.components.TieredTalismanComponent;
@@ -25,7 +26,12 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class GUIAccessoryBag extends SkyBlockInventoryGUI {
+public class GUIAccessoryBag extends SkyBlockAbstractInventory {
+    private static final String STATE_SLOT_UNLOCKED = "slot_unlocked_";
+    private static final String STATE_SLOT_LOCKED = "slot_locked_";
+    private static final String STATE_HAS_PREV_PAGE = "has_prev_page";
+    private static final String STATE_HAS_NEXT_PAGE = "has_next_page";
+
     private static final SortedMap<CustomCollectionAward, Integer> SLOTS_PER_UPGRADE = new TreeMap<>(Map.of(
             CustomCollectionAward.ACCESSORY_BAG, 3,
             CustomCollectionAward.ACCESSORY_BAG_UPGRADE_1, 9,
@@ -44,105 +50,168 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
     private int slotToSaveUpTo;
 
     public GUIAccessoryBag() {
-        super("Accessory Bag", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIYourBags()));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        int totalSlots = getTotalSlots(e.player());
+        int totalSlots = getTotalSlots(player);
         int slotsPerPage = 45;
         int totalPages = (int) Math.ceil((double) totalSlots / slotsPerPage);
 
-        getInventory().setTitle(Component.text("Accessory Bag (" + page + "/" + totalPages + ")"));
+        doAction(new SetTitleAction(Component.text("Accessory Bag (" + page + "/" + totalPages + ")")));
 
+        setupNavigationButtons();
+        setupBagSlots(player, totalSlots, slotsPerPage);
+        setupPaginationStates(totalPages);
+    }
+
+    private void setupNavigationButtons() {
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Your Bags").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIYourBags());
+                    return true;
+                })
+                .build());
+
+        // Previous page button
+        attachItem(GUIItem.builder(45)
+                .item(ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1).build())
+                .requireState(STATE_HAS_PREV_PAGE)
+                .onClick((ctx, item) -> {
+                    GUIAccessoryBag gui = new GUIAccessoryBag();
+                    gui.setPage(page - 1);
+                    ctx.player().openInventory(gui);
+                    return true;
+                })
+                .build());
+
+        // Next page button
+        attachItem(GUIItem.builder(53)
+                .item(ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1).build())
+                .requireState(STATE_HAS_NEXT_PAGE)
+                .onClick((ctx, item) -> {
+                    GUIAccessoryBag gui = new GUIAccessoryBag();
+                    gui.setPage(page + 1);
+                    ctx.player().openInventory(gui);
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupBagSlots(SkyBlockPlayer player, int totalSlots, int slotsPerPage) {
         int startIndex = (page - 1) * slotsPerPage;
         int endSlot = Math.min(totalSlots - startIndex, slotsPerPage);
         this.slotToSaveUpTo = endSlot;
 
+        // Setup unlocked slots
         for (int i = 0; i < endSlot; i++) {
-            int slot = i;
-            SkyBlockItem item = e.player().getAccessoryBag().getInSlot(i + startIndex);
+            final int slot = i;
+            final int actualSlot = i + startIndex;
+            SkyBlockItem item = player.getAccessoryBag().getInSlot(actualSlot);
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (item == null) {
-                        return ItemStack.builder(Material.AIR);
-                    } else {
-                        return PlayerItemUpdater.playerUpdate(player, item.getItemStack());
-                    }
-                }
+            doAction(new AddStateAction(STATE_SLOT_UNLOCKED + slot));
 
-                @Override
-                public boolean canPickup() {
-                    return true;
-                }
-
-                @Override
-                public void runPost(InventoryClickEvent e, SkyBlockPlayer player) {
-                    save(player);
-                }
-
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                }
-            });
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> item == null ? ItemStack.AIR :
+                            PlayerItemUpdater.playerUpdate(player, item.getItemStack()).build())
+                    .requireState(STATE_SLOT_UNLOCKED + slot)
+                    .onClick((ctx, clickedItem) -> {
+                        save(ctx.player());
+                        return true;
+                    })
+                    .onPostClick(this::save)
+                    .build());
         }
 
+        // Setup locked slots
         for (int i = endSlot; i < slotsPerPage; i++) {
-            int slotIndex = i + startIndex;
+            final int slotIndex = i + startIndex;
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(slotIndex);
             if (nextUpgrade != null) {
-                set(new GUIItem(i) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
+                doAction(new AddStateAction(STATE_SLOT_LOCKED + i));
+
+                attachItem(GUIItem.builder(i)
+                        .item(ItemStackCreator.getStack("§cLocked", Material.RED_STAINED_GLASS_PANE,
                                 1,
                                 "§7You need to unlock the",
                                 "§a" + nextUpgrade.getDisplay() + " §7upgrade",
-                                "§7to use this slot.");
-                    }
-                });
+                                "§7to use this slot.").build())
+                        .requireState(STATE_SLOT_LOCKED + i)
+                        .build());
+            }
+        }
+    }
+
+    private void setupPaginationStates(int totalPages) {
+        if (page > 1) {
+            doAction(new AddStateAction(STATE_HAS_PREV_PAGE));
+        }
+        if (page < totalPages) {
+            doAction(new AddStateAction(STATE_HAS_NEXT_PAGE));
+        }
+    }
+
+    private int getTotalSlots(SkyBlockPlayer player) {
+        return SLOTS_PER_UPGRADE.entrySet().stream()
+                .filter(entry -> player.hasCustomCollectionAward(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .max(Integer::compareTo)
+                .orElse(0);
+    }
+
+    private CustomCollectionAward getUpgradeNeededForSlotIndex(int slotIndex) {
+        return SLOTS_PER_UPGRADE.entrySet().stream()
+                .filter(entry -> slotIndex < entry.getValue())
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void save(SkyBlockPlayer player) {
+        DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = player.getAccessoryBag();
+        for (int i = 0; i < this.slotToSaveUpTo; i++) {
+            int slot = i + ((page - 1) * 45);
+            SkyBlockItem item = new SkyBlockItem(getItemStack(i));
+
+            if (item.isNA() || item.getMaterial() == Material.AIR) {
+                accessoryBag.removeFromSlot(slot);
+            } else {
+                accessoryBag.setInSlot(slot, item);
             }
         }
 
-        if (page > 1) {
-            set(new GUIClickableItem(45) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aPrevious Page", Material.ARROW, 1);
-                }
+        player.getDataHandler().get(DataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class)
+                .setValue(accessoryBag);
+    }
 
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    GUIAccessoryBag gui = new GUIAccessoryBag();
-                    gui.setPage(page - 1);
-                    gui.open(player);
-                }
-            });
+    private boolean isItemAllowed(SkyBlockItem item) {
+        if (item.isNA() || item.getMaterial().equals(Material.AIR)) return true;
+
+        if (item.hasComponent(AccessoryComponent.class) || item.hasComponent(TieredTalismanComponent.class)) {
+            DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = owner.getAccessoryBag();
+            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialType());
+
+            owner.getSkyBlockExperience().addExperience(
+                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialType())
+            );
+            return true;
         }
-
-        if (page < totalPages) {
-            set(new GUIClickableItem(53) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§aNext Page", Material.ARROW, 1);
-                }
-
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    GUIAccessoryBag gui = new GUIAccessoryBag();
-                    gui.setPage(page + 1);
-                    gui.open(player);
-                }
-            });
-        }
-
-        updateItemStacks(e.inventory(), e.player());
+        return false;
     }
 
     @Override
@@ -151,76 +220,27 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        save(getPlayer());
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        save((SkyBlockPlayer) event.getPlayer());
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem cursorItem = new SkyBlockItem(e.getCursorItem());
-        SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
+    public void onBottomClick(InventoryPreClickEvent event) {
+        SkyBlockItem cursorItem = new SkyBlockItem(event.getCursorItem());
+        SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
 
         if (isItemAllowed(cursorItem) && isItemAllowed(clickedItem)) {
-            save(getPlayer());
+            save((SkyBlockPlayer) event.getPlayer());
             return;
         }
 
-        e.setCancelled(true);
-        getPlayer().sendMessage("§cYou cannot put this item in the Accessory Bag!");
-        save(getPlayer());
+        event.setCancelled(true);
+        ((SkyBlockPlayer) event.getPlayer()).sendMessage("§cYou cannot put this item in the Accessory Bag!");
+        save((SkyBlockPlayer) event.getPlayer());
     }
 
-    private int getTotalSlots(SkyBlockPlayer player) {
-        int totalSlots = 0;
-        for (CustomCollectionAward entry : SLOTS_PER_UPGRADE.keySet()) {
-            if (player.hasCustomCollectionAward(entry)) {
-                totalSlots = Math.max(totalSlots, SLOTS_PER_UPGRADE.get(entry));
-            }
-        }
-        return totalSlots;
-    }
-
-    private CustomCollectionAward getUpgradeNeededForSlotIndex(int slotIndex) {
-        for (CustomCollectionAward entry : SLOTS_PER_UPGRADE.keySet()) {
-            if (slotIndex < SLOTS_PER_UPGRADE.get(entry)) {
-                return entry;
-            }
-        }
-        return null;
-    }
-
-    private void save(SkyBlockPlayer player) {
-        DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = player.getAccessoryBag();
-        for (int i = 0; i < this.slotToSaveUpTo; i++) {
-            int slot = i + ((page - 1) * 45);
-            SkyBlockItem item = new SkyBlockItem(getInventory().getItemStack(i));
-            if (item.isNA() || item.getMaterial() == Material.AIR) {
-                accessoryBag.removeFromSlot(slot);
-            } else {
-                accessoryBag.setInSlot(slot, item);
-            }
-        }
-
-        player.getDataHandler().get(DataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).setValue(
-                accessoryBag
-        );
-    }
-
-    public boolean isItemAllowed(SkyBlockItem item) {
-        if (item.isNA()) return true;
-        if (item.getMaterial().equals(Material.AIR)) return true;
-
-        if (item.hasComponent(AccessoryComponent.class) || item.hasComponent(TieredTalismanComponent.class)) {
-            DatapointAccessoryBag.PlayerAccessoryBag accessoryBag = getPlayer().getAccessoryBag();
-            accessoryBag.addDiscoveredAccessory(item.getAttributeHandler().getPotentialType());
-
-            getPlayer().getSkyBlockExperience().addExperience(
-                    SkyBlockLevelCause.getAccessoryCause(item.getAttributeHandler().getPotentialType())
-            );
-
-            return true;
-        } else {
-            return false;
-        }
+    @Override
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        save(player);
     }
 }

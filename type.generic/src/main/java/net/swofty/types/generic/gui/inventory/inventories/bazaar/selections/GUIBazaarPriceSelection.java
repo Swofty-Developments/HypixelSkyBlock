@@ -1,162 +1,175 @@
 package net.swofty.types.generic.gui.inventory.inventories.bazaar.selections;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.types.generic.gui.SkyBlockSignGUI;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
+import net.swofty.types.generic.gui.inventory.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements RefreshingGUI {
+public class GUIBazaarPriceSelection extends SkyBlockAbstractInventory {
     private CompletableFuture<Double> future = new CompletableFuture<>();
     private final boolean isSellOrder;
     private final ItemType itemTypeLinker;
     private final Double lowestPrice;
     private final Double highestPrice;
     private final Integer amount;
+    private final SkyBlockAbstractInventory previousGUI;
 
-
-    public GUIBazaarPriceSelection(SkyBlockInventoryGUI previousGUI, Integer amount,
+    public GUIBazaarPriceSelection(SkyBlockAbstractInventory previousGUI, Integer amount,
                                    Double lowestPrice, Double highestPrice,
                                    ItemType itemTypeLinker, boolean isSellOrder) {
-        super("At what price" + (isSellOrder ? " are you selling?" : "are you buying?") + "?", InventoryType.CHEST_4_ROW);
-
+        super(InventoryType.CHEST_4_ROW);
+        this.previousGUI = previousGUI;
         this.lowestPrice = lowestPrice;
         this.highestPrice = highestPrice;
         this.itemTypeLinker = itemTypeLinker;
         this.isSellOrder = isSellOrder;
         this.amount = amount;
 
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(31, previousGUI));
+        doAction(new SetTitleAction(Component.text("At what price" +
+                (isSellOrder ? " are you selling?" : "are you buying?") + "?")));
+
+        startLoop("refresh", 10, () -> refreshItems(owner));
     }
 
     public CompletableFuture<Double> openPriceSelection(SkyBlockPlayer player) {
         future = new CompletableFuture<>();
-        open(player);
-
-        Thread.startVirtualThread(() -> {
-            double spread = highestPrice - lowestPrice;
-            double spreadPrice = isSellOrder ? highestPrice - (spread / 10) : lowestPrice + (spread / 10);
-            set(new GUIClickableItem(14) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    future.complete(spreadPrice);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§610% of Spread",
-                            Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
-                            " ",
-                            "§7Lowest price: §6" + lowestPrice + " coins",
-                            "§7Highest price: §6" + highestPrice + " coins",
-                            "§7Spread: §6" + highestPrice + " §7- §6" + lowestPrice + " §7= §6" + spread + " coins",
-                            " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
-                            "§7Unit price: §6" + spreadPrice + " coins",
-                            " ",
-                            "§7Total: §6" + (spreadPrice * amount) + " coins",
-                            " ",
-                            "§eClick to use this price!");
-                }
-            });
-
-
-            double incrementedOffer = isSellOrder ? lowestPrice - 0.1 : highestPrice + 0.1;
-            set(new GUIClickableItem(12) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    future.complete(incrementedOffer);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
-                            Material.GOLD_NUGGET, 1,
-                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
-                            " ",
-                            "§7Beat the price of the best offer so",
-                            "§7yours is filled first.",
-                            " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
-                            "§7Unit price: §6" + incrementedOffer + " coins",
-                            " ",
-                            "§7Total: §6" + (incrementedOffer * amount) + " coins",
-                            " ",
-                            "§eClick to use this price!");
-                }
-            });
-
-            double bestOffer = isSellOrder ? lowestPrice : highestPrice;
-            set(new GUIClickableItem(10) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    future.complete(bestOffer);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§6Same as Best Offer",
-                            itemTypeLinker.material, 1,
-                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
-                            " ",
-                            "§7Use the same price as the lowest",
-                            "§7Sell Offer for this item.",
-                            " ",
-                            "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
-                            "§7Unit price: §6" + bestOffer + " coins",
-                            " ",
-                            "§7Total: §6" + (bestOffer * amount) + " coins",
-                            " ",
-                            "§eClick to use this price!");
-                }
-            });
-            set(new GUIQueryItem(16) {
-                @Override
-                public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
-                    return null;
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§6Custom Price",
-                            Material.OAK_SIGN, 1,
-                            "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
-                            " ",
-                            "§7Set the price per unit you're willing",
-                            "§7to pay. Minimum 50% of the best order.",
-                            " ",
-                            "§7Ordering: §a" +  amount + "§7x",
-                            " ",
-                            "§eClick to specify!");
-                }
-            });
-
-            refreshItems(player);
-        });
-
+        addViewer(player);
         return future;
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        future.complete(0D);
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+        setupBackButton();
+        setupPriceOptions();
     }
 
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        future.complete(0D);
+    private void setupBackButton() {
+        attachItem(GUIItem.builder(31)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + previousGUI.getTitle()).build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(previousGUI);
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupPriceOptions() {
+        double spread = highestPrice - lowestPrice;
+        double spreadPrice = isSellOrder ? highestPrice - (spread / 10) : lowestPrice + (spread / 10);
+
+        // Spread Price Option
+        attachItem(GUIItem.builder(14)
+                .item(ItemStackCreator.getStack("§610% of Spread",
+                        Material.GOLDEN_HORSE_ARMOR, 1,
+                        "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                        " ",
+                        "§7Lowest price: §6" + lowestPrice + " coins",
+                        "§7Highest price: §6" + highestPrice + " coins",
+                        "§7Spread: §6" + highestPrice + " §7- §6" + lowestPrice + " §7= §6" + spread + " coins",
+                        " ",
+                        "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                        "§7Unit price: §6" + spreadPrice + " coins",
+                        " ",
+                        "§7Total: §6" + (spreadPrice * amount) + " coins",
+                        " ",
+                        "§eClick to use this price!").build())
+                .onClick((ctx, item) -> {
+                    future.complete(spreadPrice);
+                    return true;
+                })
+                .build());
+
+        double incrementedOffer = isSellOrder ? lowestPrice - 0.1 : highestPrice + 0.1;
+
+        // Incremental Price Option
+        attachItem(GUIItem.builder(12)
+                .item(ItemStackCreator.getStack("§6Best Offer " + (isSellOrder ? "-" : "+") + "0.1",
+                        Material.GOLD_NUGGET, 1,
+                        "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                        " ",
+                        "§7Beat the price of the best offer so",
+                        "§7yours is filled first.",
+                        " ",
+                        "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                        "§7Unit price: §6" + incrementedOffer + " coins",
+                        " ",
+                        "§7Total: §6" + (incrementedOffer * amount) + " coins",
+                        " ",
+                        "§eClick to use this price!").build())
+                .onClick((ctx, item) -> {
+                    future.complete(incrementedOffer);
+                    return true;
+                })
+                .build());
+
+        double bestOffer = isSellOrder ? lowestPrice : highestPrice;
+
+        // Best Offer Option
+        attachItem(GUIItem.builder(10)
+                .item(ItemStackCreator.getStack("§6Same as Best Offer",
+                        itemTypeLinker.material, 1,
+                        "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                        " ",
+                        "§7Use the same price as the lowest",
+                        "§7Sell Offer for this item.",
+                        " ",
+                        "§7" + (isSellOrder ? "Selling" : "Buying") + " §a" +  amount + "§7x",
+                        "§7Unit price: §6" + bestOffer + " coins",
+                        " ",
+                        "§7Total: §6" + (bestOffer * amount) + " coins",
+                        " ",
+                        "§eClick to use this price!").build())
+                .onClick((ctx, item) -> {
+                    future.complete(bestOffer);
+                    return true;
+                })
+                .build());
+
+        // Custom Price Option
+        attachItem(GUIItem.builder(16)
+                .item(ItemStackCreator.getStack("§6Custom Price",
+                        Material.OAK_SIGN, 1,
+                        "§8" + (isSellOrder ? "Sell Offer" : "Buy Offer") + " Setup",
+                        " ",
+                        "§7Set the price per unit you're willing",
+                        "§7to pay. Minimum 50% of the best order.",
+                        " ",
+                        "§7Ordering: §a" +  amount + "§7x",
+                        " ",
+                        "§eClick to specify!").build())
+                .onClick((ctx, item) -> {
+                    SkyBlockSignGUI signGUI = new SkyBlockSignGUI(ctx.player());
+                    String output = signGUI.open(new String[]{"Enter price", "per unit"}).join();
+                    try {
+                        double customPrice = Double.parseDouble(output);
+                        future.complete(customPrice);
+                    } catch (NumberFormatException e) {
+                        ctx.player().sendMessage("§cInvalid price format!");
+                    }
+                    return true;
+                })
+                .build());
+    }
+
+    private void refreshItems(SkyBlockPlayer player) {
+        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
+            player.sendMessage("§cThe Bazaar is currently offline!");
+            player.closeInventory();
+        }
     }
 
     @Override
@@ -165,20 +178,17 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        future.complete(0D);
     }
 
     @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
-            player.sendMessage("§cThe Bazaar is currently offline!");
-            player.closeInventory();
-        }
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public int refreshRate() {
-        return 10;
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        future.complete(0D);
     }
 }

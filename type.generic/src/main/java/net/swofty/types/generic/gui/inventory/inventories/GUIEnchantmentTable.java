@@ -6,7 +6,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
@@ -51,7 +50,7 @@ public class GUIEnchantmentTable extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
 
         attachItem(GUIItem.builder(49)
@@ -370,7 +369,7 @@ public class GUIEnchantmentTable extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(19)));
     }
 

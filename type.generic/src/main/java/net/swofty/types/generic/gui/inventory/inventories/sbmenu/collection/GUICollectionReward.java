@@ -1,27 +1,27 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIMinionRecipes;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe.GUIRecipe;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.*;
 
-public class GUICollectionReward extends SkyBlockInventoryGUI {
+public class GUICollectionReward extends SkyBlockAbstractInventory {
     private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
             0, new int[] {  },
             1, new int[] { 22 },
@@ -41,69 +41,90 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
     private final int placement;
 
     public GUICollectionReward(ItemType type, CollectionCategory.ItemCollectionReward reward) {
-        super(type.getDisplayName() + " "
-                + StringUtility.getAsRomanNumeral(
-                        CollectionCategories.getCategory(type).getCollection(type).getPlacementOf(reward) + 1)
-                + " Rewards", InventoryType.CHEST_6_ROW);
-
+        super(InventoryType.CHEST_6_ROW);
         this.item = type;
         this.category = CollectionCategories.getCategory(type).getCollection(type);
         this.reward = reward;
         this.placement = category.getPlacementOf(reward);
+
+        doAction(new SetTitleAction(Component.text(type.getDisplayName() + " " +
+                StringUtility.getAsRomanNumeral(placement + 1) + " Rewards")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUICollectionItem(item)));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
 
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>(Arrays.asList(
-                        "§7View your " + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
-                        " "
-                ));
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-                player.getCollection().getDisplay(lore, category, reward);
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Collection Menu").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUICollectionItem(this.item));
+                    return true;
+                })
+                .build());
 
-                return ItemStackCreator.getStack("§a" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(placement),
-                        item.material, 1, lore);
-            }
-        });
+        // Info display
+        attachItem(GUIItem.builder(4)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>(Arrays.asList(
+                            "§7View your " + item.getDisplayName() + " " +
+                                    StringUtility.getAsRomanNumeral(placement) + " Collection rewards!",
+                            " "
+                    ));
 
+                    player.getCollection().getDisplay(lore, category, reward);
+
+                    return ItemStackCreator.getStack("§a" + item.getDisplayName() + " " +
+                                    StringUtility.getAsRomanNumeral(placement),
+                            item.material, 1, lore).build();
+                })
+                .build());
+
+        // Reward unlocks
+        setupRewardUnlocks(player);
+    }
+
+    private void setupRewardUnlocks(SkyBlockPlayer player) {
         int[] slots = SLOTS.get(reward.unlocks().length);
         int i = 0;
         for (CollectionCategory.Unlock unlock : reward.unlocks()) {
             int slot = slots[i];
             i++;
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (unlock instanceof CollectionCategory.UnlockRecipe) {
-                        try {
-                            SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock).getRecipes().getFirst().getResult();
-                            if (skyBlockItem.hasComponent(MinionComponent.class)) {
-                                new GUIMinionRecipes(skyBlockItem.getAttributeHandler().getMinionType(), new GUICollectionReward(item, reward)).open(player);
-                            } else {
-                                new GUIRecipe(skyBlockItem.getAttributeHandler().getPotentialType(), null).open(player);
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> unlock.getDisplay(player).build())
+                    .onClick((ctx, clickedItem) -> {
+                        if (unlock instanceof CollectionCategory.UnlockRecipe) {
+                            try {
+                                SkyBlockItem skyBlockItem = ((CollectionCategory.UnlockRecipe) unlock)
+                                        .getRecipes().getFirst().getResult();
+                                if (skyBlockItem.hasComponent(MinionComponent.class)) {
+                                    ctx.player().openInventory(new GUIMinionRecipes(
+                                            skyBlockItem.getAttributeHandler().getMinionType(),
+                                            new GUICollectionReward(item, reward)));
+                                } else {
+                                    ctx.player().openInventory(new GUIRecipe(
+                                            skyBlockItem.getAttributeHandler().getPotentialType(), null));
+                                }
+                            } catch (NullPointerException exception) {
+                                ctx.player().sendMessage("There is no recipe available for this item!");
                             }
-                        } catch (NullPointerException exception) {
-                            player.sendMessage("There is no recipe available for this item!");
                         }
-                    }
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return unlock.getDisplay(player);
-                }
-            });
+                        return true;
+                    })
+                    .build());
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
@@ -112,15 +133,13 @@ public class GUICollectionReward extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
+
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

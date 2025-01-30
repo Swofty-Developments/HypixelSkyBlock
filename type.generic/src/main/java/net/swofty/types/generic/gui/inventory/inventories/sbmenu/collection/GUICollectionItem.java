@@ -1,110 +1,151 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.datapoints.DatapointCollection;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUICollectionItem extends SkyBlockInventoryGUI {
+public class GUICollectionItem extends SkyBlockAbstractInventory {
+    private static final String STATE_CURRENT_TIER = "current_tier";
+    private static final String STATE_COMPLETED_TIER = "completed_tier";
+    private static final String STATE_LOCKED_TIER = "locked_tier";
+
     private final ItemType item;
-    private CollectionCategory category;
-    private CollectionCategory.ItemCollection collection;
+    private final CollectionCategory category;
+    private final CollectionCategory.ItemCollection collection;
 
     public GUICollectionItem(ItemType item) {
-        super(item.getDisplayName() + " Collection", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
 
         this.item = item;
         this.category = CollectionCategories.getCategory(item);
         this.collection = category.getCollection(item);
+
+        doAction(new SetTitleAction(Component.text(item.getDisplayName() + " Collection")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new InventoryCollectionCategory(
-                category,
-                getPlayer().getCollection().getDisplay(new ArrayList<>(), category)
-        )));
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§e" + item.getDisplayName(), item.material, 1,
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To " + category.getName()).build())
+                .onClick((ctx, clickedItem) -> {
+                    ctx.player().openInventory(new GUIInventoryCollectionCategory(
+                            category,
+                            ctx.player().getCollection().getDisplay(new ArrayList<>(), category)
+                    ));
+                    return true;
+                })
+                .build());
+
+        // Collection info display
+        attachItem(GUIItem.builder(4)
+                .item(() -> ItemStackCreator.getStack("§e" + item.getDisplayName(),
+                        item.material, 1,
                         "§7View all your " + item.getDisplayName() + " Collection",
                         "§7progress and rewards!",
                         " ",
-                        "§7Total Collected: §e" + player.getCollection().get(item));
-            }
-        });
+                        "§7Total Collected: §e" + owner.getCollection().get(item)).build())
+                .build());
+
+        setupCollectionRewards(player);
+    }
+
+    private void setupCollectionRewards(SkyBlockPlayer player) {
+        DatapointCollection.PlayerCollection playerCollection = player.getCollection();
+        CollectionCategory.ItemCollectionReward currentReward = playerCollection.getReward(collection);
 
         int slot = 17;
         for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
             slot++;
+            final int currentSlot = slot;
 
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUICollectionReward(item, reward).open(player);
-                }
+            if (currentReward == reward) {
+                doAction(new AddStateAction(STATE_CURRENT_TIER + "_" + currentSlot));
+            } else if (currentReward != null &&
+                    collection.getPlacementOf(currentReward) > collection.getPlacementOf(reward)) {
+                doAction(new AddStateAction(STATE_COMPLETED_TIER + "_" + currentSlot));
+            } else {
+                doAction(new AddStateAction(STATE_LOCKED_TIER + "_" + currentSlot));
+            }
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    DatapointCollection.PlayerCollection playerCollection = player.getCollection();
+            attachItem(GUIItem.builder(currentSlot)
+                    .item(() -> {
+                        List<String> lore = new ArrayList<>();
+                        lore.add(" ");
+                        playerCollection.getDisplay(lore, collection, reward);
+                        lore.add(" ");
+                        lore.add("§eClick to view rewards!");
 
-                    List<String> lore = new ArrayList<>();
-                    lore.add(" ");
-                    playerCollection.getDisplay(lore, collection, reward);
-                    lore.add(" ");
-                    lore.add("§eClick to view rewards!");
+                        if (currentReward == null) {
+                            return ItemStackCreator.getStack(
+                                    "§7" + item.getDisplayName() + " " +
+                                            StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
+                                    Material.GREEN_STAINED_GLASS_PANE,
+                                    1,
+                                    lore
+                            ).build();
+                        }
 
-                    if (playerCollection.getReward(collection) == null) {
+                        Material material;
+                        String colour;
+                        if (currentReward == reward) {
+                            material = Material.YELLOW_STAINED_GLASS_PANE;
+                            colour = "§e";
+                        } else if (collection.getPlacementOf(currentReward) > collection.getPlacementOf(reward)) {
+                            material = Material.LIME_STAINED_GLASS_PANE;
+                            colour = "§a";
+                        } else {
+                            material = Material.RED_STAINED_GLASS_PANE;
+                            colour = "§c";
+                        }
+
                         return ItemStackCreator.getStack(
-                                "§7" + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
-                                Material.GREEN_STAINED_GLASS_PANE,
+                                colour + item.getDisplayName() + " " +
+                                        StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
+                                material,
                                 1,
                                 lore
-                        );
-                    }
-
-                    Material material;
-                    String colour;
-                    if (playerCollection.getReward(collection) == reward) {
-                        material = Material.YELLOW_STAINED_GLASS_PANE;
-                        colour = "§e";
-                    } else if (collection.getPlacementOf(playerCollection.getReward(collection))
-                            > collection.getPlacementOf(reward)) {
-                        material = Material.LIME_STAINED_GLASS_PANE;
-                        colour = "§a";
-                    } else {
-                        material = Material.RED_STAINED_GLASS_PANE;
-                        colour = "§c";
-                    }
-
-                    return ItemStackCreator.getStack(
-                            colour + item.getDisplayName() + " " + StringUtility.getAsRomanNumeral(collection.getPlacementOf(reward) + 1),
-                            material,
-                            1,
-                            lore
-                    );
-                }
-            });
+                        ).build();
+                    })
+                    .onClick((ctx, clickedItem) -> {
+                        ctx.player().openInventory(new GUICollectionReward(item, reward));
+                        return true;
+                    })
+                    .requireAnyState(
+                            STATE_CURRENT_TIER + "_" + currentSlot,
+                            STATE_COMPLETED_TIER + "_" + currentSlot,
+                            STATE_LOCKED_TIER + "_" + currentSlot
+                    )
+                    .build());
         }
-
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
@@ -113,17 +154,15 @@ public class GUICollectionItem extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
+    public void onSuddenQuit(SkyBlockPlayer player) {
     }
 }

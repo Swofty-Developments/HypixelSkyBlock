@@ -1,107 +1,130 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.collection;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.GUISkyBlockMenu;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GUICollections extends SkyBlockInventoryGUI {
-    private final int[] displaySlots = {
+public class GUICollections extends SkyBlockAbstractInventory {
+    private static final int[] DISPLAY_SLOTS = {
             20, 21, 22, 23, 24,
-                    31
+            31
     };
 
     public GUICollections() {
-        super("Collections", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Collections")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUISkyBlockMenu()));
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
-        ArrayList<CollectionCategory> allCategories = CollectionCategories.getCategories();
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
 
-        set(new GUIItem(4) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>(List.of(
-                        "§7View all of the items available in",
-                        "§7SkyBlock. Collect more of an item to",
-                        "§7unlock rewards on your way to",
-                        "§7becoming a master of SkyBlock!",
-                        " "
-                ));
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To SkyBlock Menu").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUISkyBlockMenu());
+                    return true;
+                })
+                .build());
 
-                player.getCollection().getDisplay(lore);
-
-                lore.add(" ");
-                lore.add("§eClick to view!");
-                return ItemStackCreator.getStack("§aCollections", Material.PAINTING, 1, lore.toArray(new String[0]));
-            }
-        });
-
-        set(new GUIClickableItem(50) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new InventoryCraftedMinions(new GUICollections()).open(player);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStackHead("§aCrafted Minions", "ebcc099f3a00ece0e5c4b31d31c828e52b06348d0a4eac11f3fcbef3c05cb407", 1,
-                "§7View all the unique minions that you",
-                        "§7have crafted.",
-                        "",
-                        "§eClick to view!");
-            }
-        });
-
-        int index = 0;
-        for (int slot : displaySlots) {
-            CollectionCategory category = allCategories.get(index);
-
-            ArrayList<String> display = new ArrayList<>();
-            getPlayer().getCollection().getDisplay(display, category);
-
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new InventoryCollectionCategory(category, display).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ArrayList<String> lore = new ArrayList<>(Arrays.asList(
-                            "§7View your " + category.getName() + " Collections!",
+        // Collections overview
+        attachItem(GUIItem.builder(4)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>(List.of(
+                            "§7View all of the items available in",
+                            "§7SkyBlock. Collect more of an item to",
+                            "§7unlock rewards on your way to",
+                            "§7becoming a master of SkyBlock!",
                             " "
                     ));
 
-                    lore.addAll(display);
+                    owner.getCollection().getDisplay(lore);
 
-                    return ItemStackCreator.getStack(
-                            "§a" + category.getName() + " Collections", category.getDisplayIcon(),
-                            1, lore);
-                }
-            });
+                    lore.add(" ");
+                    lore.add("§eClick to view!");
+                    return ItemStackCreator.getStack("§aCollections",
+                            Material.PAINTING,
+                            1,
+                            lore).build();
+                })
+                .build());
+
+        // Crafted minions button
+        attachItem(GUIItem.builder(50)
+                .item(ItemStackCreator.getStackHead("§aCrafted Minions",
+                        "ebcc099f3a00ece0e5c4b31d31c828e52b06348d0a4eac11f3fcbef3c05cb407",
+                        1,
+                        "§7View all the unique minions that you",
+                        "§7have crafted.",
+                        "",
+                        "§eClick to view!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIInventoryCraftedMinions(new GUICollections()));
+                    return true;
+                })
+                .build());
+
+        // Category buttons
+        setupCategoryButtons(player);
+    }
+
+    private void setupCategoryButtons(SkyBlockPlayer player) {
+        ArrayList<CollectionCategory> allCategories = CollectionCategories.getCategories();
+
+        int index = 0;
+        for (int slot : DISPLAY_SLOTS) {
+            CollectionCategory category = allCategories.get(index);
+            ArrayList<String> display = new ArrayList<>();
+            player.getCollection().getDisplay(display, category);
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        ArrayList<String> lore = new ArrayList<>(Arrays.asList(
+                                "§7View your " + category.getName() + " Collections!",
+                                " "
+                        ));
+
+                        lore.addAll(display);
+
+                        return ItemStackCreator.getStack(
+                                "§a" + category.getName() + " Collections",
+                                category.getDisplayIcon(),
+                                1,
+                                lore).build();
+                    })
+                    .onClick((ctx, item) -> {
+                        ctx.player().openInventory(new GUIInventoryCollectionCategory(category, display));
+                        return true;
+                    })
+                    .build());
 
             index++;
         }
-        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override
@@ -110,17 +133,13 @@ public class GUICollections extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

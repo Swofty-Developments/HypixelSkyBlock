@@ -5,6 +5,7 @@ import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
+import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
@@ -14,11 +15,13 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsAbiphone;
 import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsConfirmBuy;
-import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsSubCategorys;
+import net.swofty.type.hub.gui.elizabeth.subguis.GUIBitsSubCategories;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -27,11 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GUIBitsShop extends SkyBlockInventoryGUI {
-
-    public GUIBitsShop() {
-        super("Community Shop", InventoryType.CHEST_6_ROW);
-    }
+public class GUIBitsShop extends SkyBlockAbstractInventory {
+    private static final String STATE_TAB_PREFIX = "tab_";
+    private static final String STATE_CATEGORY_PREFIX = "category_";
+    private static final String STATE_CAN_AFFORD_PREFIX = "can_afford_";
 
     private final int[] categoriesItemsSlots = {
             10, 11, 12, 13, 14, 16
@@ -155,11 +157,11 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
         ;
 
         private final String guiName;
-        private final SkyBlockInventoryGUI previousGUI;
+        private final SkyBlockAbstractInventory previousGUI;
         private final ItemStack.Builder item;
         private final List<CommunityShopItem> shopItems;
 
-        SubCategorys(String guiName, SkyBlockInventoryGUI previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
+        SubCategorys(String guiName, SkyBlockAbstractInventory previousGUI, ItemStack.Builder item, List<CommunityShopItem> shopItems) {
             this.guiName = guiName;
             this.previousGUI = previousGUI;
             this.item = item;
@@ -167,203 +169,244 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
         }
     }
 
-    public void onOpen(InventoryGUIOpenEvent e) {
-        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(15, ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
+    public GUIBitsShop() {
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Community Shop")));
+    }
 
-        GUIAccountAndProfileUpgrades.ShopCategorys[] allShopCategorys = GUIAccountAndProfileUpgrades.ShopCategorys.values();
-        int index = 0;
-        for (int slot : tabSlots) {
-            GUIAccountAndProfileUpgrades.ShopCategorys shopCategorys = allShopCategorys[index];
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (slot != 4) {
-                        shopCategorys.gui.open(player);
-                    }
-                }
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (slot != 4) {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-                        if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
-                            lore.removeLast();
-                            lore.add("§eClick to view!");
-                        } else if (Objects.equals(lore.getLast(), " ")) {
-                            lore.add("§eClick to view!");
-                        }
-                        return ItemStackCreator.updateLore(itemStack, lore);
-                    } else {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-                        if (Objects.equals(lore.getLast(), "§eClick to view!")) {
-                            lore.removeLast();
-                            lore.add("§aCurrently selected!");
-                        } else if (Objects.equals(lore.getLast(), " ")) {
-                            lore.add("§aCurrently selected!");
-                        }
-                        return ItemStackCreator.updateLore(itemStack, lore);
-                    }
-                }
-            });
-            index++;
-        }
+    @Override
+    public void handleOpen(SkyBlockPlayer player) {
+        border(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build());
+        attachItem(GUIItem.builder(15)
+                .item(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE).build())
+                .build());
 
-        for (int slot : categoriesItemsSlots) {
-            set(new GUIItem(slot) {
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    if (slot != 13) {
-                        return ItemStackCreator.getStack("§8▲ §7Categories", Material.GRAY_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
-                    } else {
-                        return ItemStackCreator.getStack("§8▲ §7Categories", Material.GREEN_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
-                    }
-                }
-            });
-        }
-        BitItems[] allBitItems = BitItems.values();
-        int indexBitItems = 0;
-        for (int slot : itemSlots) {
-            if (indexBitItems + 1 <= BitItems.values().length) {
-                BitItems bitItems = allBitItems[indexBitItems];
-                set(new GUIClickableItem(slot) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        if (player.getBits() >= bitItems.price) {
-                            SkyBlockItem skyBlockItem = new SkyBlockItem(bitItems.item);
-                            ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
-                            itemStack.amount(bitItems.amount);
-                            SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
-                            if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
-                                player.addAndUpdateItem(finalItem);
-                                int remainingBits = player.getBits() - bitItems.price;
-                                player.setBits(remainingBits);
-                                new GUIBitsShop().open(player);
-                            } else {
-                                new GUIBitsConfirmBuy(finalItem, bitItems.price).open(player);
+        doAction(new AddStateAction(STATE_TAB_PREFIX + "4")); // Set initial tab state
+        doAction(new AddStateAction(STATE_CATEGORY_PREFIX + "13")); // Set initial category state
+
+        setupTabs();
+        setupCategories();
+        setupBitItems(player);
+        setupSubCategories();
+        setupControlButtons();
+        setupAbiphoneButton();
+    }
+
+    private void setupTabs() {
+        GUIAccountAndProfileUpgrades.ShopCategories[] allShopCategories = GUIAccountAndProfileUpgrades.ShopCategories.values();
+
+        for (int i = 0; i < tabSlots.length; i++) {
+            final int slot = tabSlots[i];
+            final GUIAccountAndProfileUpgrades.ShopCategories category = allShopCategories[i];
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        ItemStack.Builder itemStack = category.stack;
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
+                                .stream().map(StringUtility::getTextFromComponent).toList());
+
+                        if (hasState(STATE_TAB_PREFIX + slot)) {
+                            if (!Objects.equals(lore.getLast(), "§aCurrently selected!")) {
+                                if (Objects.equals(lore.getLast(), "§eClick to view!")) {
+                                    lore.removeLast();
+                                }
+                                lore.add("§aCurrently selected!");
                             }
                         } else {
-                            player.sendMessage("§cYou don't have enough Bits to buy that!");
+                            if (!Objects.equals(lore.getLast(), "§eClick to view!")) {
+                                if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
+                                    lore.removeLast();
+                                }
+                                lore.add("§eClick to view!");
+                            }
                         }
-                    }
+                        return ItemStackCreator.updateLore(itemStack, lore).build();
+                    })
+                    .onClick((ctx, item) -> {
+                        if (slot != 4) {
+                            ctx.player().openInventory(category.gui);
+                        }
+                        return true;
+                    })
+                    .build());
+        }
+    }
 
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        SkyBlockItem item = new SkyBlockItem(bitItems.item);
+    private void setupCategories() {
+        for (int slot : categoriesItemsSlots) {
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> ItemStackCreator.getStack("§8▲ §7Categories",
+                            slot != 13 ? Material.GRAY_STAINED_GLASS_PANE : Material.GREEN_STAINED_GLASS_PANE,
+                            1, "§8▼ §7Items").build())
+                    .build());
+        }
+    }
+
+    private void setupBitItems(SkyBlockPlayer player) {
+        BitItems[] allBitItems = BitItems.values();
+
+        for (int i = 0; i < Math.min(itemSlots.length, allBitItems.length); i++) {
+            final int slot = itemSlots[i];
+            final BitItems bitItem = allBitItems[i];
+
+            String affordState = STATE_CAN_AFFORD_PREFIX + slot;
+            if (player.getBits() >= bitItem.price) {
+                doAction(new AddStateAction(affordState));
+            }
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        SkyBlockItem item = new SkyBlockItem(bitItem.item);
                         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
+                                .stream().map(StringUtility::getTextFromComponent).toList());
                         lore.add(" ");
                         lore.add("§7Cost");
-                        lore.add("§b" + StringUtility.commaify(bitItems.price) + " Bits");
+                        lore.add("§b" + StringUtility.commaify(bitItem.price) + " Bits");
                         lore.add(" ");
                         lore.add("§eClick to trade!");
-                        return ItemStackCreator.updateLore(itemStack, lore);
-                    }
-                });
-                indexBitItems++;
-            }
+                        return ItemStackCreator.updateLore(itemStack, lore).build();
+                    })
+                    .onClick((ctx, item) -> handleBitItemPurchase(ctx.player(), bitItem))
+                    .build());
         }
+    }
+
+    private boolean handleBitItemPurchase(SkyBlockPlayer player, BitItems bitItem) {
+        if (player.getBits() >= bitItem.price) {
+            SkyBlockItem skyBlockItem = new SkyBlockItem(bitItem.item);
+            ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
+            itemStack.amount(bitItem.amount);
+            SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
+
+            if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
+                player.addAndUpdateItem(finalItem);
+                player.setBits(player.getBits() - bitItem.price);
+                player.openInventory(new GUIBitsShop());
+            } else {
+                player.openInventory(new GUIBitsConfirmBuy(finalItem, bitItem.price));
+            }
+            return true;
+        }
+
+        player.sendMessage("§cYou don't have enough Bits to buy that!");
+        return false;
+    }
+
+    private void setupSubCategories() {
         SubCategorys[] allSubCategorys = SubCategorys.values();
-        int indexSubCategorys = 0;
-        for (int slot : categorySlots) {
-            SubCategorys subCategorys = allSubCategorys[indexSubCategorys];
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIBitsSubCategorys(subCategorys.getShopItems(), subCategorys.getGuiName(), subCategorys.getPreviousGUI()).open(player);
-                }
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder itemstack = subCategorys.item;
-                    ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-                    if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
-                        lore.add(" ");
-                        lore.add("§eClick to browse!");
-                    }
-                    return ItemStackCreator.updateLore(itemstack, lore);
-                }
-            });
-            indexSubCategorys++;
+        for (int i = 0; i < Math.min(categorySlots.length, allSubCategorys.length); i++) {
+            final int slot = categorySlots[i];
+            final SubCategorys category = allSubCategorys[i];
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        ItemStack.Builder itemstack = category.item;
+                        ArrayList<String> lore = new ArrayList<>(itemstack.build().get(ItemComponent.LORE)
+                                .stream().map(StringUtility::getTextFromComponent).toList());
+                        if (!Objects.equals(lore.getLast(), "§eClick to browse!")) {
+                            lore.add(" ");
+                            lore.add("§eClick to browse!");
+                        }
+                        return ItemStackCreator.updateLore(itemstack, lore).build();
+                    })
+                    .onClick((ctx, item) -> {
+                        ctx.player().openInventory(new GUIBitsSubCategories(
+                                category.getShopItems(),
+                                category.getGuiName(),
+                                category.getPreviousGUI()));
+                        return true;
+                    })
+                    .build());
         }
-        set(new GUIClickableItem(49) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.openBook(Book.builder()
-                        .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
-                                .appendNewline()
-                                .appendNewline()
-                                .append(Component.text("      "))
-                                .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt")).color(TextColor.fromHexString("#00AAAA"))))
-                        .build()
-                );
-            }
+    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop", Material.EMERALD, 1,
+    private void setupControlButtons() {
+        // Community Shop Button
+        attachItem(GUIItem.builder(49)
+                .item(() -> ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop",
+                        Material.EMERALD, 1,
                         "§8Elizabeth",
                         " ",
-                        "§7Gems: §a" + StringUtility.commaify(player.getGems()),
+                        "§7Gems: §a" + StringUtility.commaify(owner.getGems()),
                         "§8Purchase on store.hypixel.net!",
                         " ",
-                        "§7Bits: §b" + StringUtility.commaify(player.getBits()),
+                        "§7Bits: §b" + StringUtility.commaify(owner.getBits()),
                         "§8Earn from Booster Cookies!",
                         " ",
                         "§7Fame Rank: §e",
                         "§8Rank up by spending gems & bits!",
-                        "§eClick to get link!"
-                ));
-            }
-        });
-        set(new GUIClickableItem(48) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.getToggles().set(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS, false);
-                new GUIBitsShop().open(player);
-            }
+                        "§eClick to get link!")).build())
+                .onClick((ctx, item) -> {
+                    openStoreBook(ctx.player());
+                    return true;
+                })
+                .build());
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                String status;
-                if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
-                    status = "§aEnabled!";
-                } else {
-                    status = "§cOFF";
-                }
-                return ItemStackCreator.getStack("§aPurchase Confirmation", Material.COMPARATOR, 1,
-                        "§7Buying a lot and never",
-                        "§7second-guess a decision?",
-                        " ",
-                        "§7Confirmations: " + status,
-                        " ",
-                        "§eClick to toggle confirm menu!");
-            }
-        });
-        set(new GUIClickableItem(33) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBitsAbiphone().open(player);
-            }
+        // Purchase Confirmation Toggle
+        attachItem(GUIItem.builder(48)
+                .item(() -> {
+                    String status = owner.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS) ?
+                            "§aEnabled!" : "§cOFF";
+                    return ItemStackCreator.getStack("§aPurchase Confirmation",
+                            Material.COMPARATOR, 1,
+                            "§7Buying a lot and never",
+                            "§7second-guess a decision?",
+                            " ",
+                            "§7Confirmations: " + status,
+                            " ",
+                            "§eClick to toggle confirm menu!").build();
+                })
+                .onClick((ctx, item) -> {
+                    ctx.player().getToggles().set(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS, false);
+                    ctx.player().openInventory(new GUIBitsShop());
+                    return true;
+                })
+                .build());
+    }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStackHead("§5Abiphone Supershop", "785d157db6c9fcc1a5bb24c4590988849933bd355608cae3a6a420660676bc33", 1,
+    private void setupAbiphoneButton() {
+        attachItem(GUIItem.builder(33)
+                .item(ItemStackCreator.getStackHead("§5Abiphone Supershop",
+                        "785d157db6c9fcc1a5bb24c4590988849933bd355608cae3a6a420660676bc33", 1,
                         "§7Obtain upgrades and special cases",
                         "§7for your Abiphone.",
                         " ",
                         "§7Purchase an Abiphone in the §cCrimson",
-                        "§cIsle §7to contact NPCs from afar!");
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+                        "§cIsle §7to contact NPCs from afar!").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIBitsAbiphone());
+                    return true;
+                })
+                .build());
     }
+
+    private void openStoreBook(SkyBlockPlayer player) {
+        player.openBook(Book.builder()
+                .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
+                        .appendNewline()
+                        .appendNewline()
+                        .append(Component.text("      "))
+                        .append(Component.text("VISIT STORE")
+                                .clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt"))
+                                .color(TextColor.fromHexString("#00AAAA"))))
+                .build());
+    }
+
     @Override
     public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
+
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
+
+    @Override
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }

@@ -1,149 +1,180 @@
 package net.swofty.type.hub.gui;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.RemoveStateAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.RuneableComponent;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class GUIRuneRemoval extends SkyBlockInventoryGUI {
-    private final int[] borderSlots = {
+public class GUIRuneRemoval extends SkyBlockAbstractInventory {
+    private static final String STATE_NO_ITEM = "no_item";
+    private static final String STATE_INVALID_ITEM = "invalid_item";
+    private static final String STATE_VALID_ITEM = "valid_item";
+
+    private static final int[] BORDER_SLOTS = {
             0, 8, 9, 17, 18, 26, 27, 35, 36, 44
     };
-    private final int[] bottomSlots = {
+    private static final int[] BOTTOM_SLOTS = {
             45, 46, 47, 48, 49, 50, 51, 52, 53
     };
 
     public GUIRuneRemoval() {
-        super("Rune Removal", InventoryType.CHEST_6_ROW);
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Rune Removal")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        fill(Material.BLACK_STAINED_GLASS_PANE, "");
-        for (int i : bottomSlots) {
-            set(i, ItemStackCreator.createNamedItemStack(Material.WHITE_STAINED_GLASS_PANE));
-        }
-        set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIRunicPedestal()));
+    public void handleOpen(SkyBlockPlayer player) {
+        // Initial state
+        doAction(new AddStateAction(STATE_NO_ITEM));
 
-        updateFromItem(null);
+        // Base GUI setup
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+        for (int slot : BOTTOM_SLOTS) {
+            attachItem(GUIItem.builder(slot)
+                    .item(ItemStackCreator.createNamedItemStack(Material.WHITE_STAINED_GLASS_PANE).build())
+                    .build());
+        }
+
+        // Close button
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.createNamedItemStack(Material.BARRIER, "§cClose").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().closeInventory();
+                    return true;
+                })
+                .build());
+
+        // Back button
+        attachItem(GUIItem.builder(48)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1, "§7To Runic Pedestal").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIRunicPedestal());
+                    return true;
+                })
+                .build());
+
+        // State-based borders
+        borderWithState(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE).build(), STATE_NO_ITEM);
+        borderWithState(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE).build(), STATE_INVALID_ITEM);
+        borderWithState(ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE).build(), STATE_VALID_ITEM);
+
+        // Item slot
+        attachItem(GUIItem.builder(13)
+                .item(ItemStack.AIR)
+                .onClick((ctx, clickedItem) -> handleItemSlotClick(ctx.player(), clickedItem, ctx.cursorItem()))
+                .build());
+
+        // Action button
+        setupActionButton();
     }
 
-    public void updateFromItem(SkyBlockItem item) {
-        border(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE));
-
-        if (item == null) {
-            set(new GUIClickableItem(13) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    ItemStack stack = e.getCursorItem();
-
-                    if (stack.get(ItemComponent.CUSTOM_NAME) == null) {
-                        updateFromItem(null);
-                        return;
-                    }
-
-                    SkyBlockItem item = new SkyBlockItem(stack);
-                    updateFromItem(item);
-                }
-
-                @Override
-                public boolean canPickup() {
+    private void setupActionButton() {
+        // No item state
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack(
+                        "§aRune Removal", Material.BARRIER, 1,
+                        "§7Place an item with a rune attached to",
+                        "§7it in the above slot.").build())
+                .requireState(STATE_NO_ITEM)
+                .onClick((ctx, item) -> {
+                    ctx.player().sendMessage("§cYou must place an item in the above slot!");
                     return true;
-                }
+                })
+                .build());
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-            set(new GUIClickableItem(22) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    player.sendMessage("§cYou must place an item in the above slot!");
-                }
+        // Invalid item state
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack(
+                        "§cError!", Material.BARRIER, 1,
+                        "§7Place an item with a rune attached to",
+                        "§7it in the above slot.").build())
+                .requireState(STATE_INVALID_ITEM)
+                .build());
 
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§aRune Removal", Material.BARRIER, 1,
-                            "§7Place an item with a rune attached to",
-                            "§7it in the above slot."
-                    );
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
-            return;
+        // Valid item state
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack(
+                        "§aClick to Remove Rune!", Material.CAULDRON, 1,
+                        "§cWARNING: The rune will be lost",
+                        "§cforever!").build())
+                .requireState(STATE_VALID_ITEM)
+                .onClick((ctx, item) -> {
+                    SkyBlockItem sbItem = new SkyBlockItem(getItemStack(13));
+                    ItemAttributeRuneInfusedWith.RuneData runeData = sbItem.getAttributeHandler().getRuneData();
+
+                    runeData.setRuneType(null);
+                    runeData.setLevel(null);
+
+                    ctx.player().sendMessage("§aSuccessfully removed rune!");
+                    updateRuneState(sbItem);
+                    return true;
+                })
+                .build());
+    }
+
+    private boolean handleItemSlotClick(SkyBlockPlayer player, ItemStack clickedItem, ItemStack cursorItem) {
+        if (!clickedItem.isAir()) {
+            player.addAndUpdateItem(clickedItem);
+            setItemStack(13, ItemStack.AIR);
+            updateRuneState(null);
+            return true;
         }
 
-        set(new GUIClickableItem(13) {
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return PlayerItemUpdater.playerUpdate(player , item.getItemStack());
-            }
+        if (cursorItem.get(ItemComponent.CUSTOM_NAME) == null) {
+            updateRuneState(null);
+            return true;
+        }
 
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                ItemStack stack = e.getClickedItem();
-                if (stack.isAir()) return;
-                updateFromItem(null);
+        SkyBlockItem sbItem = new SkyBlockItem(cursorItem);
+        setItemStack(13, PlayerItemUpdater.playerUpdate(player, sbItem.getItemStack()).build());
+        updateRuneState(sbItem);
+        return true;
+    }
 
-                player.addAndUpdateItem(stack);
-            }
-        });
+    private void updateRuneState(SkyBlockItem item) {
+        // Remove all states
+        doAction(new RemoveStateAction(STATE_NO_ITEM));
+        doAction(new RemoveStateAction(STATE_INVALID_ITEM));
+        doAction(new RemoveStateAction(STATE_VALID_ITEM));
+
+        if (item == null) {
+            doAction(new AddStateAction(STATE_NO_ITEM));
+            return;
+        }
 
         ItemAttributeRuneInfusedWith.RuneData runeData = item.getAttributeHandler().getRuneData();
         if (item.getAmount() > 1 ||
                 item.hasComponent(RuneableComponent.class) ||
                 runeData == null ||
                 !runeData.hasRune()) {
-            set(new GUIItem(22) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            "§cError!", Material.BARRIER, 1,
-                            "§7Place an item with a rune attached to",
-                            "§7it in the above slot."
-                    );
-                }
-            });
-            updateItemStacks(getInventory(), getPlayer());
+            doAction(new AddStateAction(STATE_INVALID_ITEM));
             return;
         }
 
-        border(ItemStackCreator.createNamedItemStack(Material.GREEN_STAINED_GLASS_PANE));
-        set(new GUIClickableItem(22) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                runeData.setRuneType(null);
-                runeData.setLevel(null);
+        doAction(new AddStateAction(STATE_VALID_ITEM));
+    }
 
-                player.sendMessage("§aSuccessfully removed rune!");
-
-                updateFromItem(item);
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack(
-                        "§aClick to Remove Rune!", Material.CAULDRON, 1,
-                        "§cWARNING: The rune will be lost",
-                        "§cforever!"
-                );
-            }
-        });
-        updateItemStacks(getInventory(), getPlayer());
+    private void borderWithState(ItemStack border, String state) {
+        for (int slot : BORDER_SLOTS) {
+            attachItem(GUIItem.builder(slot)
+                    .item(border)
+                    .requireState(state)
+                    .build());
+        }
     }
 
     @Override
@@ -152,25 +183,18 @@ public class GUIRuneRemoval extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-        ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(13)));
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(13)));
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-        player.addAndUpdateItem(new SkyBlockItem(inventory.getItemStack(13)));
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void border(ItemStack.Builder stack) {
-        for (int i : borderSlots) {
-            set(i, stack);
-        }
-        updateItemStacks(getInventory(), getPlayer());
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        player.addAndUpdateItem(new SkyBlockItem(getItemStack(13)));
     }
 }

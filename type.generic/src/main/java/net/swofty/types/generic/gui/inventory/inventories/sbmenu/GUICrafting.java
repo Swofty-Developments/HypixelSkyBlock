@@ -43,7 +43,7 @@ public class GUICrafting extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         // Initial state
         doAction(new AddStateAction(STATE_NO_RECIPE));
 
@@ -189,25 +189,25 @@ public class GUICrafting extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return true;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
             ((SkyBlockPlayer) event.getPlayer()).addAndUpdateItem(new SkyBlockItem(getItemStack(slot)));
         });
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         SkyBlockItem clickedItem = new SkyBlockItem(event.getClickedItem());
         if (clickedItem.isNA() || clickedItem.getMaterial().equals(Material.AIR)) return;
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         Arrays.stream(CRAFT_SLOTS).forEach(slot -> {
             player.addAndUpdateItem(new SkyBlockItem(getItemStack(slot)));
         });

@@ -23,7 +23,7 @@ public class ViewRecipeCommand extends SkyBlockCommand {
             if (!permissionCheck(sender)) return;
 
             final ItemType item = context.get(itemArgument);
-            new GUIRecipe(item, null).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openInventory(new GUIRecipe(item, null));
         }, itemArgument);
     }
 }

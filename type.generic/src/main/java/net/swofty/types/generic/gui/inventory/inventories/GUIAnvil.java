@@ -42,7 +42,7 @@ public class GUIAnvil extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
         fill(ItemStackCreator.createNamedItemStack(Material.RED_STAINED_GLASS_PANE, "").build(), 45, 53);
 
@@ -292,12 +292,12 @@ public class GUIAnvil extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(sacrificeItemSlot)));
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(upgradeItemSlot)));
@@ -305,12 +305,12 @@ public class GUIAnvil extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         event.setCancelled(false);
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(sacrificeItemSlot)));
         player.addAndUpdateItem(new SkyBlockItem(getItemStack(upgradeItemSlot)));
         giveResult(player);

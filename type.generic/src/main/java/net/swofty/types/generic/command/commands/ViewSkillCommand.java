@@ -23,7 +23,7 @@ public class ViewSkillCommand extends SkyBlockCommand {
             if (!permissionCheck(sender)) return;
 
             final SkillCategories skillCategory = context.get(skillArgument);
-            new GUISkillCategory(skillCategory, 0).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openInventory(new GUISkillCategory(skillCategory, 0));
         }, skillArgument);
     }
 }

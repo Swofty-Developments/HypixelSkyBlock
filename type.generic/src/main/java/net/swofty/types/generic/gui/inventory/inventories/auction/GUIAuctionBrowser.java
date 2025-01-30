@@ -1,12 +1,9 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction;
 
 import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemComponent;
@@ -14,16 +11,16 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.auctions.AuctionCategories;
-import net.swofty.commons.auctions.AuctionItem;
-import net.swofty.commons.auctions.AuctionsFilter;
-import net.swofty.commons.auctions.AuctionsSorting;
+import net.swofty.commons.auctions.*;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.AddStateAction;
+import net.swofty.types.generic.gui.inventory.actions.RefreshAction;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -33,8 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Setter
-public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements RefreshingGUI {
+public class GUIAuctionBrowser extends SkyBlockAbstractInventory {
     private static final int[] PAGINATED_SLOTS = new int[]{
             11, 12, 13, 14, 15, 16,
             20, 21, 22, 23, 24, 25,
@@ -42,200 +38,205 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
             38, 39, 40, 41, 42, 43
     };
 
+    @Getter
+    private List<AuctionItem> itemCache = new ArrayList<>();
+    private int page = 1;
     private AuctionsSorting sorting = AuctionsSorting.HIGHEST_BID;
     private AuctionsFilter filter = AuctionsFilter.SHOW_ALL;
     @Getter
     private AuctionCategories category = AuctionCategories.WEAPONS;
 
-    private int page = 1;
-    @Getter
-    private List<AuctionItem> itemCache = new ArrayList<>();
-
     public GUIAuctionBrowser() {
-        super("Auction Browser", InventoryType.CHEST_6_ROW);
-
+        super(InventoryType.CHEST_6_ROW);
+        doAction(new SetTitleAction(Component.text("Auction Browser")));
         Thread.startVirtualThread(this::updateItemsCache);
+    }
+
+    @Override
+    public void handleOpen(SkyBlockPlayer player) {
+        // Set initial state and title
+        doAction(new AddStateAction("category_" + category.name().toLowerCase()));
+        doAction(new SetTitleAction(Component.text("Auction Browser - " + StringUtility.toNormalCase(category.name()))));
+
+        // Fill background with category material
+        fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), "").build());
+
+        setupBackButton();
+        setupSortingButton();
+        setupFilterButton();
+        setupCategoryButtons();
+        setupItemSlots();
+
+        // Start refresh loop
+        startLoop("refresh", 10, () -> refreshItems(player));
+    }
+
+    private void setupBackButton() {
+        attachItem(GUIItem.builder(49)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Auction House").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIAuctionHouse());
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupSortingButton() {
+        attachItem(GUIItem.builder(50)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>(List.of(" "));
+
+                    Arrays.stream(AuctionsSorting.values()).forEach(sort -> {
+                        if (filter.equals(AuctionsFilter.BIN_ONLY) && sort.equals(AuctionsSorting.MOST_BIDS)) {
+                            return;
+                        }
+
+                        if (sort == sorting) {
+                            lore.add("§b§l> §b" + StringUtility.toNormalCase(sort.name()));
+                        } else {
+                            lore.add("§7" + StringUtility.toNormalCase(sort.name()));
+                        }
+                    });
+
+                    lore.add(" ");
+                    lore.add("§eClick to switch sort!");
+
+                    return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    AuctionsSorting nextSort = sorting.next();
+                    sorting = nextSort;
+
+                    if (filter.equals(AuctionsFilter.BIN_ONLY) && nextSort.equals(AuctionsSorting.MOST_BIDS)) {
+                        sorting = AuctionsSorting.HIGHEST_BID;
+                    }
+
+                    Thread.startVirtualThread(this::updateItemsCache);
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupFilterButton() {
+        attachItem(GUIItem.builder(52)
+                .item(() -> {
+                    List<String> lore = new ArrayList<>(List.of(" "));
+
+                    Arrays.stream(AuctionsFilter.values()).forEach(currentFilter -> {
+                        if (currentFilter == filter) {
+                            lore.add("§b§l> §b" + StringUtility.toNormalCase(currentFilter.name()));
+                        } else {
+                            lore.add("§7" + StringUtility.toNormalCase(currentFilter.name()));
+                        }
+                    });
+
+                    lore.add(" ");
+                    lore.add("§bRight-Click to go backwards!");
+                    lore.add("§eClick to switch filter!");
+
+                    return ItemStackCreator.getStack("§aBIN Filter", Material.GOLD_BLOCK, 1, lore).build();
+                })
+                .onClick((ctx, item) -> {
+                    filter = ctx.clickType().equals(ClickType.RIGHT_CLICK) ?
+                            filter.previous() : filter.next();
+                    Thread.startVirtualThread(this::updateItemsCache);
+                    return true;
+                })
+                .build());
+    }
+
+    private void setupCategoryButtons() {
+        for (int i = 0; i < AuctionCategories.values().length; i++) {
+            AuctionCategories currentCategory = AuctionCategories.values()[i];
+            int slot = i * 9;
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
+                        currentCategory.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
+                        lore.add(" ");
+                        lore.add(currentCategory.equals(category) ? "§aCurrently Browsing" : "§eClick to view!");
+
+                        return ItemStackCreator.getStack(
+                                currentCategory.getColor() + StringUtility.toNormalCase(currentCategory.name()),
+                                currentCategory.getDisplayMaterial(), 1, lore).build();
+                    })
+                    .onClick((ctx, item) -> {
+                        if (currentCategory.equals(category)) return true;
+                        category = currentCategory;
+                        Thread.startVirtualThread(this::updateItemsCache);
+                        return true;
+                    })
+                    .build());
+        }
+    }
+
+    private void setupItemSlots() {
+        if (itemCache == null) {
+            fillEmptySlots(0);
+            return;
+        }
+
+        int filledSlots = 0;
+        for (AuctionItem auctionItem : itemCache) {
+            int slot = PAGINATED_SLOTS[itemCache.indexOf(auctionItem)];
+            filledSlots++;
+
+            attachItem(GUIItem.builder(slot)
+                    .item(() -> {
+                        SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
+                        ItemStack builtItem = PlayerItemUpdater.playerUpdate(owner, skyBlockItem.getItemStack()).build();
+                        return ItemStackCreator.getStack(
+                                StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
+                                skyBlockItem.getMaterial(),
+                                skyBlockItem.getAmount(),
+                                new AuctionItemLoreHandler(auctionItem).getLore()).build();
+                    })
+                    .onClick((ctx, item) -> {
+                        ctx.player().openInventory(new GUIAuctionViewItem(auctionItem.getUuid(), this));
+                        return true;
+                    })
+                    .build());
+        }
+
+        fillEmptySlots(filledSlots / 2);
+    }
+
+    private void fillEmptySlots(int startFrom) {
+        for (int i = startFrom; i < PAGINATED_SLOTS.length; i++) {
+            int slot = PAGINATED_SLOTS[i];
+            attachItem(GUIItem.builder(slot)
+                    .item(ItemStack.of(Material.AIR))
+                    .build());
+        }
     }
 
     private void updateItemsCache() {
         AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage message =
-                new AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage(
-                        sorting,
-                        filter,
-                        category
-                );
+                new AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage(sorting, filter, category);
 
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
                 .thenAccept(responseRaw -> {
-            AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
-            List<AuctionItem> auctionItems = response.items();
+                    AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response =
+                            (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
 
-            // Items are already sorted, so just paginate them
-            PaginationList<AuctionItem> paginationList = new PaginationList<>(auctionItems, 24);
-            paginationList.addAll(auctionItems);
+                    PaginationList<AuctionItem> paginationList = new PaginationList<>(response.items(), 24);
+                    paginationList.addAll(response.items());
 
-            // Set the items in the GUI
-            List<AuctionItem> paginatedItems = paginationList.getPage(page);
-            setItemCache(paginatedItems);
-        });
+                    List<AuctionItem> paginatedItems = paginationList.getPage(page);
+                    itemCache = paginatedItems;
+                    doAction(new RefreshAction());
+                });
     }
 
-    @SneakyThrows
-    private void setItems() {
-        fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
-        set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
-        getInventory().setTitle(Component.text("Auction Browser - " + StringUtility.toNormalCase(category.name())));
-
-        set(new GUIClickableItem(50) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                AuctionsSorting nextSort = sorting.next();
-                setSorting(nextSort);
-
-                if (filter.equals(AuctionsFilter.BIN_ONLY)) {
-                    // Ensure that the auctions sorting isn't MOST_BIDS
-                    if (nextSort.equals(AuctionsSorting.MOST_BIDS)) {
-                        setSorting(AuctionsSorting.HIGHEST_BID);
-                    }
-                }
-
-                Thread.startVirtualThread(() -> updateItemsCache());
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>(List.of(" "));
-
-                Arrays.stream(AuctionsSorting.values()).forEach(sort -> {
-                    // Ensure to not display the MOST_BIDS sorting if the filter is BIN_ONLY
-                    if (filter.equals(AuctionsFilter.BIN_ONLY)) {
-                        if (sort.equals(AuctionsSorting.MOST_BIDS)) {
-                            return;
-                        }
-                    }
-
-                    if (sort == sorting) {
-                        lore.add("§b§l> §b" + StringUtility.toNormalCase(sort.name()));
-                    } else {
-                        lore.add("§7" + StringUtility.toNormalCase(sort.name()));
-                    }
-                });
-
-                lore.add(" ");
-                lore.add("§eClick to switch sort!");
-
-                return ItemStackCreator.getStack("§aSort", Material.HOPPER, 1,
-                        lore);
-            }
-        });
-        set(new GUIClickableItem(52) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (e.getClickType().equals(ClickType.RIGHT_CLICK)) {
-                    AuctionsFilter nextFilter = filter.previous();
-                    setFilter(nextFilter);
-
-                    Thread.startVirtualThread(() -> updateItemsCache());
-                    return;
-                }
-                AuctionsFilter nextFilter = filter.next();
-                setFilter(nextFilter);
-
-                Thread.startVirtualThread(() -> updateItemsCache());
-            }
-
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                List<String> lore = new ArrayList<>(List.of(" "));
-
-                Arrays.stream(AuctionsFilter.values()).forEach(filter -> {
-                    if (filter == GUIAuctionBrowser.this.filter) {
-                        lore.add("§b§l> §b" + StringUtility.toNormalCase(filter.name()));
-                    } else {
-                        lore.add("§7" + StringUtility.toNormalCase(filter.name()));
-                    }
-                });
-
-                lore.add(" ");
-                lore.add("§bRight-Click to go backwards!");
-                lore.add("§eClick to switch filter!");
-
-                return ItemStackCreator.getStack("§aBIN Filter", Material.GOLD_BLOCK, 1,
-                        lore);
-            }
-        });
-        for (int i = 0; i < AuctionCategories.values().length; i++) {
-            AuctionCategories category = AuctionCategories.values()[i];
-            set(new GUIClickableItem(i * 9) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    if (category.equals(getCategory())) {
-                        return;
-                    }
-
-                    setCategory(category);
-                    Thread.startVirtualThread(() -> updateItemsCache());
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    List<String> lore = new ArrayList<>(List.of("§8Category", " ", "§7Examples:"));
-                    category.getExamples().forEach(example -> lore.add("§8◼ §7" + example));
-                    lore.add(" ");
-
-                    if (category.equals(getCategory())) {
-                        lore.add("§aCurrently Browsing");
-                    } else {
-                        lore.add("§eClick to view items!");
-                    }
-
-                    return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getDisplayMaterial(), 1, lore);
-                }
-            });
-        }
-
-        int highestCoveredSlot = 0;
-
-        if (getItemCache() == null) {
-            fillInAir(highestCoveredSlot);
+    private void refreshItems(SkyBlockPlayer player) {
+        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
+            player.sendMessage("§cAuction House is currently offline!");
+            player.closeInventory();
             return;
         }
-
-        for (AuctionItem auctionItem : getItemCache()) {
-            int slot = PAGINATED_SLOTS[getItemCache().indexOf(auctionItem)];
-            highestCoveredSlot++;
-
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIAuctionViewItem(auctionItem.getUuid(), GUIAuctionBrowser.this).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    SkyBlockItem skyBlockItem = new SkyBlockItem(auctionItem.getItem());
-                    ItemStack builtItem = PlayerItemUpdater.playerUpdate(player, skyBlockItem.getItemStack()).build();
-
-                    return ItemStackCreator.getStack(StringUtility.getTextFromComponent(builtItem.get(ItemComponent.CUSTOM_NAME)),
-                            skyBlockItem.getMaterial(), skyBlockItem.getAmount(), new AuctionItemLoreHandler(auctionItem).getLore());
-                }
-            });
-        }
-
-        // Fill the rest of the slots with air
-        fillInAir(highestCoveredSlot / 2);
-    }
-
-    private void fillInAir(int highestCoveredSlot) {
-        for (int i = highestCoveredSlot; i < PAGINATED_SLOTS.length; i++) {
-            int slot = PAGINATED_SLOTS[i];
-            set(new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(" ", Material.AIR, 1);
-                }
-            });
-        }
+        doAction(new RefreshAction());
     }
 
     @Override
@@ -244,32 +245,17 @@ public class GUIAuctionBrowser extends SkyBlockInventoryGUI implements Refreshin
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
+        // No cleanup needed
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        e.setCancelled(true);
-    }
-
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
-            player.closeInventory();
-        }
-
-        setItems();
-    }
-
-    @Override
-    public int refreshRate() {
-        return 10;
+    public void onSuddenQuit(SkyBlockPlayer player) {
+        // No cleanup needed
     }
 }

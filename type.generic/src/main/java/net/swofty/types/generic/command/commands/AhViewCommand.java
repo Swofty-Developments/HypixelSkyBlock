@@ -25,7 +25,8 @@ public class AhViewCommand extends SkyBlockCommand {
 
             UUID ah = context.get(uuid);
 
-            new GUIAuctionViewItem(ah, new GUIAuctionBrowser()).open((SkyBlockPlayer) sender);
+            ((SkyBlockPlayer) sender).openInventory(
+                    new GUIAuctionViewItem(ah, new GUIAuctionBrowser()));
         }, uuid);
     }
 }

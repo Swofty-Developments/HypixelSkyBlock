@@ -5,6 +5,7 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBanker;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBankerDeposit;
 import net.swofty.types.generic.gui.inventory.inventories.banker.GUIBankerWithdraw;
@@ -24,8 +25,8 @@ public class RedisBankHash implements ProxyToClient {
         UUID uuid = UUID.fromString(message.getString("uuid"));
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
 
-        if (SkyBlockInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
-            SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(player.getUuid());
+        if (SkyBlockAbstractInventory.GUI_MAP.containsKey(player.getUuid())) {
+            SkyBlockAbstractInventory gui = SkyBlockAbstractInventory.GUI_MAP.get(player.getUuid());
             if (gui.getClass() == GUIBankerDeposit.class ||
                     gui.getClass() == GUIBanker.class ||
                     gui.getClass() == GUIBankerWithdraw.class) {

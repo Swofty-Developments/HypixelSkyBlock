@@ -84,7 +84,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void handleOpen(SkyBlockPlayer player) {
+    public void handleOpen(SkyBlockPlayer player) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, " ").build());
 
         for (int slot : INTERIOR) {
@@ -250,6 +250,10 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
                 .build());
     }
 
+    private void attachItem(int slot, ShopItem item) {
+        attachShopItem(slot, item);
+    }
+
     private ItemStack createShopItemStack(ShopItem item) {
         ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(owner,
                 item.getItem().getItemStackBuilder().build());
@@ -329,12 +333,12 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected boolean allowHotkeying() {
+    public boolean allowHotkeying() {
         return false;
     }
 
     @Override
-    protected void onClose(InventoryCloseEvent event, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         DataHandler.Data.INVENTORY.onLoad.accept(
                 player, DataHandler.Data.INVENTORY.onQuit.apply(player)
@@ -342,7 +346,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onBottomClick(InventoryPreClickEvent event) {
+    public void onBottomClick(InventoryPreClickEvent event) {
         ItemStack stack = event.getClickedItem();
         event.setCancelled(true);
 
@@ -377,7 +381,7 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
     }
 
     @Override
-    protected void onSuddenQuit(SkyBlockPlayer player) {
+    public void onSuddenQuit(SkyBlockPlayer player) {
         // Handle any cleanup needed if player suddenly disconnects
     }
 
@@ -385,6 +389,10 @@ public abstract class SkyBlockShopGUI extends SkyBlockAbstractInventory {
 
     protected void attachShopItem(ShopItem item) {
         shopItemList.add(item);
+    }
+
+    protected void attachItem(ShopItem item) {
+        attachShopItem(item);
     }
 
     protected void updateThis(SkyBlockPlayer player) {

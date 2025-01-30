@@ -1,8 +1,8 @@
 package net.swofty.types.generic.gui.inventory.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
@@ -15,9 +15,10 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.auction.AuctionItemLoreHandler;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointUUIDList;
+import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.SetTitleAction;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.PaginationList;
@@ -27,22 +28,51 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
-    public GUIViewBids() {
-        super("Your Bids", InventoryType.CHEST_3_ROW);
+public class GUIViewBids extends SkyBlockAbstractInventory {
+    private static final String STATE_AUCTION_HOUSE_ONLINE = "auction_house_online";
+    private static final String STATE_AUCTION_HOUSE_OFFLINE = "auction_house_offline";
 
-        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(22, new GUIAuctionHouse()));
+    public GUIViewBids() {
+        super(InventoryType.CHEST_3_ROW);
+        doAction(new SetTitleAction(Component.text("Your Bids")));
     }
 
     @Override
-    public void onOpen(InventoryGUIOpenEvent e) {
-        setItems();
+    public void handleOpen(SkyBlockPlayer player) {
+        fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, "").build());
+
+        // Back button
+        attachItem(GUIItem.builder(22)
+                .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
+                        "§7To Auction House").build())
+                .onClick((ctx, item) -> {
+                    ctx.player().openInventory(new GUIAuctionHouse());
+                    return true;
+                })
+                .build());
+
+        checkAuctionHouseStatus(player);
+        startLoop("refresh", 10, () -> checkAuctionHouseStatus(player));
     }
 
-    public void setItems() {
-        List<UUID> auctions = getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue();
-        List<CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse>> futures = new ArrayList<>(auctions.size());
+    private void checkAuctionHouseStatus(SkyBlockPlayer player) {
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                doAction(new SetTitleAction(Component.text("Auction House Offline")));
+                player.sendMessage("§cAuction House is currently offline!");
+                player.closeInventory();
+                return;
+            }
+
+            loadAuctionItems(player);
+        });
+    }
+
+    private void loadAuctionItems(SkyBlockPlayer player) {
+        List<UUID> auctions = player.getDataHandler()
+                .get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue();
+        List<CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse>> futures =
+                new ArrayList<>(auctions.size());
         PaginationList<AuctionItem> auctionItems = new PaginationList<>(7);
 
         auctions.forEach(uuid -> {
@@ -63,43 +93,40 @@ public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
             futures.add(future);
         });
 
-        CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-        allDone.join();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenRun(() -> {
+            auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
+            List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);
 
-        // Sort the items by the time they were added
-        auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
+            for (int i = 0; i < 7; i++) {
+                int slot = i + 10;
+                final int index = i;
 
-        List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);
+                if (i >= auctionItems.size()) {
+                    attachItem(GUIItem.builder(slot)
+                            .item(ItemStack.AIR)
+                            .build());
+                    continue;
+                }
 
-        for (int i = 0; i < 7; i++) {
-            int slot = i + 10;
-
-            if (i >= auctionItems.size()) {
-                set(new GUIItem(slot) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStack.builder(Material.AIR);
-                    }
-                });
-                continue;
+                AuctionItem item = auctionItemsPage.get(i);
+                attachItem(GUIItem.builder(slot)
+                        .item(() -> {
+                            ItemStack.Builder baseItem = new NonPlayerItemUpdater(item.getItem()).getUpdatedItem();
+                            return ItemStackCreator.getStack(
+                                            StringUtility.getTextFromComponent(baseItem.build()
+                                                    .get(ItemComponent.CUSTOM_NAME)),
+                                            item.getItem().material(),
+                                            item.getItem().amount(),
+                                            new AuctionItemLoreHandler(item).getLore(player))
+                                    .build();
+                        })
+                        .onClick((ctx, clickedItem) -> {
+                            ctx.player().openInventory(new GUIAuctionViewItem(item.getUuid(), this));
+                            return true;
+                        })
+                        .build());
             }
-
-            AuctionItem item = auctionItemsPage.get(i);
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIAuctionViewItem(item.getUuid(), GUIViewBids.this).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack(
-                            StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
-                                    .get(ItemComponent.CUSTOM_NAME)),
-                            item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
-                }
-            });
-        }
+        });
     }
 
     @Override
@@ -108,33 +135,13 @@ public class GUIViewBids extends SkyBlockInventoryGUI implements RefreshingGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    public void onClose(InventoryCloseEvent event, CloseReason reason) {}
 
+    @Override
+    public void onBottomClick(InventoryPreClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-
-    }
-
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage("§cAuction House is currently offline!");
-            player.closeInventory();
-            return;
-        }
-
-        setItems();
-    }
-
-    @Override
-    public int refreshRate() {
-        return 10;
-    }
+    public void onSuddenQuit(SkyBlockPlayer player) {}
 }
