@@ -25,6 +25,9 @@ public class GUIItem {
     private final Consumer<SkyBlockPlayer> onPostClick;
     @Getter
     private final String id;
+    @Getter
+    @Setter
+    private long attachedTimestamp;
 
     private GUIItem(Builder builder) {
         this.slot = builder.slot;
@@ -33,6 +36,7 @@ public class GUIItem {
         this.onClick = builder.onClick;
         this.onPostClick = builder.onPostClick;
         this.id = builder.id;
+        this.attachedTimestamp = System.currentTimeMillis();
     }
 
     public boolean isVisible(Set<String> currentStates) {

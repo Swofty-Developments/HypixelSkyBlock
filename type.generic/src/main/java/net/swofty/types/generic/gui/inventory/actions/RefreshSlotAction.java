@@ -5,6 +5,7 @@ import net.swofty.types.generic.gui.inventory.GUIAction;
 import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +31,11 @@ public class RefreshSlotAction implements GUIAction {
             return;
         }
 
-        // If no state items are visible, fall back to items without state requirements
-        Optional<GUIItem> defaultItem = items.stream()
+        // If no state items are visible, get the most recently attached item
+        Optional<GUIItem> mostRecentItem = items.stream()
                 .filter(item -> item.getStateRequirements().isEmpty())
-                .findFirst();
+                .max(Comparator.comparingLong(GUIItem::getAttachedTimestamp));
 
-        gui.setItemStack(slot, defaultItem.map(GUIItem::getItem).orElse(ItemStack.AIR));
+        gui.setItemStack(slot, mostRecentItem.map(GUIItem::getItem).orElse(ItemStack.AIR));
     }
 }

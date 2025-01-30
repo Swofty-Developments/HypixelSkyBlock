@@ -75,7 +75,7 @@ public class GUIEmblems extends SkyBlockAbstractInventory {
                         return ItemStackCreator.getStack("§a" + displayName, material, 1, lore).build();
                     })
                     .onClick((ctx, item) -> {
-                        ctx.player().openInventory(new GUIInventoryEmblem(emblem));
+                        ctx.player().openInventory(new GUIEmblem(emblem));
                         return true;
                     })
                     .build());

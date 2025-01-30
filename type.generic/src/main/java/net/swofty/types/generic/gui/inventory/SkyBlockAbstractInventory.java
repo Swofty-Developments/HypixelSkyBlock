@@ -98,7 +98,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
     }
 
     protected void fill(ItemStack item, int startSlot, int endSlot) {
-        fill(item, startSlot, endSlot, true);
+        fill(item, startSlot, endSlot, false);
     }
 
     protected void fill(ItemStack item, int startSlot, int endSlot, boolean overwrite) {
@@ -275,6 +275,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
 
     // Item Management
     public void attachItem(GUIItem item) {
+        item.setAttachedTimestamp(System.nanoTime());
         items.computeIfAbsent(item.getSlot(), k -> new ArrayList<>()).add(item);
         doAction(new RefreshSlotAction(item.getSlot()));
     }

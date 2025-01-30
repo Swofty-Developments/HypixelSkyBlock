@@ -84,7 +84,7 @@ public class GUICollections extends SkyBlockAbstractInventory {
                         "",
                         "§eClick to view!").build())
                 .onClick((ctx, item) -> {
-                    ctx.player().openInventory(new GUIInventoryCraftedMinions(new GUICollections()));
+                    ctx.player().openInventory(new GUICraftedMinions(new GUICollections()));
                     return true;
                 })
                 .build());
@@ -118,7 +118,7 @@ public class GUICollections extends SkyBlockAbstractInventory {
                                 lore).build();
                     })
                     .onClick((ctx, item) -> {
-                        ctx.player().openInventory(new GUIInventoryCollectionCategory(category, display));
+                        ctx.player().openInventory(new GUICollectionCategory(category, display));
                         return true;
                     })
                     .build());

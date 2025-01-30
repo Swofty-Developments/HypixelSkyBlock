@@ -57,7 +57,7 @@ public class GUICollectionItem extends SkyBlockAbstractInventory {
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
                         "§7To " + category.getName()).build())
                 .onClick((ctx, clickedItem) -> {
-                    ctx.player().openInventory(new GUIInventoryCollectionCategory(
+                    ctx.player().openInventory(new GUICollectionCategory(
                             category,
                             ctx.player().getCollection().getDisplay(new ArrayList<>(), category)
                     ));
