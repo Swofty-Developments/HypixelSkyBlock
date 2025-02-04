@@ -3,7 +3,7 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/paper)
 
-A 1.8 to 1.21.3 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase.
+A 1.8 to 1.21.3 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
 
 #### Releases
 
@@ -64,6 +64,10 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 1. Due to the nature of SkyBlock, there may be a variety of services that need to be ran. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
 2. Move these JAR files into the same directory as your Game Servers, they will share the configuration JSON with the services.
 3. Run them using `java -jar {Insert the JAR file}`.
+
+### Forums Website Setup Guide
+1. Ensure that your API service is running.
+2. Follow the steps found at [the HypixelForums repository](https://github.com/Swofty-Developments/HypixelForums).
 
 ### Resource Pack Setup Guide
 1. In preparation for SkyBlock version 1, we already have a resource pack system setup. To start, download the `SkyBlockPacker.jar` from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest).
