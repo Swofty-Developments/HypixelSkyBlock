@@ -234,7 +234,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register Placement Rules
          */
-        BlockPlacementManager.register();
+        BlockPlacementManager.registerAll();
 
         /**
          * Start data loop
