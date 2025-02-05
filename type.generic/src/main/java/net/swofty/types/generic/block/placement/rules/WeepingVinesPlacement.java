@@ -9,9 +9,9 @@ import net.swofty.types.generic.block.placement.BlockUtils;
 import net.swofty.types.generic.block.placement.PlacementRule;
 import net.swofty.types.generic.block.placement.states.BlockState;
 
-public class WeepingVines extends PlacementRule {
+public class WeepingVinesPlacement extends PlacementRule {
 
-    public WeepingVines() {
+    public WeepingVinesPlacement() {
         super(Block.WEEPING_VINES);
     }
 

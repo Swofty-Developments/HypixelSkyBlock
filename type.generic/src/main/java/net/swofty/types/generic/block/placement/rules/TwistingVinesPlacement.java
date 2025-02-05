@@ -8,9 +8,9 @@ import net.swofty.types.generic.block.placement.BlockUtils;
 import net.swofty.types.generic.block.placement.PlacementRule;
 import net.swofty.types.generic.block.placement.states.BlockState;
 
-public class TwistingVines extends PlacementRule {
+public class TwistingVinesPlacement extends PlacementRule {
 
-    public TwistingVines() {
+    public TwistingVinesPlacement() {
         super(Block.TWISTING_VINES);
     }
 

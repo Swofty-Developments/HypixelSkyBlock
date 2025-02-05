@@ -1,7 +1,6 @@
 package net.swofty.types.generic.block.placement.states;
 
 import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.kyori.adventure.text.NBTComponent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockHandler;
 import net.swofty.types.generic.block.placement.states.error.StateError;
@@ -22,12 +21,12 @@ public class BlockState {
     private Block block;
 
     private BlockHandler blockHandler;
-    private NBTComponent blockNbt;
+    private CompoundBinaryTag blockNbt;
 
     //Internal use of BlockState to create a new BlockState from a Block and save data from the Block
     protected BlockState(Block block) {
         this.blockHandler = block.handler();
-        this.blockNbt = (NBTComponent) block.nbt();
+        this.blockNbt = block.nbt();
         this.block = block;
         //Copy All Entry
         block_states.putAll(block.properties());
@@ -168,7 +167,7 @@ public class BlockState {
             block = block.withHandler(blockHandler);
 
         if (blockNbt != null)
-            block = block.withNbt((CompoundBinaryTag) blockNbt);
+            block = block.withNbt(blockNbt);
 
         return block.withProperties(map());
     }
@@ -180,7 +179,7 @@ public class BlockState {
     public void withBlock(Block block) {
         block_states.clear();
         this.block = block;
-        this.blockNbt = (NBTComponent) block.nbt();
+        this.blockNbt = block.nbt();
         this.blockHandler = block.handler();
         block_states.putAll(block.properties());
     }
