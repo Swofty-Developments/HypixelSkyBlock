@@ -68,7 +68,7 @@ public class GUIBazaarItemSet extends SkyBlockAbstractInventory {
         // Back button
         attachItem(GUIItem.builder(30)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + new GUIBazaar(category).getTitle()).build())
+                        "§7To " + new GUIBazaar(category).getTitleAsString()).build())
                 .onClick((ctx, item) -> {
                     ctx.player().openInventory(new GUIBazaar(category));
                     return true;

@@ -44,7 +44,7 @@ public class GUILevelRewards extends SkyBlockAbstractInventory {
         // Back button
         attachItem(GUIItem.builder(30)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + new GUISkyBlockLevels().getTitle()).build())
+                        "§7To " + new GUISkyBlockLevels().getTitleAsString()).build())
                 .onClick((ctx, item) -> {
                     ctx.player().openInventory(new GUISkyBlockLevels());
                     return true;

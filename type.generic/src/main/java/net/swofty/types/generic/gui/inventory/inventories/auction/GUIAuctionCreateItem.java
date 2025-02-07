@@ -75,7 +75,7 @@ public class GUIAuctionCreateItem extends SkyBlockAbstractInventory {
     private void setupBackButton() {
         attachItem(GUIItem.builder(49)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + previousGUI.getTitle()).build())
+                        "§7To " + previousGUI.getTitleAsString()).build())
                 .onClick((ctx, item) -> {
                     ctx.player().openInventory(previousGUI);
                     return true;

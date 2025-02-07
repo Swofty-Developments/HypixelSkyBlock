@@ -7,7 +7,9 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.packet.server.play.CloseWindowPacket;
 import net.minestom.server.network.packet.server.play.OpenWindowPacket;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.gui.inventory.actions.RefreshAction;
 import net.swofty.types.generic.gui.inventory.actions.RefreshSlotAction;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -20,7 +22,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
     public static final Map<UUID, SkyBlockAbstractInventory> GUI_MAP = new ConcurrentHashMap<>();
 
     private final Set<String> states = new HashSet<>();
-    private final Map<Integer, List<GUIItem>> items = new ConcurrentHashMap<>();
+    private Map<Integer, List<GUIItem>> items = new ConcurrentHashMap<>();
     private final Map<String, UpdateLoop> activeLoops = new ConcurrentHashMap<>();
     private boolean hasFinishedLoading = false;
 
@@ -47,6 +49,8 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
             previousInventory.onClose(new InventoryCloseEvent(previousInventory, player), CloseReason.SERVER_EXITED);
             previousInventory.stopAllLoops();
             GUI_MAP.remove(player.getUuid());
+
+            player.sendPacket(new CloseWindowPacket(previousInventory.getWindowId()));
         }
 
         this.owner = (SkyBlockPlayer) player;
@@ -60,20 +64,22 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
         ));
         this.update(player);
 
-        // Handle opening
-        handleOpen((SkyBlockPlayer) player);
-        hasFinishedLoading = true;
+        Thread.startVirtualThread(() -> {
+            // Handle opening
+            handleOpen((SkyBlockPlayer) player);
+            hasFinishedLoading = true;
+        });
 
         return true;
     }
 
     @Override
     public boolean removeViewer(@NotNull Player player) {
-        if (this.viewers.remove(player)) {
-            onClose(new InventoryCloseEvent(this, player), CloseReason.SERVER_EXITED);
-            stopAllLoops();
-            GUI_MAP.remove(player.getUuid());
-        }
+        CloseReason reason = player.didCloseInventory() ? CloseReason.PLAYER_EXITED : CloseReason.SERVER_EXITED;
+        onClose(new InventoryCloseEvent(this, player), reason);
+        stopAllLoops();
+        GUI_MAP.remove(player.getUuid());
+
         return super.removeViewer(player);
     }
 
@@ -268,15 +274,30 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
         doAction(new RefreshAction());
     }
 
+    protected void removeAllItems(int slot) {
+        Map<Integer, List<GUIItem>> newItems = new HashMap<>();
+
+        for (Map.Entry<Integer, List<GUIItem>> entry : items.entrySet()) {
+            if (entry.getKey() != slot) {
+                newItems.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        items = newItems;
+        doAction(new RefreshSlotAction(slot));
+    }
+
     // Action System
     protected void doAction(GUIAction action) {
-        action.execute(this);
+        Thread.startVirtualThread(() -> {
+            action.execute(this);
+        });
     }
 
     // Item Management
     public void attachItem(GUIItem item) {
         item.setAttachedTimestamp(System.nanoTime());
-        items.computeIfAbsent(item.getSlot(), k -> new ArrayList<>()).add(item);
+        items.computeIfAbsent(item.getSlot(), k -> Collections.synchronizedList(new ArrayList<>())).add(item);
         doAction(new RefreshSlotAction(item.getSlot()));
     }
 
@@ -296,7 +317,7 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
     }
 
     public List<GUIItem> getItemsInSlot(int slot) {
-        return items.getOrDefault(slot, List.of());
+        return Collections.synchronizedList(items.getOrDefault(slot, List.of()));
     }
 
     // Loop Management
@@ -328,5 +349,9 @@ public abstract class SkyBlockAbstractInventory extends Inventory {
         SIGN_OPENED,
         PLAYER_EXITED,
         SERVER_EXITED
+    }
+
+    public @NotNull String getTitleAsString() {
+        return StringUtility.getTextFromComponent(getTitle());
     }
 }

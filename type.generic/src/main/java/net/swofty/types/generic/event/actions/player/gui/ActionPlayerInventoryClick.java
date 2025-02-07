@@ -10,6 +10,8 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.gui.inventory.GUIItem;
 import net.swofty.types.generic.gui.inventory.SkyBlockAbstractInventory;
+import net.swofty.types.generic.gui.inventory.actions.RefreshAction;
+import net.swofty.types.generic.gui.inventory.actions.RefreshSlotAction;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.InteractableComponent;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -53,7 +55,6 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
 
         if (SkyBlockAbstractInventory.GUI_MAP.containsKey(player.getUuid())) {
             SkyBlockAbstractInventory gui = SkyBlockAbstractInventory.GUI_MAP.get(player.getUuid());
-
             if (gui == null) return;
 
             if (event.getClickType().equals(ClickType.DOUBLE_CLICK)) {
@@ -69,14 +70,7 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
                 gui.onBottomClick(event);
             } else {
                 int slot = event.getSlot();
-                List<GUIItem> items = gui.getItemsInSlot(slot);
-
-                if (items.isEmpty()) return;
-
-                GUIItem visibleItem = items.stream()
-                        .filter(item -> item.isVisible(gui.getStates()))
-                        .findFirst()
-                        .orElse(null);
+                GUIItem visibleItem = RefreshSlotAction.getItem(gui, slot);
 
                 if (visibleItem == null) return;
 
@@ -94,7 +88,13 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
                 boolean canPickup = visibleItem.handleClickAndShouldAllow(context, event.getClickedItem());
                 if (!canPickup) {
                     event.setCancelled(true);
+                } else {
+                    // Check that the same GUI is still open
+                    if (player.getOpenInventory() != event.getInventory()) {
+                        event.setCancelled(true);
+                    }
                 }
+                new RefreshAction().execute(gui);
 
                 if (!cursorItem.isNA() && player.getOpenInventory() != event.getInventory()
                         && player.getOpenInventory() != null && event.getClickType() != ClickType.CHANGE_HELD) {

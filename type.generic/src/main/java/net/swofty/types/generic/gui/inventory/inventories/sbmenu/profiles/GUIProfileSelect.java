@@ -52,7 +52,7 @@ public class GUIProfileSelect extends SkyBlockAbstractInventory {
                 .item(() -> createSwitchProfileItem(player))
                 .onClick((ctx, item) -> {
                     handleProfileSwitch(ctx.player());
-                    return true;
+                    return false;
                 })
                 .build());
 
@@ -68,7 +68,7 @@ public class GUIProfileSelect extends SkyBlockAbstractInventory {
                         "§eClick to continue!").build())
                 .onClick((ctx, item) -> {
                     handleProfileDeletion(ctx.player());
-                    return true;
+                    return false;
                 })
                 .build());
     }

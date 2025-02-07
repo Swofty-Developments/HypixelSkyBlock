@@ -43,7 +43,7 @@ public class GUIBazaarBuyAmountSelection extends SkyBlockAbstractInventory {
 
         attachItem(GUIItem.builder(31)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + previousGUI.getTitle()).build())
+                        "§7To " + previousGUI.getTitleAsString()).build())
                 .onClick((ctx, item) -> {
                     ctx.player().openInventory(previousGUI);
                     return true;

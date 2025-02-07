@@ -47,7 +47,7 @@ public class GUIItem {
 
     public boolean handleClickAndShouldAllow(ClickContext context, ItemStack clickedItem) {
         boolean result = onClick != null && onClick.apply(context, clickedItem);
-        if (result) {
+        if (result && onPostClick != null) {
             onPostClick.accept(context.player());
         }
         return result;

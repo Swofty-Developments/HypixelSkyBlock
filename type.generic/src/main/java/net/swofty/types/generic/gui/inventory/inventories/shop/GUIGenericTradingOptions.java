@@ -51,7 +51,7 @@ public final class GUIGenericTradingOptions extends SkyBlockAbstractInventory {
         // Back button
         attachItem(GUIItem.builder(49)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + retPointer.getTitle()).build())
+                        "§7To " + retPointer.getTitleAsString()).build())
                 .onClick((ctx, clickedItem) -> {
                     ctx.player().openInventory(retPointer);
                     return false;

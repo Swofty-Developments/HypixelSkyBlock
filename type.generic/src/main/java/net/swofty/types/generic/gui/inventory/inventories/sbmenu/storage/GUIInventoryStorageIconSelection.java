@@ -72,7 +72,7 @@ public class GUIInventoryStorageIconSelection extends SkyBlockPaginatedInventory
         if (previous != null) {
             attachItem(GUIItem.builder(48)
                     .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                            "§7To " + previous.getTitle()).build())
+                            "§7To " + previous.getTitleAsString()).build())
                     .onClick((ctx, item) -> {
                         ctx.player().openInventory(previous);
                         return true;

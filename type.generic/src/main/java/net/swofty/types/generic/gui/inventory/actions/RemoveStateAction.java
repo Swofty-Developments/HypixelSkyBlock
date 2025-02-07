@@ -13,5 +13,6 @@ public class RemoveStateAction implements GUIAction {
     @Override
     public void execute(SkyBlockAbstractInventory gui) {
         gui.removeStateInternal(state);
+        new RefreshAction().execute(gui);
     }
 }

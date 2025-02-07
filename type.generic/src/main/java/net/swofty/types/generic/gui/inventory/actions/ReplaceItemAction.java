@@ -16,5 +16,6 @@ public class ReplaceItemAction implements GUIAction {
     @Override
     public void execute(SkyBlockAbstractInventory gui) {
         gui.replaceItemWithId(id, newItem);
+        new RefreshAction().execute(gui);
     }
 }

@@ -23,5 +23,6 @@ public class SetTitleAction implements GUIAction {
                         title
                 ))
         );
+        new RefreshAction().execute(gui);
     }
 }

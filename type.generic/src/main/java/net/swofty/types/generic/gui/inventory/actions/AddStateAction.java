@@ -13,5 +13,6 @@ public class AddStateAction implements GUIAction {
     @Override
     public void execute(SkyBlockAbstractInventory gui) {
         gui.addStateInternal(state);
+        new RefreshAction().execute(gui);
     }
 }

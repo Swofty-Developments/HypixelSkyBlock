@@ -42,7 +42,7 @@ public class GUIManageAuctions extends SkyBlockAbstractInventory {
         // Back button
         attachItem(GUIItem.builder(22)
                 .item(ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
-                        "§7To " + new GUIAuctionHouse().getTitle()).build())
+                        "§7To " + new GUIAuctionHouse().getTitleAsString()).build())
                 .onClick((ctx, item) -> {
                     ctx.player().openInventory(new GUIAuctionHouse());
                     return true;
