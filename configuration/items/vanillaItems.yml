@@ -3214,7 +3214,7 @@ items:
     rarity: COMMON
     components:
       - id: PLACEABLE
-        block_type: BlockType.CHEST
+        block_type: CHEST
       - id: SELLABLE
         value: 2.0
       - id: DEFAULT_CRAFTABLE
