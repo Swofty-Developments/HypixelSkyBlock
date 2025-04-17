@@ -3,7 +3,7 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/paper)
 
-A 1.8 to 1.21.3 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
+A 1.8 to 1.21.4 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
 
 #### Releases
 
