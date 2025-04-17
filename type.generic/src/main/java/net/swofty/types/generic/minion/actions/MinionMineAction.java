@@ -50,7 +50,7 @@ public class MinionMineAction extends MinionAction {
 
         return hasAir ?
                 new ArrayList<>() :
-                List.of(new SkyBlockItem(Material.fromNamespaceId(toMine.namespace())));
+                List.of(new SkyBlockItem(Material.fromKey(toMine.key())));
     }
 
     @Override
@@ -58,14 +58,14 @@ public class MinionMineAction extends MinionAction {
         List<ItemQuantifiable> items = minion.getItemsInMinion();
 
         if (items.stream().noneMatch(item -> {
-            return item.getItem().getMaterial() == Material.fromNamespaceId(toMine.namespace());
+            return item.getItem().getMaterial() == Material.fromKey(toMine.key());
         })) {
             return true;
         }
 
         boolean shouldAllow = false;
         for (ItemQuantifiable item : items) {
-            if (item.getItem().getMaterial() == Material.fromNamespaceId(toMine.namespace())) {
+            if (item.getItem().getMaterial() == Material.fromKey(toMine.key())) {
                 if (item.getAmount() != 64) {
                     shouldAllow = true;
                 }

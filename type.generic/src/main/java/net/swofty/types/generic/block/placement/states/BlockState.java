@@ -188,7 +188,7 @@ public class BlockState {
     public String toString() {
         return "BlockState{" +
                 "states=" + mapToString(block_states) +
-                ", block=" + block.namespace() +
+                ", block=" + block.key() +
                 '}';
     }
 

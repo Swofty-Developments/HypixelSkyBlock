@@ -127,6 +127,7 @@ public class MissionTalkToVillagers extends SkyBlockProgressMission implements M
                     player.sendPacket(new ParticlePacket(
                             Particle.HAPPY_VILLAGER,
                             false,
+                            false,
                             villagerPosition.x(),
                             villagerPosition.y() + 3f,
                             villagerPosition.z(),

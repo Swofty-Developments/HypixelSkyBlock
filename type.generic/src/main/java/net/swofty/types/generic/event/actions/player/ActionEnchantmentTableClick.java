@@ -16,7 +16,7 @@ public class ActionEnchantmentTableClick implements SkyBlockEventClass {
     public void run(PlayerBlockInteractEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (Material.fromNamespaceId(event.getBlock().namespace()) != Material.ENCHANTING_TABLE) {
+        if (Material.fromKey(event.getBlock().key()) != Material.ENCHANTING_TABLE) {
             return;
         }
 

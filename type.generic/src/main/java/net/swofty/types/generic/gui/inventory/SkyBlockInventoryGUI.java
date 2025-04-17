@@ -275,7 +275,7 @@ public abstract class  SkyBlockInventoryGUI {
             }
 
             previouslyOpen.onClose(
-                    new InventoryCloseEvent(previouslyOpen.getInventory(), player),
+                    new InventoryCloseEvent(previouslyOpen.getInventory(), player , true),
                     SkyBlockInventoryGUI.CloseReason.SERVER_EXITED
             );
             GUI_MAP.remove(player.getUuid());

@@ -30,7 +30,7 @@ public class ItemConfigParser {
     public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {
         String id = (String) config.get("id");
         Material material = Material.values().stream().filter(loopedMaterial -> {
-            return loopedMaterial.namespace().value().equalsIgnoreCase((String) config.get("material"));
+            return loopedMaterial.key().value().equalsIgnoreCase((String) config.get("material"));
         }).findFirst().orElse(Material.AIR);
 
         List<String> lore = (List<String>) config.get("lore");
@@ -290,7 +290,7 @@ public class ItemConfigParser {
                         String::toLowerCase
                 ).toList();
                 List<Material> materials = Material.values().stream()
-                        .filter(material -> blockStrings.contains(material.namespace().value().toLowerCase()))
+                        .filter(material -> blockStrings.contains(material.key().value().toLowerCase()))
                         .toList();
 
                 yield new ServerOrbComponent(handlerId, materials);

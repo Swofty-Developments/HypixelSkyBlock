@@ -47,6 +47,7 @@ public class ActionPlayerLaunchPads implements SkyBlockEventClass {
         player.sendPacket(new ParticlePacket(
                 Particle.EXPLOSION,
                 false,
+                false,
                 (float) player.getPosition().x(),
                 (float) player.getPosition().y(),
                 (float) player.getPosition().z(),

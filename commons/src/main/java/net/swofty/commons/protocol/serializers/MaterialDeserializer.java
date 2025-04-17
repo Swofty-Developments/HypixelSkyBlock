@@ -12,6 +12,6 @@ public class MaterialDeserializer extends JsonDeserializer<Material> {
     @Override
     public Material deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         JsonNode node = p.getCodec().readTree(p);
-        return Material.fromNamespaceId(node.asText());
+        return Material.fromKey(node.asText());
     }
 }

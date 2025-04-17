@@ -76,6 +76,7 @@ public class ParticleEngine
                   target.sendPacket(new ParticlePacket(
                           this.particle,
                           false, // Long distance must always be false to not cause lag
+                          false,
                           position.x(),
                           position.y(),
                           position.z(),

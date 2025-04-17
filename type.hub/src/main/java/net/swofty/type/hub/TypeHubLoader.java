@@ -72,6 +72,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     player.sendPacket(new ParticlePacket(
                             Particle.DUST.withColor(new Color(153, 0, 255)),
+                            false,
                             true,
                             (float) pos.x(),
                             (float) pos.y(),

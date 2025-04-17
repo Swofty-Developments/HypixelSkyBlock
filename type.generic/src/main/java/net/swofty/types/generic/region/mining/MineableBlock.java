@@ -73,7 +73,7 @@ public enum MineableBlock {
 
     public static MineableBlock get(Block block) {
         for (MineableBlock mineableBlock : values()) {
-            if (block.namespace().equals(mineableBlock.getMaterial().namespace()))
+            if (block.key().equals(mineableBlock.getMaterial().key()))
                 return mineableBlock;
         }
         return null;

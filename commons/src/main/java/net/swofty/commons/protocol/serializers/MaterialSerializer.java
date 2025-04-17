@@ -10,6 +10,6 @@ import java.io.IOException;
 public class MaterialSerializer extends JsonSerializer<Material> {
     @Override
     public void serialize(Material value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeString(value.namespace().asString());
+        gen.writeString(value.key().asString());
     }
 }

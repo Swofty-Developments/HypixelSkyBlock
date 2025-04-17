@@ -85,7 +85,7 @@ public class MinionSkinComponent extends SkyBlockItemComponent {
         public static MinionArmorPiece fromConfig(Map<String, Object> config) {
             String materialStr = (String) config.get("material");
             Material material = Material.values().stream()
-                    .filter(m -> materialStr.equals(m.namespace().value()))
+                    .filter(m -> materialStr.equals(m.key().value()))
                     .findFirst()
                     .orElse(Material.AIR);
 

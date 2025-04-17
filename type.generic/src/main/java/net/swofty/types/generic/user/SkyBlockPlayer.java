@@ -751,8 +751,8 @@ public class SkyBlockPlayer extends Player {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());
 
             if (gui == null) return;
-
-            gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
+            if (tempInv == null) return;
+            gui.onClose(new InventoryCloseEvent(tempInv, this , true), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
         }
     }

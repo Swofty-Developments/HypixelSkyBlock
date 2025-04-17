@@ -32,9 +32,9 @@ public class ActionPlayerDamageBlock implements SkyBlockEventClass {
         if (event.getStatus() != ClientPlayerDiggingPacket.Status.STARTED_DIGGING
                 || region == null
                 || region.getType().getMiningHandler() == null
-                || Material.fromNamespaceId(player.getInstance().getBlock(event.getBlockPosition()).namespace()) == null
+                || Material.fromKey(player.getInstance().getBlock(event.getBlockPosition()).key()) == null
                 || !region.getType().getMiningHandler().getMineableBlocks(player.getInstance(), event.getBlockPosition()).contains(
-                Material.fromNamespaceId(player.getInstance().getBlock(event.getBlockPosition()).namespace()))
+                Material.fromKey(player.getInstance().getBlock(event.getBlockPosition()).key()))
                 || player.getGameMode().equals(GameMode.CREATIVE)) {
             // Cancel the task if the player is no longer breaking the block or changed block
 

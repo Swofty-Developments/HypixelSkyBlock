@@ -19,7 +19,7 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
         jsonObject.put("itemKey", value.itemKey() != null ? value.itemKey().name() : "null");
         jsonObject.put("amount", value.amount());
         jsonObject.put("material", value.itemKey() != null ? value.itemKey().material :
-                value.material().namespace().asString());
+                value.material().key().asString());
 
         for (ItemAttribute attribute : value.attributes()) {
             jsonObject.put("attr-" + attribute.getKey(), attribute.saveIntoString());
@@ -44,7 +44,7 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
 
         int amount = jsonObject.getInt("amount");
         String materialStr = jsonObject.getString("material");
-        Material material = Material.fromNamespaceId(materialStr);
+        Material material = Material.fromKey(materialStr);
         if (material == null) {
             throw new IllegalArgumentException("Invalid material: " + materialStr);
         }
