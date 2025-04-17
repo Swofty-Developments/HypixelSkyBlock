@@ -2,7 +2,6 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import com.viaversion.viaversion.api.Via;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
@@ -69,9 +68,6 @@ public class ListenerPlayerHandler extends RedisListener {
                 return RedisMessage.sendMessageToServer(server,
                         FromProxyChannels.GET_BANK_HASH,
                         message).join();
-            }
-            case VERSION -> {
-                return new JSONObject().put("version", Via.getAPI().getPlayerVersion(player.getUniqueId()));
             }
             case EVENT -> {
                 if (potentialServer.isEmpty()) {

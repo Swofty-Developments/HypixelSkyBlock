@@ -6,10 +6,7 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerHand;
+import net.minestom.server.entity.*;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
@@ -92,6 +89,8 @@ public class SkyBlockPlayer extends Player {
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
     @Getter
     private PlayerHookManager hookManager;
+    @Getter
+    private PlayerSkin skin = PlayerSkin.fromUuid(String.valueOf(getUuid()));
 
     public SkyBlockPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
         super(playerConnection, gameProfile);
@@ -99,6 +98,7 @@ public class SkyBlockPlayer extends Player {
         joined = System.currentTimeMillis();
         hookManager = new PlayerHookManager(this, new HashMap<>());
     }
+
 
     public DataHandler getDataHandler() {
         return DataHandler.getUser(this.getUuid());
@@ -751,8 +751,8 @@ public class SkyBlockPlayer extends Player {
             SkyBlockInventoryGUI gui = SkyBlockInventoryGUI.GUI_MAP.get(this.getUuid());
 
             if (gui == null) return;
-
-            gui.onClose(new InventoryCloseEvent(tempInv, this), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
+            if (tempInv == null) return;
+            gui.onClose(new InventoryCloseEvent(tempInv, this , true), SkyBlockInventoryGUI.CloseReason.SERVER_EXITED);
             SkyBlockInventoryGUI.GUI_MAP.remove(this.getUuid());
         }
     }

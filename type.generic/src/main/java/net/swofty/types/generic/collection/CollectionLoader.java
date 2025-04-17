@@ -95,7 +95,7 @@ public class CollectionLoader {
                 @Override
                 public Material getDisplayIcon() {
                     return Material.values().stream()
-                            .filter(material -> material.namespace().value().equalsIgnoreCase(config.displayIcon))
+                            .filter(material -> material.key().value().equalsIgnoreCase(config.displayIcon))
                             .findFirst()
                             .orElse(Material.AIR);
                 }

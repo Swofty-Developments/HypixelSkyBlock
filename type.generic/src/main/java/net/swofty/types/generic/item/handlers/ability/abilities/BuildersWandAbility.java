@@ -26,7 +26,7 @@ public class BuildersWandAbility extends RegisteredAbility {
     }
 
     private static void fillConnectedFaces(SkyBlockPlayer player, Pos origin, BlockFace face) {
-        Material fillMaterial = Material.fromNamespaceId(player.getInstance().getBlock(origin).namespace());
+        Material fillMaterial = Material.fromKey(player.getInstance().getBlock(origin).key());
         int blocksInInventory = player.countItem(ItemType.fromMaterial(fillMaterial));
         int blockLimit = 164;
         if (blocksInInventory < blockLimit)
@@ -59,8 +59,8 @@ public class BuildersWandAbility extends RegisteredAbility {
         while (!blocks.isEmpty() && blockLimit > 0) {
             Pos l = (blocks.get(0));
             for (Vec vector : check) {
-                if (w.getBlock(l.add(vector)).namespace().equals(fillMaterial.namespace()) && w
-                        .getBlock(l.add(vector).add(translate)).namespace().equals(Material.AIR.namespace())) {
+                if (w.getBlock(l.add(vector)).key().equals(fillMaterial.key()) && w
+                        .getBlock(l.add(vector).add(translate)).key().equals(Material.AIR.key())) {
                     blocks.add(l.add(vector));
                 }
             }
@@ -68,8 +68,8 @@ public class BuildersWandAbility extends RegisteredAbility {
             // TODO: make sure player is on island
             if (player.isOnIsland()) {
                 blocks.removeIf(blocks.get(0)::equals);
-                if (!player.getInstance().getBlock(fillBlock).namespace().equals(fillMaterial.namespace())) {
-                    player.getInstance().setBlock(fillBlock, Block.fromNamespaceId(fillMaterial.namespace()));
+                if (!player.getInstance().getBlock(fillBlock).key().equals(fillMaterial.key())) {
+                    player.getInstance().setBlock(fillBlock, Block.fromKey(fillMaterial.key()));
 
                     blockLimit--;
                     blocksPlaced++;

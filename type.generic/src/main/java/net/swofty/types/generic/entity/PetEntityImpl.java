@@ -81,6 +81,7 @@ public class PetEntityImpl extends LivingEntity {
                 player.sendPacket(new ParticlePacket(
                         particle,
                         false,
+                        false,
                         getPosition().x(),
                         getPosition().y(),
                         getPosition().z(),

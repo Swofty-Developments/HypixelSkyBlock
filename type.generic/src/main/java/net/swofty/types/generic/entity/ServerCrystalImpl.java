@@ -83,6 +83,7 @@ public class ServerCrystalImpl extends LivingEntity {
                 player.sendPacket(new ParticlePacket(
                         Particle.HAPPY_VILLAGER,
                         false,
+                        false,
                         getPosition().x(),
                         getPosition().y(),
                         getPosition().z(),
@@ -138,6 +139,7 @@ public class ServerCrystalImpl extends LivingEntity {
                 SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
                     player.sendPacket(new ParticlePacket(
                             Particle.CLOUD,
+                            false,
                             false,
                             pos.x(),
                             pos.y(),

@@ -143,7 +143,7 @@ public class StringUtility {
     }
 
     public static Material getMaterialFromBlock(Block block) {
-        return Material.fromNamespaceId(block.namespace());
+        return Material.fromKey(block.key());
     }
 
     public static String profileAge(long tbf) {

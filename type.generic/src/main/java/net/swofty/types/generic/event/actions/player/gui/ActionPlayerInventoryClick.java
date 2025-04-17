@@ -93,7 +93,8 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
                 if (item instanceof GUIQueryItem query) {
                     gui.onClose(new InventoryCloseEvent(
                             player.getOpenInventory(),
-                            player
+                            player,
+                            true
                     ), SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
 
                     new SkyBlockSignGUI(player).open(query.lines()).thenAccept(string -> {

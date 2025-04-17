@@ -34,7 +34,7 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());
 
         Block block = event.getBlock();
-        Material material = Material.fromNamespaceId(block.name());
+        Material material = Material.fromKey(block.name());
         boolean shouldItemDrop = false;
 
         // Handle island server block breaks

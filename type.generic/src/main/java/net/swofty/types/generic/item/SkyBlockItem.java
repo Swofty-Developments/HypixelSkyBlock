@@ -50,7 +50,7 @@ public class SkyBlockItem {
     }
 
     public SkyBlockItem(Material material) {
-        String materialName = material.namespace().value();
+        String materialName = material.key().value();
         ItemType itemType = ItemType.get(materialName);
         if (itemType != null) {
             loadAsItemType(itemType);
@@ -71,7 +71,7 @@ public class SkyBlockItem {
     public SkyBlockItem(String type) {
         ItemType itemType = ItemType.get(type);
         if (itemType == null) {
-            Material material = Material.fromNamespaceId(type.toLowerCase());
+            Material material = Material.fromKey(type.toLowerCase());
             loadAsMaterial(material);
             return;
         }
@@ -118,9 +118,9 @@ public class SkyBlockItem {
         }
 
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
-        typeAttribute.setValue(material.namespace().asString());
+        typeAttribute.setValue(material.key().asString());
 
-        String materialId = material.namespace().value();
+        String materialId = material.key().value();
         config = ConfigurableSkyBlockItem.getFromID(materialId);
         if (config == null) {
             config = new ConfigurableSkyBlockItem(materialId,
@@ -213,7 +213,7 @@ public class SkyBlockItem {
         } catch (IllegalArgumentException e) {
             if (typeAttribute.getValue().equalsIgnoreCase("N/A"))
                 return Material.BEDROCK;
-            Material material = Material.fromNamespaceId(typeAttribute.getValue());
+            Material material = Material.fromKey(typeAttribute.getValue());
             if (material == null)
                 return Material.AIR;
             return material;

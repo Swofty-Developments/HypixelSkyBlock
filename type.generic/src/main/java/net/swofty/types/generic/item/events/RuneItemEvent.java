@@ -20,7 +20,7 @@ public class RuneItemEvent implements SkyBlockEventClass {
         int level = runedItem.getAttributeHandler().getRuneData().getLevel();
         int amountOfParticles = level * 3;
 
-        player.sendPacket(new ParticlePacket(Particle.DRIPPING_LAVA, true,
+        player.sendPacket(new ParticlePacket(Particle.DRIPPING_LAVA, true, false,
                 event.getKilledMob().getPosition().x(), event.getKilledMob().getPosition().y(), event.getKilledMob().getPosition().z(),
                 0, 0, 0, 0, amountOfParticles));
     }

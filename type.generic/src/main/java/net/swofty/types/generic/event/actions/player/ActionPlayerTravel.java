@@ -1,10 +1,10 @@
 package net.swofty.types.generic.event.actions.player;
 
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.utils.NamespaceID;
 import net.swofty.commons.ServerType;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -29,9 +29,9 @@ public class ActionPlayerTravel implements SkyBlockEventClass {
 
         if (delay.contains(player.getUuid())) return;
 
-        NamespaceID block = player.getInstance().getBlock(player.getPosition()).namespace();
+        Key block = player.getInstance().getBlock(player.getPosition()).key();
 
-        if (block == Block.NETHER_PORTAL.namespace()) {
+        if (block == Block.NETHER_PORTAL.key()) {
             MissionData data = player.getMissionData();
 
             if (!MissionSet.GETTING_STARTED.hasCompleted(player)
@@ -49,7 +49,7 @@ public class ActionPlayerTravel implements SkyBlockEventClass {
                     .schedule();
         }
 
-        if (block == Block.END_PORTAL.namespace()) {
+        if (block == Block.END_PORTAL.key()) {
             player.sendTo(ServerType.ISLAND);
             delay.add(player.getUuid());
 

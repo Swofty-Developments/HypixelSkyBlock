@@ -6,6 +6,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
@@ -17,7 +18,6 @@ import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
-import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.*;
@@ -274,7 +274,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockRegion.cacheRegions();
         SkyBlockMiningConfiguration.startRepeater(MinecraftServer.getSchedulerManager());
         MinecraftServer.getDimensionTypeRegistry().register(
-                NamespaceID.from("skyblock:island"),
+                Key.key("skyblock:island"),
                 DimensionType.builder()
                         .ambientLight(2)
                         .build());
@@ -530,10 +530,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
 
             UUID uuid = gameProfile.getPlayer().getUuid();
             String username = gameProfile.getPlayer().getUsername();
-
-            Thread.ofVirtual().start(() -> {
-                new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
-            });
 
             if (RedisOriginServer.origin.containsKey(uuid)) {
                 player.setOriginServer(RedisOriginServer.origin.get(uuid));

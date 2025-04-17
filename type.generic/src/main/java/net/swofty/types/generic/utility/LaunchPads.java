@@ -111,6 +111,7 @@ public enum LaunchPads {
                             player.sendPacket(new ParticlePacket(
                                     Particle.COMPOSTER,
                                     false,
+                                    false,
                                     slimeBlock.x(),
                                     slimeBlock.y() + 1,
                                     slimeBlock.z(),

@@ -58,7 +58,7 @@ public class ItemLore {
             displayName = handler.getPotentialType().getDisplayName();
         } else {
             Material material = stack.material();
-            displayName = StringUtility.toNormalCase(material.namespace().value());
+            displayName = StringUtility.toNormalCase(material.key().value());
         }
         String displayRarity = rarity.getDisplay();
 

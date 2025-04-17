@@ -62,7 +62,7 @@ public class GUISkyBlockMenu extends SkyBlockInventoryGUI {
                 lore.add("§eClick to view!");
 
                 return ItemStackCreator.getStackHead("§aYour SkyBlock Profile",
-                        PlayerSkin.fromUuid(player.getUuid().toString()), 1,
+                        player.getSkin(), 1,
                         lore
                 );
             }

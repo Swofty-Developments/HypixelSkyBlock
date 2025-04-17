@@ -2,6 +2,7 @@ package net.swofty.types.generic.command;
 
 import lombok.Getter;
 import net.minestom.server.command.CommandSender;
+import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.command.builder.Command;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
@@ -62,7 +63,7 @@ public abstract class SkyBlockCommand {
             });
 
             setCondition((commandSender, string) -> {
-                if (commandSender.isConsole()) {
+                if (commandSender instanceof ConsoleSender) {
                     return command.getParams().allowsConsole();
                 }
 
@@ -84,7 +85,7 @@ public abstract class SkyBlockCommand {
             });
 
             setCondition((commandSender, string) -> {
-                if (commandSender.isConsole()) {
+                if (commandSender instanceof ConsoleSender) {
                     return command.getParams().allowsConsole();
                 }
 
