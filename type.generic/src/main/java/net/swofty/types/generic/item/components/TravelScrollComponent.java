@@ -10,7 +10,8 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.warps.TravelScrollType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class TravelScrollComponent extends SkyBlockItemComponent {

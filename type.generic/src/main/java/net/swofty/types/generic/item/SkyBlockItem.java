@@ -8,6 +8,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
@@ -16,19 +17,16 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSandboxItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeStatistics;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeType;
-import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class SkyBlockItem {
     public List<ItemAttribute> attributes = new ArrayList<>();
@@ -122,10 +120,12 @@ public class SkyBlockItem {
         ItemAttributeType typeAttribute = (ItemAttributeType) getAttribute("item_type");
         typeAttribute.setValue(material.namespace().asString());
 
-        config = ConfigurableSkyBlockItem.getFromID(material.namespace().value());
+        String materialId = material.namespace().value();
+        config = ConfigurableSkyBlockItem.getFromID(materialId);
         if (config == null) {
-            config = new ConfigurableSkyBlockItem(UUID.randomUUID().toString(),
+            config = new ConfigurableSkyBlockItem(materialId,
                     material, List.of(), new HashMap<>());
+            config.register();
         } else {
             ItemStatistics statistics = config.getDefaultStatistics();
             ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
@@ -174,16 +174,21 @@ public class SkyBlockItem {
         return attributes.stream().filter(attribute -> attribute.getKey().equals(key)).findFirst().orElse(null);
     }
 
-    public @Nullable ConfigurableSkyBlockItem getConfig() {
+    public @Nullable ConfigurableSkyBlockItem toConfigurableItem() {
         String type = getAttributeHandler().getTypeAsString();
-        return ConfigurableSkyBlockItem.getFromID(type);
+        ConfigurableSkyBlockItem configItem = ConfigurableSkyBlockItem.getFromID(type);
+        // Update our own config reference if we found one
+        if (configItem != null) {
+            this.config = configItem;
+        }
+        return configItem;
     }
 
     @Override
     public SkyBlockItem clone() {
         SkyBlockItem item = new SkyBlockItem(getMaterial());
         List<ItemAttribute> attributesForClone = new ArrayList<>();
-        item.config = config;
+        item.config = config;  // Add debug here
         item.amount = amount;
         ItemAttribute.getPossibleAttributes().forEach(attribute -> {
             attribute.setValue(getAttribute(attribute.getKey()).getValue());
@@ -231,7 +236,9 @@ public class SkyBlockItem {
     }
 
     public <T extends SkyBlockItemComponent> boolean hasComponent(Class<T> componentClass) {
-        if (config == null) return false;
+        if (config == null) {
+            return false;
+        }
         return config.hasComponent(componentClass);
     }
 

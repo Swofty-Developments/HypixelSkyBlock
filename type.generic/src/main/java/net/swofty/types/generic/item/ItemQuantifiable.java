@@ -5,10 +5,7 @@ import lombok.NonNull;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
-
-import java.nio.channels.SelectionKey;
 
 public class ItemQuantifiable {
     private @NonNull SkyBlockItem item;

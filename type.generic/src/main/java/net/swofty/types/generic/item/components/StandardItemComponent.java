@@ -15,6 +15,7 @@ public class StandardItemComponent extends SkyBlockItemComponent {
     public StandardItemComponent(String type) {
         this.type = StandardItemType.valueOf(type);
 
+        addInheritedComponent(new TrackedUniqueComponent());
         addInheritedComponent(new ExtraRarityComponent(this.type.getRarityDisplay()));
         addInheritedComponent(new ReforgableComponent(this.type.getReforgeType()));
         addInheritedComponent(new EnchantableComponent(this.type.getEnchantGroups(), true));

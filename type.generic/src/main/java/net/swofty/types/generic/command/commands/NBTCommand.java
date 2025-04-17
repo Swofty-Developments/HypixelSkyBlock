@@ -2,10 +2,8 @@ package net.swofty.types.generic.command.commands;
 
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
-import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 
@@ -27,7 +25,7 @@ public class NBTCommand extends SkyBlockCommand {
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;
 
-            ItemStack item = ((SkyBlockPlayer) sender).getInventory().getItemInMainHand();
+            ItemStack item = ((SkyBlockPlayer) sender).getItemInMainHand();
             AtomicReference<String> values = new AtomicReference<>("");
 
             item.toItemNBT().forEach((key) -> {

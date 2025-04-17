@@ -32,7 +32,7 @@ public class ActionPlayerChangeSkyBlockMenuDisplay implements SkyBlockEventClass
 
     public static void runCheck(SkyBlockPlayer player) {
         SkyBlockItem switchedTo = new SkyBlockItem(player.getItemInMainHand());
-        if (switchedTo.isNA() || switchedTo.getConfig() == null) {
+        if (switchedTo.isNA() || switchedTo.toConfigurableItem() == null) {
             setMainMenu(player);
             return;
         }

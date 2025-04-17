@@ -1,8 +1,6 @@
 package net.swofty.types.generic.event.actions.custom;
 
 import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.potion.Potion;
-import net.minestom.server.potion.PotionEffect;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -18,6 +16,6 @@ public class ActionChangeMiningRegion implements SkyBlockEventClass {
 
         if (SkyBlockConst.isIslandServer()) return;
 
-        player.getAttribute(Attribute.PLAYER_MINING_EFFICIENCY).setBaseValue(0D);
+        player.getAttribute(Attribute.MINING_EFFICIENCY).setBaseValue(0D);
     }
 }

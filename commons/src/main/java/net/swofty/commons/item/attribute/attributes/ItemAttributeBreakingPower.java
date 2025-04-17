@@ -1,6 +1,5 @@
 package net.swofty.commons.item.attribute.attributes;
 
-import lombok.SneakyThrows;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;

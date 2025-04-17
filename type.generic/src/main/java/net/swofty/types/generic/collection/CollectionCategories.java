@@ -23,8 +23,6 @@ public enum CollectionCategories {
 
     CollectionCategories(String file) {
         this.file = file;
-
-        getCategory();
     }
 
     public CollectionCategory getCategory() {

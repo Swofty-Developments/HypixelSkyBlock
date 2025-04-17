@@ -1,6 +1,8 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.kyori.adventure.text.Component;
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -8,8 +10,6 @@ import net.swofty.types.generic.event.custom.SkillUpdateEvent;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.skill.SkillCategory;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.StringUtility;
 
 import java.util.Arrays;
 
@@ -32,7 +32,7 @@ public class ActionSkillLevelUp implements SkyBlockEventClass {
 
         player.sendMessage("§3§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         player.sendMessage(Component.text("  §b§lSKILL LEVEL UP §3" + skillCategory + " §8" +
-                        (oldLevelDisplay.isEmpty() ? "§e" : oldLevelDisplay + ">§e") +
+                        (oldLevelDisplay.isEmpty() ? "§e" : oldLevelDisplay + "➜§e") +
                         StringUtility.getAsRomanNumeral(newLevel))
                 .hoverEvent(Component.text("§eClick to view your " + skillCategory + " Skill progress!"))
                 .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewskill " + skillCategory.toString().toUpperCase()))

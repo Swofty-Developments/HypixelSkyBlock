@@ -1,8 +1,6 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.network.packet.client.common.ClientPingRequestPacket;
 import net.minestom.server.network.packet.client.common.ClientPongPacket;
-import net.minestom.server.network.packet.server.common.PingResponsePacket;
 import net.swofty.anticheat.engine.SwoftyPlayer;
 import net.swofty.anticheat.event.packet.RequestPingPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;

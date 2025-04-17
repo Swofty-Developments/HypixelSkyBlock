@@ -2,7 +2,6 @@ package net.swofty.commons.protocol.objects;
 
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 
 public class PingProtocolObject extends ProtocolObject<
         PingProtocolObject.EmptyMessage,

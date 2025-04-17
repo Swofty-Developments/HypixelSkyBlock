@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

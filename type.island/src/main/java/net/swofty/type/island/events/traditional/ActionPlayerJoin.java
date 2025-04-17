@@ -2,7 +2,6 @@ package net.swofty.type.island.events.traditional;
 
 import lombok.SneakyThrows;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;

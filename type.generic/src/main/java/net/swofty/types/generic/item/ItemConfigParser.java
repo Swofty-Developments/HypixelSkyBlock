@@ -1,13 +1,9 @@
 package net.swofty.types.generic.item;
 
 import net.minestom.server.color.Color;
-import net.minestom.server.event.player.PlayerItemAnimationEvent;
-import net.minestom.server.item.ItemComponent;
-import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.ItemAnimation;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.DyedItemColor;
 import net.minestom.server.particle.Particle;
-import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.Rarity;
@@ -16,12 +12,10 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
-import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.item.components.RuneComponent;
-import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
-import net.swofty.types.generic.minion.MinionIngredient;
 import net.swofty.types.generic.item.components.*;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.handlers.pet.KatUpgrade;
+import net.swofty.types.generic.minion.MinionIngredient;
 import net.swofty.types.generic.utility.RarityValue;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 import org.jetbrains.annotations.Nullable;
@@ -116,8 +110,7 @@ public class ItemConfigParser {
                 yield new DefaultSoulboundComponent(coopAllowed);
             }
             case "DISABLE_ANIMATION" -> {
-                List<PlayerItemAnimationEvent.ItemAnimationType> animations =
-                        (List<PlayerItemAnimationEvent.ItemAnimationType>) config.get("disabled_animations");
+                List<ItemAnimation> animations = (List<ItemAnimation>) config.get("disabled_animations");
                 yield new DisableAnimationComponent(animations);
             }
             case "DRILL" -> new DrillComponent();
@@ -185,7 +178,6 @@ public class ItemConfigParser {
                 Color color = new Color(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b));
                 yield new LeatherColorComponent(color);
             }
-            case "LEGGINGS" -> new LeggingsComponent();
             case "MINION" -> {
                 String minionType = (String) config.get("minion_type");
                 String baseItem = (String) config.get("base_item");

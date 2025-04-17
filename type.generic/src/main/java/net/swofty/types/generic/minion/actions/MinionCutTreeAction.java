@@ -2,7 +2,6 @@ package net.swofty.types.generic.minion.actions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.types.generic.item.SkyBlockItem;

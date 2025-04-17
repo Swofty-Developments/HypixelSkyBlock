@@ -2,11 +2,11 @@ package net.swofty.types.generic.gems;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import net.swofty.commons.ChatColor;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.statistics.ItemStatistic;
-import net.swofty.commons.ChatColor;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.GemstoneComponent;
 import net.swofty.types.generic.item.components.GemstoneImplComponent;
 

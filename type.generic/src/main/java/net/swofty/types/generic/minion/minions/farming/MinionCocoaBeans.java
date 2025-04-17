@@ -5,7 +5,6 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
-import net.swofty.types.generic.minion.actions.MinionMineAction;
 import net.swofty.types.generic.minion.actions.MinionMineCocoaBeansAction;
 
 import java.util.List;

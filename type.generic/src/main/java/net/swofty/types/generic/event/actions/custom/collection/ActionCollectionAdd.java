@@ -1,9 +1,7 @@
 package net.swofty.types.generic.event.actions.custom.collection;
 
-import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
@@ -78,18 +76,29 @@ public class ActionCollectionAdd implements SkyBlockEventClass {
                     addedAmount = Integer.parseInt(existingReplacement.display().substring(2, existingReplacement.display().indexOf(" "))) + 1;
                 } catch (NumberFormatException ignored) {}
             }
-
-            bar.addReplacement(
-                    SkyBlockActionBar.BarSection.DEFENSE,
-                    new SkyBlockActionBar.DisplayReplacement(
-                            "§2+" + addedAmount + " " + category.getName() +
-                                    " §7(" + player.getCollection().get(type) +
-                                    "/" +
-                                    player.getCollection().getReward(collection).requirement() + ")",
-                            20,
-                            startingPriority
-                    )
-            );
+            if (player.getCollection().getReward(collection) != null) {
+                bar.addReplacement(
+                        SkyBlockActionBar.BarSection.DEFENSE,
+                        new SkyBlockActionBar.DisplayReplacement(
+                                "§2+" + addedAmount + " " + type.getDisplayName() +
+                                        " §7(" + StringUtility.commaify(player.getCollection().get(type)) +
+                                        "/" +
+                                        StringUtility.shortenNumber(player.getCollection().getReward(collection).requirement()) + ")",
+                                20,
+                                startingPriority
+                        )
+                );
+            } else { //if Collection is maxed
+                bar.addReplacement(
+                        SkyBlockActionBar.BarSection.DEFENSE,
+                        new SkyBlockActionBar.DisplayReplacement(
+                                "§2+" + addedAmount + " " + type.getDisplayName() +
+                                        " §7(" + StringUtility.commaify(player.getCollection().get(type)) + ")",
+                                20,
+                                startingPriority
+                        )
+                );
+            }
         }, 5);
     }
 }

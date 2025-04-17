@@ -83,18 +83,15 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - OAA
-              - OBA
-              - OBO
+              - AA
+              - BA
+              - B
             ingredients:
               A:
                 type: DIAMOND
                 amount: 1
               B:
                 type: STICK
-                amount: 1
-              O:
-                type: AIR
                 amount: 1
             result:
               type: DIAMOND_AXE
@@ -131,18 +128,15 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - OAA
-              - OBA
-              - OBO
+              - AA
+              - BA
+              - B
             ingredients:
               A:
                 type: GOLD_INGOT
                 amount: 1
               B:
                 type: STICK
-                amount: 1
-              O:
-                type: AIR
                 amount: 1
             result:
               type: GOLDEN_AXE
@@ -179,18 +173,15 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - OAA
-              - OBA
-              - OBO
+              - AA
+              - BA
+              - B
             ingredients:
               A:
                 type: IRON_INGOT
                 amount: 1
               B:
                 type: STICK
-                amount: 1
-              O:
-                type: AIR
                 amount: 1
             result:
               type: IRON_AXE
@@ -227,18 +218,15 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - OAA
-              - OBA
-              - OBO
+              - AA
+              - BA
+              - B
             ingredients:
               A:
                 type: COBBLESTONE
                 amount: 1
               B:
                 type: STICK
-                amount: 1
-              O:
-                type: AIR
                 amount: 1
             result:
               type: STONE_AXE
@@ -275,18 +263,15 @@ items:
           - type: SHAPED
             recipe-type: NONE
             pattern:
-              - OAA
-              - OBA
-              - OBO
+              - AA
+              - BA
+              - B
             ingredients:
               A:
                 type: OAK_PLANKS
                 amount: 1
               B:
                 type: STICK
-                amount: 1
-              O:
-                type: AIR
                 amount: 1
             result:
               type: WOODEN_AXE

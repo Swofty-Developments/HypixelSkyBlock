@@ -19,7 +19,7 @@ public class ActionBlockPlaceable implements SkyBlockEventClass {
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (item.getConfig() == null) return;
+        if (item.toConfigurableItem() == null) return;
 
         if (item.hasComponent(PlaceableComponent.class)) {
             PlaceableComponent placeable = item.getComponent(PlaceableComponent.class);

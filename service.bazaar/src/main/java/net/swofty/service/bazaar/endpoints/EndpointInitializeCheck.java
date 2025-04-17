@@ -10,7 +10,6 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class EndpointInitializeCheck implements ServiceEndpoint<
         BazaarInitializeProtocolObject.BazaarInitializationRequest,

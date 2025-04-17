@@ -1,13 +1,8 @@
 package net.swofty.velocity.packet;
 
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.proxy.protocol.packet.BossBarPacket;
-import com.velocitypowered.proxy.protocol.packet.JoinGamePacket;
-import com.velocitypowered.proxy.protocol.packet.KeepAlivePacket;
-import com.velocitypowered.proxy.protocol.packet.RespawnPacket;
-import com.velocitypowered.proxy.protocol.packet.config.FinishedUpdatePacket;
-import com.velocitypowered.proxy.protocol.packet.config.RegistrySyncPacket;
-import com.velocitypowered.proxy.protocol.packet.config.StartUpdatePacket;
+import com.velocitypowered.proxy.protocol.packet.*;
+import com.velocitypowered.proxy.protocol.packet.config.*;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -32,6 +27,9 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != KeepAlivePacket.class
                     && packet.getClass() != RegistrySyncPacket.class
                     && packet.getClass() != FinishedUpdatePacket.class
+                    && packet.getClass() != PluginMessagePacket.class
+                    && packet.getClass() != KnownPacksPacket.class
+                    && packet.getClass() != TagsUpdatePacket.class
             ) {
                 System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;

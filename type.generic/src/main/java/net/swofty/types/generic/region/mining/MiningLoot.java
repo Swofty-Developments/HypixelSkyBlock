@@ -1,7 +1,6 @@
 package net.swofty.types.generic.region.mining;
 
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.utility.MaterialQuantifiableRandom;
 

@@ -2,12 +2,12 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.data.Datapoint;
-import net.swofty.commons.StringUtility;
 import org.json.JSONObject;
 
 import java.util.*;

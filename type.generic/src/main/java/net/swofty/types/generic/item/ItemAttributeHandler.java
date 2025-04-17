@@ -11,15 +11,14 @@ import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
+import net.swofty.types.generic.item.components.*;
 import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
-import net.swofty.types.generic.item.components.*;
 
 public class ItemAttributeHandler {
     SkyBlockItem item;

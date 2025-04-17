@@ -1,13 +1,10 @@
 package net.swofty.anticheat.loader.minestom.packets;
 
-import net.minestom.server.network.packet.client.play.ClientPlayerPositionAndRotationPacket;
 import net.minestom.server.network.packet.client.play.ClientPlayerPositionPacket;
 import net.swofty.anticheat.engine.SwoftyPlayer;
-import net.swofty.anticheat.event.packet.PositionAndRotationPacket;
 import net.swofty.anticheat.event.packet.PositionPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
-import net.swofty.anticheat.math.Pos;
 
 import java.util.UUID;
 
@@ -33,7 +30,7 @@ public class MinestomHandlerPositionPacket
                         ((PositionPacket) packet).getY(),
                         ((PositionPacket) packet).getZ()
                 ),
-                ((PositionPacket) packet).isOnGround()
+                (byte) (((PositionPacket) packet).isOnGround() ? 1 : 0)
         );
     }
 

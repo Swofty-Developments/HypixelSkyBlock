@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player.data;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.types.generic.event.EventNodes;

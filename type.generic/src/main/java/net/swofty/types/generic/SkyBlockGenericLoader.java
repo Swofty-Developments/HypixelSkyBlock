@@ -48,6 +48,9 @@ import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.item.ConfigurableSkyBlockItem;
 import net.swofty.types.generic.item.ItemConfigParser;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.CraftableComponent;
+import net.swofty.types.generic.item.components.MuseumComponent;
+import net.swofty.types.generic.item.components.ServerOrbComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.set.ArmorSetRegistry;
 import net.swofty.types.generic.item.set.impl.MuseumableSet;
@@ -61,12 +64,10 @@ import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionRepeater;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.museum.MuseumableItemCategory;
-import net.swofty.types.generic.item.components.CraftableComponent;
-import net.swofty.types.generic.item.components.MuseumComponent;
-import net.swofty.types.generic.item.components.ServerOrbComponent;
 import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.packet.SkyBlockPacketClientListener;
 import net.swofty.types.generic.packet.SkyBlockPacketServerListener;
+import net.swofty.types.generic.block.placement.BlockPlacementManager;
 import net.swofty.types.generic.redis.RedisAuthenticate;
 import net.swofty.types.generic.redis.RedisOriginServer;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
@@ -85,7 +86,8 @@ import net.swofty.types.generic.utility.MathUtility;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.*;
@@ -143,6 +145,42 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         CrystalDatabase.connect(mongoClient);
 
         /**
+         * Register items
+         */
+        ItemAttribute.registerItemAttributes();
+        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
+        File configDir = new File("./configuration");
+        File itemsDir = new File(configDir, "items");
+        try {
+            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
+            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
+            for (File file : yamlFiles) {
+                try {
+                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
+                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
+
+                    if (items != null) {
+                        for (Map<String, Object> itemConfig : items) {
+                            try {
+                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                            } catch (Exception e) {
+                                Logger.error("Failed to parse item " + itemConfig.get("id"));
+                                e.printStackTrace();
+                                continue;
+                            }
+                        }
+                    } else {
+                        Logger.warn("No items found in " + file.getName());
+                    }
+                } catch (IOException e) {
+                    Logger.error("Failed to load " + file.getName(), e);
+                }
+            }
+        } catch (IOException e) {
+            Logger.error("Failed to scan for YAML files", e);
+        }
+
+        /**
          * Register commands
          */
         MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, command) -> {
@@ -192,6 +230,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockCalendar.tick(MinecraftServer.getSchedulerManager());
         SkyBlockServerAttributes.loadAttributes(AttributeDatabase.getDocument("attributes"));
         SkyBlockServerAttributes.saveAttributeLoop();
+
+        /**
+         * Register Placement Rules
+         */
+        BlockPlacementManager.registerAll();
 
         /**
          * Start data loop
@@ -310,42 +353,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             String zone = typeLoader.getType().toString();
             FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer(), FairySoulZone.valueOf(zone));
-        }
-
-        /**
-         * Register items
-         */
-        ItemAttribute.registerItemAttributes();
-        PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
-        File configDir = new File("./configuration");
-        File itemsDir = new File(configDir, "items");
-        try {
-            List<File> yamlFiles = YamlFileUtils.getYamlFiles(itemsDir);
-            Logger.info("Found " + yamlFiles.size() + " YAML files to load");
-            for (File file : yamlFiles) {
-                try {
-                    Map<String, Object> data = YamlFileUtils.loadYaml(file);
-                    List<Map<String, Object>> items = (List<Map<String, Object>>) data.get("items");
-
-                    if (items != null) {
-                        for (Map<String, Object> itemConfig : items) {
-                            try {
-                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
-                            } catch (Exception e) {
-                                Logger.error("Failed to parse item " + itemConfig.get("id"));
-                                e.printStackTrace();
-                                continue;
-                            }
-                        }
-                    } else {
-                        Logger.warn("No items found in " + file.getName());
-                    }
-                } catch (IOException e) {
-                    Logger.error("Failed to load " + file.getName(), e);
-                }
-            }
-        } catch (IOException e) {
-            Logger.error("Failed to scan for YAML files", e);
         }
 
         /**
@@ -518,8 +525,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Handle ConnectionManager
          */
-        MinecraftServer.getConnectionManager().setPlayerProvider((uuid, username, playerConnection) -> {
-            SkyBlockPlayer player = new SkyBlockPlayer(uuid, username, playerConnection);
+        MinecraftServer.getConnectionManager().setPlayerProvider((gameProfile, playerConnection) -> {
+            SkyBlockPlayer player = new SkyBlockPlayer(playerConnection, gameProfile);
+
+            UUID uuid = gameProfile.getPlayer().getUuid();
+            String username = gameProfile.getPlayer().getUsername();
 
             Thread.ofVirtual().start(() -> {
                 new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);

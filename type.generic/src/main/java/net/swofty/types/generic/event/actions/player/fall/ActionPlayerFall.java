@@ -5,9 +5,9 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.event.EventNodes;
+import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.types.generic.event.SkyBlockEvent;
 
 import java.util.HashMap;
 

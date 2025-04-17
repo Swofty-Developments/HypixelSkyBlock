@@ -7,7 +7,6 @@ import net.swofty.service.bazaar.BazaarService;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import org.bson.Document;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 

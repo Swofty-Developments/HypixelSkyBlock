@@ -3,12 +3,16 @@ package net.swofty.types.generic.utility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.crafting.ShapedRecipe;
 import net.swofty.types.generic.item.crafting.ShapelessRecipe;
+import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.string.PlayerTemplateProcessor;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeParser {
     public static SkyBlockRecipe<?> parseRecipe(Map<String, Object> config) {

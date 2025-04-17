@@ -3,6 +3,7 @@ package net.swofty.types.generic.event.actions.item;
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
+import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -20,6 +21,10 @@ public class ActionItemAbilityRightUse implements SkyBlockEventClass {
         ItemStack itemStack = event.getItemStack();
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+
+        UnderstandableSkyBlockItem understandable = item.toUnderstandable();
+        String string = understandable.serialize();
+
 
         if (item.hasComponent(AbilityComponent.class)) {
             AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);

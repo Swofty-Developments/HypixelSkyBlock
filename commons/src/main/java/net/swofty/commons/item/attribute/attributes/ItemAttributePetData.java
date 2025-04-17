@@ -3,12 +3,12 @@ package net.swofty.commons.item.attribute.attributes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.commons.item.Rarity;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
-import net.swofty.commons.item.attribute.ItemAttribute;
 
 public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.PetData> {
     @Override

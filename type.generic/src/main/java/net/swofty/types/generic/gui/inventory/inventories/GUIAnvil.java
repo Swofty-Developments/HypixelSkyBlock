@@ -80,7 +80,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
                         return;
                     }
 
-                    giveResult(e.getInventory(), player);
+                    giveResult((Inventory) e.getInventory(), player);
 
                     SkyBlockItem item = new SkyBlockItem(stack);
                     updateItemToUpgrade(item);
@@ -141,7 +141,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
                         return;
                     }
 
-                    giveResult(e.getInventory(), player);
+                    giveResult((Inventory) e.getInventory(), player);
 
                     SkyBlockItem item = new SkyBlockItem(stack);
                     updateItemToSacrifice(item);
@@ -309,7 +309,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(resultSlot) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                giveResult(e.getInventory(),player);
+                giveResult((Inventory) e.getInventory(),player);
                 new GUIAnvil().open(player);
             }
 
@@ -339,7 +339,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
         ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(sacrificeItemSlot)));
         ((SkyBlockPlayer) e.getPlayer()).addAndUpdateItem(new SkyBlockItem(e.getInventory().getItemStack(upgradeItemSlot)));
 
-        giveResult(e.getInventory(), (SkyBlockPlayer) e.getPlayer());
+        giveResult((Inventory) e.getInventory(), (SkyBlockPlayer) e.getPlayer());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package net.swofty.types.generic.utility;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;

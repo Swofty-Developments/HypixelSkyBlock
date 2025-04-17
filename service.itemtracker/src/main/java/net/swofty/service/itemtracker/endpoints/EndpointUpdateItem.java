@@ -6,7 +6,7 @@ import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocol
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.itemtracker.TrackedItemsDatabase;
 
-import java.util.*;
+import java.util.UUID;
 
 public class EndpointUpdateItem implements ServiceEndpoint<
         TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage,

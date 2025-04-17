@@ -94,7 +94,7 @@ items:
         texture: d5d2750595477ecc13869580b12ffc3b13fc2b3ac3e5035ecfc9aafa036722a2
       - id: EXTRA_UNDER_NAME
         display: Machine Fuel
-  - id: PICKONIMBUS2000
+  - id: PICKONIMBUS_2000
     rarity: COMMON
     default_statistics:
       damage: 30.0

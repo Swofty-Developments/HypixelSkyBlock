@@ -12,14 +12,14 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Unit;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.item.ItemLore;
-import net.swofty.commons.item.Rarity;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.ItemAttributeHandler;
-import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
+import net.swofty.types.generic.item.ItemLore;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.GemstoneComponent;
 import net.swofty.types.generic.item.components.SkullHeadComponent;
 import net.swofty.types.generic.item.components.TrackedUniqueComponent;
@@ -38,8 +38,7 @@ public class PlayerItemUpdater {
         return playerUpdateFull(player, stack, isOwnedByPlayer).getValue();
     }
 
-    public static Map.Entry<SkyBlockItem,
-            ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
+    public static Map.Entry<SkyBlockItem, ItemStack.Builder> playerUpdateFull(SkyBlockPlayer player, ItemStack stack, boolean isOwnedByPlayer) {
         if (stack.hasTag(Tag.Boolean("uneditable")) && stack.getTag(Tag.Boolean("uneditable")))
             return Map.entry(new SkyBlockItem(stack), ItemStackCreator.getFromStack(stack));
 
@@ -99,16 +98,12 @@ public class PlayerItemUpdater {
                     new Color(leatherColour.red(), leatherColour.green(), leatherColour.blue()), false));
         }
 
-        if (item.hasComponent(TrackedUniqueComponent.class)
-                && handler.getUniqueTrackedID() == null
-                && isOwnedByPlayer) {
+        if (item.hasComponent(TrackedUniqueComponent.class) && handler.getUniqueTrackedID() == null && isOwnedByPlayer) {
             UUID randomUUID = UUID.randomUUID();
 
             handler.setUniqueTrackedID(randomUUID.toString(), player);
             toReturn.set(Tag.String("unique-tracked-id"), randomUUID.toString());
-        } else if (item.hasComponent(TrackedUniqueComponent.class)
-                && handler.getUniqueTrackedID() != null
-                && isOwnedByPlayer) {
+        } else if (item.hasComponent(TrackedUniqueComponent.class) && handler.getUniqueTrackedID() != null && isOwnedByPlayer) {
             handler.setUniqueTrackedID(handler.getUniqueTrackedID(), player);
         }
 
@@ -130,7 +125,6 @@ public class PlayerItemUpdater {
         if (item.hasComponent(GemstoneComponent.class)) {
             GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
 
-
             int index = 0;
             ItemAttributeGemData.GemData gemData = item.getAttributeHandler().getGemData();
             for (GemstoneComponent.GemstoneSlot slot : gemstoneComponent.getSlots()) {
@@ -146,7 +140,7 @@ public class PlayerItemUpdater {
                 }
                 index++;
             }
-            item.getAttributeHandler().setGemData(gemData);
+            handler.setGemData(gemData);
         }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {

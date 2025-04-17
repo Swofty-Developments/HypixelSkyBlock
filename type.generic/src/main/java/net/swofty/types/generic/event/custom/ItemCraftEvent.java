@@ -9,7 +9,10 @@ import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class ItemCraftEvent implements PlayerInstanceEvent {

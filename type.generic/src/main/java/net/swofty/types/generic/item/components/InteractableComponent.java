@@ -7,7 +7,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 public class InteractableComponent extends SkyBlockItemComponent {
     private final BiConsumer<SkyBlockPlayer, SkyBlockItem> rightClickHandler;

@@ -1,7 +1,7 @@
 package net.swofty.types.generic.entity.villager;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.metadata.villager.VillagerMeta;
+import net.minestom.server.entity.VillagerProfession;
 
 public abstract class NPCVillagerParameters {
     public abstract String[] holograms();
@@ -10,5 +10,5 @@ public abstract class NPCVillagerParameters {
 
     public abstract boolean looking();
 
-    public abstract VillagerMeta.Profession profession();
+    public abstract VillagerProfession profession();
 }

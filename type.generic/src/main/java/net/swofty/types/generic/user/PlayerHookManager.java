@@ -1,7 +1,5 @@
 package net.swofty.types.generic.user;
 
-import net.swofty.types.generic.event.SkyBlockEvent;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;

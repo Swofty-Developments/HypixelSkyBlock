@@ -11,8 +11,6 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.HeadProfile;
 import net.swofty.types.generic.user.fairysouls.FairySoul;
 
-import java.util.UUID;
-
 public class EntityFairySoul extends EntityCreature {
 
     private static final String SKULL_TEXTURES = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2OTIzYWQyNDczMTAwMDdmNmFlNWQzMjZkODQ3YWQ1Mzg2NGNmMTZjMzU2NWExODFkYzhlNmIyMGJlMjM4NyJ9fX0=";

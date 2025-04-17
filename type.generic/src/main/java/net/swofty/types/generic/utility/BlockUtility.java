@@ -1,10 +1,7 @@
 package net.swofty.types.generic.utility;
 
-import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.instance.block.Block;
 import org.json.JSONObject;
-
-import java.util.Base64;
 
 public class BlockUtility {
 

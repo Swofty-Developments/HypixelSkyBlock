@@ -14,7 +14,6 @@ items:
         b: '100'
       - id: SELLABLE
         value: 320.0
-      - id: ARMOR
   - id: MINER_OUTFIT_CHESTPLATE
     rarity: COMMON
     default_statistics:
@@ -30,7 +29,6 @@ items:
         b: '100'
       - id: SELLABLE
         value: 640.0
-      - id: ARMOR
   - id: MINER_OUTFIT_HELMET
     rarity: COMMON
     default_statistics:
@@ -46,7 +44,6 @@ items:
         b: '100'
       - id: SELLABLE
         value: 400.0
-      - id: ARMOR
   - id: MINER_OUTFIT_LEGGINGS
     rarity: COMMON
     default_statistics:
@@ -62,4 +59,3 @@ items:
         b: '100'
       - id: SELLABLE
         value: 560.0
-      - id: ARMOR

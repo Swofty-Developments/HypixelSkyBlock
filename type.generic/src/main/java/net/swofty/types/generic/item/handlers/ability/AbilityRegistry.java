@@ -1,5 +1,7 @@
 package net.swofty.types.generic.item.handlers.ability;
 
+import net.swofty.types.generic.item.handlers.ability.abilities.BuildersWandAbility;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +17,12 @@ AbilityRegistry {
                 RegisteredAbility.AbilityActivation.RIGHT_CLICK,
                 50,
                 new RegisteredAbility.AbilityManaCost(25),
-                (player, item) -> {
+                (player, item, ignored, ignored2) -> {
                     player.sendMessage("Hey");
                 }
         ));
+
+        register(new BuildersWandAbility());
     }
 
     public static void register(RegisteredAbility ability) {

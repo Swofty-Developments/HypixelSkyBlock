@@ -31,6 +31,9 @@ items:
   - id: BUILDERS_WAND
     rarity: COMMON
     components:
+      - id: ABILITY
+        abilities:
+          - GRAND_ARCHITECT
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
   - id: DITTO_BLOB

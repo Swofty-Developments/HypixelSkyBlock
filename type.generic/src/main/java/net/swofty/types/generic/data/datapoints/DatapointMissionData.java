@@ -6,7 +6,6 @@ import net.swofty.types.generic.mission.MissionData;
 import org.json.JSONObject;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class DatapointMissionData extends Datapoint<MissionData> {
     private static final Serializer<MissionData> serializer = new Serializer<MissionData>() {

@@ -66,7 +66,7 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
         });
 
         ItemType itemTypeLinker = item.getAttributeHandler().getPotentialType();
-        if (item.getConfig() == null) {
+        if (item.toConfigurableItem() == null) {
             getPlayer().closeInventory();
             getPlayer().sendMessage("§cThis item has no associated crafting recipes!");
             return;

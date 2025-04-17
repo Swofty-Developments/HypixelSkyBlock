@@ -26,6 +26,7 @@ public class BowComponent extends SkyBlockItemComponent {
         addInheritedComponent(new ReforgableComponent(ReforgeType.BOWS));
         addInheritedComponent(new EnchantableComponent(List.of(EnchantItemGroups.BOW), true));
         addInheritedComponent(new RuneableComponent(RuneableComponent.RuneApplicableTo.BOWS));
+        addInheritedComponent(new TrackedUniqueComponent());
     }
 
     public BowComponent(String handlerId, boolean shouldBeArrow) {

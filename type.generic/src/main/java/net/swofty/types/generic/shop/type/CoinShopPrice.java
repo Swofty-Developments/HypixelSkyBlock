@@ -3,9 +3,9 @@ package net.swofty.types.generic.shop.type;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import net.swofty.commons.StringUtility;
 import net.swofty.types.generic.shop.ShopPrice;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import net.swofty.commons.StringUtility;
 
 import java.util.List;
 

@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.item.ItemType;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
-
-import java.lang.reflect.InvocationTargetException;
-import net.swofty.commons.item.attribute.ItemAttribute;
 
 public class ItemAttributeRuneInfusedWith extends ItemAttribute<ItemAttributeRuneInfusedWith.RuneData> {
 
