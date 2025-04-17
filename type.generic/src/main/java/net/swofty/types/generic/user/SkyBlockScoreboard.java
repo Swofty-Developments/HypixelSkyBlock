@@ -3,6 +3,7 @@ package net.swofty.types.generic.user;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.StringUtility;
@@ -15,7 +16,6 @@ import net.swofty.types.generic.data.datapoints.DatapointInteger;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.SkyBlockRegion;
-import net.swofty.types.generic.scoreboard.SwoftySidebar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SkyBlockScoreboard {
-    private static final Map<UUID, SwoftySidebar> sidebarCache = new HashMap<>();
+    private static final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
     private static Integer skyblockName = 0;
 
     public static void start() {
@@ -50,7 +50,7 @@ public class SkyBlockScoreboard {
                     sidebarCache.get(player.getUuid()).removeViewer(player);
                 }
 
-                SwoftySidebar sidebar = new SwoftySidebar(Component.text("  " + getSidebarName(skyblockName, false)
+                Sidebar sidebar = new Sidebar(Component.text("  " + getSidebarName(skyblockName, false)
                         + (player.isCoop() ? " §b§lCO-OP  " : "  ")));
 
                 addLine("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8m" + SkyBlockConst.getServerName(), sidebar);
@@ -93,12 +93,12 @@ public class SkyBlockScoreboard {
         sidebarCache.remove(player.getUuid());
     }
 
-    private static void addLine(String text, SwoftySidebar sidebar) {
-        for (SwoftySidebar.ScoreboardLine existingLine : sidebar.getLines()) {
+    private static void addLine(String text, Sidebar sidebar) {
+        for (Sidebar.ScoreboardLine existingLine : sidebar.getLines()) {
             sidebar.updateLineScore(existingLine.getId(), existingLine.getLine() + 1);
         }
 
-        sidebar.createLine(new SwoftySidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
+        sidebar.createLine(new Sidebar.ScoreboardLine(UUID.randomUUID().toString(), Component.text(text), 0));
     }
 
     private static String getSidebarName(int counter, boolean isGuest) {

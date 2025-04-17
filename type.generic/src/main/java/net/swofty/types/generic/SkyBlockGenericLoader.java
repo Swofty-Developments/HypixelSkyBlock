@@ -531,10 +531,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
             UUID uuid = gameProfile.getPlayer().getUuid();
             String username = gameProfile.getPlayer().getUsername();
 
-            Thread.ofVirtual().start(() -> {
-                new ProxyPlayer(uuid).getVersion().thenAccept(player::setVersion);
-            });
-
             if (RedisOriginServer.origin.containsKey(uuid)) {
                 player.setOriginServer(RedisOriginServer.origin.get(uuid));
                 RedisOriginServer.origin.remove(uuid);

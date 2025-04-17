@@ -150,29 +150,7 @@ public class ProxyPlayer {
         return future;
     }
 
-    public CompletableFuture<MinecraftVersion> getVersion() {
-        CompletableFuture<MinecraftVersion> future = new CompletableFuture<>();
 
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.VERSION;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {
-            try {
-                future.complete(MinecraftVersion.byProtocolId(
-                        (int) s.get("version")
-                ));
-            } catch (Exception e) {
-                future.complete(MinecraftVersion.MINECRAFT_1_21);
-            } // ViaVersion is disabled
-        });
-
-        return future;
-    }
 
     public void refreshCoopData(String datapoint) {
         JSONObject json = new JSONObject();

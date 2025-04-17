@@ -26,9 +26,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.raphimc.vialoader.ViaLoader;
-import net.raphimc.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import net.raphimc.vialoader.impl.platform.ViaRewindPlatformImpl;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
@@ -44,8 +41,6 @@ import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
-import net.swofty.velocity.via.injector.SkyBlockViaInjector;
-import net.swofty.velocity.via.loader.SkyBlockVLLoader;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 
@@ -89,11 +84,6 @@ public class SkyBlockVelocity {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
         shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
-        /**
-         * Cross version support!
-         */
-        ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null , ViaBackwardsPlatformImpl::new , ViaRewindPlatformImpl::new);
-
         /**
          * Register packets
          */
@@ -158,7 +148,7 @@ public class SkyBlockVelocity {
 
         List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.ISLAND);
         List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.ISLAND);
-        GameManager.GameServer toSendTo = gameServers.get(0);
+        GameManager.GameServer toSendTo = gameServers.getFirst();
 
         for (BalanceConfiguration configuration : configurations) {
             GameManager.GameServer server = configuration.getServer(player, gameServers);
