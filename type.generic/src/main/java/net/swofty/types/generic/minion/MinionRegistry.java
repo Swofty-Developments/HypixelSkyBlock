@@ -10,6 +10,8 @@ import net.swofty.types.generic.minion.minions.fishing.MinionFishing;
 import net.swofty.types.generic.minion.minions.foraging.*;
 import net.swofty.types.generic.minion.minions.mining.*;
 
+import java.util.Arrays;
+
 public enum MinionRegistry {
     COBBLESTONE(MinionCobblestone.class, ItemType.COBBLESTONE_MINION),
     COAL(MinionCoal.class, ItemType.COAL_MINION),
@@ -76,6 +78,9 @@ public enum MinionRegistry {
     MinionRegistry(Class<? extends SkyBlockMinion> minionClass, ItemType ItemType) {
         this.minionClass = minionClass;
         this.itemType = ItemType;
+    }
+    public static MinionRegistry fromItemType(ItemType itemType){
+        return Arrays.stream(values()).filter(minionType -> minionType.itemType == itemType).findFirst().orElse(null);
     }
 
     public SkyBlockMinion asSkyBlockMinion() {
