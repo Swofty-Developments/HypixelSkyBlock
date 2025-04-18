@@ -3,6 +3,7 @@ package net.swofty.types.generic.event.actions.player.gui;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemComponent;
 import net.swofty.commons.StringUtility;
@@ -66,9 +67,11 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
             if (event.getInventory() == null) {
                 if (!gui.allowHotkeying() && isHotKey(event)) {
                     event.setCancelled(true);
-                    return;
                 }
-                gui.onBottomClick(event);
+                return;
+            }
+            if (event.getInventory() instanceof PlayerInventory){
+              gui.onBottomClick(event);
             } else {
                 int slot = event.getSlot();
                 GUIItem item = gui.get(slot);
@@ -94,7 +97,7 @@ public class ActionPlayerInventoryClick implements SkyBlockEventClass {
                     gui.onClose(new InventoryCloseEvent(
                             player.getOpenInventory(),
                             player,
-                            true
+                            false
                     ), SkyBlockInventoryGUI.CloseReason.SIGN_OPENED);
 
                     new SkyBlockSignGUI(player).open(query.lines()).thenAccept(string -> {
