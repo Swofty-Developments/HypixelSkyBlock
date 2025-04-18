@@ -184,16 +184,6 @@ public class GUIRecipe extends SkyBlockInventoryGUI {
     }
 
     @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, SkyBlockPlayer player) {
-
-    }
-
-    @Override
     public void onBottomClick(InventoryPreClickEvent e) {
         e.setCancelled(true);
     }

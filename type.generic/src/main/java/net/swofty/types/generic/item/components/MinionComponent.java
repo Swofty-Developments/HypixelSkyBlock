@@ -24,10 +24,10 @@ public class MinionComponent extends SkyBlockItemComponent {
     private MinionRegistry minionRegistry;
     private ItemType baseItem;
 
-    public MinionComponent(String minionType,
+    public MinionComponent(String minionType, String baseItem,
                            boolean isByDefaultCraftable, List<MinionIngredient> ingredients) {
         this.minionRegistry = MinionRegistry.valueOf(minionType);
-        this.baseItem = minionRegistry.getItemType();
+        this.baseItem = ItemType.get(baseItem);
 
         addInheritedComponent(new SkullHeadComponent((item -> {
             int tier = item.getAttributeHandler().getMinionData().tier();

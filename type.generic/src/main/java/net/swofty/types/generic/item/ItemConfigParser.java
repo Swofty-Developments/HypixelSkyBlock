@@ -194,7 +194,7 @@ public class ItemConfigParser {
                     ));
                 }
 
-                yield new MinionComponent(minionType, isByDefaultCraftable, ingredientsMap);
+                yield new MinionComponent(minionType,baseItem, isByDefaultCraftable, ingredientsMap);
             }
             case "MINION_FUEL" -> {
                 double percentage = (double) config.get("fuel_percentage");
