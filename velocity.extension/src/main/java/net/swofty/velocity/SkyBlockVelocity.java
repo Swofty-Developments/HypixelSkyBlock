@@ -125,6 +125,19 @@ public class SkyBlockVelocity {
         );
 
         /**
+         * Register commands
+         */
+
+        CommandManager commandManager = proxy.getCommandManager();
+        CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
+                .aliases("status")
+                .plugin(this)
+                .build();
+
+        commandManager.register(statusCommandMeta , new ServerStatusCommand());
+
+
+        /**
          * Handle database
          */
         new ProfilesDatabase("_placeHolder").connect(Configuration.get("mongodb"));

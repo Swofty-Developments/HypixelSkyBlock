@@ -106,8 +106,6 @@ public class GameManager {
                         }
                     }).delay(Duration.ofMillis(SLEEP_TIME - 100)).schedule();
                 });
-
-                System.out.println(serverType.name() + ": " + registeredServers.stream().map(gameServer -> "mini" + gameServer.displayName() + " (" + gameServer.internalID() + ")").toList());
             });
         }).repeat(Duration.ofMillis(SLEEP_TIME)).schedule();
     }
