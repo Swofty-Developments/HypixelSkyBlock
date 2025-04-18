@@ -28,6 +28,7 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
@@ -89,12 +90,10 @@ public class SkyBlockPlayer extends Player {
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
     @Getter
     private PlayerHookManager hookManager;
-    @Getter
-    private PlayerSkin skin = PlayerSkin.fromUuid(String.valueOf(getUuid()));
+
 
     public SkyBlockPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
         super(playerConnection, gameProfile);
-
         joined = System.currentTimeMillis();
         hookManager = new PlayerHookManager(this, new HashMap<>());
     }
@@ -106,6 +105,12 @@ public class SkyBlockPlayer extends Player {
 
     public DatapointMuseum.MuseumData getMuseumData() {
         return getDataHandler().get(DataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+    }
+
+    public PlayerSkin getPlayerSkin(){
+        String texture = getDataHandler().get(DataHandler.Data.SKIN_TEXTURE , DatapointString.class).getValue();
+        String signature = getDataHandler().get(DataHandler.Data.SKIN_SIGNATURE , DatapointString.class).getValue();
+        return new PlayerSkin(texture , signature);
     }
 
     public DatapointToggles.Toggles getToggles() {
