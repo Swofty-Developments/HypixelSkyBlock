@@ -11,6 +11,7 @@ import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.MinionComponent;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.item.updater.NonPlayerItemUpdater;
+import net.swofty.types.generic.minion.MinionRegistry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public abstract class CollectionCategory {
                     case RECIPE -> {
                         ((UnlockRecipe) unlock).getRecipes().forEach(recipe -> {
                             if (recipe.getResult().getDisplayName().contains("Minion") && !Arrays.toString(lore.toArray()).contains("Minion §7Recipes")) {
-                                lore.add("§9  " + StringUtility.toNormalCase(recipe.getResult().getAttributeHandler().getMinionType().toString()) + " Minion §7Recipes");
+                                lore.add("§9  " + StringUtility.toNormalCase(MinionRegistry.fromItemType(recipe.getResult().getAttributeHandler().getPotentialType()).name()) + " Minion §7Recipes");
                             } else if (!recipe.getResult().getDisplayName().contains("Minion")) {
                                 lore.add("§7  §e" + recipe.getResult().getDisplayName() + " §7Recipe");
                             }
