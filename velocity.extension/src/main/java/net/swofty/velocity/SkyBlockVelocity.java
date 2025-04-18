@@ -1,6 +1,8 @@
 package net.swofty.velocity;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.AwaitingEventExecutor;
 import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
@@ -22,6 +24,10 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
+import com.viaversion.vialoader.ViaLoader;
+import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
+import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
+import com.viaversion.vialoader.impl.platform.ViaVersionPlatformImpl;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -30,6 +36,7 @@ import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.velocity.command.ServerStatusCommand;
 import net.swofty.velocity.data.CoopDatabase;
 import net.swofty.velocity.data.ProfilesDatabase;
 import net.swofty.velocity.data.UserDatabase;
@@ -41,9 +48,12 @@ import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
+import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
@@ -68,6 +78,8 @@ public class SkyBlockVelocity {
     private static RegisteredServer limboServer;
     @Getter
     private static boolean shouldAuthenticate = false;
+    @Getter
+    private static boolean supportCrossVersion = false;
     @Inject
     private ProxyServer proxy;
 
@@ -84,6 +96,14 @@ public class SkyBlockVelocity {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
         shouldAuthenticate = Configuration.getOrDefault("require-authentication", false);
+        supportCrossVersion = Configuration.getOrDefault("cross-version-support" , false);
+
+        /**
+         * initialize cross version support
+         */
+        if (supportCrossVersion) {
+            ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
+        }
         /**
          * Register packets
          */
