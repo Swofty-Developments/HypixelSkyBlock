@@ -181,7 +181,7 @@ public class ItemConfigParser {
             case "MINION" -> {
                 String minionType = (String) config.get("minion_type");
                 String baseItem = (String) config.get("base_item");
-                boolean isByDefaultCraftable = (boolean) config.get("is_craftable");
+                boolean isByDefaultCraftable = (boolean) config.get("default_craftable");
 
                 List<String> ingredients = (List<String>) config.get("ingredients");
                 List<MinionIngredient> ingredientsMap = new ArrayList<>();

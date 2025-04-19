@@ -6,7 +6,7 @@ items:
       - id: MINION
         minion_type: BLAZE
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - BLAZE_ROD:10
           - BLAZE_ROD:20
@@ -26,7 +26,7 @@ items:
       - id: MINION
         minion_type: CAVE_SPIDER
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SPIDER_EYE:10
           - SPIDER_EYE:20
@@ -46,7 +46,7 @@ items:
       - id: MINION
         minion_type: CREEPER
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - GUNPOWDER:10
           - GUNPOWDER:20
@@ -66,7 +66,7 @@ items:
       - id: MINION
         minion_type: ENDERMAN
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - ENDER_PEARL:8
           - ENDER_PEARL:16
@@ -86,7 +86,7 @@ items:
       - id: MINION
         minion_type: GHAST
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - GHAST_TEAR:8
           - GHAST_TEAR:16
@@ -106,7 +106,7 @@ items:
       - id: MINION
         minion_type: MAGMA_CUBE
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - MAGMA_CREAM:10
           - MAGMA_CREAM:20
@@ -126,7 +126,7 @@ items:
       - id: MINION
         minion_type: SKELETON
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - BONE:10
           - BONE:20
@@ -146,7 +146,7 @@ items:
       - id: MINION
         minion_type: SLIME
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SLIMEBALL:10
           - SLIMEBALL:20
@@ -166,7 +166,7 @@ items:
       - id: MINION
         minion_type: SPIDER
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - STRING:10
           - STRING:20
@@ -186,7 +186,7 @@ items:
       - id: MINION
         minion_type: ZOMBIE
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - ROTTEN_FLESH:10
           - ROTTEN_FLESH:20
@@ -206,7 +206,7 @@ items:
       - id: MINION
         minion_type: CACTUS
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - CACTUS:16
           - CACTUS:32
@@ -226,7 +226,7 @@ items:
       - id: MINION
         minion_type: CARROT
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - CARROT:16
           - CARROT:32
@@ -246,7 +246,7 @@ items:
       - id: MINION
         minion_type: CHICKEN
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - RAW_CHICKEN:8
           - RAW_CHICKEN:16
@@ -266,7 +266,7 @@ items:
       - id: MINION
         minion_type: COCOA_BEANS
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - COCOA_BEANS:10
           - COCOA_BEANS:20
@@ -286,7 +286,7 @@ items:
       - id: MINION
         minion_type: COW
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - RAW_BEEF:8
           - RAW_BEEF:16
@@ -306,7 +306,7 @@ items:
       - id: MINION
         minion_type: MELON
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - MELON_SLICE:32
           - MELON_SLICE:64
@@ -326,7 +326,7 @@ items:
       - id: MINION
         minion_type: MUSHROOM
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - RED_MUSHROOM:10
           - RED_MUSHROOM:20
@@ -346,7 +346,7 @@ items:
       - id: MINION
         minion_type: NETHER_WART
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - NETHER_WART:10
           - NETHER_WART:20
@@ -366,7 +366,7 @@ items:
       - id: MINION
         minion_type: PIG
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - PORKCHOP:8
           - PORKCHOP:16
@@ -386,7 +386,7 @@ items:
       - id: MINION
         minion_type: POTATO
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - POTATO:16
           - POTATO:32
@@ -406,7 +406,7 @@ items:
       - id: MINION
         minion_type: PUMPKIN
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - PUMPKIN:10
           - PUMPKIN:20
@@ -426,7 +426,7 @@ items:
       - id: MINION
         minion_type: RABBIT
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - RABBIT:8
           - RABBIT:16
@@ -446,7 +446,7 @@ items:
       - id: MINION
         minion_type: SHEEP
         base_item: WOODEN_SWORD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - MUTTON:8
           - MUTTON:16
@@ -466,7 +466,7 @@ items:
       - id: MINION
         minion_type: SUGAR_CANE
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SUGAR_CANE:16
           - SUGAR_CANE:32
@@ -486,7 +486,7 @@ items:
       - id: MINION
         minion_type: WHEAT
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - WHEAT:10
           - WHEAT:20
@@ -506,7 +506,7 @@ items:
       - id: MINION
         minion_type: CLAY
         base_item: WOODEN_SHOVEL
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - CLAY_BALL:10
           - CLAY_BALL:20
@@ -526,7 +526,7 @@ items:
       - id: MINION
         minion_type: FISHING
         base_item: FISHING_ROD
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - COD:8
           - COD:16
@@ -546,7 +546,7 @@ items:
       - id: MINION
         minion_type: ACACIA
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - ACACIA_LOG:10
           - ACACIA_LOG:20
@@ -566,7 +566,7 @@ items:
       - id: MINION
         minion_type: BIRCH
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - BIRCH_LOG:10
           - BIRCH_LOG:20
@@ -586,7 +586,7 @@ items:
       - id: MINION
         minion_type: DARK_OAK
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - DARK_OAK_LOG:10
           - DARK_OAK_LOG:20
@@ -606,7 +606,7 @@ items:
       - id: MINION
         minion_type: FLOWER
         base_item: WOODEN_HOE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - DANDELION:20
           - DANDELION:40
@@ -627,7 +627,7 @@ items:
       - id: MINION
         minion_type: JUNGLE
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - JUNGLE_LOG:10
           - JUNGLE_LOG:20
@@ -647,7 +647,7 @@ items:
       - id: MINION
         minion_type: OAK
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - OAK_LOG:10
           - OAK_LOG:20
@@ -667,7 +667,7 @@ items:
       - id: MINION
         minion_type: SPRUCE
         base_item: WOODEN_AXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SPRUCE_LOG:10
           - SPRUCE_LOG:20
@@ -687,7 +687,7 @@ items:
       - id: MINION
         minion_type: COAL
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - COAL:10
           - COAL:20
@@ -707,7 +707,7 @@ items:
       - id: MINION
         minion_type: COBBLESTONE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - COBBLESTONE:10
           - COBBLESTONE:20
@@ -727,7 +727,7 @@ items:
       - id: MINION
         minion_type: DIAMOND
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - DIAMOND:10
           - DIAMOND:20
@@ -747,7 +747,7 @@ items:
       - id: MINION
         minion_type: EMERALD
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - EMERALD:10
           - EMERALD:20
@@ -767,7 +767,7 @@ items:
       - id: MINION
         minion_type: ENDSTONE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - END_STONE:10
           - END_STONE:20
@@ -787,7 +787,7 @@ items:
       - id: MINION
         minion_type: GLOWSTONE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - GLOWSTONE_DUST:16
           - GLOWSTONE_DUST:32
@@ -807,7 +807,7 @@ items:
       - id: MINION
         minion_type: GOLD
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - GOLD_INGOT:10
           - GOLD_INGOT:20
@@ -827,7 +827,7 @@ items:
       - id: MINION
         minion_type: GRAVEL
         base_item: WOODEN_SHOVEL
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - GRAVEL:10
           - GRAVEL:20
@@ -847,7 +847,7 @@ items:
       - id: MINION
         minion_type: HARD_STONE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - HARD_STONE:32
           - HARD_STONE:64
@@ -867,7 +867,7 @@ items:
       - id: MINION
         minion_type: ICE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - ICE:10
           - ICE:20
@@ -887,7 +887,7 @@ items:
       - id: MINION
         minion_type: IRON
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - IRON_INGOT:10
           - IRON_INGOT:20
@@ -907,7 +907,7 @@ items:
       - id: MINION
         minion_type: LAPIS
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - LAPIS_LAZULI:32
           - LAPIS_LAZULI:64
@@ -927,7 +927,7 @@ items:
       - id: MINION
         minion_type: MITHRIL
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - MITHRIL:10
           - MITHRIL:20
@@ -947,7 +947,7 @@ items:
       - id: MINION
         minion_type: OBSIDIAN
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - OBSIDIAN:10
           - OBSIDIAN:20
@@ -967,7 +967,7 @@ items:
       - id: MINION
         minion_type: QUARTZ
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - QUARTZ:10
           - QUARTZ:20
@@ -987,7 +987,7 @@ items:
       - id: MINION
         minion_type: REDSTONE
         base_item: WOODEN_PICKAXE
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - REDSTONE:16
           - REDSTONE:32
@@ -1007,7 +1007,7 @@ items:
       - id: MINION
         minion_type: SAND
         base_item: WOODEN_SHOVEL
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SAND:10
           - SAND:20
@@ -1027,7 +1027,7 @@ items:
       - id: MINION
         minion_type: SNOW
         base_item: WOODEN_SHOVEL
-        is_craftable: false
+        default_craftable: false
         ingredients:
           - SNOW_BLOCK:4
           - SNOW_BLOCK:8
