@@ -59,6 +59,7 @@ import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -236,15 +237,20 @@ public class SkyBlockVelocity {
                 return;
             }
 
-            GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverType);
-            if (server == null) {
+            try {
+                GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverType);
+                if (server == null) {
+                    transferHandler.forceRemoveFromLimbo();
+                    event.getPlayer().disconnect(reason);
+                    return;
+                }
+                transferHandler.noLimboTransferTo(server.registeredServer());
+                event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+            } catch (Exception e) {
+                Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
                 transferHandler.forceRemoveFromLimbo();
                 event.getPlayer().disconnect(reason);
-                return;
             }
-
-            transferHandler.noLimboTransferTo(server.registeredServer());
-            event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
         });
     }
 

@@ -2,6 +2,8 @@ package net.swofty.types.generic.command.commands;
 
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.tag.Tag;
+import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.user.SkyBlockPlayer;
@@ -28,13 +30,14 @@ public class NBTCommand extends SkyBlockCommand {
             ItemStack item = ((SkyBlockPlayer) sender).getItemInMainHand();
             AtomicReference<String> values = new AtomicReference<>("");
 
-            item.toItemNBT().forEach((key) -> {
-                values.set(key.getKey() + ": " + key.getValue() + "\n");
-            });
-
-            item.get(ItemComponent.CUSTOM_DATA).nbt().forEach((key) -> {
-                values.set(key.getKey() + ": " + key.getValue() + "\n");
-            });
+            for (ItemAttribute possibleAttribute : ItemAttribute.getPossibleAttributes()) {
+                String key = possibleAttribute.getKey();
+                String value = item.getTag(Tag.String(key));
+                if (value != null) {
+                    values.set(key + ": " + value + "\n");
+                    sender.sendMessage(key + ": " + value);
+                }
+            }
 
             if (itemNBTCache.containsKey(((SkyBlockPlayer) sender).getUuid())) {
                 if (itemNBTCache.get(((SkyBlockPlayer) sender).getUuid()).equals(values.get())) {

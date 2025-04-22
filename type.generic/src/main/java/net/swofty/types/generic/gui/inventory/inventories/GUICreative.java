@@ -47,6 +47,7 @@ public class GUICreative extends SkyBlockPaginatedGUI<SkyBlockItem> {
         List<SkyBlockItem> vanilla = new ArrayList<>(Material.values().stream().map(SkyBlockItem::new).toList());
         vanilla.removeIf((element) -> ItemType.isVanillaReplaced(element.getAttributeHandler().getTypeAsString()));
         paged.addAll(vanilla);
+
         return paged;
     }
 

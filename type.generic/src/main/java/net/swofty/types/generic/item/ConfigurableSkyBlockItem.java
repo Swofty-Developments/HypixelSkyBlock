@@ -1,6 +1,7 @@
 package net.swofty.types.generic.item;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -35,9 +36,20 @@ public class ConfigurableSkyBlockItem {
         for (Map.Entry<String, Double> entry : statistics.entrySet()) {
             String stat = entry.getKey();
             Double value = entry.getValue();
-            builder = builder.withAdditive(ItemStatistic.valueOf(stat.toUpperCase()), value);
+            builder = builder.withBase(ItemStatistic.valueOf(stat.toUpperCase()), value);
         }
         this.defaultStatistics = builder.build();
+    }
+
+    public ConfigurableSkyBlockItem(String id, Material material, List<String> lore, ItemStatistics defaultStatistics,
+                                    Map<Class<? extends SkyBlockItemComponent>, ComponentEntry> components, Set<Class<? extends SkyBlockItemComponent>> explicitComponents) {
+        this.id = id;
+        this.material = material;
+        this.lore = lore;
+        this.defaultStatistics = defaultStatistics;
+
+        this.components.putAll(components);
+        this.explicitComponents.addAll(explicitComponents);
     }
 
     public void addComponent(SkyBlockItemComponent component, boolean isExplicit) {
@@ -136,8 +148,23 @@ public class ConfigurableSkyBlockItem {
         CACHED_ITEMS.put(id, this);
     }
 
+    public ConfigurableSkyBlockItem clone() {
+        return new ConfigurableSkyBlockItem(
+                this.id,
+                this.material,
+                this.lore,
+                this.defaultStatistics,
+                this.components,
+                this.explicitComponents
+        );
+    }
+
     public static @Nullable ConfigurableSkyBlockItem getFromID(String id) {
-        return CACHED_ITEMS.get(id);
+        @Nullable ConfigurableSkyBlockItem item = CACHED_ITEMS.get(id);
+        if (item == null) {
+            return null;
+        }
+        return item.clone();
     }
 
     private enum ComponentSource {
@@ -167,5 +194,9 @@ public class ConfigurableSkyBlockItem {
         public ComponentNotFoundException(String message) {
             super(message);
         }
+    }
+
+    public static Set<String> getIDs() {
+        return CACHED_ITEMS.keySet();
     }
 }

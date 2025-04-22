@@ -23,6 +23,7 @@ import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +97,7 @@ public class SkyBlockItem {
         try {
             rarityAttribute.setValue(type.rarity);
         } catch (IllegalArgumentException e) {
+            Logger.error("Invalid rarity for type " + type.name() + ": " + e.getMessage());
             rarityAttribute.setValue(Rarity.COMMON);
         }
 
@@ -152,10 +154,6 @@ public class SkyBlockItem {
         }
 
         ConfigurableSkyBlockItem config = ConfigurableSkyBlockItem.getFromID(itemType);
-        if (config != null) {
-            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
-            statisticsAttribute.setValue(config.getDefaultStatistics());
-        }
 
         for (ItemAttribute attribute : ItemAttribute.getPossibleAttributes()) {
             if (item.hasTag(Tag.String(attribute.getKey()))) {
@@ -167,6 +165,11 @@ public class SkyBlockItem {
                 attributes.removeIf(a -> a.getKey().equals(attribute.getKey()));
                 attributes.add(attribute);
             }
+        }
+
+        if (config != null) {
+            ItemAttributeStatistics statisticsAttribute = (ItemAttributeStatistics) getAttribute("statistics");
+            statisticsAttribute.setValue(config.getDefaultStatistics());
         }
     }
 
@@ -292,9 +295,7 @@ public class SkyBlockItem {
     }
 
     public static boolean isSkyBlockItem(ItemStack item) {
-        if (item.get(ItemComponent.CUSTOM_DATA) == null)
-            return false;
-        return item.get(ItemComponent.CUSTOM_DATA).hasTag(Tag.String("item_type"));
+        return item.hasTag(Tag.String("item_type"));
     }
 
     @Override

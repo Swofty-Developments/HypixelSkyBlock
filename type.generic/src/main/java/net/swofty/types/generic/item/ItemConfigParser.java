@@ -29,6 +29,9 @@ import java.util.Map;
 public class ItemConfigParser {
     public static ConfigurableSkyBlockItem parseItem(Map<String, Object> config) {
         String id = (String) config.get("id");
+        // Clean up the ID
+        id = id.replaceAll("[^a-zA-Z0-9_]", "");
+
         Material material = Material.values().stream().filter(loopedMaterial -> {
             return loopedMaterial.key().value().equalsIgnoreCase((String) config.get("material"));
         }).findFirst().orElse(Material.AIR);
