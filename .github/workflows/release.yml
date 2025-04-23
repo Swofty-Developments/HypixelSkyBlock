@@ -51,3 +51,4 @@ jobs:
             service.auctionhouse/build/libs/*.jar
             service.bazaar/build/libs/*.jar
             service.itemtracker/build/libs/*.jar
+            service.api/build/libs/*.jar
