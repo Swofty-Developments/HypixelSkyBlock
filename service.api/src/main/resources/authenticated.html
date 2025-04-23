@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Management Panel</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: rgba(0, 0, 0, 0.7);
+            --primary-color: #8A2BE2;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --danger-color: #ff5252;
+            --success-color: #4caf50;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .user-badge {
+            background: linear-gradient(45deg, var(--primary-color), #9400D3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-icon {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .uuid-info {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .info-label {
+            color: var(--accent-color);
+            margin-right: 6px;
+        }
+
+        .info-value {
+            font-family: 'Courier New', monospace;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .refresh-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .refresh-btn:hover {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: var(--accent-color);
+        }
+
+        .refresh-btn svg {
+            transition: transform 0.5s ease;
+        }
+
+        .refresh-btn:active svg {
+            transform: rotate(180deg);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--accent-color);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.5);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+
+        .key-cell {
+            font-family: 'Courier New', monospace;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .actions-cell {
+            text-align: right;
+        }
+
+        .copy-btn, .delete-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-color);
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .delete-btn:hover {
+            color: var(--danger-color);
+            background-color: rgba(255, 82, 82, 0.1);
+        }
+
+        .add-key-form {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 3px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        .submit-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary-color), #9400D3);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 27px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .key-cell {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>API Management Panel</h1>
+        <div class="user-info">
+            <div class="user-badge">
+                <div class="user-icon">U</div>
+                <span id="username">Authenticated</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Your API Keys
+            <button id="table-refresh-btn" class="refresh-btn" title="Refresh API Keys">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                </svg>
+            </button>
+        </h2>
+
+        <!-- Static empty state - we'll replace this with real data if available -->
+        <div id="keys-container" class="empty-state">
+            <div class="empty-icon">🔑</div>
+            <p>Create your first API key using the form below</p>
+        </div>
+
+        <form id="add-key-form" class="add-key-form">
+            <div class="form-group">
+                <label class="form-label" for="description">Description</label>
+                <input type="text" id="description" class="form-input" placeholder="e.g. Production Server" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="usage">Allowed Usage Per Day</label>
+                <input type="number" id="usage" class="form-input" placeholder="e.g. 1000" min="1" required>
+            </div>
+            <button type="submit" class="submit-btn">Generate New API Key</button>
+        </form>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    // Global variable to prevent multiple API calls
+    let isLoading = false;
+    let hasLoaded = false;
+
+    // Get session ID from cookie
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Set cookie with full options
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Delete cookie - comprehensive approach
+    function deleteCookie(name) {
+        document.cookie = name + '=; Max-Age=0; path=/;';
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+        console.log(`Attempted to delete cookie: ${name}`);
+    }
+
+    // Show toast notification
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = isError ? 'toast error show' : 'toast show';
+
+        setTimeout(() => {
+            toast.className = 'toast';
+        }, 3000);
+    }
+
+    // Safely parse JSON
+    function safeJsonParse(str) {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+            console.error('Failed to parse JSON:', str);
+            return null;
+        }
+    }
+
+    // Copy text to clipboard
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                showToast('API key copied to clipboard');
+            })
+            .catch(err => {
+                console.error('Could not copy text: ', err);
+                showToast('Failed to copy API key', true);
+            });
+    }
+
+
+
+    // Delete an API key
+    function deleteKey(apiKey) {
+        if (isLoading) return;
+
+        if (!confirm('Are you sure you want to delete this API key?')) {
+            return;
+        }
+
+        isLoading = true;
+        showToast('Deleting API key...');
+
+        fetch(`/api/delete_key?key=${encodeURIComponent(apiKey)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    showToast('API key deleted successfully');
+                    loadKeysData(); // Refresh the table
+                } else {
+                    showToast('Failed to delete API key: ' + data.message, true);
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting API key:', error);
+                showToast('Failed to delete API key', true);
+            })
+            .finally(() => {
+                isLoading = false;
+            });
+    }
+
+    // Create a new API key
+    function createAPIKey() {
+        if (isLoading) return false;
+
+        const description = document.getElementById('description').value;
+        const usage = document.getElementById('usage').value;
+
+        if (!description || !usage || isNaN(parseInt(usage)) || parseInt(usage) <= 0) {
+            showToast('Please enter a valid description and usage', true);
+            return false;
+        }
+
+        isLoading = true;
+        showToast('Creating API key...');
+
+        fetch(`/api/insert_key?description=${encodeURIComponent(description)}&usagePerDay=${encodeURIComponent(usage)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    showToast('API key created successfully');
+
+                    // Clear form fields
+                    document.getElementById('description').value = '';
+                    document.getElementById('usage').value = '';
+
+                    // Refresh the table
+                    loadKeysData();
+                } else {
+                    showToast('Failed to create API key: ' + data.message, true);
+                }
+            })
+            .catch(error => {
+                console.error('Error creating API key:', error);
+                showToast('Failed to create API key', true);
+            })
+            .finally(() => {
+                isLoading = false;
+            });
+
+        return false;
+    }
+
+    // Load API keys data (refreshable)
+    function loadKeysData() {
+        if (isLoading) return;
+
+        isLoading = true;
+        const keysContainer = document.getElementById('keys-container');
+        keysContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span>Loading API keys...</span>
+                </div>
+            `;
+
+        // Try to load API keys
+        fetch('/api/get_keys')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    const keys = safeJsonParse(data.message);
+
+                    if (keys && Array.isArray(keys) && keys.length > 0) {
+                        // We have keys, display them
+                        let html = `
+                                <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>API Key</th>
+                                            <th>Description</th>
+                                            <th>Usage Limit</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                            `;
+
+                        keys.forEach(key => {
+                            html += `
+                                    <tr>
+                                        <td class="key-cell">${key.api_key}</td>
+                                        <td>${key.description}</td>
+                                        <td>${key.allowed_per_day_usage}/day</td>
+                                        <td class="actions-cell">
+                                            <button class="copy-btn" onclick="copyToClipboard('${key.api_key}')">Copy</button>
+                                            <button class="delete-btn" onclick="deleteKey('${key.api_key}')">Delete</button>
+                                        </td>
+                                    </tr>
+                                `;
+                        });
+
+                        html += `
+                                    </tbody>
+                                </table>
+                                </div>
+                            `;
+
+                        keysContainer.innerHTML = html;
+                        keysContainer.className = 'table-container';
+                    } else {
+                        // No keys found
+                        keysContainer.className = 'empty-state';
+                        keysContainer.innerHTML = `
+                                <div class="empty-icon">🔑</div>
+                                <p>You don't have any API keys yet</p>
+                                <p>Create your first key using the form below</p>
+                            `;
+                    }
+                } else {
+                    // Error loading keys
+                    keysContainer.className = 'empty-state';
+                    keysContainer.innerHTML = `
+                            <div class="empty-icon">⚠️</div>
+                            <p>Couldn't load API keys</p>
+                            <p>${data.message || 'Please try again later'}</p>
+                        `;
+                }
+            })
+            .catch(error => {
+                console.log('Could not load API keys:', error);
+                keysContainer.className = 'empty-state';
+                keysContainer.innerHTML = `
+                        <div class="empty-icon">⚠️</div>
+                        <p>Couldn't connect to the API</p>
+                        <p>Please check your connection and try again</p>
+                    `;
+            })
+            .finally(() => {
+                isLoading = false;
+                hasLoaded = true;
+            });
+    }
+
+    // Load user information
+    function loadUserInfo() {
+        // Try to get authentication info
+        fetch('/api/isAuthenticated', {
+            headers: {
+                'X-Session-ID': getCookie('sessionId')
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    // Parse the user data
+                    const userData = safeJsonParse(data.message);
+                    if (userData) {
+                        // Update username
+                        const usernameElement = document.getElementById('username');
+                        if (userData.authenticatorName) {
+                            usernameElement.textContent = userData.authenticatorName;
+                        }
+
+                        // Update user icon
+                        const userIcon = document.querySelector('.user-icon');
+                        if (userData.authenticatorName) {
+                            userIcon.textContent = userData.authenticatorName.charAt(0).toUpperCase();
+                        }
+
+                        // Add UUID information
+                        if (userData.authenticatorUUID) {
+                            // Create or update the UUID display
+                            const userBadge = document.querySelector('.user-badge');
+
+                            // Look for existing uuid-info element
+                            let uuidInfo = document.getElementById('uuid-info');
+                            if (!uuidInfo) {
+                                // Create a new element if it doesn't exist
+                                uuidInfo = document.createElement('div');
+                                uuidInfo.id = 'uuid-info';
+                                uuidInfo.className = 'uuid-info';
+                                userBadge.parentNode.insertBefore(uuidInfo, userBadge.nextSibling);
+                            }
+
+                            uuidInfo.innerHTML = `
+                                <span class="info-label">UUID:</span>
+                                <span class="info-value">${userData.authenticatorUUID}</span>
+                            `;
+                        }
+
+                        // Add avatar if we have a UUID
+                        if (userData.authenticatorUUID) {
+                            const userIcon = document.querySelector('.user-icon');
+
+                            // Replace text with Minecraft avatar
+                            userIcon.innerHTML = `<img src="https://crafatar.com/avatars/${userData.authenticatorUUID}?size=24&overlay" alt="Avatar" style="width: 24px; height: 24px; border-radius: 50%;">`;
+                            userIcon.style.padding = '0';
+                            userIcon.style.overflow = 'hidden';
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.log('Could not load user info. Using default.');
+            });
+    }
+
+    // Improved logout function
+    function logout() {
+        console.log('Logout initiated - direct approach');
+
+        // Delete the sessionId cookie first
+        deleteCookie('sessionId');
+
+        // Create and append an iframe to make a GET request to the logout endpoint
+        const logoutFrame = document.createElement('iframe');
+        logoutFrame.style.display = 'none';
+
+        // Set up the source URL for the iframe
+        const timestamp = new Date().getTime();
+        logoutFrame.src = '/api/logout';
+
+        // Add a listener to detect when the iframe has loaded
+        logoutFrame.onload = function() {
+            console.log('Logout request completed via iframe');
+            // Remove the iframe after a short delay to ensure the request completes
+            setTimeout(() => {
+                document.body.removeChild(logoutFrame);
+                // Redirect after the iframe is removed
+                window.location.replace('/?logout=' + timestamp);
+            }, 100);
+        };
+
+        // Add a safety timeout in case the onload event doesn't fire
+        setTimeout(() => {
+            console.log('Safety timeout triggered for logout');
+            if (document.body.contains(logoutFrame)) {
+                document.body.removeChild(logoutFrame);
+            }
+            window.location.replace('/?logout=' + timestamp);
+        }, 1000);
+
+        // Append the iframe to the document
+        document.body.appendChild(logoutFrame);
+    }
+
+    // Initialize once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set up form submission
+        document.getElementById('add-key-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            createAPIKey();
+        });
+
+        // Add refresh functionality
+        document.getElementById('table-refresh-btn').addEventListener('click', function() {
+            if (!isLoading) {
+                loadKeysData();
+                const svg = this.querySelector('svg');
+                svg.style.animation = 'none';
+                setTimeout(() => {
+                    svg.style.animation = 'spin 1s linear';
+                }, 5);
+            }
+        });
+
+        // Load user info
+        loadUserInfo();
+
+        // Load keys data initially
+        loadKeysData();
+
+        // Set up auto-refresh every 2 seconds
+        setInterval(function() {
+            if (!isLoading) {
+                loadKeysData();
+            }
+        }, 2000);
+    });
+</script>
+</body>
+</html>

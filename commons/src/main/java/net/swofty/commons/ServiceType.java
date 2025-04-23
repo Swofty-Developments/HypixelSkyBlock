@@ -4,5 +4,6 @@ public enum ServiceType {
     AUCTION_HOUSE,
     BAZAAR,
     ITEM_TRACKER,
+    API,
     ;
 }

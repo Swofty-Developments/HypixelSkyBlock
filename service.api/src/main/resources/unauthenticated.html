@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Authentication</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(128, 0, 255, 0.3);
+            z-index: 1;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #8A2BE2, #FFD700);
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 10px;
+        }
+
+        .code-container {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, #8A2BE2, #FFD700, #8A2BE2);
+            opacity: 0.1;
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .code {
+            font-size: 3rem;
+            letter-spacing: 0.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
+        }
+
+        .instruction {
+            font-size: 1rem;
+            margin-top: 20px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .session-id {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 40px;
+        }
+
+        .refresh-animation {
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #8A2BE2;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .status {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="gradient-bg"></div>
+    <h1>API Authentication</h1>
+
+    <div class="code-container">
+        <div class="code" id="authCode">--------</div>
+    </div>
+
+    <div class="instruction">
+        Run <span style="color: #FFD700;">/verifyapi &lt;code&gt;</span> from an authenticated account to grant access
+    </div>
+
+    <div class="session-id">
+        Session ID: <span id="sessionId">generating...</span>
+    </div>
+
+    <div class="refresh-animation">
+        <div class="spinner"></div>
+        <div class="status pulse">Checking authentication status...</div>
+    </div>
+</div>
+
+<script>
+    // Generate a random session ID
+    function generateSessionId() {
+        return 'sess_' + Array.from(crypto.getRandomValues(new Uint8Array(16)))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+    }
+
+    // Generate a random 8-digit code
+    function generateAuthCode() {
+        return Array.from(crypto.getRandomValues(new Uint8Array(8)))
+            .map(b => (b % 10).toString())
+            .join('');
+    }
+
+    // Save session ID to local storage
+    function saveSessionId(sessionId) {
+        localStorage.setItem('authSessionId', sessionId);
+        return sessionId;
+    }
+
+    // Get session ID from local storage or generate new one
+    function getOrCreateSessionId() {
+        let sessionId = localStorage.getItem('authSessionId');
+        if (!sessionId) {
+            sessionId = generateSessionId();
+            saveSessionId(sessionId);
+        }
+        return sessionId;
+    }
+
+    // Initialize the page
+    function init() {
+        // Get or create session ID
+        const sessionId = getOrCreateSessionId();
+        document.getElementById('sessionId').textContent = sessionId;
+
+        // Generate auth code
+        const authCode = generateAuthCode();
+
+        // Display code with animation
+        const codeDisplay = document.getElementById('authCode');
+        let displayedCode = '--------';
+        codeDisplay.textContent = displayedCode;
+
+        // Animate code display
+        let charIndex = 0;
+        const codeInterval = setInterval(() => {
+            displayedCode = displayedCode.substring(0, charIndex) +
+                authCode.charAt(charIndex) +
+                displayedCode.substring(charIndex + 1);
+            codeDisplay.textContent = displayedCode;
+            charIndex++;
+
+            if (charIndex >= 8) {
+                clearInterval(codeInterval);
+            }
+        }, 200);
+
+        // Initial auth initiation
+        initiateAuth(authCode, sessionId);
+
+        // Set up polling for authentication status
+        checkAuthentication(sessionId);
+        setInterval(() => checkAuthentication(sessionId), 2000);
+
+        // Also set session ID as a cookie in case server-side cookies aren't working
+        document.cookie = "sessionId=" + sessionId + "; path=/; max-age=3600";
+    }
+
+    // Call /api/initiateAuth
+    function initiateAuth(authCode, sessionId) {
+        // In a real implementation, this would be a fetch call
+        console.log(`Initiating auth with code: ${authCode} and session: ${sessionId}`);
+
+        fetch('/api/initiateAuth', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Auth-Code': authCode,
+                'X-Session-ID': sessionId
+            }
+        }).catch(error => {
+            // This will likely error in a demo environment, which is expected
+            console.log('Auth initiation request sent (might not reach server in demo)');
+        });
+    }
+
+    // Check authentication status
+    function checkAuthentication(sessionId) {
+        // Update spinner to show checking activity
+        const spinner = document.querySelector('.spinner');
+        spinner.style.borderTopColor = '#FFD700';
+
+        setTimeout(() => {
+            spinner.style.borderTopColor = '#8A2BE2';
+        }, 1000);
+
+        console.log(`Checking auth status for session: ${sessionId}`);
+
+        fetch('/api/isAuthenticated', {
+            method: 'GET',
+            headers: {
+                'X-Session-ID': sessionId
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Auth response:', data);
+                if (data && data.status === "SUCCESS") {
+                    try {
+                        // Parse the message which contains the authentication details
+                        const authData = JSON.parse(data.message);
+
+                        // Save all auth data to session storage
+                        localStorage.setItem('authenticatorUUID', authData.authenticatorUUID);
+                        localStorage.setItem('authenticatorName', authData.authenticatorName);
+                        localStorage.setItem('authCode', authData.authCode);
+                        localStorage.setItem('sessionId', authData._id);
+
+                        console.log('Authentication successful, redirecting...');
+
+                        // Show success status before redirect
+                        document.querySelector('.status').textContent = 'Authentication successful! Redirecting...';
+                        document.querySelector('.status').style.color = '#00FF00';
+
+                        // Redirect to authenticated panel
+                        setTimeout(() => {
+                            window.location.href = '/panel/authenticated';
+                        }, 1000);
+                    } catch (e) {
+                        console.error('Error parsing auth data:', e);
+                    }
+                } else if (data && data.status === "ERROR") {
+                    console.log('Not yet authenticated:', data.message);
+                    document.querySelector('.status').textContent = 'Waiting for authentication...';
+                }
+            })
+            .catch(error => {
+                console.log('Error checking authentication:', error);
+            });
+    }
+
+    // Start the application
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
