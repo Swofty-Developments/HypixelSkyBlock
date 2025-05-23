@@ -1,0 +1,87 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: hypixel_mongo
+    environment:
+      MONGO_INITDB_DATABASE: Minestom # Default database name
+      MONGO_URL: hypixel_mongo
+    volumes:
+      - ./configuration/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+      - mongodb-data:/data/db
+      - ./configuration/:/csv
+    ports:
+      - "27017:27017"
+    networks:
+      - hypixel_network
+    healthcheck:
+      test: ["CMD", "pgrep", "mongod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: ["mongod", "--quiet"]
+
+  redis:
+    image: redis:latest
+    container_name: hypixel_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - hypixel_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  proxy:
+    build:
+      context: .
+      dockerfile: "./DockerFiles/Dockerfile.proxy"
+    container_name: hypixel_proxy
+    ports:
+      - "25565:25565"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "25565"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  game_server:
+    build:
+      context: .
+      dockerfile: "./DockerFiles/Dockerfile.game_server"
+    container_name: hypixel_game_server
+    depends_on:
+      proxy:
+        condition: service_healthy
+    ports:
+      - "25566:25566"
+      - "65535:65535"
+      - "20000:20000"
+    volumes:
+      - ./configuration:/app/configuration_files
+    networks:
+      - hypixel_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:25566"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongodb-data:
+    driver: local
+    name: mongo-data
+
+networks:
+  hypixel_network:
+    driver: bridge
