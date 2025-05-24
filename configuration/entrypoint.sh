@@ -13,7 +13,7 @@ sed -i "s/secret: '.*'/secret: '$secret'/" ./settings.yml
 
 
 # Clear any previously created Screens (Starting freshhh)
-screen -ls | grep Detached | awk '{print $1}' | xargs -r screen -S {} -X quit
+screen -wipe
 
 # Start services in separate screen sessions
 screen -dmS SkyBlockCore_ISLAND java --enable-preview -jar SkyBlockCore.jar ISLAND
@@ -25,6 +25,8 @@ screen -dmS ServiceAPI java -jar ServiceAPI.jar
 screen -dmS ServiceAuctionHouse java -jar ServiceAuctionHouse.jar
 screen -dmS ServiceBazaar java -jar ServiceBazaar.jar
 screen -dmS ServiceItemTracker java -jar ServiceItemTracker.jar
+
+echo "Started all services with a total of: $(screen -ls | grep -c 'Detached') screens"
 
 # Keep the container running
 tail -f /dev/null
