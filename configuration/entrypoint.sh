@@ -11,6 +11,10 @@ mv ./configuration/resources.json.tmp ./configuration/resources.json
 # Replace the secret in settings.yml
 sed -i "s/secret: '.*'/secret: '$secret'/" ./settings.yml
 
+
+# Clear any previously created Screens (Starting freshhh)
+screen -ls | grep Detached | awk '{print $1}' | xargs -r screen -S {} -X quit
+
 # Start services in separate screen sessions
 screen -dmS SkyBlockCore_ISLAND java --enable-preview -jar SkyBlockCore.jar ISLAND
 sleep 20
