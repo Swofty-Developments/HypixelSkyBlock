@@ -83,6 +83,8 @@ Most parts about downloading and setting up files will be automated for you but 
 
 - Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
 
+- In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
+
 ## Running the contaniners! 
 
 - (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
