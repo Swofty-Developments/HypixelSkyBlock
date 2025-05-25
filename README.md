@@ -75,33 +75,6 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 3. Run the packer JAR using `java -jar SkyBlockPacker.jar -v (Location of SkyBlockPack) -o (Output Directory) -t (Location of Pack Textures)`.
 4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
 
-
-# 🐋 Running with Docker
-- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
-
-Most parts about downloading and setting up files will be automated for you but you will need to add the following files to the `configuration` folder:
-
-- Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
-
-## Running the contaniners! 
-
-- (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
-- Open Docker Desktop/Docker and ensure that it is running.
-- Open a terminal and navigate to the directory where you cloned the repository.
-- Run the following command to build and run the containers (Your Server):
-
-```bash
-docker-compose up --build
-```
-
-- If you want to run the server in detached mode, you can use the `-d` flag:
-
-```bash
-docker-compose up --build -d
-```
-
-
-
 ### Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
 

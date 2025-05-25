@@ -1,13 +1,13 @@
 {
-  "mongodb": "mongodb://hypixel_mongo:27017",
-  "redis-uri": "redis://hypixel_redis:6379",
+  "mongodb": "mongodb://localhost",
+  "redis-uri": "redis://localhost:6379",
   "velocity-secret": "ixmSUgWOgvs7",
   "limbo-port": "65535",
   "pterodactyl-mode": false,
   "spark": false,
   "require-authentication": false,
   "cross-version-support": true,
-  "host-name": "hypixel_game_server",
+  "host-name": "0.0.0.0",
   "transfer-timeout": "800",
   "sandbox-mode": true,
   "anticheat": true
