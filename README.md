@@ -101,26 +101,6 @@ docker-compose up --build
 ```bash
 docker-compose up --build -d
 ```
-> Note: If you have already runned the server before with `docker-compose up --build` you can just run `docker-compose up` to start the server without rebuilding the images making it faster.
-
-- To stop the containers, you can use:
-
-```bash
-docker-compose down
-```
-
-Or click the stop button in Docker Desktop.
-
-### How to add new servers using Docker?
-To add new servers like the Hub, Islands or Farming Island follow these steps:
-1. Open the `entrypoint.sh` file in the `configuration` folder.
-2. Add the following line to the end of the file, replacing `ServerType` with the type of server you want to add (e.g., `HUB`, `ISLAND`, etc.):
-
-```bash
-screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar ServerType
-```
-
-3. Save the file and run `docker-compose up --build` again to apply the changes.
 
 
 
