@@ -123,16 +123,6 @@ screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar ServerT
 3. Save the file and run `docker-compose up --build` again to apply the changes.
 
 
-If you want to run services directly in the container you can attach to the container using:
-
-```bash
-docker-compose exec game_server /bin/bash
-```
-
-or go to the `exec` tab in Docker Desktop.
-
-and then run the service command inside there. It will create its own screen session for you to run the service in.
-
 
 ### Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
