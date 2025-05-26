@@ -75,6 +75,65 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 3. Run the packer JAR using `java -jar SkyBlockPacker.jar -v (Location of SkyBlockPack) -o (Output Directory) -t (Location of Pack Textures)`.
 4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
 
+
+# 🐋 Running with Docker
+- Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
+
+Most parts about downloading and setting up files will be automated for you but you will need to add the following files to the `configuration` folder:
+
+- Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
+
+- In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
+
+## Running the contaniners! 
+
+- (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
+- Open Docker Desktop/Docker and ensure that it is running.
+- Open a terminal and navigate to the directory where you cloned the repository.
+- Run the following command to build and run the containers (Your Server):
+
+```bash
+docker-compose up --build
+```
+
+- If you want to run the server in detached mode, you can use the `-d` flag:
+
+```bash
+docker-compose up --build -d
+```
+> Note: If you have already runned the server before with `docker-compose up --build` you can just run `docker-compose up` to start the server without rebuilding the images making it faster.
+
+- To stop the containers, you can use:
+
+```bash
+docker-compose down
+```
+
+Or click the stop button in Docker Desktop.
+
+### How to add new servers using Docker?
+To add new servers like the Hub, Islands or Farming Island follow these steps:
+1. Open the `entrypoint.sh` file in the `configuration` folder.
+2. Add the following line to the end of the file, replacing `ServerType` with the type of server you want to add (e.g., `HUB`, `ISLAND`, etc.):
+
+```bash
+screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar ServerType
+```
+
+3. Save the file and run `docker-compose up --build` again to apply the changes.
+
+
+If you want to run services directly in the container you can attach to the container using:
+
+```bash
+docker-compose exec game_server /bin/bash
+```
+
+or go to the `exec` tab in Docker Desktop.
+
+and then run the service command inside there. It will create its own screen session for you to run the service in.
+
+
 ### Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
 
