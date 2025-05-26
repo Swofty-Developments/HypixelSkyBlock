@@ -368,7 +368,7 @@ def main():
             ("Minestom.regions.csv", "configuration/collections/regions.csv"),
             ("Minestom.fairysouls.csv", "configuration/collections/fairysouls.csv"),
             ("Minestom.crystals.csv", "configuration/collections/crystals.csv"),
-            ("NanoLimbo-1.8.1.jar", "NanoLimbo.jar"),
+            ("NanoLimbo-1.9.1-all.jar", "NanoLimbo.jar"),
             ("velocity.toml", "velocity.toml")
         ]
 

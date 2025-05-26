@@ -20,7 +20,7 @@ screen -dmS SkyBlockCore_ISLAND java --enable-preview -jar SkyBlockCore.jar ISLA
 sleep 20
 screen -dmS SkyBlockCore_HUB java --enable-preview -jar SkyBlockCore.jar HUB
 screen -dmS SkyBlockCore_FARMING java --enable-preview -jar SkyBlockCore.jar THE_FARMING_ISLANDS
-screen -dmS NanoLimbo java -jar NanoLimbo-1.8.1.jar
+screen -dmS NanoLimbo java -jar NanoLimbo-1.9.1-all.jar
 screen -dmS ServiceAPI java -jar ServiceAPI.jar
 screen -dmS ServiceAuctionHouse java -jar ServiceAuctionHouse.jar
 screen -dmS ServiceBazaar java -jar ServiceBazaar.jar
