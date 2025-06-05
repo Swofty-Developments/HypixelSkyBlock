@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
+import net.minestom.server.network.socket.Server;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
@@ -30,7 +31,14 @@ public class ActionPlayerDataSave implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         UUID uuid = player.getUuid();
 
-        if (!player.hasAuthenticated) return;
+        if (!player.hasAuthenticated) {
+            ServerOutboundMessage.sendMessageToProxy(
+                    ToProxyChannels.FINISHED_WITH_PLAYER,
+                    new JSONObject().put("uuid" , uuid.toString()),
+                    (response)->{}
+            );
+            return;
+        }
 
         player.getDataHandler().runOnSave(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
