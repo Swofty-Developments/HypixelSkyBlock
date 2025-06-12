@@ -2025,7 +2025,7 @@ items:
                 amount: 1
             result:
               type: ANDESITE_SLAB
-              amount: 1
+              amount: 6
   - id: ANDESITE_STAIRS
     material: ANDESITE_STAIRS
     rarity: COMMON
@@ -2047,7 +2047,7 @@ items:
                 amount: 1
             result:
               type: ANDESITE_STAIRS
-              amount: 1
+              amount: 4
   - id: ANDESITE_WALL
     material: ANDESITE_WALL
     rarity: COMMON
@@ -2109,7 +2109,7 @@ items:
                 amount: 1
             result:
               type: POLISHED_ANDESITE_SLAB
-              amount: 1
+              amount: 6
   - id: POLISHED_ANDESITE_STAIRS
     material: POLISHED_ANDESITE_STAIRS
     rarity: COMMON
@@ -2131,7 +2131,7 @@ items:
                 amount: 1
             result:
               type: POLISHED_ANDESITE_STAIRS
-              amount: 1
+              amount: 4
   - id: COBBLESTONE
     material: COBBLESTONE
     rarity: COMMON
@@ -2158,7 +2158,7 @@ items:
                 amount: 1
             result:
               type: COBBLESTONE_SLAB
-              amount: 1
+              amount: 6
   - id: COBBLESTONE_STAIRS
     material: COBBLESTONE_STAIRS
     rarity: COMMON
@@ -2180,7 +2180,7 @@ items:
                 amount: 1
             result:
               type: COBBLESTONE_STAIRS
-              amount: 1
+              amount: 4
   - id: COBBLESTONE_WALL
     material: COBBLESTONE_WALL
     rarity: COMMON
@@ -2312,7 +2312,7 @@ items:
                 amount: 1
             result:
               type: POLISHED_DIORITE_SLAB
-              amount: 1
+              amount: 6
   - id: POLISHED_DIORITE_STAIRS
     material: POLISHED_DIORITE_STAIRS
     rarity: COMMON
@@ -2334,7 +2334,7 @@ items:
                 amount: 1
             result:
               type: POLISHED_DIORITE_STAIRS
-              amount: 1
+              amount: 4
   - id: GRANITE
     material: GRANITE
     rarity: COMMON
@@ -2361,7 +2361,7 @@ items:
                 amount: 1
             result:
               type: GRANITE_SLAB
-              amount: 1
+              amount: 6
   - id: GRANITE_STAIRS
     material: GRANITE_STAIRS
     rarity: COMMON
@@ -2383,7 +2383,7 @@ items:
                 amount: 1
             result:
               type: GRANITE_STAIRS
-              amount: 1
+              amount: 4
   - id: GRANITE_WALL
     material: GRANITE_WALL
     rarity: COMMON
@@ -2529,7 +2529,7 @@ items:
                 amount: 1
             result:
               type: NETHER_BRICK_SLAB
-              amount: 1
+              amount: 6
   - id: NETHER_BRICK_STAIRS
     material: NETHER_BRICK_STAIRS
     rarity: COMMON
@@ -2551,7 +2551,7 @@ items:
                 amount: 1
             result:
               type: NETHER_BRICK_STAIRS
-              amount: 1
+              amount: 4
   - id: NETHER_BRICK_WALL
     material: NETHER_BRICK_WALL
     rarity: COMMON
@@ -2651,7 +2651,7 @@ items:
                 amount: 1
             result:
               type: QUARTZ_SLAB
-              amount: 3
+              amount: 6
   - id: QUARTZ_STAIRS
     material: QUARTZ_STAIRS
     rarity: COMMON
@@ -2673,7 +2673,7 @@ items:
                 amount: 1
             result:
               type: QUARTZ_STAIRS
-              amount: 1
+              amount: 4
   - id: CHISELED_RED_SANDSTONE
     material: CHISELED_RED_SANDSTONE
     rarity: COMMON
@@ -2756,7 +2756,7 @@ items:
                 amount: 1
             result:
               type: CUT_RED_SANDSTONE_SLAB
-              amount: 1
+              amount: 6
   - id: CUT_SANDSTONE
     material: CUT_SANDSTONE
     rarity: COMMON
@@ -2797,7 +2797,7 @@ items:
                 amount: 1
             result:
               type: CUT_SANDSTONE_SLAB
-              amount: 1
+              amount: 6
   - id: RED_SANDSTONE
     material: RED_SANDSTONE
     rarity: COMMON
@@ -2838,7 +2838,7 @@ items:
                 amount: 1
             result:
               type: RED_SANDSTONE_SLAB
-              amount: 3
+              amount: 6
   - id: RED_SANDSTONE_STAIRS
     material: RED_SANDSTONE_STAIRS
     rarity: COMMON
@@ -2860,7 +2860,7 @@ items:
                 amount: 1
             result:
               type: RED_SANDSTONE_STAIRS
-              amount: 1
+              amount: 4
   - id: RED_SANDSTONE_WALL
     material: RED_SANDSTONE_WALL
     rarity: COMMON
@@ -2922,7 +2922,7 @@ items:
                 amount: 1
             result:
               type: SANDSTONE_SLAB
-              amount: 3
+              amount: 6
   - id: SANDSTONE_STAIRS
     material: SANDSTONE_STAIRS
     rarity: COMMON
@@ -2944,7 +2944,7 @@ items:
                 amount: 1
             result:
               type: SANDSTONE_STAIRS
-              amount: 1
+              amount: 4
   - id: SANDSTONE_WALL
     material: SANDSTONE_WALL
     rarity: COMMON
@@ -2992,7 +2992,7 @@ items:
                 amount: 1
             result:
               type: SMOOTH_STONE_SLAB
-              amount: 1
+              amount: 6
   - id: STONE
     material: STONE
     rarity: COMMON
@@ -3041,7 +3041,7 @@ items:
                 amount: 1
             result:
               type: STONE_STAIRS
-              amount: 1
+              amount: 4
   - id: MOSSY_STONE_BRICKS
     material: MOSSY_STONE_BRICKS
     rarity: COMMON
@@ -3081,7 +3081,7 @@ items:
                 amount: 1
             result:
               type: MOSSY_STONE_BRICK_SLAB
-              amount: 1
+              amount: 6
   - id: MOSSY_STONE_BRICK_STAIRS
     material: MOSSY_STONE_BRICK_STAIRS
     rarity: COMMON
@@ -3103,7 +3103,7 @@ items:
                 amount: 1
             result:
               type: MOSSY_STONE_BRICK_STAIRS
-              amount: 1
+              amount: 4
   - id: MOSSY_STONE_BRICK_WALL
     material: MOSSY_STONE_BRICK_WALL
     rarity: COMMON
@@ -3165,7 +3165,7 @@ items:
                 amount: 1
             result:
               type: STONE_BRICK_SLAB
-              amount: 1
+              amount: 6
   - id: STONE_BRICK_STAIRS
     material: STONE_BRICK_STAIRS
     rarity: COMMON
@@ -3187,7 +3187,7 @@ items:
                 amount: 1
             result:
               type: STONE_BRICK_STAIRS
-              amount: 1
+              amount: 4
   - id: STONE_BRICK_WALL
     material: STONE_BRICK_WALL
     rarity: COMMON
@@ -3421,7 +3421,7 @@ items:
                 amount: 1
             result:
               type: ACACIA_SLAB
-              amount: 1
+              amount: 6
   - id: ACACIA_STAIRS
     material: ACACIA_STAIRS
     rarity: COMMON
@@ -3443,7 +3443,7 @@ items:
                 amount: 1
             result:
               type: ACACIA_STAIRS
-              amount: 1
+              amount: 4
   - id: ACACIA_TRAPDOOR
     material: ACACIA_TRAPDOOR
     rarity: COMMON
@@ -3591,7 +3591,7 @@ items:
                 amount: 1
             result:
               type: BIRCH_SLAB
-              amount: 1
+              amount: 6
   - id: BIRCH_STAIRS
     material: BIRCH_STAIRS
     rarity: COMMON
@@ -3613,7 +3613,7 @@ items:
                 amount: 1
             result:
               type: BIRCH_STAIRS
-              amount: 1
+              amount: 4
   - id: BIRCH_TRAPDOOR
     material: BIRCH_TRAPDOOR
     rarity: COMMON
@@ -3761,7 +3761,7 @@ items:
                 amount: 1
             result:
               type: DARK_OAK_SLAB
-              amount: 1
+              amount: 6
   - id: DARK_OAK_STAIRS
     material: DARK_OAK_STAIRS
     rarity: COMMON
@@ -3783,7 +3783,7 @@ items:
                 amount: 1
             result:
               type: DARK_OAK_STAIRS
-              amount: 1
+              amount: 4
   - id: DARK_OAK_TRAPDOOR
     material: DARK_OAK_TRAPDOOR
     rarity: COMMON
@@ -3931,7 +3931,7 @@ items:
                 amount: 1
             result:
               type: JUNGLE_SLAB
-              amount: 1
+              amount: 6
   - id: JUNGLE_STAIRS
     material: JUNGLE_STAIRS
     rarity: COMMON
@@ -3953,7 +3953,7 @@ items:
                 amount: 1
             result:
               type: JUNGLE_STAIRS
-              amount: 1
+              amount: 4
   - id: JUNGLE_TRAPDOOR
     material: JUNGLE_TRAPDOOR
     rarity: COMMON
@@ -4101,7 +4101,7 @@ items:
                 amount: 1
             result:
               type: OAK_SLAB
-              amount: 1
+              amount: 6
   - id: OAK_STAIRS
     material: OAK_STAIRS
     rarity: COMMON
@@ -4123,7 +4123,7 @@ items:
                 amount: 1
             result:
               type: OAK_STAIRS
-              amount: 6
+              amount: 4
   - id: OAK_TRAPDOOR
     material: OAK_TRAPDOOR
     rarity: COMMON
@@ -4271,7 +4271,7 @@ items:
                 amount: 1
             result:
               type: SPRUCE_SLAB
-              amount: 1
+              amount: 6
   - id: SPRUCE_STAIRS
     material: SPRUCE_STAIRS
     rarity: COMMON
@@ -4293,7 +4293,7 @@ items:
                 amount: 1
             result:
               type: SPRUCE_STAIRS
-              amount: 1
+              amount: 4
   - id: SPRUCE_TRAPDOOR
     material: SPRUCE_TRAPDOOR
     rarity: COMMON
