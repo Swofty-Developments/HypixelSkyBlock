@@ -175,7 +175,7 @@ public class SkyBlockVelocity {
 
         if (!GameManager.hasType(ServerType.ISLAND)) {
             player.disconnect(
-                    Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
+                    Component.text("§cThere are no SkyBlock instances available at the moment. Please try again later.")
             );
             return;
         }
@@ -220,10 +220,6 @@ public class SkyBlockVelocity {
         transferHandler.standardTransferTo(originalServer, serverType);
 
         Thread.startVirtualThread(() -> {
-            // Determine if the registeredServer disconnect was due to a crash
-            // if it was, then we send the player back to another registeredServer
-            // of that type, otherwise we disconnect them for the same
-            // reason as the original
             try {
                 Thread.sleep(GameManager.SLEEP_TIME + 300);
             } catch (InterruptedException e) {
@@ -252,16 +248,6 @@ public class SkyBlockVelocity {
                 event.getPlayer().disconnect(reason);
             }
         });
-    }
-
-    @Subscribe
-    public void onPing(ProxyPingEvent event) {
-        event.setPing(new ServerPing(
-                event.getPing().getVersion(),
-                null,
-                Component.text("                §aSkyBlock Recreation §c[1.8-1.20]"),
-                event.getPing().getFavicon().orElse(null)
-        ));
     }
 
     public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {

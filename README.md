@@ -3,7 +3,7 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/paper)
 
-A 1.8 to 1.21.4 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
+A 1.8 to 1.21.5 recreation of HypixelSkyBlock utilizing Minestom, with the intention of actually having a properly abstracted, scalable codebase. This project is sisters with the [HypixelForums](https://github.com/Swofty-Developments/HypixelForums) project and optionally, can be used together.
 
 #### Releases
 
@@ -35,7 +35,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download the Velocity proxy from [here](https://api.papermc.io/v2/projects/velocity/versions/3.4.0-SNAPSHOT/builds/463/downloads/velocity-3.4.0-SNAPSHOT-463.jar)
 3. Download `velocity.toml` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and move it to where you want your Proxy server to run.
-4. Move your Velocity proxy JAR into that folder aswell, and run the proxy using `java -jar velocity-3.4.0-SNAPSHOT-463.jar` as a command in that directory.
+4. Move your Velocity proxy JAR into that folder as well, and run the proxy using `java -jar velocity-3.4.0-SNAPSHOT-463.jar` as a command in that directory.
 5. Close this proxy once it has generated the `plugins` folder, just by pressing `CTRL + C` or closing the CMD Prompt.
 6. Move the `SkyBlockProxy.jar` from earlier into the plugins folder.
 7. Make a new folder where your `velocity.toml` is and call it `configuration`
