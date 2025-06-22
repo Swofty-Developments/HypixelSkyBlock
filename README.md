@@ -86,7 +86,7 @@ Most parts about downloading and setting up files will be automated for you but 
 
 - In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
 
-## Running the contaniners! 
+## Running the containers! 
 
 - (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
 - Open Docker Desktop/Docker and ensure that it is running.
