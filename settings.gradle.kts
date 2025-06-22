@@ -1,4 +1,4 @@
-rootProject.name = "HypixelSkyBlock"
+rootProject.name = "SkyBlock"
 include(":packer")
 include(":commons")
 include(":dungeons")
