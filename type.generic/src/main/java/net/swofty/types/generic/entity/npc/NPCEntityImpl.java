@@ -71,7 +71,6 @@ public class NPCEntityImpl extends Entity {
                 new EntityHeadLookPacket(getEntityId(), getPosition().yaw()),
                 new EntityMetaDataPacket(getEntityId(), Map.of(17, Metadata.Byte((byte) 127)))
         );
-        setInvisible(true);
 
         packetsSent.add(player);
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {
