@@ -9,6 +9,8 @@ import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
+import org.json.JSONObject;
+
 public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeHotPotatoBookData.HotPotatoBookData> {
 
     @Override
@@ -24,6 +26,10 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
     @Override
     public HotPotatoBookData loadFromString(String string) {
         HotPotatoBookData hotPotatoBookData = new HotPotatoBookData();
+
+        JSONObject obj = new JSONObject(string);
+        
+
         String[] split = string.split(",");
         for (String s : split) {
             String[] split1 = s.split(":");
@@ -45,14 +51,22 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
 
     @Override
     public String saveIntoString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        JSONObject obj = new JSONObject();
+
         if (getValue().hasPotatoBook()) {
-            stringBuilder.append("potatoType:").append(getValue().getPotatoType()).append(",");
+            obj.put("potatoType", getValue().getPotatoType());
         } else {
-            stringBuilder.append("potatoType:null,");
+            obj.put("potatoType", null);
         }
-        stringBuilder.append("amount:").append(getValue().getAmount());
-        return stringBuilder.toString();
+
+        JSONArray array = new JSONArray();
+
+        for (Map.Entry<ItemType, Integer> appliedItem : getValue().getAppliedItems()) {
+                array.put(appliedItem.getKey() + ":" + appliableItem.getValue())
+            }
+
+        obj.put("applied", array);
+        return obj.toString();
     }
 
     @AllArgsConstructor
@@ -61,14 +75,18 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
     @Setter
     public static class HotPotatoBookData {
         private PotatoType potatoType = null;
-        private int amount = 0;
+        private HashMap<ItemType, Integer> appliedItems = new HashMap<>();
 
-        public void addAmount(int amount) {
-            this.amount += amount;
+        public void addAmount(ItemType itemType, int amount) {
+            if (!appliedItems.containsKey(itemType)){
+                appliedItems.put(itemType, amount)
+            }else{
+                appliedItems.put(itemType, appliableItems.get(itemType) + amount)
+            }
         }
 
-        public boolean hasPotatoBook() {
-            return amount > 0;
+        public bool hasAppliedItem(ItemType itemType){
+            return appliedItems.containsKey(itemType) && appliedItems.get(itemType) > 0;
         }
     }
 }

@@ -14,6 +14,11 @@ items:
           - "SAPPHIRE:50000"
       - id: STANDARD_ITEM
         standard_item_type: SWORD
+      - id: HOT_POTATO
+        potato_type: WEAPONS
+        appliable_items:
+          - "HOT_POTATO_BOOK:10"
+          - "FUMING_POTATO_BOOK:5"
 
   - id: ASPECT_OF_THE_JERRY
     material: WOODEN_SWORD
