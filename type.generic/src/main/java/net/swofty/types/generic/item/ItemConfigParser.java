@@ -39,10 +39,6 @@ public class ItemConfigParser {
         List<String> lore = (List<String>) config.get("lore");
         Map<String, Double> statistics = new HashMap<>();
 
-        if (id.startsWith("HOT")){
-            System.out.println(id);
-        }
-
         if (config.containsKey("default_statistics")) {
             // Convert all the objects to doubles, noting they may be integers
             for (Map.Entry<String, Object> entry : ((Map<String, Object>) config.get("default_statistics")).entrySet()) {
