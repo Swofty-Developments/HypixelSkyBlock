@@ -4,10 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.attribute.ItemAttribute;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeHotPotatoBookData.HotPotatoBookData> {
 
@@ -24,35 +32,51 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
     @Override
     public HotPotatoBookData loadFromString(String string) {
         HotPotatoBookData hotPotatoBookData = new HotPotatoBookData();
-        String[] split = string.split(",");
-        for (String s : split) {
-            String[] split1 = s.split(":");
-            switch (split1[0]) {
-                case "potatoType":
-                    if (!split1[1].equals("null")) {
-                        hotPotatoBookData.setPotatoType(PotatoType.valueOf(split1[1]));
-                    } else {
-                        hotPotatoBookData.setPotatoType(null);
-                    }
-                    break;
-                case "amount":
-                    hotPotatoBookData.setAmount(Integer.parseInt(split1[1]));
-                    break;
-            }
+
+        JSONObject obj = new JSONObject(string);
+
+        PotatoType potatoType = null;
+        if (obj.has("potatoType")){
+            potatoType = obj.getEnum(PotatoType.class, "potatoType");
         }
+
+        hotPotatoBookData.setPotatoType(potatoType);
+
+        if (obj.has("applied")) {
+            var list = obj.getJSONArray("applied");
+
+            HashMap<ItemType, Integer> applied = new HashMap<>();
+            for (int i = 0; i < list.length(); i++) {
+                var value = list.getString(i);
+
+                var split = value.split(":");
+                applied.put(ItemType.valueOf(split[0]), Integer.parseInt(split[1]));
+            }
+
+            hotPotatoBookData.setAppliedItems(applied);
+        }
+
         return hotPotatoBookData;
     }
 
     @Override
     public String saveIntoString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (getValue().hasPotatoBook()) {
-            stringBuilder.append("potatoType:").append(getValue().getPotatoType()).append(",");
+        JSONObject obj = new JSONObject();
+
+        if (getValue().hasAppliedItem()) {
+            obj.put("potatoType", getValue().getPotatoType());
         } else {
-            stringBuilder.append("potatoType:null,");
+            obj.putOnce("potatoType", null);
         }
-        stringBuilder.append("amount:").append(getValue().getAmount());
-        return stringBuilder.toString();
+
+        JSONArray array = new JSONArray();
+
+        for (Map.Entry<ItemType, Integer> appliedItem : getValue().getAppliedItems().entrySet()) {
+                array.put(appliedItem.getKey() + ":" + appliedItem.getValue());
+            }
+
+        obj.put("applied", array);
+        return obj.toString();
     }
 
     @AllArgsConstructor
@@ -61,14 +85,26 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
     @Setter
     public static class HotPotatoBookData {
         private PotatoType potatoType = null;
-        private int amount = 0;
+        private HashMap<ItemType, Integer> appliedItems = new HashMap<>();
 
-        public void addAmount(int amount) {
-            this.amount += amount;
+        public void addAmount(ItemType itemType, int amount) {
+            if (!appliedItems.containsKey(itemType)){
+                appliedItems.put(itemType, amount);
+            }else{
+                appliedItems.put(itemType, appliedItems.get(itemType) + amount);
+            }
         }
 
-        public boolean hasPotatoBook() {
-            return amount > 0;
+        public int getAmount(ItemType type){
+            return appliedItems.getOrDefault(type, 0);
+        }
+
+        public boolean hasAppliedItem(ItemType itemType){
+            return appliedItems.containsKey(itemType) && appliedItems.get(itemType) > 0;
+        }
+
+        public boolean hasAppliedItem(){
+            return appliedItems.values().stream().mapToInt(Integer::intValue).sum() > 0;
         }
     }
 }

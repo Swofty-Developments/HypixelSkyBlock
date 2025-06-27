@@ -283,7 +283,7 @@ public class PlayerStatistics {
 
     private ItemStatistics getHotPotatoBookStatistics(SkyBlockItem item, ItemStatistics statistics) {
         ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
-        if (hotPotatoBookData.hasPotatoBook()) {
+        if (hotPotatoBookData.hasAppliedItem()) {
             ItemStatistics.Builder toAdd = ItemStatistics.builder();
             PotatoType potatoType = hotPotatoBookData.getPotatoType();
 

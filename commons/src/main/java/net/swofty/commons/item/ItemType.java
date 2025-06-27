@@ -472,6 +472,7 @@ public enum ItemType {
     NECRONS_HANDLE(Material.STICK,  Rarity.EPIC),
     BIGFOOT_LASSO(Material.LEAD, Rarity.EPIC),
     BONZO_FRAGMENT(Material.RED_MUSHROOM, Rarity.RARE),
+    FUMING_POTATO_BOOK(Material.BOOK,  Rarity.EPIC),
 
     /**
      * Mythological Ritual
