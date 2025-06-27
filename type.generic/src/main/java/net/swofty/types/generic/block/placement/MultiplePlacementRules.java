@@ -20,7 +20,7 @@ public class MultiplePlacementRules extends BlockPlacementRule {
     @Override
     public @Nullable Block blockPlace(@NotNull PlacementState placementState) {
         //Get the current block state
-        BlockState blockState = BlockStateManager.get(block);
+        BlockState blockState = BlockStateManager.get(placementState.block());
 
         //Block cannot be placed
         for (PlacementRule placement : getPlacementRules()) {
@@ -37,7 +37,7 @@ public class MultiplePlacementRules extends BlockPlacementRule {
 
     @Override
     public @NotNull Block blockUpdate(@NotNull UpdateState updateState) {
-        BlockState blockState = BlockStateManager.get(block);
+        BlockState blockState = BlockStateManager.get(updateState.currentBlock());
 
         for (PlacementRule placement : getPlacementRules())
             if (placement.canUpdate(blockState, updateState))
