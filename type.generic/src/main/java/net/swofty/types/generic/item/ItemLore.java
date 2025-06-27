@@ -301,7 +301,7 @@ public class ItemLore {
 
         double hpbValue = 0;
         ItemAttributeHotPotatoBookData.HotPotatoBookData hotPotatoBookData = item.getAttributeHandler().getHotPotatoBookData();
-        if (hotPotatoBookData.hasPotatoBook()) {
+        if (hotPotatoBookData.hasAppliedItem()) {
             for (Map.Entry<ItemStatistic, Double> entry : hotPotatoBookData.getPotatoType().stats.entrySet()) {
                 ItemStatistic stat = entry.getKey();
                 Double value = entry.getValue();

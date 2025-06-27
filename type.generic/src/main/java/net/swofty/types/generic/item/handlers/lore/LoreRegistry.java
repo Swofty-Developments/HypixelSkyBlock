@@ -70,11 +70,7 @@ public class LoreRegistry {
                 "§eClick to open!"
         ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
         register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> {
-            List<String> lore = PotatoType.allLores();
-            lore.add("§7This item can be applied to an item up to");
-            lore.add("§a10 §7times!");
-
-            return lore;
+            return PotatoType.allLores();
         }, null));
     }
 

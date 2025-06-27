@@ -24,16 +24,22 @@ public class AnvilCombineRegistry {
                     HotPotatoableComponent hotPotatoable = upgradeItem.getComponent(HotPotatoableComponent.class);
                     PotatoType potatoType = hotPotatoable.getPotatoType();
 
+                    var type = sacrificeItem.getAttributeHandler().getPotentialType();
+
                     ItemAttributeHotPotatoBookData.HotPotatoBookData upgradeData = upgradeItem.getAttributeHandler().getHotPotatoBookData();
-                    upgradeData.addAmount(1);
+                    upgradeData.addAmount(type, 1);
                     upgradeData.setPotatoType(potatoType);
                     upgradeItem.getAttributeHandler().setHotPotatoBookData(upgradeData);
                 },
                 (player, upgradeItem, sacrificeItem) -> {
                     if (upgradeItem.hasComponent(HotPotatoableComponent.class)) {
+                        System.out.println(upgradeItem.getAttributeHandler().getPotentialType());
+
+                        var type = sacrificeItem.getAttributeHandler().getPotentialType();
+
                         HotPotatoableComponent hotPotatoable = upgradeItem.getComponent(HotPotatoableComponent.class);
                         ItemAttributeHotPotatoBookData.HotPotatoBookData upgradeData = upgradeItem.getAttributeHandler().getHotPotatoBookData();
-                        return upgradeData.getAmount() < 10;
+                        return hotPotatoable.canApply(type) && upgradeData.getAmount(type) < hotPotatoable.getMax(type);
                     }
                     return false;
                 },

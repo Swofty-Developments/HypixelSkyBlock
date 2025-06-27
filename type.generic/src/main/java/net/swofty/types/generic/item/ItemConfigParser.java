@@ -38,6 +38,11 @@ public class ItemConfigParser {
 
         List<String> lore = (List<String>) config.get("lore");
         Map<String, Double> statistics = new HashMap<>();
+
+        if (id.startsWith("HOT")){
+            System.out.println(id);
+        }
+
         if (config.containsKey("default_statistics")) {
             // Convert all the objects to doubles, noting they may be integers
             for (Map.Entry<String, Object> entry : ((Map<String, Object>) config.get("default_statistics")).entrySet()) {
@@ -137,6 +142,9 @@ public class ItemConfigParser {
                 String display = (String) config.get("display");
                 yield new ExtraRarityComponent(display);
             }
+            case "DUNGEON_ITEM" -> {
+                yield new ExtraRarityComponent("DUNGEON ITEM");
+            }
             case "EXTRA_UNDER_NAME" -> {
                 if (config.containsKey("displays")) {
                     List<String> displays = (List<String>) config.get("displays");
@@ -158,6 +166,23 @@ public class ItemConfigParser {
             }
             case "HOT_POTATO" -> {
                 String type = (String) config.get("potato_type");
+
+                if (config.containsKey("appliable_items")) {
+                    var appliableItems = (List<String>) config.get("appliable_items");
+                    HashMap<ItemType, Integer> appliable = new HashMap<>();
+
+                    for (var item : appliableItems) {
+                        var split = item.split(":");
+
+                        if (split.length != 2)
+                            continue;
+
+                        appliable.put(ItemType.valueOf(split[0]), Integer.parseInt(split[1]));
+                    }
+
+                    yield new HotPotatoableComponent(PotatoType.valueOf(type), appliable);
+                }
+
                 yield new HotPotatoableComponent(PotatoType.valueOf(type));
             }
             case "INTERACTABLE" -> {
