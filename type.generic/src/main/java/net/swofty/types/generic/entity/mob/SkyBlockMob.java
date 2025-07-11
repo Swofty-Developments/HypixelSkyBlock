@@ -27,7 +27,9 @@ import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.ArmorComponent;
 import net.swofty.types.generic.loottable.LootAffector;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -38,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,22 +55,27 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
+        init();
+    }
 
+    private void init() {
         this.setCustomNameVisible(true);
-        this.getAttribute(Attribute.MAX_HEALTH).setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
-        this.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
+
+        this.getAttribute(Attribute.MAX_HEALTH)
+                .setBaseValue(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
+        this.getAttribute(Attribute.MOVEMENT_SPEED)
+                .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
         this.setCustomName(Component.text(
-            "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                + " §a" + Math.round(getHealth())
-                + "§f/§a"
-                + Math.round(getStatistics().getOverall(ItemStatistic.HEALTH))
+                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
+                        + " §a" + Math.round(getHealth())
+                        + "§f/§a"
+                        + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
         ));
 
         setAutoViewable(true);
         setAutoViewEntities(true);
-
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
     }
 
@@ -85,7 +93,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public abstract @Nullable SkyBlockLootTable getLootTable();
     public abstract SkillCategories getSkillCategory();
     public abstract long damageCooldown();
-    public abstract long getSkillXP();
+    public abstract OtherLoot getOtherLoot();
 
     public ItemStatistics getStatistics() {
         ItemStatistics statistics = getBaseStatistics().clone();
@@ -129,15 +137,38 @@ public abstract class SkyBlockMob extends EntityCreature {
 
         SkyBlockEventHandler.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 
-        player.getSkills().increase(player, getSkillCategory(), (double) getSkillXP());
+        player.getSkills().increase(player, getSkillCategory(), (double) getOtherLoot().getSkillXPAmount());
         player.playSound(Sound.sound(Key.key("entity." + getEntityType().name().toLowerCase().replace("minecraft:", "") + ".death"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 
         if (getLootTable() == null) return;
         if (getLastDamageSource() == null) return;
         if (getLastDamageSource().getAttacker() == null) return;
 
-        Map<ItemType, SkyBlockLootTable.LootRecord> drops = getLootTable()
-            .runChances(player, LootAffector.MAGIC_FIND, LootAffector.ENCHANTMENT_LUCK);
+        Map<ItemType, SkyBlockLootTable.LootRecord> drops = new HashMap<>();
+
+        for (SkyBlockLootTable.LootRecord record : getLootTable().getLootTable()) {
+            ItemType itemType = record.getItemType();
+
+            SkyBlockItem item = new SkyBlockItem(itemType);
+            List<LootAffector> affectors = new ArrayList<>();
+
+            affectors.add(LootAffector.MAGIC_FIND);
+            if (item.hasComponent(ArmorComponent.class)) {
+                affectors.add(LootAffector.ENCHANTMENT_LUCK);
+            } else {
+                affectors.add(LootAffector.ENCHANTMENT_LOOTING);
+            }
+
+            double adjustedChance = record.getChancePercent();
+
+            for (LootAffector affector : affectors) {
+                adjustedChance = affector.getAffector().apply(player, adjustedChance, this);
+            }
+
+            if (Math.random() * 100 < adjustedChance && record.getShouldCalculate().apply(player)) {
+                drops.put(itemType, record);
+            }
+        }
 
         for (ItemType itemType : drops.keySet()) {
             SkyBlockLootTable.LootRecord record = drops.get(itemType);
@@ -146,6 +177,7 @@ public abstract class SkyBlockMob extends EntityCreature {
 
             SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
             ItemType droppedItemLinker = item.getAttributeHandler().getPotentialType();
+
             if (player.canInsertItemIntoSacks(droppedItemLinker, record.getAmount())) {
                 player.getSackItems().increase(droppedItemLinker, record.getAmount());
             } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
@@ -158,8 +190,6 @@ public abstract class SkyBlockMob extends EntityCreature {
     }
 
     public static void runRegionPopulators(Scheduler scheduler) {
-        if (SkyBlockConst.isIslandServer()) return;
-
         scheduler.submitTask(() -> {
             if (SkyBlockGenericLoader.getLoadedPlayers().isEmpty()) return TaskSchedule.seconds(10);
 

@@ -17,6 +17,7 @@ public enum CustomCollectionAward {
     EFFICIENCY_DISCOUNT("§9Efficiency §7Exp Discount §a(-25%)"),
     GROWTH_DISCOUNT("§9Growth §7Exp Discount §a(-25%)"),
     LUCK_DISCOUNT("§9Luck §7Exp Discount §a(-25%)"),
+    LOOTING_DISCOUNT("§9Looting §7Exp Discount §a(-25%)"),
     SHARPNESS_DISCOUNT("§9Sharpness §7Exp Discount §a(-25%)"),
     SMITE_DISCOUNT("§9Smite §7Exp Discount §a(-25%)"),
     ENDER_SLAYER_DISCOUNT("§9Ender Slayer §7Exp Discount §a(-25%)"),

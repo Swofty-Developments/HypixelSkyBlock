@@ -11,10 +11,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.hub.mobs.MobGraveyardZombie;
-import net.swofty.type.hub.mobs.MobGraveyardZombieVillager;
-import net.swofty.type.hub.mobs.MobRuinsWolf;
-import net.swofty.type.hub.mobs.MobRuinsWolfOld;
 import net.swofty.type.hub.runes.RuneEntityImpl;
 import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.types.generic.SkyBlockConst;
@@ -22,7 +18,6 @@ import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -137,16 +132,6 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
                 "net.swofty.type.hub.events",
                 SkyBlockEventClass.class
         ).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<MobRegistry> getMobs() {
-        return new ArrayList<>(List.of(
-                new MobRegistry(EntityType.ZOMBIE, MobGraveyardZombie.class),
-                new MobRegistry(EntityType.ZOMBIE_VILLAGER, MobGraveyardZombieVillager.class),
-                new MobRegistry(EntityType.WOLF, MobRuinsWolfOld.class),
-                new MobRegistry(EntityType.WOLF, MobRuinsWolf.class)
-        ));
     }
 
     @Override

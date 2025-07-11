@@ -39,7 +39,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
 
         @Override
         public PlayerSkyBlockExperience deserialize(String json) {
-            List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> experience = new ArrayList<>();
+            List<SkyBlockLevelCauseAbstr> experience = new ArrayList<>();
 
             JSONObject jsonObject = new JSONObject(json);
             jsonObject.getJSONArray("values").forEach((value) -> {
@@ -71,12 +71,12 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
     @NoArgsConstructor
     @Getter
     public static class PlayerSkyBlockExperience {
-        private List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
+        private List<SkyBlockLevelCauseAbstr> completedExperienceCauses = new ArrayList<>();
         private Map.Entry<SkyBlockEmblems, Integer> currentEmblem = null;
         @Setter
         private SkyBlockPlayer attachedPlayer = null;
 
-        public PlayerSkyBlockExperience(List<net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
+        public PlayerSkyBlockExperience(List<SkyBlockLevelCauseAbstr> completedExperienceCauses, Map.Entry<SkyBlockEmblems, Integer> currentEmblem) {
             this.completedExperienceCauses = completedExperienceCauses;
             this.currentEmblem = currentEmblem;
         }
@@ -118,7 +118,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
          * @param cause the {@link SkyBlockLevelCauseAbstr} representing the experience cause.
          * @return true if the cause has been completed, false otherwise.
          */
-        public boolean hasExperienceFor(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {
+        public boolean hasExperienceFor(SkyBlockLevelCauseAbstr cause) {
             return completedExperienceCauses.contains(cause);
         }
 
@@ -128,7 +128,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
          *
          * @param cause the {@link SkyBlockLevelCauseAbstr} to be added.
          */
-        public void addExperience(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr cause) {
+        public void addExperience(SkyBlockLevelCauseAbstr cause) {
             if (completedExperienceCauses.contains(cause)) return;
             String causeKey = SkyBlockLevelCause.getKey(cause);
             if (completedExperienceCauses.stream().anyMatch((c) -> SkyBlockLevelCause.getKey(c).equals(causeKey))) return;
@@ -176,7 +176,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
          */
         public Double getTotalXP() {
             if (completedExperienceCauses.isEmpty()) return 0.0;
-            return completedExperienceCauses.stream().mapToDouble(net.swofty.types.generic.levels.abstr.SkyBlockLevelCauseAbstr::xpReward).sum();
+            return completedExperienceCauses.stream().mapToDouble(SkyBlockLevelCauseAbstr::xpReward).sum();
         }
 
         /**

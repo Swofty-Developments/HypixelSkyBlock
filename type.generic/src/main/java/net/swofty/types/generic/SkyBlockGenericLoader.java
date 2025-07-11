@@ -219,10 +219,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         /**
          * Register entities
          */
-        typeLoader.getMobs().forEach(mob -> {
-            MobRegistry.registerExtraMob(mob.getEntityType(), mob.getClazz());
-        });
+        loopThroughPackage("net.swofty.types.generic.entity.mob.mobs", SkyBlockMob.class)
+                .forEach(mob -> MobRegistry.registerExtraMob(mob.getClass()));
+
         MathUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
+
 
         /**
          * Handle server attributes

@@ -8,6 +8,7 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityAttackEvent;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -28,8 +29,6 @@ import java.util.UUID;
 public class PlayerActionDamageMob implements SkyBlockEventClass {
     private static final Random random = new Random();
     private static final Map<UUID, Long> COOLDOWN = new HashMap<>();
-
-
 
     @SkyBlockEvent(node = EventNodes.ALL , requireDataLoaded = false)
     public void run(EntityAttackEvent event) {

@@ -3,7 +3,7 @@ package net.swofty.types.generic.minion.minions.farming;
 import net.minestom.server.color.Color;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.entity.mob.mobs.MobSheep;
+import net.swofty.types.generic.entity.mob.mobs.minionMobs.MobMinionSheep;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.actions.MinionKillMobAction;
@@ -77,6 +77,6 @@ public class MinionSheep extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(() -> new MobSheep(EntityType.SHEEP));
+        return new MinionKillMobAction(MobMinionSheep::new);
     }
 }

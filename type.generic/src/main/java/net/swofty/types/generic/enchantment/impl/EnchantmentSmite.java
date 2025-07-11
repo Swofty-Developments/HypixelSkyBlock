@@ -54,7 +54,10 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
     @Override
     public ItemStatistics getStatisticsOnDamage(SkyBlockPlayer causer, LivingEntity receiver, int level) {
         if (receiver instanceof SkyBlockMob skyBlockMob) {
-            if (skyBlockMob.getEntityType() == EntityType.SKELETON || skyBlockMob.getEntityType() == EntityType.ZOMBIFIED_PIGLIN || skyBlockMob.getEntityType() == EntityType.WITHER || skyBlockMob.getEntityType() == EntityType.ZOMBIE) {
+            if (skyBlockMob.getEntityType() == EntityType.SKELETON || skyBlockMob.getEntityType() == EntityType.ZOMBIFIED_PIGLIN ||
+                    skyBlockMob.getEntityType() == EntityType.WITHER || skyBlockMob.getEntityType() == EntityType.ZOMBIE ||
+                    skyBlockMob.getEntityType() == EntityType.ZOMBIE_VILLAGER) {
+
                 return ItemStatistics.builder().withBase(ItemStatistic.DAMAGE, MULTIPLIERS[level - 1]).build();
             }
         }

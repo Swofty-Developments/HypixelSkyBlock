@@ -31,8 +31,6 @@ public interface SkyBlockTypeLoader {
     List<SkyBlockEventClass> getTraditionalEvents();
     List<SkyBlockEventClass> getCustomEvents();
 
-    List<MobRegistry> getMobs();
-
     List<SkyBlockNPC> getNPCs();
 
     List<SkyBlockVillagerNPC> getVillagerNPCs();

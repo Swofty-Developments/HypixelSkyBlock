@@ -1,4 +1,4 @@
-package net.swofty.type.hub.mobs;
+package net.swofty.types.generic.entity.mob.mobs.hub;
 
 import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
@@ -9,11 +9,12 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -24,20 +25,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
+public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
 
-    public MobGraveyardZombieVillager(EntityType entityType) {
-        super(entityType);
+    public MobRuinsOldWolf() {
+        super(EntityType.WOLF);
     }
 
     @Override
     public String getDisplayName() {
-        return "Zombie Villager";
+        return "Old Wolf";
     }
 
     @Override
     public Integer getLevel() {
-        return 1;
+        return 50;
     }
 
     @Override
@@ -47,8 +48,8 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                         1.6,
                         20,
                         TimeUnit.SERVER_TICK,
-                        RegionType.GRAVEYARD), // Attack the target
-                new RandomRegionStrollGoal(this, 15, RegionType.GRAVEYARD)  // Walk around
+                        RegionType.RUINS), // Attack the target
+                new RandomRegionStrollGoal(this, 15, RegionType.RUINS)  // Walk around
         );
     }
 
@@ -59,15 +60,15 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
                 new ClosestEntityRegionTarget(this,
                         16,
                         entity -> entity instanceof SkyBlockPlayer,
-                        RegionType.GRAVEYARD) // If there is none, target the nearest player
+                        RegionType.RUINS) // If there is none, target the nearest player
         );
     }
 
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.HEALTH, 120D)
-                .withBase(ItemStatistic.DAMAGE, 24D)
+                .withBase(ItemStatistic.HEALTH, 15000D)
+                .withBase(ItemStatistic.DAMAGE, 800D)
                 .withBase(ItemStatistic.SPEED, 100D)
                 .build();
     }
@@ -78,12 +79,12 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
             @Override
             public @NonNull List<LootRecord> getLootTable() {
                 return List.of(
-                        new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20)
+                        new LootRecord(ItemType.BONE, makeAmountBetween(1, 3), 20)
                 );
             }
 
             @Override
-            public @NotNull CalculationMode getCalculationMode() {
+            public @NonNull CalculationMode getCalculationMode() {
                 return CalculationMode.CALCULATE_INDIVIDUAL;
             }
         };
@@ -100,14 +101,29 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     }
 
     @Override
-    public long getSkillXP() {
-        return 7;
+    public List<Populator> getPopulators() {
+        return Arrays.asList(
+                new Populator(RegionType.RUINS, 2)
+        );
     }
 
     @Override
-    public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 5)
-        );
+    public OtherLoot getOtherLoot() {
+        return new OtherLoot(40, 40, 30);
+    }
+
+    @Override
+    public int getMaxBestiaryTier() {
+        return 15;
+    }
+
+    @Override
+    public int getBestiaryBracket() {
+        return 3;
+    }
+
+    @Override
+    public String getMobID() {
+        return "50_ruins_old_wolf";
     }
 }

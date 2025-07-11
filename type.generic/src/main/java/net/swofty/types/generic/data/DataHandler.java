@@ -303,15 +303,22 @@ public class DataHandler {
         }, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
-        EXPERIENCE("experience", false, false, false, DatapointFloat.class, new DatapointFloat("experience", 0f), (player, datapoint) -> {
+
+
+
+
+        EXPERIENCE("experience", false, false, false, DatapointLong.class, new DatapointLong("experience", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
-            player.setExp((Float) datapoint.getValue());
-        }, (player) -> new DatapointFloat("experience", player.getExp())),
+            //set the exp and levels here (deserializing, onLoad)
+            player.setExperience((Long) datapoint.getValue());
+        }, (player) -> {
+            //return a new DatapointLong with the total exp amount (serializing, onQuit)
+            return new DatapointLong("experience", player.getExperience());
+        }),
+
+
+
         BAZAAR_ORDERS("bazaar_orders", false, false, false, DatapointStringList.class, new DatapointStringList("bazaar_orders")),
-        LEVELS("levels", false, false, false, DatapointInteger.class, new DatapointInteger("levels", 0), (player, datapoint) -> {
-        }, (player, datapoint) -> {
-            player.setLevel((Integer) datapoint.getValue());
-        }, (player) -> new DatapointInteger("levels", player.getLevel())),
         MISSION_DATA("mission_data", false, false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();
@@ -355,6 +362,7 @@ public class DataHandler {
         ACCESSORY_BAG("accessory_bag", false, false, false, DatapointAccessoryBag.class, new DatapointAccessoryBag("accessory_bag")),
         SACK_OF_SACKS("sack_of_sacks", false, false, false, DatapointSackOfSacks.class, new DatapointSackOfSacks("sack_of_sacks")),
         ITEMS_IN_SACKS("items_in_sacks", false, false, false, DatapointItemsInSacks.class, new DatapointItemsInSacks("items_in_sacks")),
+        BESTIARY("bestiary", false, false, false, DatapointBestiary.class, new DatapointBestiary("bestiary")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
         GEMS("gems", false, false, false, DatapointInteger.class, new DatapointInteger("gems", 0)),

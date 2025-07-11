@@ -79,11 +79,6 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<MobRegistry> getMobs() {
-        return new ArrayList<>();
-    }
-
-    @Override
     public List<SkyBlockEventClass> getCustomEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.type.island.events.custom",
