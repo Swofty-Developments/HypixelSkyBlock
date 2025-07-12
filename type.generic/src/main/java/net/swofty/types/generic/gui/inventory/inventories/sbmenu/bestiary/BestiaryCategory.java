@@ -9,13 +9,14 @@ import net.swofty.types.generic.entity.mob.mobs.hub.MobGraveyardZombieVillager;
 import net.swofty.types.generic.entity.mob.mobs.hub.MobRuinsOldWolf;
 import net.swofty.types.generic.entity.mob.mobs.hub.MobRuinsWolf;
 import net.swofty.types.generic.entity.mob.mobs.island.MobZombie_1;
+import net.swofty.types.generic.entity.mob.mobs.island.MobZombie_2;
 
 import java.util.List;
 
 public enum BestiaryCategory {;
     @Getter
     public enum PRIVATE_ISLAND implements BestiaryEntry {
-        ZOMBIE("§aZombie", "Brains.", Material.ZOMBIE_HEAD,"", List.of(new MobZombie_1())),
+        ZOMBIE("§aZombie", "Brains.", Material.ZOMBIE_HEAD,"", List.of(new MobZombie_1(), new MobZombie_2())),
         ;
 
         private final String name, description, texture;

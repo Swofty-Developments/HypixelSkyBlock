@@ -303,21 +303,10 @@ public class DataHandler {
         }, (player, datapoint) -> {
             player.setGameMode((GameMode) datapoint.getValue());
         }, (player) -> new DatapointGamemode("gamemode", player.getGameMode())),
-
-
-
-
         EXPERIENCE("experience", false, false, false, DatapointLong.class, new DatapointLong("experience", 0L), (player, datapoint) -> {
         }, (player, datapoint) -> {
-            //set the exp and levels here (deserializing, onLoad)
             player.setExperience((Long) datapoint.getValue());
-        }, (player) -> {
-            //return a new DatapointLong with the total exp amount (serializing, onQuit)
-            return new DatapointLong("experience", player.getExperience());
-        }),
-
-
-
+        }, (player) -> new DatapointLong("experience", player.getExperience())),
         BAZAAR_ORDERS("bazaar_orders", false, false, false, DatapointStringList.class, new DatapointStringList("bazaar_orders")),
         MISSION_DATA("mission_data", false, false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
         }, (player, datapoint) -> {

@@ -5,14 +5,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.types.generic.bestiary.BestiaryData;
 import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.BestiaryUpdateEvent;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryEntry;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,11 +102,29 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             return kills;
         }
 
-        public List<String> getDisplay(List<String> lore, double currentProgress, double currentRequirement, double totalKills, double totalRequirement, String prefix) {
+        public List<String> getDisplay(List<String> lore, int kills, BestiaryMob mob, BestiaryEntry bestiaryEntry) {
+            BestiaryData bestiaryData = new BestiaryData();
+
+            int bracket = mob.getBestiaryBracket();
+            int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
+            double currentProgress = bestiaryData.getKillsToNextTier(mob, kills);
+            double currentRequirement = bestiaryData.getTotalKillsForNextTier(bracket, tier + 1);
+            double totalRequirement = bestiaryData.getTotalKillsForMaxTier(mob);
+
+            lore.add("§7" + bestiaryEntry.getDescription());
+            lore.add("");
+            lore.add("§7Kills: §a" + kills);
+            lore.add("§7Deaths: §a TO BE DONE"); //TODO add datapoint for amount of deaths
+            lore.add("");
+
+            if (tier > 0) {
+                bestiaryData.getTotalBonuses(lore, bestiaryEntry.getName(), tier);
+                lore.add("");
+            }
 
             // Current tier progress
             int unlockedPercentage = (int) (currentProgress / currentRequirement * 100);
-            lore.add("§7" + prefix + " §b" + unlockedPercentage + "%");
+            lore.add("§7Progress to Tier " + StringUtility.getAsRomanNumeral(tier + 1) + " §b" + unlockedPercentage + "%");
 
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
@@ -111,29 +132,31 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
 
             String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
             int formattingCodeLength = 4;
-            String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(
-                    completedLoadingBar.length() - formattingCodeLength,
-                    maxBarLength
-            ));
+            String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(completedLoadingBar.length() - formattingCodeLength, maxBarLength));
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §b" +
-                    StringUtility.commaify(currentProgress) + "§3/§b" + StringUtility.shortenNumber(currentRequirement));
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §b" + StringUtility.commaify(currentProgress) + "§3/§b" + StringUtility.shortenNumber(currentRequirement));
 
             lore.add("");
 
             // Total kill progress*
-            int totalUnlockedPercentage = (int) (totalKills / totalRequirement * 100);
+            int totalUnlockedPercentage = (int) (kills / totalRequirement * 100);
             lore.add("§7Overall Progress: §b" + totalUnlockedPercentage + "%");
 
-            int totalCompletedLength = (int) Math.round((totalKills / totalRequirement) * maxBarLength);
+            int totalCompletedLength = (int) Math.round((kills / totalRequirement) * maxBarLength);
             String totalCompletedBar = "§3§m" + baseLoadingBar.substring(0, Math.min(totalCompletedLength, maxBarLength));
-            String totalUncompletedBar = "§f§m" + baseLoadingBar.substring(Math.min(
-                    totalCompletedBar.length() - formattingCodeLength,
-                    maxBarLength
-            ));
+            String totalUncompletedBar = "§f§m" + baseLoadingBar.substring(Math.min(totalCompletedBar.length() - formattingCodeLength, maxBarLength));
 
-            lore.add(totalCompletedBar + totalUncompletedBar + "§r §b" +
-                    StringUtility.commaify(totalKills) + "§3/§b" + StringUtility.shortenNumber(totalRequirement));
+            lore.add(totalCompletedBar + totalUncompletedBar + "§r §b" + StringUtility.commaify(kills) + "§3/§b" + StringUtility.shortenNumber(totalRequirement));
+
+            if (mob.getMaxBestiaryTier() > tier) {
+                lore.add("§8Capped at Tier " + StringUtility.getAsRomanNumeral(mob.getMaxBestiaryTier()));
+                lore.add("");
+            }
+
+            if (tier < mob.getMaxBestiaryTier()) {
+                bestiaryData.getNextBonuses(lore, bestiaryEntry.getName(), tier + 1);
+                lore.add("");
+            }
 
             return lore;
         }

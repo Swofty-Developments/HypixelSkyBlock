@@ -5,6 +5,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -116,6 +117,16 @@ public class MobGraveyardZombie extends BestiaryMob implements RegionPopulator {
     @Override
     public String getMobID() {
         return "1_graveyard_zombie";
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.ZOMBIE_HEAD;
+    }
+
+    @Override
+    public String getTexture() {
+        return "";
     }
 
     @Override

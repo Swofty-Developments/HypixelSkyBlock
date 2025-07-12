@@ -1,6 +1,5 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary;
 
-import lombok.Getter;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -8,21 +7,34 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.item.Rarity;
 import net.swofty.types.generic.bestiary.BestiaryData;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
-import net.swofty.types.generic.entity.mob.mobs.island.MobZombie_1;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
+import net.swofty.types.generic.loottable.OtherLoot;
+import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GUIBestiaryMob extends SkyBlockInventoryGUI {
+
+    private static final Map<Integer, int[]> SLOTS = new HashMap<>(Map.of(
+            0, new int[] {  },
+            1, new int[] { 22 },
+            2, new int[] { 21, 23 },
+            3, new int[] { 20, 22, 24 },
+            4, new int[] { 19, 21, 23, 25 },
+            5, new int[] { 20, 21, 22, 23, 24 },
+            6, new int[] { 21, 22, 23, 30, 31, 32 },
+            7, new int[] { 19, 20, 21, 22, 23, 24, 25}
+    ));
 
     private static final int[] displaySlots = {
             10, 11, 12, 13, 14, 15, 16,
@@ -33,145 +45,125 @@ public class GUIBestiaryMob extends SkyBlockInventoryGUI {
 
     BestiaryData bestiaryData = new BestiaryData();
     BestiaryCategories category;
+    BestiaryEntry bestiaryEntry;
 
-    public GUIBestiaryMob(BestiaryCategories category) {
-        super("Bestiary ➡ " + StringUtility.stripColor(category.getDisplayName()), InventoryType.CHEST_6_ROW);
+    public GUIBestiaryMob(BestiaryCategories category, BestiaryEntry bestiaryEntry) {
+        super(StringUtility.stripColor(category.getDisplayName() + " ➡ " + StringUtility.stripColor(bestiaryEntry.getName())), InventoryType.CHEST_6_ROW);
         this.category = category;
+        this.bestiaryEntry = bestiaryEntry;
     }
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(49));
-        set(GUIClickableItem.getGoBackItem(48, new GUIBestiary()));
+        set(GUIClickableItem.getGoBackItem(48, new GUIBestiaryIsland(category)));
 
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                ArrayList<String> lore = new ArrayList<>();
+                BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
+                int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
+                int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
 
-                BestiaryEntry[] entries = category.getEntries();
-                int total = entries.length;
-                int found = 0;
-                int completed = 0;
+                player.getBestiaryData().getDisplay(lore, kills, mob, bestiaryEntry);
 
-                for (BestiaryEntry entry : entries) {
-                    int kills = player.getBestiaryData().getAmount(entry.getMobs());
-                    if (kills > 0) {
-                        found++;
-
-                        BestiaryMob mob = entry.getMobs().getFirst();
-                        int mobKills = player.getBestiaryData().getAmount(mob);
-                        int tier = bestiaryData.getCurrentBestiaryTier(mob, mobKills);
-                        if (tier == mob.getMaxBestiaryTier()) completed++;
-                    }
+                if (bestiaryEntry.getMaterial() == Material.PLAYER_HEAD) {
+                    return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
+                            bestiaryEntry.getTexture(), 1, lore);
+                } else {
+                    return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
+                            bestiaryEntry.getMaterial(), 1, lore);
                 }
-
-                List<String> lore = new ArrayList<>();
-                lore.add("§7View all of the mobs that you've");
-                lore.add("§7found and killed on " + category.getDisplayName() + "§7.");
-                lore.add("");
-
-                // Families Found
-                int foundPercent = (int) ((double) found / total * 100);
-                String foundColor = foundPercent == 100 ? "§a" : "§e";
-                lore.add("§7Families Found: " + foundColor + foundPercent + "%");
-
-                String baseBar = "─────────────────";
-                int barLength = baseBar.length();
-                int filled = (int) Math.round(((double) found / total) * barLength);
-                String filledBar = "§3§m" + baseBar.substring(0, Math.min(filled, barLength));
-                String unfilledBar = "§f§m" + baseBar.substring(Math.min(filled, barLength));
-
-                lore.add(filledBar + unfilledBar + "§r §b" +
-                        StringUtility.commaify(found) + "§3/§b" + StringUtility.shortenNumber(total));
-                lore.add("");
-
-                // Families Completed
-                int completedPercent = (int) ((double) completed / total * 100);
-                String completedColor = completedPercent == 100 ? "§a" : "§e";
-                lore.add("§7Families Completed: " + completedColor + completedPercent + "%");
-
-                int completedFilled = (int) Math.round(((double) completed / total) * barLength);
-                String completedBar = "§3§m" + baseBar.substring(0, Math.min(completedFilled, barLength));
-                String completedUnfilled = "§f§m" + baseBar.substring(Math.min(completedFilled, barLength));
-
-                lore.add(completedBar + completedUnfilled + "§r §b" +
-                        StringUtility.commaify(completed) + "§3/§b" + StringUtility.shortenNumber(total));
-
-                return ItemStackCreator.getStackHead(
-                        category.getDisplayName(),
-                        "c9c8881e42915a9d29bb61a16fb26d059913204d265df5b439b3d792acd56",
-                        1,
-                        lore
-                );
             }
         });
 
-        BestiaryEntry[] bestiaryEntries = category.getEntries();
-        int index = 0;
-        for (int slot : displaySlots) {
-            if (index >= bestiaryEntries.length) break;
-            BestiaryEntry bestiaryEntry = bestiaryEntries[index];
-            BestiaryMob mob = bestiaryEntry.getMobs().getFirst();
-            int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
-            int bracket = mob.getBestiaryBracket();
-            int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
-            if (kills > 0) {
-                set(new GUIItem(slot) {
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        ArrayList<String> lore = new ArrayList<>();
-                        lore.add("§7" + bestiaryEntry.getDescription());
-                        lore.add("");
-                        lore.add("§7Kills: §a" + kills);
-                        lore.add("§7Deaths: §a TO BE DONE"); //TODO add datapoint for amount of deaths
-                        lore.add("");
+        List<BestiaryMob> bestiaryMobs = bestiaryEntry.getMobs();
+        int mobCount = bestiaryMobs.size();
 
-                        if (tier > 0) {
-                            bestiaryData.getTotalBonuses(lore, bestiaryEntry.getName(), tier);
-                            lore.add("");
-                        }
+        int[] chosenSlots = SLOTS.getOrDefault(mobCount, displaySlots);
 
-                        player.getBestiaryData().getDisplay(
-                                lore,
-                                bestiaryData.getKillsToNextTier(mob, kills),
-                                bestiaryData.getTotalKillsForNextTier(bracket, tier + 1),
-                                kills,
-                                bestiaryData.getTotalKillsForMaxTier(mob),
-                                "§7Progress to Tier " + StringUtility.getAsRomanNumeral(tier + 1)
-                        );
+        for (int i = 0; i < bestiaryMobs.size() && i < chosenSlots.length; i++) {
+            BestiaryMob mob = bestiaryMobs.get(i);
+            int slot = chosenSlots[i];
 
-                        if (mob.getMaxBestiaryTier() > tier) {
-                            lore.add("§8Capped at Tier " + StringUtility.getAsRomanNumeral(mob.getMaxBestiaryTier()));
-                            lore.add("");
-                        }
+            set(new GUIItem(slot) {
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    ArrayList<String> lore = new ArrayList<>();
+                    int kills = getPlayer().getBestiaryData().getAmount(mob);
+                    OtherLoot otherLoot = mob.getOtherLoot();
 
-                        if (tier < mob.getMaxBestiaryTier()) {
-                            bestiaryData.getNextBonuses(lore, bestiaryEntry.getName(), tier + 1);
-                            lore.add("");
-                        }
+                    List<SkyBlockLootTable.LootRecord> commonLoot = new ArrayList<>();
+                    List<SkyBlockLootTable.LootRecord> uncommonLoot = new ArrayList<>();
+                    List<SkyBlockLootTable.LootRecord> rareLoot = new ArrayList<>();
+                    List<SkyBlockLootTable.LootRecord> legendaryLoot = new ArrayList<>();
+                    List<SkyBlockLootTable.LootRecord> rngesusLoot = new ArrayList<>();
 
-                        lore.add("§eClick to view!");
+                    List<SkyBlockLootTable.LootRecord> lootRecords = mob.getLootTable().getLootTable();
 
-                        if (bestiaryEntry.getMaterial() == Material.PLAYER_HEAD) {
-                            return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    bestiaryEntry.getTexture(), 1, lore);
-                        } else {
-                            return ItemStackCreator.getStack("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
-                                    bestiaryEntry.getMaterial(), 1, lore);
-                        }
+                    for (SkyBlockLootTable.LootRecord lootRecord : lootRecords) {
+                        double chance = lootRecord.getChancePercent();
+                        if (chance <= 0.01) rngesusLoot.add(lootRecord);
+                        else if (chance <= 0.1) legendaryLoot.add(lootRecord);
+                        else if (chance <= 1) rareLoot.add(lootRecord);
+                        else if (chance <= 30) uncommonLoot.add(lootRecord);
+                        else commonLoot.add(lootRecord);
                     }
-                });
-            } else {
-                set(new GUIItem(slot) {
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack("§c" + bestiaryEntry.getName(), Material.GRAY_DYE, 1,
-                                "§7Kill a mob belonging to this Family to",
-                                "§7unlock it in your Bestiary!");
+
+                    lore.add("§7Coins per Kill: §6" + otherLoot.getCoinAmount());
+                    lore.add("§7" + mob.getSkillCategory().asCategory().getName() + " Exp: §3" + otherLoot.getSkillXPAmount());
+                    lore.add("§7Xp Orbs: §3" + otherLoot.getXpOrbAmount());
+                    lore.add("");
+                    lore.add("§7Kills: §a" + kills);
+                    lore.add("§7Deaths: §a" + "TODO");
+                    lore.add("");
+
+                    if (!commonLoot.isEmpty()) {
+                        lore.add(Rarity.COMMON.getColor() + "Common Loot");
+                        for (SkyBlockLootTable.LootRecord lootRecord : commonLoot) {
+                            lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName());
+                        }
+                        lore.add("");
                     }
-                });
-            }
-            index++;
+                    if (!uncommonLoot.isEmpty()) {
+                        lore.add(Rarity.UNCOMMON.getColor() + "Uncommon Loot");
+                        for (SkyBlockLootTable.LootRecord lootRecord : uncommonLoot) {
+                            lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
+                        }
+                        lore.add("");
+                    }
+                    if (!rareLoot.isEmpty()) {
+                        lore.add(Rarity.RARE.getColor() + "Rare Loot");
+                        for (SkyBlockLootTable.LootRecord lootRecord : rareLoot) {
+                            lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
+                        }
+                        lore.add("");
+                    }
+                    if (!legendaryLoot.isEmpty()) {
+                        lore.add(Rarity.LEGENDARY.getColor() + "Legendary Loot");
+                        for (SkyBlockLootTable.LootRecord lootRecord : legendaryLoot) {
+                            lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
+                        }
+                        lore.add("");
+                    }
+                    if (!rngesusLoot.isEmpty()) {
+                        lore.add("§dRNGesus Loot");
+                        for (SkyBlockLootTable.LootRecord lootRecord : rngesusLoot) {
+                            lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
+                        }
+                        lore.add("");
+                    }
+
+                    lore.removeLast();
+
+                    if (mob.getDisplayItem() == Material.PLAYER_HEAD) {
+                        return ItemStackCreator.getStackHead("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), mob.getTexture(), 1, lore);
+                    } else {
+                        return ItemStackCreator.getStack("§8[§7Lv" + mob.getLevel() + "§8] §f" + mob.getDisplayName(), bestiaryEntry.getMaterial(), 1, lore);
+                    }
+                }
+            });
         }
         updateItemStacks(getInventory(), getPlayer());
     }

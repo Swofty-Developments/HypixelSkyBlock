@@ -5,6 +5,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -125,5 +126,15 @@ public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
     @Override
     public String getMobID() {
         return "50_ruins_old_wolf";
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.PLAYER_HEAD;
+    }
+
+    @Override
+    public String getTexture() {
+        return "d359537c15534f61c1cd886bc118774ed22280e7cdab6613870160aad4ca39";
     }
 }

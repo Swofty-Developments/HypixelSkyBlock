@@ -5,6 +5,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
@@ -118,6 +119,16 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
     @Override
     public String getMobID() {
         return "1_graveyard_zombie_villager";
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.PLAYER_HEAD;
+    }
+
+    @Override
+    public String getTexture() {
+        return "69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a";
     }
 
     @Override

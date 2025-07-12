@@ -27,8 +27,8 @@ public class GUIBestiary extends SkyBlockInventoryGUI {
 
     @Getter
     private enum BestiaryRegions {
-        YOUR_ISLAND("§aYour Island", Material.PLAYER_HEAD, "c9c8881e42915a9d29bb61a16fb26d059913204d265df5b439b3d792acd56", new GUIBestiaryMob(BestiaryCategories.YOUR_ISLAND),"§7View all of the mobs that you've", "§7found and killed on §aYour Island§7."),
-        HUB("§aHub", Material.PLAYER_HEAD, "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8", new GUIBestiaryMob(BestiaryCategories.HUB), "§7View all of the mobs that you've", "§7found and killed in the §aHub§7."),
+        YOUR_ISLAND("§aYour Island", Material.PLAYER_HEAD, "c9c8881e42915a9d29bb61a16fb26d059913204d265df5b439b3d792acd56", new GUIBestiaryIsland(BestiaryCategories.YOUR_ISLAND),"§7View all of the mobs that you've", "§7found and killed on §aYour Island§7."),
+        HUB("§aHub", Material.PLAYER_HEAD, "d7cc6687423d0570d556ac53e0676cb563bbdd9717cd8269bdebed6f6d4e7bf8", new GUIBestiaryIsland(BestiaryCategories.HUB), "§7View all of the mobs that you've", "§7found and killed in the §aHub§7."),
         THE_FARMING_ISLANDS("§aThe Farming Islands", Material.PLAYER_HEAD, "4d3a6bd98ac1833c664c4909ff8d2dc62ce887bdcf3cc5b3848651ae5af6b", null, "§7View all of the mobs that you've", "§7found and killed in §aThe Farming", "§aIslands§7."),
         GARDEN("§bGarden", Material.PLAYER_HEAD, "f4880d2c1e7b86e87522e20882656f45bafd42f94932b2c5e0d6ecaa490cb4c", null, "§7View all of the §6Pests §7that you've", "§7killed on the §bGarden§7."),
         SPIDERS_DEN("§cSpider's Den", Material.PLAYER_HEAD, "c754318a3376f470e481dfcd6c83a59aa690ad4b4dd7577fdad1c2ef08d8aee6", null, "§7View all of the mobs that you've", "§7found and killed in the §cSpider's Den§7."),
