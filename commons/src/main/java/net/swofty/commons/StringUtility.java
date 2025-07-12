@@ -281,7 +281,6 @@ public class StringUtility {
         return statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName();
     }
 
-    /*
     public static List<String> centerLines(List<String> lines) {
         int maxLength = lines.stream()
                 .map(StringUtility::stripColor)
@@ -297,70 +296,5 @@ public class StringUtility {
         }
 
         return centered;
-    }
-     */
-
-    //TODO fix this stupid centering
-    public static List<String> centerLines(List<String> lines) {
-        int CHAT_WIDTH_PIXELS = 320;
-        int SPACE_WIDTH = 4; // Minecraft space width
-        List<String> centered = new ArrayList<>();
-
-        for (String line : lines) {
-            if (line.isEmpty()) {
-                centered.add(line);
-                continue;
-            }
-
-            boolean bold = false;
-            int pixelWidth = 0;
-            int formatCodeCount = 0;
-
-            // Calculate visible width and count format codes
-            for (int i = 0; i < line.length(); i++) {
-                char c = line.charAt(i);
-                if (c == '§' && i + 1 < line.length()) {
-                    char code = line.charAt(i + 1);
-                    if (code == 'l') bold = true;
-                    else if (code == 'r') bold = false;
-                    formatCodeCount += 2;
-                    i++; // Skip format code
-                    continue;
-                }
-                pixelWidth += getCharWidth(c, bold) + 1; // +1 for character spacing
-            }
-
-            // Subtract the last character's spacing
-            if (pixelWidth > 0) pixelWidth--;
-
-            // Calculate padding
-            int padding = (CHAT_WIDTH_PIXELS - pixelWidth) / 2;
-            int spaces = Math.max(0, padding / SPACE_WIDTH);
-
-            // Add extra space if needed (Minecraft rendering quirk)
-            if (padding % SPACE_WIDTH >= 2) {
-                spaces++;
-            }
-            System.out.printf("Line (%.3f px): %s\n", (float)pixelWidth, line.replace("§", "&"));
-
-            centered.add(" ".repeat(spaces) + line);
-        }
-
-        return centered;
-    }
-
-    private static int getCharWidth(char c, boolean bold) {
-        // Special case for certain characters
-        if (c == '➡') return 6; // Arrow character
-        if (c == '✯') return 7; // Star character
-
-        return switch (c) {
-            case ' ', 'I', '[', ']', 't' -> 4;
-            case '!', '.', ',', ':', ';', 'i', '|' -> 2;
-            case '\'', '`', 'l' -> 3;
-            case '*', 'f', 'k', '<', '>' -> 5;
-            case '§' -> 0;
-            default -> bold ? 6 : 5;
-        };
     }
 }

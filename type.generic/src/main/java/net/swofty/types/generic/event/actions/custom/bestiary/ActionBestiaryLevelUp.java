@@ -49,7 +49,6 @@ public class ActionBestiaryLevelUp implements SkyBlockEventClass {
 
             List<String> lines = new ArrayList<>();
             lines.add("");
-            lines.add("§6§lREWARDS");
             lines.add("§6§lBESTIARY");
             lines.add(transitionLine);
             lines.add("");
@@ -72,7 +71,6 @@ public class ActionBestiaryLevelUp implements SkyBlockEventClass {
 
             message.append("§3§l").append("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-            System.out.println(message);
             player.sendMessage(message.toString());
         }
     }

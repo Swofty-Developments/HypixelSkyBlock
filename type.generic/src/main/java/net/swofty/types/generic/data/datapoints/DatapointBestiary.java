@@ -111,10 +111,14 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             double currentRequirement = bestiaryData.getTotalKillsForNextTier(bracket, tier + 1);
             double totalRequirement = bestiaryData.getTotalKillsForMaxTier(mob);
 
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+            int formattingCodeLength = 4;
+
             lore.add("§7" + bestiaryEntry.getDescription());
             lore.add("");
             lore.add("§7Kills: §a" + kills);
-            lore.add("§7Deaths: §a TO BE DONE"); //TODO add datapoint for amount of deaths
+            lore.add("§7Deaths: §a" + "TODO"); //TODO add datapoint for amount of deaths
             lore.add("");
 
             if (tier > 0) {
@@ -123,24 +127,26 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             }
 
             // Current tier progress
-            int unlockedPercentage = (int) (currentProgress / currentRequirement * 100);
-            lore.add("§7Progress to Tier " + StringUtility.getAsRomanNumeral(tier + 1) + " §b" + unlockedPercentage + "%");
+            if (tier < mob.getMaxBestiaryTier()) {
+                int unlockedPercentage = (int) (currentProgress / currentRequirement * 100);
+                lore.add("§7Progress to Tier " + StringUtility.getAsRomanNumeral(tier + 1) + " §b" + unlockedPercentage + "%");
 
-            String baseLoadingBar = "─────────────────";
-            int maxBarLength = baseLoadingBar.length();
-            int completedLength = (int) Math.round((currentProgress / currentRequirement) * maxBarLength);
+                int completedLength = (int) Math.round((currentProgress / currentRequirement) * maxBarLength);
 
-            String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
-            int formattingCodeLength = 4;
-            String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(completedLoadingBar.length() - formattingCodeLength, maxBarLength));
+                String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+                String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(completedLoadingBar.length() - formattingCodeLength, maxBarLength));
 
-            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §b" + StringUtility.commaify(currentProgress) + "§3/§b" + StringUtility.shortenNumber(currentRequirement));
-
-            lore.add("");
+                lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §b" + StringUtility.commaify(currentProgress) + "§3/§b" + StringUtility.shortenNumber(currentRequirement));
+                lore.add("");
+            }
 
             // Total kill progress*
             int totalUnlockedPercentage = (int) (kills / totalRequirement * 100);
-            lore.add("§7Overall Progress: §b" + totalUnlockedPercentage + "%");
+            if (tier < mob.getMaxBestiaryTier()) {
+                lore.add("§7Overall Progress: §b" + totalUnlockedPercentage + "%");
+            } else {
+                lore.add("§7Overall Progress: §b" + totalUnlockedPercentage + "% §7(§c§lMAX!§7)");
+            }
 
             int totalCompletedLength = (int) Math.round((kills / totalRequirement) * maxBarLength);
             String totalCompletedBar = "§3§m" + baseLoadingBar.substring(0, Math.min(totalCompletedLength, maxBarLength));
@@ -150,8 +156,9 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
 
             if (mob.getMaxBestiaryTier() > tier) {
                 lore.add("§8Capped at Tier " + StringUtility.getAsRomanNumeral(mob.getMaxBestiaryTier()));
-                lore.add("");
             }
+
+            lore.add("");
 
             if (tier < mob.getMaxBestiaryTier()) {
                 bestiaryData.getNextBonuses(lore, bestiaryEntry.getName(), tier + 1);
