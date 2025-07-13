@@ -77,7 +77,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 4. Once this has finished, you should have a resource pack in the output directory you specified. Merely apply this on Minecraft and you'll be good to go.
 
 
-# 🐋 Running with Docker
+## 🐋 Running with Docker
 - Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
 
 Most parts about downloading and setting up files will be automated for you but you will need to add the following files to the `configuration` folder:
@@ -135,16 +135,23 @@ or go to the `exec` tab in Docker Desktop.
 and then run the service command inside there. It will create its own screen session for you to run the service in.
 
 
-### Common Issues
+## Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
 
     => Your Memurai isn't running.
 2. `Preview features are not enabled for... Try running with '--enable-preview'`
 
     => try `java --enable-preview -jar SkyBlockCore.jar {ServerType}`
+3. Having issues connecting to the server?
+
+    => Check if your velocity secret is the same everywhere including the limbo config.
+
+4. Still having issues? 
+
+    => Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles!
 
 ## Credits
 
 Thanks to:
 * All the lovely people in the Minestom discord for single-handedly carrying all of my knowledge about this API.
-* Myself and any other contributors, which can be viewed on this Git page.
+* Myself and any other contributors, who can be viewed [HERE](https://github.com/Swofty-Developments/HypixelSkyBlock/graphs/contributors).
