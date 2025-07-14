@@ -146,9 +146,14 @@ and then run the service command inside there. It will create its own screen ses
 
     => Check if your velocity secret is the same everywhere including the limbo config.
 
-4. Still having issues? 
+4. `You have strayed too far from the spawn! Teleporting you back...` when joining an island?
 
-    => Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles!
+    => You didn't import your regions (correctly).
+
+5. Still having issues? 
+
+    => Make sure that you followed everything correctly. If that didn't help, join our discord and ask for help in #code-help. Please provide screenshots of all your consoles! 
+### Pinging staff members won't solve your issue faster!
 
 ## Credits
 
