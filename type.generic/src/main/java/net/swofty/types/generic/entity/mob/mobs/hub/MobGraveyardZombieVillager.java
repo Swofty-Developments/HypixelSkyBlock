@@ -1,19 +1,21 @@
-package net.swofty.type.hub.mobs;
+package net.swofty.types.generic.entity.mob.mobs.hub;
 
 import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
@@ -24,10 +26,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPopulator {
+public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPopulator {
 
-    public MobGraveyardZombieVillager(EntityType entityType) {
-        super(entityType);
+    public MobGraveyardZombieVillager() {
+        super(EntityType.ZOMBIE_VILLAGER);
     }
 
     @Override
@@ -100,8 +102,33 @@ public class MobGraveyardZombieVillager extends SkyBlockMob implements RegionPop
     }
 
     @Override
-    public long getSkillXP() {
-        return 7;
+    public OtherLoot getOtherLoot() {
+        return new OtherLoot(7, 1, 2);
+    }
+
+    @Override
+    public int getMaxBestiaryTier() {
+        return 15;
+    }
+
+    @Override
+    public int getBestiaryBracket() {
+        return 4;
+    }
+
+    @Override
+    public String getMobID() {
+        return "1_graveyard_zombie_villager";
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.PLAYER_HEAD;
+    }
+
+    @Override
+    public String getTexture() {
+        return "69198f410a10f99314aa0fbe9a3db10697bbc1c011f019507d96673c64217f5a";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.swofty.types.generic.entity.mob.mobs;
+package net.swofty.types.generic.entity.mob.mobs.minionMobs;
 
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
@@ -11,16 +11,19 @@ import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MobZombie extends SkyBlockMob {
-    public MobZombie(EntityType entityType) {
-        super(entityType);
+public class MobMinionZombie extends SkyBlockMob {
+
+    public MobMinionZombie() {
+        super(EntityType.ZOMBIE);
     }
 
     @Override
@@ -73,7 +76,7 @@ public class MobZombie extends SkyBlockMob {
     }
 
     @Override
-    public long getSkillXP() {
-        return 4;
+    public OtherLoot getOtherLoot() {
+        return new OtherLoot(0, 0, 5);
     }
 }

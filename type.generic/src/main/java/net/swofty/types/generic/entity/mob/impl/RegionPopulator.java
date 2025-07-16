@@ -14,6 +14,7 @@ public interface RegionPopulator {
     List<Populator> getPopulators();
 
     static void populateRegion(MobRegistry registry, Populator populator) {
+        if (SkyBlockConst.getInstanceContainer() == null) return;
         SkyBlockRegion region = SkyBlockRegion.getRandomRegionOfType(populator.regionType());
 
         if (region == null) return;

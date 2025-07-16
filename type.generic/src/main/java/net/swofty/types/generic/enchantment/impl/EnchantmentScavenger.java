@@ -1,9 +1,13 @@
-package net.swofty.types.generic.enchantment.impl;
 
+        package net.swofty.types.generic.enchantment.impl;
+
+import net.swofty.types.generic.bestiary.BestiaryData;
 import net.swofty.types.generic.collection.CustomCollectionAward;
+import net.swofty.types.generic.data.datapoints.DatapointBestiary;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
@@ -36,7 +40,6 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
         ));
 
         if (player.hasCustomCollectionAward(CustomCollectionAward.SCAVENGER_DISCOUNT)) {
-            // Discount 25%
             levels.replaceAll((k, v) -> (int) (v * 0.75));
         }
 
@@ -45,7 +48,12 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
 
     @Override
     public List<EnchantItemGroups> getGroups() {
-        return List.of(EnchantItemGroups.SWORD, EnchantItemGroups.FISHING_WEAPON, EnchantItemGroups.LONG_SWORD, EnchantItemGroups.GAUNTLET);
+        return List.of(
+                EnchantItemGroups.SWORD,
+                EnchantItemGroups.FISHING_WEAPON,
+                EnchantItemGroups.LONG_SWORD,
+                EnchantItemGroups.GAUNTLET
+        );
     }
 
     @Override
@@ -69,25 +77,20 @@ public class EnchantmentScavenger implements Ench, EnchFromTable, SkyBlockEventC
         return 3;
     }
 
+    public int getScavengedCoins(PlayerKilledSkyBlockMobEvent event) {
+        SkyBlockPlayer player = event.getPlayer();
 
-    @SkyBlockEvent(node = EventNodes.PLAYER , requireDataLoaded = true)
-    public void run(PlayerKilledSkyBlockMobEvent event) {
-        PlayerEnchantmentHandler enchantmentHandler = event.getPlayer().getEnchantmentHandler();
-
+        PlayerEnchantmentHandler enchantmentHandler = player.getEnchantmentHandler();
         PlayerEnchantmentHandler.EnchantmentHandlerResponse response = enchantmentHandler.getItemWithHighestLevelOf(
                 EnchantmentType.SCAVENGER,
-                PlayerEnchantmentHandler.EnchantedItemSource.HAND,
-                PlayerEnchantmentHandler.EnchantedItemSource.ARMOR,
-                PlayerEnchantmentHandler.EnchantedItemSource.ACCESSORY
+                PlayerEnchantmentHandler.EnchantedItemSource.HAND
         );
 
-        if (response == null) return;
-        SkyBlockMob mob = event.getKilledMob();
-        int mobLevel = mob.getLevel();
+        if (response == null) return 0;
 
         int enchantmentLevel = response.level();
         int coins = (int) (0.3 + ((enchantmentLevel - 1) * 0.3));
 
-        event.getPlayer().setCoins(event.getPlayer().getCoins() + (coins * mobLevel));
+        return coins * event.getKilledMob().getLevel();
     }
 }

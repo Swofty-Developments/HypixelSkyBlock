@@ -20,11 +20,13 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.bestiary.BestiaryData;
 import net.swofty.types.generic.data.datapoints.DatapointSkills;
 import net.swofty.types.generic.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.SkyBlockEnchantment;
 import net.swofty.types.generic.enchantment.abstr.EventBasedEnchant;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.event.value.SkyBlockValueEvent;
 import net.swofty.types.generic.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.types.generic.gems.Gemstone;
@@ -59,6 +61,7 @@ public class PlayerStatistics {
     private ItemStatistics accessoryStatistics = ItemStatistics.builder().build();
     private final List<TemporaryStatistic> temporaryStatistics = Collections.synchronizedList(new ArrayList<>());
     private final List<TemporaryConditionalStatistic> temporaryConditionalStatistics = Collections.synchronizedList(new ArrayList<>());
+    BestiaryData bestiaryData = new BestiaryData();
 
     public PlayerStatistics(SkyBlockPlayer player) {
         this.player = player;
@@ -218,6 +221,7 @@ public class PlayerStatistics {
 
     public ItemStatistics allStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics total = ItemStatistics.builder().build();
+        if (enemy instanceof BestiaryMob bestiaryMob) total = ItemStatistics.add(total, getBestiaryStatistics(causer, bestiaryMob));
         total = ItemStatistics.add(total, allArmorStatistics(causer, enemy));
         total = ItemStatistics.add(total, mainHandStatistics(causer, enemy));
         total = ItemStatistics.add(total, spareStatistics());
@@ -340,8 +344,21 @@ public class PlayerStatistics {
         return statistics;
     }
 
-    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics,
-                                                              SkyBlockPlayer causer, LivingEntity enemy) {
+    private ItemStatistics getBestiaryStatistics(SkyBlockPlayer causer, BestiaryMob enemy) {
+        ItemStatistics statistics = ItemStatistics.builder().build();
+
+        int kills = causer.getBestiaryData().getAmount(enemy);
+        int tier = bestiaryData.getCurrentBestiaryTier(enemy, kills);
+        double magicFind = bestiaryData.getTotalMagicFind(tier);
+        double strength = bestiaryData.getTotalStrength(tier);
+
+        if (magicFind > 0) statistics.addAdditive(ItemStatistic.MAGIC_FIND, magicFind);
+        if (strength > 0) statistics.addAdditive(ItemStatistic.STRENGTH, strength);
+
+        return statistics;
+    }
+
+    public Map.Entry<Double, Boolean> runPrimaryDamageFormula(ItemStatistics enemyStatistics, SkyBlockPlayer causer, LivingEntity enemy) {
         ItemStatistics all = allStatistics(causer, enemy);
         return runPrimaryDamageFormula(all, enemyStatistics);
     }

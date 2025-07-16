@@ -107,7 +107,7 @@ public abstract class SkyBlockLootTable {
 
                     // Apply LootAffectors to the chance percentage
                     for (LootAffector affector : affectors) {
-                        adjustedChancePercent = affector.getAffector().apply(player, adjustedChancePercent);
+                        adjustedChancePercent = affector.getAffector().apply(player, adjustedChancePercent, null);
                     }
 
                     if (Math.random() * 100 < adjustedChancePercent) {

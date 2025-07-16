@@ -3,7 +3,7 @@ package net.swofty.types.generic.minion.minions.combat;
 import net.minestom.server.color.Color;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.entity.mob.mobs.MobZombie;
+import net.swofty.types.generic.entity.mob.mobs.minionMobs.MobMinionZombie;
 import net.swofty.types.generic.minion.MinionAction;
 import net.swofty.types.generic.minion.SkyBlockMinion;
 import net.swofty.types.generic.minion.actions.MinionKillMobAction;
@@ -74,6 +74,6 @@ public class MinionZombie extends SkyBlockMinion {
 
     @Override
     public MinionAction getAction() {
-        return new MinionKillMobAction(() -> new MobZombie(EntityType.ZOMBIE));
+        return new MinionKillMobAction(MobMinionZombie::new);
     }
 }

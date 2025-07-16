@@ -129,16 +129,14 @@ public class GUIViewPlayerProfile extends SkyBlockInventoryGUI {
                 if (dataHandler.get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem() != null) {
                     name = "§fSelected Emblem: " + dataHandler.get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getCurrentEmblem().toString();
                     material = dataHandler.get(DataHandler.Data.SKYBLOCK_EXPERIENCE, DatapointSkyBlockExperience.class).getValue().getEmblem().displayMaterial();
-                    lore.add(" ");
-                    lore.add("§eClick to view unlocked emblems!");
                 } else {
                     name = "§cNo Selected Emblem";
                     material = Material.BARRIER;
                     lore.add("§fThis player does not have any");
                     lore.add("§femblem selected.");
-                    lore.add(" ");
-                    lore.add("§eClick to view unlocked emblems!");
                 }
+                lore.add(" ");
+                lore.add("§eClick to view unlocked emblems!");
                 return ItemStackCreator.getStack(name, material, 1, lore);
             }
         });

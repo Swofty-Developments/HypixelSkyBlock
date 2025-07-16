@@ -255,6 +255,5 @@ public class DatapointSkills extends Datapoint<DatapointSkills.PlayerSkills> {
 
             return lore;
         }
-
     }
 }

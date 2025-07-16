@@ -21,6 +21,7 @@ public enum EnchantmentType {
     FIRST_STRIKE(EnchantmentFirstStrike.class),
     GROWTH(EnchantmentGrowth.class),
     LUCK(EnchantmentLuck.class),
+    LOOTING(EnchantmentLooting.class),
     ENDER_SLAYER(EnchantmentEnderSlayer.class),
     SMITE(EnchantmentSmite.class),
     ;

@@ -302,6 +302,9 @@ collections:
     - type: XP
       data:
         xp: 4
+    - type: CUSTOM_AWARD
+      data:
+        customAward: LOOTING_DISCOUNT
   - amount: 500
     rewards:
     - type: XP

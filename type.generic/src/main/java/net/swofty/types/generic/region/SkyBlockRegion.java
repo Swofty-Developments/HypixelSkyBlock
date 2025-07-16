@@ -53,9 +53,17 @@ public class SkyBlockRegion {
 
     public Pos getRandomPosition() {
         List<Integer> bounds = getBounds();
-        int x = new Random().nextInt(bounds.get(1) - bounds.get(0)) + bounds.get(0);
-        int y = new Random().nextInt(bounds.get(3) - bounds.get(2)) + bounds.get(2);
-        int z = new Random().nextInt(bounds.get(5) - bounds.get(4)) + bounds.get(4);
+
+        int xMin = bounds.get(0), xMax = bounds.get(1);
+        int yMin = bounds.get(2), yMax = bounds.get(3);
+        int zMin = bounds.get(4), zMax = bounds.get(5);
+
+        Random random = new Random();
+
+        int x = xMax > xMin ? random.nextInt(xMax - xMin) + xMin : xMin;
+        int y = yMax > yMin ? random.nextInt(yMax - yMin) + yMin : yMin;
+        int z = zMax > zMin ? random.nextInt(zMax - zMin) + zMin : zMin;
+
         return new Pos(x, y, z);
     }
 

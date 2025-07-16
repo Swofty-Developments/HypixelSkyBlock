@@ -73,11 +73,6 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<MobRegistry> getMobs() {
-        return new ArrayList<>();
-    }
-
-    @Override
     public List<SkyBlockEventClass> getCustomEvents() {
         return new ArrayList<>();
     }

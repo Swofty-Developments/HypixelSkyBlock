@@ -5,6 +5,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.swofty.commons.statistics.ItemStatistic;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -274,5 +275,26 @@ public class StringUtility {
                 default -> i + "th";
             };
         };
+    }
+
+    public static String getFormatedStatistic(ItemStatistic statistic) {
+        return statistic.getDisplayColor() + statistic.getSymbol() + " " + statistic.getDisplayName();
+    }
+
+    public static List<String> centerLines(List<String> lines) {
+        int maxLength = lines.stream()
+                .map(StringUtility::stripColor)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+
+        List<String> centered = new ArrayList<>();
+        for (String line : lines) {
+            String stripped = stripColor(line);
+            int padding = Math.max(0, (maxLength - stripped.length()) / 2);
+            centered.add(" ".repeat(padding) + line);
+        }
+
+        return centered;
     }
 }

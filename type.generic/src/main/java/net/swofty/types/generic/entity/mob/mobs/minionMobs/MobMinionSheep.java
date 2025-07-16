@@ -1,27 +1,32 @@
-package net.swofty.types.generic.entity.mob.mobs;
+package net.swofty.types.generic.entity.mob.mobs.minionMobs;
 
+import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobPig extends SkyBlockMob {
-    public MobPig(EntityType entityType) {
-        super(entityType);
+public class MobMinionSheep extends SkyBlockMob {
+
+    public MobMinionSheep() {
+        super(EntityType.SHEEP);
     }
 
     @Override
     public String getDisplayName() {
-        return "Pig";
+        return "Sheep";
     }
 
     @Override
@@ -44,14 +49,26 @@ public class MobPig extends SkyBlockMob {
     @Override
     public ItemStatistics getBaseStatistics() {
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.HEALTH, 20D)
+                .withBase(ItemStatistic.HEALTH, 100D)
                 .withBase(ItemStatistic.SPEED, 70D)
                 .build();
     }
 
     @Override
     public @Nullable SkyBlockLootTable getLootTable() {
-        return null;
+        return new SkyBlockLootTable() {
+            @Override
+            public @NonNull List<LootRecord> getLootTable() {
+                return List.of(
+                        new LootRecord(ItemType.MUTTON, makeAmountBetween(1, 3), 80)
+                );
+            }
+
+            @Override
+            public @NonNull CalculationMode getCalculationMode() {
+                return CalculationMode.CALCULATE_INDIVIDUAL;
+            }
+        };
     }
 
     @Override
@@ -65,7 +82,7 @@ public class MobPig extends SkyBlockMob {
     }
 
     @Override
-    public long getSkillXP() {
-        return 4;
+    public OtherLoot getOtherLoot() {
+        return new OtherLoot(0, 0, 5);
     }
 }

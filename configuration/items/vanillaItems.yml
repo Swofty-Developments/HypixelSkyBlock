@@ -5094,6 +5094,8 @@ items:
             result:
               type: DIAMOND_SWORD
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
     default_statistics:
       damage: 35.0
   - id: GOLDEN_SWORD
@@ -5120,6 +5122,8 @@ items:
             result:
               type: GOLDEN_SWORD
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
     default_statistics:
       damage: 20.0
   - id: IRON_SWORD
@@ -5146,6 +5150,8 @@ items:
             result:
               type: IRON_SWORD
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
     default_statistics:
       damage: 30.0
   - id: STONE_SWORD
@@ -5172,6 +5178,8 @@ items:
             result:
               type: STONE_SWORD
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
     default_statistics:
       damage: 25.0
   - id: WOODEN_SWORD
@@ -5198,6 +5206,8 @@ items:
             result:
               type: WOODEN_SWORD
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
     default_statistics:
       damage: 20.0
   - id: BREWING_STAND

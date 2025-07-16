@@ -1,6 +1,7 @@
 package net.swofty.types.generic.event.actions.custom.skill;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.types.generic.event.EventNodes;
@@ -35,7 +36,7 @@ public class ActionSkillLevelUp implements SkyBlockEventClass {
                         (oldLevelDisplay.isEmpty() ? "§e" : oldLevelDisplay + "➜§e") +
                         StringUtility.getAsRomanNumeral(newLevel))
                 .hoverEvent(Component.text("§eClick to view your " + skillCategory + " Skill progress!"))
-                .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewskill " + skillCategory.toString().toUpperCase()))
+                .clickEvent(ClickEvent.runCommand("/viewskill " + skillCategory.toString().toUpperCase()))
         );
 
         SkillCategory.SkillReward reward = skillCategory.asCategory().getReward(newLevel);

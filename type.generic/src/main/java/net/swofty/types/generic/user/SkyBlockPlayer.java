@@ -691,6 +691,58 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.KAT, DatapointKat.class).getValue();
     }
 
+    public DatapointBestiary.PlayerBestiary getBestiaryData() {
+        DatapointBestiary.PlayerBestiary bestiary = getDataHandler().get(DataHandler.Data.BESTIARY, DatapointBestiary.class).getValue();
+        bestiary.setAttachedPlayer(this);
+        return bestiary;
+    }
+
+    public Long getExperience() {
+        return getDataHandler().get(DataHandler.Data.EXPERIENCE, DatapointLong.class).getValue();
+    }
+
+    public void setExperience(long value) {
+        getDataHandler().get(DataHandler.Data.EXPERIENCE, DatapointLong.class).setValue(value);
+
+        int level;
+        float progressToNext;
+
+        // Determine the level from total experience
+        if (value <= 352) {
+            level = (int) (Math.sqrt(value + 9) - 3);
+        } else if (value <= 1507) {
+            level = (int) (8.1 + Math.sqrt((2.0 / 5.0) * (value - 195.975)));
+        } else {
+            level = (int) (18.0555 + Math.sqrt((2.0 / 9.0) * (value - 752.9861)));
+        }
+
+        // Calculate total experience required to reach this level
+        long expAtCurrentLevel;
+        int expToNextLevel;
+
+        if (level <= 16) {
+            expAtCurrentLevel = (long) level * level + 6L * level;
+            expToNextLevel = 2 * level + 7;
+        } else if (level <= 31) {
+            expAtCurrentLevel = (long) (2.5 * level * level - 40.5 * level + 360);
+            expToNextLevel = 5 * level - 38;
+        } else {
+            expAtCurrentLevel = (long) (4.5 * level * level - 162.5 * level + 2220);
+            expToNextLevel = 9 * level - 158;
+        }
+
+        long expIntoLevel = value - expAtCurrentLevel;
+        progressToNext = expToNextLevel > 0 ? (float) expIntoLevel / expToNextLevel : 0f;
+
+        setLevel(level);
+        setExp(progressToNext);
+    }
+
+    public void addExperience(long value) {
+        setExperience(getExperience() + value);
+    }
+
+
     @Override
     public void kill() {
         setHealth(getMaxHealth());

@@ -1,32 +1,35 @@
-package net.swofty.type.hub.mobs;
+package net.swofty.types.generic.entity.mob.mobs.hub;
 
 import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
+import net.minestom.server.item.Material;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
+import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
+import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
+public class MobRuinsOldWolf extends BestiaryMob implements RegionPopulator {
 
-    public MobRuinsWolfOld(EntityType entityType) {
-        super(entityType);
+    public MobRuinsOldWolf() {
+        super(EntityType.WOLF);
     }
 
     @Override
@@ -106,7 +109,32 @@ public class MobRuinsWolfOld extends SkyBlockMob implements RegionPopulator {
     }
 
     @Override
-    public long getSkillXP() {
-        return 40;
+    public OtherLoot getOtherLoot() {
+        return new OtherLoot(40, 40, 30);
+    }
+
+    @Override
+    public int getMaxBestiaryTier() {
+        return 15;
+    }
+
+    @Override
+    public int getBestiaryBracket() {
+        return 3;
+    }
+
+    @Override
+    public String getMobID() {
+        return "50_ruins_old_wolf";
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.PLAYER_HEAD;
+    }
+
+    @Override
+    public String getTexture() {
+        return "d359537c15534f61c1cd886bc118774ed22280e7cdab6613870160aad4ca39";
     }
 }
