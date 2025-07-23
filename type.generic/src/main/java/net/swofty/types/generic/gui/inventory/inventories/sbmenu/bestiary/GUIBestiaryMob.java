@@ -92,6 +92,7 @@ public class GUIBestiaryMob extends SkyBlockInventoryGUI {
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     ArrayList<String> lore = new ArrayList<>();
                     int kills = getPlayer().getBestiaryData().getAmount(mob);
+                    int deaths = getPlayer().getDeathData().getAmount(mob.getMobID());
                     OtherLoot otherLoot = mob.getOtherLoot();
 
                     List<SkyBlockLootTable.LootRecord> commonLoot = new ArrayList<>();
@@ -116,7 +117,7 @@ public class GUIBestiaryMob extends SkyBlockInventoryGUI {
                     lore.add("§7Xp Orbs: §3" + otherLoot.getXpOrbAmount());
                     lore.add("");
                     lore.add("§7Kills: §a" + kills);
-                    lore.add("§7Deaths: §a" + "TODO");
+                    lore.add("§7Deaths: §a" + deaths);
                     lore.add("");
 
                     if (!commonLoot.isEmpty()) {

@@ -28,7 +28,6 @@ import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
-import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.data.datapoints.*;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.event.actions.player.ActionPlayerChangeSkyBlockMenuDisplay;
@@ -90,6 +89,8 @@ public class SkyBlockPlayer extends Player {
     private MinecraftVersion version = MinecraftVersion.MINECRAFT_1_20_3;
     @Getter
     private PlayerHookManager hookManager;
+
+    private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
 
     public SkyBlockPlayer(@NotNull GameProfile gameProfile, @NotNull PlayerConnection playerConnection) {
@@ -486,7 +487,7 @@ public class SkyBlockPlayer extends Player {
         int maxStorage = 0;
         String sackCategory = "";
 
-        Matcher matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(sack.name());
+        Matcher matcher = SACK_PATTERN.matcher(sack.name());
         if (matcher.find()) {
             sackCategory = matcher.group(2);
         } else {
@@ -495,7 +496,7 @@ public class SkyBlockPlayer extends Player {
         }
 
         for (SkyBlockItem skyBlockItem : getAllSacks()) {
-            matcher = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$").matcher(skyBlockItem.getAttributeHandler().getTypeAsString());
+            matcher = SACK_PATTERN.matcher(skyBlockItem.getAttributeHandler().getTypeAsString());
             if (matcher.find()) {
                 String otherCategory = matcher.group(2);
                 if (sackCategory.equals(otherCategory) && skyBlockItem.hasComponent(SackComponent.class)) {
@@ -687,6 +688,10 @@ public class SkyBlockPlayer extends Player {
         getDataHandler().get(DataHandler.Data.BOOSTER_COOKIE_EXPIRATION_DATE, DatapointLong.class).setValue(timestamp);
     }
 
+    public boolean isBoosterCookieActive() {
+        return getBoosterCookieExpirationDate() >= System.currentTimeMillis();
+    }
+
     public DatapointKat.PlayerKat getKatData() {
         return getDataHandler().get(DataHandler.Data.KAT, DatapointKat.class).getValue();
     }
@@ -742,6 +747,9 @@ public class SkyBlockPlayer extends Player {
         setExperience(getExperience() + value);
     }
 
+    public DatapointDeaths.PlayerDeaths getDeathData() {
+        return getDataHandler().get(DataHandler.Data.DEATHS, DatapointDeaths.class).getValue();
+    }
 
     @Override
     public void kill() {
@@ -754,12 +762,14 @@ public class SkyBlockPlayer extends Player {
 
         sendMessage("§c☠ §7You " + creator.createPersonal());
 
-        DatapointDouble coins = getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
-        coins.setValue(coins.getValue() / 2);
+        getDeathData().increase(this.lastDamage, 1);
 
         playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-        sendMessage("§cYou died and lost " + StringUtility.decimalify(coins.getValue(), 1) + " coins!");
+        if (!isBoosterCookieActive()) {
+            sendMessage("§cYou died and lost " + StringUtility.decimalify(getCoins() / 2, 1) + " coins!");
+            setCoins(getCoins() / 2);
+        }
 
         if (!SkyBlockConst.getTypeLoader().getLoaderValues().announceDeathMessages()) return;
 

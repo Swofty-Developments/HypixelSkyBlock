@@ -352,6 +352,7 @@ public class DataHandler {
         SACK_OF_SACKS("sack_of_sacks", false, false, false, DatapointSackOfSacks.class, new DatapointSackOfSacks("sack_of_sacks")),
         ITEMS_IN_SACKS("items_in_sacks", false, false, false, DatapointItemsInSacks.class, new DatapointItemsInSacks("items_in_sacks")),
         BESTIARY("bestiary", false, false, false, DatapointBestiary.class, new DatapointBestiary("bestiary")),
+        DEATHS("deaths", false, false, false, DatapointDeaths.class, new DatapointDeaths("deaths")),
         SKYBLOCK_EXPERIENCE("skyblock_experience", false, false, false, DatapointSkyBlockExperience.class, new DatapointSkyBlockExperience("skyblock_experience")),
         BITS("bits", false, false, false, DatapointInteger.class, new DatapointInteger("bits", 0)),
         GEMS("gems", false, false, false, DatapointInteger.class, new DatapointInteger("gems", 0)),
