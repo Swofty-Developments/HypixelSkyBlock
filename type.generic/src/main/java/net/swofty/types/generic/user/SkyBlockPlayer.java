@@ -756,15 +756,14 @@ public class SkyBlockPlayer extends Player {
         setHealth(getMaxHealth());
         sendTo(SkyBlockConst.getTypeLoader().getType());
 
-        if (SkyBlockConst.isIslandServer()) return;
-
         DeathMessageCreator creator = new DeathMessageCreator(this.lastDamage);
-
         sendMessage("§c☠ §7You " + creator.createPersonal());
 
         getDeathData().increase(this.lastDamage, 1);
 
         playSound(Sound.sound(Key.key("block.anvil.fall"), Sound.Source.PLAYER, 1.0f, 2.0f));
+
+        if (SkyBlockConst.isIslandServer()) return;
 
         if (!isBoosterCookieActive()) {
             sendMessage("§cYou died and lost " + StringUtility.decimalify(getCoins() / 2, 1) + " coins!");

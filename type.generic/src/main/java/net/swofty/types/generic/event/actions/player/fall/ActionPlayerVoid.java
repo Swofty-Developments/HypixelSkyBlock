@@ -15,11 +15,8 @@ public class ActionPlayerVoid implements SkyBlockEventClass {
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (player.getPosition().y() <= -1) {
-            player.damage(DamageType.OUT_OF_WORLD, 1000000000);
-
-            if (player.getGameMode() == GameMode.CREATIVE)
-                player.sendTo(SkyBlockConst.getTypeLoader().getType());
+        if (player.getPosition().y() < 0 && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+            player.kill();
         }
     }
 }
