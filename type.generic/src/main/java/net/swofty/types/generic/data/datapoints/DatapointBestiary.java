@@ -10,13 +10,13 @@ import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.BestiaryUpdateEvent;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryCategories;
+import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryCategory;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryEntry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiary> {
 
@@ -57,6 +57,8 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
         private Map<String, Integer> mobs = new HashMap<>();
         @Setter
         private SkyBlockPlayer attachedPlayer = null;
+
+        BestiaryData bestiaryData = new BestiaryData();
 
         public PlayerBestiary(Map<String, Integer> mobs) {
             this.mobs = mobs;
@@ -100,8 +102,7 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             return kills;
         }
 
-        public List<String> getDisplay(List<String> lore, int kills, BestiaryMob mob, BestiaryEntry bestiaryEntry) {
-            BestiaryData bestiaryData = new BestiaryData();
+        public List<String> getMobDisplay(List<String> lore, int kills, BestiaryMob mob, BestiaryEntry bestiaryEntry) {
 
             int bracket = mob.getBestiaryBracket();
             int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
@@ -168,6 +169,73 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
                 bestiaryData.getNextBonuses(lore, bestiaryEntry.getName(), tier + 1);
                 lore.add("");
             }
+
+            return lore;
+        }
+
+        public List<String> getTotalDisplay(List<String> lore) {
+
+            List<BestiaryEntry> allEntries = new ArrayList<>();
+            double totalFamilies = 0;
+            double familiesFound = 0;
+            double familiesCompleted = 0;
+
+            String baseLoadingBar = "─────────────────";
+            int maxBarLength = baseLoadingBar.length();
+            int formattingCodeLength = 4;
+
+            for (BestiaryCategories category : BestiaryCategories.values()) {
+                allEntries.addAll(Arrays.asList(category.getEntries()));
+            }
+
+            totalFamilies = allEntries.size();
+
+            for (BestiaryEntry entry : allEntries) {
+                int kills = getAmount(entry.getMobs());
+                if (kills > 0) familiesFound++;
+                if (kills >= bestiaryData.getTotalKillsForMaxTier(entry.getMobs().getFirst())) familiesCompleted++;
+            }
+
+            lore.add("§7The Bestiary is a compendium of");
+            lore.add("§7mobs in SkyBlock. It contains detailed");
+            lore.add("§7information on loot drops, your mob");
+            lore.add("§7stats, and more!");
+            lore.add("");
+            lore.add("§7Kill mobs within §aFamilies §7to progress");
+            lore.add("§7and earn §arewards§7, including §b✯ Magic");
+            lore.add("§bFind §7bonuses towards mobs in the");
+            lore.add("§7Family.");
+            lore.add("");
+
+            // Families found
+            int unlockedPercentage = (int) (familiesFound / totalFamilies * 100);
+            if (familiesFound != totalFamilies) {
+                lore.add("§7Families Found: §e" + unlockedPercentage + "%");
+            } else {
+                lore.add("§7Families Found: §e" + unlockedPercentage + "% §7(§c§lMAX!§7)");
+            }
+
+            int completedLength = (int) Math.round((familiesFound / totalFamilies) * maxBarLength);
+
+            String completedLoadingBar = "§3§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
+            String uncompletedLoadingBar = "§f§m" + baseLoadingBar.substring(Math.min(completedLoadingBar.length() - formattingCodeLength, maxBarLength));
+
+            lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §b" + StringUtility.commaify(familiesFound) + "§3/§b" + StringUtility.shortenNumber(totalFamilies));
+            lore.add("");
+
+            // Families completed
+            int totalUnlockedPercentage = (int) (familiesCompleted / totalFamilies * 100);
+            if (familiesCompleted != totalFamilies) {
+                lore.add("§7Families Completed: §e" + totalUnlockedPercentage + "%");
+            } else {
+                lore.add("§7Families Completed: §e" + totalUnlockedPercentage + "% §7(§c§lMAX!§7)");
+            }
+
+            int totalCompletedLength = (int) Math.round((familiesCompleted / totalFamilies) * maxBarLength);
+            String totalCompletedBar = "§3§m" + baseLoadingBar.substring(0, Math.min(totalCompletedLength, maxBarLength));
+            String totalUncompletedBar = "§f§m" + baseLoadingBar.substring(Math.min(totalCompletedBar.length() - formattingCodeLength, maxBarLength));
+
+            lore.add(totalCompletedBar + totalUncompletedBar + "§r §b" + StringUtility.commaify(familiesCompleted) + "§3/§b" + StringUtility.shortenNumber(totalFamilies));
 
             return lore;
         }

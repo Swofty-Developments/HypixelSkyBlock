@@ -67,7 +67,7 @@ public class GUIBestiaryMob extends SkyBlockInventoryGUI {
                 int kills = getPlayer().getBestiaryData().getAmount(bestiaryEntry.getMobs());
                 int tier = bestiaryData.getCurrentBestiaryTier(mob, kills);
 
-                player.getBestiaryData().getDisplay(lore, kills, mob, bestiaryEntry);
+                player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
                 if (bestiaryEntry.getMaterial() == Material.PLAYER_HEAD) {
                     return ItemStackCreator.getStackHead("§a" + bestiaryEntry.getName() + " " + StringUtility.getAsRomanNumeral(tier),
