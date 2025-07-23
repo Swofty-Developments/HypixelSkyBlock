@@ -11,11 +11,9 @@ import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.BestiaryUpdateEvent;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryEntry;
-import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +108,12 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             double currentProgress = bestiaryData.getKillsToNextTier(mob, kills);
             double currentRequirement = bestiaryData.getTotalKillsForNextTier(bracket, tier + 1);
             double totalRequirement = bestiaryData.getTotalKillsForMaxTier(mob);
+            DatapointDeaths.PlayerDeaths playerDeaths = attachedPlayer.getDeathData();
+            int deaths = 0;
+
+            for (BestiaryMob bestiaryMob : bestiaryEntry.getMobs()) {
+                deaths += playerDeaths.getAmount(bestiaryMob.getMobID());
+            }
 
             String baseLoadingBar = "─────────────────";
             int maxBarLength = baseLoadingBar.length();
@@ -118,7 +122,7 @@ public class DatapointBestiary extends Datapoint<DatapointBestiary.PlayerBestiar
             lore.add("§7" + bestiaryEntry.getDescription());
             lore.add("");
             lore.add("§7Kills: §a" + kills);
-            lore.add("§7Deaths: §a" + "TODO"); //TODO add datapoint for amount of deaths
+            lore.add("§7Deaths: §a" + deaths);
             lore.add("");
 
             if (tier > 0) {
