@@ -15,13 +15,13 @@ public class EnchantmentSilkTouch implements Ench, EnchFromTable {
 
     @Override
     public String getDescription(int level) {
-        return "§7Allows you to mine blocks in their original form.";
+        return "§7Allows you to collect normally unobtainable block drops.";
     }
 
     @Override
     public ApplyLevels getLevelsToApply(@NonNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
-                1, 64
+                1, 10
         ));
         return new ApplyLevels(levels);
     }
@@ -37,13 +37,13 @@ public class EnchantmentSilkTouch implements Ench, EnchFromTable {
     @Override
     public TableLevels getLevelsFromTableToApply(@NonNull SkyBlockPlayer player) {
         HashMap<Integer, Integer> levels = new HashMap<>(Map.of(
-                1, 30
+                1, 10
         ));
         return new TableLevels(levels);
     }
 
     @Override
     public int getRequiredBookshelfPower() {
-        return 15;
+        return 5;
     }
 }
