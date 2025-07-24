@@ -121,7 +121,7 @@ public class GUIBestiaryIsland extends SkyBlockInventoryGUI {
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
                         ArrayList<String> lore = new ArrayList<>();
 
-                        player.getBestiaryData().getDisplay(lore, kills, mob, bestiaryEntry);
+                        player.getBestiaryData().getMobDisplay(lore, kills, mob, bestiaryEntry);
 
                         lore.add("§eClick to view!");
 

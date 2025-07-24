@@ -53,21 +53,12 @@ public class GUISkillCategory extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1,
-                            "§7The Bestiary is a compendium of",
-                            "§7mobs in SkyBlock. It contains detailed",
-                            "§7information on loot drops, your mob",
-                            "§7stats, and more!",
-                            " ",
-                            "§7Kill mobs within §aFamilies §7to progress",
-                            "§7and earn §arewards§7, including §b✯ Magic",
-                            "§bFind §7bonuses towards mobs in the",
-                            "§7Family.",
-                            " ",
-                            "§c§lHERE PROGRESS BAR",
-                            " ",
-                            "§eClick to view!"
-                            );
+                    ArrayList<String> lore = new ArrayList<>();
+                    player.getBestiaryData().getTotalDisplay(lore);
+                    lore.add("");
+                    lore.add("§eClick to view!");
+
+                    return ItemStackCreator.getStack("§3Bestiary", Material.WRITTEN_BOOK, 1, lore);
                 }
             });
         }

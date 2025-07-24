@@ -2,7 +2,6 @@ package net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.mobs.hub.MobGraveyardZombie;
 import net.swofty.types.generic.entity.mob.mobs.hub.MobGraveyardZombieVillager;
