@@ -197,7 +197,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         }
 
         public Builder addSimpleRule(ItemType dropItem, double chance, String amount) {
-            DropConditions conditions = new DropConditions(null,null,  null, null, null, null, null);
+            DropConditions conditions = new DropConditions(null, null, null, null, null, null, null);
             List<Drop> drops = List.of(new Drop(dropItem, chance, amount));
             return addRule(conditions, drops);
         }
@@ -216,27 +216,27 @@ public class CustomDropComponent extends SkyBlockItemComponent {
     }
 
     public static DropConditions smeltingTouch(boolean smeltingTouch) {
-        return new DropConditions(null, smeltingTouch,null,  null, null, null, null);
+        return new DropConditions(null, smeltingTouch, null, null, null, null, null);
     }
 
     public static DropConditions brokenWith(ItemType tool) {
-        return new DropConditions(null,null,  tool, null, null, null, null);
+        return new DropConditions(null, null, tool, null, null, null, null);
     }
 
     public static DropConditions notBrokenWith(String tool) {
-        return new DropConditions(null,null,  null, "!" + tool, null, null, null);
+        return new DropConditions(null, null, null, "!" + tool, null, null, null);
     }
 
     public static DropConditions location(LocationType locationType) {
-        return new DropConditions(null,null,  null, null, locationType, null, null);
+        return new DropConditions(null, null, null, null, locationType, null, null);
     }
 
     public static DropConditions region(String region) {
-        return new DropConditions(null, null,null,  null, null, region, null);
+        return new DropConditions(null, null, null, null, null, region, null);
     }
 
     public static DropConditions notRegion(String region) {
-        return new DropConditions(null,null,  null, null, null, null, "!" + region);
+        return new DropConditions(null, null, null, null, null, null, "!" + region);
     }
 
     public static Drop drop(ItemType item, double chance, String amount) {
