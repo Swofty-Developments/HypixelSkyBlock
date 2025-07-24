@@ -60,6 +60,12 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             }
         }
 
+        // No rules matched - return default drop (1 of the original material)
+        ItemType originalType = brokenItem.getAttributeHandler().getPotentialType();
+        if (originalType != null) {
+            drops.add(new SkyBlockItem(originalType, 1));
+        }
+
         return drops;
     }
 
