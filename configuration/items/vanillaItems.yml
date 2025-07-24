@@ -13,19 +13,19 @@ items:
       - id: CUSTOM_DROP
         rules:
           - conditions:
-              silk_touch: false
-            drops:
-              - item: WHEAT_SEEDS
-                chance: 0.125
-                amount: 1
-              # No grass block drop without silk touch
-          - conditions:
-              silk_touch: true
+              broken_with: SHEARS
             drops:
               - item: SHORT_GRASS
                 chance: 1.0
                 amount: 1
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
       - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
   - id: GRASS_BLOCK
     material: GRASS_BLOCK
     rarity: COMMON
@@ -33,17 +33,23 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
-  - id: SHORT_GRASS
-    material: GRASS
+  - id: TALL_GRASS
     rarity: COMMON
+    material: TALL_GRASS
     components:
-      - id: PLACEABLE
-      - id: SELLABLE
-        value: 1.0
-  - id: LONG_GRASS
-    material: GRASS
-    rarity: COMMON
-    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: TALL_GRASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
@@ -51,9 +57,222 @@ items:
     material: FERN
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: FERN
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
+  - id: LARGE_FERN
+    material: LARGE_FERN
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: FERN
+                chance: 1.0
+                amount: 2
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+  - id: OAK_LEAVES
+    rarity: COMMON
+    material: OAK_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: OAK_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: OAK_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: OAK_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
+  - id: SPRUCE_LEAVES
+    rarity: COMMON
+    material: SPRUCE_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: SPRUCE_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: SPRUCE_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: SPRUCE_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
+  - id: BIRCH_LEAVES
+    rarity: COMMON
+    material: BIRCH_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BIRCH_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: BIRCH_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: BIRCH_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
+  - id: JUNGLE_LEAVES
+    rarity: COMMON
+    material: JUNGLE_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: JUNGLE_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: JUNGLE_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: JUNGLE_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
+  - id: ACACIA_LEAVES
+    rarity: COMMON
+    material: ACACIA_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: ACACIA_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: ACACIA_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: ACACIA_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
+  - id: DARK_OAK_LEAVES
+    rarity: COMMON
+    material: DARK_OAK_LEAVES
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: DARK_OAK_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: DARK_OAK_LEAVES
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: DARK_OAK_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: 1-2
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
   - id: ANVIL
     material: ANVIL
     rarity: COMMON
@@ -404,6 +623,16 @@ items:
     material: BLACK_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BLACK_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -429,6 +658,16 @@ items:
     material: BLUE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+        - conditions:
+            silk_touch: true
+          drops:
+            - item: BLUE_STAINED_GLASS
+              chance: 1.0
+              amount: 1
+        - conditions:
+          drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -454,6 +693,16 @@ items:
     material: BROWN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BROWN_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -479,6 +728,16 @@ items:
     material: CYAN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: CYAN_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -500,67 +759,20 @@ items:
             result:
               type: CYAN_STAINED_GLASS
               amount: 8
-  - id: OAK_LEAVES
-    rarity: COMMON
-    material: oak_leaves
-    components:
-      - id: CUSTOM_DROP
-        rules:
-          # Silk touch rule - always gives leaves (highest priority)
-          - conditions:
-              silk_touch: true
-            drops:
-              - item: OAK_LEAVES
-                chance: 1.0
-                amount: 1
-          # Shears rule - gives leaves + normal drops
-          - conditions:
-              broken_with: SHEARS
-            drops:
-              - item: OAK_LEAVES
-                chance: 1.0
-                amount: 1
-              - item: OAK_SAPLING
-                chance: 0.05
-                amount: 1
-              - item: STICK
-                chance: 0.02
-                amount: "1-2"
-              - item: APPLE
-                chance: 0.005
-                amount: 1
-          # Default rule - no shears, no silk touch
-          - conditions:
-              silk_touch: false
-              broken_with_not: SHEARS
-            drops:
-              - item: OAK_SAPLING
-                chance: 0.05
-                amount: 1
-              - item: STICK
-                chance: 0.02
-                amount: "1-2"
-              - item: APPLE
-                chance: 0.005
-                amount: 1
-      - id: PLACEABLE
   - id: GLASS
     material: GLASS
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
-          # No silk touch = no drops
-          - conditions:
-              silk_touch: false
-            drops: [ ]
-          # Silk touch = get glass back
           - conditions:
               silk_touch: true
             drops:
               - item: GLASS
                 chance: 1.0
                 amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -568,6 +780,16 @@ items:
     material: GRAY_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GRAY_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -593,6 +815,16 @@ items:
     material: GREEN_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GREEN_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -618,6 +850,16 @@ items:
     material: LIGHT_BLUE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIGHT_BLUE_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -643,6 +885,16 @@ items:
     material: LIGHT_GRAY_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIGHT_GRAY_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -668,6 +920,16 @@ items:
     material: LIME_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIME_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -693,6 +955,16 @@ items:
     material: MAGENTA_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: MAGENTA_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -718,6 +990,16 @@ items:
     material: ORANGE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: ORANGE_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -743,6 +1025,16 @@ items:
     material: PINK_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: PINK_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -768,6 +1060,16 @@ items:
     material: PURPLE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: PURPLE_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -793,6 +1095,16 @@ items:
     material: RED_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: RED_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -818,6 +1130,16 @@ items:
     material: WHITE_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: WHITE_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -843,6 +1165,16 @@ items:
     material: YELLOW_STAINED_GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: YELLOW_STAINED_GLASS
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0
@@ -868,6 +1200,16 @@ items:
     material: BLACK_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BLACK_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -889,6 +1231,16 @@ items:
     material: BLUE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BLUE_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -910,6 +1262,16 @@ items:
     material: BROWN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: BROWN_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -931,6 +1293,16 @@ items:
     material: CYAN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: CYAN_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -952,6 +1324,16 @@ items:
     material: GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -973,6 +1355,16 @@ items:
     material: GRAY_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GRAY_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -994,6 +1386,16 @@ items:
     material: GREEN_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GREEN_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1015,6 +1417,16 @@ items:
     material: LIGHT_BLUE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIGHT_BLUE_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1036,6 +1448,16 @@ items:
     material: LIGHT_GRAY_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIGHT_GRAY_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1057,6 +1479,16 @@ items:
     material: LIME_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LIME_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1078,6 +1510,16 @@ items:
     material: MAGENTA_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: MAGENTA_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1099,6 +1541,16 @@ items:
     material: ORANGE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: ORANGE_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1120,6 +1572,16 @@ items:
     material: PINK_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: PINK_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1141,6 +1603,16 @@ items:
     material: PURPLE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: PURPLE_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1162,6 +1634,16 @@ items:
     material: RED_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: RED_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1183,6 +1665,16 @@ items:
     material: WHITE_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: WHITE_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -1204,6 +1696,16 @@ items:
     material: YELLOW_STAINED_GLASS_PANE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: YELLOW_STAINED_GLASS_PANE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
         value: 0.8
@@ -3074,9 +3576,25 @@ items:
     material: STONE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: STONE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: COBBLESTONE
+                chance: 1.0
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 1.0
   - id: STONE_SLAB
     material: STONE_SLAB
     rarity: COMMON
