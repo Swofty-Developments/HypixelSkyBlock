@@ -249,7 +249,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
 
     public static CustomDropComponent.DropConditions parseDropConditions(Map<String, Object> conditionsConfig) {
         if (conditionsConfig == null) {
-            return new CustomDropComponent.DropConditions(null,null,  null, null, null, null, null);
+            return new CustomDropComponent.DropConditions(null, null, null, null, null, null, null);
         }
 
         Boolean silkTouch = null;
