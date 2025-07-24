@@ -4,17 +4,22 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.trait.PlayerInstanceEvent;
 import net.minestom.server.item.Material;
+import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+
+import java.util.List;
 
 @Getter
 public class CustomBlockBreakEvent implements PlayerInstanceEvent {
     private final SkyBlockPlayer player;
     private final Material material;
     private final Point point;
+    private final List<SkyBlockItem> drops;
 
-    public CustomBlockBreakEvent(SkyBlockPlayer player, Material material, Point point) {
+    public CustomBlockBreakEvent(SkyBlockPlayer player, Material material, Point point, List<SkyBlockItem> drops) {
         this.player = player;
         this.material = material;
         this.point = point;
+        this.drops = drops;
     }
 }

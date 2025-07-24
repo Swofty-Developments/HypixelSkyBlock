@@ -11,8 +11,8 @@ import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
-import net.swofty.types.generic.item.ItemDropChanger;
 import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.CustomDropComponent;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.region.SkyBlockMiningConfiguration;
 import net.swofty.types.generic.region.SkyBlockRegion;
@@ -20,6 +20,8 @@ import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;
+
+import java.util.List;
 
 public class ActionRegionBlockBreak implements SkyBlockEventClass {
 
@@ -68,74 +70,85 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
 
         // Handle item drops for valid breaks
         if (material != null && shouldItemDrop) {
-            // Determine which item should be dropped
-            SkyBlockItem item = ItemDropChanger.get(material) != null ?
-                    ItemDropChanger.get(material).getItemSupplier().get() :
-                    new SkyBlockItem(material);
+            SkyBlockItem brokenBlockItem = new SkyBlockItem(material);
+
+            // Determine which item(s) should be dropped using CustomDropComponent
+            List<SkyBlockItem> customDrops = CustomDropComponent.simulateDrop(
+                    brokenBlockItem,
+                    player,
+                    new SkyBlockItem(player.getItemInMainHand()),
+                    region,
+                    SkyBlockConst.isIslandServer()
+            );
 
             // Call custom break event
             SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
-                    player, item.getMaterial(), event.getBlockPosition()
+                    player, material, event.getBlockPosition(), customDrops
             ));
 
-            // Calculate drop amount with fortune multiplier
-            int dropAmount;
-            try {
-                MineableBlock mineableBlock = MineableBlock.get(block);
-                double baseFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().baseSkillFortune()); //might need to return 100 if null
-                double specificFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().specificBlockFortune());
-                double fortune = baseFortune + specificFortune;
-                double dropMultiplicator = (1 + (fortune * 0.01));
-                dropAmount = mineableBlock.getDrops().getAmount(dropMultiplicator);
-            } catch (NullPointerException e) {
-                dropAmount = 1;
-            }
+            // Process each drop with fortune multiplier
+            for (SkyBlockItem dropItem : customDrops) {
+                // Calculate drop amount with fortune multiplier
+                int dropAmount = dropItem.getAmount(); // Base amount from CustomDropComponent
 
-            // Create the item to be given to the player
-            SkyBlockItem skyBlockItem = new SkyBlockItem(item.getItemStackBuilder().amount(dropAmount).build());
-            ItemType droppedItemType = skyBlockItem.getAttributeHandler().getPotentialType();
-
-// Handle item distribution based on player conditions
-            if (player.canInsertItemIntoSacks(droppedItemType, dropAmount)) {
-                player.getSackItems().increase(droppedItemType, dropAmount);
-            } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
-                player.addAndUpdateItem(skyBlockItem);
-            } else {
-                // Determine nearest air block between ore and player
-                Pos orePos = Pos.fromPoint(event.getBlockPosition());
-                Pos playerPos = player.getPosition();
-
-                Pos[] offsets = {
-                        new Pos(1, 0, 0), new Pos(-1, 0, 0),
-                        new Pos(0, 1, 0), new Pos(0, -1, 0),
-                        new Pos(0, 0, 1), new Pos(0, 0, -1)
-                };
-
-                Pos nearestAirBlock = null;
-                double closestDistanceSquared = Double.MAX_VALUE;
-
-                for (Pos offset : offsets) {
-                    Pos adjacentPos = orePos.add(offset);
-                    Block block2 = player.getInstance().getBlock(adjacentPos);
-
-                    if (block2.isAir()) {
-                        double distanceSquared = adjacentPos.distanceSquared(playerPos);
-                        if (distanceSquared < closestDistanceSquared) {
-                            closestDistanceSquared = distanceSquared;
-                            nearestAirBlock = adjacentPos;
-                        }
+                try {
+                    MineableBlock mineableBlock = MineableBlock.get(block);
+                    if (mineableBlock != null) {
+                        double baseFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().baseSkillFortune());
+                        double specificFortune = player.getStatistics().allStatistics().getOverall(mineableBlock.getBlockType().specificBlockFortune());
+                        double fortune = baseFortune + specificFortune;
+                        double dropMultiplier = (1 + (fortune * 0.01));
+                        dropAmount = (int) Math.ceil(dropAmount * dropMultiplier);
                     }
+                } catch (NullPointerException e) {
+                    // Keep base amount if fortune calculation fails
                 }
 
-                // Use the nearest air block or fallback to default position
-                Pos dropPos = (nearestAirBlock != null) ? nearestAirBlock.add(0.5, 0.5, 0.5) : orePos.add(0.5, 1.5, 0.5);
+                // Update the drop item amount
+                dropItem.setAmount(dropAmount);
+                ItemType droppedItemType = dropItem.getAttributeHandler().getPotentialType();
 
-                // Spawn the item
-                DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(skyBlockItem, player);
-                droppedItem.setInstance(player.getInstance(), dropPos);
-                droppedItem.addViewer(player);
+                // Handle item distribution based on player conditions
+                if (player.canInsertItemIntoSacks(droppedItemType, dropAmount)) {
+                    player.getSackItems().increase(droppedItemType, dropAmount);
+                } else if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+                    player.addAndUpdateItem(dropItem);
+                } else {
+                    // Determine nearest air block between ore and player
+                    Pos orePos = Pos.fromPoint(event.getBlockPosition());
+                    Pos playerPos = player.getPosition();
+
+                    Pos[] offsets = {
+                            new Pos(1, 0, 0), new Pos(-1, 0, 0),
+                            new Pos(0, 1, 0), new Pos(0, -1, 0),
+                            new Pos(0, 0, 1), new Pos(0, 0, -1)
+                    };
+
+                    Pos nearestAirBlock = null;
+                    double closestDistanceSquared = Double.MAX_VALUE;
+
+                    for (Pos offset : offsets) {
+                        Pos adjacentPos = orePos.add(offset);
+                        Block block2 = player.getInstance().getBlock(adjacentPos);
+
+                        if (block2.isAir()) {
+                            double distanceSquared = adjacentPos.distanceSquared(playerPos);
+                            if (distanceSquared < closestDistanceSquared) {
+                                closestDistanceSquared = distanceSquared;
+                                nearestAirBlock = adjacentPos;
+                            }
+                        }
+                    }
+
+                    // Use the nearest air block or fallback to default position
+                    Pos dropPos = (nearestAirBlock != null) ? nearestAirBlock.add(0.5, 0.5, 0.5) : orePos.add(0.5, 1.5, 0.5);
+
+                    // Spawn the item
+                    DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(dropItem, player);
+                    droppedItem.setInstance(player.getInstance(), dropPos);
+                    droppedItem.addViewer(player);
+                }
             }
-
         }
     }
 }

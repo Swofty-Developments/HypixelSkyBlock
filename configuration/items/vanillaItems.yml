@@ -6,6 +6,26 @@ items:
       - id: PLACEABLE
       - id: SELLABLE
         value: 1.0
+  - id: SHORT_GRASS
+    rarity: COMMON
+    material: SHORT_GRASS
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: false
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
+              # No grass block drop without silk touch
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: SHORT_GRASS
+                chance: 1.0
+                amount: 1
+      - id: PLACEABLE
   - id: GRASS_BLOCK
     material: GRASS_BLOCK
     rarity: COMMON
@@ -480,10 +500,67 @@ items:
             result:
               type: CYAN_STAINED_GLASS
               amount: 8
+  - id: OAK_LEAVES
+    rarity: COMMON
+    material: oak_leaves
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          # Silk touch rule - always gives leaves (highest priority)
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: OAK_LEAVES
+                chance: 1.0
+                amount: 1
+          # Shears rule - gives leaves + normal drops
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: OAK_LEAVES
+                chance: 1.0
+                amount: 1
+              - item: OAK_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: "1-2"
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+          # Default rule - no shears, no silk touch
+          - conditions:
+              silk_touch: false
+              broken_with_not: SHEARS
+            drops:
+              - item: OAK_SAPLING
+                chance: 0.05
+                amount: 1
+              - item: STICK
+                chance: 0.02
+                amount: "1-2"
+              - item: APPLE
+                chance: 0.005
+                amount: 1
+      - id: PLACEABLE
   - id: GLASS
     material: GLASS
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          # No silk touch = no drops
+          - conditions:
+              silk_touch: false
+            drops: [ ]
+          # Silk touch = get glass back
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GLASS
+                chance: 1.0
+                amount: 1
       - id: PLACEABLE
       - id: SELLABLE
         value: 3.0

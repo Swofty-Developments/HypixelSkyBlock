@@ -1,6 +1,7 @@
 package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.types.generic.event.EventNodes;
@@ -16,7 +17,7 @@ public class ActionPlayerInteractWithCrafting implements SkyBlockEventClass {
     public void run(InventoryPreClickEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        if (event.getInventory() != null) return;
+        if (!(event.getInventory() instanceof PlayerInventory)) return;
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
         if (!event.getClickType().equals(ClickType.CHANGE_HELD)) // Fix dupe glitches by numkeying items into recipe grid

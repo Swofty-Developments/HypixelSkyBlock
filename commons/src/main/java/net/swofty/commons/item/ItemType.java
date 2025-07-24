@@ -595,6 +595,7 @@ public enum ItemType {
     /**
      * Shovels
      */
+    SHEARS(Material.SHEARS,  Rarity.COMMON),
     WOODEN_SHOVEL(Material.WOODEN_SHOVEL,  Rarity.COMMON),
     STONE_SHOVEL(Material.STONE_SHOVEL,  Rarity.COMMON),
     GOLDEN_SHOVEL(Material.GOLDEN_SHOVEL,  Rarity.COMMON),

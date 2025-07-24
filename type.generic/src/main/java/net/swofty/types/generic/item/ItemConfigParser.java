@@ -287,6 +287,33 @@ public class ItemConfigParser {
                 String applicableTo = (String) config.get("applicable_to");
                 yield new RuneableComponent(RuneableComponent.RuneApplicableTo.valueOf(applicableTo));
             }
+            case "CUSTOM_DROP" -> {
+                List<Map<String, Object>> rulesConfig = (List<Map<String, Object>>) config.get("rules");
+                List<CustomDropComponent.DropRule> rules = new ArrayList<>();
+
+                for (Map<String, Object> ruleConfig : rulesConfig) {
+                    // Parse conditions
+                    Map<String, Object> conditionsConfig = (Map<String, Object>) ruleConfig.get("conditions");
+                    CustomDropComponent.DropConditions conditions = CustomDropComponent.parseDropConditions(conditionsConfig);
+
+                    // Parse drops
+                    List<Map<String, Object>> dropsConfig = (List<Map<String, Object>>) ruleConfig.get("drops");
+                    List<CustomDropComponent.Drop> drops = new ArrayList<>();
+
+                    for (Map<String, Object> dropConfig : dropsConfig) {
+                        String itemName = (String) dropConfig.get("item");
+                        ItemType itemType = ItemType.valueOf(itemName);
+                        double chance = ((Number) dropConfig.get("chance")).doubleValue();
+                        String amount = dropConfig.get("amount").toString();
+
+                        drops.add(new CustomDropComponent.Drop(itemType, chance, amount));
+                    }
+
+                    rules.add(new CustomDropComponent.DropRule(conditions, drops));
+                }
+
+                yield new CustomDropComponent(rules);
+            }
             case "RUNE" -> {
                 int level = (int) config.get("required_level");
                 String color = (String) config.get("color");

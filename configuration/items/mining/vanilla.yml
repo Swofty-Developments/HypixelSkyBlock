@@ -299,6 +299,20 @@ items:
   - id: GOLD_ORE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: false
+            drops:
+              - item: GOLD_INGOT
+                chance: 1.0
+                amount: "2-5"
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GOLD_ORE
+                chance: 1.0
+                amount: 1
       - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING

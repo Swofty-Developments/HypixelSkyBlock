@@ -90,7 +90,7 @@ title:
 # Don't use secret if you not use MODERN type
 infoForwarding:
   type: MODERN
-  secret: '9KfeURi1losL'
+  secret: 'ixmSUgWOgvs7'
   tokens:
     - '<BUNGEE_GUARD_TOKEN>'
 

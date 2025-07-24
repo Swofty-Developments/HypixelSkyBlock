@@ -58,7 +58,7 @@ public class SkyBlock {
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
         long startTime = System.currentTimeMillis();
 
-        boolean isPterodactyl = Configuration.getOrDefault("pterodactyl-mode" , false);
+        boolean isPterodactyl = Configuration.getOrDefault("pterodaddctyl-mode" , false);
 
         if (isPterodactyl && args.length < 2) {
             Logger.error("Please specify server port.");

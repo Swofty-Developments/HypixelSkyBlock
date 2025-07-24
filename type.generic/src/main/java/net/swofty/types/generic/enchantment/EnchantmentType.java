@@ -24,6 +24,7 @@ public enum EnchantmentType {
     LOOTING(EnchantmentLooting.class),
     ENDER_SLAYER(EnchantmentEnderSlayer.class),
     SMITE(EnchantmentSmite.class),
+    SILK_TOUCH(EnchantmentSilkTouch.class),
     ;
 
     private final Class<? extends Ench> clazz;
