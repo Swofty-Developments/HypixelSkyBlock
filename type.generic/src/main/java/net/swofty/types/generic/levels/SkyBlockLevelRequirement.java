@@ -5,6 +5,7 @@ import net.minestom.server.item.Material;
 import net.swofty.types.generic.levels.unlocks.CustomLevelUnlock;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class SkyBlockLevelRequirement {
             SkyBlockLevelLoader.initializeCustomLevelAwardCache(levels);
             isLoaded = true;
 
-            System.out.println("Loaded " + levels.length + " SkyBlock levels from YAML");
+            Logger.info("Loaded " + levels.length + " SkyBlock levels from YAML");
         } catch (Exception e) {
             System.err.println("Failed to load SkyBlock levels from YAML: " + e.getMessage());
             e.printStackTrace();

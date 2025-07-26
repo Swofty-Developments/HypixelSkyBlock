@@ -38,6 +38,10 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         List<SkyBlockItem> drops = new ArrayList<>();
 
         if (!brokenItem.hasComponent(CustomDropComponent.class)) {
+            ItemType originalType = brokenItem.getAttributeHandler().getPotentialType();
+            if (originalType != null) {
+                drops.add(new SkyBlockItem(originalType, 1));
+            }
             return drops; // No custom drops
         }
 

@@ -120,7 +120,9 @@ public class GUIMuseumEmptyDisplay extends SkyBlockPaginatedGUI<SkyBlockItem> {
         TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
                 item.getAttributeHandler().getUniqueTrackedID()
         );
-        TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
+        ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
+        TrackedItemRetrieveProtocolObject.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+        TrackedItem trackedItem = trackedItemResponse.trackedItem();
 
         return new GUIClickableItem(slot) {
             @Override

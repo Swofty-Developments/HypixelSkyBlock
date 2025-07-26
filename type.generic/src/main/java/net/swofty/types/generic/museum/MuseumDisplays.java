@@ -102,18 +102,22 @@ public enum MuseumDisplays {
                 SkyBlockItem item = entry.getKey();
                 int position = entry.getValue();
 
-                Map.Entry<LivingEntity, PlayerHolograms.ExternalPlayerHologram> displays =
-                        display.displayHandler.display(player, display, item, position);
-                newDisplayEntities.put((MuseumDisplayEntityImpl) displays.getKey(), displays.getValue());
+                MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, item, position);
+                // Add all entities from the display info
+                for (LivingEntity entity : displayInfo.getEntities()) {
+                    newDisplayEntities.put((MuseumDisplayEntityImpl) entity, displayInfo.getHologram());
+                }
 
                 handledPositions[position] = 1;
             }
 
             for (int i = 0; i < totalPositions; i++) {
                 if (handledPositions[i] == 0) {
-                    Map.Entry<LivingEntity, PlayerHolograms.ExternalPlayerHologram> displays =
-                            display.displayHandler.display(player, display, null, i);
-                    newDisplayEntities.put((MuseumDisplayEntityImpl) displays.getKey(), displays.getValue());
+                    MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, null, i);
+                    // Add all entities from the display info
+                    for (LivingEntity entity : displayInfo.getEntities()) {
+                        newDisplayEntities.put((MuseumDisplayEntityImpl) entity, displayInfo.getHologram());
+                    }
                 }
             }
         }

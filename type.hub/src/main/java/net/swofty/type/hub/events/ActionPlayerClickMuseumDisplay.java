@@ -24,8 +24,7 @@ public class ActionPlayerClickMuseumDisplay implements SkyBlockEventClass {
                 new GUIMuseumEmptyDisplay(museumDisplayEntity.getDisplay(),
                         museumDisplayEntity.getPositionInMuseum()).open(player);
             } else {
-                ItemDisplayMeta itemDisplayMeta = (ItemDisplayMeta) museumDisplayEntity.getEntityMeta();
-                SkyBlockItem item = new SkyBlockItem(itemDisplayMeta.getItemStack());
+                SkyBlockItem item = museumDisplayEntity.getAttachedItem();
                 new GUIMuseumNonEmptyDisplay(item,
                         museumDisplayEntity.getDisplay(),
                         museumDisplayEntity.getPositionInMuseum()).open(player);

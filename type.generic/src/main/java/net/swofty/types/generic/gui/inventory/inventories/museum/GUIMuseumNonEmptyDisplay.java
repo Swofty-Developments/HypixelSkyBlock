@@ -22,6 +22,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.ItemPriceCalculator;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
     private final SkyBlockItem item;
@@ -36,6 +37,7 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
         this.display = display;
         this.position = position;
 
+        fill(Material.BLACK_STAINED_GLASS_PANE, "");
         set(GUIClickableItem.getCloseItem(31));
     }
 
@@ -51,7 +53,10 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
         TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
                 item.getAttributeHandler().getUniqueTrackedID()
         );
-        TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
+        ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
+
+        TrackedItemRetrieveProtocolObject.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+        TrackedItem trackedItem = trackedItemResponse.trackedItem();
 
         set(new GUIClickableItem(35) {
             @Override
@@ -78,9 +83,11 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 ItemStack.Builder stack = new NonPlayerItemUpdater(item).getUpdatedItem();
                 ArrayList<String> lore = new ArrayList<>(item.getLore());
+                UUID trackedItemUUID = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+
                 lore.add("§8§m---------------------");
                 lore.add("§7Item Donated");
-                lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(item.getAttributeHandler().getUniqueTrackedID())));
+                lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(trackedItemUUID)));
                 lore.add(" ");
                 lore.add("§7Item Created");
                 lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));
@@ -90,8 +97,8 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
                 lore.add("§6" + StringUtility.commaify(new ItemPriceCalculator(item).calculateCleanPrice()) + " Coins");
                 lore.add(" ");
                 lore.add("§7Item Value");
-                if (data.getCalculatedPrices().containsKey(item.getAttributeHandler().getUniqueTrackedID())) {
-                    lore.add("§6" + StringUtility.commaify(data.getCalculatedPrices().get(item.getAttributeHandler().getUniqueTrackedID())) + " Coins");
+                if (data.getCalculatedPrices().containsKey(trackedItemUUID)) {
+                    lore.add("§6" + StringUtility.commaify(data.getCalculatedPrices().get(trackedItemUUID)) + " Coins");
                 } else {
                     lore.add("§cUncalculated");
                 }
@@ -99,6 +106,8 @@ public class GUIMuseumNonEmptyDisplay extends SkyBlockInventoryGUI {
                 return ItemStackCreator.updateLore(stack, lore);
             }
         });
+
+        updateItemStacks(getInventory(), getPlayer());
     }
 
     @Override

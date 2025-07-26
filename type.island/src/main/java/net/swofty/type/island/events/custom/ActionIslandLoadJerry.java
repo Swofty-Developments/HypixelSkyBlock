@@ -41,6 +41,7 @@ public class ActionIslandLoadJerry implements SkyBlockEventClass {
                 event.getIsland().getIslandInstance(),
                 jerryInformation.getJerryPosition()
         );
+        jerry.setNoGravity(true);
 
         jerryInformation.setJerry(jerry);
 

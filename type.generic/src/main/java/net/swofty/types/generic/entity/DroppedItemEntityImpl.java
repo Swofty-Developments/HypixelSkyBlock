@@ -17,7 +17,7 @@ import java.util.Map;
 @Getter
 public class DroppedItemEntityImpl extends Entity {
     @Getter
-    private static Map<SkyBlockPlayer, List<DroppedItemEntityImpl>> droppedItems = new HashMap<>();
+    private static final Map<SkyBlockPlayer, List<DroppedItemEntityImpl>> droppedItems = new HashMap<>();
     private final SkyBlockPlayer player;
     private final long endPickupDelay;
 

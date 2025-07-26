@@ -59,7 +59,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
-            player.sendMessage("§cYou already have a " + skyBlockItem.getDisplayName() + " in your Museum!");
+            player.sendMessage("§cYou already have a " + skyBlockItem.getDisplayName() + " §cin your Museum!");
             return;
         }
 
@@ -134,7 +134,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
-                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join()).trackedItem();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 List<String> lore = new ArrayList<>(item.getLore(player));
@@ -197,8 +197,8 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
                 TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(trackedItemUUID);
-                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER)
-                        .handleRequest(message).join();
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER)
+                        .handleRequest(message).join()).trackedItem();
 
                 List<String> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add("§8§m---------------------");

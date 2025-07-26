@@ -40,14 +40,14 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 3.0
-  - id: COCOA_BEAN
+  - id: COCOA_BEANS
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
           - conditions:
             drops:
-              - item: COCOA_BEAN
+              - item: COCOA_BEANS
                 chance: 1.0
                 amount: 3
       - id: SKILLABLE_MINE
@@ -346,7 +346,7 @@ items:
     components:
       - id: SELLABLE
         value: 4.0
-  - id: SEEDS
+  - id: WHEAT_SEEDS
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -412,7 +412,7 @@ items:
               - item: WHEAT
                 chance: 1.0
                 amount: 1
-              - item: SEEDS
+              - item: WHEAT_SEEDS
                 chance: 1.0
                 amount: 1-4
       - id: SKILLABLE_MINE

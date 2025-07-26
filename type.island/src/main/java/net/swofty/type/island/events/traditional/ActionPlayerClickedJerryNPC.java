@@ -20,7 +20,6 @@ public class ActionPlayerClickedJerryNPC implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (event.getHand() != PlayerHand.MAIN) return;
-
         if (event.getTarget().getEntityType() != EntityType.VILLAGER) return;
 
         JerryClickedEvent jerryClickedEvent = new JerryClickedEvent(player);

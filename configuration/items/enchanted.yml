@@ -879,7 +879,7 @@ items:
         value: 320
 
   - id: ENCHANTED_SEEDS
-    material: seeds
+    material: WHEAT_SEEDS
     rarity: UNCOMMON
     default_statistics: {}
     components:

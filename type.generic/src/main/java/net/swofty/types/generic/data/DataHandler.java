@@ -2,6 +2,7 @@ package net.swofty.types.generic.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
@@ -49,9 +50,9 @@ public class DataHandler {
         return this.datapoints.get(key);
     }
 
-    public static DataHandler getUser(UUID uuid) {
+    public static @NonNull DataHandler getUser(UUID uuid) {
         if (!userCache.containsKey(uuid)) {
-            return null;
+            throw new RuntimeException("User " + uuid + " does not exist!");
         }
         return userCache.get(uuid);
     }
