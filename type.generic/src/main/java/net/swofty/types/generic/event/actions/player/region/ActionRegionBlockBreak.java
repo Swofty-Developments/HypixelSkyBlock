@@ -5,6 +5,7 @@ import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.Material;
+import net.minestom.server.tag.Tag;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
@@ -82,9 +83,11 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             );
 
             // Call custom break event
-            SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
-                    player, material, event.getBlockPosition(), customDrops
-            ));
+            if (!(block.hasTag(Tag.Boolean("player_placed")) && block.getTag(Tag.Boolean("player_placed")))) {
+                SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
+                        player, material, event.getBlockPosition(), customDrops
+                ));
+            }
 
             // Process each drop with fortune multiplier
             for (SkyBlockItem dropItem : customDrops) {

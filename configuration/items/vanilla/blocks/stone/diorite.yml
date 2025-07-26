@@ -1,0 +1,74 @@
+items:
+  - id: DIORITE
+    material: DIORITE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+
+  - id: DIORITE_SLAB
+    material: DIORITE_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_SLAB
+              amount: 6
+
+  - id: DIORITE_STAIRS
+    material: DIORITE_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_STAIRS
+              amount: 4
+
+  - id: DIORITE_WALL
+    material: DIORITE_WALL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DIORITE
+                amount: 1
+            result:
+              type: DIORITE_WALL
+              amount: 6

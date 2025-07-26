@@ -1,0 +1,322 @@
+items:
+  - id: BLACK_WOOL
+    material: BLACK_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_WOOL
+              amount: 1
+
+  - id: BLUE_WOOL
+    material: BLUE_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_WOOL
+              amount: 1
+
+  - id: BROWN_WOOL
+    material: BROWN_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_WOOL
+              amount: 1
+
+  - id: CYAN_WOOL
+    material: CYAN_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_WOOL
+              amount: 1
+
+  - id: GRAY_WOOL
+    material: GRAY_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_WOOL
+              amount: 1
+
+  - id: GREEN_WOOL
+    material: GREEN_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: CACTUS_GREEN
+                amount: 1
+            result:
+              type: GREEN_WOOL
+              amount: 1
+
+  - id: LIGHT_BLUE_WOOL
+    material: LIGHT_BLUE_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_WOOL
+              amount: 1
+
+  - id: LIGHT_GRAY_WOOL
+    material: LIGHT_GRAY_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_WOOL
+              amount: 1
+
+  - id: LIME_WOOL
+    material: LIME_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_WOOL
+              amount: 1
+
+  - id: MAGENTA_WOOL
+    material: MAGENTA_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_WOOL
+              amount: 1
+
+  - id: ORANGE_WOOL
+    material: ORANGE_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_WOOL
+              amount: 1
+
+  - id: PINK_WOOL
+    material: PINK_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_WOOL
+              amount: 1
+
+  - id: PURPLE_WOOL
+    material: PURPLE_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_WOOL
+              amount: 1
+
+  - id: RED_WOOL
+    material: RED_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: RED_DYE
+                amount: 1
+            result:
+              type: RED_WOOL
+              amount: 1
+
+  - id: WHITE_WOOL
+    material: WHITE_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: STRING
+                amount: 1
+            result:
+              type: WHITE_WOOL
+              amount: 1
+
+  - id: YELLOW_WOOL
+    material: YELLOW_WOOL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: WHITE_WOOL
+                amount: 1
+              - type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_WOOL
+              amount: 1

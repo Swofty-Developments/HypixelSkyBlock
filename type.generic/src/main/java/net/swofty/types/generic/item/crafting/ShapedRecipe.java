@@ -25,7 +25,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         List<String> pattern, Function<SkyBlockPlayer, CraftingResult> canCraft) {
         super(result, type, canCraft);
         this.ingredientMap = ingredientMap;
-        this.pattern = pattern;
+        this.pattern = normalizedPattern(pattern);
         if (pattern.isEmpty()) {
             throw new IllegalArgumentException("Pattern must have at least one element");
         }
@@ -38,6 +38,12 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                         SkyBlockItem result, Map<Character, ItemQuantifiable> ingredientMap,
                         List<String> pattern) {
         this(type, result, ingredientMap, pattern, (_) -> new CraftingResult(true, new String[]{}));
+    }
+
+    private List<String> normalizedPattern(List<String> pattern) {
+        return pattern.stream()
+                .map(row -> String.format("%-3s", row))
+                .toList();
     }
 
     public void addExtraRequirement(char patternChar, Function<SkyBlockItem, Boolean> requirement) {

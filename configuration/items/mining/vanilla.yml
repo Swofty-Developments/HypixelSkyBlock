@@ -103,63 +103,6 @@ items:
             result:
               type: DIAMOND_BLOCK
               amount: 1
-  - id: DIAMOND_PICKAXE
-    rarity: COMMON
-    default_statistics:
-      mining_speed: 230.0
-      breaking_power: 4.0
-      damage: 30.0
-    components:
-      - id: PICKAXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AAA
-              - OBO
-              - OBO
-            ingredients:
-              A:
-                type: DIAMOND
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: DIAMOND_PICKAXE
-              amount: 1
-      - id: SELLABLE
-        value: 12.0
-  - id: DIAMOND_SHOVEL
-    rarity: COMMON
-    default_statistics:
-      damage: 30.0
-    components:
-      - id: SHOVEL
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - A
-              - B
-              - B
-            ingredients:
-              A:
-                type: DIAMOND
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: DIAMOND_SHOVEL
-              amount: 1
-      - id: SELLABLE
-        value: 4.0
   - id: EMERALD
     rarity: COMMON
     components:
@@ -284,63 +227,6 @@ items:
             result:
               type: GOLD_BLOCK
               amount: 1
-  - id: GOLDEN_PICKAXE
-    rarity: COMMON
-    default_statistics:
-      mining_speed: 250.0
-      damage: 15.0
-      breaking_power: 1.0
-    components:
-      - id: PICKAXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AAA
-              - OBO
-              - OBO
-            ingredients:
-              A:
-                type: GOLD_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: GOLDEN_PICKAXE
-              amount: 1
-      - id: SELLABLE
-        value: 6.0
-  - id: GOLDEN_SHOVEL
-    rarity: COMMON
-    default_statistics:
-      damage: 15.0
-    components:
-      - id: SHOVEL
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - A
-              - B
-              - B
-            ingredients:
-              A:
-                type: GOLD_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: GOLDEN_SHOVEL
-              amount: 1
-      - id: SELLABLE
-        value: 3.0
   - id: GOLD_INGOT
     rarity: COMMON
     components:
@@ -363,7 +249,7 @@ items:
                 amount: 1
             result:
               type: GOLD_NUGGET
-              amount: 1
+              amount: 9
       - id: SELLABLE
         value: 0.4
   - id: GOLD_ORE
@@ -429,6 +315,21 @@ items:
     components:
       - id: SELLABLE
         value: 3.0
+  - id: IRON_NUGGET
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 0.3
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: IRON_INGOT
+                amount: 1
+            result:
+              type: IRON_NUGGET
+              amount: 9
   - id: IRON_ORE
     rarity: COMMON
     components:
@@ -451,63 +352,6 @@ items:
         mining_value: 5.0
       - id: SELLABLE
         value: 3.0
-  - id: IRON_PICKAXE
-    rarity: COMMON
-    default_statistics:
-      mining_speed: 160.0
-      damage: 24.0
-      breaking_power: 3.0
-    components:
-      - id: PICKAXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AAA
-              - OBO
-              - OBO
-            ingredients:
-              A:
-                type: IRON_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: IRON_PICKAXE
-              amount: 1
-      - id: SELLABLE
-        value: 4.0
-  - id: IRON_SHOVEL
-    rarity: COMMON
-    default_statistics:
-      damage: 25.0
-    components:
-      - id: SHOVEL
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - A
-              - B
-              - B
-            ingredients:
-              A:
-                type: IRON_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: IRON_SHOVEL
-              amount: 1
-      - id: SELLABLE
-        value: 2.0
   - id: LAPIS_LAZULI
     rarity: COMMON
     components:
@@ -729,117 +573,3 @@ items:
             result:
               type: SNOW_BLOCK
               amount: 1
-  - id: STONE_PICKAXE
-    rarity: COMMON
-    default_statistics:
-      mining_speed: 110.0
-      damage: 20.0
-      breaking_power: 2.0
-    components:
-      - id: PICKAXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AAA
-              - OBO
-              - OBO
-            ingredients:
-              A:
-                type: COBBLESTONE
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: STONE_PICKAXE
-              amount: 1
-      - id: SELLABLE
-        value: 1.0
-  - id: STONE_SHOVEL
-    rarity: COMMON
-    default_statistics:
-      damage: 20.0
-    components:
-      - id: SHOVEL
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - A
-              - B
-              - B
-            ingredients:
-              A:
-                type: COBBLESTONE
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: STONE_SHOVEL
-              amount: 1
-      - id: SELLABLE
-        value: 1.0
-  - id: WOODEN_PICKAXE
-    rarity: COMMON
-    default_statistics:
-      mining_speed: 70.0
-      damage: 15.0
-      breaking_power: 1.0
-    components:
-      - id: PICKAXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AAA
-              - OBO
-              - OBO
-            ingredients:
-              A:
-                type: OAK_PLANKS
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: WOODEN_PICKAXE
-              amount: 1
-      - id: SELLABLE
-        value: 1.0
-  - id: WOODEN_SHOVEL
-    rarity: COMMON
-    default_statistics:
-      damage: 15.0
-    components:
-      - id: SHOVEL
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - A
-              - B
-              - B
-            ingredients:
-              A:
-                type: OAK_PLANKS
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: WOODEN_SHOVEL
-              amount: 1
-      - id: SELLABLE
-        value: 1.0

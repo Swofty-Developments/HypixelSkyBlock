@@ -1,0 +1,424 @@
+items:
+  - id: TERRACOTTA
+    material: TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: WHITE_TERRACOTTA
+    material: WHITE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: WHITE_DYE
+                amount: 1
+            result:
+              type: WHITE_TERRACOTTA
+              amount: 8
+
+  - id: ORANGE_TERRACOTTA
+    material: ORANGE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: ORANGE_DYE
+                amount: 1
+            result:
+              type: ORANGE_TERRACOTTA
+              amount: 8
+
+  - id: MAGENTA_TERRACOTTA
+    material: MAGENTA_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: MAGENTA_DYE
+                amount: 1
+            result:
+              type: MAGENTA_TERRACOTTA
+              amount: 8
+
+  - id: LIGHT_BLUE_TERRACOTTA
+    material: LIGHT_BLUE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIGHT_BLUE_DYE
+                amount: 1
+            result:
+              type: LIGHT_BLUE_TERRACOTTA
+              amount: 8
+
+  - id: YELLOW_TERRACOTTA
+    material: YELLOW_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: YELLOW_DYE
+                amount: 1
+            result:
+              type: YELLOW_TERRACOTTA
+              amount: 8
+
+  - id: LIME_TERRACOTTA
+    material: LIME_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIME_DYE
+                amount: 1
+            result:
+              type: LIME_TERRACOTTA
+              amount: 8
+
+  - id: PINK_TERRACOTTA
+    material: PINK_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: PINK_DYE
+                amount: 1
+            result:
+              type: PINK_TERRACOTTA
+              amount: 8
+
+  - id: GRAY_TERRACOTTA
+    material: GRAY_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: GRAY_DYE
+                amount: 1
+            result:
+              type: GRAY_TERRACOTTA
+              amount: 8
+
+  - id: LIGHT_GRAY_TERRACOTTA
+    material: LIGHT_GRAY_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: LIGHT_GRAY_DYE
+                amount: 1
+            result:
+              type: LIGHT_GRAY_TERRACOTTA
+              amount: 8
+
+  - id: CYAN_TERRACOTTA
+    material: CYAN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: CYAN_DYE
+                amount: 1
+            result:
+              type: CYAN_TERRACOTTA
+              amount: 8
+
+  - id: PURPLE_TERRACOTTA
+    material: PURPLE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: PURPLE_DYE
+                amount: 1
+            result:
+              type: PURPLE_TERRACOTTA
+              amount: 8
+
+  - id: BLUE_TERRACOTTA
+    material: BLUE_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BLUE_DYE
+                amount: 1
+            result:
+              type: BLUE_TERRACOTTA
+              amount: 8
+
+  - id: BROWN_TERRACOTTA
+    material: BROWN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BROWN_DYE
+                amount: 1
+            result:
+              type: BROWN_TERRACOTTA
+              amount: 8
+
+  - id: GREEN_TERRACOTTA
+    material: GREEN_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: GREEN_DYE
+                amount: 1
+            result:
+              type: GREEN_TERRACOTTA
+              amount: 8
+
+  - id: RED_TERRACOTTA
+    material: RED_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: RED_DYE
+                amount: 1
+            result:
+              type: RED_TERRACOTTA
+              amount: 8
+
+  - id: BLACK_TERRACOTTA
+    material: BLACK_TERRACOTTA
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: TERRACOTTA
+                amount: 1
+              B:
+                type: BLACK_DYE
+                amount: 1
+            result:
+              type: BLACK_TERRACOTTA
+              amount: 8

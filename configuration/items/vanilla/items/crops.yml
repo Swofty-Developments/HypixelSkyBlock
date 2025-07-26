@@ -1,0 +1,181 @@
+items:
+  - id: CACTUS
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              smelting_touch: true
+            drops:
+              - item: CACTUS_GREEN
+                chance: 1.0
+                amount: 1
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 2.0
+      - id: SELLABLE
+        value: 3.0
+
+  - id: CARROT
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: CARROT
+                chance: 1.0
+                amount: 2-5
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+
+  - id: COCOA_BEANS
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: COCOA_BEANS
+                chance: 1.0
+                amount: 3
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+
+  - id: NETHER_WART
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: NETHER_WART
+                chance: 1.0
+                amount: 2-4
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 4.0
+
+  - id: POTATO
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: POTATO
+                chance: 1.0
+                amount: 2-5
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 3.0
+
+  - id: MELON_BLOCK
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: MELON_BLOCK
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: MELON_SLICE
+                chance: 1.0
+                amount: 3-7
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 18.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: MELON_SLICE
+                amount: 1
+            result:
+              type: MELON_BLOCK
+              amount: 1
+
+  - id: MELON_SLICE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Melon
+
+  - id: WHEAT_SEEDS
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Seeds
+
+  - id: WHEAT
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+            drops:
+              - item: WHEAT
+                chance: 1.0
+                amount: 1
+              - item: WHEAT_SEEDS
+                chance: 1.0
+                amount: 1-4
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.0
+      - id: SELLABLE
+        value: 6.0
+
+  - id: SUGAR_CANE
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 2.0
+      - id: SELLABLE
+        value: 4.0
+
+  - id: PUMPKIN
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 4.5
+      - id: SELLABLE
+        value: 10.0
+
+  - id: MUSHROOM
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FARMING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 10.0

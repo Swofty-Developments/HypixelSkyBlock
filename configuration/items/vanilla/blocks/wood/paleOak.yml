@@ -1,0 +1,337 @@
+items:
+  - id: PALE_OAK_LOG
+    material: PALE_OAK_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_PALE_OAK_LOG
+    material: STRIPPED_PALE_OAK_LOG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: PALE_OAK_WOOD
+    material: PALE_OAK_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_PALE_OAK_WOOD
+    material: STRIPPED_PALE_OAK_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: PALE_OAK_PLANKS
+    material: PALE_OAK_PLANKS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PALE_OAK_LOG
+                amount: 1
+            result:
+              type: PALE_OAK_PLANKS
+              amount: 4
+
+  - id: PALE_OAK_DOOR
+    material: PALE_OAK_DOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_DOOR
+              amount: 1
+
+  - id: PALE_OAK_FENCE
+    material: PALE_OAK_FENCE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: PALE_OAK_FENCE
+              amount: 3
+
+  - id: PALE_OAK_FENCE_GATE
+    material: PALE_OAK_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_FENCE_GATE
+              amount: 1
+
+  - id: PALE_OAK_PRESSURE_PLATE
+    material: PALE_OAK_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_PRESSURE_PLATE
+              amount: 1
+
+  - id: PALE_OAK_SLAB
+    material: PALE_OAK_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_SLAB
+              amount: 6
+
+  - id: PALE_OAK_STAIRS
+    material: PALE_OAK_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_STAIRS
+              amount: 4
+
+  - id: PALE_OAK_TRAPDOOR
+    material: PALE_OAK_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_TRAPDOOR
+              amount: 2
+
+  - id: PALE_OAK_BUTTON
+    material: PALE_OAK_BUTTON
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: PALE_OAK_PLANKS
+                amount: 1
+            result:
+              type: PALE_OAK_BUTTON
+              amount: 1
+
+  - id: PALE_OAK_BOAT
+    material: PALE_OAK_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PALE_OAK_BOAT
+              amount: 1
+
+  - id: PALE_OAK_CHEST_BOAT
+    material: PALE_OAK_CHEST_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: CHEST
+                amount: 1
+              B:
+                type: PALE_OAK_BOAT
+                amount: 1
+            result:
+              type: PALE_OAK_CHEST_BOAT
+              amount: 1
+
+  - id: PALE_OAK_SIGN
+    material: PALE_OAK_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: PALE_OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PALE_OAK_SIGN
+              amount: 3
+
+  - id: PALE_OAK_HANGING_SIGN
+    material: PALE_OAK_HANGING_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - BBB
+              - BBB
+            ingredients:
+              A:
+                type: CHAIN
+                amount: 1
+              B:
+                type: STRIPPED_PALE_OAK_LOG
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: PALE_OAK_HANGING_SIGN
+              amount: 6

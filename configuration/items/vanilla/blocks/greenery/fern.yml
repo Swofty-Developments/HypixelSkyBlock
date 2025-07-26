@@ -1,0 +1,42 @@
+items:
+  - id: FERN
+    material: FERN
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: FERN
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: LARGE_FERN
+    material: LARGE_FERN
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              broken_with: SHEARS
+            drops:
+              - item: FERN
+                chance: 1.0
+                amount: 2
+          - conditions:
+            drops:
+              - item: WHEAT_SEEDS
+                chance: 0.125
+                amount: 1
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0

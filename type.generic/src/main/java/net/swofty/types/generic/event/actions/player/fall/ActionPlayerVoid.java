@@ -1,9 +1,9 @@
 package net.swofty.types.generic.event.actions.player.fall;
 
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
@@ -16,7 +16,7 @@ public class ActionPlayerVoid implements SkyBlockEventClass {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (player.getPosition().y() < 0 && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
-            player.kill();
+            player.damage(DamageType.OUT_OF_WORLD, Float.MAX_VALUE);
         }
     }
 }
