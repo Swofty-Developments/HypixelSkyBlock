@@ -58,6 +58,7 @@ import net.swofty.types.generic.item.set.impl.SetRepeatable;
 import net.swofty.types.generic.item.updater.PlayerItemUpdater;
 import net.swofty.types.generic.levels.CustomLevelAward;
 import net.swofty.types.generic.levels.SkyBlockLevelCause;
+import net.swofty.types.generic.levels.SkyBlockLevelLoader;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.levels.unlocks.CustomLevelUnlock;
 import net.swofty.types.generic.mission.MissionData;
@@ -422,6 +423,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         SkyBlockValueEvent.register();
         CustomEventCaller.start();
         SkyBlockEventHandler.register(SkyBlockConst.getEventHandler());
+
+        /**
+         * Cache SkyBlock levels
+         */
+        SkyBlockLevelRequirement.loadFromYaml();
 
         /**
          * Cache custom collections
