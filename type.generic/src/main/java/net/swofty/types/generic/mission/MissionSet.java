@@ -29,6 +29,7 @@ public enum MissionSet {
     TIMBER(MissionTalkToLumberjack.class, MissionBreakOaklog.class, MissionTalkToLumberjackAgain.class),
     FIRST_HARVEST(MissionTalkToFarmer.class, MissionCollectWheat.class, MissionTalkToFarmerAgain.class),
     BACK_AT_THE_BARNYARD(MissionTalkToFarmHand.class, MissionCraftWheatMinion.class, MissionTalkToFarmhandAgain.class),
+    CARPENTRY(MissionGiveWoolToCarpenter.class),
     ;
 
     private final Class<? extends SkyBlockMission>[] missions;

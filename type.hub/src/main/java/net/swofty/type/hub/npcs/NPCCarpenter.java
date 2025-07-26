@@ -1,19 +1,22 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.item.ItemType;
+import net.swofty.types.generic.entity.npc.NPCDialogue;
 import net.swofty.types.generic.entity.npc.NPCParameters;
-import net.swofty.types.generic.entity.npc.SkyBlockNPC;
+import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.missions.MissionGiveWoolToCarpenter;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-public class NPCCarpenter extends SkyBlockNPC {
+import java.util.List;
+
+public class NPCCarpenter extends NPCDialogue {
 
     public NPCCarpenter() {
         super(new NPCParameters() {
             @Override
             public String[] holograms(SkyBlockPlayer player) {
-                return new String[]{"§9Carpenter", "§e§lCLICK"};
+                return new String[]{"§fCarpenter", "§e§lCLICK"};
             }
 
             @Override
@@ -40,8 +43,55 @@ public class NPCCarpenter extends SkyBlockNPC {
 
     @Override
     public void onClick(PlayerClickNPCEvent e) {
-        e.player().sendMessage(Component.text("§cThis Feature is not there yet. §aOpen a Pull request HERE to get it added quickly!")
-                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Swofty-Developments/HypixelSkyBlock")));
+        if (isInDialogue(e.player())) return;
+        MissionData data = e.player().getMissionData();
+
+        if (!data.isCurrentlyActive(MissionGiveWoolToCarpenter.class) && !data.hasCompleted(MissionGiveWoolToCarpenter.class)) {
+            setDialogue(e.player(), "initial-hello").thenRun(() -> {
+                data.startMission(MissionGiveWoolToCarpenter.class);
+            });
+            return;
+        }
+        if (!data.hasCompleted(MissionGiveWoolToCarpenter.class) && data.isCurrentlyActive(MissionGiveWoolToCarpenter.class)) {
+            if (e.player().getAmountInInventory(ItemType.WHITE_WOOL) >= 64) {
+                e.player().takeItem(ItemType.WHITE_WOOL, 64);
+                setDialogue(e.player(), "completed-quest").thenRun(() -> {
+                    data.endMission(MissionGiveWoolToCarpenter.class);
+                });
+            } else {
+                e.player().sendMessage("§e[NPC] Carpenter§f: Come back with a stack of White Wool!");
+            }
+            return;
+        }
+        if (data.hasCompleted(MissionGiveWoolToCarpenter.class)) {
+            setDialogue(e.player(), "spoke-again");
+        }
     }
 
+    @Override
+    public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
+        return List.of(
+                NPCDialogue.DialogueSet.builder()
+                        .key("initial-hello").lines(new String[]{
+                                "Hi, " + player.getUsername() + "! Welcome to the §aFurniture Shop§f.",
+                                "Sales are too good right now, I can't keep up with the demand!",
+                                "Could you bring a §astack of White Wool§f to help replenish my stock?",
+                                "Sheep over in The Barn drop wool, but you can also purchase it from the §dWool Weaver§f.",
+                                "She lives in a house not far from here - it's over by the water fountain."
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
+                        .key("completed-quest").lines(new String[]{
+                                "Wow, thanks so much for the help!",
+                                "Carpentry is my passion, I always love to teach others.",
+                                "Here's the recipe for the §aCarpentry Table§f. You can place it in your world and craft furniture that you've unlocked!",
+                                "You can now gain Carpentry XP by crafting items. Leveling your §aCarpentry Skill§f unlocks new furniture recipes!",
+                                "Some furniture is available exclusively in the Furniture Shop downstairs. Check it out!"
+                        }).build(),
+                NPCDialogue.DialogueSet.builder()
+                        .key("spoke-again").lines(new String[]{
+                                "Check out the Furniture Shop downstairs!",
+                                "The Furniture Shop is downstairs. Purchase cool furniture down there!"
+                        }).build()
+        ).stream().toArray(NPCDialogue.DialogueSet[]::new);
+    }
 }
