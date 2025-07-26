@@ -46,7 +46,11 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         // Find the first matching rule
         for (DropRule rule : component.getRules()) {
             if (rule.matches(brokenWith, region, isOnIsland)) {
-                // Process all drops for this rule
+
+                if (rule.drops().isEmpty()) {
+                    return drops;
+                }
+
                 for (Drop drop : rule.drops()) {
                     if (RANDOM.nextDouble() <= drop.chance()) {
                         int amount = calculateAmount(drop.amount());
@@ -56,7 +60,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
                         }
                     }
                 }
-                break; // Only process the first matching rule
+                return drops; // Only process the first matching rule
             }
         }
 
@@ -91,6 +95,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
 
     public record DropConditions(
             Boolean silkTouch,
+            Boolean smeltingTouch,
             ItemType brokenWith,
             String brokenWithNot, // For negation like "!SHEARS"
             LocationType locationType,
@@ -102,6 +107,14 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             if (silkTouch != null) {
                 boolean hasSilkTouch = tool != null && hasSilkTouch(tool);
                 if (silkTouch != hasSilkTouch) {
+                    return false;
+                }
+            }
+
+            // Check smelting touch condition
+            if (smeltingTouch != null) {
+                boolean hasSmeltingTouch = tool != null && hasSmeltingTouch(tool);
+                if (smeltingTouch != hasSmeltingTouch) {
                     return false;
                 }
             }
@@ -155,6 +168,10 @@ public class CustomDropComponent extends SkyBlockItemComponent {
             return tool.getAttributeHandler().getEnchantment(EnchantmentType.SILK_TOUCH) != null;
         }
 
+        private boolean hasSmeltingTouch(SkyBlockItem tool) {
+            return tool.getAttributeHandler().getEnchantment(EnchantmentType.SMELTING_TOUCH) != null;
+        }
+
         private ItemType getToolType(SkyBlockItem tool) {
             return tool.getAttributeHandler().getPotentialType();
         }
@@ -180,7 +197,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         }
 
         public Builder addSimpleRule(ItemType dropItem, double chance, String amount) {
-            DropConditions conditions = new DropConditions(null, null, null, null, null, null);
+            DropConditions conditions = new DropConditions(null, null, null, null, null, null, null);
             List<Drop> drops = List.of(new Drop(dropItem, chance, amount));
             return addRule(conditions, drops);
         }
@@ -191,31 +208,35 @@ public class CustomDropComponent extends SkyBlockItemComponent {
     }
 
     public static DropConditions conditions() {
-        return new DropConditions(null, null, null, null, null, null);
+        return new DropConditions(null, null, null, null, null, null, null);
     }
 
     public static DropConditions silkTouch(boolean silkTouch) {
-        return new DropConditions(silkTouch, null, null, null, null, null);
+        return new DropConditions(silkTouch, null, null, null, null, null, null);
+    }
+
+    public static DropConditions smeltingTouch(boolean smeltingTouch) {
+        return new DropConditions(null, smeltingTouch, null, null, null, null, null);
     }
 
     public static DropConditions brokenWith(ItemType tool) {
-        return new DropConditions(null, tool, null, null, null, null);
+        return new DropConditions(null, null, tool, null, null, null, null);
     }
 
     public static DropConditions notBrokenWith(String tool) {
-        return new DropConditions(null, null, "!" + tool, null, null, null);
+        return new DropConditions(null, null, null, "!" + tool, null, null, null);
     }
 
     public static DropConditions location(LocationType locationType) {
-        return new DropConditions(null, null, null, locationType, null, null);
+        return new DropConditions(null, null, null, null, locationType, null, null);
     }
 
     public static DropConditions region(String region) {
-        return new DropConditions(null, null, null, null, region, null);
+        return new DropConditions(null, null, null, null, null, region, null);
     }
 
     public static DropConditions notRegion(String region) {
-        return new DropConditions(null, null, null, null, null, "!" + region);
+        return new DropConditions(null, null, null, null, null, null, "!" + region);
     }
 
     public static Drop drop(ItemType item, double chance, String amount) {
@@ -228,12 +249,17 @@ public class CustomDropComponent extends SkyBlockItemComponent {
 
     public static CustomDropComponent.DropConditions parseDropConditions(Map<String, Object> conditionsConfig) {
         if (conditionsConfig == null) {
-            return new CustomDropComponent.DropConditions(null, null, null, null, null, null);
+            return new CustomDropComponent.DropConditions(null, null, null, null, null, null, null);
         }
 
         Boolean silkTouch = null;
         if (conditionsConfig.containsKey("silk_touch")) {
             silkTouch = (Boolean) conditionsConfig.get("silk_touch");
+        }
+
+        Boolean smeltingTouch = null;
+        if (conditionsConfig.containsKey("smelting_touch")) {
+            smeltingTouch = (Boolean) conditionsConfig.get("smelting_touch");
         }
 
         ItemType brokenWith = null;
@@ -268,7 +294,7 @@ public class CustomDropComponent extends SkyBlockItemComponent {
         }
 
         return new CustomDropComponent.DropConditions(
-                silkTouch, brokenWith, brokenWithNot, locationType, region, regionNot
+                silkTouch, smeltingTouch, brokenWith, brokenWithNot, locationType, region, regionNot
         );
     }
 }

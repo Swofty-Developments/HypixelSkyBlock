@@ -2,9 +2,6 @@ items:
   - id: COAL
     rarity: COMMON
     components:
-      - id: SKILLABLE_MINE
-        category: MINING
-        mining_value: 5.0
       - id: SELLABLE
         value: 2.0
       - id: MINION_FUEL
@@ -12,6 +9,28 @@ items:
         last_time_ms: 1800000
       - id: EXTRA_UNDER_NAME
         display: Brewing Ingredient
+  - id: COAL_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: COAL_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: COAL
+                chance: 1.0
+                amount: 4-6
+      - id: PLACEABLE
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 5.0
+      - id: SELLABLE
+        value: 4.0
   - id: COAL_BLOCK
     rarity: COMMON
     components:
@@ -39,11 +58,30 @@ items:
   - id: DIAMOND
     rarity: COMMON
     components:
-      - id: SKILLABLE_MINE
-        category: MINING
-        mining_value: 5.0
       - id: SELLABLE
         value: 8.0
+  - id: DIAMOND_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: DIAMOND_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: DIAMOND
+                chance: 1.0
+                amount: 1
+      - id: PLACEABLE
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 10.0
+      - id: SELLABLE
+        value: 1.0
   - id: DIAMOND_BLOCK
     rarity: COMMON
     components:
@@ -125,11 +163,30 @@ items:
   - id: EMERALD
     rarity: COMMON
     components:
-      - id: SKILLABLE_MINE
-        category: MINING
-        mining_value: 5.0
       - id: SELLABLE
         value: 6.0
+  - id: EMERALD_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: EMERALD_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: EMERALD
+                chance: 1.0
+                amount: 1
+      - id: PLACEABLE
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 9.0
+      - id: SELLABLE
+        value: 1.0
   - id: EMERALD_BLOCK
     rarity: COMMON
     components:
@@ -168,6 +225,19 @@ items:
   - id: GLOWSTONE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GLOWSTONE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: GLOWSTONE_DUST
+                chance: 1.0
+                amount: 2-4
       - id: PLACEABLE
       - id: SELLABLE
         value: 8.0
@@ -302,13 +372,12 @@ items:
       - id: CUSTOM_DROP
         rules:
           - conditions:
-              silk_touch: false
+              smelting_touch: true
             drops:
               - item: GOLD_INGOT
                 chance: 1.0
-                amount: "2-5"
+                amount: 1
           - conditions:
-              silk_touch: true
             drops:
               - item: GOLD_ORE
                 chance: 1.0
@@ -316,7 +385,7 @@ items:
       - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
-        mining_value: 5.0
+        mining_value: 6.0
       - id: SELLABLE
         value: 4.0
   - id: GRAVEL
@@ -363,6 +432,19 @@ items:
   - id: IRON_ORE
     rarity: COMMON
     components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              smelting_touch: true
+            drops:
+              - item: IRON_INGOT
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: IRON_ORE
+                chance: 1.0
+                amount: 1
       - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
@@ -429,9 +511,28 @@ items:
   - id: LAPIS_LAZULI
     rarity: COMMON
     components:
+      - id: SELLABLE
+        value: 1.0
+  - id: LAPIS_LAZULI_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: LAPIS_LAZULI_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: LAPIS_LAZULI
+                chance: 1.0
+                amount: 4-8
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
-        mining_value: 5.0
+        mining_value: 7.0
       - id: SELLABLE
         value: 1.0
   - id: LAPIS_LAZULI_BLOCK
@@ -506,11 +607,30 @@ items:
   - id: QUARTZ
     rarity: COMMON
     components:
+      - id: SELLABLE
+        value: 4.0
+  - id: NETHER_QUARTZ_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: NETHER_QUARTZ_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: QUARTZ
+                chance: 1.0
+                amount: 1
+      - id: PLACEABLE
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 5.0
       - id: SELLABLE
-        value: 4.0
+        value: 1.0
   - id: RED_SAND
     rarity: COMMON
     components:
@@ -523,12 +643,31 @@ items:
   - id: REDSTONE
     rarity: COMMON
     components:
-      - id: SKILLABLE_MINE
-        category: MINING
-        mining_value: 5.0
       - id: SELLABLE
         value: 1.0
       - id: PLACEABLE
+  - id: REDSTONE_ORE
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: REDSTONE_ORE
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: REDSTONE
+                chance: 1.0
+                amount: 4-5
+      - id: PLACEABLE
+      - id: SKILLABLE_MINE
+        category: MINING
+        mining_value: 7.0
+      - id: SELLABLE
+        value: 1.0
   - id: REDSTONE_BLOCK
     rarity: COMMON
     components:
