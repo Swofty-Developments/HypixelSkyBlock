@@ -50,6 +50,10 @@ public class DataHandler {
         return this.datapoints.get(key);
     }
 
+    public Map<String, Datapoint> getDatapoints() {
+        return this.datapoints;
+    }
+
     public static @NonNull DataHandler getUser(UUID uuid) {
         if (!userCache.containsKey(uuid)) {
             throw new RuntimeException("User " + uuid + " does not exist!");

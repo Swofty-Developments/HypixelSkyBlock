@@ -60,15 +60,6 @@ public class ListenerPlayerHandler extends RedisListener {
                         FromProxyChannels.TELEPORT,
                         message).join();
             }
-            case BANK_HASH -> {
-                if (potentialServer.isEmpty()) {
-                    return new JSONObject();
-                }
-                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                return RedisMessage.sendMessageToServer(server,
-                        FromProxyChannels.GET_BANK_HASH,
-                        message).join();
-            }
             case EVENT -> {
                 if (potentialServer.isEmpty()) {
                     return new JSONObject();

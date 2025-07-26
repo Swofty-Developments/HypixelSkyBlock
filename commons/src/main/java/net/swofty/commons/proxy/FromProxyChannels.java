@@ -8,7 +8,6 @@ import org.json.JSONObject;
 @Getter
 public enum FromProxyChannels {
     TELEPORT("teleport", new TeleportRequirements()),
-    GET_BANK_HASH("bank-hash", new GetBankHashRequirements()),
     PROMPT_PLAYER_FOR_AUTHENTICATION("authenticate", new PromptPlayerForAuthenticationRequirements()),
     PLAYER_HAS_SWITCHED_FROM_HERE("player-has-switched-from-here", new PlayerHasSwitchedFromHereRequirements()),
     DOES_SERVER_HAVE_ISLAND("does-server-have-island", new DoesServerHaveIslandRequirements()),

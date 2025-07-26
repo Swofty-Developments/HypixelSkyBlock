@@ -52,3 +52,4 @@ jobs:
             service.bazaar/build/libs/*.jar
             service.itemtracker/build/libs/*.jar
             service.api/build/libs/*.jar
+            service.datamutex/build/libs/*.jar

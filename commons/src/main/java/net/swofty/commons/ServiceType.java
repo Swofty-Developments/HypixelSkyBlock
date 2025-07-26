@@ -5,5 +5,6 @@ public enum ServiceType {
     BAZAAR,
     ITEM_TRACKER,
     API,
+    DATA_MUTEX,
     ;
 }

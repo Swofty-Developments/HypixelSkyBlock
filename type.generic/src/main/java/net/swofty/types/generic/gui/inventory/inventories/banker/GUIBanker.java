@@ -69,7 +69,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBankerDeposit(bankData.getSessionHash()).open(player);
+                new GUIBankerDeposit().open(player);
             }
 
             @Override
@@ -95,7 +95,7 @@ public class GUIBanker extends SkyBlockInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(13) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBankerWithdraw(bankData.getSessionHash()).open(player);
+                new GUIBankerWithdraw().open(player);
             }
 
             @Override

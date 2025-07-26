@@ -21,6 +21,7 @@ import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
@@ -105,6 +106,9 @@ public class SkyBlock {
         ProxyAPI proxyAPI = new ProxyAPI(Configuration.get("redis-uri"), serverUUID);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.types.generic.redis", ProxyToClient.class)
                 .forEach(proxyAPI::registerFromProxyHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.types.generic.redis.service", ServiceToClient.class)
+                .forEach(proxyAPI::registerFromServiceHandler);
+
         Arrays.stream(ToProxyChannels.values()).forEach(
                 ServerOutboundMessage::registerServerToProxy
         );

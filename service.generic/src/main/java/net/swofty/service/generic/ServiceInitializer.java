@@ -10,6 +10,7 @@ import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
+import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class ServiceInitializer {
          * Register Redis
          */
         ServiceRedisManager.connect(Configuration.get("redis-uri"), service.getType());
+        // Initialize service-to-server communication
+        ServiceToServerManager.initialize(service.getType());
+
         List<ServiceEndpoint> endpoints = new ArrayList<>(service.getEndpoints());
         endpoints.add(new PingEndpoint());
 

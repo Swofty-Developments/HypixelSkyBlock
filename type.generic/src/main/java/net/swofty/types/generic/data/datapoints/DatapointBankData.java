@@ -30,7 +30,6 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
             json.put("lastClaimedInterest", value.lastClaimedInterest);
             json.put("amount", value.amount);
             json.put("balanceLimit", value.balanceLimit);
-            json.put("sessionHash", value.sessionHash.toString());
 
             return json.toString();
         }
@@ -47,14 +46,12 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
             }
 
             return new BankData(jsonObject.optLong("lastClaimedInterest", System.currentTimeMillis()), transactions,
-                    UUID.fromString(jsonObject.getString("sessionHash")), jsonObject.getDouble("amount"),
-                    jsonObject.getDouble("balanceLimit"));
+                    jsonObject.getDouble("amount"), jsonObject.getDouble("balanceLimit"));
         }
 
         @Override
         public BankData clone(BankData value) {
-            return new BankData(value.lastClaimedInterest, new ArrayList<>(value.transactions),
-                    UUID.randomUUID(), value.amount, value.balanceLimit);
+            return new BankData(value.lastClaimedInterest, new ArrayList<>(value.transactions), value.amount, value.balanceLimit);
         }
     };
 
@@ -67,8 +64,7 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
     }
 
     public DatapointBankData(String key) {
-        super(key, new BankData(SkyBlockCalendar.getElapsed(), new ArrayList<>(),
-                UUID.randomUUID(), 0, 50000000), serializer);
+        super(key, new BankData(SkyBlockCalendar.getElapsed(), new ArrayList<>(), 0, 50000000), serializer);
     }
 
     @AllArgsConstructor
@@ -77,7 +73,6 @@ public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
     public static class BankData {
         private long lastClaimedInterest;
         private List<Transaction> transactions;
-        private UUID sessionHash;
         private double amount;
         private double balanceLimit;
 

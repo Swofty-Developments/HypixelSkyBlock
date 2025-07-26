@@ -104,7 +104,7 @@ public class TypeTheFarmingIslandsLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<ServiceType> getRequiredServices() {
-        return new ArrayList<>();
+        return new ArrayList<>(List.of(ServiceType.DATA_MUTEX));
     }
 
     @Override

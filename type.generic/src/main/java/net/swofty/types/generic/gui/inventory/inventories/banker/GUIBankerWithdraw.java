@@ -7,8 +7,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.DataMutexService;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -17,19 +17,10 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
-    UUID bankHash;
 
-    public GUIBankerWithdraw(UUID bankHash) {
+    public GUIBankerWithdraw() {
         super("Bank Withdrawal", InventoryType.CHEST_4_ROW);
-
-        this.bankHash = bankHash;
     }
 
     @Override
@@ -157,70 +148,64 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
     }
 
     private void attemptWithdrawal(SkyBlockPlayer player, double amount) {
-        DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
-        if (amount > bankData.getAmount()) {
-            player.sendMessage("§cYou do not have that many coins to withdraw!");
-            return;
-        }
-
         player.sendMessage("§8Withdrawing coins...");
+
         if (!player.isCoop()) {
+            // Single player - no synchronization needed
+            DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
+            if (amount > bankData.getAmount()) {
+                player.sendMessage("§cYou do not have that many coins to withdraw!");
+                return;
+            }
+
             bankData.removeAmount(amount);
             bankData.addTransaction(new DatapointBankData.Transaction(
-                    System.currentTimeMillis(),
-                    -amount,
-                    player.getUsername()
-            ));
+                    System.currentTimeMillis(), -amount, player.getUsername()));
 
             player.setCoins(player.getCoins() + amount);
-            player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
-                    StringUtility.decimalify(bankData.getAmount(), 1)
-                    + " coins§a in your account.");
+            player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) +
+                    " coins§a! You now have §6" + StringUtility.decimalify(bankData.getAmount(), 1) +
+                    " coins§a in your account.");
             return;
         }
+
+        // Coop scenario - use mutex service
         CoopDatabase.Coop coop = player.getCoop();
+        String lockKey = "bank_data:" + player.getSkyBlockIsland().getIslandID().toString();
 
-        player.setBankDelayed(true);
-        Thread.startVirtualThread(() -> {
-            List<CompletableFuture<Void>> futures = new ArrayList<>();
-            AtomicBoolean allow = new AtomicBoolean(true);
+        DataMutexService mutexService = new DataMutexService();
 
-            for (UUID memberId : coop.members()) {
-                if (memberId.equals(player.getUuid())) continue;
+        mutexService.withSynchronizedData(
+                lockKey,
+                coop.members(),
+                DataHandler.Data.BANK_DATA,
 
-                futures.add(CompletableFuture.runAsync(() -> {
-                    ProxyPlayer proxyPlayer = new ProxyPlayer(memberId);
-                    if (!proxyPlayer.isOnline().join()) return;
-
-                    UUID bankHash = proxyPlayer.getBankHash().join();
-                    if (bankHash != null && !bankHash.equals(this.bankHash)) {
-                        allow.set(false);
+                // This callback receives the LATEST bank data from across all servers
+                (DatapointBankData.BankData latestBankData) -> {
+                    // Validate against the most up-to-date data
+                    if (amount > latestBankData.getAmount()) {
+                        player.sendMessage("§cYou do not have that many coins to withdraw!");
+                        return null; // Return null to indicate failure - no changes made
                     }
-                }));
-            }
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
-            if (!allow.get()) {
-                player.sendMessage("§cYou cannot withdraw coins as your coop members have invalidated your bank session.");
-                player.setBankDelayed(false);
-            } else {
-                bankData.removeAmount(amount);
-                bankData.setSessionHash(UUID.randomUUID());
-                bankData.addTransaction(new DatapointBankData.Transaction(
-                        System.currentTimeMillis(),
-                        -amount,
-                        player.getUsername()
-                ));
+                    // Make the changes to the synchronized data
+                    latestBankData.removeAmount(amount);
+                    latestBankData.addTransaction(new DatapointBankData.Transaction(
+                            System.currentTimeMillis(), -amount, player.getUsername()));
 
-                player.setCoins(player.getCoins() + amount);
-                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
+                    player.setCoins(player.getCoins() + amount);
+                    player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) +
+                            " coins§a! You now have §6" + StringUtility.decimalify(latestBankData.getAmount(), 1) +
+                            " coins§a in your account.");
 
-                player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
-                        StringUtility.decimalify(bankData.getAmount(), 1)
-                        + " coins§a in your account.");
-                player.setBankDelayed(false);
-            }
-        });
+                    return latestBankData; // Return modified data to be propagated to all servers
+                },
+
+                // Failure callback
+                () -> {
+                    player.sendMessage("§cYou cannot withdraw coins as your coop members are currently using the bank.");
+                }
+        );
     }
 
     @Override

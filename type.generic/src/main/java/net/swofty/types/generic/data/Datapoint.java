@@ -24,6 +24,7 @@ public abstract class Datapoint<T> {
     private String key;
     @Getter
     private T value;
+    @Getter
     protected Serializer<T> serializer;
     DataHandler.Data data;
 

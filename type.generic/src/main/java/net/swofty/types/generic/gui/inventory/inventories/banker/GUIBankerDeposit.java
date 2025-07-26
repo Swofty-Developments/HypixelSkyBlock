@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.DataMutexService;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
 import net.swofty.types.generic.data.mongodb.CoopDatabase;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -25,12 +26,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIBankerDeposit extends SkyBlockInventoryGUI {
-    UUID bankHash;
 
-    public GUIBankerDeposit(UUID bankHash) {
+    public GUIBankerDeposit() {
         super("Bank Deposit", InventoryType.CHEST_4_ROW);
-
-        this.bankHash = bankHash;
     }
 
     @Override
@@ -159,52 +157,37 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
             return;
         }
         CoopDatabase.Coop coop = player.getCoop();
-
         player.setBankDelayed(true);
-        bankData.setSessionHash(UUID.randomUUID());
 
-        Thread.startVirtualThread(() -> {
-            List<CompletableFuture<Void>> futures = new ArrayList<>();
-            AtomicBoolean allow = new AtomicBoolean(true);
+        String lockKey = "bank_data:" + player.getSkyBlockIsland().getIslandID().toString();
+        DataMutexService mutexService = new DataMutexService();
 
-            player.getLogHandler().debug("Your bank hash is " + bankHash);
-
-            for (UUID memberId : coop.members()) {
-                if (memberId.equals(player.getUuid())) continue;
-
-                futures.add(CompletableFuture.runAsync(() -> {
-                    ProxyPlayer proxyPlayer = new ProxyPlayer(memberId);
-                    if (!proxyPlayer.isOnline().join()) return;
-
-                    UUID newBankHash = proxyPlayer.getBankHash().join();
-                    player.getLogHandler().debug("Bank hash for " + memberId + " is " + newBankHash);
-                    if (newBankHash != null && !newBankHash.equals(bankHash)) {
-                        allow.set(false);
+        mutexService.withSynchronizedData(
+                lockKey,
+                coop.members(),
+                DataHandler.Data.BANK_DATA,
+                (DatapointBankData.BankData latestBankData) -> {
+                    if (latestBankData.getAmount() + amount > latestBankData.getBalanceLimit()) {
+                        player.sendMessage("§cYou cannot deposit that much, you would exceed your balance limit of §6" +
+                                StringUtility.commaify(latestBankData.getBalanceLimit()) + " coins§c!");
+                        return null; // Return null to indicate failure - no changes made
                     }
-                }));
-            }
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-            player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
-            if (!allow.get()) {
-                player.sendMessage("§cYou cannot deposit coins as your coop members have invalidated your bank session.");
-                player.setBankDelayed(false);
-                player.setCoins(player.getCoins() + amount);
-            } else {
-                bankData.addAmount(amount);
-                bankData.addTransaction(new DatapointBankData.Transaction(
-                        System.currentTimeMillis(),
-                        amount,
-                        player.getUsername()
-                ));
-                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
+                    player.setCoins(player.getCoins() - amount);
+                    latestBankData.addAmount(amount);
+                    latestBankData.addTransaction(new DatapointBankData.Transaction(
+                            System.currentTimeMillis(), amount, player.getUsername()));
 
-                player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) + " coins§a! You now have §6" +
-                        StringUtility.decimalify(bankData.getAmount(), 1)
-                        + " coins§a in your account.");
-                player.setBankDelayed(false);
-            }
-        });
+                    player.sendMessage("§aYou have deposited §6" + StringUtility.decimalify(amount, 1) +
+                            " coins§a! You now have §6" + StringUtility.decimalify(latestBankData.getAmount(), 1) +
+                            " coins§a in your account.");
+
+                    return latestBankData; // Return modified data to be propagated to all servers
+                },
+                () -> {
+                    player.sendMessage("§cYou cannot deposit coins as your coop members are currently using the bank.");
+                }
+        );
     }
 
     @Override

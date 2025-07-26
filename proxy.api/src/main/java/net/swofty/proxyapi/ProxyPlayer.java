@@ -150,8 +150,6 @@ public class ProxyPlayer {
         return future;
     }
 
-
-
     public void refreshCoopData(String datapoint) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
