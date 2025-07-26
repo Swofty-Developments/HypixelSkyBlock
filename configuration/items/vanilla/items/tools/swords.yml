@@ -1,0 +1,141 @@
+items:
+  - id: WOODEN_SWORD
+    material: WOODEN_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: WOODEN_SWORD
+              amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+    default_statistics:
+      damage: 20.0
+  - id: STONE_SWORD
+    material: STONE_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: STONE_SWORD
+              amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+    default_statistics:
+      damage: 25.0
+  - id: IRON_SWORD
+    material: IRON_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: IRON_SWORD
+              amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+    default_statistics:
+      damage: 30.0
+  - id: GOLDEN_SWORD
+    material: GOLDEN_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: GOLDEN_SWORD
+              amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+    default_statistics:
+      damage: 20.0
+  - id: DIAMOND_SWORD
+    material: DIAMOND_SWORD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 8.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+              - B
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: DIAMOND_SWORD
+              amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+    default_statistics:
+      damage: 35.0

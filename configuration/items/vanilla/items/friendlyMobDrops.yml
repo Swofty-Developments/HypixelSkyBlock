@@ -1,0 +1,60 @@
+items:
+  - id: EGG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+  - id: FEATHER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+
+  - id: LEATHER
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+
+  - id: MUTTON
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+
+  - id: RABBIT_FOOT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+
+  - id: RABBIT_HIDE
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+
+  - id: RAW_BEEF
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+
+  - id: RAW_CHICKEN
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+
+  - id: RAW_PORKCHOP
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 5.0
+
+  - id: RAW_RABBIT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 4.0
+

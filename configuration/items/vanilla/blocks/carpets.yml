@@ -1,0 +1,336 @@
+items:
+  - id: BLACK_CARPET
+    material: BLACK_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BLACK_WOOL
+                amount: 1
+            result:
+              type: BLACK_CARPET
+              amount: 3
+
+  - id: BLUE_CARPET
+    material: BLUE_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BLUE_WOOL
+                amount: 1
+            result:
+              type: BLUE_CARPET
+              amount: 3
+
+  - id: BROWN_CARPET
+    material: BROWN_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: BROWN_WOOL
+                amount: 1
+            result:
+              type: BROWN_CARPET
+              amount: 3
+
+  - id: CYAN_CARPET
+    material: CYAN_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: CYAN_WOOL
+                amount: 1
+            result:
+              type: CYAN_CARPET
+              amount: 3
+
+  - id: GRAY_CARPET
+    material: GRAY_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GRAY_WOOL
+                amount: 1
+            result:
+              type: GRAY_CARPET
+              amount: 3
+
+  - id: GREEN_CARPET
+    material: GREEN_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: GREEN_WOOL
+                amount: 1
+            result:
+              type: GREEN_CARPET
+              amount: 3
+
+  - id: LIGHT_BLUE_CARPET
+    material: LIGHT_BLUE_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIGHT_BLUE_WOOL
+                amount: 1
+            result:
+              type: LIGHT_BLUE_CARPET
+              amount: 3
+
+  - id: LIGHT_GRAY_CARPET
+    material: LIGHT_GRAY_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIGHT_GRAY_WOOL
+                amount: 1
+            result:
+              type: LIGHT_GRAY_CARPET
+              amount: 3
+
+  - id: LIME_CARPET
+    material: LIME_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: LIME_WOOL
+                amount: 1
+            result:
+              type: LIME_CARPET
+              amount: 3
+
+  - id: MAGENTA_CARPET
+    material: MAGENTA_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: MAGENTA_WOOL
+                amount: 1
+            result:
+              type: MAGENTA_CARPET
+              amount: 3
+
+  - id: ORANGE_CARPET
+    material: ORANGE_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: ORANGE_WOOL
+                amount: 1
+            result:
+              type: ORANGE_CARPET
+              amount: 3
+
+  - id: PINK_CARPET
+    material: PINK_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: PINK_WOOL
+                amount: 1
+            result:
+              type: PINK_CARPET
+              amount: 3
+
+  - id: PURPLE_CARPET
+    material: PURPLE_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: PURPLE_WOOL
+                amount: 1
+            result:
+              type: PURPLE_CARPET
+              amount: 3
+
+  - id: RED_CARPET
+    material: RED_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: RED_WOOL
+                amount: 1
+            result:
+              type: RED_CARPET
+              amount: 3
+
+  - id: WHITE_CARPET
+    material: WHITE_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: WHITE_WOOL
+                amount: 1
+            result:
+              type: WHITE_CARPET
+              amount: 3
+
+  - id: YELLOW_CARPET
+    material: YELLOW_CARPET
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: YELLOW_WOOL
+                amount: 1
+            result:
+              type: YELLOW_CARPET
+              amount: 3

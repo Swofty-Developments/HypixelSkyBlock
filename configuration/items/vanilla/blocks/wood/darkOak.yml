@@ -1,0 +1,337 @@
+items:
+  - id: DARK_OAK_LOG
+    material: DARK_OAK_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_DARK_OAK_LOG
+    material: STRIPPED_DARK_OAK_LOG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: DARK_OAK_WOOD
+    material: DARK_OAK_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_DARK_OAK_WOOD
+    material: STRIPPED_DARK_OAK_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: DARK_OAK_PLANKS
+    material: DARK_OAK_PLANKS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: DARK_OAK_LOG
+                amount: 1
+            result:
+              type: DARK_OAK_PLANKS
+              amount: 4
+
+  - id: DARK_OAK_DOOR
+    material: DARK_OAK_DOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_DOOR
+              amount: 1
+
+  - id: DARK_OAK_FENCE
+    material: DARK_OAK_FENCE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: DARK_OAK_FENCE
+              amount: 3
+
+  - id: DARK_OAK_FENCE_GATE
+    material: DARK_OAK_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_FENCE_GATE
+              amount: 1
+
+  - id: DARK_OAK_PRESSURE_PLATE
+    material: DARK_OAK_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_PRESSURE_PLATE
+              amount: 1
+
+  - id: DARK_OAK_SLAB
+    material: DARK_OAK_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_SLAB
+              amount: 6
+
+  - id: DARK_OAK_STAIRS
+    material: DARK_OAK_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_STAIRS
+              amount: 4
+
+  - id: DARK_OAK_TRAPDOOR
+    material: DARK_OAK_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_TRAPDOOR
+              amount: 2
+
+  - id: DARK_OAK_BUTTON
+    material: DARK_OAK_BUTTON
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: DARK_OAK_PLANKS
+                amount: 1
+            result:
+              type: DARK_OAK_BUTTON
+              amount: 1
+
+  - id: DARK_OAK_BOAT
+    material: DARK_OAK_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DARK_OAK_BOAT
+              amount: 1
+
+  - id: DARK_OAK_CHEST_BOAT
+    material: DARK_OAK_CHEST_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: CHEST
+                amount: 1
+              B:
+                type: DARK_OAK_BOAT
+                amount: 1
+            result:
+              type: DARK_OAK_CHEST_BOAT
+              amount: 1
+
+  - id: DARK_OAK_SIGN
+    material: DARK_OAK_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: DARK_OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DARK_OAK_SIGN
+              amount: 3
+
+  - id: DARK_OAK_HANGING_SIGN
+    material: DARK_OAK_HANGING_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - BBB
+              - BBB
+            ingredients:
+              A:
+                type: CHAIN
+                amount: 1
+              B:
+                type: STRIPPED_DARK_OAK_LOG
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DARK_OAK_HANGING_SIGN
+              amount: 6

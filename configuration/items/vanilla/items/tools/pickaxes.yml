@@ -1,0 +1,156 @@
+items:
+  - id: WOODEN_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 70.0
+      damage: 15.0
+      breaking_power: 1.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - OBO
+            ingredients:
+              A:
+                type: OAK_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: WOODEN_PICKAXE
+              amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: STONE_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 110.0
+      damage: 20.0
+      breaking_power: 2.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - OBO
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_PICKAXE
+              amount: 1
+      - id: SELLABLE
+        value: 1.0
+  - id: IRON_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 160.0
+      damage: 24.0
+      breaking_power: 3.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - OBO
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_PICKAXE
+              amount: 1
+      - id: SELLABLE
+        value: 4.0
+  - id: GOLDEN_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 250.0
+      damage: 15.0
+      breaking_power: 1.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - OBO
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_PICKAXE
+              amount: 1
+      - id: SELLABLE
+        value: 6.0
+  - id: DIAMOND_PICKAXE
+    rarity: COMMON
+    default_statistics:
+      mining_speed: 230.0
+      breaking_power: 4.0
+      damage: 30.0
+    components:
+      - id: PICKAXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - OBO
+              - OBO
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_PICKAXE
+              amount: 1
+      - id: SELLABLE
+        value: 12.0

@@ -1,0 +1,153 @@
+items:
+  - id: SANDSTONE
+    material: SANDSTONE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SAND
+                amount: 1
+            result:
+              type: SANDSTONE
+              amount: 1
+
+  - id: SANDSTONE_SLAB
+    material: SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: SANDSTONE_SLAB
+              amount: 6
+
+  - id: SANDSTONE_STAIRS
+    material: SANDSTONE_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 2.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: SANDSTONE_STAIRS
+              amount: 4
+
+  - id: SANDSTONE_WALL
+    material: SANDSTONE_WALL
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: SANDSTONE_WALL
+              amount: 6
+
+  - id: CUT_SANDSTONE
+    material: CUT_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: SANDSTONE
+                amount: 1
+            result:
+              type: CUT_SANDSTONE
+              amount: 1
+
+  - id: CUT_SANDSTONE_SLAB
+    material: CUT_SANDSTONE_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: CUT_SANDSTONE
+                amount: 1
+            result:
+              type: CUT_SANDSTONE_SLAB
+              amount: 6
+
+  - id: CHISELED_SANDSTONE
+    material: CHISELED_SANDSTONE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 3.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - A
+            ingredients:
+              A:
+                type: SANDSTONE_SLAB
+                amount: 1
+            result:
+              type: CHISELED_SANDSTONE
+              amount: 1

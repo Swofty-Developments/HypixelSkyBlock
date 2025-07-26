@@ -1,4 +1,10 @@
 items:
+  - id: BLAZE_ROD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 9.0
+
   - id: BLAZE_POWDER
     rarity: COMMON
     components:
@@ -14,16 +20,13 @@ items:
               amount: 2
       - id: SELLABLE
         value: 4.0
-  - id: BLAZE_ROD
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 9.0
+
   - id: BONE
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
+
   - id: BONE_MEAL
     rarity: COMMON
     components:
@@ -37,11 +40,13 @@ items:
             result:
               type: BONE_MEAL
               amount: 3
+
   - id: ENDER_PEARL
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 7.0
+
   - id: EYE_OF_ENDER
     rarity: COMMON
     components:
@@ -59,6 +64,7 @@ items:
               amount: 1
       - id: SELLABLE
         value: 15.0
+
   - id: FERMENTED_SPIDER_EYE
     rarity: COMMON
     components:
@@ -78,31 +84,37 @@ items:
             result:
               type: FERMENTED_SPIDER_EYE
               amount: 1
+
   - id: GHAST_TEAR
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 16.0
+
   - id: GUNPOWDER
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 4.0
+
   - id: MAGMA_CREAM
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 8.0
+
   - id: ROTTEN_FLESH
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
+
   - id: SLIME_BALL
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 5.0
+
   - id: SLIME_BLOCK
     rarity: COMMON
     components:
@@ -124,11 +136,13 @@ items:
             result:
               type: SLIME_BLOCK
               amount: 1
+
   - id: SPIDER_EYE
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 3.0
+
   - id: STRING_ITEM
     rarity: COMMON
     components:

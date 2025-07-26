@@ -1,0 +1,337 @@
+items:
+  - id: CHERRY_LOG
+    material: CHERRY_LOG
+    rarity: COMMON
+    components:
+      - id: SKILLABLE_MINE
+        category: FORAGING
+        mining_value: 6.0
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_CHERRY_LOG
+    material: STRIPPED_CHERRY_LOG
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: CHERRY_WOOD
+    material: CHERRY_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: STRIPPED_CHERRY_WOOD
+    material: STRIPPED_CHERRY_WOOD
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 2.0
+      - id: PLACEABLE
+
+  - id: CHERRY_PLANKS
+    material: CHERRY_PLANKS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CHERRY_LOG
+                amount: 1
+            result:
+              type: CHERRY_PLANKS
+              amount: 4
+
+  - id: CHERRY_DOOR
+    material: CHERRY_DOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AA
+              - AA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_DOOR
+              amount: 1
+
+  - id: CHERRY_FENCE
+    material: CHERRY_FENCE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: CHERRY_FENCE
+              amount: 3
+
+  - id: CHERRY_FENCE_GATE
+    material: CHERRY_FENCE_GATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - ABA
+              - ABA
+            ingredients:
+              A:
+                type: STICK
+                amount: 1
+              B:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_FENCE_GATE
+              amount: 1
+
+  - id: CHERRY_PRESSURE_PLATE
+    material: CHERRY_PRESSURE_PLATE
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_PRESSURE_PLATE
+              amount: 1
+
+  - id: CHERRY_SLAB
+    material: CHERRY_SLAB
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_SLAB
+              amount: 6
+
+  - id: CHERRY_STAIRS
+    material: CHERRY_STAIRS
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 0.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - AA
+              - AAA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_STAIRS
+              amount: 4
+
+  - id: CHERRY_TRAPDOOR
+    material: CHERRY_TRAPDOOR
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.5
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_TRAPDOOR
+              amount: 2
+
+  - id: CHERRY_BUTTON
+    material: CHERRY_BUTTON
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPELESS
+            recipe-type: NONE
+            ingredients:
+              - type: CHERRY_PLANKS
+                amount: 1
+            result:
+              type: CHERRY_BUTTON
+              amount: 1
+
+  - id: CHERRY_BOAT
+    material: CHERRY_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - AAA
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CHERRY_BOAT
+              amount: 1
+
+  - id: CHERRY_CHEST_BOAT
+    material: CHERRY_CHEST_BOAT
+    rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - A
+              - B
+            ingredients:
+              A:
+                type: CHEST
+                amount: 1
+              B:
+                type: CHERRY_BOAT
+                amount: 1
+            result:
+              type: CHERRY_CHEST_BOAT
+              amount: 1
+
+  - id: CHERRY_SIGN
+    material: CHERRY_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - AAA
+              - OBO
+            ingredients:
+              A:
+                type: CHERRY_PLANKS
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CHERRY_SIGN
+              amount: 3
+
+  - id: CHERRY_HANGING_SIGN
+    material: CHERRY_HANGING_SIGN
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AOA
+              - BBB
+              - BBB
+            ingredients:
+              A:
+                type: CHAIN
+                amount: 1
+              B:
+                type: STRIPPED_CHERRY_LOG
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: CHERRY_HANGING_SIGN
+              amount: 6

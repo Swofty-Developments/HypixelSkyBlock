@@ -1,0 +1,29 @@
+items:
+  - id: DIRT
+    material: DIRT
+    rarity: COMMON
+    components:
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
+
+  - id: GRASS_BLOCK
+    material: GRASS_BLOCK
+    rarity: COMMON
+    components:
+      - id: CUSTOM_DROP
+        rules:
+          - conditions:
+              silk_touch: true
+            drops:
+              - item: GRASS_BLOCK
+                chance: 1.0
+                amount: 1
+          - conditions:
+            drops:
+              - item: DIRT
+                chance: 1.0
+                amount: 1
+      - id: PLACEABLE
+      - id: SELLABLE
+        value: 1.0
