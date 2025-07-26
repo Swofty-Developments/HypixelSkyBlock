@@ -64,6 +64,8 @@ public class ArmorMuseumDisplayHandler extends MuseumDisplay {
             PlayerHolograms.addExternalPlayerHologram(hologram);
 
             itemEntity = new MuseumDisplayEntityImpl(EntityType.ARMOR_STAND, display, position, false);
+            ArmorStandMeta armorStandMeta = (ArmorStandMeta) itemEntity.getEntityMeta();
+            armorStandMeta.setHasArms(true);
 
             if (helmet != null) {
                 itemEntity.setEquipment(EquipmentSlot.HELMET, helmet.getItemStack());
