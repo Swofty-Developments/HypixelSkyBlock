@@ -897,7 +897,7 @@ items:
         item_id: SHARK_FIN
 
   - id: ENCHANTED_SLIMEBALL
-    material: slimeball
+    material: SLIME_BALL
     rarity: UNCOMMON
     default_statistics: {}
     components:

@@ -98,7 +98,7 @@ items:
     components:
       - id: SELLABLE
         value: 2.0
-  - id: SLIMEBALL
+  - id: SLIME_BALL
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -119,7 +119,7 @@ items:
               - AAA
             ingredients:
               A:
-                type: SLIMEBALL
+                type: SLIME_BALL
                 amount: 1
             result:
               type: SLIME_BLOCK

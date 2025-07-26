@@ -51,6 +51,7 @@ import net.swofty.types.generic.noteblock.SkyBlockSongsHandler;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.region.mining.MineableBlock;
 import net.swofty.types.generic.skill.skills.RunecraftingSkill;
+import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.DeathMessageCreator;
 import org.jetbrains.annotations.NotNull;
@@ -171,6 +172,10 @@ public class SkyBlockPlayer extends Player {
                 (displayEmblem == null ? "" : displayEmblem.emblem() + " ") +
                 getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                 this.getUsername();
+    }
+
+    public Rank getRank() {
+        return getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue();
     }
 
     public PlayerShopData getShoppingData() {

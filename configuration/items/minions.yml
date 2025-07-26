@@ -148,10 +148,10 @@ items:
         base_item: WOODEN_SWORD
         default_craftable: false
         ingredients:
-          - SLIMEBALL:10
-          - SLIMEBALL:20
-          - SLIMEBALL:40
-          - SLIMEBALL:64
+          - SLIME_BALL:10
+          - SLIME_BALL:20
+          - SLIME_BALL:40
+          - SLIME_BALL:64
           - ENCHANTED_SLIMEBALL:1
           - ENCHANTED_SLIMEBALL:3
           - ENCHANTED_SLIMEBALL:8

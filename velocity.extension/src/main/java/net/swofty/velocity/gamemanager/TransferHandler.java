@@ -8,6 +8,7 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +73,13 @@ public record TransferHandler(Player player) {
             RegisteredServer originServer = playersOriginServer.get(player);
             UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
             UUID sendingToServerUUID = server.internalID();
+            ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+
+            RedisMessage.sendMessageToServer(sendingToServerUUID,
+                    FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
+                    new JSONObject().put("uuid", player.getUniqueId().toString())
+                            .put("origin-type", originServerType.name())
+            );
 
             playersOriginServer.remove(player);
             playersGoalServerType.remove(player);
@@ -81,12 +89,6 @@ public record TransferHandler(Player player) {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
-            RedisMessage.sendMessageToServer(sendingToServerUUID,
-                    FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-                    new JSONObject().put("uuid", player.getUniqueId().toString())
-                            .put("origin-type", type.name())
-            );
 
             player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
@@ -98,6 +100,9 @@ public record TransferHandler(Player player) {
 
     public void noLimboTransferTo(ServerType type) {
         new Thread(() -> {
+            RegisteredServer originServer = playersOriginServer.get(player);
+            ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+
             playersGoalServerType.remove(player);
             playersOriginServer.remove(player);
 
@@ -105,7 +110,7 @@ public record TransferHandler(Player player) {
             RedisMessage.sendMessageToServer(server.internalID(),
                     FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
                     new JSONObject().put("uuid", player.getUniqueId().toString())
-                            .put("origin-type", type.name())
+                            .put("origin-type", originServerType.name())
             );
 
             player.createConnectionRequest(server.registeredServer()).connectWithIndication();
@@ -119,6 +124,9 @@ public record TransferHandler(Player player) {
 
     public void noLimboTransferTo(RegisteredServer toTransferTo) {
         new Thread(() -> {
+            RegisteredServer originServer = playersOriginServer.get(player);
+            ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
+
             playersGoalServerType.remove(player);
             playersOriginServer.remove(player);
 
@@ -128,7 +136,7 @@ public record TransferHandler(Player player) {
             RedisMessage.sendMessageToServer(serverUUID,
                     FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
                     new JSONObject().put("uuid", player.getUniqueId().toString())
-                            .put("origin-type", type.name())
+                            .put("origin-type", originServerType.name())
             );
 
             player.createConnectionRequest(toTransferTo).connectWithIndication();

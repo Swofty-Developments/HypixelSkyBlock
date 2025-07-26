@@ -800,7 +800,7 @@ public enum ItemType {
     REDSTONE(Material.REDSTONE,  Rarity.COMMON),
     REDSTONE_BLOCK(Material.REDSTONE_BLOCK,  Rarity.COMMON),
     ROTTEN_FLESH(Material.ROTTEN_FLESH,  Rarity.COMMON),
-    SLIMEBALL(Material.SLIME_BALL,  Rarity.COMMON),
+    SLIME_BALL(Material.SLIME_BALL,  Rarity.COMMON),
     SPONGE(Material.SPONGE,  Rarity.COMMON),
     SPRUCE_WOOD(Material.SPRUCE_WOOD,  Rarity.COMMON),
     STRING(Material.STRING,  Rarity.COMMON),

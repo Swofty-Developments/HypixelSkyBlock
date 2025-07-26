@@ -274,41 +274,47 @@ public abstract class SkyBlockShopGUI extends SkyBlockInventoryGUI {
 
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
-                            player, sbItem.getItemStackBuilder().build()
-                    );
-                    itemStack.amount(item.amount);
+                    try {
+                        ItemStack.Builder itemStack = PlayerItemUpdater.playerUpdate(
+                                player, sbItem.getItemStackBuilder().build()
+                        );
+                        itemStack.amount(item.amount);
 
-                    if (item.getDisplayName() != null)
-                        itemStack.set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName())
-                                .decoration(TextDecoration.ITALIC, false));
+                        if (item.getDisplayName() != null)
+                            itemStack.set(ItemComponent.CUSTOM_NAME, Component.text(item.getDisplayName())
+                                    .decoration(TextDecoration.ITALIC, false));
 
-                    List<String> lore;
+                        List<String> lore;
 
-                    if (item.getLore() != null) {
-                        lore = item.lore;
-                    } else {
-                        lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
-                                .stream()
-                                .map(StringUtility::getTextFromComponent)
-                                .toList());
-                    }
+                        if (item.getLore() != null) {
+                            lore = item.lore;
+                        } else {
+                            lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE)
+                                    .stream()
+                                    .map(StringUtility::getTextFromComponent)
+                                    .toList());
+                        }
 
-                    lore.add("");
-                    lore.add("§7Cost");
-                    lore.addAll(price.getGUIDisplay());
-                    lore.add("");
-                    if (item.hasStock) {
-                        lore.add("§7Stock");
-                        lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
                         lore.add("");
+                        lore.add("§7Cost");
+                        lore.addAll(price.getGUIDisplay());
+                        lore.add("");
+                        if (item.hasStock) {
+                            lore.add("§7Stock");
+                            lore.add("§6" + getPlayer().getShoppingData().getStock(item.getItem().toUnderstandable()) + " §7remaining");
+                            lore.add("");
+                        }
+                        lore.add("§eClick to trade!");
+
+                        if (item.stackable)
+                            lore.add("§eRight-click for more trading options!");
+
+                        return ItemStackCreator.updateLore(itemStack, lore);
+                    } catch (Exception e) {
+                        getPlayer().sendMessage("§cThere was an error processing item " + item.getItem().getDisplayName() + "!");
+                        e.printStackTrace();
+                        return ItemStackCreator.getStack("§cError", Material.BARRIER, 1);
                     }
-                    lore.add("§eClick to trade!");
-
-                    if (item.stackable)
-                        lore.add("§eRight-click for more trading options!");
-
-                    return ItemStackCreator.updateLore(itemStack, lore);
                 }
             });
         }
