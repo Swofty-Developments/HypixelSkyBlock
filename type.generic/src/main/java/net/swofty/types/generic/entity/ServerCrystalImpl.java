@@ -109,19 +109,19 @@ public class ServerCrystalImpl extends LivingEntity {
             }
             if (landToPlaceOn.isEmpty()) return;
 
-            Map<Block, Pos> possible = new HashMap<>();
+            List<Pos> possiblePositions = new ArrayList<>();
             for (Pos block : landToPlaceOn) {
                 Block a = instance.getBlock(block.add(0, 1, 0));
                 if (a.isAir()) {
-                    possible.put(a, block);
+                    possiblePositions.add(block);
                 }
             }
-            if (possible.isEmpty()) return;
+            if (possiblePositions.isEmpty()) return;
 
-            Block block = MathUtility.getRandomElement(new ArrayList<>(possible.keySet()));
-            if (block == null) return;
+            Pos selectedGroundPos = MathUtility.getRandomElement(possiblePositions);
+            if (selectedGroundPos == null) return;
 
-            Pos position = possible.get(block).add(0, 1, 0);
+            Pos position = selectedGroundPos.add(0, 1, 0);
             Block blockToPlace = toPlace.apply(this);
             try {
                 instance.setBlock(position, blockToPlace.withProperty("age", "7"));
@@ -129,9 +129,8 @@ public class ServerCrystalImpl extends LivingEntity {
                 instance.setBlock(position, blockToPlace);
             }
 
-            Pos blockLocation = possible.get(block).add(0, 1, 0);
             Pos crystalLocation = getPosition().add(0, 1, 0);
-            Vec direction = blockLocation.asVec().sub(crystalLocation.asVec());
+            Vec direction = position.asVec().sub(crystalLocation.asVec());
 
             for (int i = 0; i < 20; i++) {
                 Pos pos = crystalLocation.add(direction.mul((double) i / 20));
