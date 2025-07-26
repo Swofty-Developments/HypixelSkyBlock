@@ -332,6 +332,10 @@ public abstract class  SkyBlockInventoryGUI {
         afterOpen(openEvent);
     }
 
+    protected void setTitle(String title) {
+        inventory.setTitle(Component.text(title));
+    }
+
     /**
      * Method to allow people to hotkey items into the GUI or not
      *

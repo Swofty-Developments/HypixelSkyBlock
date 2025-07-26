@@ -48,10 +48,7 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         e.setCancelled(true);
 
         ItemStack item = e.getClickedItem();
-
         SkyBlockItem skyBlockItem = new SkyBlockItem(item);
-        UnderstandableSkyBlockItem serializableItem = skyBlockItem.toUnderstandable();
-        String serialized = serializableItem.toString();
 
         if (skyBlockItem.getAttributeHandler().getPotentialType() == null) {
             return;
@@ -60,7 +57,7 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
-        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
+        if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
             player.sendMessage("§cYou already have a " + skyBlockItem.getAttributeHandler().getPotentialType().getDisplayName() + " in your Museum!");
             return;
         }
@@ -70,10 +67,10 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
         if (armorSetRegistry == null)
             return;
 
-        boolean hasTakenItOut = data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null;
+        boolean hasTakenItOut = data.getItemPreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null;
         if (hasTakenItOut) {
             UUID uuidOfAlreadyInMuseum = UUID.fromString(
-                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType())
+                    data.getItemPreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType())
                             .getAttributeHandler().getUniqueTrackedID());
             UUID uuidOfNew = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
 
@@ -109,7 +106,7 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                         // Make sure that the item is the same as the one that was taken out
                         UUID uuidOfPotentialItem = UUID.fromString(potentialItem.getAttributeHandler().getUniqueTrackedID());
                         UUID uuidOfAlreadyInMuseum = UUID.fromString(
-                                data.getTypePreviouslyInMuseum(potentialItem.getAttributeHandler().getPotentialType())
+                                data.getItemPreviouslyInMuseum(potentialItem.getAttributeHandler().getPotentialType())
                                         .getAttributeHandler().getUniqueTrackedID());
 
                         if (uuidOfPotentialItem.equals(uuidOfAlreadyInMuseum)) {
@@ -206,7 +203,9 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                 TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
-                TrackedItem trackedItem = (TrackedItem) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join();
+                ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
+                TrackedItemRetrieveProtocolObject.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+                TrackedItem trackedItem = trackedItemResponse.trackedItem();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 toReturn.set(ItemComponent.CUSTOM_DATA, item.getItemStack().get(ItemComponent.CUSTOM_DATA));
@@ -260,9 +259,7 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
 
                 List<SkyBlockItem> set = List.of(helmet, chestplate, leggings, boots);
                 set.forEach(item -> {
-                    data.getPreviouslyInMuseum().add(item);
-                    data.getCurrentlyInMuseum().remove(item);
-                    data.getMuseumDisplay().remove(UUID.fromString(item.getAttributeHandler().getUniqueTrackedID()));
+                    data.moveToRetrieved(item);
                     player.addAndUpdateItem(item);
                 });
 
@@ -284,17 +281,20 @@ public class GUIMuseumArmorCategory extends SkyBlockPaginatedGUI<ArmorSetRegistr
                             "§7Museum");
                 }
 
-
                 ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
                 UUID helmetUUID = UUID.fromString(helmet.getAttributeHandler().getUniqueTrackedID());
                 UUID chestplateUUID = UUID.fromString(chestplate.getAttributeHandler().getUniqueTrackedID());
                 UUID leggingsUUID = UUID.fromString(leggings.getAttributeHandler().getUniqueTrackedID());
                 UUID bootsUUID = UUID.fromString(boots.getAttributeHandler().getUniqueTrackedID());
 
-                TrackedItem trackedHelmet = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(helmetUUID)).join();
-                TrackedItem trackedChestplate = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(chestplateUUID)).join();
-                TrackedItem trackedLeggings = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(leggingsUUID)).join();
-                TrackedItem trackedBoots = (TrackedItem) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(bootsUUID)).join();
+                TrackedItemRetrieveProtocolObject.TrackedItemResponse helmetResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(helmetUUID)).join();
+                TrackedItem trackedHelmet = helmetResponse.trackedItem();
+                TrackedItemRetrieveProtocolObject.TrackedItemResponse chestplateResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(chestplateUUID)).join();
+                TrackedItem trackedChestplate = chestplateResponse.trackedItem();
+                TrackedItemRetrieveProtocolObject.TrackedItemResponse leggingsResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(leggingsUUID)).join();
+                TrackedItem trackedLeggings = leggingsResponse.trackedItem();
+                TrackedItemRetrieveProtocolObject.TrackedItemResponse bootsResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(bootsUUID)).join();
+                TrackedItem trackedBoots = bootsResponse.trackedItem();
 
                 int helmetValue = new ItemPriceCalculator(helmet).calculateCleanPrice().intValue();
                 int chestplateValue = new ItemPriceCalculator(chestplate).calculateCleanPrice().intValue();

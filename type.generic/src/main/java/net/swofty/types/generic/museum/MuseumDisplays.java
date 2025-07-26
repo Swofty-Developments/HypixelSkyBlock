@@ -8,7 +8,8 @@ import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.museum.display.ItemMuseumDisplay;
+import net.swofty.types.generic.museum.display.ArmorMuseumDisplayHandler;
+import net.swofty.types.generic.museum.display.ItemMuseumDisplayHandler;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ import java.util.*;
 
 @Getter
 public enum MuseumDisplays {
-    ATRIUM_SLOTS(new ItemMuseumDisplay(),
+    ATRIUM_SLOTS(new ItemMuseumDisplayHandler(),
             List.of(MuseumableItemCategory.WEAPONS, MuseumableItemCategory.RARITIES),
             new Pos(-34.5, 65, 75.5), new Pos(-33.5, 65, 73.5), new Pos(-31.5, 65, 71.5),
             new Pos(-29.5, 65, 69.5), new Pos(-27.5, 65, 68.5), new Pos(-17.5, 65, 68.5),
@@ -24,7 +25,7 @@ public enum MuseumDisplays {
             new Pos(-15.5, 65, 91.5), new Pos(-17.5, 65, 92.5), new Pos(-27.5, 65, 92.5),
             new Pos(-29.5, 65, 91.5), new Pos(-31.5, 65, 89.5), new Pos(-33.5, 65, 87.5),
             new Pos(-34.5, 65, 85.5)),
-    RARITIES_SLOTS(new ItemMuseumDisplay(),
+    RARITIES_SLOTS(new ItemMuseumDisplayHandler(),
             List.of(MuseumableItemCategory.RARITIES),
             new Pos(-22.5, 55, 128.5), new Pos(-19.5, 55, 125.5), new Pos(-25.5, 55, 125.5),
             new Pos(-18.5, 52, 115.5), new Pos(-15.5, 52, 116.5), new Pos(-13.5, 52, 118.5),
@@ -33,15 +34,20 @@ public enum MuseumDisplays {
             new Pos(-22.5, 52, 138.5), new Pos(-26.5, 52, 135.5), new Pos(-29.5, 52, 134.5),
             new Pos(-31.5, 52, 132.5), new Pos(-32.5, 52, 129.5), new Pos(-35.5, 52, 125.5),
             new Pos(-31.5, 52, 118.5), new Pos(-29.5, 52, 116.5), new Pos(-26.5, 52, 115.5)),
-    WEAPONS_WING_SLOTS(new ItemMuseumDisplay(),
+    WEAPONS_WING_SLOTS(new ItemMuseumDisplayHandler(),
             List.of(MuseumableItemCategory.WEAPONS),
             new Pos(-27.5, 53, 45.5), new Pos(-30.5, 53, 44.5), new Pos(-32.5, 53, 41.5),
             new Pos(-33.5, 53, 38.5), new Pos(-32.5, 53, 35.5), new Pos(-30.5, 53, 32.5),
             new Pos(-27.5, 53, 31.5), new Pos(-17.5, 53, 31.5), new Pos(-14.5, 53, 32.5),
             new Pos(-12.5, 53, 35.5), new Pos(-11.5, 53, 38.5), new Pos(-12.5, 53, 41.5),
-            new Pos(-14.5, 53, 44.5), new Pos(-17.5, 53, 45.5), new Pos(-33.5, 53, 23.5),
-            new Pos(-27.5, 53, 16.5), new Pos(-22.5, 53, 14.5), new Pos(-17.5, 53, 16.5),
-            new Pos(-13.5, 53, 19.5), new Pos(-11.5, 53, 23.5)
+            new Pos(-14.5, 53, 44.5), new Pos(-17.5, 53, 45.5), new Pos(-33.5, 55, 23.5),
+            new Pos(-27.5, 55, 16.5), new Pos(-22.5, 55, 14.5), new Pos(-17.5, 55, 16.5),
+            new Pos(-13.5, 55, 19.5), new Pos(-11.5, 55, 23.5), new Pos(-31.5, 55, 19.5)
+    ),
+    ARMOR_SETS(new ArmorMuseumDisplayHandler(),
+            List.of(MuseumableItemCategory.ARMOR_SETS),
+            new Pos(-10.5, 66, 84.5, 90, 0), new Pos(-11.5, 66, 87.5, 90, 0),
+            new Pos(-10.5, 66, 76.5, 90, 0), new Pos(-11.5, 66, 73.5, 90, 0)
     ),
     ;
 
@@ -72,8 +78,8 @@ public enum MuseumDisplays {
 
     public static void updateDisplay(@NotNull SkyBlockPlayer player) {
         DatapointMuseum.MuseumData playerMuseumData = player.getMuseumData();
-        UUID museumPlayerToView = playerMuseumData.getCurrentlyViewing().getKey();
-        UUID museumProfileToView = playerMuseumData.getCurrentlyViewing().getValue();
+        UUID museumPlayerToView = playerMuseumData.getCurrentlyViewing().playerUuid();
+        UUID museumProfileToView = playerMuseumData.getCurrentlyViewing().profileUuid();
 
         DatapointMuseum.MuseumData museumDataViewing;
         if (museumPlayerToView.equals(player.getUuid())) {
@@ -98,11 +104,11 @@ public enum MuseumDisplays {
         for (MuseumDisplays display : values()) {
             int totalPositions = display.positions.size();
             int[] handledPositions = new int[totalPositions];
-            for (Map.Entry<SkyBlockItem, Integer> entry : museumDataViewing.getInDisplay(display).entrySet()) {
-                SkyBlockItem item = entry.getKey();
-                int position = entry.getValue();
+            for (Map.Entry<Integer, List<SkyBlockItem>> entry : museumDataViewing.getDisplayHandler().fetchAllDisplayedItemsBySlot().get(display).entrySet()) {
+                int position = entry.getKey();
 
-                MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, item, position);
+                MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, false, position);
+
                 // Add all entities from the display info
                 for (LivingEntity entity : displayInfo.getEntities()) {
                     newDisplayEntities.put((MuseumDisplayEntityImpl) entity, displayInfo.getHologram());
@@ -113,7 +119,7 @@ public enum MuseumDisplays {
 
             for (int i = 0; i < totalPositions; i++) {
                 if (handledPositions[i] == 0) {
-                    MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, null, i);
+                    MuseumDisplayEntityInformation displayInfo = display.displayHandler.display(player, display, true, i);
                     // Add all entities from the display info
                     for (LivingEntity entity : displayInfo.getEntities()) {
                         newDisplayEntities.put((MuseumDisplayEntityImpl) entity, displayInfo.getHologram());

@@ -58,15 +58,15 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
         SkyBlockPlayer player = (SkyBlockPlayer) e.getPlayer();
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
-        if (data.getTypeInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
+        if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
             player.sendMessage("§cYou already have a " + skyBlockItem.getDisplayName() + " §cin your Museum!");
             return;
         }
 
-        if (data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
+        if (data.getItemPreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
             UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
             UUID previouslyInMuseumUUID = UUID.fromString(
-                    data.getTypePreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType())
+                    data.getItemPreviouslyInMuseum(skyBlockItem.getAttributeHandler().getPotentialType())
                             .getAttributeHandler().getUniqueTrackedID()
             );
 
@@ -175,9 +175,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 player.sendMessage("§aYou retrieved your " + item.getDisplayName() + " from the Museum. It still counts towards your Museum progress, but not towards your total item value.");
                 player.sendMessage("§aYou can return or replace the item in your Museum at any time!");
 
-                data.getPreviouslyInMuseum().add(skyBlockItem);
-                data.getCurrentlyInMuseum().remove(skyBlockItem);
-                data.getMuseumDisplay().remove(UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID()));
+                data.moveToRetrieved(skyBlockItem);
                 player.setMuseumData(data);
                 MuseumDisplays.updateDisplay(player);
 
@@ -221,10 +219,9 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 }
                 lore.add(" ");
                 lore.add("§7Display Slot");
-                if (data.getCurrentlyInMuseum().contains(skyBlockItem)
-                        && data.getMuseumDisplay().get(trackedItemUUID) != null) {
-                    lore.add("§9" + data.getMuseumDisplay().get(trackedItemUUID).getKey()
-                            + " Slot #" + (data.getMuseumDisplay().get(trackedItemUUID).getValue() + 1));
+                DatapointMuseum.DisplayPlacement placement = data.getDisplayHandler().getItemDisplayPlacement(skyBlockItem);
+                if (data.getCurrentlyInMuseum().contains(skyBlockItem) && placement != null) {
+                    lore.add("§9" + placement.display() + " Slot #" + (placement.slot() + 1));
                 } else {
                     lore.add("§cNot In Display");
                 }
@@ -239,7 +236,7 @@ public class GUIMuseumCategory extends SkyBlockPaginatedGUI<ItemType> {
                 }
 
                 return ItemStackCreator.getStack("§a" + item.getDisplayName(),
-                       hasTakenItOut ? Material.LIME_DYE : item.material, 1, lore);
+                        hasTakenItOut ? Material.LIME_DYE : item.material, 1, lore);
             }
         };
     }

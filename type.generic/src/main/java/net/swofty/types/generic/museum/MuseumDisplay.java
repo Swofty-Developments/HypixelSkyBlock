@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class MuseumDisplay {
     public abstract MuseumDisplayEntityInformation display(SkyBlockPlayer player,
-                                                           MuseumDisplays category,
-                                                           @Nullable SkyBlockItem item,
+                                                           MuseumDisplays display,
+                                                           boolean empty,
                                                            int position);
 }

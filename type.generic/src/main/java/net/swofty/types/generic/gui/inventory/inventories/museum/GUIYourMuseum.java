@@ -97,8 +97,9 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
                 int unlockedItems = data.getAllItems().size();
 
                 double percentageUnlocked = (double) unlockedItems / (double) maxAmountOfItems * 100;
+                double percentageUnlockedToTwoDecimalPlaces = Math.round(percentageUnlocked * 100) / 100.0;
 
-                lore.add("§7Items Donated: §e" + percentageUnlocked + "§6%");
+                lore.add("§7Items Donated: §e" + percentageUnlockedToTwoDecimalPlaces + "§6%");
                 lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
 
                 Map<UUID, Double> calculatedPrices = data.getCalculatedPrices();
@@ -145,10 +146,11 @@ public class GUIYourMuseum extends SkyBlockInventoryGUI {
                     ));
 
                     int maxAmountOfItems = MuseumableItemCategory.getMuseumableItemCategorySize(category);
-                    int unlockedItems = data.getAllItems(category).size();
+                    int unlockedItems = data.getItemsByCategory(category).size();
                     double percentage = (double) unlockedItems / (double) maxAmountOfItems * 100;
+                    double percentageToTwoDecimalPlaces = Math.round(percentage * 100) / 100.0;
 
-                    lore.add("§7Items Donated: §e" + percentage + "§6%");
+                    lore.add("§7Items Donated: §e" + percentageToTwoDecimalPlaces + "§6%");
                     lore.add(getAsDisplay(unlockedItems, maxAmountOfItems));
                     lore.add(" ");
                     lore.add("§eClick to view!");

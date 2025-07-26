@@ -364,7 +364,10 @@ public class DataHandler {
         MUSEUM_DATA("museum_data", false, false, false, DatapointMuseum.class, new DatapointMuseum("museum_data"), (player, datapoint) -> {
         }, (player, datapoint) -> {
             DatapointMuseum.MuseumData data = (DatapointMuseum.MuseumData) datapoint.getValue();
-            data.setCurrentlyViewing(Map.entry(player.getUuid(), player.getProfiles().getCurrentlySelected()));
+            data.setCurrentlyViewing(new DatapointMuseum.ViewingInfo(
+                    player.getUuid(),
+                    player.getProfiles().getCurrentlySelected()
+            ));
         }),
         SKIN_SIGNATURE("skin_signature", false, false, false, DatapointString.class, new DatapointString("skin_signature", "null"), (player, datapoint) -> {
         }, (player, datapoint) -> {

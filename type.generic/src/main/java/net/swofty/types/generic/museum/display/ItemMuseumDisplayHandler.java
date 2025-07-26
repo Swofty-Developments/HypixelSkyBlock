@@ -5,45 +5,46 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.minestom.server.entity.metadata.other.InteractionMeta;
+import net.swofty.types.generic.data.datapoints.DatapointMuseum;
 import net.swofty.types.generic.entity.hologram.PlayerHolograms;
 import net.swofty.types.generic.item.SkyBlockItem;
-import net.swofty.types.generic.museum.MuseumDisplay;
-import net.swofty.types.generic.museum.MuseumDisplayEntityImpl;
-import net.swofty.types.generic.museum.MuseumDisplayEntityInformation;
-import net.swofty.types.generic.museum.MuseumDisplays;
+import net.swofty.types.generic.museum.*;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemMuseumDisplay extends MuseumDisplay {
+public class ItemMuseumDisplayHandler extends MuseumDisplay {
 
     @Override
-    public MuseumDisplayEntityInformation display(SkyBlockPlayer player,
-                                                  MuseumDisplays category,
-                                                  @Nullable SkyBlockItem item,
-                                                  int position) {
-        Pos pos = category.getPositions().get(position);
+    public MuseumDisplayEntityInformation display(SkyBlockPlayer player, MuseumDisplays display, boolean empty, int position) {
+        DatapointMuseum.MuseumData museumData = player.getMuseumData();
+        Pos pos = display.getPositions().get(position);
         PlayerHolograms.ExternalPlayerHologram hologram;
         LivingEntity itemEntity;
         ArrayList<LivingEntity> entities = new ArrayList<>();
 
-        if (item == null) {
+        if (empty) {
             hologram = PlayerHolograms.ExternalPlayerHologram.builder()
                     .player(player)
-                    .text(new String[]{"§7" + category + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
+                    .text(new String[]{"§7" + display.toString() + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
                     .pos(pos.add(0, 1, 0))
                     .build();
             PlayerHolograms.addExternalPlayerHologram(hologram);
 
-            itemEntity = new MuseumDisplayEntityImpl(EntityType.ARMOR_STAND, category, position, true, null);
+            itemEntity = new MuseumDisplayEntityImpl(EntityType.ARMOR_STAND, display, position, true);
             itemEntity.setAutoViewable(false);
             itemEntity.setNoGravity(true);
             itemEntity.setInvisible(true);
             itemEntity.setInstance(player.getInstance(), pos);
             itemEntity.addViewer(player);
         } else {
+            List<SkyBlockItem> items = museumData.getDisplayHandler().getItemsAtSlot(display, position);
+
+            // Validate that there is only one item at the slot as there should be for this type of display
+            if (items.size() > 1) throw new RuntimeException("Invalid museum display state");
+            SkyBlockItem item = items.getFirst();
+
             hologram = PlayerHolograms.ExternalPlayerHologram.builder()
                     .player(player)
                     .text(new String[]{item.getDisplayName()})
@@ -51,7 +52,7 @@ public class ItemMuseumDisplay extends MuseumDisplay {
                     .build();
             PlayerHolograms.addExternalPlayerHologram(hologram);
 
-            itemEntity = new MuseumDisplayEntityImpl(EntityType.ITEM, category, position, false, item);
+            itemEntity = new MuseumDisplayEntityImpl(EntityType.ITEM, display, position, false);
             ItemEntityMeta itemDisplayMeta = (ItemEntityMeta) itemEntity.getEntityMeta();
             itemDisplayMeta.setItem(item.getItemStack());
 
@@ -60,7 +61,7 @@ public class ItemMuseumDisplay extends MuseumDisplay {
             itemEntity.setInstance(player.getInstance(), pos.add(0, 1, 0));
             itemEntity.addViewer(player);
 
-            LivingEntity interactableEntity = new MuseumDisplayEntityImpl(EntityType.INTERACTION, category, position, false, item);
+            LivingEntity interactableEntity = new MuseumDisplayEntityImpl(EntityType.INTERACTION, display, position, false);
             InteractionMeta interactionMeta = (InteractionMeta) interactableEntity.getEntityMeta();
             interactionMeta.setWidth(1);
             interactionMeta.setHeight(2);

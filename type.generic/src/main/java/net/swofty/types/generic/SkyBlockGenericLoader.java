@@ -516,18 +516,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 MuseumableItemCategory.addItem(museumComponent.getCategory(), itemType);
             }
         });
-        Arrays.stream(ArmorSetRegistry.values()).forEach(armorSet -> {
-            try {
-                if (armorSet.getClazz().newInstance() instanceof MuseumableSet) {
-                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getHelmet());
-                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getChestplate());
-                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getLeggings());
-                    MuseumableItemCategory.addItem(MuseumableItemCategory.ARMOR_SETS, armorSet.getBoots());
-                }
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
         /**
          * Handle ConnectionManager

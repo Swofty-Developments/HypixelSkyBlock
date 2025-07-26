@@ -21,13 +21,15 @@ public class ActionPlayerClickMuseumDisplay implements SkyBlockEventClass {
             boolean isEmpty = museumDisplayEntity.isEmpty();
 
             if (isEmpty) {
-                new GUIMuseumEmptyDisplay(museumDisplayEntity.getDisplay(),
-                        museumDisplayEntity.getPositionInMuseum()).open(player);
-            } else {
-                SkyBlockItem item = museumDisplayEntity.getAttachedItem();
-                new GUIMuseumNonEmptyDisplay(item,
+                new GUIMuseumEmptyDisplay(
                         museumDisplayEntity.getDisplay(),
-                        museumDisplayEntity.getPositionInMuseum()).open(player);
+                        museumDisplayEntity.getPositionInMuseum()
+                ).open(player);
+            } else {
+                new GUIMuseumNonEmptyDisplay(
+                        museumDisplayEntity.getDisplay(),
+                        museumDisplayEntity.getPositionInMuseum()
+                ).open(player);
             }
         }
     }

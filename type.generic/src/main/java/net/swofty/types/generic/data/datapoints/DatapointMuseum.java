@@ -42,74 +42,62 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
         super(key, new MuseumData(), serializer);
     }
 
+    // Records for better encapsulation
+    public record ViewingInfo(UUID playerUuid, UUID profileUuid) {}
+    public record DisplayPlacement(MuseumDisplays display, Integer slot) {}
+    public record ItemMetadata(UUID itemUuid, Long insertionTime, Double calculatedPrice) {}
+
     @Getter
     @Setter
     public static class MuseumData {
-        private Map.Entry<UUID, UUID> currentlyViewing = Map.entry(UUID.randomUUID(), UUID.randomUUID());
+        private ViewingInfo currentlyViewing = new ViewingInfo(UUID.randomUUID(), UUID.randomUUID());
         private boolean hasBoughtAppraisalService = false;
         private ArrayList<SkyBlockItem> currentlyInMuseum = new ArrayList<>();
         private ArrayList<SkyBlockItem> previouslyInMuseum = new ArrayList<>();
-        private Map<UUID, Map.Entry<MuseumDisplays, Integer>> museumDisplay = new HashMap<>();
+        private Map<UUID, DisplayPlacement> museumDisplay = new HashMap<>();
         private Map<UUID, Long> insertionTimes = new HashMap<>();
         private Map<UUID, Double> calculatedPrices = new HashMap<>();
 
-        public Map<SkyBlockItem, Integer> getInDisplay(MuseumDisplays display) {
-            return museumDisplay.entrySet().stream()
-                    .filter(entry -> entry.getValue() != null && entry.getValue().getKey().equals(display))
-                    .collect(Collectors.toMap(
-                            entry -> getFromUUID(entry.getKey()),
-                            entry -> entry.getValue().getValue()
-                    ));
+        @Getter
+        private final DisplayHandler displayHandler = new DisplayHandler();
+
+        public List<SkyBlockItem> getItemsByCategory(MuseumableItemCategory category) {
+            return getAllItems().stream()
+                    .filter(item -> category.contains(item.getAttributeHandler().getPotentialType()))
+                    .collect(Collectors.toList());
         }
 
-        public @Nullable SkyBlockItem getTypeInMuseum(ItemType type) {
+        public List<SkyBlockItem> getCurrentItemsByCategory(MuseumableItemCategory category) {
+            return currentlyInMuseum.stream()
+                    .filter(item -> category.contains(item.getAttributeHandler().getPotentialType()))
+                    .collect(Collectors.toList());
+        }
+
+        public List<SkyBlockItem> getNotInDisplayByCategory(MuseumableItemCategory category) {
+            return currentlyInMuseum.stream()
+                    .filter(item -> category.contains(item.getAttributeHandler().getPotentialType()))
+                    .filter(item -> !museumDisplay.containsKey(UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())))
+                    .collect(Collectors.toList());
+        }
+
+        // Item retrieval methods
+        public @Nullable SkyBlockItem getItemInMuseum(ItemType type) {
             return currentlyInMuseum.stream()
                     .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst().orElse(null);
         }
 
-        public @Nullable SkyBlockItem getTypePreviouslyInMuseum(ItemType type) {
+        public @Nullable SkyBlockItem getItemPreviouslyInMuseum(ItemType type) {
             return previouslyInMuseum.stream()
                     .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst().orElse(null);
         }
 
-        public List<SkyBlockItem> getInMuseumThatAreNotInDisplay() {
-            return currentlyInMuseum.stream()
-                    .filter(item -> !museumDisplay.containsKey(UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())))
-                    .collect(Collectors.toList());
-        }
-
-        public void removeFromDisplay(MuseumDisplays display, Integer slot) {
-            museumDisplay.entrySet().stream()
-                    .filter(entry -> entry.getValue().getKey().equals(display) && entry.getValue().getValue().equals(slot))
-                    .findFirst()
-                    .ifPresent(entry -> museumDisplay.remove(entry.getKey()));
-        }
-
-        public List<SkyBlockItem> getAllItems() {
-            List<SkyBlockItem> items = new ArrayList<>(currentlyInMuseum);
-            items.addAll(previouslyInMuseum);
-            return items;
-        }
-
-        public List<SkyBlockItem> getAllItems(MuseumableItemCategory category) {
-            return getAllItems().stream()
-                    .filter(item -> category.getItems().contains(item.getAttributeHandler().getPotentialType()))
-                    .collect(Collectors.toList());
-        }
-
         public @Nullable SkyBlockItem getItem(MuseumableItemCategory category, ItemType type) {
-            return getAllItems(category).stream()
+            return getItemsByCategory(category).stream()
                     .filter(item -> item.getAttributeHandler().getPotentialType().equals(type))
                     .findFirst()
                     .orElse(null);
-        }
-
-        public List<SkyBlockItem> getNotInDisplay() {
-            return currentlyInMuseum.stream()
-                    .filter(item -> !museumDisplay.containsKey(UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())))
-                    .collect(Collectors.toList());
         }
 
         public @NonNull SkyBlockItem getFromUUID(UUID itemUuid) {
@@ -122,46 +110,219 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
                             .orElseThrow(() -> new IllegalArgumentException("No item with UUID " + itemUuid + " found")));
         }
 
-        public void addToDisplay(SkyBlockItem item, MuseumDisplays display, Integer slot) {
-            UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
-            museumDisplay.put(itemUuid, Map.entry(display, slot));
+        public List<SkyBlockItem> getAllItems() {
+            List<SkyBlockItem> items = new ArrayList<>(currentlyInMuseum);
+            items.addAll(previouslyInMuseum);
+            return items;
+        }
+
+        public Map<MuseumableItemCategory, List<SkyBlockItem>> getAllItemsByCategory() {
+            return MuseumableItemCategory.sortAsMuseumItems(getAllItems());
         }
 
         public void add(SkyBlockItem item) {
-            // Remove any other item with the same type
-            currentlyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(item.getAttributeHandler().getPotentialType()));
-            previouslyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(item.getAttributeHandler().getPotentialType()));
+            ItemType itemType = item.getAttributeHandler().getPotentialType();
+
+            // Remove any existing item of the same type
+            currentlyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(itemType));
+            previouslyInMuseum.removeIf(i -> i.getAttributeHandler().getPotentialType().equals(itemType));
 
             currentlyInMuseum.add(item);
             UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
             insertionTimes.put(itemUuid, System.currentTimeMillis());
         }
 
+        public void moveToRetrieved(SkyBlockItem item) {
+            UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+
+            if (currentlyInMuseum.remove(item)) {
+                previouslyInMuseum.add(item);
+                museumDisplay.remove(itemUuid);
+            }
+        }
+
+        public ItemMetadata getItemMetadata(UUID itemUuid) {
+            return new ItemMetadata(
+                    itemUuid,
+                    insertionTimes.get(itemUuid),
+                    calculatedPrices.get(itemUuid)
+            );
+        }
+
+        public class DisplayHandler {
+            public List<SkyBlockItem> getAllItemsInDisplay(MuseumDisplays display) {
+                return museumDisplay.entrySet().stream()
+                        .filter(entry -> entry.getValue().display().equals(display))
+                        .sorted(Map.Entry.comparingByValue(Comparator.comparing(DisplayPlacement::slot)))
+                        .map(entry -> getFromUUID(entry.getKey()))
+                        .collect(Collectors.toList());
+            }
+
+            public List<SkyBlockItem> getItemsAtSlot(MuseumDisplays display, Integer slot) {
+                return museumDisplay.entrySet().stream()
+                        .filter(entry -> entry.getValue().display().equals(display) && entry.getValue().slot().equals(slot))
+                        .map(entry -> getFromUUID(entry.getKey()))
+                        .collect(Collectors.toList());
+            }
+
+            public Map<Integer, List<SkyBlockItem>> getItemsBySlot(MuseumDisplays display) {
+                return museumDisplay.entrySet().stream()
+                        .filter(entry -> entry.getValue().display().equals(display))
+                        .collect(Collectors.groupingBy(
+                                entry -> entry.getValue().slot(),
+                                Collectors.mapping(entry -> getFromUUID(entry.getKey()), Collectors.toList())
+                        ));
+            }
+
+            public List<SkyBlockItem> getItemsInDisplayByCategory(MuseumDisplays display, MuseumableItemCategory category) {
+                return getAllItemsInDisplay(display).stream()
+                        .filter(item -> category.contains(item.getAttributeHandler().getPotentialType()))
+                        .collect(Collectors.toList());
+            }
+
+            public List<SkyBlockItem> getItemsAtSlotByCategory(MuseumDisplays display, Integer slot, MuseumableItemCategory category) {
+                return getItemsAtSlot(display, slot).stream()
+                        .filter(item -> category.contains(item.getAttributeHandler().getPotentialType()))
+                        .collect(Collectors.toList());
+            }
+
+            public boolean isItemInDisplay(SkyBlockItem item) {
+                UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+                return museumDisplay.containsKey(itemUuid);
+            }
+
+            public @Nullable DisplayPlacement getItemDisplayPlacement(SkyBlockItem item) {
+                UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+                return museumDisplay.get(itemUuid);
+            }
+
+            public void addToDisplay(SkyBlockItem item, MuseumDisplays display, Integer slot) {
+                UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+                museumDisplay.put(itemUuid, new DisplayPlacement(display, slot));
+            }
+
+            public void addToDisplay(List<SkyBlockItem> items, MuseumDisplays display, Integer slot) {
+                for (SkyBlockItem item : items) {
+                    addToDisplay(item, display, slot);
+                }
+            }
+
+            public void removeFromDisplay(SkyBlockItem item) {
+                UUID itemUuid = UUID.fromString(item.getAttributeHandler().getUniqueTrackedID());
+                museumDisplay.remove(itemUuid);
+            }
+
+            public void removeFromDisplay(List<SkyBlockItem> items) {
+                for (SkyBlockItem item : items) {
+                    removeFromDisplay(item);
+                }
+            }
+
+            public void removeAllFromSlot(MuseumDisplays display, Integer slot) {
+                museumDisplay.entrySet().removeIf(entry ->
+                        entry.getValue().display().equals(display) &&
+                                entry.getValue().slot().equals(slot)
+                );
+            }
+
+            public void removeAllFromDisplay(MuseumDisplays display) {
+                museumDisplay.entrySet().removeIf(entry ->
+                        entry.getValue().display().equals(display)
+                );
+            }
+
+            public boolean hasItemsAtSlot(MuseumDisplays display, Integer slot) {
+                return museumDisplay.values().stream()
+                        .anyMatch(placement -> placement.display().equals(display) && placement.slot().equals(slot));
+            }
+
+            public int getItemCountAtSlot(MuseumDisplays display, Integer slot) {
+                return (int) museumDisplay.values().stream()
+                        .filter(placement -> placement.display().equals(display) && placement.slot().equals(slot))
+                        .count();
+            }
+
+            public List<Integer> getOccupiedSlots(MuseumDisplays display) {
+                return museumDisplay.values().stream()
+                        .filter(placement -> placement.display().equals(display))
+                        .map(DisplayPlacement::slot)
+                        .distinct()
+                        .sorted()
+                        .collect(Collectors.toList());
+            }
+
+            public List<Integer> getAvailableSlots(MuseumDisplays display) {
+                Set<Integer> occupiedSlots = museumDisplay.values().stream()
+                        .filter(placement -> placement.display().equals(display))
+                        .map(DisplayPlacement::slot)
+                        .collect(Collectors.toSet());
+
+                List<Integer> availableSlots = new ArrayList<>();
+                for (int i = 0; i < display.getPositions().size(); i++) {
+                    if (!occupiedSlots.contains(i)) {
+                        availableSlots.add(i);
+                    }
+                }
+                return availableSlots;
+            }
+
+            public Map<MuseumDisplays, List<SkyBlockItem>> fetchAllDisplayedItems() {
+                Map<MuseumDisplays, List<SkyBlockItem>> displayedItems = new HashMap<>();
+
+                for (MuseumDisplays display : MuseumDisplays.values()) {
+                    displayedItems.put(display, getAllItemsInDisplay(display));
+                }
+
+                return displayedItems;
+            }
+
+            public Map<MuseumDisplays, Map<Integer, List<SkyBlockItem>>> fetchAllDisplayedItemsBySlot() {
+                Map<MuseumDisplays, Map<Integer, List<SkyBlockItem>>> displayedItems = new HashMap<>();
+
+                for (MuseumDisplays display : MuseumDisplays.values()) {
+                    displayedItems.put(display, getItemsBySlot(display));
+                }
+
+                return displayedItems;
+            }
+
+            public Map<MuseumDisplays, Integer> getDisplayItemCounts() {
+                return Arrays.stream(MuseumDisplays.values())
+                        .collect(Collectors.toMap(
+                                display -> display,
+                                display -> getAllItemsInDisplay(display).size()
+                        ));
+            }
+        }
+
         public JSONObject serialize() {
             JSONObject json = new JSONObject();
-            if (currentlyViewing != null)
-                json.put("currentlyViewing", currentlyViewing.getKey() + "=" + currentlyViewing.getValue());
-            else json.put("currentlyViewing", JSONObject.NULL);
+
+            if (currentlyViewing != null) {
+                json.put("currentlyViewing", currentlyViewing.playerUuid() + "=" + currentlyViewing.profileUuid());
+            } else {
+                json.put("currentlyViewing", JSONObject.NULL);
+            }
+
             json.put("hasBoughtAppraisalService", hasBoughtAppraisalService);
 
-            List<String> currentlyInMuseum = this.currentlyInMuseum.stream()
+            List<String> currentItems = currentlyInMuseum.stream()
                     .map(item -> item.toUnderstandable().serialize())
                     .toList();
-            List<String> previouslyInMuseum = this.previouslyInMuseum.stream()
+            List<String> previousItems = previouslyInMuseum.stream()
                     .map(item -> item.toUnderstandable().serialize())
                     .toList();
 
-            json.put("currentlyInMuseum", currentlyInMuseum);
-            json.put("previouslyInMuseum", previouslyInMuseum);
+            json.put("currentlyInMuseum", currentItems);
+            json.put("previouslyInMuseum", previousItems);
 
-            JSONObject museumDisplayJson = new JSONObject();
-            for (Map.Entry<UUID, Map.Entry<MuseumDisplays, Integer>> entry : museumDisplay.entrySet()) {
+            JSONObject displayJson = new JSONObject();
+            for (Map.Entry<UUID, DisplayPlacement> entry : museumDisplay.entrySet()) {
                 UUID itemUuid = entry.getKey();
-                MuseumDisplays display = entry.getValue().getKey();
-                int position = entry.getValue().getValue();
-                museumDisplayJson.put(itemUuid.toString(), display.name() + "=" + position);
+                DisplayPlacement placement = entry.getValue();
+                displayJson.put(itemUuid.toString(), placement.display().name() + "=" + placement.slot());
             }
-            json.put("museumDisplay", museumDisplayJson.toString());
+            json.put("museumDisplay", displayJson.toString());
 
             json.put("insertionTimes", new JSONObject(insertionTimes).toString());
             json.put("calculatedPrices", new JSONObject(calculatedPrices).toString());
@@ -171,13 +332,17 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
 
         public static MuseumData deserialize(JSONObject json) {
             MuseumData data = new MuseumData();
-            if (json.isNull("currentlyViewing"))
+
+            if (json.isNull("currentlyViewing")) {
                 data.currentlyViewing = null;
-            else
-                data.currentlyViewing = Map.entry(
-                        UUID.fromString(json.getString("currentlyViewing").split("=")[0]),
-                        UUID.fromString(json.getString("currentlyViewing").split("=")[1])
+            } else {
+                String[] viewingParts = json.getString("currentlyViewing").split("=");
+                data.currentlyViewing = new ViewingInfo(
+                        UUID.fromString(viewingParts[0]),
+                        UUID.fromString(viewingParts[1])
                 );
+            }
+
             data.hasBoughtAppraisalService = json.getBoolean("hasBoughtAppraisalService");
 
             data.previouslyInMuseum = json.getJSONArray("previouslyInMuseum").toList().stream()
@@ -188,15 +353,15 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
                     .map(item -> new SkyBlockItem(UnderstandableSkyBlockItem.deserialize((String) item)))
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            JSONObject museumDisplayJson = new JSONObject(json.getString("museumDisplay"));
-            data.museumDisplay = museumDisplayJson.toMap().entrySet().stream()
+            JSONObject displayJson = new JSONObject(json.getString("museumDisplay"));
+            data.museumDisplay = displayJson.toMap().entrySet().stream()
                     .collect(Collectors.toMap(
                             entry -> UUID.fromString(entry.getKey()),
                             entry -> {
                                 String[] values = ((String) entry.getValue()).split("=");
                                 MuseumDisplays display = MuseumDisplays.valueOf(values[0]);
-                                int position = Integer.parseInt(values[1]);
-                                return Map.entry(display, position);
+                                int slot = Integer.parseInt(values[1]);
+                                return new DisplayPlacement(display, slot);
                             }
                     ));
 
@@ -205,6 +370,7 @@ public class DatapointMuseum extends Datapoint<DatapointMuseum.MuseumData> {
                             entry -> UUID.fromString(entry.getKey()),
                             entry -> (Long) entry.getValue()
                     ));
+
             data.calculatedPrices = new JSONObject(json.getString("calculatedPrices")).toMap().entrySet().stream()
                     .collect(Collectors.toMap(
                             entry -> UUID.fromString(entry.getKey()),

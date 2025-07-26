@@ -22,8 +22,8 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         public String[] holograms(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
-                UUID currentlyViewing = data.getCurrentlyViewing().getKey();
-                UUID profileUUID = data.getCurrentlyViewing().getValue();
+                UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
+                UUID profileUUID = data.getCurrentlyViewing().profileUuid();
 
                 handler = DataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
             }
@@ -40,8 +40,8 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         public String signature(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
-                UUID currentlyViewing = data.getCurrentlyViewing().getKey();
-                UUID profileUUID = data.getCurrentlyViewing().getValue();
+                UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
+                UUID profileUUID = data.getCurrentlyViewing().profileUuid();
 
                 handler = DataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
             }
@@ -52,8 +52,8 @@ public class NPCMuseumDisplay extends SkyBlockNPC {
         public String texture(SkyBlockPlayer player) {
             if (handler == null) {
                 DatapointMuseum.MuseumData data = player.getMuseumData();
-                UUID currentlyViewing = data.getCurrentlyViewing().getKey();
-                UUID profileUUID = data.getCurrentlyViewing().getValue();
+                UUID currentlyViewing = data.getCurrentlyViewing().playerUuid();
+                UUID profileUUID = data.getCurrentlyViewing().profileUuid();
 
                 handler = DataHandler.getProfileOfOfflinePlayer(currentlyViewing, profileUUID);
             }
