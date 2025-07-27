@@ -83,11 +83,11 @@ public class ActionRegionBlockBreak implements SkyBlockEventClass {
             );
 
             // Call custom break event
-            if (!(block.hasTag(Tag.Boolean("player_placed")) && block.getTag(Tag.Boolean("player_placed")))) {
-                SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
-                        player, material, event.getBlockPosition(), customDrops
-                ));
-            }
+            boolean playerPlaced = block.hasTag(Tag.Boolean("player_placed")) && block.getTag(Tag.Boolean("player_placed"));
+
+            SkyBlockEventHandler.callSkyBlockEvent(new CustomBlockBreakEvent(
+                    player, material, event.getBlockPosition(), customDrops, playerPlaced
+            ));
 
             // Process each drop with fortune multiplier
             for (SkyBlockItem dropItem : customDrops) {

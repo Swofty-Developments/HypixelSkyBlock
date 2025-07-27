@@ -85,5 +85,4 @@ public class NPCLumberJack extends NPCDialogue {
                         }).build()
         ).stream().toArray(DialogueSet[]::new);
     }
-
 }

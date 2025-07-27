@@ -13,6 +13,8 @@ public class ActionSkillMiningHandler implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(CustomBlockBreakEvent event) {
+        if (event.getPlayerPlaced()) return;
+
         SkyBlockItem item = new SkyBlockItem(event.getMaterial());
 
         if (!item.hasComponent(SkillableMineComponent.class)) return;
