@@ -96,7 +96,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                                 break;
                             }
 
-                            if (stackMaterial.matchesMaterial(patternMaterial.getItem())
+                            if (stackMaterial.matchesType(patternMaterial.getItem())
                                     || ExchangeableType.isExchangeable(
                                             stackMaterial.getItem().getAttributeHandler().getPotentialType(),
                                             patternMaterial.getItem().getAttributeHandler().getPotentialType()
@@ -186,7 +186,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                                 continue;
                             }
 
-                            if (stackMaterial.matchesMaterial(patternMaterial.getItem())
+                            if (stackMaterial.matchesType(patternMaterial.getItem())
                                     || ExchangeableType.isExchangeable(
                                             stackMaterial.getItem().getAttributeHandler().getPotentialType(),
                                             patternMaterial.getItem().getAttributeHandler().getPotentialType()
@@ -277,7 +277,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                 ItemQuantifiable patternMaterial = recipe.getIngredientMap().get(patternChar);
                 ItemQuantifiable gridMaterial = ItemQuantifiable.of(grid[startRow + row][startCol + col]);
 
-                if (!gridMaterial.matchesMaterial(patternMaterial.getItem()) ||
+                if (!gridMaterial.matchesType(patternMaterial.getItem()) ||
                         gridMaterial.getAmount() < patternMaterial.getAmount()) {
                     if (!ExchangeableType.isExchangeable(gridMaterial.getItem().getAttributeHandler().getPotentialType(),
                             patternMaterial.getItem().getAttributeHandler().getPotentialType())) {

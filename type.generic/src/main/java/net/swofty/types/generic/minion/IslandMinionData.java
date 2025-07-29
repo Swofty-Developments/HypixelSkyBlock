@@ -87,7 +87,7 @@ public class IslandMinionData {
 
             // Check if the item already exists in the inventory.
             Optional<ItemQuantifiable> existingItem = itemsInMinion.stream()
-                    .filter(materialQuantifiable -> materialQuantifiable.matchesMaterial(item))
+                    .filter(materialQuantifiable -> materialQuantifiable.matchesType(item))
                     .findFirst();
 
             if (existingItem.isPresent()) {

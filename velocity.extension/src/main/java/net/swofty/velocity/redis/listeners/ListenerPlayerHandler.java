@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
@@ -87,7 +88,7 @@ public class ListenerPlayerHandler extends RedisListener {
                         || new TransferHandler(player).isInLimbo()
                         || !GameManager.isAnyEmpty(type)) {
                     player.sendMessage(Component.text(
-                            "§cAttempted to transfer to an " + type.name() + " server, but there are no empty slots available. Please try again later."
+                            "§cAttempted to transfer to a(n) " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
                     ));
                     return new JSONObject();
                 }

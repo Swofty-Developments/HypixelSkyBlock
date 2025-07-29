@@ -58,8 +58,8 @@ public class ItemQuantifiable {
         return item;
     }
 
-    public boolean matchesMaterial(SkyBlockItem item) {
-        return this.item.getMaterial() == item.getMaterial();
+    public boolean matchesType(SkyBlockItem item) {
+        return this.item.getAttributeHandler().getTypeAsString() == item.getAttributeHandler().getTypeAsString();
     }
 
     public String toString() {

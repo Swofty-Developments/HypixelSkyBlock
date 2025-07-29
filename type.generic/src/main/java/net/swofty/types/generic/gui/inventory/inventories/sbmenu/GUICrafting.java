@@ -136,7 +136,7 @@ public class GUICrafting extends SkyBlockInventoryGUI implements RefreshingGUI {
                     }
                 }
                 if (isShift){
-                    // if is shift click add updated item to player inventory
+                    // if is a shift click add updated item to player inventory
                     e.setCancelled(true);
                     player.addAndUpdateItem(e.getClickedItem());
                 }
