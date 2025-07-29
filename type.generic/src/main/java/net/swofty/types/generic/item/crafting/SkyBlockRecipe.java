@@ -67,8 +67,10 @@ public abstract class SkyBlockRecipe<T> {
         return recipes;
     }
 
-    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType craftingMaterial) {
-        ShapelessRecipe recipe = new ShapelessRecipe(type, new SkyBlockItem(craftingMaterial))
+    public static SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type,
+                                                               ItemType craftingMaterial,
+                                                               ItemType output) {
+        ShapelessRecipe recipe = new ShapelessRecipe(type, new SkyBlockItem(output))
                 .add(craftingMaterial, 32)
                 .add(craftingMaterial, 32)
                 .add(craftingMaterial, 32)

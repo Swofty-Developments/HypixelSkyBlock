@@ -8,13 +8,14 @@ import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import java.util.List;
 
 public class EnchantedComponent extends SkyBlockItemComponent {
-    public EnchantedComponent(SkyBlockRecipe.RecipeType type, String itemId) {
+    public EnchantedComponent(SkyBlockRecipe.RecipeType type, String enchantedItem, String nonEnchantedID) {
         addInheritedComponent(new DisableAnimationComponent(
                 List.of(ItemAnimation.EAT)
         ));
         addInheritedComponent(new CraftableComponent(getStandardEnchantedRecipe(
                 type,
-                ItemType.valueOf(itemId)
+                ItemType.valueOf(enchantedItem),
+                ItemType.valueOf(nonEnchantedID)
         ), true));
     }
 
@@ -24,7 +25,7 @@ public class EnchantedComponent extends SkyBlockItemComponent {
         ));
     }
 
-    public SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType material) {
-        return SkyBlockRecipe.getStandardEnchantedRecipe(type, material);
+    public SkyBlockRecipe<?> getStandardEnchantedRecipe(SkyBlockRecipe.RecipeType type, ItemType enchantedItem, ItemType nonEnchantedID) {
+        return SkyBlockRecipe.getStandardEnchantedRecipe(type, enchantedItem, nonEnchantedID);
     }
 }

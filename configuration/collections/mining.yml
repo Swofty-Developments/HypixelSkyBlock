@@ -25,7 +25,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: AUTO_SMELTER
+        craftingMaterial: AUTO_SMELTER
         resultAmount: 1
         pattern:
           - AAA
@@ -48,7 +48,7 @@ collections:
         unlockedItemType: ENCHANTED_COBBLESTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: COBBLESTONE
+        craftingMaterial: COBBLESTONE
   - amount: 2500
     rewards:
     - type: XP
@@ -57,7 +57,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: COMPACTOR
+        craftingMaterial: COMPACTOR
         resultAmount: 1
         pattern:
           - AAA
@@ -86,7 +86,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: MINERS_OUTFIT_BOOTS
+        craftingMaterial: MINERS_OUTFIT_BOOTS
         resultAmount: 1
         pattern:
           - AOA
@@ -101,7 +101,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: MINERS_OUTFIT_CHESTPLATE
+        craftingMaterial: MINERS_OUTFIT_CHESTPLATE
         resultAmount: 1
         pattern:
           - AOA
@@ -117,7 +117,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: MINERS_OUTFIT_HELMET
+        craftingMaterial: MINERS_OUTFIT_HELMET
         resultAmount: 1
         pattern:
           - AAA
@@ -132,7 +132,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: MINERS_OUTFIT_LEGGINGS
+        craftingMaterial: MINERS_OUTFIT_LEGGINGS
         resultAmount: 1
         pattern:
           - AAA
@@ -158,7 +158,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: HASTE_RING
+        craftingMaterial: HASTE_RING
         resultAmount: 1
         pattern:
           - AAA
@@ -179,7 +179,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: SUPER_COMPACTOR_3000
+        craftingMaterial: SUPER_COMPACTOR_3000
         resultAmount: 1
         pattern:
           - AAA
@@ -226,7 +226,7 @@ collections:
         unlockedItemType: ENCHANTED_COAL
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: COAL
+        craftingMaterial: COAL
   - amount: 2500
     rewards:
     - type: XP
@@ -247,7 +247,7 @@ collections:
         unlockedItemType: ENCHANTED_COAL_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_COAL
+        craftingMaterial: ENCHANTED_COAL
   - amount: 25000
     rewards:
     - type: XP
@@ -256,7 +256,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: NONE
-        resultType: ENCHANTED_LAVA_BUCKET
+        craftingMaterial: ENCHANTED_LAVA_BUCKET
         resultAmount: 1
         pattern:
           - ABA
@@ -317,10 +317,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: ENCHANTED_GOLD
+        unlockedItemType: ENCHANTED_GOLD_INGOT
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: GOLD_INGOT
+        craftingMaterial: GOLD_INGOT
   - amount: 2500
     rewards:
     - type: XP
@@ -344,7 +344,7 @@ collections:
         unlockedItemType: ENCHANTED_GOLD_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_GOLD_BLOCK
+        craftingMaterial: ENCHANTED_GOLD_BLOCK
   - amount: 25000
     rewards:
     - type: XP
@@ -381,7 +381,7 @@ collections:
         unlockedItemType: ENCHANTED_LAPIS_LAZULI
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: LAPIS_LAZULI
+        craftingMaterial: LAPIS_LAZULI
   - amount: 10000
     rewards:
     - type: XP
@@ -402,7 +402,7 @@ collections:
         unlockedItemType: ENCHANTED_LAPIS_LAZULI_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_LAPIS_LAZULI
+        craftingMaterial: ENCHANTED_LAPIS_LAZULI
   - amount: 100000
     rewards:
     - type: XP
@@ -457,7 +457,7 @@ collections:
         unlockedItemType: ENCHANTED_FLINT
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: FLINT
+        craftingMaterial: FLINT
   - amount: 5000
     rewards:
     - type: XP
@@ -512,7 +512,7 @@ collections:
         unlockedItemType: ENCHANTED_DIAMOND
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: DIAMOND
+        craftingMaterial: DIAMOND
   - amount: 2500
     rewards:
     - type: XP
@@ -529,7 +529,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: DIAMOND_SPREADING
+        craftingMaterial: DIAMOND_SPREADING
         resultAmount: 1
         pattern:
           - AAA
@@ -557,7 +557,7 @@ collections:
         unlockedItemType: ENCHANTED_DIAMOND_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_DIAMOND
+        craftingMaterial: ENCHANTED_DIAMOND
   - amount: 50000
     rewards:
     - type: XP
@@ -594,7 +594,7 @@ collections:
         unlockedItemType: ENCHANTED_EMERALD
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: EMERALD
+        craftingMaterial: EMERALD
   - amount: 5000
     rewards:
     - type: XP
@@ -615,7 +615,7 @@ collections:
         unlockedItemType: ENCHANTED_EMERALD_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_EMERALD
+        craftingMaterial: ENCHANTED_EMERALD
   - amount: 50000
     rewards:
     - type: XP
@@ -667,7 +667,7 @@ collections:
         unlockedItemType: ENCHANTED_END_STONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: END_STONE
+        craftingMaterial: END_STONE
   - amount: 10000
     rewards:
     - type: XP
@@ -702,10 +702,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: FLAWED_RUBY
+        unlockedItemType: FLAWED_RUBY_GEMSTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ROUGH_RUBY_GEMSTONE
+        craftingMaterial: ROUGH_RUBY_GEMSTONE
   - amount: 1000
     rewards:
     - type: XP
@@ -723,10 +723,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: FINE_RUBY
+        unlockedItemType: FINE_RUBY_GEMSTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: FLAWED_RUBY_GEMSTONE
+        craftingMaterial: FLAWED_RUBY_GEMSTONE
   - amount: 25000
     rewards:
     - type: XP
@@ -749,10 +749,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: FLAWLESS_RUBY
+        unlockedItemType: FLAWLESS_RUBY_GEMSTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: FINE_RUBY_GEMSTONE
+        craftingMaterial: FINE_RUBY_GEMSTONE
   - amount: 1000000
     rewards:
     - type: XP
@@ -789,7 +789,7 @@ collections:
         unlockedItemType: ENCHANTED_GLOWSTONE_DUST
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: GLOWSTONE_DUST
+        craftingMaterial: GLOWSTONE_DUST
   - amount: 2500
     rewards:
     - type: XP
@@ -805,7 +805,7 @@ collections:
         unlockedItemType: ENCHANTED_GLOWSTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_GLOWSTONE_DUST
+        craftingMaterial: ENCHANTED_GLOWSTONE_DUST
   - amount: 10000
     rewards:
     - type: XP
@@ -835,10 +835,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: ENCHANTED_HARDSTONE
+        unlockedItemType: ENCHANTED_HARD_STONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: HARD_STONE
+        craftingMaterial: HARD_STONE
   - amount: 50000
     rewards:
     - type: XP
@@ -859,7 +859,7 @@ collections:
         unlockedItemType: CONCENTRATED_STONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_HARD_STONE
+        craftingMaterial: ENCHANTED_HARD_STONE
   - amount: 1000000
     rewards:
     - type: XP
@@ -896,7 +896,7 @@ collections:
         unlockedItemType: ENCHANTED_ICE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: PACKED_ICE
+        craftingMaterial: PACKED_ICE
   - amount: 1000
     rewards:
     - type: XP
@@ -917,7 +917,7 @@ collections:
         unlockedItemType: ENCHANTED_PACKED_ICE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_ICE
+        craftingMaterial: ENCHANTED_ICE
   - amount: 50000
     rewards:
     - type: XP
@@ -969,10 +969,10 @@ collections:
         xp: 4
     - type: SPECIAL_UNLOCK
       data:
-        unlockedItemType: ENCHANTED_IRON
+        unlockedItemType: ENCHANTED_IRON_INGOT
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: IRON_INGOT
+        craftingMaterial: IRON_INGOT
   - amount: 2500
     rewards:
     - type: XP
@@ -981,7 +981,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: BUDGET_HOPPER
+        craftingMaterial: BUDGET_HOPPER
         resultAmount: 1
         pattern:
           - AOA
@@ -1012,7 +1012,7 @@ collections:
         unlockedItemType: ENCHANTED_IRON_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_IRON_INGOT
+        craftingMaterial: ENCHANTED_IRON_INGOT
   - amount: 25000
     rewards:
     - type: XP
@@ -1026,7 +1026,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: MINING
-        resultType: ENCHANTED_HOPPER
+        craftingMaterial: ENCHANTED_HOPPER
         resultAmount: 1
         pattern:
           - AOA
@@ -1083,7 +1083,7 @@ collections:
         unlockedItemType: ENCHANTED_MITHRIL
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: MITHRIL
+        craftingMaterial: MITHRIL
   - amount: 2500
     rewards:
     - type: XP
@@ -1136,7 +1136,7 @@ collections:
         unlockedItemType: ENCHANTED_MYCELIUM
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: MYCELIUM
+        craftingMaterial: MYCELIUM
   - amount: 1000
     rewards:
     - type: XP
@@ -1162,7 +1162,7 @@ collections:
         unlockedItemType: ENCHANTED_MYCELIUM_CUBE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_MYCELIUM
+        craftingMaterial: ENCHANTED_MYCELIUM
   - amount: 25000
     rewards:
     - type: XP
@@ -1209,7 +1209,7 @@ collections:
         unlockedItemType: ENCHANTED_QUARTZ
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: QUARTZ
+        craftingMaterial: QUARTZ
   - amount: 2500
     rewards:
     - type: XP
@@ -1225,7 +1225,7 @@ collections:
         unlockedItemType: ENCHANTED_QUARTZ_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_QUARTZ
+        craftingMaterial: ENCHANTED_QUARTZ
   - amount: 10000
     rewards:
     - type: XP
@@ -1268,7 +1268,7 @@ collections:
         unlockedItemType: ENCHANTED_NETHERRACK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: NETHERRACK
+        craftingMaterial: NETHERRACK
   - amount: 5000
     rewards:
     - type: XP
@@ -1305,7 +1305,7 @@ collections:
         unlockedItemType: ENCHANTED_OBSIDIAN
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: OBSIDIAN
+        craftingMaterial: OBSIDIAN
   - amount: 2500
     rewards:
     - type: XP
@@ -1353,7 +1353,7 @@ collections:
         unlockedItemType: ENCHANTED_RED_SAND
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: RED_SAND
+        craftingMaterial: RED_SAND
   - amount: 2500
     rewards:
     - type: XP
@@ -1369,7 +1369,7 @@ collections:
         unlockedItemType: ENCHANTED_RED_SAND_CUBE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_RED_SAND
+        craftingMaterial: ENCHANTED_RED_SAND
   - amount: 15000
     rewards:
     - type: XP
@@ -1393,7 +1393,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: NONE
-        resultType: EVERBURNING_FLAME
+        craftingMaterial: EVERBURNING_FLAME
         resultAmount: 1
         pattern:
           - ABA
@@ -1449,7 +1449,7 @@ collections:
         unlockedItemType: ENCHANTED_REDSTONE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: REDSTONE
+        craftingMaterial: REDSTONE
   - amount: 3000
     rewards:
     - type: XP
@@ -1478,7 +1478,7 @@ collections:
         unlockedItemType: ENCHANTED_REDSTONE_BLOCK
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_REDSTONE
+        craftingMaterial: ENCHANTED_REDSTONE
   - amount: 50000
     rewards:
     - type: XP
@@ -1579,7 +1579,7 @@ collections:
         unlockedItemType: ENCHANTED_SAND
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: SAND
+        craftingMaterial: SAND
   - amount: 2500
     rewards:
     - type: XP
@@ -1607,7 +1607,7 @@ collections:
         unlockedItemType: ENCHANTED_SULPHUR
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: SULPHUR
+        craftingMaterial: SULPHUR
   - amount: 2500
     rewards:
     - type: XP
@@ -1633,7 +1633,7 @@ collections:
         unlockedItemType: ENCHANTED_SULPHUR_CUBE
         isEnchantedRecipe: true
         recipeType: MINING
-        resultType: ENCHANTED_SULPHUR
+        craftingMaterial: ENCHANTED_SULPHUR
   - amount: 25000
     rewards:
     - type: XP

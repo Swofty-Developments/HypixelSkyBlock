@@ -773,13 +773,13 @@ items:
           - END_STONE:20
           - END_STONE:40
           - END_STONE:64
-          - ENCHANTED_ENDSTONE:1
-          - ENCHANTED_ENDSTONE:2
-          - ENCHANTED_ENDSTONE:4
-          - ENCHANTED_ENDSTONE:8
-          - ENCHANTED_ENDSTONE:16
-          - ENCHANTED_ENDSTONE:32
-          - ENCHANTED_ENDSTONE:64
+          - ENCHANTED_END_STONE:1
+          - ENCHANTED_END_STONE:2
+          - ENCHANTED_END_STONE:4
+          - ENCHANTED_END_STONE:8
+          - ENCHANTED_END_STONE:16
+          - ENCHANTED_END_STONE:32
+          - ENCHANTED_END_STONE:64
   - id: GLOWSTONE_MINION
     material: PLAYER_HEAD
     rarity: COMMON

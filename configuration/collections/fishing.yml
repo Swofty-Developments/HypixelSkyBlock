@@ -22,7 +22,7 @@ collections:
         unlockedItemType: ENCHANTED_CLAY
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: CLAY_BALL
+        craftingMaterial: CLAY_BALL
   - amount: 250
     rewards:
     - type: XP
@@ -182,7 +182,7 @@ collections:
         unlockedItemType: ENCHANTED_LILY_PAD
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: LILY_PAD
+        craftingMaterial: LILY_PAD
   - amount: 500
     rewards:
     - type: XP
@@ -322,7 +322,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: NONE
-        resultType: PRISMARINE_BLADE
+        craftingMaterial: PRISMARINE_BLADE
         resultAmount: 1
         pattern:
           - A
@@ -377,7 +377,7 @@ collections:
         unlockedItemType: ENCHANTED_PUFFERFISH
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: PUFFERFISH
+        craftingMaterial: PUFFERFISH
   - amount: 100
     rewards:
     - type: XP
@@ -462,7 +462,7 @@ collections:
         unlockedItemType: ENCHANTED_RAW_FISH
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: COD
+        craftingMaterial: COD
   - amount: 2500
     rewards:
     - type: XP
@@ -481,7 +481,7 @@ collections:
         unlockedItemType: ENCHANTED_COOKED_FISH
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: ENCHANTED_COD
+        craftingMaterial: ENCHANTED_COD
   - amount: 30000
     rewards:
     - type: XP
@@ -533,7 +533,7 @@ collections:
         unlockedItemType: ENCHANTED_RAW_SALMON
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: SALMON
+        craftingMaterial: SALMON
   - amount: 500
     rewards:
     - type: XP
@@ -559,7 +559,7 @@ collections:
         unlockedItemType: ENCHANTED_COOKED_SALMON
         isEnchantedRecipe: true
         recipeType: FISHING
-        resultType: ENCHANTED_RAW_SALMON
+        craftingMaterial: ENCHANTED_RAW_SALMON
   - amount: 10000
     rewards:
     - type: XP

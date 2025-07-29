@@ -25,7 +25,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: FORAGING
-        resultType: LEAFLET_HELMET
+        craftingMaterial: LEAFLET_HELMET
         resultAmount: 1
         pattern:
           - AAA
@@ -40,7 +40,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: FORAGING
-        resultType: LEAFLET_LEGGINGS
+        craftingMaterial: LEAFLET_LEGGINGS
         resultAmount: 1
         pattern:
           - AAA
@@ -56,7 +56,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: FORAGING
-        resultType: LEAFLET_BOOTS
+        craftingMaterial: LEAFLET_BOOTS
         resultAmount: 1
         pattern:
           - AOA
@@ -71,7 +71,7 @@ collections:
     - type: RECIPE
       data:
         recipeType: FORAGING
-        resultType: LEAFLET_CHESTPLATE
+        craftingMaterial: LEAFLET_CHESTPLATE
         resultAmount: 1
         pattern:
           - AOA
@@ -104,7 +104,7 @@ collections:
         unlockedItemType: ENCHANTED_OAK_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: OAK_LOG
+        craftingMaterial: OAK_LOG
   - amount: 5000
     rewards:
     - type: XP
@@ -156,7 +156,7 @@ collections:
         unlockedItemType: ENCHANTED_SPRUCE_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: SPRUCE_LOG
+        craftingMaterial: SPRUCE_LOG
   - amount: 5000
     rewards:
     - type: XP
@@ -218,7 +218,7 @@ collections:
         unlockedItemType: ENCHANTED_BIRCH_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: BIRCH_LOG
+        craftingMaterial: BIRCH_LOG
   - amount: 5000
     rewards:
     - type: XP
@@ -280,7 +280,7 @@ collections:
         unlockedItemType: ENCHANTED_JUNGLE_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: JUNGLE_LOG
+        craftingMaterial: JUNGLE_LOG
   - amount: 5000
     rewards:
     - type: XP
@@ -337,7 +337,7 @@ collections:
         unlockedItemType: ENCHANTED_ACACIA_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: ACACIA_LOG
+        craftingMaterial: ACACIA_LOG
   - amount: 5000
     rewards:
     - type: XP
@@ -389,7 +389,7 @@ collections:
         unlockedItemType: ENCHANTED_DARK_OAK_LOG
         isEnchantedRecipe: true
         recipeType: FORAGING
-        resultType: DARK_OAK_LOG
+        craftingMaterial: DARK_OAK_LOG
   - amount: 5000
     rewards:
     - type: XP

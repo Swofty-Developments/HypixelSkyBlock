@@ -4,12 +4,10 @@ import lombok.Data;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.item.ItemQuantifiable;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.components.CraftableComponent;
-import net.swofty.types.generic.item.crafting.ShapedRecipe;
-import net.swofty.types.generic.item.crafting.ShapelessRecipe;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
+import net.swofty.types.generic.utility.RecipeParser;
 import org.jetbrains.annotations.Nullable;
 import org.yaml.snakeyaml.Yaml;
 
@@ -55,6 +53,7 @@ public class CollectionLoader {
     public static class RewardData {
         // Recipe data
         public String recipeType;
+        public String craftingMaterial;
         public String resultType;
         public int resultAmount;
         public List<String> pattern;
@@ -162,37 +161,62 @@ public class CollectionLoader {
         return new CollectionCategory.UnlockRecipe() {
             @Override
             public SkyBlockRecipe<?> getRecipe() {
-                if (data.pattern != null) {
-                    // Shaped recipe
-                    Map<Character, ItemQuantifiable> ingredientMap = new HashMap<>();
-                    for (Map.Entry<String, RecipeIngredient> entry : data.ingredients.entrySet()) {
-                        char key = entry.getKey().charAt(0);
-                        ItemType type = ItemType.valueOf(entry.getValue().type);
-                        ingredientMap.put(key, new ItemQuantifiable(type, entry.getValue().amount));
-                    }
-
-                    return new ShapedRecipe(
-                            SkyBlockRecipe.RecipeType.valueOf(data.recipeType),
-                            new SkyBlockItem(ItemType.valueOf(data.resultType), data.resultAmount),
-                            ingredientMap,
-                            data.pattern
-                    );
-                } else {
-                    // Shapeless recipe
-                    ShapelessRecipe recipe = new ShapelessRecipe(
-                            SkyBlockRecipe.RecipeType.valueOf(data.recipeType),
-                            new SkyBlockItem(ItemType.valueOf(data.resultType)),
-                            data.resultAmount
-                    );
-
-                    for (RecipeIngredient ingredient : data.ingredients.values()) {
-                        recipe.add(ItemType.valueOf(ingredient.type), ingredient.amount);
-                    }
-
-                    return recipe;
-                }
+                // Convert RewardData to the Map format expected by RecipeParser
+                Map<String, Object> config = convertToRecipeConfig(data);
+                return RecipeParser.parseRecipe(config);
             }
         };
+    }
+
+    private static Map<String, Object> convertToRecipeConfig(RewardData data) {
+        Map<String, Object> config = new HashMap<>();
+        config.put("type", data.pattern != null ? "shaped" : "shapeless");
+        config.put("recipe-type", data.recipeType);
+
+        // Convert result
+        Map<String, Object> result = new HashMap<>();
+        if (data.craftingMaterial == null) {
+            throw new RuntimeException("Crafting material is null for " + data.unlockedItemType);
+        }
+        result.put("type", data.craftingMaterial);
+        result.put("amount", data.resultAmount);
+        config.put("result", result);
+
+        // Convert ingredients based on recipe type
+        if (data.pattern != null) {
+            config.put("pattern", data.pattern);
+            config.put("ingredients", convertShapedIngredients(data.ingredients));
+        } else {
+            config.put("ingredients", convertShapelessIngredients(data.ingredients));
+        }
+
+        return config;
+    }
+
+    private static Map<String, Map<String, Object>> convertShapedIngredients(Map<String, RecipeIngredient> ingredients) {
+        Map<String, Map<String, Object>> converted = new HashMap<>();
+
+        for (Map.Entry<String, RecipeIngredient> entry : ingredients.entrySet()) {
+            Map<String, Object> ingredient = new HashMap<>();
+            ingredient.put("type", entry.getValue().type);
+            ingredient.put("amount", entry.getValue().amount);
+            converted.put(entry.getKey(), ingredient);
+        }
+
+        return converted;
+    }
+
+    private static List<Map<String, Object>> convertShapelessIngredients(Map<String, RecipeIngredient> ingredients) {
+        List<Map<String, Object>> converted = new ArrayList<>();
+
+        for (RecipeIngredient ingredient : ingredients.values()) {
+            Map<String, Object> ingredientMap = new HashMap<>();
+            ingredientMap.put("type", ingredient.type);
+            ingredientMap.put("amount", ingredient.amount);
+            converted.add(ingredientMap);
+        }
+
+        return converted;
     }
 
     private static CollectionCategory.UnlockRecipe parseSpecialUnlock(RewardData data) {
@@ -212,9 +236,13 @@ public class CollectionLoader {
                     CraftableComponent component = item.getComponent(CraftableComponent.class);
                     return component.getRecipes();
                 } else if (data.isEnchantedRecipe) {
+                    if (data.craftingMaterial == null) {
+                        System.out.println("Crafting material is null for " + data.unlockedItemType);
+                    }
                     return List.of(SkyBlockRecipe.getStandardEnchantedRecipe(
                             SkyBlockRecipe.RecipeType.valueOf(data.recipeType),
-                            ItemType.valueOf(data.resultType)
+                            ItemType.valueOf(data.craftingMaterial),
+                            ItemType.valueOf(data.unlockedItemType)
                     ));
                 }
                 return null;

@@ -497,6 +497,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                                     recipes.add(recipeInstance);
                                 });
                             } catch (Exception e) {
+                                e.printStackTrace();
                                 Logger.error("Failed to parse recipe " + collection.type() + " : " + reward.requirement());
                             }
                         }

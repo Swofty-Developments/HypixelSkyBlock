@@ -52,7 +52,7 @@ public class ItemConfigParser {
         if (components == null) components = new ArrayList<>();
         for (Map<String, Object> componentConfig : components) {
             String componentId = (String) componentConfig.get("id");
-            SkyBlockItemComponent component = parseComponent(componentId, componentConfig);
+            SkyBlockItemComponent component = parseComponent(id, componentId, componentConfig);
             if (component != null) {
                 // Mark all components from YAML as explicit
                 item.addComponent(component, true);
@@ -63,7 +63,7 @@ public class ItemConfigParser {
         return item;
     }
 
-    private static @Nullable SkyBlockItemComponent parseComponent(String id, Map<String, Object> config) {
+    private static @Nullable SkyBlockItemComponent parseComponent(String itemId, String id, Map<String, Object> config) {
         return switch (id.toUpperCase()) {
             case "ABILITY" -> {
                 List<String> abilities = (List<String>) config.get("abilities");
@@ -129,8 +129,8 @@ public class ItemConfigParser {
             case "ENCHANTED" -> {
                 if (config.containsKey("recipe_type") && config.containsKey("item_id")) {
                     SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.valueOf((String) config.get("recipe_type"));
-                    String itemId = (String) config.get("item_id");
-                    yield new EnchantedComponent(type, itemId);
+                    String baseMaterial = (String) config.get("item_id");
+                    yield new EnchantedComponent(type, itemId, baseMaterial);
                 }
                 yield new EnchantedComponent();
             }

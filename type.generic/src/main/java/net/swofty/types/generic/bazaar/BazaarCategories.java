@@ -77,7 +77,7 @@ public enum BazaarCategories {
             new BazaarItemSet(ItemType.SAND, "Sand",
                     ItemType.SAND, ItemType.ENCHANTED_SAND, ItemType.RED_SAND, ItemType.ENCHANTED_RED_SAND, ItemType.ENCHANTED_RED_SAND_CUBE),
             new BazaarItemSet(ItemType.END_STONE, "End Stone",
-                    ItemType.END_STONE, ItemType.ENCHANTED_ENDSTONE),
+                    ItemType.END_STONE, ItemType.ENCHANTED_END_STONE),
             new BazaarItemSet(ItemType.SNOW, "Snow",
                     ItemType.SNOW, ItemType.SNOW_BLOCK, ItemType.ENCHANTED_SNOW_BLOCK),
             new BazaarItemSet(ItemType.SULPHUR, "Sulphur",

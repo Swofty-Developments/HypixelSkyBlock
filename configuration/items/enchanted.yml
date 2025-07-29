@@ -409,7 +409,7 @@ items:
       - id: SELLABLE
         value: 320
 
-  - id: ENCHANTED_GOLD
+  - id: ENCHANTED_GOLD_INGOT
     material: gold
     rarity: UNCOMMON
     default_statistics: {}
@@ -454,8 +454,8 @@ items:
       - id: SELLABLE
         value: 640
 
-  - id: ENCHANTED_HARDSTONE
-    material: hardstone
+  - id: ENCHANTED_HARD_STONE
+    material: hard_stone
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -490,7 +490,7 @@ items:
       - id: SELLABLE
         value: 160
 
-  - id: ENCHANTED_IRON
+  - id: ENCHANTED_IRON_INGOT
     material: iron
     rarity: UNCOMMON
     default_statistics: {}
