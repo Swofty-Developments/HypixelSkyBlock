@@ -58,7 +58,7 @@ public class SkyBlock {
 
         Map<String, String> options = parseOptionalArgs(args);
         Integer maxPlayers = options.containsKey("--max-players") ?
-                Integer.parseInt(options.get("--max-players")) : 0;
+                Integer.parseInt(options.get("--max-players")) : 20;
         Integer pterodactylPort = options.containsKey("--pterodactyl-port") ?
                 Integer.parseInt(options.get("--pterodactyl-port")) : -1;
 
