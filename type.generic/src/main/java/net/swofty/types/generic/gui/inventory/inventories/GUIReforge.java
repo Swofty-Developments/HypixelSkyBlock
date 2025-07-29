@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.Rarity;
 import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.item.reforge.ReforgeLoader;
@@ -188,7 +189,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
                     return;
                 }
 
-                String itemName = item.getDisplayName();
+                String itemName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
                 player.sendMessage("§aYou reforged your" +
                         item.getAttributeHandler().getRarity().getColor() + oldPrefix + " " + itemName + "§a into a " +
