@@ -11,6 +11,7 @@ public enum SkillCategories {
     FORAGING(ForagingSkill.class),
     ENCHANTING(EnchantingSkill.class),
     RUNECRAFTING(RunecraftingSkill.class),
+    CARPENTRY(CarpentrySkill.class),
     ;
 
     private final Class<? extends SkillCategory> clazz;

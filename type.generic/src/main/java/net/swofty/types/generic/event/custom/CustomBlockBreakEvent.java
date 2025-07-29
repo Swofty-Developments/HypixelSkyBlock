@@ -15,11 +15,13 @@ public class CustomBlockBreakEvent implements PlayerInstanceEvent {
     private final Material material;
     private final Point point;
     private final List<SkyBlockItem> drops;
+    private final Boolean playerPlaced;
 
-    public CustomBlockBreakEvent(SkyBlockPlayer player, Material material, Point point, List<SkyBlockItem> drops) {
+    public CustomBlockBreakEvent(SkyBlockPlayer player, Material material, Point point, List<SkyBlockItem> drops, Boolean playerPlaced) {
         this.player = player;
         this.material = material;
         this.point = point;
         this.drops = drops;
+        this.playerPlaced = playerPlaced;
     }
 }

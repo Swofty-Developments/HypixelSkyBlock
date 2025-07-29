@@ -163,11 +163,10 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     if (items != null) {
                         for (Map<String, Object> itemConfig : items) {
                             try {
-                                ConfigurableSkyBlockItem item = ItemConfigParser.parseItem(itemConfig);
+                                ItemConfigParser.parseItem(itemConfig);
                             } catch (Exception e) {
                                 Logger.error("Failed to parse item " + itemConfig.get("id"));
                                 e.printStackTrace();
-                                continue;
                             }
                         }
                     } else {

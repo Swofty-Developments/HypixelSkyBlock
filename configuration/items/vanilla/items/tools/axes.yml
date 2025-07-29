@@ -1,238 +1,4 @@
 items:
-  - id: ACACIA_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: BIRCH_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: DARK_OAK_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: JUNGLE_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: OAK_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: SPRUCE_LOG
-    rarity: COMMON
-    components:
-      - id: SKILLABLE_MINE
-        category: FORAGING
-        mining_value: 6.0
-      - id: SELLABLE
-        value: 2.0
-      - id: PLACEABLE
-  - id: DIAMOND_AXE
-    rarity: COMMON
-    default_statistics:
-      damage: 30.0
-    components:
-      - id: AXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - AB
-              - OB
-            ingredients:
-              A:
-                type: DIAMOND
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: DIAMOND_AXE
-              amount: 1
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - BA
-              - B
-            ingredients:
-              A:
-                type: DIAMOND
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: DIAMOND_AXE
-              amount: 1
-      - id: SELLABLE
-        value: 12.0
-  - id: GOLDEN_AXE
-    rarity: COMMON
-    default_statistics:
-      damage: 20.0
-    components:
-      - id: AXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - AB
-              - OB
-            ingredients:
-              A:
-                type: GOLD_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: GOLDEN_AXE
-              amount: 1
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - BA
-              - B
-            ingredients:
-              A:
-                type: GOLD_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: GOLDEN_AXE
-              amount: 1
-      - id: SELLABLE
-        value: 6.0
-  - id: IRON_AXE
-    rarity: COMMON
-    default_statistics:
-      damage: 25.0
-    components:
-      - id: AXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - AB
-              - OB
-            ingredients:
-              A:
-                type: IRON_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: IRON_AXE
-              amount: 1
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - BA
-              - B
-            ingredients:
-              A:
-                type: IRON_INGOT
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: IRON_AXE
-              amount: 1
-      - id: SELLABLE
-        value: 4.0
-  - id: STONE_AXE
-    rarity: COMMON
-    default_statistics:
-      damage: 15.0
-    components:
-      - id: AXE
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - AB
-              - OB
-            ingredients:
-              A:
-                type: COBBLESTONE
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: STONE_AXE
-              amount: 1
-          - type: SHAPED
-            recipe-type: NONE
-            pattern:
-              - AA
-              - BA
-              - B
-            ingredients:
-              A:
-                type: COBBLESTONE
-                amount: 1
-              B:
-                type: STICK
-                amount: 1
-            result:
-              type: STONE_AXE
-              amount: 1
-      - id: SELLABLE
-        value: 2.0
   - id: WOODEN_AXE
     rarity: COMMON
     default_statistics:
@@ -278,99 +44,183 @@ items:
               amount: 1
       - id: SELLABLE
         value: 1.0
-  - id: DANDELION
+  - id: STONE_AXE
     rarity: COMMON
+    default_statistics:
+      damage: 15.0
     components:
+      - id: AXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AB
+              - OB
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: STONE_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - BA
+              - B
+            ingredients:
+              A:
+                type: COBBLESTONE
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: STONE_AXE
+              amount: 1
       - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: POPPY
+        value: 2.0
+  - id: IRON_AXE
     rarity: COMMON
+    default_statistics:
+      damage: 25.0
     components:
+      - id: AXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AB
+              - OB
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: IRON_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - BA
+              - B
+            ingredients:
+              A:
+                type: IRON_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: IRON_AXE
+              amount: 1
       - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: BLUE_ORCHID
+        value: 4.0
+  - id: GOLDEN_AXE
     rarity: COMMON
+    default_statistics:
+      damage: 20.0
     components:
+      - id: AXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AB
+              - OB
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: GOLDEN_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - BA
+              - B
+            ingredients:
+              A:
+                type: GOLD_INGOT
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: GOLDEN_AXE
+              amount: 1
       - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: ALLIUM
+        value: 6.0
+  - id: DIAMOND_AXE
     rarity: COMMON
+    default_statistics:
+      damage: 30.0
     components:
+      - id: AXE
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - AB
+              - OB
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+              O:
+                type: AIR
+                amount: 1
+            result:
+              type: DIAMOND_AXE
+              amount: 1
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AA
+              - BA
+              - B
+            ingredients:
+              A:
+                type: DIAMOND
+                amount: 1
+              B:
+                type: STICK
+                amount: 1
+            result:
+              type: DIAMOND_AXE
+              amount: 1
       - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: AZURE_BLUET
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: RED_TULIP
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: ORANGE_TULIP
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: WHITE_TULIP
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: PINK_TULIP
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: OXEYE_DAISY
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: SUNFLOWER
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: LILAC
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: ROSE_BUSH
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: PEONY
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: CORNFLOWER
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
-  - id: LILY_OF_THE_VALLEY
-    rarity: COMMON
-    components:
-      - id: SELLABLE
-        value: 1.0
-      - id: PLACEABLE
+        value: 12.0

@@ -25,7 +25,7 @@ public class ActionCollectionAdd implements SkyBlockEventClass {
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(CustomBlockBreakEvent event) {
-        if (SkyBlockConst.isIslandServer()) return;
+        if (event.getPlayerPlaced()) return;
 
         SkyBlockPlayer player = event.getPlayer();
         ItemType type = ItemType.fromMaterial(event.getMaterial());

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class GUISkills extends SkyBlockInventoryGUI {
     private final int[] displaySlots = {
             20, 21, 22, 23, 24,
-            30, 32
+                30, 31, 32
     };
 
     public GUISkills() {
@@ -55,31 +55,40 @@ public class GUISkills extends SkyBlockInventoryGUI {
                 set(new GUIClickableItem(slot) {
                     @Override
                     public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                        if (category == SkillCategories.CARPENTRY && !player.getMissionData().hasCompleted("give_wool_to_carpenter")) return;
                         new GUISkillCategory(category, 0).open(player);
                     }
 
                     @Override
                     public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        ArrayList<String> lore = new ArrayList<>(skillCategory.getDescription());
-                        lore.add(" ");
-
-                        Integer nextLevel = player.getSkills().getNextLevel(category);
-
-                        if (nextLevel != null) {
-                            player.getSkills().getDisplay(lore, category, skillCategory.getRewards()[nextLevel - 1].requirement(),
-                                    "§7Progress to Level " + StringUtility.getAsRomanNumeral(nextLevel) + ": ");
+                        ArrayList<String> lore = new ArrayList<>();
+                        if (category == SkillCategories.CARPENTRY && !player.getMissionData().hasCompleted("give_wool_to_carpenter")) {
+                            lore.add("§7Unlock this skill by talking to the");
+                            lore.add("§7Carpenter.");
+                            lore.add("");
+                            lore.add("§bNot unlocked!");
+                        } else {
+                            lore.addAll(skillCategory.getDescription());
                             lore.add(" ");
 
-                            SkillCategory.SkillReward[] rewards = skillCategory.getRewards();
-                            SkillCategory.SkillReward reward = rewards[nextLevel - 1];
+                            Integer nextLevel = player.getSkills().getNextLevel(category);
 
-                            reward.getDisplay(lore);
-                        } else {
-                            lore.add("§cMax Level Reached!");
+                            if (nextLevel != null) {
+                                player.getSkills().getDisplay(lore, category, skillCategory.getRewards()[nextLevel - 1].requirement(),
+                                        "§7Progress to Level " + StringUtility.getAsRomanNumeral(nextLevel) + ": ");
+                                lore.add(" ");
+
+                                SkillCategory.SkillReward[] rewards = skillCategory.getRewards();
+                                SkillCategory.SkillReward reward = rewards[nextLevel - 1];
+
+                                reward.getDisplay(lore);
+                            } else {
+                                lore.add("§cMax Level Reached!");
+                            }
+
+                            lore.add(" ");
+                            lore.add("§eClick to view!");
                         }
-
-                        lore.add(" ");
-                        lore.add("§eClick to view!");
 
                         return ItemStackCreator.getStack(
                                 "§a" + skillCategory.getName() + " " +
