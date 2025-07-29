@@ -391,11 +391,6 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         BlockAttribute.registerBlockAttributes();
 
         /**
-         * Register SkyBlock levels
-         */
-        SkyBlockLevelCause.initializeCauses();
-
-        /**
          * Register event
          */
         loopThroughPackage("net.swofty.types.generic.enchantment.impl", SkyBlockEventClass.class).forEach(SkyBlockEventHandler::registerEventMethods);
@@ -521,6 +516,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                 MuseumableItemCategory.addItem(museumComponent.getCategory(), itemType);
             }
         });
+
+        /**
+         * Register SkyBlock levels
+         */
+        SkyBlockLevelCause.initializeCauses();
 
         /**
          * Handle ConnectionManager

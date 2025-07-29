@@ -22,7 +22,7 @@ public class MissionMineCoal extends SkyBlockProgressMission {
             return;
         }
 
-        if (event.getMaterial().equals(Material.COAL)) {
+        if (event.getMaterial().equals(Material.COAL_ORE)) {
             MissionData.ActiveMission mission = data.getMission(this.getClass()).getKey();
             mission.setMissionProgress(mission.getMissionProgress() + 1);
             mission.checkIfMissionEnded(event.getPlayer());
@@ -48,7 +48,6 @@ public class MissionMineCoal extends SkyBlockProgressMission {
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§3100 §7Mining Experience", "§b5 SkyBlock XP"))).forEach(player::sendMessage);
         player.getSkills().increase(player, SkillCategories.MINING, 100D);
-        player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
         player.getMissionData().startMission(MissionTalkToBlacksmithAgain.class);
     }
 

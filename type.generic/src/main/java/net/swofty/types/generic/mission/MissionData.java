@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
+import net.swofty.types.generic.levels.SkyBlockLevelCause;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -93,6 +94,7 @@ public class MissionData {
 
         ActiveMission activeMission = activeMissions.stream().filter(mission -> mission.getMissionID().equals(missionID)).findFirst().get();
         getMissionFromCache(missionID).onEnd(getSkyBlockPlayer(), activeMission.getCustomData(), activeMission);
+        getSkyBlockPlayer().getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(activeMission.getMissionID()));
         activeMission.setMissionEnded((int) SkyBlockCalendar.getElapsed());
         activeMissions.remove(activeMission);
         completedMissions.add(activeMission);

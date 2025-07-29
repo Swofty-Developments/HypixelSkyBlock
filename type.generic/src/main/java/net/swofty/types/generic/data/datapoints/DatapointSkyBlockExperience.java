@@ -2,6 +2,7 @@ package net.swofty.types.generic.data.datapoints;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.types.generic.data.Datapoint;
@@ -128,7 +129,7 @@ public class DatapointSkyBlockExperience extends Datapoint<DatapointSkyBlockExpe
          *
          * @param cause the {@link SkyBlockLevelCauseAbstr} to be added.
          */
-        public void addExperience(SkyBlockLevelCauseAbstr cause) {
+        public void addExperience(@NonNull SkyBlockLevelCauseAbstr cause) {
             if (completedExperienceCauses.contains(cause)) return;
             String causeKey = SkyBlockLevelCause.getKey(cause);
             if (completedExperienceCauses.stream().anyMatch((c) -> SkyBlockLevelCause.getKey(c).equals(causeKey))) return;

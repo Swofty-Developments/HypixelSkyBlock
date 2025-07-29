@@ -1,5 +1,6 @@
 package net.swofty.types.generic.levels;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
@@ -22,7 +23,6 @@ import java.util.Map;
 public class SkyBlockLevelCause {
     private static final Map<String, SkyBlockLevelCauseAbstr> CAUSES = new HashMap<>();
 
-    @SneakyThrows
     public static void initializeCauses() {
         // Register all Skill causes
         for (SkillCategories category : SkillCategories.values()) {
@@ -96,8 +96,8 @@ public class SkyBlockLevelCause {
     }
 
     public static MissionLevelCause getMissionCause(String missionKey) {
-        for (SkyBlockLevelCauseAbstr cause : CAUSES.values()) {
-            if (cause instanceof MissionLevelCause missionCause) {
+        for (String key : CAUSES.keySet()) {
+            if (CAUSES.get(key) instanceof MissionLevelCause missionCause) {
                 if (missionCause.getMissionKey().equals(missionKey)) {
                     return missionCause;
                 }
@@ -169,7 +169,7 @@ public class SkyBlockLevelCause {
         return CAUSES.get(key);
     }
 
-    public static String getKey(SkyBlockLevelCauseAbstr cause) {
+    public static String getKey(@NonNull SkyBlockLevelCauseAbstr cause) {
         for (Map.Entry<String, SkyBlockLevelCauseAbstr> entry : CAUSES.entrySet()) {
             if (entry.getValue() == cause) {
                 return entry.getKey();
