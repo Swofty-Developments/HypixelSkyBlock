@@ -1,39 +1,41 @@
 package net.swofty.commons.item.attribute.attributes;
 
-import net.swofty.commons.item.ReforgeType;
 import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
 
-public class ItemAttributeReforge extends ItemAttribute<ReforgeType.Reforge> {
+public class ItemAttributeReforge extends ItemAttribute<String> {
     @Override
     public String getKey() {
         return "reforge";
     }
 
     @Override
-    public ReforgeType.Reforge getDefaultValue(@Nullable ItemStatistics defaultStatistics) {
+    public String getDefaultValue(@Nullable ItemStatistics defaultStatistics) {
         return null;
     }
 
     @Override
-    public ReforgeType.Reforge loadFromString(String string) {
-        for (ReforgeType reforgeType : ReforgeType.values()) {
-            for (ReforgeType.Reforge reforge : reforgeType.getReforges()) {
-                if (reforge.prefix().equals(string)) {
-                    return reforge;
-                }
-            }
+    public String loadFromString(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
         }
+
+        if (ReforgeLoader.getReforge(string) != null) {
+            return string;
+        }
+
+        System.err.println("Unknown reforge: " + string);
         return null;
     }
 
     @Override
     public String saveIntoString() {
-        ReforgeType.Reforge toSave = getValue();
-        if (toSave == null) {
+        String toSave = getValue();
+        if (toSave == null || toSave.isEmpty()) {
             return "";
         }
-        return toSave.prefix();
+        return toSave;
     }
 }

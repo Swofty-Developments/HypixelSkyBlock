@@ -4,8 +4,9 @@ import net.minestom.server.color.Color;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.ReforgeType;
 import net.swofty.commons.item.attribute.attributes.*;
+import net.swofty.commons.item.reforge.Reforge;
+import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.proxyapi.ProxyService;
@@ -202,8 +203,12 @@ public class ItemAttributeHandler {
                 .removeIf(enchantment -> new SkyBlockEnchantment(enchantment).type() == type);
     }
 
-    public @Nullable ReforgeType.Reforge getReforge() {
-        return ((ItemAttributeReforge) item.getAttribute("reforge")).getValue();
+    public @Nullable Reforge getReforge() {
+        String reforgeName = ((ItemAttributeReforge) item.getAttribute("reforge")).getValue();
+        if (reforgeName == null || reforgeName.isEmpty()) {
+            return null;
+        }
+        return ReforgeLoader.getReforge(reforgeName);
     }
 
     public MinionRegistry getMinionType() {
@@ -226,10 +231,27 @@ public class ItemAttributeHandler {
         item.getAttribute("minion_tier").setValue(data);
     }
 
-    public void setReforge(ReforgeType.Reforge reforge) throws IllegalArgumentException {
+    public void setReforge(Reforge reforge) throws IllegalArgumentException {
         if (!item.getAttributeHandler().getRarity().isReforgable())
             throw new IllegalArgumentException("The rarity " + item.getAttributeHandler().getRarity().name() + " is not reforgable.");
-        ((ItemAttributeReforge) item.getAttribute("reforge")).setValue(reforge);
+
+        String reforgeName = (reforge != null) ? reforge.getName() : null;
+        item.getAttribute("reforge").setValue(reforgeName);
+    }
+
+    public void setReforge(String reforgeName) throws IllegalArgumentException {
+        if (!item.getAttributeHandler().getRarity().isReforgable())
+            throw new IllegalArgumentException("The rarity " + item.getAttributeHandler().getRarity().name() + " is not reforgable.");
+
+        // Validate the reforge exists
+        if (reforgeName != null && !reforgeName.isEmpty()) {
+            Reforge reforge = ReforgeLoader.getReforge(reforgeName);
+            if (reforge == null) {
+                throw new IllegalArgumentException("Unknown reforge: " + reforgeName);
+            }
+        }
+
+        item.getAttribute("reforge").setValue(reforgeName);
     }
 
     public @Nullable SkyBlockEnchantment getEnchantment(EnchantmentType type) {

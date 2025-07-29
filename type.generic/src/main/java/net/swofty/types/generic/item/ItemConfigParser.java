@@ -7,7 +7,7 @@ import net.minestom.server.particle.Particle;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.ReforgeType;
+import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.gems.GemRarity;

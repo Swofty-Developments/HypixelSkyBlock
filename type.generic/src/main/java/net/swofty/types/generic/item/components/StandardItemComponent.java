@@ -2,7 +2,7 @@ package net.swofty.types.generic.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.item.PotatoType;
-import net.swofty.commons.item.ReforgeType;
+import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 

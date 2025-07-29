@@ -3,7 +3,7 @@ package net.swofty.types.generic.item.components;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.swofty.commons.item.ReforgeType;
+import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
 import net.swofty.types.generic.item.handlers.bow.BowRegistry;

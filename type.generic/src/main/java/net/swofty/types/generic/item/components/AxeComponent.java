@@ -1,6 +1,6 @@
 package net.swofty.types.generic.item.components;
 
-import net.swofty.commons.item.ReforgeType;
+import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
 import net.swofty.types.generic.utility.groups.EnchantItemGroups;
 

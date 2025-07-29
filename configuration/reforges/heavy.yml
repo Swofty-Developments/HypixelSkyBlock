@@ -1,0 +1,20 @@
+name: "Heavy"
+prefix: "Heavy"
+applicableTypes:
+  - "ARMOR"
+
+statistics:
+  DEFENSE:
+    expression: "25 + {level} * 15"
+
+  SPEED:
+    # Negative value for all rarities
+    common: -1
+    uncommon: -1
+    rare: -1
+    epic: -1
+    legendary: -1
+    mythic: -1
+
+  CRIT_DAMAGE:
+    expression: "1 + {level} * 0.5"

@@ -23,6 +23,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.*;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.attribute.ItemAttribute;
+import net.swofty.commons.item.reforge.ReforgeLoader;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.block.attribute.BlockAttribute;
 import net.swofty.types.generic.calendar.SkyBlockCalendar;
@@ -285,6 +286,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
          * Load fairy souls
          */
         FairySoul.cacheFairySouls();
+
+        /**
+         * Initialize reforges
+         */
+        ReforgeLoader.loadAllReforges();
 
         /**
          * Create audiences

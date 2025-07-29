@@ -10,11 +10,11 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.ReforgeType;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeHotPotatoBookData;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith;
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
+import net.swofty.commons.item.reforge.Reforge;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.collection.CollectionCategories;
@@ -275,7 +275,7 @@ public class ItemLore {
 
         if (item.hasComponent(ReforgableComponent.class)) {
             addLoreLine("§8This item can be reforged!");
-            if (handler.getReforge() != null) displayName = handler.getReforge().prefix() + " " + displayName;
+            if (handler.getReforge() != null) displayName = handler.getReforge().getPrefix() + " " + displayName;
         }
 
         ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
@@ -301,7 +301,7 @@ public class ItemLore {
     }
 
     private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
-                                           ReforgeType.Reforge reforge, Rarity rarity) {
+                                           Reforge reforge, Rarity rarity) {
         SkyBlockItem item = new SkyBlockItem(stack);
         double reforgeValue = 0;
         double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);

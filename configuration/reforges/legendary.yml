@@ -1,0 +1,21 @@
+name: "Legendary"
+prefix: "Legendary"
+applicableTypes:
+  - "SWORDS"
+  - "FISHING_RODS"
+
+statistics:
+  STRENGTH:
+    expression: "{level} * 1.5 + 2"
+
+  CRIT_CHANCE:
+    expression: "5 + {level} * 2"
+
+  CRIT_DAMAGE:
+    expression: "{level} ^ 1.2 * 3"
+
+  INTELLIGENCE:
+    expression: "{level} * 5 + 3"
+
+  BONUS_ATTACK_SPEED:
+    expression: "2 + {level} * 2.5"

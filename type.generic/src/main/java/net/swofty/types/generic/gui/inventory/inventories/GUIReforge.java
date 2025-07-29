@@ -8,7 +8,9 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.Rarity;
-import net.swofty.commons.item.ReforgeType;
+import net.swofty.commons.item.reforge.Reforge;
+import net.swofty.commons.item.reforge.ReforgeLoader;
+import net.swofty.commons.item.reforge.ReforgeType;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
@@ -22,6 +24,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.utility.MathUtility;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GUIReforge extends SkyBlockInventoryGUI {
@@ -132,6 +135,24 @@ public class GUIReforge extends SkyBlockInventoryGUI {
             return;
         }
 
+        // Check if there are valid reforges for this item type
+        ReforgeType reforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
+        List<Reforge> validReforges = ReforgeLoader.getReforgesForType(reforgeType);
+
+        if (validReforges.isEmpty()) {
+            set(new GUIItem(22) {
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    return ItemStackCreator.getStack(
+                            "§cError!", Material.BARRIER, 1,
+                            "§7No reforges available for this item type!"
+                    );
+                }
+            });
+            updateItemStacks(getInventory(), getPlayer());
+            return;
+        }
+
         border(ItemStackCreator.createNamedItemStack(Material.LIME_STAINED_GLASS_PANE));
         set(new GUIClickableItem(22) {
             @Override
@@ -146,13 +167,22 @@ public class GUIReforge extends SkyBlockInventoryGUI {
 
                 coins.setValue(coins.getValue() - cost);
 
-                ReforgeType reforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
-                ReforgeType.Reforge reforge = reforgeType.getReforges().get(MathUtility.random(0, reforgeType.getReforges().size() - 1));
-                String oldPrefix = item.getAttributeHandler().getReforge() == null ? "" :
-                        " " + item.getAttributeHandler().getReforge().prefix();
+                ReforgeType itemReforgeType = item.getComponent(ReforgableComponent.class).getReforgeType();
+                List<Reforge> availableReforges = ReforgeLoader.getReforgesForType(itemReforgeType);
+
+                if (availableReforges.isEmpty()) {
+                    player.sendMessage("§cNo reforges available for this item!");
+                    return;
+                }
+
+                Reforge selectedReforge = availableReforges.get(MathUtility.random(0, availableReforges.size() - 1));
+
+                // Get old reforge info for the message
+                Reforge oldReforge = item.getAttributeHandler().getReforge();
+                String oldPrefix = (oldReforge != null) ? " " + oldReforge.getPrefix() : "";
 
                 try {
-                    item.getAttributeHandler().setReforge(reforge);
+                    item.getAttributeHandler().setReforge(selectedReforge);
                 } catch (IllegalArgumentException ex) {
                     player.sendMessage("§c" + ex.getMessage());
                     return;
@@ -162,7 +192,7 @@ public class GUIReforge extends SkyBlockInventoryGUI {
 
                 player.sendMessage("§aYou reforged your" +
                         item.getAttributeHandler().getRarity().getColor() + oldPrefix + " " + itemName + "§a into a " +
-                        item.getAttributeHandler().getRarity().getColor() + reforge.prefix() + " " + itemName + "§a!");
+                        item.getAttributeHandler().getRarity().getColor() + selectedReforge.getPrefix() + " " + itemName + "§a!");
 
                 updateFromItem(item);
             }
