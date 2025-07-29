@@ -5,16 +5,20 @@ applicableTypes:
 
 statistics:
   DEFENSE:
-    expression: "25 + {level} * 15"
+    common: 25
+    uncommon: 35
+    rare: 50
+    epic: 65
+    legendary: 80
+    mythic: 110
 
   SPEED:
-    # Negative value for all rarities
-    common: -1
-    uncommon: -1
-    rare: -1
-    epic: -1
-    legendary: -1
-    mythic: -1
+    expression: "-1"
 
   CRIT_DAMAGE:
-    expression: "1 + {level} * 0.5"
+    common: -1
+    uncommon: -2
+    rare: -2
+    epic: -3
+    legendary: -5
+    mythic: -7

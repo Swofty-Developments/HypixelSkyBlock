@@ -1,0 +1,29 @@
+name: "Rich"
+prefix: "Rich"
+applicableTypes:
+  - "BOWS"
+
+statistics:
+  INTELLIGENCE:
+    common: 3
+    uncommon: 6
+    rare: 10
+    epic: 15
+    legendary: 20
+    mythic: 30
+
+  CRIT_CHANCE:
+    common: 10
+    uncommon: 12
+    rare: 14
+    epic: 17
+    legendary: 20
+    mythic: 25
+
+  CRIT_DAMAGE:
+    common: 2
+    uncommon: 4
+    rare: 7
+    epic: 10
+    legendary: 15
+    mythic: 20

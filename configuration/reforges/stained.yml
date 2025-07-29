@@ -1,0 +1,19 @@
+name: "Stained"
+prefix: "Stained"
+applicableTypes:
+  - "EQUIPMENT"
+
+statistics:
+  HEALTH:
+    expression: "{level} + 2"
+
+  DEFENSE:
+    expression: "{level} + 2"
+
+  CRIT_CHANCE:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 2
+    legendary: 3
+    mythic: 4

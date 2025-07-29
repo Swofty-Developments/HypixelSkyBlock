@@ -1,0 +1,21 @@
+name: "Hasty"
+prefix: "Hasty"
+applicableTypes:
+  - "BOWS"
+
+statistics:
+  CRIT_CHANCE:
+    common: 20
+    uncommon: 25
+    rare: 30
+    epic: 40
+    legendary: 50
+    mythic: 60
+
+  STRENGTH:
+    common: 3
+    uncommon: 5
+    rare: 7
+    epic: 10
+    legendary: 15
+    mythic: 20

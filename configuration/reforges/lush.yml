@@ -1,0 +1,21 @@
+name: "Lush"
+prefix: "Lush"
+applicableTypes:
+  - "AXES"
+
+statistics:
+  SPEED:
+    common: 3
+    uncommon: 4
+    rare: 5
+    epic: 7
+    legendary: 10
+    mythic: 15
+
+  FORAGING_FORTUNE:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 2
+    legendary: 3
+    mythic: 5
