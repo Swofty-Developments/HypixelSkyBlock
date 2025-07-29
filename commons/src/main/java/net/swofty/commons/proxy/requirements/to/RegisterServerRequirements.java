@@ -15,7 +15,8 @@ public class RegisterServerRequirements extends ProxyChannelRequirements {
     @Override
     public List<RequiredKey> getRequiredKeysForServer() {
         return List.of(
-                new RequiredKey("type") // Type of the server
+                new RequiredKey("type"), // Type of the server
+                new RequiredKey("max_players") // Max players for the server
                 // OPTIONALLY YOU CAN PASS THROUGH A PORT TO FORCE IT
         );
     }

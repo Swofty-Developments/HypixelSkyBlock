@@ -30,10 +30,7 @@ import org.reflections.Reflections;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,14 +56,18 @@ public class SkyBlock {
         ServerType serverType = ServerType.valueOf(args[0].toUpperCase());
         long startTime = System.currentTimeMillis();
 
-        boolean isPterodactyl = Configuration.getOrDefault("pterodaddctyl-mode" , false);
+        Map<String, String> options = parseOptionalArgs(args);
+        Integer maxPlayers = options.containsKey("--max-players") ?
+                Integer.parseInt(options.get("--max-players")) : 0;
+        Integer pterodactylPort = options.containsKey("--pterodactyl-port") ?
+                Integer.parseInt(options.get("--pterodactyl-port")) : -1;
 
-        if (isPterodactyl && args.length < 2) {
-            Logger.error("Please specify server port.");
+        boolean isPterodactyl = Configuration.getOrDefault("pterodactyl-mode" , false);
+
+        if (isPterodactyl && pterodactylPort == -1) {
+            Logger.error("Please specify server port for pterodactyl mode with --pterodactyl-port");
             System.exit(0);
         }
-
-        int pterodactylPort = isPterodactyl ? Integer.parseInt(args[1]) : -1;
 
         /**
          * Initialize TypeLoader
@@ -151,11 +152,14 @@ public class SkyBlock {
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
             SkyBlockConst.setPort(port);
+            SkyBlockConst.setMaxPlayers(maxPlayers);
 
             ServerOutboundMessage.sendMessageToProxy(
                     ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),
                     (response) -> {
                         SkyBlockConst.setServerName((String) response.get("server-name"));
+                        SkyBlockConst.setShortenedServerName((String) response.get("shortened-server-name"));
+                        Logger.info("Received server name: " + SkyBlockConst.getServerName());
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
 
@@ -195,8 +199,10 @@ public class SkyBlock {
 
         ServerOutboundMessage.sendMessageToProxy(
                 ToProxyChannels.REGISTER_SERVER,
-                new JSONObject().put("type", serverType.name())
-                        .put("port" , pterodactylPort),
+                new JSONObject()
+                        .put("type", serverType.name())
+                        .put("port" , pterodactylPort)
+                        .put("max_players", maxPlayers),
                 (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
     }
 
@@ -230,5 +236,15 @@ public class SkyBlock {
 
             return TaskSchedule.seconds(1);
         } , ExecutionType.TICK_END);
+    }
+
+    private static Map<String, String> parseOptionalArgs(String[] args) {
+        Map<String, String> options = new HashMap<>();
+        for (int i = 0; i < args.length - 1; i++) {
+            if (args[i].startsWith("--")) {
+                options.put(args[i], args[i + 1]);
+            }
+        }
+        return options;
     }
 }

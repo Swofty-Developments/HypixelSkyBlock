@@ -21,12 +21,18 @@ public class SkyBlockConst {
     private static String serverName;
     @Getter
     @Setter
+    private static String shortenedServerName;
+    @Getter
+    @Setter
     private static SkyBlockTypeLoader typeLoader;
     @Getter
     private static Integer currentIslandVersion = 1;
     @Getter
     @Setter
     private static int port;
+    @Getter
+    @Setter
+    private static int maxPlayers;
 
     public static boolean isIslandServer() {
         return typeLoader.getType() == ServerType.ISLAND;

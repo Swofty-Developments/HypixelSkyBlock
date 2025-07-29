@@ -26,7 +26,12 @@ public class BalanceConfigurations {
 
     public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
         for (BalanceConfiguration configuration : configurations.get(type)) {
-            GameManager.GameServer server = configuration.getServer(player, GameManager.getFromType(type));
+            List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
+            serversToConsider.removeIf(server -> {
+                return server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
+            });
+
+            GameManager.GameServer server = configuration.getServer(player, serversToConsider);
             if (server != null) return server;
         }
         return null;

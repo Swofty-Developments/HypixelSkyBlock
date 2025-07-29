@@ -18,8 +18,9 @@ public class ListenerServerInitialized extends RedisListener {
         if (message.has("port")) {
             port = message.getInt("port");
         }
+        int maxPlayers = message.getInt("max_players");
 
-        GameManager.GameServer server = GameManager.addServer(type, serverUUID, port);
+        GameManager.GameServer server = GameManager.addServer(type, serverUUID, port, maxPlayers);
 
         return new JSONObject().put("port", server.registeredServer().getServerInfo().getAddress().getPort());
     }

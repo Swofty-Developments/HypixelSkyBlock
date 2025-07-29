@@ -49,7 +49,7 @@ public class ActionPlayerDataLoaded implements SkyBlockEventClass {
             if (rank.isStaff()) {
                 CustomGroups.staffMembers.add(player);
             }
-            player.sendMessage("§7Sending to server mini" + SkyBlockConst.getServerName() + "...");
+
             player.sendMessage("§7 ");
             player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
                     DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());

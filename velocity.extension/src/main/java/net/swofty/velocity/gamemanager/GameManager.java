@@ -22,20 +22,30 @@ public class GameManager {
     @Getter
     private static Map<ServerType, ArrayList<GameServer>> servers = new HashMap<>();
 
-    public static GameServer addServer(ServerType type, UUID serverID, int port) {
+    public static GameServer addServer(ServerType type, UUID serverID, int port, int maxPlayers) {
         port = port == -1 ? getNextAvailablePort() : port;    // if port is -1 then get next available port
         RegisteredServer registeredServer = SkyBlockVelocity.getServer().registerServer(
                 new ServerInfo(serverID.toString(), new InetSocketAddress(Configuration.get("host-name"), port))
         );
 
+        String rootName = maxPlayers <= 20 ? "mini" : "mega";
+        String shortenedRootName = maxPlayers <= 20 ? "m" : "M";
+
         String displayName = getNextAvailableDisplayName() + "" +
                 Character.toUpperCase((char) (new Random().nextInt(26) + 'a'));
 
-        GameServer server = new GameServer(displayName, serverID, registeredServer);
+        GameServer server = new GameServer(
+                rootName + displayName, shortenedRootName + displayName,
+                serverID, registeredServer, maxPlayers
+        );
         if (!servers.containsKey(type)) servers.put(type, new ArrayList<>(List.of(server)));
         else servers.get(type).add(server);
 
         return server;
+    }
+
+    public static boolean isAnyEmpty(ServerType type) {
+        return servers.get(type).stream().anyMatch(gameServer -> gameServer.maxPlayers() > gameServer.registeredServer().getPlayersConnected().size());
     }
 
     public static @Nullable GameServer getFromRegisteredServer(RegisteredServer registeredServer) {
@@ -135,5 +145,11 @@ public class GameManager {
         return highestPort + 1;
     }
 
-    public record GameServer(String displayName, UUID internalID, RegisteredServer registeredServer) { }
+    public record GameServer(String displayName, String shortDisplayName,
+                             UUID internalID, RegisteredServer registeredServer,
+                             int maxPlayers) {
+        public boolean hasEmptySlots() {
+            return maxPlayers > registeredServer().getPlayersConnected().size();
+        }
+    }
 }

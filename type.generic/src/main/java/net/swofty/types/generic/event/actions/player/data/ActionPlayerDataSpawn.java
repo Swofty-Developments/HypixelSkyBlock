@@ -88,7 +88,7 @@ public class ActionPlayerDataSpawn implements SkyBlockEventClass {
         // Manually call region event with a delay
         MathUtility.delay(() -> {
             SkyBlockRegion playerRegion = player.getRegion();
-            if (playerRegion != null)
+            if (playerRegion != null && player.isOnline())
                 SkyBlockEventHandler.callSkyBlockEvent(new PlayerRegionChangeEvent(
                         player,
                         null,

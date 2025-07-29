@@ -2,6 +2,7 @@ package net.swofty.velocity.gamemanager;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import net.kyori.adventure.text.Component;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
@@ -32,6 +33,14 @@ public record TransferHandler(Player player) {
 
     public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
         new Thread(() -> {
+            boolean hasEmptyServer = GameManager.hasType(type) && GameManager.isAnyEmpty(type);
+            if (!hasEmptyServer) {
+                player.sendMessage(Component.text(
+                        "§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."
+                ));
+                return;
+            }
+
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
 
             player.createConnectionRequest(limboServer).connectWithIndication();
@@ -76,6 +85,8 @@ public record TransferHandler(Player player) {
             playersGoalServerType.remove(player);
             playersOriginServer.remove(player);
 
+            GameManager.GameServer manualPickAsGame = GameManager.getFromUUID(serverUUID);
+            player.sendMessage(Component.text("§7Sending to server " + manualPickAsGame.displayName() + "..."));
             player.createConnectionRequest(manualPick).connectWithIndication();
 
             RedisMessage.sendMessageToServer(originServerUUID,
@@ -90,6 +101,12 @@ public record TransferHandler(Player player) {
 
             ServerType type = playersGoalServerType.get(player);
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
+
+            if (server == null) {
+                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                return;
+            }
+
             RegisteredServer originServer = playersOriginServer.get(player);
             UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
             UUID sendingToServerUUID = server.internalID();
@@ -110,6 +127,7 @@ public record TransferHandler(Player player) {
                 throw new RuntimeException(e);
             }
 
+            player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
             player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
             RedisMessage.sendMessageToServer(originServerUUID,
@@ -128,6 +146,11 @@ public record TransferHandler(Player player) {
 
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
 
+            if (server == null) {
+                player.disconnect(Component.text("§cThere are no SkyBlock (type=" + type.name() + ") servers available at the moment."));
+                return;
+            }
+
             if (originServer != null && originServerType != null) {
                 RedisMessage.sendMessageToServer(server.internalID(),
                         FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
@@ -136,6 +159,7 @@ public record TransferHandler(Player player) {
                 );
             }
 
+            player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
             player.createConnectionRequest(server.registeredServer()).connectWithIndication();
         }).start();
     }
@@ -164,6 +188,7 @@ public record TransferHandler(Player player) {
                 );
             }
 
+            GameManager.GameServer toTransferToAsGame = GameManager.getFromUUID(serverUUID);
             player.createConnectionRequest(toTransferTo).connectWithIndication();
         }).start();
     }

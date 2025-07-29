@@ -27,7 +27,7 @@ public class IslandServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry("§b§lArea: §7Private Island", TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Server: §8mini" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Server: §8" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(" Minions: §9" + minions.size() + "§7/§9" + data.getSlots(), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());

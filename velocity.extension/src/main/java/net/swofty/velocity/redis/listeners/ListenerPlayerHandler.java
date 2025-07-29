@@ -2,6 +2,7 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
@@ -49,6 +50,18 @@ public class ListenerPlayerHandler extends RedisListener {
                 TransferHandler transferHandler = new TransferHandler(player);
 
                 if (serverInfo == null) {
+                    player.sendMessage(Component.text(
+                            "§cAttempted to connect to " + server + ", but there is no server with that UUID. Please try again later."
+                    ));
+                    return new JSONObject();
+                }
+
+                player.sendMessage(Component.text("§7Sending to server " + serverInfo.displayName() + "..."));
+
+                if (!serverInfo.hasEmptySlots()) {
+                    player.sendMessage(Component.text(
+                            "§cAttempted to connect to " + serverInfo.displayName() + ", but there are no empty slots available. Please try again later."
+                    ));
                     return new JSONObject();
                 }
 
@@ -70,7 +83,12 @@ public class ListenerPlayerHandler extends RedisListener {
             }
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf(message.getString("type"));
-                if (!GameManager.hasType(type) || new TransferHandler(player).isInLimbo()) {
+                if (!GameManager.hasType(type)
+                        || new TransferHandler(player).isInLimbo()
+                        || !GameManager.isAnyEmpty(type)) {
+                    player.sendMessage(Component.text(
+                            "§cAttempted to transfer to an " + type.name() + " server, but there are no empty slots available. Please try again later."
+                    ));
                     return new JSONObject();
                 }
                 new TransferHandler(player).standardTransferTo(

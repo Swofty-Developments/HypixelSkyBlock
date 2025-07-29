@@ -16,7 +16,7 @@ public class TheFarmingIslandsServerModule extends TablistModule {
         ));
 
         entries.add(new TablistEntry("§b§lArea: §7The Farming Islands", TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(" Server: §8mini" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(" Server: §8" + SkyBlockConst.getServerName(), TablistSkinRegistry.GRAY));
 
         fillRestWithGray(entries);
 

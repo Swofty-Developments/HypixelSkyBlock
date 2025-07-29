@@ -173,7 +173,7 @@ public class SkyBlockVelocity {
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
         Player player = event.getPlayer();
 
-        if (!GameManager.hasType(ServerType.ISLAND)) {
+        if (!GameManager.hasType(ServerType.ISLAND) || !GameManager.isAnyEmpty(ServerType.ISLAND)) {
             player.disconnect(
                     Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
             );
@@ -246,6 +246,7 @@ public class SkyBlockVelocity {
                 }
                 transferHandler.noLimboTransferTo(server.registeredServer());
                 event.getPlayer().sendPlainMessage("§cAn exception occurred in your connection, so you were put into another SkyBlock server.");
+                event.getPlayer().sendPlainMessage("§7Sending to server " + server.displayName() + "...");
             } catch (Exception e) {
                 Logger.getAnonymousLogger().log(Level.SEVERE, "An exception occurred while trying to transfer " + event.getPlayer().getUsername() + " to " + serverType, e);
                 transferHandler.forceRemoveFromLimbo();

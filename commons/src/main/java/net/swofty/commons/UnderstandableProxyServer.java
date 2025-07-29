@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record UnderstandableProxyServer(String name, UUID uuid, ServerType type, int port, List<UUID> players) {
+public record UnderstandableProxyServer(String name, UUID uuid, ServerType type,
+                                        int port, List<UUID> players, int maxPlayers,
+                                        String shortName
+                                        ) {
     public JSONObject toJSON() {
         return new JSONObject()
                 .put("name", name)
                 .put("uuid", uuid.toString())
                 .put("type", type.name())
                 .put("port", port)
-                .put("players", players);
+                .put("players", players)
+                .put("max_players", maxPlayers)
+                .put("short_name", shortName);
     }
 
     public static UnderstandableProxyServer singleFromJSON(JSONObject json) {
@@ -27,7 +32,9 @@ public record UnderstandableProxyServer(String name, UUID uuid, ServerType type,
                 UUID.fromString(json.getString("uuid")),
                 ServerType.valueOf(json.getString("type")),
                 json.getInt("port"),
-                players
+                players,
+                json.getInt("max_players"),
+                json.getString("short_name")
         );
     }
 

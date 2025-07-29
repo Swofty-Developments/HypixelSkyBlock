@@ -26,7 +26,9 @@ public class ListenerServersInformation extends RedisListener {
                         server.internalID(),
                         GameManager.getTypeFromRegisteredServer(server.registeredServer()),
                         server.registeredServer().getServerInfo().getAddress().getPort(),
-                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList()
+                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        server.maxPlayers(),
+                        server.shortDisplayName()
                 )).toList();
                 return new JSONObject().put("servers_list", UnderstandableProxyServer.toJSON(understandableProxyServers));
             }
@@ -38,7 +40,9 @@ public class ListenerServersInformation extends RedisListener {
                         server.internalID(),
                         GameManager.getTypeFromRegisteredServer(server.registeredServer()),
                         server.registeredServer().getServerInfo().getAddress().getPort(),
-                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList()
+                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        server.maxPlayers(),
+                        server.shortDisplayName()
                 )).toList();
                 return new JSONObject().put("servers_list", UnderstandableProxyServer.toJSON(understandableProxyServers));
             }
@@ -51,7 +55,9 @@ public class ListenerServersInformation extends RedisListener {
                         server.internalID(),
                         GameManager.getTypeFromRegisteredServer(server.registeredServer()),
                         server.registeredServer().getServerInfo().getAddress().getPort(),
-                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList()
+                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        server.maxPlayers(),
+                        server.shortDisplayName()
                 )).toList();
                 return new JSONObject().put("servers_list", UnderstandableProxyServer.toJSON(understandableProxyServers));
             }
@@ -69,7 +75,9 @@ public class ListenerServersInformation extends RedisListener {
                         server.internalID(),
                         GameManager.getTypeFromRegisteredServer(server.registeredServer()),
                         server.registeredServer().getServerInfo().getAddress().getPort(),
-                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList()
+                        server.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        server.maxPlayers(),
+                        server.shortDisplayName()
                 )).toList();
                 return new JSONObject().put("servers_list", UnderstandableProxyServer.toJSON(understandableProxyServers));
             }

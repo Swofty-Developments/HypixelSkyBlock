@@ -13,6 +13,9 @@ public class ListenerServerName extends RedisListener {
     @Override
     public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
         GameManager.GameServer server = GameManager.getFromUUID(serverUUID);
-        return new JSONObject().put("server-name", server.displayName());
+
+        return new JSONObject()
+                .put("server-name", server.displayName())
+                .put("shortened-server-name", server.shortDisplayName());
     }
 }

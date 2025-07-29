@@ -79,8 +79,8 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
                     UnderstandableProxyServer smallestServer = serversToUse.stream()
                             .min(Comparator.comparingInt((UnderstandableProxyServer server) -> server.players().size()))
                            .orElseThrow();
-                    player.sendMessage("§7Request join for Hub mega" + smallestServer.name() + "...");
                     ProxyPlayer proxyPlayer = new ProxyPlayer(player.getUuid());
+                    proxyPlayer.sendMessage("§7Request join for Hub " + smallestServer.name() + "...");
                     proxyPlayer.transferToWithIndication(smallestServer.uuid())
                             .orTimeout(3, TimeUnit.SECONDS)
                             .exceptionally(throwable -> {
@@ -97,8 +97,8 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
 
                 int randomIndex = (int) (Math.random() * serversToUse.size());
                 UnderstandableProxyServer randomServer = serversToUse.get(randomIndex);
-                player.sendMessage("§7Request join for Hub mega" + randomServer.name() + "...");
                 ProxyPlayer proxyPlayer = new ProxyPlayer(player.getUuid());
+                proxyPlayer.sendMessage("§7Request join for Hub " + randomServer.name() + "...");
                 proxyPlayer.transferToWithIndication(randomServer.uuid())
                         .orTimeout(3, TimeUnit.SECONDS)
                         .exceptionally(throwable -> {
@@ -121,7 +121,7 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
                         "§7or the other?",
                         " ",
                         "§7Hub Servers: §a" + servers.size(),
-                        "§7Current: §3mega" + SkyBlockConst.getServerName() + " §7(" + SkyBlockGenericLoader.getLoadedPlayers().size() + ")",
+                        "§7Current: §3" + SkyBlockConst.getServerName() + " §7(" + SkyBlockGenericLoader.getLoadedPlayers().size() + "/" + SkyBlockConst.getMaxPlayers() + ")",
                         " ",
                         "§bRight-Click for a small server!",
                         "§eClick to join a random hub!"
@@ -149,18 +149,23 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
     @Override
     protected GUIClickableItem createItemFor(UnderstandableProxyServer server, int slot, SkyBlockPlayer player) {
         boolean isThisServer = server.port() == SkyBlockConst.getPort();
+        boolean isFull = server.players().size() >= server.maxPlayers();
+
         return new GUIClickableItem(slot) {
+            private int counterAtThisMoment;
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 counter++;
+                counterAtThisMoment = Integer.valueOf(counter);
                 return ItemStackCreator.getStack(
                         (isThisServer ? "§c"  : "§a") + "SkyBlock Hub #" + counter,
                         (isThisServer ? Material.RED_CONCRETE  : Material.QUARTZ_BLOCK), 1,
-                        "§7Players: " + server.players().size(),
-                        "§8Server: mega" + server.name(),
+                        "§7Players: " + server.players().size() + "/" + server.maxPlayers(),
+                        "§8Server: " + server.name(),
                         " ",
-                        (isThisServer ? "§cAlready connected!" : "§eClick to connect!")
+                        (isThisServer ? "§cAlready connected!" :
+                                isFull ? "§cFull!" : "§eClick to connect!")
                 );
             }
 
@@ -172,14 +177,19 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
                     return;
                 }
 
+                if (isFull) {
+                    player.sendMessage("§cYou cannot join this server because it is full!");
+                    return;
+                }
+
                 if (sending) {
                     player.sendMessage("§cWe are currently trying to queue you into another server!");
                     return;
                 }
 
                 sending = true;
-                player.sendMessage("§7Request join for Hub #" + counter + " (mega" + server.name() + ")...");
                 ProxyPlayer proxyPlayer = new ProxyPlayer(player.getUuid());
+                proxyPlayer.sendMessage("§7Request join for Hub #" + counterAtThisMoment + " (" + server.name() + ")...");
                 proxyPlayer.transferToWithIndication(server.uuid())
                         .orTimeout(3, TimeUnit.SECONDS)
                         .exceptionally(throwable -> {
