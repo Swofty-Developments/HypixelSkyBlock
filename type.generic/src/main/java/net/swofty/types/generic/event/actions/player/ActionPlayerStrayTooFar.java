@@ -8,6 +8,7 @@ import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.region.SkyBlockRegion;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.categories.Rank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,8 @@ public class ActionPlayerStrayTooFar implements SkyBlockEventClass {
     public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = player.getRegion();
+
+        if (player.getRank().isEqualOrHigherThan(Rank.DEVELOPER)) return;
 
         if (region != null) {
             startedStray.remove(player.getUuid());
