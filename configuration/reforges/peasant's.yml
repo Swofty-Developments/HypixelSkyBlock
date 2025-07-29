@@ -1,0 +1,13 @@
+name: "Peasant's"
+prefix: "Peasant's"
+applicableTypes:
+  - "HOES"
+
+statistics:
+  SPEED:
+    common: 1
+    uncommon: 2
+    rare: 3
+    epic: 5
+    legendary: 7
+    mythic: 9

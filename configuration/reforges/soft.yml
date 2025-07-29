@@ -1,0 +1,48 @@
+name: "Soft"
+prefix: "Soft"
+applicableTypes:
+  - "EQUIPMENT"
+
+statistics:
+  HEALTH:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 5
+    legendary: 6
+    mythic: 7
+
+  DEFENSE:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 1
+    legendary: 2
+    mythic: 2
+
+  SPEED:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 1
+    legendary: 2
+    mythic: 2
+
+  CRIT_CHANCE:
+    expression: "1"
+
+  CRIT_DAMAGE:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 2
+    legendary: 2
+    mythic: 2
+
+  BONUS_ATTACK_SPEED:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 1
+    legendary: 1
+    mythic: 2

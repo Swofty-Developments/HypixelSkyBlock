@@ -1,0 +1,13 @@
+name: "Zooming"
+prefix: "Zooming"
+applicableTypes:
+  - "HOES"
+
+statistics:
+  SPEED:
+    common: 5
+    uncommon: 8
+    rare: 12
+    epic: 16
+    legendary: 20
+    mythic: 25

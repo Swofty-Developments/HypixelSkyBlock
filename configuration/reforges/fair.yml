@@ -1,0 +1,46 @@
+name: "Fair"
+prefix: "Fair"
+applicableTypes:
+  - "SWORDS"
+  - "FISHING_RODS"
+
+statistics:
+  STRENGTH:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 12
+
+  CRIT_CHANCE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 12
+
+  CRIT_DAMAGE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 12
+
+  INTELLIGENCE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 12
+
+  BONUS_ATTACK_SPEED:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 7
+    legendary: 10
+    mythic: 12

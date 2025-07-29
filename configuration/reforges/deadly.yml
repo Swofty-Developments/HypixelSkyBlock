@@ -1,0 +1,21 @@
+name: "Deadly"
+prefix: "Deadly"
+applicableTypes:
+  - "BOWS"
+
+statistics:
+  CRIT_CHANCE:
+    common: 10
+    uncommon: 13
+    rare: 16
+    epic: 19
+    legendary: 22
+    mythic: 25
+
+  CRIT_DAMAGE:
+    common: 5
+    uncommon: 10
+    rare: 18
+    epic: 32
+    legendary: 50
+    mythic: 70

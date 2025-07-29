@@ -1,0 +1,21 @@
+name: "Fortunate"
+prefix: "Fortunate"
+applicableTypes:
+  - "PICKAXES"
+
+statistics:
+  MINING_SPEED:
+    common: 1
+    uncommon: 2
+    rare: 3
+    epic: 4
+    legendary: 6
+    mythic: 8
+
+  MINING_FORTUNE:
+    common: 1
+    uncommon: 1
+    rare: 1
+    epic: 2
+    legendary: 2
+    mythic: 3

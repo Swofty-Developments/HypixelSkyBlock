@@ -1,0 +1,29 @@
+name: "Astute"
+prefix: "Astute"
+applicableTypes:
+  - "EQUIPMENT"
+
+statistics:
+  HEALTH:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 3
+    legendary: 4
+    mythic: 5
+
+  DEFENSE:
+    common: 1
+    uncommon: 2
+    rare: 2
+    epic: 3
+    legendary: 4
+    mythic: 5
+
+  INTELLIGENCE:
+    common: 3
+    uncommon: 4
+    rare: 5
+    epic: 6
+    legendary: 8
+    mythic: 10

@@ -1,0 +1,64 @@
+name: "Pure"
+prefix: "Pure"
+applicableTypes:
+  - "ARMOR"
+
+statistics:
+  INTELLIGENCE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
+
+  CRIT_CHANCE:
+    common: 2
+    uncommon: 4
+    rare: 6
+    epic: 8
+    legendary: 10
+    mythic: 12
+
+  SPEED:
+    expression: "1"
+
+  STRENGTH:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
+
+  BONUS_ATTACK_SPEED:
+    common: 1
+    uncommon: 1
+    rare: 2
+    epic: 3
+    legendary: 4
+    mythic: 5
+
+  CRIT_DAMAGE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
+
+  HEALTH:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
+
+  DEFENSE:
+    common: 2
+    uncommon: 3
+    rare: 4
+    epic: 6
+    legendary: 8
+    mythic: 10
