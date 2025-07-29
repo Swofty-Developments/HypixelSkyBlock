@@ -60,7 +60,7 @@ public abstract class SkyBlockPaginatedGUI<T> extends SkyBlockInventoryGUI {
         });
     }
 
-    private void updatePagedItems(PaginationList<?> paged, int page, SkyBlockPlayer player) {
+    protected void updatePagedItems(PaginationList<?> paged, int page, SkyBlockPlayer player) {
         List<?> thisPage = paged.getPage(page);
         if (thisPage == null) throw new IllegalStateException();
         Arrays.stream(getPaginatedSlots()).forEach(slot -> set(new GUIItem(slot) {

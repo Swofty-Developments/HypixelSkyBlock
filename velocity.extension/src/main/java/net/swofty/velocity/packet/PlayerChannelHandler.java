@@ -20,8 +20,8 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
     public void write(final ChannelHandlerContext ctx, final Object packet, final ChannelPromise promise) throws Exception {
         try {
             if (new TransferHandler(player).isInLimbo()
-                    && packet.getClass() != RespawnPacket.class
-                    && packet.getClass() != JoinGamePacket.class
+                    //&& packet.getClass() != RespawnPacket.class
+                    //&& packet.getClass() != JoinGamePacket.class
                     && packet.getClass() != BossBarPacket.class
                     && packet.getClass() != StartUpdatePacket.class
                     && packet.getClass() != KeepAlivePacket.class

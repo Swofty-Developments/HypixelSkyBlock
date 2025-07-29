@@ -3,6 +3,7 @@ package net.swofty.velocity.redis.listeners;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
+import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
@@ -41,6 +42,32 @@ public class ListenerPlayerHandler extends RedisListener {
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
         switch (action) {
+            case TRANSFER_WITH_UUID -> {
+                UUID server = UUID.fromString(message.getString("server_uuid"));
+                System.out.println("Transfer with UUID: " + server);
+                GameManager.GameServer serverInfo = GameManager.getFromUUID(server);
+                TransferHandler transferHandler = new TransferHandler(player);
+
+                if (serverInfo == null) {
+                    return new JSONObject();
+                }
+
+                transferHandler.addToDisregard();
+                transferHandler.sendToLimbo().join();
+
+                // Trick the packet blocker into thinking player is in normal transfer process
+                TransferHandler.playersGoalServerType.put(player, ServerType.HUB);
+
+                try {
+                    Thread.sleep(Long.parseLong(Configuration.get("transfer-timeout")));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                TransferHandler.playersGoalServerType.remove(player);
+                transferHandler.noLimboTransferTo(serverInfo.registeredServer());
+                transferHandler.removeFromDisregard();
+            }
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf(message.getString("type"));
                 if (!GameManager.hasType(type) || new TransferHandler(player).isInLimbo()) {

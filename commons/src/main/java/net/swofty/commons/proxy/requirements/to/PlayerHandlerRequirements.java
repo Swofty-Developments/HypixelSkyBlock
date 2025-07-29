@@ -27,6 +27,7 @@ public class PlayerHandlerRequirements extends ProxyChannelRequirements {
         EVENT,
         REFRESH_COOP_DATA,
         MESSAGE,
+        TRANSFER_WITH_UUID,
         ;
     }
 }

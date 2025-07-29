@@ -150,6 +150,7 @@ public class SkyBlock {
             Logger.info("Started server on port " + port + " in " + (endTime - startTime) + "ms");
             Logger.info("Server Type: " + serverType.name());
             Logger.info("Internal ID: " + serverUUID.toString());
+            SkyBlockConst.setPort(port);
 
             ServerOutboundMessage.sendMessageToProxy(
                     ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),

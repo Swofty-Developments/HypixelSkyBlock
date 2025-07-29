@@ -17,6 +17,7 @@ import net.swofty.commons.item.attribute.attributes.ItemAttributeRuneInfusedWith
 import net.swofty.commons.item.attribute.attributes.ItemAttributeSoulbound;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
+import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.gems.GemRarity;
 import net.swofty.types.generic.gems.Gemstone;
 import net.swofty.types.generic.item.components.*;
@@ -45,6 +46,7 @@ public class ItemLore {
     @SneakyThrows
     public void updateLore(@Nullable SkyBlockPlayer player) {
         SkyBlockItem item = new SkyBlockItem(stack);
+        @Nullable ItemType type = item.getAttributeHandler().getPotentialType();
         ItemAttributeHandler handler = item.getAttributeHandler();
 
         Rarity rarity = handler.getRarity();
@@ -85,7 +87,17 @@ public class ItemLore {
         if (item.hasComponent(ExtraUnderNameComponent.class)) {
             ExtraUnderNameComponent underNameDisplay = item.getComponent(ExtraUnderNameComponent.class);
             underNameDisplay.getDisplays().forEach(line -> addLoreLine("§8" + line));
+
+            if (type != null && CollectionCategories.getCategory(type) != null) {
+                addLoreLine("§8Collection Item");
+            }
+
             addLoreLine(null);
+        } else {
+            if (type != null && CollectionCategories.getCategory(type) != null) {
+                addLoreLine("§8Collection Item");
+                addLoreLine(null);
+            }
         }
 
         // Handle Item Statistics

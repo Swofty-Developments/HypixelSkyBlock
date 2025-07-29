@@ -10,30 +10,29 @@ import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public record TransferHandler(Player player) {
-    private static final Map<Player, ServerType> playersGoalServerType = new HashMap<>();
+    public static final Map<Player, ServerType> playersGoalServerType = new HashMap<>();
     private static final Map<Player, RegisteredServer> playersOriginServer = new HashMap<>();
+    private static final List<Player> disregard = new ArrayList<>();
 
     public boolean isInLimbo() {
         return playersGoalServerType.containsKey(player);
     }
 
+    public void addToDisregard() {
+        disregard.add(player);
+    }
+
+    public void removeFromDisregard() {
+        disregard.remove(player);
+    }
+
     public void standardTransferTo(RegisteredServer currentServer, ServerType type) {
         new Thread(() -> {
             RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
-
-            if (player.getCurrentServer().isPresent()) {
-                RegisteredServer previousServer = player.getCurrentServer().get().getServer();
-                if (previousServer.getServerInfo().getName().equals(limboServer.getServerInfo().getName())) {
-                    playersGoalServerType.put(player, type);
-                    playersOriginServer.put(player, currentServer);
-                    return;
-                }
-            }
 
             player.createConnectionRequest(limboServer).connectWithIndication();
             playersGoalServerType.put(player, type);
@@ -41,8 +40,27 @@ public record TransferHandler(Player player) {
         }).start();
     }
 
+    public CompletableFuture<Boolean> sendToLimbo() {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        new Thread(() -> {
+            if (player.getCurrentServer().isPresent()) {
+                RegisteredServer previousServer = player.getCurrentServer().get().getServer();
+                playersOriginServer.put(player, previousServer);
+            }
+
+            RegisteredServer limboServer = SkyBlockVelocity.getLimboServer();
+            player.createConnectionRequest(limboServer).connectWithIndication();
+            future.complete(true);
+        }).start();
+
+        return future;
+    }
+
     public void previousServerIsFinished(RegisteredServer manualPick) {
         new Thread(() -> {
+            if (disregard.contains(player)) return;
+
             RegisteredServer originServer = playersOriginServer.get(player);
             ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
@@ -68,6 +86,8 @@ public record TransferHandler(Player player) {
 
     public void previousServerIsFinished() {
         new Thread(() -> {
+            if (disregard.contains(player)) return;
+
             ServerType type = playersGoalServerType.get(player);
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
             RegisteredServer originServer = playersOriginServer.get(player);
@@ -107,11 +127,14 @@ public record TransferHandler(Player player) {
             playersOriginServer.remove(player);
 
             GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
-            RedisMessage.sendMessageToServer(server.internalID(),
-                    FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-                    new JSONObject().put("uuid", player.getUniqueId().toString())
-                            .put("origin-type", originServerType.name())
-            );
+
+            if (originServer != null && originServerType != null) {
+                RedisMessage.sendMessageToServer(server.internalID(),
+                        FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
+                        new JSONObject().put("uuid", player.getUniqueId().toString())
+                                .put("origin-type", originServerType.name())
+                );
+            }
 
             player.createConnectionRequest(server.registeredServer()).connectWithIndication();
         }).start();
@@ -133,11 +156,13 @@ public record TransferHandler(Player player) {
             ServerType type = GameManager.getTypeFromRegisteredServer(toTransferTo);
             UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
 
-            RedisMessage.sendMessageToServer(serverUUID,
-                    FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-                    new JSONObject().put("uuid", player.getUniqueId().toString())
-                            .put("origin-type", originServerType.name())
-            );
+            if (originServer != null && originServerType != null) {
+                RedisMessage.sendMessageToServer(serverUUID,
+                        FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
+                        new JSONObject().put("uuid", player.getUniqueId().toString())
+                                .put("origin-type", originServerType.name())
+                );
+            }
 
             player.createConnectionRequest(toTransferTo).connectWithIndication();
         }).start();

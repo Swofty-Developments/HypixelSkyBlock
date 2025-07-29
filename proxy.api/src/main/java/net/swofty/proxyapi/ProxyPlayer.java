@@ -100,6 +100,25 @@ public class ProxyPlayer {
                 json, (s) -> {});
     }
 
+    public CompletableFuture<Void> transferToWithIndication(UUID serverToTransferTo) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("server_uuid", serverToTransferTo.toString());
+
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER_WITH_UUID;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {});
+
+        waitingForTransferComplete.put(uuid, future);
+
+        return future;
+    }
+
     public void transferTo(ServerType serverType) {
         JSONObject json = new JSONObject();
         json.put("uuid", uuid.toString());
