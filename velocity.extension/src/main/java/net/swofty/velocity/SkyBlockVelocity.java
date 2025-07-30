@@ -238,7 +238,12 @@ public class SkyBlockVelocity {
             }
 
             try {
-                GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverType);
+                ServerType serverTypeToTry = serverType;
+                if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
+                    serverTypeToTry = ServerType.ISLAND;
+                }
+
+                GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
                 if (server == null) {
                     transferHandler.forceRemoveFromLimbo();
                     event.getPlayer().disconnect(reason);

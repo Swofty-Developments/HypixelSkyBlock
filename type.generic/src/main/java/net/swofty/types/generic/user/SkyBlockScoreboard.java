@@ -13,9 +13,12 @@ import net.swofty.types.generic.calendar.SkyBlockCalendar;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.DatapointDouble;
 import net.swofty.types.generic.data.datapoints.DatapointInteger;
+import net.swofty.types.generic.mission.LocationAssociatedMission;
 import net.swofty.types.generic.mission.MissionData;
+import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.mission.SkyBlockProgressMission;
 import net.swofty.types.generic.region.SkyBlockRegion;
+import net.swofty.types.generic.utility.BlockUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,9 +72,18 @@ public class SkyBlockScoreboard {
                 if (region != null &&
                         !missionData.getActiveMissions(region.getType()).isEmpty()) {
                     MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
+                    SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
-                    addLine("§fObjective", sidebar);
-                    addLine("§e" + mission, sidebar);
+                    if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
+                        addLine("§fObjective §e" + BlockUtility.getArrow(
+                                player.getPosition(),
+                                locationAssociatedMission.getLocation()
+                        ), sidebar);
+                        addLine("§e" + mission, sidebar);
+                    } else {
+                        addLine("§fObjective", sidebar);
+                        addLine("§e" + mission, sidebar);
+                    }
 
                     SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
                     if (progressMission != null)

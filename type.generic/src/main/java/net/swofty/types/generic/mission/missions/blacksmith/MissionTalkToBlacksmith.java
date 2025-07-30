@@ -1,8 +1,10 @@
 package net.swofty.types.generic.mission.missions.blacksmith;
 
+import net.minestom.server.coordinate.Pos;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.PlayerRegionChangeEvent;
+import net.swofty.types.generic.mission.LocationAssociatedMission;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.SkyBlockMission;
 import net.swofty.types.generic.region.RegionType;
@@ -12,12 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class MissionTalkToBlacksmith extends SkyBlockMission {
-
+public class MissionTalkToBlacksmith extends SkyBlockMission implements LocationAssociatedMission {
 
     @SkyBlockEvent(node = EventNodes.CUSTOM , requireDataLoaded = true)
     public void run(PlayerRegionChangeEvent event) {
-        MissionData data = ((PlayerRegionChangeEvent) event).getPlayer().getMissionData();
+        MissionData data = event.getPlayer().getMissionData();
 
         if (event.getTo() == null || !event.getTo().equals(RegionType.BLACKSMITH)) {
             return;
@@ -53,5 +54,10 @@ public class MissionTalkToBlacksmith extends SkyBlockMission {
     @Override
     public Set<RegionType> getValidRegions() {
         return Set.of(RegionType.BLACKSMITH, RegionType.COAL_MINE);
+    }
+
+    @Override
+    public Pos getLocation() {
+        return new Pos(-28.5, 69, -125.45);
     }
 }
