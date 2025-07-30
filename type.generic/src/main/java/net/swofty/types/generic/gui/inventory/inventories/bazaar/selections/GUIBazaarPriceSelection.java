@@ -30,7 +30,7 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
     public GUIBazaarPriceSelection(SkyBlockInventoryGUI previousGUI, Integer amount,
                                    Double lowestPrice, Double highestPrice,
                                    ItemType itemTypeLinker, boolean isSellOrder) {
-        super("At what price" + (isSellOrder ? " are you selling?" : "are you buying?") + "?", InventoryType.CHEST_4_ROW);
+        super("At what price" + (isSellOrder ? " are you selling" : " are you buying") + "?", InventoryType.CHEST_4_ROW);
 
         this.lowestPrice = lowestPrice;
         this.highestPrice = highestPrice;
@@ -127,7 +127,17 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
             set(new GUIQueryItem(16) {
                 @Override
                 public SkyBlockInventoryGUI onQueryFinish(String query, SkyBlockPlayer player) {
-                    return null;
+                    try {
+                        double price = Double.parseDouble(query);
+                        if (price <= 0) {
+                            throw new NumberFormatException();
+                        }
+                        future.complete(price);
+                        return null;
+                    } catch (NumberFormatException e) {
+                        player.sendMessage("§cInvalid price. Price must be a number.");
+                        return null;
+                    }
                 }
 
                 @Override
@@ -153,6 +163,7 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
 
     @Override
     public void onClose(InventoryCloseEvent e, CloseReason reason) {
+        if (reason == CloseReason.SIGN_OPENED) return;
         future.complete(0D);
     }
 

@@ -88,9 +88,6 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
          */
         Logger.info("Registering bazaar cache");
         ProxyService bazaarService = new ProxyService(ServiceType.BAZAAR);
-        if (bazaarService.isOnline().join()) {
-            bazaarService.handleRequest(BazaarCategories.getInitializationRequest()).join();
-        }
 
         /**
          * Register museum chunks

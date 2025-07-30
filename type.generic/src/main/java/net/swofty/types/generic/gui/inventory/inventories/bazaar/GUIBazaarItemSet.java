@@ -8,7 +8,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
@@ -82,8 +81,13 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
             Thread.startVirtualThread(() -> {
                 BazaarGetItemProtocolObject.BazaarGetItemMessage message =
                         new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name());
-                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = new ProxyService(ServiceType.BAZAAR).handleRequest(message);
-                BazaarItem item = futureBazaar.join().item();
+                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar =
+                        new ProxyService(ServiceType.BAZAAR).handleRequest(message);
+                BazaarGetItemProtocolObject.BazaarGetItemResponse response = futureBazaar.join();
+
+                // Calculate statistics from order data
+                BazaarStatistics sellStats = calculateSellStatistics(response.sellOrders());
+                BazaarStatistics buyStats = calculateBuyStatistics(response.buyOrders());
 
                 set(new GUIClickableItem(slot) {
                     @Override
@@ -97,18 +101,31 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                         lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
                         lore.add(" ");
 
-                        lore.add("§7Buy price: §6" +
-                                new DecimalFormat("#,###").format(item.getSellStatistics().getLowestOrder())
-                                + " coins");
-                        lore.add("§8" + StringUtility.shortenNumber(item.getSellStatistics().getHighestOrder())
-                                + " in " + item.getSellOrders().size() + " offers");
+                        // Buy price (what you pay - from sell orders)
+                        if (sellStats.getAveragePrice() > 0) {
+                            lore.add("§7Buy price: §6" +
+                                    new DecimalFormat("#,###").format(sellStats.getAveragePrice())
+                                    + " coins");
+                            lore.add("§8" + StringUtility.shortenNumber(sellStats.getLowestPrice())
+                                    + " in " + response.sellOrders().size() + " offers");
+                        } else {
+                            lore.add("§7Buy price: §cNo offers");
+                            lore.add("§8No sell orders available");
+                        }
 
                         lore.add(" ");
-                        lore.add("§7Sell price: §6" +
-                                new DecimalFormat("#,###").format(item.getBuyStatistics().getHighestOrder())
-                                + " coins");
-                        lore.add("§8" + StringUtility.shortenNumber(item.getBuyStatistics().getLowestOrder())
-                                + " in " + item.getBuyOrders().size() + " offers");
+
+                        // Sell price (what you get - from buy orders)
+                        if (buyStats.getAveragePrice() > 0) {
+                            lore.add("§7Sell price: §6" +
+                                    new DecimalFormat("#,###").format(buyStats.getAveragePrice())
+                                    + " coins");
+                            lore.add("§8" + StringUtility.shortenNumber(buyStats.getHighestPrice())
+                                    + " in " + response.buyOrders().size() + " orders");
+                        } else {
+                            lore.add("§7Sell price: §cNo orders");
+                            lore.add("§8No buy orders available");
+                        }
 
                         lore.add(" ");
                         lore.add("§eClick to view details!");
@@ -127,6 +144,63 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
         updateItemStacks(getInventory(), getPlayer());
+    }
+
+    private BazaarStatistics calculateBuyStatistics(List<BazaarGetItemProtocolObject.OrderRecord> buyOrders) {
+        if (buyOrders.isEmpty()) {
+            return new BazaarStatistics(0, 0, 0);
+        }
+
+        double total = buyOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
+        double average = total / buyOrders.size();
+
+        double highest = buyOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .max().orElse(0);
+
+        double lowest = buyOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .min().orElse(0);
+
+        return new BazaarStatistics(highest, lowest, average);
+    }
+
+    private BazaarStatistics calculateSellStatistics(List<BazaarGetItemProtocolObject.OrderRecord> sellOrders) {
+        if (sellOrders.isEmpty()) {
+            return new BazaarStatistics(0, 0, 0);
+        }
+
+        double total = sellOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
+        double average = total / sellOrders.size();
+
+        double highest = sellOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .max().orElse(0);
+
+        double lowest = sellOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .min().orElse(0);
+
+        return new BazaarStatistics(highest, lowest, average);
+    }
+
+    /**
+     * Helper class to hold price statistics
+     */
+    private static class BazaarStatistics {
+        private final double highestPrice;
+        private final double lowestPrice;
+        private final double averagePrice;
+
+        public BazaarStatistics(double highestPrice, double lowestPrice, double averagePrice) {
+            this.highestPrice = highestPrice;
+            this.lowestPrice = lowestPrice;
+            this.averagePrice = averagePrice;
+        }
+
+        public double getHighestPrice() { return highestPrice; }
+        public double getLowestPrice() { return lowestPrice; }
+        public double getAveragePrice() { return averagePrice; }
     }
 
     @Override

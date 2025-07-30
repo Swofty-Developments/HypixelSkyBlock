@@ -7,6 +7,7 @@ import net.swofty.types.generic.entity.npc.NPCParameters;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.GUIBazaar;
 import net.swofty.types.generic.levels.SkyBlockLevelRequirement;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.user.categories.Rank;
 
 import java.util.stream.Stream;
 
@@ -44,7 +45,8 @@ public class NPCBazaar extends NPCDialogue {
     public void onClick(PlayerClickNPCEvent e) {
         if (isInDialogue(e.player())) return;
         SkyBlockLevelRequirement lvl = e.player().getSkyBlockExperience().getLevel();
-        if (lvl.asInt() >= 7) {
+        if (lvl.asInt() >= 7 || e.player().getRank().isEqualOrHigherThan(Rank.DEVELOPER)) {
+            e.player().getLogHandler().debug("As a staff member, you have bypassed the bazaar requirement.");
             new GUIBazaar(BazaarCategories.FARMING).open(e.player());
             return;
         }

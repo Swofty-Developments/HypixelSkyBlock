@@ -7,7 +7,6 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.bazaar.BazaarItem;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
@@ -18,185 +17,302 @@ import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import net.swofty.types.generic.utility.MathUtility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
-    private static final int[] SLOTS = new int[]{
-            11, 12, 13, 14, 15, 16,
-            20, 21, 22, 23, 24, 25,
-            29, 30, 31, 32, 33, 34,
-            38, 39, 40, 41, 42, 43
+    private static final int[] SLOTS = {
+            11,12,13,14,15,16,
+            20,21,22,23,24,25,
+            29,30,31,32,33,34,
+            38,39,40,41,42,43
     };
+    private static final long CACHE_TTL_MS = 30_000L;
+
+    private static final Map<BazaarCategories, CacheEntry> CACHE = new ConcurrentHashMap<>();
+
     private final BazaarCategories category;
 
     public GUIBazaar(BazaarCategories category) {
-        super("Bazaar -> " + StringUtility.toNormalCase(category.name()), InventoryType.CHEST_6_ROW);
-
+        super("Bazaar → " + StringUtility.toNormalCase(category.name()),
+                InventoryType.CHEST_6_ROW);
         this.category = category;
 
         fill(ItemStackCreator.createNamedItemStack(category.getGlassItem()));
         set(GUIClickableItem.getCloseItem(49));
-        set(new GUIClickableItem(50) {
-            @Override
-            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                new GUIBazaarOrders().open(player);
-            }
 
-            @Override
-            public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
-                        "§7You don't have any ongoing orders.",
-                        " ",
-                        "§eClick to manage!");
+        set(new GUIClickableItem(50) {
+            @Override public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+                new GUIBazaarOrders().open(p);
+            }
+            @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                return ItemStackCreator.getStack("§aManage Orders",
+                        Material.BOOK, 1,
+                        "§7View your pending Bazaar orders",
+                        "§eClick to open");
             }
         });
     }
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        int i = 0;
-        for (BazaarCategories bazaarCategories : BazaarCategories.values()) {
-            set(new GUIClickableItem(i * 9) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                    new GUIBazaar(bazaarCategories).open(player);
+        // Tabs at top
+        renderCategoryTabs();
+
+        long now = System.currentTimeMillis();
+        CacheEntry entry = CACHE.get(category);
+
+        if (entry != null && now - entry.timestamp <= CACHE_TTL_MS) {
+            // fresh cache: render immediately
+            renderSlots(entry.slots);
+        } else {
+            // expired or missing: clear cache & show placeholders
+            CACHE.remove(category);
+            renderPlaceholders();
+            // async rebuild & render
+            CompletableFuture.runAsync(this::rebuildCacheAndRender);
+        }
+    }
+
+    private void renderCategoryTabs() {
+        int idx = 0;
+        for (BazaarCategories cat : BazaarCategories.values()) {
+            int slot = idx * 9;
+            set(new GUIClickableItem(slot) {
+                @Override public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+                    new GUIBazaar(cat).open(p);
                 }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                    ItemStack.Builder builder = ItemStackCreator.getStack(
-                            bazaarCategories.getColor() + StringUtility.toNormalCase(bazaarCategories.name()),
-                            bazaarCategories.getDisplayItem(), 1,
-                            "§8Category", " ",
-                            (category == bazaarCategories ? "§aCurrently Viewing" : "§eClick to view!")
+                @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    var b = ItemStackCreator.getStack(
+                            cat.getColor() + StringUtility.toNormalCase(cat.name()),
+                            cat.getDisplayItem(), 1,
+                            "§8Category"," ",
+                            category == cat
+                                    ? "§aCurrently Viewing"
+                                    : "§eClick to view!"
                     );
-
-                    if (category == bazaarCategories) {
-                        builder = ItemStackCreator.enchant(builder);
-                    }
-
-                    return builder;
+                    if (category == cat) b = ItemStackCreator.enchant(b);
+                    return b;
                 }
             });
-
-            i++;
+            idx++;
         }
-
         updateItemStacks(getInventory(), getPlayer());
+    }
 
-        Thread.startVirtualThread(() -> {
-            int i1 = 0;
-            for (int j : SLOTS) {
-                if (category.getItems().size() <= i1) {
-                    set(new GUIItem(j) {
-                        @Override
-                        public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                            return ItemStack.builder(Material.AIR);
-                        }
-                    });
-                    continue;
+    private void renderPlaceholders() {
+        for (int slot : SLOTS) {
+            set(new GUIItem(slot) {
+                @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    return ItemStackCreator.getStack("§7Loading...", Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
-                BazaarItemSet itemSet = (BazaarItemSet) category.getItems().toArray()[i1];
-                i1++;
+            });
+        }
+        updateItemStacks(getInventory(), getPlayer());
+    }
 
-                List<String> lore = new ArrayList<>(Arrays.asList(
-                        "§8" + itemSet.items.size() + " products", " "
-                ));
+    private void rebuildCacheAndRender() {
+        List<BazaarItemSet> sets = category.getItems().stream().toList();
 
-                // Save a list of futures for every item in the set
-                List<CompletableFuture<Void>> futures = new ArrayList<>();
+        // Create a thread-safe map to collect results
+        Map<BazaarItemSet, Map<ItemType, PriceData>> setDataMap = new ConcurrentHashMap<>();
 
-                for (ItemType type : itemSet.items) {
-                    // Create a new future for each item
-                    CompletableFuture<Void> future = new CompletableFuture<>();
-                    futures.add(future);
+        // Initialize the map
+        for (BazaarItemSet set : sets) {
+            setDataMap.put(set, new ConcurrentHashMap<>());
+        }
 
-                    ProxyService baseService = new ProxyService(ServiceType.BAZAAR);
-                    BazaarGetItemProtocolObject.BazaarGetItemMessage message = new BazaarGetItemProtocolObject.BazaarGetItemMessage(type.name());
-                    CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar = baseService.handleRequest(message);
+        // Collect all futures for price fetching
+        List<CompletableFuture<Void>> allFutures = new ArrayList<>();
 
-                    Thread.startVirtualThread(() -> {
-                        BazaarItem bazaarItem = futureBazaar.join().item();
+        for (BazaarItemSet set : sets) {
+            for (ItemType type : set.items) {
+                CompletableFuture<Void> future = new ProxyService(ServiceType.BAZAAR)
+                        .<BazaarGetItemProtocolObject.BazaarGetItemMessage, BazaarGetItemProtocolObject.BazaarGetItemResponse>handleRequest(
+                                new BazaarGetItemProtocolObject.BazaarGetItemMessage(type.name())
+                        )
+                        .thenAccept(response -> {
+                            // Calculate statistics from the order data
+                            BazaarStatistics sellStats = calculateSellStatistics(response.sellOrders());
+                            BazaarStatistics buyStats = calculateBuyStatistics(response.buyOrders());
 
-                        lore.add(type.rarity.getColor() + "▶ §7" + type.getDisplayName()
-                                + " §c" + StringUtility.shortenNumber(bazaarItem.getSellStatistics().getMeanOrder()) +
-                                " §8| §a" + StringUtility.shortenNumber(bazaarItem.getBuyStatistics().getMeanOrder()));
-                        future.complete(null);
-                    });
-                }
-
-                // Wait for all futures to complete by joining them
-                CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-
-                lore.add(" ");
-                lore.add("§eClick to view products!");
-
-                set(new GUIClickableItem(j) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIBazaarItemSet(category, itemSet).open(player);
-                    }
-
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        return ItemStackCreator.getStack(category.getColor() + itemSet.displayName,
-                                itemSet.displayMaterial.material, 1, lore);
-                    }
-                });
+                            // Store the price data thread-safely
+                            setDataMap.get(set).put(type, new PriceData(
+                                    type,
+                                    sellStats.getAveragePrice(),
+                                    buyStats.getAveragePrice()
+                            ));
+                        })
+                        .exceptionally(throwable -> {
+                            System.err.println("Failed to fetch bazaar data for " + type.name() + ": " + throwable.getMessage());
+                            // Store empty data on failure
+                            setDataMap.get(set).put(type, new PriceData(type, 0, 0));
+                            return null;
+                        });
+                allFutures.add(future);
             }
-
-            updateItemStacks(getInventory(), getPlayer());
-        });
-    }
-
-    @Override
-    public boolean allowHotkeying() {
-        return false;
-    }
-
-    @Override
-    public void onBottomClick(InventoryPreClickEvent e) {
-        SkyBlockItem clickedItem = new SkyBlockItem(e.getClickedItem());
-        ItemType type = clickedItem.getAttributeHandler().getPotentialType();
-        e.setCancelled(true);
-
-        if (clickedItem.isNA()) {
-            return;
         }
 
-        if (type == null) {
-            return;
-        }
+        // When all price data is collected, build the cache entry
+        CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0]))
+                .thenRun(() -> {
+                    List<CacheEntry.CachedSlot> slotData = new ArrayList<>();
 
-        Map.Entry<BazaarCategories, BazaarItemSet> entry = BazaarCategories.getFromItem(type);
+                    // Build slot records
+                    for (int i = 0; i < sets.size() && i < SLOTS.length; i++) {
+                        int slot = SLOTS[i];
+                        BazaarItemSet set = sets.get(i);
 
-        if (entry == null) {
-            return;
-        }
+                        // Build lore safely
+                        List<String> lore = new ArrayList<>();
+                        lore.add("§8" + set.items.size() + " products");
+                        lore.add(" ");
 
-        Thread.startVirtualThread(() -> {
-            new GUIBazaarItemSet(entry.getKey(), entry.getValue()).open((SkyBlockPlayer) e.getPlayer());
-        });
+                        // Add price data for each item in the set
+                        Map<ItemType, PriceData> priceDataMap = setDataMap.get(set);
+                        for (ItemType type : set.items) {
+                            PriceData priceData = priceDataMap.get(type);
+                            if (priceData != null) {
+                                lore.add(type.rarity.getColor()
+                                        + "▶ §7" + type.getDisplayName()
+                                        + " §c" + StringUtility.shortenNumber(priceData.sellPrice())
+                                        + " §8| §a" + StringUtility.shortenNumber(priceData.buyPrice()));
+                            }
+                        }
+
+                        lore.add(" ");
+                        lore.add("§eClick to view products!");
+                        slotData.add(new CacheEntry.CachedSlot(slot, set, lore));
+                    }
+
+                    // Cache it
+                    CACHE.put(category, new CacheEntry(System.currentTimeMillis(), slotData));
+
+                    // Schedule UI update on main thread
+                    MathUtility.delay(() -> {
+                        renderSlots(slotData);
+                    }, 1);
+                })
+                .exceptionally(throwable -> {
+                    System.err.println("Failed to rebuild bazaar cache: " + throwable.getMessage());
+
+                    // Fallback: render with "Error loading" placeholders
+                    MathUtility.delay(() -> {
+                        for (int slot : SLOTS) {
+                            set(new GUIItem(slot) {
+                                @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                                    return ItemStackCreator.getStack("§cError Loading", Material.BARRIER, 1,
+                                            "§7Failed to load bazaar data",
+                                            "§7Please try again later");
+                                }
+                            });
+                        }
+                        updateItemStacks(getInventory(), getPlayer());
+                    }, 1);
+                    return null;
+                });
     }
 
-    @Override
-    public void refreshItems(SkyBlockPlayer player) {
+    private void renderSlots(List<CacheEntry.CachedSlot> slots) {
+        // Clear existing slots first
+        for (int slot : SLOTS) {
+            set(new GUIItem(slot) {
+                @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    return ItemStack.builder(Material.AIR);
+                }
+            });
+        }
+
+        // Set the new slots
+        for (CacheEntry.CachedSlot cs : slots) {
+            set(new GUIClickableItem(cs.slot()) {
+                @Override public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+                    new GUIBazaarItemSet(category, cs.itemSet()).open(p);
+                }
+                @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    return ItemStackCreator.getStack(
+                            category.getColor() + cs.itemSet().displayName,
+                            cs.itemSet().displayMaterial.material,
+                            1,
+                            cs.lore()
+                    );
+                }
+            });
+        }
+        updateItemStacks(getInventory(), getPlayer());
+    }
+
+    private BazaarStatistics calculateBuyStatistics(List<BazaarGetItemProtocolObject.OrderRecord> buyOrders) {
+        if (buyOrders.isEmpty()) {
+            return new BazaarStatistics(0, 0, 0);
+        }
+
+        double total = buyOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
+        double average = total / buyOrders.size();
+
+        double highest = buyOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .max().orElse(0);
+
+        return new BazaarStatistics(highest, 0, average);
+    }
+
+    private BazaarStatistics calculateSellStatistics(List<BazaarGetItemProtocolObject.OrderRecord> sellOrders) {
+        if (sellOrders.isEmpty()) {
+            return new BazaarStatistics(0, 0, 0);
+        }
+
+        double total = sellOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
+        double average = total / sellOrders.size();
+
+        double lowest = sellOrders.stream()
+                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
+                .min().orElse(0);
+
+        return new BazaarStatistics(0, lowest, average);
+    }
+
+    /**
+     * Helper class to hold price statistics
+     */
+    private static class BazaarStatistics {
+        private final double highestPrice;
+        private final double lowestPrice;
+        private final double averagePrice;
+
+        public BazaarStatistics(double highestPrice, double lowestPrice, double averagePrice) {
+            this.highestPrice = highestPrice;
+            this.lowestPrice = lowestPrice;
+            this.averagePrice = averagePrice;
+        }
+
+        public double getHighestPrice() { return highestPrice; }
+        public double getLowestPrice() { return lowestPrice; }
+        public double getAveragePrice() { return averagePrice; }
+    }
+
+    /**
+     * Thread-safe price data holder
+     */
+    private record PriceData(ItemType itemType, double sellPrice, double buyPrice) {}
+
+    @Override public boolean allowHotkeying() { return false; }
+    @Override public void onBottomClick(InventoryPreClickEvent e) { e.setCancelled(true); }
+    @Override public int refreshRate() { return 10; }
+    @Override public void refreshItems(SkyBlockPlayer player) {
         if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
             player.sendMessage("§cThe Bazaar is currently offline!");
             player.closeInventory();
         }
     }
 
-    @Override
-    public int refreshRate() {
-        return 10;
+    private record CacheEntry(long timestamp, List<CachedSlot> slots) {
+        record CachedSlot(int slot, BazaarItemSet itemSet, List<String> lore) {}
     }
 }

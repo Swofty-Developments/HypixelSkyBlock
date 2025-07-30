@@ -389,10 +389,12 @@ public abstract class  SkyBlockInventoryGUI {
      * @param inventory an inventory object to set the items in
      */
     public void updateItemStacks(Inventory inventory, SkyBlockPlayer player) {
-        for (GUIItem item : items) {
-            ItemStack toReplace = item.getItem(player).build();
-            if (!inventory.getItemStack(item.itemSlot).equals(toReplace)) {
-                inventory.setItemStack(item.itemSlot, toReplace);
+        synchronized (items) {
+            for (GUIItem item : items) {
+                ItemStack toReplace = item.getItem(player).build();
+                if (!inventory.getItemStack(item.itemSlot).equals(toReplace)) {
+                    inventory.setItemStack(item.itemSlot, toReplace);
+                }
             }
         }
     }

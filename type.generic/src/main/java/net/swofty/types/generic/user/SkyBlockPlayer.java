@@ -407,6 +407,8 @@ public class SkyBlockPlayer extends Player {
                 item.getItemStack(),
                 true).build();
         this.getInventory().addItemStack(toAdd);
+
+        // TODO: add overflow into the players queue
     }
 
     public void addAndUpdateItem(UnderstandableSkyBlockItem item) {
@@ -443,6 +445,9 @@ public class SkyBlockPlayer extends Player {
     public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
         List<SkyBlockItem> consumedItems = new ArrayList<>();
         Map<Integer, Integer> map = getAllOfTypeInInventory(type);
+        int total = map.values().stream().mapToInt(Integer::intValue).sum();
+        if (total < amount) return null;
+
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             if (amount <= 0) break;
 
@@ -458,7 +463,6 @@ public class SkyBlockPlayer extends Player {
             getInventory().setItemStack(slot, item);
             amount -= Math.min(amount, currentAmount);
         }
-        if (amount > 0) throw new IllegalStateException("Not enough items to take!");
         return consumedItems;
     }
 
@@ -662,6 +666,27 @@ public class SkyBlockPlayer extends Player {
 
     public Integer getBits() {
         return getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).getValue();
+    }
+
+    public int maxItemFit(ItemType targetType) {
+        int fit = 0;
+        int maxStack = targetType.material.maxStackSize();
+
+        var inv = getInventory();
+        int size = inv.getSize();
+
+        for (int slot = 0; slot < size; slot++) {
+            ItemStack stack = inv.getItemStack(slot);
+            // Interpret the stack via ItemType
+            ItemType slotType = ItemType.fromMaterial(stack.material());
+
+            if (slotType == null) {
+                fit += maxStack;
+            } else if (slotType.equals(targetType)) {
+                fit += (maxStack - stack.amount());
+            }
+        }
+        return fit;
     }
 
     public void setBits(int bits) {

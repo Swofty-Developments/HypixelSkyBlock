@@ -35,47 +35,52 @@ public class BalanceConfigurations {
             player.sendPlainMessage("§8Executing test flow " + TestFlowManager.getTestFlowForPlayer(player.getUsername()).getName() + "...");
         }
 
-        for (BalanceConfiguration configuration : configurations.get(type)) {
-            List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
-            if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
-                serversToConsider.removeIf(server -> {
-                    boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
-
-                    if (!TestFlowManager.isServerInTestFlow(server.internalID())) {
-                        remove = true;
-                    }
-
-                    TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
-                            server.internalID()
-                    );
-
-                    if (!testFlowInstance.hasPlayer(player.getUsername())) {
-                        remove = true;
-                    }
-
-                    return remove;
-                });
-            } else {
-                serversToConsider.removeIf(server -> {
-                    boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
-
-                    if (TestFlowManager.isServerInTestFlow(server.internalID())) {
-                        remove = true;
-                    }
-
-                    return remove;
-                });
-            }
-
-            GameManager.GameServer server = configuration.getServer(player, serversToConsider);
-
-            if (server != null) {
+        try {
+            for (BalanceConfiguration configuration : configurations.get(type)) {
+                List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
                 if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
-                    player.sendPlainMessage("§8Done overriding the server manager for your test flow.");
+                    serversToConsider.removeIf(server -> {
+                        boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
+
+                        if (!TestFlowManager.isServerInTestFlow(server.internalID())) {
+                            remove = true;
+                        }
+
+                        TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+                                server.internalID()
+                        );
+
+                        if (!testFlowInstance.hasPlayer(player.getUsername())) {
+                            remove = true;
+                        }
+
+                        return remove;
+                    });
+                } else {
+                    serversToConsider.removeIf(server -> {
+                        boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
+
+                        if (TestFlowManager.isServerInTestFlow(server.internalID())) {
+                            remove = true;
+                        }
+
+                        return remove;
+                    });
                 }
-                return server;
+
+                GameManager.GameServer server = configuration.getServer(player, serversToConsider);
+
+                if (server != null) {
+                    if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+                        player.sendPlainMessage("§8Done overriding the server manager for your test flow.");
+                    }
+                    return server;
+                }
             }
+            return null;
+        } catch (Exception e) {
+            System.out.println("Error in trying to balance type " + type.name() + " for player " + player.getUsername());
+            throw e;
         }
-        return null;
     }
 }

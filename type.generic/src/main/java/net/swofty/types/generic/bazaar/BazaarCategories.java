@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.BazaarInitializeProtocolObject;
 
 import java.util.*;
 
@@ -133,17 +132,6 @@ public enum BazaarCategories {
     @Override
     public String toString() {
         return StringUtility.toNormalCase(name());
-    }
-
-    public static BazaarInitializeProtocolObject.BazaarInitializationRequest getInitializationRequest() {
-        List<ItemType> items = new ArrayList<>();
-        for (BazaarCategories category : BazaarCategories.values()) {
-            for (BazaarItemSet itemSet : category.items) {
-                items.addAll(itemSet.items);
-            }
-        }
-
-        return new BazaarInitializeProtocolObject.BazaarInitializationRequest(items.stream().map(ItemType::name).toList());
     }
 
     public static Map.Entry<BazaarCategories, BazaarItemSet> getFromItem(ItemType itemType) {

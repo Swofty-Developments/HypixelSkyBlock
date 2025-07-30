@@ -46,11 +46,13 @@ public class NPCBazaarAgent extends NPCDialogue {
         if (isInDialogue(e.player())) return;
         SkyBlockLevelRequirement lvl = e.player().getSkyBlockExperience().getLevel();
         if (lvl.asInt() >= 7 || e.player().getRank().isEqualOrHigherThan(Rank.DEVELOPER)) {
+            e.player().getLogHandler().debug("As a staff member, you have bypassed the bazaar requirement.");
             new GUIBazaar(BazaarCategories.FARMING).open(e.player());
             return;
         }
         setDialogue(e.player(), "hello");
     }
+
     @Override
     public NPCDialogue.DialogueSet[] getDialogueSets(SkyBlockPlayer player) {
         return Stream.of(
