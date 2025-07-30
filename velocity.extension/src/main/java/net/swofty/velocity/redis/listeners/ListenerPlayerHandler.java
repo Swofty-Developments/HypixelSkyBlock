@@ -88,7 +88,7 @@ public class ListenerPlayerHandler extends RedisListener {
                         || new TransferHandler(player).isInLimbo()
                         || !GameManager.isAnyEmpty(type)) {
                     player.sendMessage(Component.text(
-                            "§cAttempted to transfer to a(n) " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
+                            "§cAttempted to transfer to a " + StringUtility.toNormalCase(type.name()) + " server, but there are no empty slots available. Please try again later."
                     ));
                     return new JSONObject();
                 }

@@ -41,6 +41,8 @@ dependencies {
 
     implementation("net.bytebuddy:byte-buddy:1.14.16")
     implementation("net.bytebuddy:byte-buddy-agent:1.14.16")
+    implementation("org.tinylog:tinylog-api:2.7.0")
+    implementation("org.tinylog:tinylog-impl:2.7.0")
 }
 
 evaluationDependsOn(":commons")

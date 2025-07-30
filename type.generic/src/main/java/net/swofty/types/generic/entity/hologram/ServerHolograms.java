@@ -4,28 +4,36 @@ import lombok.Builder;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
+import net.swofty.commons.ServerType;
+import net.swofty.types.generic.SkyBlockConst;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public enum ServerHolograms {
-    TO_ISLAND(new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),
+    TO_ISLAND(ServerType.HUB, new Pos(-2.5, 71, -62.5), "§bTravel to:", "§aYour Island"),
+    TO_DUNGEON_HUB(ServerType.HUB, new Pos(-44.5, 89, 12), "§bTravel to:", "§aDungeon Hub"),
     ;
 
     private static final Map<ExternalHologram, List<HologramEntity>> externalHolograms = new HashMap<>();
 
+    private final ServerType serverType;
     private final Pos pos;
     private final String[] text;
 
-    ServerHolograms(Pos pos, String... text) {
+    ServerHolograms(ServerType serverType, Pos pos, String... text) {
+        this.serverType = serverType;
         this.pos = pos;
         this.text = text;
     }
 
     public static void spawnAll(Instance instance) {
         for (ServerHolograms hologram : values()) {
+            if (hologram.serverType != SkyBlockConst.getTypeLoader().getType()) continue;
+
             // Calculate the starting Y position based on the text length
             double startY = hologram.text.length * 0.3 - 0.3;
             for (int i = 0; i < hologram.text.length; i++) {

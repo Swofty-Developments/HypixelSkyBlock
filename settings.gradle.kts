@@ -14,6 +14,7 @@ include(":loader")
 include(":type.thefarmingislands")
 include(":type.island")
 include(":type.hub")
+include(":type.dungeonhub")
 
 include(":service.auctionhouse")
 include(":service.bazaar")

@@ -13,6 +13,8 @@ public enum ToProxyChannels {
     REGISTER_SERVER("register-server", new RegisterServerRequirements()),
     FINISHED_WITH_PLAYER("finished-with-player", new FinishedWithPlayerRequirements()),
     REQUEST_SERVERS("servers", new ServersRequirement()),
+    REGISTER_TEST_FLOW("register-test-flow", new RegisterTestFlowRequirements()),
+    TEST_FLOW_SERVER_READY("test-flow-server-ready", new TestFlowServerReadyRequirements()),
     ;
 
     @Getter

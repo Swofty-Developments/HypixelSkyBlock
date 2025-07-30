@@ -1,7 +1,6 @@
 package net.swofty.types.generic.user.fairysouls;
 
 public enum FairySoulZone {
-
     HUB,
     DUNGEON_HUB,
     GOLD_MINE,

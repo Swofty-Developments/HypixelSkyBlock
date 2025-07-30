@@ -48,6 +48,7 @@ import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.testflow.TestFlowManager;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
 import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
 import org.json.JSONObject;
@@ -61,6 +62,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Plugin(
@@ -111,6 +113,7 @@ public class SkyBlockVelocity {
         server.getEventManager().register(this, PostLoginEvent.class,
                 (AwaitingEventExecutor<PostLoginEvent>) postLoginEvent -> EventTask.withContinuation(continuation -> {
                     injectPlayer(postLoginEvent.getPlayer());
+                    TestFlowManager.handlePlayerJoin(postLoginEvent.getPlayer().getUsername());
                     continuation.resume();
                 }));
         server.getEventManager().register(this, PermissionsSetupEvent.class,
@@ -122,7 +125,11 @@ public class SkyBlockVelocity {
                 (AwaitingEventExecutor<DisconnectEvent>) disconnectEvent ->
                         disconnectEvent.getLoginStatus() == DisconnectEvent.LoginStatus.CONFLICTING_LOGIN
                                 ? null
-                                : EventTask.async(() -> removePlayer(disconnectEvent.getPlayer()))
+                                : EventTask.async(() -> {
+                                    // Handle test flow player leave
+                                    TestFlowManager.handlePlayerLeave(disconnectEvent.getPlayer().getUsername());
+                                    removePlayer(disconnectEvent.getPlayer());
+                                })
         );
 
         /**
@@ -181,6 +188,37 @@ public class SkyBlockVelocity {
         }
 
         List<GameManager.GameServer> gameServers = GameManager.getFromType(ServerType.ISLAND);
+        if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+            TestFlowManager.ProxyTestFlowInstance instance = TestFlowManager.getTestFlowForPlayer(player.getUsername());
+            player.sendPlainMessage("§7You are currently in test flow " + instance.getName() + ".");
+            player.sendPlainMessage("§7Servers involved include " + instance.getGameServers().stream().map(GameManager.GameServer::displayName).collect(Collectors.joining(", ")));
+            player.sendPlainMessage("§7We are expecting " + instance.getTotalExpectedServers() + " servers to instantiate.");
+            player.sendPlainMessage("§7Test flow has been running for " + instance.getUptime() / 1000 + " seconds.");
+
+            gameServers.removeIf(server -> {
+                TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+                        server.internalID()
+                );
+
+                return testFlowInstance == null || !instance.hasServer(server.internalID());
+            });
+        } else {
+            gameServers.removeIf(server -> {
+                TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+                        server.internalID()
+                );
+
+                return testFlowInstance != null;
+            });
+        }
+
+        if (gameServers.isEmpty()) {
+            player.disconnect(
+                    Component.text("§cThere are no SkyBlock (type=ISLAND) servers available at the moment.")
+            );
+            return;
+        }
+
         List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.ISLAND);
         GameManager.GameServer toSendTo = gameServers.getFirst();
 
@@ -230,12 +268,12 @@ public class SkyBlockVelocity {
                 throw new RuntimeException(e);
             }
 
-            boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
+            /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
             if (isOnline) {
                 transferHandler.forceRemoveFromLimbo();
                 event.getPlayer().disconnect(reason);
                 return;
-            }
+            }*/
 
             try {
                 ServerType serverTypeToTry = serverType;

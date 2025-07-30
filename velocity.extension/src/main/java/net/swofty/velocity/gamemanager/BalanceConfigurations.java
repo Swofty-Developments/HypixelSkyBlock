@@ -2,8 +2,10 @@ package net.swofty.velocity.gamemanager;
 
 import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.TestFlow;
 import net.swofty.velocity.gamemanager.balanceconfigurations.IslandCheck;
 import net.swofty.velocity.gamemanager.balanceconfigurations.LowestPlayerCount;
+import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -13,6 +15,9 @@ import java.util.Map;
 public class BalanceConfigurations {
     public static HashMap<ServerType, List<BalanceConfiguration>> configurations = new HashMap<>(Map.of(
             ServerType.HUB, List.of(
+                    new LowestPlayerCount()
+            ),
+            ServerType.DUNGEON_HUB, List.of(
                     new LowestPlayerCount()
             ),
             ServerType.THE_FARMING_ISLANDS, List.of(
@@ -25,14 +30,51 @@ public class BalanceConfigurations {
     );
 
     public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
+        if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+            player.sendPlainMessage("§eYou are currently in a network-isolated test flow, load balancing will be restricted to test flow servers!");
+            player.sendPlainMessage("§8Executing test flow " + TestFlowManager.getTestFlowForPlayer(player.getUsername()).getName() + "...");
+        }
+
         for (BalanceConfiguration configuration : configurations.get(type)) {
             List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
-            serversToConsider.removeIf(server -> {
-                return server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
-            });
+            if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+                serversToConsider.removeIf(server -> {
+                    boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
+
+                    if (!TestFlowManager.isServerInTestFlow(server.internalID())) {
+                        remove = true;
+                    }
+
+                    TestFlowManager.ProxyTestFlowInstance testFlowInstance = TestFlowManager.getFromServerUUID(
+                            server.internalID()
+                    );
+
+                    if (!testFlowInstance.hasPlayer(player.getUsername())) {
+                        remove = true;
+                    }
+
+                    return remove;
+                });
+            } else {
+                serversToConsider.removeIf(server -> {
+                    boolean remove = server.maxPlayers() <= server.registeredServer().getPlayersConnected().size();
+
+                    if (TestFlowManager.isServerInTestFlow(server.internalID())) {
+                        remove = true;
+                    }
+
+                    return remove;
+                });
+            }
 
             GameManager.GameServer server = configuration.getServer(player, serversToConsider);
-            if (server != null) return server;
+
+            if (server != null) {
+                if (TestFlowManager.isPlayerInTestFlow(player.getUsername())) {
+                    player.sendPlainMessage("§8Done overriding the server manager for your test flow.");
+                }
+                return server;
+            }
         }
         return null;
     }

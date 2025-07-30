@@ -9,6 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
@@ -113,6 +114,8 @@ public class GameManager {
                             System.out.println("Server " + givenServer.getServerInfo().getName() + " is offline! Removing from list...");
                             System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
                             servers.get(serverType).remove(registeredServer);
+
+                            TestFlowManager.handleServerDisconnect(registeredServer.internalID);
                         }
                     }).delay(Duration.ofMillis(SLEEP_TIME - 100)).schedule();
                 });

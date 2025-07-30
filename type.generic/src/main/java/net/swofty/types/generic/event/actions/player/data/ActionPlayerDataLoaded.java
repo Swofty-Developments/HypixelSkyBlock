@@ -6,6 +6,7 @@ import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.swofty.commons.TestFlow;
 import net.swofty.packer.SkyBlockTexture;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.data.DataHandler;
@@ -51,7 +52,7 @@ public class ActionPlayerDataLoaded implements SkyBlockEventClass {
             }
 
             player.sendMessage("§7 ");
-            player.sendMessage("§aYour profile is: §e" + player.getDataHandler().get(
+            player.sendMessage("§aYour are playing on profile: §e" + player.getDataHandler().get(
                     DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
             player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
 

@@ -107,6 +107,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
                 (type) -> switch (type) {
                     default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                     case THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
+                    case DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
                 }, // Spawn position
                 true // Announce death messages
         );

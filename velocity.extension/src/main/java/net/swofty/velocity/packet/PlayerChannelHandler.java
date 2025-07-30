@@ -2,6 +2,9 @@ package net.swofty.velocity.packet;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.proxy.protocol.packet.*;
+import com.velocitypowered.proxy.protocol.packet.chat.SystemChatPacket;
+import com.velocitypowered.proxy.protocol.packet.chat.legacy.LegacyChatPacket;
+import com.velocitypowered.proxy.protocol.packet.chat.session.SessionPlayerChatPacket;
 import com.velocitypowered.proxy.protocol.packet.config.*;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,10 +31,13 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != RegistrySyncPacket.class
                     && packet.getClass() != FinishedUpdatePacket.class
                     && packet.getClass() != PluginMessagePacket.class
+                    && packet.getClass() != LegacyChatPacket.class
+                    && packet.getClass() != SystemChatPacket.class
+                    && packet.getClass() != SessionPlayerChatPacket.class
                     && packet.getClass() != KnownPacksPacket.class
                     && packet.getClass() != TagsUpdatePacket.class
             ) {
-                System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
+                //System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;
             }
             if (respawn == null && packet.getClass() == RespawnPacket.class) {

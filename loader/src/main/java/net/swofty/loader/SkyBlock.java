@@ -15,6 +15,7 @@ import net.swofty.anticheat.loader.SwoftyValues;
 import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.TestFlow;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.ProxyAPI;
@@ -25,6 +26,7 @@ import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
@@ -33,6 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class SkyBlock {
     @Getter
@@ -42,7 +45,7 @@ public class SkyBlock {
     @Setter
     private static SkyBlockTypeLoader typeLoader;
 
-    private static final boolean ENABLE_SPARK = Configuration.getOrDefault("spark" , false);
+    private static final boolean ENABLE_SPARK = Configuration.getOrDefault("spark", false);
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -59,14 +62,23 @@ public class SkyBlock {
         Map<String, String> options = parseOptionalArgs(args);
         Integer maxPlayers = options.containsKey("--max-players") ?
                 Integer.parseInt(options.get("--max-players")) : 20;
-        Integer pterodactylPort = options.containsKey("--pterodactyl-port") ?
-                Integer.parseInt(options.get("--pterodactyl-port")) : -1;
 
-        boolean isPterodactyl = Configuration.getOrDefault("pterodactyl-mode" , false);
+        // Test flow configuration
+        String testFlowName = options.get("--test-flow");
+        String testFlowHandler = options.get("--test-flow-handler");
+        String testFlowPlayers = options.get("--test-flow-players");
+        String testFlowIndex = options.get("--test-flow-index");
+        String testFlowTotal = options.get("--test-flow-total");
+        String testFlowTotalExpected = options.get("--test-flow-total-expected");
+        String testFlowServerConfigs = options.get("--test-flow-server-configs");
 
-        if (isPterodactyl && pterodactylPort == -1) {
-            Logger.error("Please specify server port for pterodactyl mode with --pterodactyl-port");
-            System.exit(0);
+        boolean isTestFlow = testFlowName != null;
+
+        if (isTestFlow) {
+            Logger.info("Starting server as part of test flow: " + testFlowName);
+            Logger.info("Handler: " + testFlowHandler);
+            Logger.info("Players: " + testFlowPlayers);
+            Logger.info("Server index: " + testFlowIndex + " of " + testFlowTotal);
         }
 
         /**
@@ -157,8 +169,22 @@ public class SkyBlock {
             ServerOutboundMessage.sendMessageToProxy(
                     ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),
                     (response) -> {
-                        SkyBlockConst.setServerName((String) response.get("server-name"));
-                        SkyBlockConst.setShortenedServerName((String) response.get("shortened-server-name"));
+                        if (isTestFlow) {
+                            String serverNameRaw = ((String) response.get("shortened-server-name"))
+                                    .substring(1);
+                            String serverName = "isolated" + serverNameRaw;
+                            String shortenedServerName = "i" + serverNameRaw;
+
+                            SkyBlockConst.setServerName(serverName);
+                            SkyBlockConst.setShortenedServerName(shortenedServerName);
+
+                            handleTestFlowRegistration(testFlowName, testFlowHandler, testFlowPlayers,
+                                    serverType, testFlowIndex, testFlowTotal, testFlowServerConfigs);
+                        } else {
+                            SkyBlockConst.setServerName((String) response.get("server-name"));
+                            SkyBlockConst.setShortenedServerName((String) response.get("shortened-server-name"));
+                        }
+
                         Logger.info("Received server name: " + SkyBlockConst.getServerName());
                     });
             checkProxyConnected(MinecraftServer.getSchedulerManager());
@@ -185,6 +211,7 @@ public class SkyBlock {
                 });
             }
         });
+
         new Thread(() -> {
             try {
                 Thread.sleep(100);
@@ -197,13 +224,95 @@ public class SkyBlock {
             System.exit(0);
         }).start();
 
+        JSONObject registerMessage = new JSONObject()
+                .put("type", serverType.name())
+                .put("max_players", maxPlayers);
+
+        // Add test flow information if this is a test flow server
+        if (isTestFlow) {
+            registerMessage.put("is_test_flow", true)
+                    .put("test_flow_name", testFlowName)
+                    .put("test_flow_index", testFlowIndex)
+                    .put("test_flow_total", testFlowTotal);
+        }
+
         ServerOutboundMessage.sendMessageToProxy(
                 ToProxyChannels.REGISTER_SERVER,
-                new JSONObject()
-                        .put("type", serverType.name())
-                        .put("port" , pterodactylPort)
-                        .put("max_players", maxPlayers),
+                registerMessage,
                 (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
+    }
+
+    private static void handleTestFlowRegistration(String testFlowName, String handler, String players,
+                                                   ServerType serverType, String index, String total, String serverConfigs) {
+        // Parse players list and set up local test flow state
+        List<String> playerList = Arrays.stream(players.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+        // Set the current test flow for this server
+        TestFlow.setCurrentTestFlow(testFlowName, playerList);
+
+        // Only the first server (global index 0) should register the test flow with the proxy
+        if ("0".equals(index)) {
+            Logger.info("Registering test flow with proxy: " + testFlowName);
+
+            // Parse server configs and create JSON array
+            JSONArray serverConfigsArray = new JSONArray();
+            String[] configs = serverConfigs.split(",");
+
+            for (String config : configs) {
+                String[] parts = config.trim().split(":");
+                String type = parts[0];
+                int count = parts.length > 1 ? Integer.parseInt(parts[1]) : 1;
+
+                serverConfigsArray.put(new JSONObject()
+                        .put("type", type)
+                        .put("count", count));
+            }
+
+            JSONObject testFlowMessage = new JSONObject()
+                    .put("test_flow_name", testFlowName)
+                    .put("handler", handler)
+                    .put("players", new JSONArray(playerList))
+                    .put("server_configs", serverConfigsArray);
+
+            ServerOutboundMessage.sendMessageToProxy(
+                    ToProxyChannels.REGISTER_TEST_FLOW,
+                    testFlowMessage,
+                    (response) -> {
+                        Logger.info("Test flow registered successfully with proxy");
+                        // Mark this server as ready
+                        notifyTestFlowServerReady(testFlowName, serverType, index);
+                    });
+        } else {
+            // For other servers, just notify they're ready
+            notifyTestFlowServerReady(testFlowName, serverType, index);
+        }
+    }
+
+    private static void notifyTestFlowServerReady(String testFlowName, ServerType serverType, String index) {
+        JSONObject readyMessage = new JSONObject()
+                .put("test_flow_name", testFlowName)
+                .put("server_type", serverType.name())
+                .put("server_index", index);
+
+        ServerOutboundMessage.sendMessageToProxy(
+                ToProxyChannels.TEST_FLOW_SERVER_READY,
+                readyMessage,
+                (response) -> {
+                    Logger.info("Notified proxy that " + serverType.name() + " server " + index + " is ready for test flow: " + testFlowName);
+                });
+    }
+
+    private static Map<String, String> parseOptionalArgs(String[] args) {
+        Map<String, String> options = new HashMap<>();
+        for (int i = 0; i < args.length - 1; i++) {
+            if (args[i].startsWith("--")) {
+                options.put(args[i], args[i + 1]);
+            }
+        }
+        return options;
     }
 
     private static void checkProxyConnected(Scheduler scheduler) {
@@ -213,10 +322,10 @@ public class SkyBlock {
             try {
                 ServerOutboundMessage.sendMessageToProxy(
                         ToProxyChannels.PROXY_IS_ONLINE, new JSONObject(), (response) -> {
-                    if (response.get("online").equals(true)) {
-                        responded.set(true);
-                    }
-                });
+                            if (response.get("online").equals(true)) {
+                                responded.set(true);
+                            }
+                        });
             } catch (Exception e) {
                 MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
                 try {
@@ -235,16 +344,6 @@ public class SkyBlock {
             }, TaskSchedule.tick(4), TaskSchedule.stop());
 
             return TaskSchedule.seconds(1);
-        } , ExecutionType.TICK_END);
-    }
-
-    private static Map<String, String> parseOptionalArgs(String[] args) {
-        Map<String, String> options = new HashMap<>();
-        for (int i = 0; i < args.length - 1; i++) {
-            if (args[i].startsWith("--")) {
-                options.put(args[i], args[i + 1]);
-            }
-        }
-        return options;
+        }, ExecutionType.TICK_END);
     }
 }

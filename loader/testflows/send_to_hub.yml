@@ -1,0 +1,5 @@
+start_servers:
+  - ISLAND:2
+  - HUB:2
+
+handler: SendToHubTestFlowHandler.java
