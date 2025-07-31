@@ -20,6 +20,7 @@ public class BazaarSellProtocolObject extends ProtocolObject<
                 JSONObject json = new JSONObject();
                 json.put("item-name", value.itemName);
                 json.put("player-uuid", value.playerUUID);
+                json.put("profile-uuid", value.profileUUID);
                 json.put("price", value.price);
                 json.put("amount", value.amount);
                 return json.toString();
@@ -31,6 +32,7 @@ public class BazaarSellProtocolObject extends ProtocolObject<
                 BazaarSellMessage message = new BazaarSellMessage();
                 message.itemName = jsonObject.getString("item-name");
                 message.playerUUID = UUID.fromString(jsonObject.getString("player-uuid"));
+                message.profileUUID = UUID.fromString(jsonObject.getString("profile-uuid"));
                 message.price = jsonObject.getDouble("price");
                 message.amount = jsonObject.getInt("amount");
                 return message;
@@ -38,7 +40,7 @@ public class BazaarSellProtocolObject extends ProtocolObject<
 
             @Override
             public BazaarSellMessage clone(BazaarSellMessage value) {
-                return new BazaarSellMessage(value.itemName, value.playerUUID, value.price, value.amount);
+                return new BazaarSellMessage(value.itemName, value.playerUUID, value.profileUUID, value.price, value.amount);
             }
         };
     }
@@ -73,6 +75,7 @@ public class BazaarSellProtocolObject extends ProtocolObject<
     public static class BazaarSellMessage {
         public String itemName;
         public UUID playerUUID;
+        public UUID profileUUID;
         public Double price;
         public int amount;
     }

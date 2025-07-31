@@ -1,3 +1,8 @@
 package net.swofty.commons.bazaar;
 
-public interface BazaarTransaction {}
+import org.json.JSONObject;
+
+public interface BazaarTransaction {
+    JSONObject toJSON();
+    BazaarTransaction fromJSON(JSONObject json);
+}

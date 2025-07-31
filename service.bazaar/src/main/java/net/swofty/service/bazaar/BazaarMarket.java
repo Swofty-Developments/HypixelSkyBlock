@@ -24,9 +24,6 @@ public class BazaarMarket {
             Executors.newSingleThreadScheduledExecutor();
 
     private BazaarMarket() {
-        // load persisted orders
-        OrderRepository.loadAll();
-
         // schedule expiration check
         scheduler.scheduleAtFixedRate(this::expireOldOrders,
                 1, 1, TimeUnit.HOURS);
@@ -36,23 +33,26 @@ public class BazaarMarket {
         public enum Side { BUY, SELL }
         public final UUID    orderId;
         public final UUID    owner;
+        public final UUID    profileUuid;
         public final Side    side;
         public final double  price;
         public double        remaining;
         public final Instant ts;
 
         // for new orders:
-        public LimitOrder(UUID owner, Side side, double price, double qty) {
-            this(UUID.randomUUID(), owner, side, price, qty, Instant.now());
+        public LimitOrder(UUID owner, UUID profileUuid, Side side, double price, double qty) {
+            this(UUID.randomUUID(), owner, profileUuid, side, price, qty, Instant.now());
         }
+
         // for DB‐loaded orders:
-        LimitOrder(UUID id, UUID owner, Side side, double price, double qty, Instant ts) {
-            this.orderId   = id;
-            this.owner     = owner;
-            this.side      = side;
-            this.price     = price;
-            this.remaining = qty;
-            this.ts        = ts;
+        LimitOrder(UUID id, UUID owner, UUID profileUuid, Side side, double price, double qty, Instant ts) {
+            this.orderId     = id;
+            this.owner       = owner;
+            this.profileUuid = profileUuid;
+            this.side        = side;
+            this.price       = price;
+            this.remaining   = qty;
+            this.ts          = ts;
         }
     }
 
@@ -63,11 +63,16 @@ public class BazaarMarket {
         book.add(lo);
     }
 
-    public void submitBuy(String item, UUID buyer, double price, double qty) {
-        submitOrder(item, new LimitOrder(buyer, LimitOrder.Side.BUY, price, qty));
+    public void submitBuy(String item, UUID buyer, UUID buyerProfile, double price, double qty) {
+        submitOrder(item, new LimitOrder(buyer, buyerProfile, LimitOrder.Side.BUY, price, qty));
     }
-    public void submitSell(String item, UUID seller, double price, double qty) {
-        submitOrder(item, new LimitOrder(seller, LimitOrder.Side.SELL, price, qty));
+    public void submitSell(String item, UUID seller, UUID sellerProfile, double price, double qty) {
+        submitOrder(item, new LimitOrder(seller, sellerProfile, LimitOrder.Side.SELL, price, qty));
+    }
+    public void submitDelete(UUID orderId, UUID player, UUID profile) {
+        OrderRepository.delete(orderId);
+        buyBook.values().forEach(q -> q.removeIf(o -> o.orderId.equals(orderId)));
+        sellBook.values().forEach(q -> q.removeIf(o -> o.orderId.equals(orderId)));
     }
 
     private void submitOrder(String item, LimitOrder incoming) {
@@ -117,7 +122,8 @@ public class BazaarMarket {
 
             // emit
             var tx = new SuccessfulBazaarTransaction(
-                    item, b.owner, s.owner, price, qty, tax, Instant.now()
+                    item, b.owner, b.profileUuid, s.owner, s.profileUuid,
+                    price, qty, tax, Instant.now()
             );
             propagator.propagate(tx);
 
@@ -162,7 +168,7 @@ public class BazaarMarket {
                 OrderRepository.delete(o.orderId);
 
                 var evt = new OrderExpiredBazaarTransaction(
-                        o.orderId, item, o.owner, o.side.name(), o.remaining, Instant.now()
+                        o.orderId, item, o.owner, o.profileUuid, o.side.name(), o.price, o.remaining, Instant.now()
                 );
                 propagator.propagate(evt);
             }

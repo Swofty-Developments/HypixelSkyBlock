@@ -1,9 +1,6 @@
 package net.swofty.commons.service;
 
 import lombok.Getter;
-import net.swofty.commons.proxy.ProxyChannelRequirements;
-import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 @Getter
 public enum FromServiceChannels {
@@ -12,6 +9,7 @@ public enum FromServiceChannels {
     LOCK_PLAYER_DATA("lock-player-data"),
     UNLOCK_PLAYER_DATA("unlock-player-data"),
     KICK_FROM_GUI("kick-from-gui"),
+    PROPAGATE_BAZAAR_TRANSACTION("propagate-bazaar-transaction"),
     ;
 
     private final String channelName;

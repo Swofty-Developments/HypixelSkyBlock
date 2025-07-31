@@ -33,6 +33,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
         List<OrderRecord> buyOrderRecords = buyOrders.stream()
                 .map(order -> new OrderRecord(
                         order.owner,
+                        order.profileUuid,
                         order.price,
                         order.remaining
                 ))
@@ -41,6 +42,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
         List<OrderRecord> sellOrderRecords = sellOrders.stream()
                 .map(order -> new OrderRecord(
                         order.owner,
+                        order.profileUuid,
                         order.price,
                         order.remaining
                 ))

@@ -21,6 +21,7 @@ public class BazaarGetPendingOrdersProtocolObject
             public String serialize(BazaarGetPendingOrdersMessage v) {
                 JSONObject o = new JSONObject();
                 o.put("player-uuid", v.playerUUID.toString());
+                o.put("profile-uuid", v.profileUUID.toString());
                 return o.toString();
             }
 
@@ -28,13 +29,14 @@ public class BazaarGetPendingOrdersProtocolObject
             public BazaarGetPendingOrdersMessage deserialize(String json) {
                 JSONObject o = new JSONObject(json);
                 return new BazaarGetPendingOrdersMessage(
-                        UUID.fromString(o.getString("player-uuid"))
+                        UUID.fromString(o.getString("player-uuid")),
+                        UUID.fromString(o.getString("profile-uuid"))
                 );
             }
 
             @Override
             public BazaarGetPendingOrdersMessage clone(BazaarGetPendingOrdersMessage v) {
-                return new BazaarGetPendingOrdersMessage(v.playerUUID);
+                return new BazaarGetPendingOrdersMessage(v.playerUUID, v.profileUUID);
             }
         };
     }
@@ -51,6 +53,7 @@ public class BazaarGetPendingOrdersProtocolObject
                     o.put("side",       order.side);
                     o.put("price",      order.price);
                     o.put("amount",     order.amount);
+                    o.put("profile-uuid", order.profileUUID.toString());
                     return o;
                 }).collect(Collectors.toList()));
                 return arr.toString();
@@ -66,7 +69,8 @@ public class BazaarGetPendingOrdersProtocolObject
                             o.getString("item-name"),
                             o.getString("side"),
                             o.getDouble("price"),
-                            o.getDouble("amount")
+                            o.getDouble("amount"),
+                            UUID.fromString(o.getString("profile-uuid"))
                     );
                 }).collect(Collectors.toList());
                 return new BazaarGetPendingOrdersResponse(list);
@@ -82,6 +86,7 @@ public class BazaarGetPendingOrdersProtocolObject
     @lombok.AllArgsConstructor
     public static class BazaarGetPendingOrdersMessage {
         public UUID playerUUID;
+        public UUID profileUUID;
     }
 
     public record PendingOrder(
@@ -89,7 +94,8 @@ public class BazaarGetPendingOrdersProtocolObject
             String itemName,
             String side,
             double price,
-            double amount
+            double amount,
+            UUID   profileUUID
     ) {}
 
     /** Response is just a list of those. */

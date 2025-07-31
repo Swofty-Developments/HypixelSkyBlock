@@ -6,12 +6,10 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
-import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
+import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
@@ -61,7 +59,7 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
-                        "§7You don't have any ongoing orders.",
+                        "§7View your pending Bazaar orders",
                         " ",
                         "§eClick to manage!");
             }
@@ -70,137 +68,93 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        List<CompletableFuture> futures = new ArrayList<>();
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
 
         int i = 0;
         for (ItemType itemType : itemSet.items) {
-            CompletableFuture future = new CompletableFuture();
-            futures.add(future);
             int slot = SLOTS.get(itemSet.items.size())[i];
 
-            Thread.startVirtualThread(() -> {
-                BazaarGetItemProtocolObject.BazaarGetItemMessage message =
-                        new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name());
-                CompletableFuture<BazaarGetItemProtocolObject.BazaarGetItemResponse> futureBazaar =
-                        new ProxyService(ServiceType.BAZAAR).handleRequest(message);
-                BazaarGetItemProtocolObject.BazaarGetItemResponse response = futureBazaar.join();
+            CompletableFuture<Void> future = e.player().getBazaarConnector().getItemStatistics(itemType)
+                    .thenAccept(stats -> {
+                        set(new GUIClickableItem(slot) {
+                            @Override
+                            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                                new GUIBazaarItem(itemType).open(player);
+                            }
 
-                // Calculate statistics from order data
-                BazaarStatistics sellStats = calculateSellStatistics(response.sellOrders());
-                BazaarStatistics buyStats = calculateBuyStatistics(response.buyOrders());
+                            @Override
+                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                                List<String> lore = new ArrayList<>();
+                                lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
+                                lore.add(" ");
 
-                set(new GUIClickableItem(slot) {
-                    @Override
-                    public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                        new GUIBazaarItem(itemType).open(player);
-                    }
+                                // Buy price (what you pay - from sell orders)
+                                if (stats.bestAsk() > 0) {
+                                    lore.add("§7Buy price: §6" +
+                                            new DecimalFormat("#,###").format(stats.bestAsk())
+                                            + " coins");
+                                    lore.add("§8" + StringUtility.shortenNumber(stats.bestAsk())
+                                            + " best offer");
+                                } else {
+                                    lore.add("§7Buy price: §cNo offers");
+                                    lore.add("§8No sell orders available");
+                                }
 
-                    @Override
-                    public ItemStack.Builder getItem(SkyBlockPlayer player) {
-                        List<String> lore = new ArrayList<>();
-                        lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
-                        lore.add(" ");
+                                lore.add(" ");
 
-                        // Buy price (what you pay - from sell orders)
-                        if (sellStats.getAveragePrice() > 0) {
-                            lore.add("§7Buy price: §6" +
-                                    new DecimalFormat("#,###").format(sellStats.getAveragePrice())
-                                    + " coins");
-                            lore.add("§8" + StringUtility.shortenNumber(sellStats.getLowestPrice())
-                                    + " in " + response.sellOrders().size() + " offers");
-                        } else {
-                            lore.add("§7Buy price: §cNo offers");
-                            lore.add("§8No sell orders available");
-                        }
+                                // Sell price (what you get - from buy orders)
+                                if (stats.bestBid() > 0) {
+                                    lore.add("§7Sell price: §6" +
+                                            new DecimalFormat("#,###").format(stats.bestBid())
+                                            + " coins");
+                                    lore.add("§8" + StringUtility.shortenNumber(stats.bestBid())
+                                            + " best bid");
+                                } else {
+                                    lore.add("§7Sell price: §cNo orders");
+                                    lore.add("§8No buy orders available");
+                                }
 
-                        lore.add(" ");
+                                lore.add(" ");
+                                lore.add("§eClick to view details!");
 
-                        // Sell price (what you get - from buy orders)
-                        if (buyStats.getAveragePrice() > 0) {
-                            lore.add("§7Sell price: §6" +
-                                    new DecimalFormat("#,###").format(buyStats.getAveragePrice())
-                                    + " coins");
-                            lore.add("§8" + StringUtility.shortenNumber(buyStats.getHighestPrice())
-                                    + " in " + response.buyOrders().size() + " orders");
-                        } else {
-                            lore.add("§7Sell price: §cNo orders");
-                            lore.add("§8No buy orders available");
-                        }
+                                return ItemStackCreator.getStack(
+                                        itemType.rarity.getColor() + itemType.getDisplayName(),
+                                        itemType.material, 1, lore);
+                            }
+                        });
+                    })
+                    .exceptionally(throwable -> {
+                        // Handle errors gracefully
+                        set(new GUIClickableItem(slot) {
+                            @Override
+                            public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
+                                new GUIBazaarItem(itemType).open(player);
+                            }
 
-                        lore.add(" ");
-                        lore.add("§eClick to view details!");
+                            @Override
+                            public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                                List<String> lore = new ArrayList<>();
+                                lore.add("§8" + StringUtility.toNormalCase(itemType.rarity.name()) + " commodity");
+                                lore.add(" ");
+                                lore.add("§cError loading market data");
+                                lore.add("§7Please try again later");
+                                lore.add(" ");
+                                lore.add("§eClick to view details!");
 
-                        return ItemStackCreator.getStack(
-                                itemType.rarity.getColor() + itemType.getDisplayName(),
-                                itemType.material, 1, lore);
-                    }
-                });
+                                return ItemStackCreator.getStack(
+                                        itemType.rarity.getColor() + itemType.getDisplayName(),
+                                        itemType.material, 1, lore);
+                            }
+                        });
+                        return null;
+                    });
 
-                future.complete(null);
-            });
+            futures.add(future);
             i++;
         }
 
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-
-        updateItemStacks(getInventory(), getPlayer());
-    }
-
-    private BazaarStatistics calculateBuyStatistics(List<BazaarGetItemProtocolObject.OrderRecord> buyOrders) {
-        if (buyOrders.isEmpty()) {
-            return new BazaarStatistics(0, 0, 0);
-        }
-
-        double total = buyOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
-        double average = total / buyOrders.size();
-
-        double highest = buyOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .max().orElse(0);
-
-        double lowest = buyOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .min().orElse(0);
-
-        return new BazaarStatistics(highest, lowest, average);
-    }
-
-    private BazaarStatistics calculateSellStatistics(List<BazaarGetItemProtocolObject.OrderRecord> sellOrders) {
-        if (sellOrders.isEmpty()) {
-            return new BazaarStatistics(0, 0, 0);
-        }
-
-        double total = sellOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
-        double average = total / sellOrders.size();
-
-        double highest = sellOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .max().orElse(0);
-
-        double lowest = sellOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .min().orElse(0);
-
-        return new BazaarStatistics(highest, lowest, average);
-    }
-
-    /**
-     * Helper class to hold price statistics
-     */
-    private static class BazaarStatistics {
-        private final double highestPrice;
-        private final double lowestPrice;
-        private final double averagePrice;
-
-        public BazaarStatistics(double highestPrice, double lowestPrice, double averagePrice) {
-            this.highestPrice = highestPrice;
-            this.lowestPrice = lowestPrice;
-            this.averagePrice = averagePrice;
-        }
-
-        public double getHighestPrice() { return highestPrice; }
-        public double getLowestPrice() { return lowestPrice; }
-        public double getAveragePrice() { return averagePrice; }
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenRun(() -> updateItemStacks(getInventory(), getPlayer()));
     }
 
     @Override
@@ -245,10 +199,12 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
-            player.sendMessage("§cThe Bazaar is currently offline!");
-            player.closeInventory();
-        }
+        player.getBazaarConnector().isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage("§cThe Bazaar is currently offline!");
+                player.closeInventory();
+            }
+        });
     }
 
     @Override

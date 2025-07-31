@@ -10,7 +10,11 @@ import org.tinylog.Logger;
 import java.util.UUID;
 
 public class ProxyAPI {
+    private final UUID serverUUID;
+
     public ProxyAPI(String URI, UUID serverUUID) {
+        this.serverUUID = serverUUID;
+
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterID(serverUUID.toString());
     }
@@ -51,6 +55,22 @@ public class ProxyAPI {
                     serviceId,
                     ChannelRegistry.getFromName("service_response"),
                     requestId + "}=-=-={" + response.toString());
+        });
+
+        RedisAPI.getInstance().registerChannel("service_broadcast_" + handler.getChannel().getChannelName(), (event) -> {
+            String[] split = event.message.split("}=-=-=\\{");
+            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
+            UUID requestId = UUID.fromString(split[1]);
+            String rawMessage = split[2];
+            JSONObject json = new JSONObject(rawMessage);
+
+            JSONObject response = handler.onMessage(json);
+
+            // Send response back to service with this server's UUID
+            RedisAPI.getInstance().publishMessage(
+                    serviceId,
+                    ChannelRegistry.getFromName("service_broadcast_response"),
+                    requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response.toString());
         });
     }
 

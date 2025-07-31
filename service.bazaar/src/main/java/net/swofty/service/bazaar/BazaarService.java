@@ -17,6 +17,8 @@ public class BazaarService implements SkyBlockService {
 
         // Initialize the bazaar market (loads existing orders)
         BazaarMarket.get();
+        // load persisted orders
+        OrderRepository.loadAll();
     }
 
     @Override

@@ -26,6 +26,7 @@ import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
+import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.datapoints.*;
@@ -480,6 +481,10 @@ public class SkyBlockPlayer extends Player {
 
     public DatapointItemsInSacks.PlayerItemsInSacks getSackItems() {
         return getDataHandler().get(DataHandler.Data.ITEMS_IN_SACKS, DatapointItemsInSacks.class).getValue();
+    }
+
+    public BazaarConnector getBazaarConnector() {
+        return new BazaarConnector(this);
     }
 
     public List<SkyBlockItem> getAllSacks() {

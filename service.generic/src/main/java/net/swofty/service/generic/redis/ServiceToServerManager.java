@@ -8,13 +8,21 @@ import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class ServiceToServerManager {
     private static final Map<UUID, CompletableFuture<JSONObject>> pendingRequests = new ConcurrentHashMap<>();
+    // Keep track of in-flight broadcasts
+    private static final Map<UUID, BroadcastRequest> pendingBroadcastRequests = new ConcurrentHashMap<>();
+    // Single threaded scheduler to fire timeouts
+    private static final ScheduledExecutorService scheduler =
+            Executors.newSingleThreadScheduledExecutor(r -> {
+                Thread t = new Thread(r, "broadcast-timeouter");
+                t.setDaemon(true);
+                return t;
+            });
     private static ServiceType currentServiceType;
 
     public static void initialize(ServiceType serviceType) {
@@ -29,6 +37,18 @@ public class ServiceToServerManager {
             CompletableFuture<JSONObject> future = pendingRequests.remove(requestId);
             if (future != null) {
                 future.complete(new JSONObject(response));
+            }
+        });
+
+        RedisAPI.getInstance().registerChannel("service_broadcast_response", (event) -> {
+            String[] split = event.message.split("}=-=-=\\{");
+            UUID requestId = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
+            UUID serverUUID = UUID.fromString(split[1]);
+            String response = split[2];
+
+            BroadcastRequest broadcastRequest = pendingBroadcastRequests.get(requestId);
+            if (broadcastRequest != null) {
+                broadcastRequest.addResponse(serverUUID, new JSONObject(response));
             }
         });
     }
@@ -82,6 +102,51 @@ public class ServiceToServerManager {
                     });
                     return results;
                 });
+    }
+
+    /**
+     * Send a message to ALL servers and collect responses
+     */
+    public static CompletableFuture<Map<UUID, JSONObject>> sendToAllServers(FromServiceChannels channel, JSONObject message) {
+        return sendToAllServers(channel, message, 300); // Default 300ms timeout
+    }
+
+    /**
+     * Send a message to all servers and collect responses for up to `timeoutMs` milliseconds.
+     * When the timeout elapses, completes the future with whatever has been collected so far.
+     */
+    public static CompletableFuture<Map<UUID, JSONObject>> sendToAllServers(
+            FromServiceChannels channel,
+            JSONObject message,
+            int timeoutMs
+    ) {
+        UUID requestId = UUID.randomUUID();
+        CompletableFuture<Map<UUID, JSONObject>> future = new CompletableFuture<>();
+
+        // Track this request
+        BroadcastRequest broadcastRequest = new BroadcastRequest(future);
+        pendingBroadcastRequests.put(requestId, broadcastRequest);
+
+        // Build and publish the Redis message
+        String channelName = "service_broadcast_" + channel.getChannelName();
+        String messageContent = currentServiceType.name()
+                + "}=-=-={" + requestId
+                + "}=-=-={" + message.toString();
+        RedisAPI.getInstance()
+                .publishMessage("*",
+                        ChannelRegistry.getFromName(channelName),
+                        messageContent);
+
+        // Schedule the timeout task
+        scheduler.schedule(() -> {
+            // Remove from pending and complete with collected responses
+            BroadcastRequest req = pendingBroadcastRequests.remove(requestId);
+            if (req != null) {
+                req.getFuture().complete(req.getResponses());
+            }
+        }, timeoutMs, TimeUnit.MILLISECONDS);
+
+        return future;
     }
 
     /**

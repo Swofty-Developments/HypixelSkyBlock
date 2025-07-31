@@ -27,7 +27,14 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
             BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage msg) {
 
         UUID player = msg.playerUUID;
-        var docs = OrderDatabase.ordersCollection.find(Filters.eq("owner", player.toString()));
+        UUID profile = msg.profileUUID;
+
+        var docs = OrderDatabase.ordersCollection.find(
+                Filters.and(
+                        Filters.eq("owner", player.toString()),
+                        Filters.eq("profileUuid", profile.toString())
+                )
+        );
         List<PendingOrder> out = new ArrayList<>();
 
         for (Document d : docs) {
@@ -36,7 +43,8 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
                     d.getString("itemName"),
                     d.getString("side"),
                     d.getDouble("price"),
-                    d.getDouble("remaining")
+                    d.getDouble("remaining"),
+                    UUID.fromString(d.getString("profileUuid"))
             ));
         }
 

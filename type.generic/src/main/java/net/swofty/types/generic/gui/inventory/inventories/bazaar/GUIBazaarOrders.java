@@ -4,14 +4,9 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject.PendingOrder;
-import net.swofty.proxyapi.ProxyService;
+import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
-import net.swofty.types.generic.gui.inventory.RefreshingGUI;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
@@ -20,8 +15,6 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public class GUIBazaarOrders extends SkyBlockInventoryGUI {
     // Slots for sell orders (top row)
@@ -55,58 +48,29 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        ProxyService bazaar = new ProxyService(ServiceType.BAZAAR);
-
-        bazaar.<BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage,
-                        BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse>handleRequest(
-                        new BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage(
-                                e.player().getUuid()
-                        )
-                )
-                .thenAccept(resp -> {
-                    updateOrders(resp.orders);
-                });
+        e.player().getBazaarConnector().getPendingOrders()
+                .thenAccept(this::updateOrders);
     }
 
-    private void updateOrders(List<PendingOrder> orders) {
+    private void updateOrders(List<BazaarConnector.BazaarOrder> orders) {
         DecimalFormat formatter = new DecimalFormat("#,###.##");
 
         // Clear the sell/buy rows first
-        for (int slot : SELL_SLOTS) {
-            set(new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer p) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-        }
-        for (int slot : BUY_SLOTS) {
-            set(new GUIItem(slot) {
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer p) {
-                    return ItemStack.builder(Material.AIR);
-                }
-            });
-        }
+        clearSlots();
 
         // Track next free positions
         int sellIndex = 0, buyIndex = 0;
 
-        for (PendingOrder order : orders) {
-            boolean isSell = "SELL".equalsIgnoreCase(order.side());
+        for (BazaarConnector.BazaarOrder order : orders) {
+            boolean isSell = order.side() == BazaarConnector.OrderSide.SELL;
             int[] slots = isSell ? SELL_SLOTS : BUY_SLOTS;
             int index = isSell ? sellIndex++ : buyIndex++;
 
             if (index >= slots.length) break; // No more room
 
             int slot = slots[index];
-            ItemType itemType;
-
-            try {
-                itemType = ItemType.valueOf(order.itemName());
-            } catch (IllegalArgumentException e) {
-                continue; // Skip invalid item types
-            }
+            ItemType itemType = order.getItemType();
+            if (itemType == null) continue; // Skip invalid item types
 
             set(new GUIClickableItem(slot) {
                 @Override
@@ -118,25 +82,16 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
                 public ItemStack.Builder getItem(SkyBlockPlayer p) {
                     List<String> lore = new ArrayList<>();
 
-                    if (isSell) {
-                        lore.add("§8Worth " + formatter.format(order.price() * order.amount()) + " coins");
-                        lore.add(" ");
-                        lore.add("§7Order amount: §a" + (int)order.amount() + "§8x");
-                        lore.add(" ");
-                        lore.add("§7Price per unit: §6" + formatter.format(order.price()) + " coins");
-                    } else {
-                        lore.add("§8Worth " + formatter.format(order.price() * order.amount()) + " coins");
-                        lore.add(" ");
-                        lore.add("§7Order amount: §a" + (int)order.amount() + "§8x");
-                        lore.add(" ");
-                        lore.add("§7Price per unit: §6" + formatter.format(order.price()) + " coins");
-                    }
-
+                    lore.add("§8Worth " + formatter.format(order.getTotalValue()) + " coins");
+                    lore.add(" ");
+                    lore.add("§7Order amount: §a" + (int)order.amount() + "§8x");
+                    lore.add(" ");
+                    lore.add("§7Price per unit: §6" + formatter.format(order.price()) + " coins");
                     lore.add(" ");
                     lore.add("§eClick to view options!");
 
                     return ItemStackCreator.getStack(
-                            (isSell ? "§6§l" : "§a§l") + (isSell ? "SELL" : "BUY") + " §f" + itemType.getDisplayName(),
+                            (isSell ? "§6§l" : "§a§l") + order.side() + " §f" + itemType.getDisplayName(),
                             itemType.material,
                             1,
                             lore
@@ -172,6 +127,32 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
         updateItemStacks(getInventory(), getPlayer());
     }
 
-    @Override public boolean allowHotkeying() { return false; }
-    @Override public void onBottomClick(InventoryPreClickEvent e) { e.setCancelled(true); }
+    private void clearSlots() {
+        for (int slot : SELL_SLOTS) {
+            set(new GUIItem(slot) {
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    return ItemStack.builder(Material.AIR);
+                }
+            });
+        }
+        for (int slot : BUY_SLOTS) {
+            set(new GUIItem(slot) {
+                @Override
+                public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                    return ItemStack.builder(Material.AIR);
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean allowHotkeying() {
+        return false;
+    }
+
+    @Override
+    public void onBottomClick(InventoryPreClickEvent e) {
+        e.setCancelled(true);
+    }
 }

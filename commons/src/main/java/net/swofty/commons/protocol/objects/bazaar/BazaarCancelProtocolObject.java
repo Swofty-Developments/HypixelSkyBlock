@@ -20,6 +20,7 @@ public class BazaarCancelProtocolObject extends ProtocolObject<
                 JSONObject o = new JSONObject();
                 o.put("order-id",   v.orderId.toString());
                 o.put("player-uuid", v.playerUuid.toString());
+                o.put("profile-uuid", v.profileUuid.toString());
                 return o.toString();
             }
             @Override
@@ -27,12 +28,13 @@ public class BazaarCancelProtocolObject extends ProtocolObject<
                 JSONObject o = new JSONObject(json);
                 return new CancelMessage(
                         UUID.fromString(o.getString("order-id")),
-                        UUID.fromString(o.getString("player-uuid"))
+                        UUID.fromString(o.getString("player-uuid")),
+                        UUID.fromString(o.getString("profile-uuid"))
                 );
             }
             @Override
             public CancelMessage clone(CancelMessage v) {
-                return new CancelMessage(v.orderId, v.playerUuid);
+                return new CancelMessage(v.orderId, v.playerUuid, v.profileUuid);
             }
         };
     }
@@ -62,6 +64,7 @@ public class BazaarCancelProtocolObject extends ProtocolObject<
     public static class CancelMessage {
         public UUID orderId;
         public UUID playerUuid;
+        public UUID profileUuid;
     }
 
     @AllArgsConstructor @NoArgsConstructor

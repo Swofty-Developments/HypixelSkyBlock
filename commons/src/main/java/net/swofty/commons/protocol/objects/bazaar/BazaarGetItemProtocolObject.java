@@ -68,6 +68,7 @@ public class BazaarGetItemProtocolObject extends ProtocolObject<
 
     public record OrderRecord(
             UUID playerUUID,
+            UUID profileUUID,
             double price,
             double amount
     ) {}

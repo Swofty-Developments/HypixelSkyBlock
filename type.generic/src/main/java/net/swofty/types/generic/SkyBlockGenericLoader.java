@@ -85,6 +85,7 @@ import net.swofty.types.generic.user.fairysouls.FairySoulZone;
 import net.swofty.types.generic.user.statistics.PlayerStatistics;
 import net.swofty.types.generic.utility.LaunchPads;
 import net.swofty.types.generic.utility.MathUtility;
+import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -558,11 +559,11 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         return players;
     }
 
-    public static SkyBlockPlayer getFromUUID(UUID uuid) {
+    public static @Nullable SkyBlockPlayer getFromUUID(UUID uuid) {
         return getLoadedPlayers().stream().filter(player -> player.getUuid().toString().equalsIgnoreCase(uuid.toString())).findFirst().orElse(null);
     }
 
-    public static SkyBlockPlayer getPlayerFromProfileUUID(UUID uuid) {
+    public static @Nullable SkyBlockPlayer getPlayerFromProfileUUID(UUID uuid) {
         return getLoadedPlayers().stream().filter(player -> player.getProfiles().getCurrentlySelected().equals(uuid)).findFirst().orElse(null);
     }
 

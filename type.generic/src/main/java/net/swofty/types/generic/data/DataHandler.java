@@ -312,7 +312,7 @@ public class DataHandler {
         }, (player, datapoint) -> {
             player.setExperience((Long) datapoint.getValue());
         }, (player) -> new DatapointLong("experience", player.getExperience())),
-        BAZAAR_ORDERS("bazaar_orders", false, false, false, DatapointStringList.class, new DatapointStringList("bazaar_orders")),
+        COMPLETED_BAZAAR_TRANSACTIONS("completed_bazaar_transactions", false, false, false, DatapointCompletedBazaarTransactions.class, new DatapointCompletedBazaarTransactions("completed_bazaar_transactions")),
         MISSION_DATA("mission_data", false, false, false, DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()), (player, datapoint) -> {
         }, (player, datapoint) -> {
             MissionData data = (MissionData) datapoint.getValue();

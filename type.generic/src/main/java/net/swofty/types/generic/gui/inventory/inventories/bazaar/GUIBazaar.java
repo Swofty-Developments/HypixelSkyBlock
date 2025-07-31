@@ -5,12 +5,10 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
-import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.bazaar.BazaarCategories;
+import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
@@ -23,7 +21,6 @@ import net.swofty.types.generic.utility.MathUtility;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
@@ -51,6 +48,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
             @Override public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
                 new GUIBazaarOrders().open(p);
             }
+
             @Override public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 return ItemStackCreator.getStack("§aManage Orders",
                         Material.BOOK, 1,
@@ -76,7 +74,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
             CACHE.remove(category);
             renderPlaceholders();
             // async rebuild & render
-            CompletableFuture.runAsync(this::rebuildCacheAndRender);
+            CompletableFuture.runAsync(() -> rebuildCacheAndRender(e.player()));
         }
     }
 
@@ -117,7 +115,7 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
         updateItemStacks(getInventory(), getPlayer());
     }
 
-    private void rebuildCacheAndRender() {
+    private void rebuildCacheAndRender(SkyBlockPlayer player) {
         List<BazaarItemSet> sets = category.getItems().stream().toList();
 
         // Create a thread-safe map to collect results
@@ -133,20 +131,13 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
 
         for (BazaarItemSet set : sets) {
             for (ItemType type : set.items) {
-                CompletableFuture<Void> future = new ProxyService(ServiceType.BAZAAR)
-                        .<BazaarGetItemProtocolObject.BazaarGetItemMessage, BazaarGetItemProtocolObject.BazaarGetItemResponse>handleRequest(
-                                new BazaarGetItemProtocolObject.BazaarGetItemMessage(type.name())
-                        )
-                        .thenAccept(response -> {
-                            // Calculate statistics from the order data
-                            BazaarStatistics sellStats = calculateSellStatistics(response.sellOrders());
-                            BazaarStatistics buyStats = calculateBuyStatistics(response.buyOrders());
-
+                CompletableFuture<Void> future = player.getBazaarConnector().getItemStatistics(type)
+                        .thenAccept(stats -> {
                             // Store the price data thread-safely
                             setDataMap.get(set).put(type, new PriceData(
                                     type,
-                                    sellStats.getAveragePrice(),
-                                    buyStats.getAveragePrice()
+                                    stats.averageAsk(),   // Average sell price
+                                    stats.averageBid()    // Average buy price
                             ));
                         })
                         .exceptionally(throwable -> {
@@ -248,55 +239,6 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
         updateItemStacks(getInventory(), getPlayer());
     }
 
-    private BazaarStatistics calculateBuyStatistics(List<BazaarGetItemProtocolObject.OrderRecord> buyOrders) {
-        if (buyOrders.isEmpty()) {
-            return new BazaarStatistics(0, 0, 0);
-        }
-
-        double total = buyOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
-        double average = total / buyOrders.size();
-
-        double highest = buyOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .max().orElse(0);
-
-        return new BazaarStatistics(highest, 0, average);
-    }
-
-    private BazaarStatistics calculateSellStatistics(List<BazaarGetItemProtocolObject.OrderRecord> sellOrders) {
-        if (sellOrders.isEmpty()) {
-            return new BazaarStatistics(0, 0, 0);
-        }
-
-        double total = sellOrders.stream().mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price).sum();
-        double average = total / sellOrders.size();
-
-        double lowest = sellOrders.stream()
-                .mapToDouble(BazaarGetItemProtocolObject.OrderRecord::price)
-                .min().orElse(0);
-
-        return new BazaarStatistics(0, lowest, average);
-    }
-
-    /**
-     * Helper class to hold price statistics
-     */
-    private static class BazaarStatistics {
-        private final double highestPrice;
-        private final double lowestPrice;
-        private final double averagePrice;
-
-        public BazaarStatistics(double highestPrice, double lowestPrice, double averagePrice) {
-            this.highestPrice = highestPrice;
-            this.lowestPrice = lowestPrice;
-            this.averagePrice = averagePrice;
-        }
-
-        public double getHighestPrice() { return highestPrice; }
-        public double getLowestPrice() { return lowestPrice; }
-        public double getAveragePrice() { return averagePrice; }
-    }
-
     /**
      * Thread-safe price data holder
      */
@@ -306,10 +248,14 @@ public class GUIBazaar extends SkyBlockInventoryGUI implements RefreshingGUI {
     @Override public void onBottomClick(InventoryPreClickEvent e) { e.setCancelled(true); }
     @Override public int refreshRate() { return 10; }
     @Override public void refreshItems(SkyBlockPlayer player) {
-        if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
-            player.sendMessage("§cThe Bazaar is currently offline!");
-            player.closeInventory();
-        }
+        player.getBazaarConnector().isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage("§cThe Bazaar is currently offline!");
+                player.closeInventory();
+            } else {
+                player.getBazaarConnector().processAllPendingTransactions();
+            }
+        });
     }
 
     private record CacheEntry(long timestamp, List<CachedSlot> slots) {
