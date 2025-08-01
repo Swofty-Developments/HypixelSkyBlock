@@ -52,7 +52,7 @@ public class ActionPlayerDataLoaded implements SkyBlockEventClass {
             }
 
             player.sendMessage("§7 ");
-            player.sendMessage("§aYour are playing on profile: §e" + player.getDataHandler().get(
+            player.sendMessage("§aYou are playing on profile: §e" + player.getDataHandler().get(
                     DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
             player.sendMessage("§8Profile ID: " + player.getProfiles().getCurrentlySelected());
 
