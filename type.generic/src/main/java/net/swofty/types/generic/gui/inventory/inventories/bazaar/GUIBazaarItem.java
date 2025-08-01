@@ -8,6 +8,7 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.gui.inventory.*;
+import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarOrderAmountSelection;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarPriceSelection;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIItem;
@@ -20,19 +21,16 @@ import java.util.*;
 
 public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI {
     private final ItemType itemType;
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
+    private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getKey()
-                        + " → " + itemType.getDisplayName(),
-                InventoryType.CHEST_4_ROW);
-
+        super(BazaarCategories.getFromItem(itemType).getKey() + " → " + itemType.getDisplayName(), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
-        // Background and navigation
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(30, new GUIBazaar(BazaarCategories.getFromItem(itemType).getKey())));
 
-        // Manage Orders
         set(new GUIClickableItem(32) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
@@ -40,225 +38,253 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             }
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
-                return ItemStackCreator.getStack("§aManage Orders",
-                        Material.BOOK, 1,
-                        "§7View your pending Bazaar orders",
-                        "§eClick to open");
+                return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
+                        "§7View your pending Bazaar orders", "§eClick to open");
             }
         });
 
-        // Center item preview
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
-                return new NonPlayerItemUpdater(new SkyBlockItem(itemType))
-                        .getUpdatedItem();
+                return new NonPlayerItemUpdater(new SkyBlockItem(itemType)).getUpdatedItem();
             }
         });
     }
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
-        // Fetch live statistics for this item
         e.player().getBazaarConnector().getItemStatistics(itemType)
-                .thenAccept(this::updateItems);
+                .thenAccept(stats -> {
+                    this.currentStats = stats;
+                    updateItems(stats);
+                });
     }
 
     private void updateItems(BazaarConnector.BazaarStatistics stats) {
-        // SLOT 10: Instant Buy
         set(new GUIClickableItem(10) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                int maxSpace = p.maxItemFit(itemType);
+                if (stats.bestAsk() <= 0) {
+                    p.sendMessage("§6[Bazaar] §cNo sell offers available!");
+                    return;
+                }
 
-                p.getBazaarConnector().instantBuy(itemType, maxSpace)
-                        .thenAccept(result -> {
-                            if (result.success()) {
-                                p.sendMessage("§6[Bazaar] §a" + result.message());
-                                p.closeInventory();
-                            } else {
-                                p.sendMessage("§c[Bazaar] " + result.message());
+                int maxSpace = p.maxItemFit(itemType);
+                if (maxSpace <= 0) {
+                    p.sendMessage("§6[Bazaar] §cInventory full!");
+                    return;
+                }
+
+                double priceWithFee = stats.bestAsk() * 1.04;
+
+                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, true, true, maxSpace, priceWithFee)
+                        .openAmountSelection(p)
+                        .thenAccept(amount -> {
+                            if (amount <= 0) return;
+
+                            double totalCost = priceWithFee * amount;
+                            if (totalCost > p.getCoins()) {
+                                p.sendMessage("§6[Bazaar] §cNeed " + FORMATTER.format(totalCost) + " coins!");
+                                return;
                             }
+
+                            p.getBazaarConnector().instantBuy(itemType, amount)
+                                    .thenAccept(result -> {
+                                        p.sendMessage("§6[Bazaar] " + (result.success() ? "§a" : "§c") + result.message());
+                                        if (result.success()) p.closeInventory();
+                                    });
                         });
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
+                lore.add("§8Instant Buy");
                 lore.add(" ");
 
                 if (stats.bestAsk() <= 0) {
                     lore.add("§cNo sell offers available");
-                    lore.add("§8Cannot buy instantly");
                 } else {
-                    double priceWithFee = stats.bestAsk() * 1.04; // 4% fee
-                    lore.add("§7Unit price: §6" + String.format("%.2f", priceWithFee) + " coins §7(+4% fee)");
-                    lore.add("§7Max available: §6" + p.maxItemFit(itemType));
+                    double priceWithFee = stats.bestAsk() * 1.04;
+                    lore.add("§7Price: §6" + FORMATTER.format(priceWithFee) + " coins §7(+4% fee)");
+                    lore.add("§7Max space: §e" + p.maxItemFit(itemType) + "x");
                     lore.add(" ");
-                    lore.add("§eClick to buy instantly");
+                    lore.add("§eClick to select amount!");
                 }
 
-                return ItemStackCreator.getStack("§aBuy Instantly", Material.GOLDEN_HORSE_ARMOR, 1, lore);
+                return ItemStackCreator.getStack("§aBuy Instantly", Material.EMERALD, 1, lore);
             }
         });
 
-        // SLOT 11: Instant Sell
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                p.getBazaarConnector().instantSell(itemType)
-                        .thenAccept(result -> {
-                            if (result.success()) {
-                                p.sendMessage("§6[Bazaar] §a" + result.message());
-                                p.closeInventory();
-                            } else {
-                                p.sendMessage("§6[Bazaar] §c" + result.message());
-                            }
+                int have = p.getAmountInInventory(itemType);
+                if (have <= 0) {
+                    p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
+                    return;
+                }
+
+                if (stats.bestBid() <= 0) {
+                    p.sendMessage("§6[Bazaar] §cNo buy orders available!");
+                    return;
+                }
+
+                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, false, true, have, stats.bestBid())
+                        .openAmountSelection(p)
+                        .thenAccept(amount -> {
+                            if (amount <= 0) return;
+
+                            p.getBazaarConnector().instantSell(itemType)
+                                    .thenAccept(result -> {
+                                        p.sendMessage("§6[Bazaar] " + (result.success() ? "§a" : "§c") + result.message());
+                                        if (result.success()) p.closeInventory();
+                                    });
                         });
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8" + itemType.getDisplayName());
+                lore.add("§8Instant Sell");
                 lore.add(" ");
 
                 int have = p.getAmountInInventory(itemType);
-                if (have == 0) {
-                    lore.add("§7You have none");
-                    lore.add("§8Cannot sell instantly");
+                if (have <= 0) {
+                    lore.add("§7You have: §c0x");
                 } else if (stats.bestBid() <= 0) {
-                    lore.add("§7You have: §a" + have);
+                    lore.add("§7You have: §e" + have + "x");
                     lore.add("§cNo buy orders available");
-                    lore.add("§8Cannot sell instantly");
                 } else {
-                    lore.add("§7You have: §a" + have);
-                    lore.add("§7Unit price: §6" + String.format("%.2f", stats.bestBid()));
+                    lore.add("§7You have: §e" + have + "x");
+                    lore.add("§7Price: §6" + FORMATTER.format(stats.bestBid()) + " coins");
                     lore.add(" ");
-                    lore.add("§eClick to sell instantly");
+                    lore.add("§eClick to select amount!");
                 }
 
-                return ItemStackCreator.getStack("§6Sell Instantly", Material.HOPPER, 1, lore);
+                return ItemStackCreator.getStack("§6Sell Instantly", Material.GOLD_INGOT, 1, lore);
             }
         });
 
-        // SLOT 15: Create Buy Order
         set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                new GUIBazaarPriceSelection(
-                        GUIBazaarItem.this,
-                        p.maxItemFit(itemType),
-                        stats.bestAsk(),
-                        stats.worstAsk(),
-                        itemType, false
-                ).openPriceSelection(p).thenAccept(price -> {
-                    if (price <= 0) {
-                        p.sendMessage("§cMust pick a positive price.");
-                        return;
-                    }
+                int maxSpace = p.maxItemFit(itemType);
+                if (maxSpace <= 0) {
+                    p.sendMessage("§6[Bazaar] §cInventory full!");
+                    return;
+                }
 
-                    int qty = p.maxItemFit(itemType);
-                    double totalCost = price * qty;
+                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, true, false, maxSpace, p.getCoins())
+                        .openAmountSelection(p)
+                        .thenAccept(amount -> {
+                            if (amount <= 0) return;
 
-                    if (totalCost > p.getCoins()) {
-                        p.sendMessage("§6[Bazaar] §cInsufficient funds to complete escrow!");
-                        return;
-                    }
+                            new GUIBazaarPriceSelection(
+                                    GUIBazaarItem.this, amount, stats.bestAsk(), stats.worstAsk(), itemType, false
+                            ).openPriceSelection(p).thenAccept(price -> {
+                                if (price <= 0) return;
 
-                    // Deduct coins upfront for escrow
-                    p.setCoins(p.getCoins() - totalCost);
-                    p.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
-                    p.sendMessage("§6[Bazaar] §7Submitting buy order...");
-
-                    p.getBazaarConnector().createBuyOrder(itemType, price, qty)
-                            .thenAccept(result -> {
-                                if (result.success()) {
-                                    p.sendMessage("§6[Bazaar] §eBuy Order Setup! §a"
-                                            + qty + "§7x " + itemType.getDisplayName() + " §7for §6" +(price * qty) + " coins§7!");
-                                    p.closeInventory();
-                                } else {
-                                    // Refund on failure
-                                    p.setCoins(p.getCoins() + totalCost);
-                                    p.sendMessage("§6[Bazaar] §cFailed! §7Refunded §6" + new DecimalFormat("#,###.##").format(totalCost) + " coins §7from escrow!");
+                                double totalCost = price * amount;
+                                if (totalCost > p.getCoins()) {
+                                    p.sendMessage("§6[Bazaar] §cNeed " + FORMATTER.format(totalCost) + " coins!");
+                                    new GUIBazaarItem(itemType).open(p);
+                                    return;
                                 }
+
+                                p.setCoins(p.getCoins() - totalCost);
+                                p.sendMessage("§6[Bazaar] §7Escrowing " + FORMATTER.format(totalCost) + " coins...");
+
+                                p.getBazaarConnector().createBuyOrder(itemType, price, amount)
+                                        .thenAccept(result -> {
+                                            if (result.success()) {
+                                                p.sendMessage("§6[Bazaar] §aBuy order created for " + amount + "x at " +
+                                                        FORMATTER.format(price) + " coins each!");
+                                                p.closeInventory();
+                                            } else {
+                                                p.setCoins(p.getCoins() + totalCost);
+                                                p.sendMessage("§6[Bazaar] §cFailed! Refunded " + FORMATTER.format(totalCost) + " coins.");
+                                                new GUIBazaarItem(itemType).open(p);
+                                            }
+                                        });
                             });
-                });
+                        });
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Create a limit‑buy order");
+                lore.add("§8Create Buy Order");
+                lore.add(" ");
+                lore.add("§7Max space: §e" + p.maxItemFit(itemType) + "x");
                 if (stats.bestAsk() > 0) {
-                    lore.add("§7Best ask: §6" + String.format("%.2f", stats.bestAsk()));
-                } else {
-                    lore.add("§7No current sell orders");
+                    lore.add("§7Best ask: §6" + FORMATTER.format(stats.bestAsk()) + " coins");
                 }
                 lore.add(" ");
-                lore.add("§eClick to choose price");
+                lore.add("§eClick to create order!");
+
                 return ItemStackCreator.getStack("§aCreate Buy Order", Material.LIME_STAINED_GLASS_PANE, 1, lore);
             }
         });
 
-        // SLOT 16: Create Sell Offer
         set(new GUIClickableItem(16) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                int total = p.getAmountInInventory(itemType);
-                if (total == 0) {
-                    p.sendMessage("§cYou have none to list.");
+                int have = p.getAmountInInventory(itemType);
+                if (have <= 0) {
+                    p.sendMessage("§6[Bazaar] §cYou don't have any " + itemType.getDisplayName() + "!");
                     return;
                 }
 
-                new GUIBazaarPriceSelection(
-                        GUIBazaarItem.this,
-                        total,
-                        stats.bestBid(),
-                        stats.worstBid(),
-                        itemType, true
-                ).openPriceSelection(p).thenAccept(price -> {
-                    if (price <= 0) {
-                        p.sendMessage("§cMust pick a positive price.");
-                        return;
-                    }
+                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, false, false, have, 0)
+                        .openAmountSelection(p)
+                        .thenAccept(amount -> {
+                            if (amount <= 0) return;
 
-                    p.sendMessage("§6[Bazaar] §7Putting goods in escrow...");
-                    var items = p.takeItem(itemType, total);
-                    if (items == null) {
-                        p.sendMessage("§6[Bazaar] §cYou don't have enough " + itemType.getDisplayName() + " to sell!");
-                        return;
-                    }
+                            new GUIBazaarPriceSelection(
+                                    GUIBazaarItem.this, amount, stats.bestBid(), stats.worstBid(), itemType, true
+                            ).openPriceSelection(p).thenAccept(price -> {
+                                if (price <= 0) return;
 
-                    p.sendMessage("§6[Bazaar] §7Submitting sell offer...");
-
-                    p.getBazaarConnector().createSellOrder(itemType, price, total)
-                            .thenAccept(result -> {
-                                if (result.success()) {
-                                    p.sendMessage("§6[Bazaar] §eSell Offer Setup! §a"
-                                            + total + "§7x " + itemType.getDisplayName() + " §7for §6" + (price * total) + " coins§7!");
-                                    p.closeInventory();
-                                } else {
-                                    // Return items on failure (this would need to be implemented)
-                                    p.sendMessage("§6[Bazaar] §cFailed! " + result.message());
+                                var items = p.takeItem(itemType, amount);
+                                if (items == null) {
+                                    p.sendMessage("§6[Bazaar] §cFailed to remove items!");
+                                    new GUIBazaarItem(itemType).open(p);
+                                    return;
                                 }
+
+                                p.sendMessage("§6[Bazaar] §7Escrowing " + amount + "x " + itemType.getDisplayName() + "...");
+
+                                p.getBazaarConnector().createSellOrder(itemType, price, amount)
+                                        .thenAccept(result -> {
+                                            if (result.success()) {
+                                                p.sendMessage("§6[Bazaar] §aSell order created for " + amount + "x at " +
+                                                        FORMATTER.format(price) + " coins each!");
+                                                p.closeInventory();
+                                            } else {
+                                                p.addAndUpdateItem(items);
+                                                p.sendMessage("§6[Bazaar] §cFailed! Items returned.");
+                                                new GUIBazaarItem(itemType).open(p);
+                                            }
+                                        });
                             });
-                });
+                        });
             }
 
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 List<String> lore = new ArrayList<>();
-                lore.add("§8Create a limit‑sell order");
+                lore.add("§8Create Sell Order");
+                lore.add(" ");
+                int have = p.getAmountInInventory(itemType);
+                lore.add("§7You have: §e" + have + "x");
                 if (stats.bestBid() > 0) {
-                    lore.add("§7Best bid: §6" + String.format("%.2f", stats.bestBid()));
-                } else {
-                    lore.add("§7No current buy orders");
+                    lore.add("§7Best bid: §6" + FORMATTER.format(stats.bestBid()) + " coins");
                 }
                 lore.add(" ");
-                lore.add("§eClick to choose price");
-                return ItemStackCreator.getStack("§6Create Sell Offer", Material.PAPER, 1, lore);
+                lore.add("§eClick to create order!");
+
+                return ItemStackCreator.getStack("§6Create Sell Order", Material.PAPER, 1, lore);
             }
         });
 
@@ -267,12 +293,13 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
 
     @Override
     public void refreshItems(SkyBlockPlayer player) {
-        player.getBazaarConnector().isOnline().thenAccept(online -> {
-            if (!online) {
-                player.sendMessage("§cThe Bazaar is offline!");
-                player.closeInventory();
-            }
-        });
+        if (currentStats != null) {
+            player.getBazaarConnector().getItemStatistics(itemType)
+                    .thenAccept(stats -> {
+                        this.currentStats = stats;
+                        updateItems(stats);
+                    });
+        }
     }
 
     @Override

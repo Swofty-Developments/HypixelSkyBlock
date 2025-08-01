@@ -18,6 +18,7 @@ import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
+import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.swofty.commons.*;
@@ -32,6 +33,7 @@ import net.swofty.types.generic.collection.CollectionCategory;
 import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.Datapoint;
 import net.swofty.types.generic.data.mongodb.*;
 import net.swofty.types.generic.entity.ServerCrystalImpl;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
@@ -353,6 +355,18 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
                     .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
             Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
         }).repeat(10, TimeUnit.SERVER_TICK).schedule();
+
+        /**
+         * Register Bazaar propagator
+         */
+        MinecraftServer.getSchedulerManager().submitTask(() -> {
+            Thread.startVirtualThread(() -> {
+                SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
+                    player.getBazaarConnector().processAllPendingTransactions();
+                });
+            });
+            return TaskSchedule.seconds(15);
+        });
 
         /**
          * Register holograms and fairy souls

@@ -6,6 +6,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.bazaar.BazaarConnector;
+import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointCompletedBazaarTransactions;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
 import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
@@ -13,22 +15,18 @@ import net.swofty.types.generic.gui.inventory.item.GUIItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GUIBazaarOrders extends SkyBlockInventoryGUI {
-    // Slots for sell orders (top row)
     private static final int[] SELL_SLOTS = {10,11,12,13,14,15,16};
-    // Slots for buy orders (bottom row)
     private static final int[] BUY_SLOTS  = {19,20,21,22,23,24,25};
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
 
     public GUIBazaarOrders() {
         super("§8Co-op Bazaar Orders", InventoryType.CHEST_4_ROW);
-
-        // Dark gray background
         fill(ItemStackCreator.createNamedItemStack(Material.GRAY_STAINED_GLASS_PANE));
 
-        // Add section headers
         set(new GUIItem(4) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
@@ -49,58 +47,65 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         e.player().getBazaarConnector().getPendingOrders()
-                .thenAccept(this::updateOrders);
+                .thenAccept(orders -> loadAndDisplayOrders(e.player(), orders));
     }
 
-    private void updateOrders(List<BazaarConnector.BazaarOrder> orders) {
-        DecimalFormat formatter = new DecimalFormat("#,###.##");
+    private void loadAndDisplayOrders(SkyBlockPlayer player, List<BazaarConnector.BazaarOrder> activeOrders) {
+        var completedTransactions = player.getDataHandler().get(
+                DataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
+                DatapointCompletedBazaarTransactions.class
+        ).getValue();
 
-        // Clear the sell/buy rows first
+        var unclaimedTransactions = completedTransactions.getUnclaimedTransactions();
+
+        Map<UUID, List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction>> groupedCompletions =
+                unclaimedTransactions.stream()
+                        .filter(tx -> tx.getRelatedOrderId() != null)
+                        .collect(Collectors.groupingBy(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getRelatedOrderId));
+
+        List<OrderDisplayItem> displayItems = new ArrayList<>();
+
+        for (var activeOrder : activeOrders) {
+            var completions = groupedCompletions.get(activeOrder.orderId());
+            if (completions != null && !completions.isEmpty()) {
+                displayItems.add(new OrderDisplayItem(activeOrder, completions, true));
+                displayItems.add(new OrderDisplayItem(activeOrder, null, false));
+            } else {
+                displayItems.add(new OrderDisplayItem(activeOrder, null, false));
+            }
+        }
+
+        for (var entry : groupedCompletions.entrySet()) {
+            UUID orderId = entry.getKey();
+            var completions = entry.getValue();
+
+            boolean hasActiveOrder = activeOrders.stream()
+                    .anyMatch(order -> order.orderId().equals(orderId));
+
+            if (!hasActiveOrder) {
+                displayItems.add(new OrderDisplayItem(null, completions, true));
+            }
+        }
+
+        updateOrderDisplay(displayItems);
+    }
+
+    private void updateOrderDisplay(List<OrderDisplayItem> items) {
         clearSlots();
 
-        // Track next free positions
         int sellIndex = 0, buyIndex = 0;
 
-        for (BazaarConnector.BazaarOrder order : orders) {
-            boolean isSell = order.side() == BazaarConnector.OrderSide.SELL;
+        for (OrderDisplayItem item : items) {
+            boolean isSell = item.isSellOrder();
             int[] slots = isSell ? SELL_SLOTS : BUY_SLOTS;
             int index = isSell ? sellIndex++ : buyIndex++;
 
-            if (index >= slots.length) break; // No more room
+            if (index >= slots.length) break;
 
             int slot = slots[index];
-            ItemType itemType = order.getItemType();
-            if (itemType == null) continue; // Skip invalid item types
-
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                    new GUIBazaarOrderOptions(order).open(p);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(SkyBlockPlayer p) {
-                    List<String> lore = new ArrayList<>();
-
-                    lore.add("§8Worth " + formatter.format(order.getTotalValue()) + " coins");
-                    lore.add(" ");
-                    lore.add("§7Order amount: §a" + (int)order.amount() + "§8x");
-                    lore.add(" ");
-                    lore.add("§7Price per unit: §6" + formatter.format(order.price()) + " coins");
-                    lore.add(" ");
-                    lore.add("§eClick to view options!");
-
-                    return ItemStackCreator.getStack(
-                            (isSell ? "§6§l" : "§a§l") + order.side() + " §f" + itemType.getDisplayName(),
-                            itemType.material,
-                            1,
-                            lore
-                    );
-                }
-            });
+            set(createOrderItem(slot, item));
         }
 
-        // Add "no orders" placeholders if empty
         if (sellIndex == 0) {
             set(new GUIItem(SELL_SLOTS[0]) {
                 @Override
@@ -123,8 +128,25 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
             });
         }
 
-        // Render changes
         updateItemStacks(getInventory(), getPlayer());
+    }
+
+    private GUIClickableItem createOrderItem(int slot, OrderDisplayItem item) {
+        return new GUIClickableItem(slot) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+                if (item.isCompleted()) {
+                    new GUIBazaarOrderCompletedOptions(item.getCompletions(), item.getActiveOrder()).open(p);
+                } else {
+                    new GUIBazaarOrderOptions(item.getActiveOrder()).open(p);
+                }
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                return item.createDisplayItem();
+            }
+        };
     }
 
     private void clearSlots() {
@@ -143,6 +165,120 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
                     return ItemStack.builder(Material.AIR);
                 }
             });
+        }
+    }
+
+    private static class OrderDisplayItem {
+        private final BazaarConnector.BazaarOrder activeOrder;
+        private final List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions;
+        private final boolean isCompleted;
+
+        public OrderDisplayItem(BazaarConnector.BazaarOrder activeOrder,
+                                List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> completions,
+                                boolean isCompleted) {
+            this.activeOrder = activeOrder;
+            this.completions = completions;
+            this.isCompleted = isCompleted;
+        }
+
+        public boolean isSellOrder() {
+            if (activeOrder != null) {
+                return activeOrder.side() == BazaarConnector.OrderSide.SELL;
+            } else if (completions != null && !completions.isEmpty()) {
+                var firstCompletion = completions.get(0);
+                return firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_COMPLETED ||
+                        firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_ORDER_EXPIRED;
+            }
+            return false;
+        }
+
+        public boolean isCompleted() {
+            return isCompleted;
+        }
+
+        public BazaarConnector.BazaarOrder getActiveOrder() {
+            return activeOrder;
+        }
+
+        public List<DatapointCompletedBazaarTransactions.CompletedBazaarTransaction> getCompletions() {
+            return completions;
+        }
+
+        public ItemStack.Builder createDisplayItem() {
+            if (isCompleted && completions != null && !completions.isEmpty()) {
+                return createCompletedOrderDisplay();
+            } else if (activeOrder != null) {
+                return createActiveOrderDisplay();
+            }
+            return ItemStack.builder(Material.AIR);
+        }
+
+        private ItemStack.Builder createCompletedOrderDisplay() {
+            var firstCompletion = completions.get(0);
+            String itemName = firstCompletion.getItemName();
+            ItemType itemType;
+
+            try {
+                itemType = ItemType.valueOf(itemName);
+            } catch (IllegalArgumentException e) {
+                itemType = ItemType.STONE;
+            }
+
+            List<String> lore = new ArrayList<>();
+            boolean isSell = isSellOrder();
+
+            double totalQuantity = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getQuantity).sum();
+            double totalValue = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue).sum();
+            double totalRefund = completions.stream().mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount).sum();
+
+            lore.add("§a§l✓ COMPLETED");
+            lore.add("§8Ready to claim!");
+            lore.add(" ");
+            lore.add("§7Completed amount: §a" + (int)totalQuantity + "§8x");
+            lore.add("§7Total value: §6" + FORMATTER.format(Math.abs(totalValue)) + " coins");
+            lore.add(" ");
+
+            if (isSell) {
+                lore.add("§7You will receive:");
+                lore.add("  §6+" + FORMATTER.format(Math.abs(totalValue)) + " coins");
+            } else {
+                lore.add("§7You will receive:");
+                lore.add("  §a+" + (int)totalQuantity + "x " + itemType.getDisplayName());
+                if (totalValue > 0) {
+                    lore.add("  §6+" + FORMATTER.format(totalRefund) + " coins refund");
+                }
+            }
+
+            lore.add(" ");
+            lore.add("§eClick to claim rewards!");
+
+            return ItemStackCreator.getStack(
+                    "§a§l" + (isSell ? "SELL" : "BUY") + " §f" + itemType.getDisplayName(),
+                    itemType.material,
+                    Math.max(1, (int)totalQuantity),
+                    lore
+            );
+        }
+
+        private ItemStack.Builder createActiveOrderDisplay() {
+            List<String> lore = new ArrayList<>();
+            boolean isSell = activeOrder.side() == BazaarConnector.OrderSide.SELL;
+            ItemType itemType = activeOrder.getItemType();
+
+            lore.add("§8Worth " + FORMATTER.format(activeOrder.getTotalValue()) + " coins");
+            lore.add(" ");
+            lore.add("§7Order amount: §a" + (int)activeOrder.amount() + "§8x");
+            lore.add(" ");
+            lore.add("§7Price per unit: §6" + FORMATTER.format(activeOrder.price()) + " coins");
+            lore.add(" ");
+            lore.add("§eClick to view options!");
+
+            return ItemStackCreator.getStack(
+                    (isSell ? "§6§l" : "§a§l") + activeOrder.side() + " §f" + itemType.getDisplayName(),
+                    itemType.material,
+                    1,
+                    lore
+            );
         }
     }
 

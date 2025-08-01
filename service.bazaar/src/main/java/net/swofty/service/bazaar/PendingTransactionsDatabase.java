@@ -99,7 +99,7 @@ public class PendingTransactionsDatabase {
 
             return switch (type) {
                 case "SuccessfulBazaarTransaction" -> new SuccessfulBazaarTransaction(
-                        null, null, null, null, null, 0, 0, 0, null
+                        null, null, null, null, null, 0, 0, 0, 0, 0, UUID.randomUUID(), UUID.randomUUID(), null
                 ).fromJSON(jsonData);
                 case "OrderExpiredBazaarTransaction" -> new OrderExpiredBazaarTransaction(
                         null, null, null, null, null, 0, 0, null

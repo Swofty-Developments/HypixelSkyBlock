@@ -7,6 +7,7 @@ import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -59,8 +60,12 @@ public class ServerOutboundMessage {
                 message = split[1];
             } else message = "";
 
-            redisMessageListeners.get(uuid).accept(message);
-            redisMessageListeners.remove(uuid);
+            try {
+                redisMessageListeners.get(uuid).accept(message);
+                redisMessageListeners.remove(uuid);
+            } catch (Exception e) {
+                Logger.error("Failed to handle message from " + uuid + ": " + e.getMessage());
+            }
         });
     }
 

@@ -11,6 +11,8 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
+import java.util.UUID;
+
 public class RedisPropogateBazaarTransaction implements ServiceToClient {
 
     @Override
@@ -56,7 +58,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
         try {
             return switch (type) {
                 case "SuccessfulBazaarTransaction" -> new SuccessfulBazaarTransaction(
-                        null, null, null, null, null, 0, 0, 0, null
+                        null, null, null, null, null, 0, 0, 0, 0, 0, UUID.randomUUID(), UUID.randomUUID(), null
                 ).fromJSON(data);
                 case "OrderExpiredBazaarTransaction" -> new OrderExpiredBazaarTransaction(
                         null, null, null, null, null, 0, 0, null

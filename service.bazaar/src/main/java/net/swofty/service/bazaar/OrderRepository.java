@@ -16,7 +16,7 @@ public class OrderRepository {
                 .append("owner",   o.owner.toString())
                 .append("profileUuid", o.profileUuid.toString())
                 .append("side",    o.side.name())
-                .append("price",   o.price)
+                .append("originalPrice", o.originalPrice)
                 .append("remaining", o.remaining)
                 .append("ts",      o.ts.toString());
         OrderDatabase.ordersCollection.insertOne(d);
@@ -40,7 +40,7 @@ public class OrderRepository {
             UUID   owner       = UUID.fromString(d.getString("owner"));
             UUID   profileUuid = UUID.fromString(d.getString("profileUuid"));
             LimitOrder.Side side = LimitOrder.Side.valueOf(d.getString("side"));
-            double price       = d.getDouble("price");
+            double price       = d.getDouble("originalPrice");
             double rem         = d.getDouble("remaining");
             Instant ts         = Instant.parse(d.getString("ts"));
 

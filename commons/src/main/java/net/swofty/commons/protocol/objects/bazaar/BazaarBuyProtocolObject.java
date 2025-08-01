@@ -32,7 +32,7 @@ public class BazaarBuyProtocolObject extends ProtocolObject
                 message.itemName = jsonObject.getString("item-name");
                 message.playerUUID = UUID.fromString(jsonObject.getString("player-uuid"));
                 message.profileUUID = UUID.fromString(jsonObject.getString("profile-uuid"));
-                message.price = jsonObject.getInt("price");
+                message.price = jsonObject.getDouble("price");
                 message.amount = jsonObject.getInt("amount");
                 return message;
             }
@@ -74,7 +74,7 @@ public class BazaarBuyProtocolObject extends ProtocolObject
     public static class BazaarBuyMessage {
         public String itemName;
         public int amount;
-        public Integer price;
+        public double price;
         public UUID playerUUID;
         public UUID profileUUID;
     }

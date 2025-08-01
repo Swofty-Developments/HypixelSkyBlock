@@ -100,7 +100,7 @@ public class GUIBazaarPriceSelection extends SkyBlockInventoryGUI implements Ref
                 }
             });
 
-            double bestOffer = isSellOrder ? lowestPrice : highestPrice;
+            double bestOffer = isSellOrder ? highestPrice : lowestPrice;
             set(new GUIClickableItem(10) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

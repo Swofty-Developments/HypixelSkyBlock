@@ -28,7 +28,10 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
                 transactionObj.put("itemName", transaction.getItemName());
                 transactionObj.put("quantity", transaction.getQuantity());
                 transactionObj.put("pricePerUnit", transaction.getPricePerUnit());
-                transactionObj.put("taxTaken", transaction.getTaxTaken());
+                transactionObj.put("secondaryAmount", transaction.getSecondaryAmount());
+                transactionObj.put("originalBidPrice", transaction.getOriginalBidPrice());
+                transactionObj.put("relatedOrderId", transaction.getRelatedOrderId() != null ?
+                        transaction.getRelatedOrderId().toString() : null);
                 transactionObj.put("timestamp", transaction.getTimestamp().toString());
                 transactionObj.put("claimed", transaction.isClaimed());
 
@@ -52,13 +55,25 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject transactionObj = jsonArray.getJSONObject(i);
 
+                    String relatedOrderIdStr = transactionObj.optString("relatedOrderId", null);
+                    UUID relatedOrderId = null;
+                    if (relatedOrderIdStr != null && !relatedOrderIdStr.equals("null")) {
+                        try {
+                            relatedOrderId = UUID.fromString(relatedOrderIdStr);
+                        } catch (IllegalArgumentException e) {
+                            // Invalid UUID format, leave as null
+                        }
+                    }
+
                     CompletedBazaarTransaction transaction = new CompletedBazaarTransaction(
                             transactionObj.getString("id"),
                             TransactionType.valueOf(transactionObj.getString("type")),
                             transactionObj.getString("itemName"),
                             transactionObj.getDouble("quantity"),
                             transactionObj.getDouble("pricePerUnit"),
-                            transactionObj.optDouble("taxTaken", 0.0),
+                            transactionObj.optDouble("secondaryAmount", 0.0),
+                            transactionObj.optDouble("originalBidPrice", 0.0),
+                            relatedOrderId,
                             Instant.parse(transactionObj.getString("timestamp")),
                             transactionObj.getBoolean("claimed")
                     );
@@ -83,7 +98,9 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
                         transaction.getItemName(),
                         transaction.getQuantity(),
                         transaction.getPricePerUnit(),
-                        transaction.getTaxTaken(),
+                        transaction.getSecondaryAmount(),
+                        transaction.getOriginalBidPrice(),
+                        transaction.getRelatedOrderId(),
                         transaction.getTimestamp(),
                         transaction.isClaimed()
                 ));
@@ -194,21 +211,45 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
         private String itemName;
         private double quantity;
         private double pricePerUnit;
-        private double taxTaken; // For expired buy orders, this stores the original price paid
+        private double secondaryAmount;  // Tax for sells, refund for expired buys, price improvement for buys
+        private double originalBidPrice; // Track original bid for buy transactions
+        private UUID relatedOrderId;     // Track which order this belongs to
         private Instant timestamp;
         private boolean claimed;
 
         /**
          * Create a successful buy transaction
          */
-        public static CompletedBazaarTransaction createBuyTransaction(String itemName, double quantity, double pricePerUnit) {
+        public static CompletedBazaarTransaction createBuyTransaction(
+                String itemName, double quantity, double actualPrice, double originalBid, UUID orderId
+        ) {
+            double priceImprovement = (originalBid - actualPrice) * quantity;
             return new CompletedBazaarTransaction(
                     UUID.randomUUID().toString(),
                     TransactionType.BUY_COMPLETED,
                     itemName,
                     quantity,
-                    pricePerUnit,
-                    0.0,
+                    actualPrice,
+                    priceImprovement, // Store price improvement
+                    originalBid,
+                    orderId,
+                    Instant.now(),
+                    false
+            );
+        }
+
+        public static CompletedBazaarTransaction createRefundTransaction(
+                String itemName, double refundAmount, String reason, UUID orderId
+        ) {
+            return new CompletedBazaarTransaction(
+                    UUID.randomUUID().toString(),
+                    TransactionType.REFUND,
+                    itemName,
+                    0, // No quantity for pure refunds
+                    0, // No per-unit price
+                    refundAmount,
+                    0, // No original bid
+                    orderId,
                     Instant.now(),
                     false
             );
@@ -217,46 +258,53 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
         /**
          * Create a successful sell transaction
          */
-        public static CompletedBazaarTransaction createSellTransaction(String itemName, double quantity, double pricePerUnit, double taxTaken) {
+        public static CompletedBazaarTransaction createSellTransaction(
+                String itemName, double quantity, double pricePerUnit, double taxTaken, UUID orderId
+        ) {
             return new CompletedBazaarTransaction(
                     UUID.randomUUID().toString(),
                     TransactionType.SELL_COMPLETED,
                     itemName,
                     quantity,
                     pricePerUnit,
-                    taxTaken,
+                    taxTaken,           // Tax stored in secondaryAmount
+                    0,                  // No original bid for sell orders
+                    orderId,            // Related order ID needed for sells
                     Instant.now(),
                     false
             );
         }
 
-        /**
-         * Create an expired buy order (refund coins)
-         */
-        public static CompletedBazaarTransaction createExpiredBuyOrder(String itemName, double quantity, double originalPricePaid) {
+        public static CompletedBazaarTransaction createExpiredBuyOrder(
+                String itemName, double quantity, double originalPricePerUnit, UUID orderId
+        ) {
+            double totalRefund = originalPricePerUnit * quantity;
             return new CompletedBazaarTransaction(
                     UUID.randomUUID().toString(),
                     TransactionType.BUY_ORDER_EXPIRED,
                     itemName,
                     quantity,
-                    originalPricePaid, // Store original price in pricePerUnit for display
-                    originalPricePaid, // Store in taxTaken field for refund calculation
+                    originalPricePerUnit,  // Store original price per unit for display
+                    totalRefund,           // Total refund amount in secondaryAmount
+                    originalPricePerUnit,  // Store original bid price
+                    orderId,               // Link to the expired order
                     Instant.now(),
                     false
             );
         }
 
-        /**
-         * Create an expired sell order (return items)
-         */
-        public static CompletedBazaarTransaction createExpiredSellOrder(String itemName, double quantity) {
+        public static CompletedBazaarTransaction createExpiredSellOrder(
+                String itemName, double quantity, UUID orderId
+        ) {
             return new CompletedBazaarTransaction(
                     UUID.randomUUID().toString(),
                     TransactionType.SELL_ORDER_EXPIRED,
                     itemName,
                     quantity,
-                    0.0, // No price for returned items
-                    0.0,
+                    0.0,                   // No price for returned items
+                    0.0,                   // No secondary amount
+                    0.0,                   // No original bid
+                    orderId,               // Link to the expired order
                     Instant.now(),
                     false
             );
@@ -267,37 +315,44 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
          */
         public double getTotalValue() {
             return switch (type) {
-                case BUY_COMPLETED -> pricePerUnit * quantity; // Total cost
-                case SELL_COMPLETED -> (pricePerUnit * quantity) - taxTaken; // Net earnings
-                case BUY_ORDER_EXPIRED -> taxTaken; // Refund amount
-                case SELL_ORDER_EXPIRED -> 0.0; // Items returned, no monetary value
+                case BUY_COMPLETED -> pricePerUnit * quantity; // Items received
+                case SELL_COMPLETED -> (pricePerUnit * quantity) - secondaryAmount; // Net earnings
+                case BUY_ORDER_EXPIRED -> secondaryAmount; // Refund amount
+                case SELL_ORDER_EXPIRED -> 0.0; // Items returned
+                case REFUND -> secondaryAmount; // Pure refund
             };
         }
 
-        /**
-         * Get a human-readable description
-         */
         public String getDescription() {
             return switch (type) {
-                case BUY_COMPLETED -> String.format("Bought %.0fx %s for %.2f coins each", quantity, itemName, pricePerUnit);
-                case SELL_COMPLETED -> String.format("Sold %.0fx %s for %.2f coins each", quantity, itemName, pricePerUnit);
-                case BUY_ORDER_EXPIRED -> String.format("Buy order expired: %.0fx %s (refund %.2f coins)", quantity, itemName, taxTaken);
-                case SELL_ORDER_EXPIRED -> String.format("Sell order expired: %.0fx %s returned", quantity, itemName);
+                case BUY_COMPLETED -> {
+                    if (secondaryAmount > 0) {
+                        yield String.format("Bought %.0fx %s for %.2f coins each (saved %.2f coins!)",
+                                quantity, itemName, pricePerUnit, secondaryAmount);
+                    } else {
+                        yield String.format("Bought %.0fx %s for %.2f coins each",
+                                quantity, itemName, pricePerUnit);
+                    }
+                }
+                case SELL_COMPLETED -> String.format("Sold %.0fx %s for %.2f coins each",
+                        quantity, itemName, pricePerUnit);
+                case BUY_ORDER_EXPIRED -> String.format("Buy order expired: refund of %.2f coins",
+                        secondaryAmount);
+                case SELL_ORDER_EXPIRED -> String.format("Sell order expired: %.0fx %s returned",
+                        quantity, itemName);
+                case REFUND -> String.format("Refund: %.2f coins from %s order",
+                        secondaryAmount, itemName);
             };
         }
 
-        /**
-         * Check if this transaction gives items to the player
-         */
         public boolean givesItems() {
             return type == TransactionType.BUY_COMPLETED || type == TransactionType.SELL_ORDER_EXPIRED;
         }
 
-        /**
-         * Check if this transaction gives coins to the player
-         */
         public boolean givesCoins() {
-            return type == TransactionType.SELL_COMPLETED || type == TransactionType.BUY_ORDER_EXPIRED;
+            return type == TransactionType.SELL_COMPLETED ||
+                    type == TransactionType.BUY_ORDER_EXPIRED ||
+                    type == TransactionType.REFUND;
         }
     }
 
@@ -305,6 +360,7 @@ public class DatapointCompletedBazaarTransactions extends Datapoint<DatapointCom
         BUY_COMPLETED,      // Player bought items (receive items)
         SELL_COMPLETED,     // Player sold items (receive coins)
         BUY_ORDER_EXPIRED,  // Buy order expired (receive coin refund)
-        SELL_ORDER_EXPIRED  // Sell order expired (receive items back)
+        SELL_ORDER_EXPIRED, // Sell order expired (receive items back)
+        REFUND              // For price improvement refunds
     }
 }

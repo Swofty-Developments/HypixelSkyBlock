@@ -399,6 +399,13 @@ public class SkyBlockPlayer extends Player {
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
+    public void addAndUpdateItem(@Nullable List<SkyBlockItem> items) {
+        if (items == null) return;
+        for (SkyBlockItem item : items) {
+            addAndUpdateItem(item);
+        }
+    }
+
     public void addAndUpdateItem(@Nullable SkyBlockItem item) {
         if (item == null) return;
         if (item.isNA()) return;

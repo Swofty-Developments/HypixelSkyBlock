@@ -34,7 +34,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
                 .map(order -> new OrderRecord(
                         order.owner,
                         order.profileUuid,
-                        order.price,
+                        order.originalPrice,
                         order.remaining
                 ))
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
                 .map(order -> new OrderRecord(
                         order.owner,
                         order.profileUuid,
-                        order.price,
+                        order.originalPrice,
                         order.remaining
                 ))
                 .collect(Collectors.toList());

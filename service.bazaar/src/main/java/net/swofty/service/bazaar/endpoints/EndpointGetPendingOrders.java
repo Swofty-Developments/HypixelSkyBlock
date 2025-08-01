@@ -42,7 +42,7 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
                     UUID.fromString(d.getString("_id")),
                     d.getString("itemName"),
                     d.getString("side"),
-                    d.getDouble("price"),
+                    d.getDouble("originalPrice"),
                     d.getDouble("remaining"),
                     UUID.fromString(d.getString("profileUuid"))
             ));
