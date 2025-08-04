@@ -8,28 +8,25 @@ import net.swofty.types.generic.item.crafting.ShapelessRecipe;
 import net.swofty.types.generic.item.crafting.SkyBlockRecipe;
 import net.swofty.types.generic.string.PlayerTemplateProcessor;
 import net.swofty.types.generic.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RecipeParser {
     public static SkyBlockRecipe<?> parseRecipe(Map<String, Object> config) {
         String type = (String) config.get("type");
         String recipeType = (String) config.get("recipe-type");
-        SkyBlockRecipe.RecipeType craftingType = null;
+        SkyBlockRecipe.RecipeType craftingType;
+
         try {
             craftingType = SkyBlockRecipe.RecipeType.valueOf(recipeType.toUpperCase());
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
+            Logger.warn("Unknown recipe type enum '{}', defaulting to NONE", recipeType);
             craftingType = SkyBlockRecipe.RecipeType.NONE;
         }
 
-        // Parse result
         Map<String, Object> resultConfig = (Map<String, Object>) config.get("result");
         SkyBlockItem result = parseResult(resultConfig);
-
-        // Parse requirements if they exist
         List<RequirementCheck> requirements = parseRequirements((Map<String, Object>) config.get("requirements"));
 
         if (type.equalsIgnoreCase("shapeless")) {
@@ -48,7 +45,6 @@ public class RecipeParser {
             String rightValue = processor.parseMessage(rightVariable).trim();
 
             try {
-                // Try parsing as numbers first
                 double leftNumber = Double.parseDouble(leftValue);
                 double rightNumber = Double.parseDouble(rightValue);
 
@@ -62,7 +58,6 @@ public class RecipeParser {
                     default -> throw new IllegalArgumentException("Invalid operation: " + operation);
                 };
             } catch (NumberFormatException e) {
-                // If not numbers, compare as strings
                 return switch (operation) {
                     case "=" -> leftValue.equals(rightValue);
                     case "!=" -> !leftValue.equals(rightValue);
@@ -106,6 +101,8 @@ public class RecipeParser {
         ShapelessRecipe recipe = new ShapelessRecipe(craftingType, result, amount,
                 (player) -> checkRequirements(player, requirements));
 
+        recipe.init();
+
         for (Map<String, Object> ingredient : ingredients) {
             String materialType = (String) ingredient.get("type");
             int count = (int) ingredient.getOrDefault("amount", 1);
@@ -145,8 +142,11 @@ public class RecipeParser {
 
         result.setAmount((Integer) ((Map<String, Object>) config.get("result")).get("amount"));
 
-        return new ShapedRecipe(craftingType, result, ingredientMap, pattern,
+        ShapedRecipe recipe = new ShapedRecipe(craftingType, result, ingredientMap, pattern,
                 (player) -> checkRequirements(player, requirements));
+
+        recipe.init();
+        return recipe;
     }
 
     private static SkyBlockRecipe.CraftingResult checkRequirements(SkyBlockPlayer player, List<RequirementCheck> requirements) {
@@ -170,14 +170,10 @@ public class RecipeParser {
         String type = (String) resultConfig.get("type");
         int amount = (int) resultConfig.getOrDefault("amount", 1);
 
-        SkyBlockItem item;
-        if (type.startsWith("ITEM_TYPE_")) {
-            item = new SkyBlockItem(ItemType.valueOf(type.substring(10)), amount);
-        } else {
-            item = new SkyBlockItem(ItemType.valueOf(type), amount);
-        }
+        ItemType itemType = type.startsWith("ITEM_TYPE_")
+                ? ItemType.valueOf(type.substring(10))
+                : ItemType.valueOf(type);
 
-        item.setAmount(amount);
-        return item;
+        return new SkyBlockItem(itemType, amount);
     }
 }
