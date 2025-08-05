@@ -3,8 +3,6 @@ package net.swofty.types.generic.entity.mob;
 import lombok.Getter;
 import net.minestom.server.entity.EntityType;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
-import net.swofty.types.generic.entity.mob.mobs.island.MobZombie_1;
-import net.swofty.types.generic.entity.mob.mobs.minionMobs.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

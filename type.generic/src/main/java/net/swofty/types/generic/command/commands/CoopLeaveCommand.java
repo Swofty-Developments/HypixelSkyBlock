@@ -46,7 +46,7 @@ public class CoopLeaveCommand extends SkyBlockCommand {
                 ProfilesDatabase.collection.deleteOne(Filters.eq("_id", player.getProfiles().getCurrentlySelected().toString()));
 
                 player.getProfiles().removeProfile(player.getProfiles().getCurrentlySelected());
-                player.getProfiles().setCurrentlySelected(player.getProfiles().getProfiles().get(0));
+                player.getProfiles().setCurrentlySelected(player.getProfiles().getProfiles().getFirst());
                 new UserDatabase(player.getUuid()).saveProfiles(player.getProfiles());
             }, TaskSchedule.tick(4), TaskSchedule.stop());
         });

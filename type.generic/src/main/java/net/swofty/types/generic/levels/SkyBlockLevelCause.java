@@ -1,7 +1,6 @@
 package net.swofty.types.generic.levels;
 
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.collection.CollectionCategory;

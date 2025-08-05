@@ -91,7 +91,7 @@ public enum PlayerHolograms {
 
                     // Remove excess holograms if there are too many for this hologram type
                     while (perTypeCurrentEntities.size() > lines.length) {
-                        HologramEntity entity = perTypeCurrentEntities.remove(perTypeCurrentEntities.size() - 1);
+                        HologramEntity entity = perTypeCurrentEntities.removeLast();
                         currentEntities.remove(Map.entry(hologram, entity));
                         entity.removeViewer(skyBlockPlayer);
                         entity.remove();

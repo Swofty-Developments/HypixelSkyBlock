@@ -6,7 +6,7 @@ import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The source of the enchant, for the enchanting guide
+ * The source of the enchantment, for the enchanting guide
  */
 @RequiredArgsConstructor
 @Getter

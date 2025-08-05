@@ -36,7 +36,8 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
             }
 
             // Handle the transaction using BazaarAwarder
-            JSONObject result = switch (transaction) {
+
+            return switch (transaction) {
                 case SuccessfulBazaarTransaction success -> handleSuccessfulTransaction(success);
                 case OrderExpiredBazaarTransaction expired -> handleExpiredTransaction(expired);
                 default -> {
@@ -44,8 +45,6 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
                     yield createFailureResponse("Unknown transaction type");
                 }
             };
-
-            return result;
 
         } catch (Exception e) {
             Logger.error("Failed to propagate bazaar transaction: " + e.getMessage());

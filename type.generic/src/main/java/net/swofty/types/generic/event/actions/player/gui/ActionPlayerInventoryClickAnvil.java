@@ -2,8 +2,6 @@ package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.type.AnvilInventory;
 import net.minestom.server.network.packet.server.play.WindowPropertyPacket;
 import net.minestom.server.timer.TaskSchedule;

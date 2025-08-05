@@ -46,8 +46,8 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
             if (index < items.size()) {
                 items.forEach(shopItem -> {
                     ItemType item = shopItem.getItemType();
-                    Integer price = shopItem.getPrice();
-                    Integer amount = shopItem.getAmount();
+                    int price = shopItem.getPrice();
+                    int amount = shopItem.getAmount();
                     set(new GUIClickableItem(slot) {
                         @Override
                         public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -58,8 +58,7 @@ public class GUIBitsSubCategorys extends SkyBlockInventoryGUI {
                                 SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
                                 if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                                     player.addAndUpdateItem(finalItem);
-                                    int remainingBits = player.getBits() - price;
-                                    player.setBits(remainingBits);
+                                    player.removeBits(price);
                                     new GUIBitsSubCategorys(items, guiName, previousGUI).open(player);
                                 } else {
                                     new GUIBitsConfirmBuy(finalItem, price).open(player);

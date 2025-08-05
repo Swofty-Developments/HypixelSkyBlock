@@ -124,7 +124,7 @@ public class IslandMinionData {
             //Handle Minion Fuel
             ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
             if (minionFuel != null) {
-                percentageSpeedIncrease += new SkyBlockItem(minionFuel).getComponent(MinionFuelComponent.class).getFuelPercentage();
+                percentageSpeedIncrease += (int) new SkyBlockItem(minionFuel).getComponent(MinionFuelComponent.class).getFuelPercentage();
             }
 
             //Handle speed increases from minion upgrades

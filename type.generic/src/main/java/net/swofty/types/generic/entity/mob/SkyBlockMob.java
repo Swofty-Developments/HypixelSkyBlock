@@ -20,7 +20,6 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.entity.DroppedItemEntityImpl;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
@@ -132,8 +131,7 @@ public abstract class SkyBlockMob extends EntityCreature {
         super.kill();
         mobs.remove(this);
 
-        if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer)) return;
-        SkyBlockPlayer player = (SkyBlockPlayer) getLastDamageSource().getAttacker();
+        if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
 
         SkyBlockEventHandler.callSkyBlockEvent(new PlayerKilledSkyBlockMobEvent(player, this));
 

@@ -11,9 +11,7 @@ import net.swofty.commons.auctions.AuctionItem;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class EndpointFetchItems implements ServiceEndpoint<
         AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage,

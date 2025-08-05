@@ -4,7 +4,6 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.inventory.condition.InventoryCondition;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
@@ -166,8 +165,7 @@ public class GUISkyBlockProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (player.getPetData().getEnabledPet() != null && !player.getPetData().getEnabledPet().getItemStack().isAir()) {
                     SkyBlockItem pet = player.getPetData().getEnabledPet();
-                    ItemStack.Builder itemStack = new NonPlayerItemUpdater(pet).getUpdatedItem();
-                    return itemStack;
+                    return new NonPlayerItemUpdater(pet).getUpdatedItem();
                 } else {
                     return ItemStackCreator.getStack("§7Empty Pet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
                 }

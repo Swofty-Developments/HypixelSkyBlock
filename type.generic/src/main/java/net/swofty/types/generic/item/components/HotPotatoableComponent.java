@@ -5,7 +5,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.item.PotatoType;
 import net.swofty.types.generic.item.SkyBlockItemComponent;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter

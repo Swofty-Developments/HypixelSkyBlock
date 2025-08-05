@@ -3,7 +3,6 @@ package net.swofty.commons.protocol.objects.bazaar;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +15,7 @@ public class BazaarGetItemProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<BazaarGetItemMessage> getSerializer() {
-        return new Serializer<BazaarGetItemMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(BazaarGetItemMessage value) {
                 return value.itemName;
@@ -36,7 +35,7 @@ public class BazaarGetItemProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<BazaarGetItemResponse> getReturnSerializer() {
-        return new Serializer<BazaarGetItemResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(BazaarGetItemResponse value) {
                 return gson.toJson(value);

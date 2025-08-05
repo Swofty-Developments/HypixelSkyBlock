@@ -29,7 +29,7 @@ public class MissionTalkToBartender extends SkyBlockMission {
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         //TODO move bartender to the bar
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§6100 §7Coins"))).forEach(player::sendMessage);
-        player.setCoins(player.getCoins() + 100);
+        player.addCoins(100);
     }
 
     @Override

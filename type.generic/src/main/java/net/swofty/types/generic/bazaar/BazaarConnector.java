@@ -4,7 +4,6 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.item.ItemType;
 import net.swofty.commons.protocol.objects.bazaar.*;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.types.generic.item.SkyBlockItem;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 
 import java.text.DecimalFormat;
@@ -161,7 +160,7 @@ public class BazaarConnector {
                 );
             }
 
-            player.setCoins(player.getCoins() - totalCost);
+            player.removeCoins(totalCost);
 
             return createBuyOrder(itemType, priceWithFee, quantity)
                     .thenApply(result -> {

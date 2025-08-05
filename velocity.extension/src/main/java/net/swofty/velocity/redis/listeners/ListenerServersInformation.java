@@ -11,7 +11,6 @@ import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.json.JSONObject;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @ChannelListener(channel = ToProxyChannels.REQUEST_SERVERS)

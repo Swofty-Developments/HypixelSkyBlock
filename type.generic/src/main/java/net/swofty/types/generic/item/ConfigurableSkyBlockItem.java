@@ -1,7 +1,6 @@
 package net.swofty.types.generic.item;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minestom.server.item.Material;
 import net.swofty.commons.statistics.ItemStatistic;

@@ -3,15 +3,8 @@ package net.swofty.service.api;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
-import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocolObject;
-import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public record APIAdminDatabase() {
     public static MongoClient client;

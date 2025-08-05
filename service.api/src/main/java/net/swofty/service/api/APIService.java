@@ -13,7 +13,6 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.types.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.types.generic.data.mongodb.UserDatabase;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 import spark.Spark;
 
 import java.io.IOException;

@@ -47,12 +47,10 @@ public class GUISack extends SkyBlockInventoryGUI {
 
         final int finalSackItemSize = sackItemSize;
 
-        SackSize nearestSackSize = SACK_SIZES.stream()
+        return SACK_SIZES.stream()
                 .filter(sackSize -> sackSize.getAmountItems() >= finalSackItemSize)
                 .min(Comparator.comparingInt(SackSize::getAmountItems))
                 .orElse(SACK_SIZES.getLast());
-
-        return nearestSackSize;
     }
 
     public GUISack(ItemType sack, Boolean closeGUIButton) {

@@ -34,6 +34,16 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
             1, 2, 3, 4, 5, 7
     };
 
+    private final Integer cookieCost = 325;
+
+    private final Book book = Book.builder()
+            .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
+                    .appendNewline()
+                    .appendNewline()
+                    .append(Component.text("      "))
+                    .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt")).color(TextColor.fromHexString("#00AAAA"))))
+            .build();
+
     public void onOpen(InventoryGUIOpenEvent e) {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
@@ -50,27 +60,24 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                 }
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    ItemStack.Builder itemStack = shopCategorys.stack;
+                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 3) {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
                             lore.add("§eClick to view!");
                         } else if (Objects.equals(lore.getLast(), " ")) {
                             lore.add("§eClick to view!");
                         }
-                        return ItemStackCreator.updateLore(itemStack, lore);
                     } else {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§eClick to view!")) {
                             lore.removeLast();
                             lore.add("§aCurrently selected!");
                         } else if (Objects.equals(lore.getLast(), " ")) {
                             lore.add("§aCurrently selected!");
                         }
-                        return ItemStackCreator.updateLore(itemStack, lore);
                     }
+                    return ItemStackCreator.updateLore(itemStack, lore);
                 }
             });
             index++;
@@ -87,24 +94,16 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                 }
             });
         }
-        final Integer cookieCost = 325;
+
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getGems() >= cookieCost) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    Integer remainingGems = (int) (player.getGems() - cookieCost);
-                    player.setGems(remainingGems);
+                    player.removeGems(cookieCost);
                     new GUIBuyBoosterCookies().open(player);
                 } else {
-                    player.openBook(Book.builder()
-                            .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
-                                    .appendNewline()
-                                    .appendNewline()
-                                    .append(Component.text("      "))
-                                    .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("https://store.hypixel.net/nec?ign=" + player.getUsername().toLowerCase())).color(TextColor.fromHexString("#00AAAA"))))
-                            .build()
-                    );
+                    player.openBook(book);
                 }
             }
 
@@ -149,39 +148,25 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                 } else {
                     if (Objects.equals(lore.getLast(), "§eClick to purchase!")) {
                         lore.removeLast();
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
-                    } else {
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
                     }
+                    lore.add("§cCannot afford this!");
+                    lore.add("§eClick here to get gems!");
                 }
                 return ItemStackCreator.updateLore(itemStack, lore);
             }
         });
         set(new GUIClickableItem(31) {
-            final Integer boosterCookieAmount = 6;
+            final int boosterCookieAmount = 6;
+            final int totalCookiePrice = boosterCookieAmount*cookieCost;
+
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (player.getGems() >= cookieCost*boosterCookieAmount) {
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    Integer remainingGems = player.getGems() - cookieCost*boosterCookieAmount;
-                    player.setGems(remainingGems);
+                if (player.getGems() >= totalCookiePrice) {
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
+                    player.removeGems(totalCookiePrice);
                     new GUIBuyBoosterCookies().open(player);
                 } else {
-                    player.openBook(Book.builder()
-                            .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
-                                    .appendNewline()
-                                    .appendNewline()
-                                    .append(Component.text("      "))
-                                    .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt")).color(TextColor.fromHexString("#00AAAA"))))
-                            .build()
-                    );
+                    player.openBook(book);
                 }
             }
 
@@ -209,13 +194,13 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                         "§6Legendary",
                         " ",
                         "§7Cost",
-                        "§a" + cookieCost*boosterCookieAmount + " Skyblock Gems",
+                        "§a" + totalCookiePrice + " Skyblock Gems",
                         " ",
                         "§7You have: §a" + StringUtility.commaify(player.getGems()) + " Gems",
                         ""
                 ));
                 ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-                if (player.getGems() >= cookieCost*boosterCookieAmount) {
+                if (player.getGems() >= totalCookiePrice) {
                     if (Objects.equals(lore.getLast(), "§eClick here to get gems!")) {
                         lore.removeLast();
                         lore.removeLast();
@@ -226,45 +211,25 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                 } else {
                     if (Objects.equals(lore.getLast(), "§eClick to purchase!")) {
                         lore.removeLast();
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
-                    } else {
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
                     }
+                    lore.add("§cCannot afford this!");
+                    lore.add("§eClick here to get gems!");
                 }
                 return ItemStackCreator.updateLore(itemStack, lore);
             }
         });
         set(new GUIClickableItem(33) {
-            final Integer boosterCookieAmount = 12;
+            final int boosterCookieAmount = 12;
+            final int totalCookiePrice = boosterCookieAmount*cookieCost;
+
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                if (player.getGems() >= cookieCost*boosterCookieAmount) {
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
-                    Integer remainingGems = player.getGems() - cookieCost*boosterCookieAmount;
-                    player.setGems(remainingGems);
+                if (player.getGems() >= totalCookiePrice) {
+                    player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
+                    player.removeGems(totalCookiePrice);
                     new GUIBuyBoosterCookies().open(player);
                 } else {
-                    player.openBook(Book.builder()
-                            .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
-                                    .appendNewline()
-                                    .appendNewline()
-                                    .append(Component.text("      "))
-                                    .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt")).color(TextColor.fromHexString("#00AAAA"))))
-                            .build()
-                    );
+                    player.openBook(book);
                 }
             }
 
@@ -292,13 +257,13 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                         "§6Legendary",
                         " ",
                         "§7Cost",
-                        "§a" + cookieCost*boosterCookieAmount + " Skyblock Gems",
+                        "§a" + totalCookiePrice + " Skyblock Gems",
                         " ",
                         "§7You have: §a" + StringUtility.commaify(player.getGems()) + " Gems",
                         ""
                 ));
                 ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
-                if (player.getGems() >= cookieCost*boosterCookieAmount) {
+                if (player.getGems() >= totalCookiePrice) {
                     if (Objects.equals(lore.getLast(), "§eClick here to get gems!")) {
                         lore.removeLast();
                         lore.removeLast();
@@ -309,12 +274,9 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
                 } else {
                     if (Objects.equals(lore.getLast(), "§eClick to purchase!")) {
                         lore.removeLast();
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
-                    } else {
-                        lore.add("§cCannot afford this!");
-                        lore.add("§eClick here to get gems!");
                     }
+                    lore.add("§cCannot afford this!");
+                    lore.add("§eClick here to get gems!");
                 }
                 return ItemStackCreator.updateLore(itemStack, lore);
             }
@@ -322,14 +284,7 @@ public class GUIBuyBoosterCookies extends SkyBlockInventoryGUI {
         set(new GUIClickableItem(49) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
-                player.openBook(Book.builder()
-                        .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
-                                .appendNewline()
-                                .appendNewline()
-                                .append(Component.text("      "))
-                                .append(Component.text("VISIT STORE").clickEvent(ClickEvent.openUrl("http://bit.ly/4aG54lt")).color(TextColor.fromHexString("#00AAAA"))))
-                        .build()
-                );
+                player.openBook(book);
             }
 
             @Override

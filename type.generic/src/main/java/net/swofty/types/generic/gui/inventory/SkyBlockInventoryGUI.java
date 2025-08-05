@@ -173,7 +173,7 @@ public abstract class  SkyBlockInventoryGUI {
     }
 
     /**
-     * Fills the border of a rectangle between two slots
+     * Fills the border of a rectangle defined with two slots
      *
      * @param stack       the {@link ItemStack} of your choice
      * @param cornerSlot  the top left corner of your rectangle

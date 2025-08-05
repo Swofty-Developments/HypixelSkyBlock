@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointStorage extends Datapoint<DatapointStorage.PlayerStorage> {
-    private static final Serializer<DatapointStorage.PlayerStorage> serializer = new Serializer<PlayerStorage>() {
+    private static final Serializer<DatapointStorage.PlayerStorage> serializer = new Serializer<>() {
         @Override
         public String serialize(PlayerStorage value) {
             JSONObject jsonObject = new JSONObject();

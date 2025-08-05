@@ -44,7 +44,7 @@ public class GUIBazaarOrderCompletedOptions extends SkyBlockInventoryGUI {
     private void setupItems() {
         if (completions == null || completions.isEmpty()) return;
 
-        var firstCompletion = completions.get(0);
+        var firstCompletion = completions.getFirst();
         String itemName = firstCompletion.getItemName();
         ItemType itemType;
 
@@ -233,7 +233,7 @@ public class GUIBazaarOrderCompletedOptions extends SkyBlockInventoryGUI {
                         .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
                         .sum();
 
-                player.setCoins(player.getCoins() + Math.abs(totalCoins));
+                player.addCoins(Math.abs(totalCoins));
                 player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(Math.abs(totalCoins)) + " coins§a!");
             } else {
                 double totalQuantity = completions.stream()
@@ -249,7 +249,7 @@ public class GUIBazaarOrderCompletedOptions extends SkyBlockInventoryGUI {
                 player.sendMessage("§6[Bazaar] §aReceived §e" + (int)totalQuantity + "x " + itemType.getDisplayName() + "§a!");
 
                 if (totalRefund > 0) {
-                    player.setCoins(player.getCoins() + totalRefund);
+                    player.addCoins(totalRefund);
                     player.sendMessage("§6[Bazaar] §aReceived §6" + FORMATTER.format(totalRefund) + " coins §arefund!");
                 }
             }
@@ -278,7 +278,7 @@ public class GUIBazaarOrderCompletedOptions extends SkyBlockInventoryGUI {
 
     private boolean isSellOrder() {
         if (completions == null || completions.isEmpty()) return false;
-        var firstCompletion = completions.get(0);
+        var firstCompletion = completions.getFirst();
         return firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_COMPLETED ||
                 firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_ORDER_EXPIRED;
     }
@@ -286,7 +286,7 @@ public class GUIBazaarOrderCompletedOptions extends SkyBlockInventoryGUI {
     private ItemType getItemType() {
         if (completions == null || completions.isEmpty()) return ItemType.STONE;
         try {
-            return ItemType.valueOf(completions.get(0).getItemName());
+            return ItemType.valueOf(completions.getFirst().getItemName());
         } catch (IllegalArgumentException e) {
             return ItemType.STONE;
         }

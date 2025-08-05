@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.entity.metadata.other.InteractionMeta;
 import net.swofty.types.generic.data.datapoints.DatapointMuseum;
@@ -33,7 +32,7 @@ public class ArmorMuseumDisplayHandler extends MuseumDisplay {
         if (empty) {
             hologram = PlayerHolograms.ExternalPlayerHologram.builder()
                     .player(player)
-                    .text(new String[]{"§7" + display.toString() + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
+                    .text(new String[]{"§7" + display + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
                     .pos(pos.add(0, 1, 0))
                     .build();
             PlayerHolograms.addExternalPlayerHologram(hologram);

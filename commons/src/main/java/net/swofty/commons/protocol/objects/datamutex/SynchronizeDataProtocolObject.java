@@ -15,7 +15,7 @@ public class SynchronizeDataProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<SynchronizeDataRequest> getSerializer() {
-        return new Serializer<SynchronizeDataRequest>() {
+        return new Serializer<>() {
             @Override
             public String serialize(SynchronizeDataRequest value) {
                 JSONObject json = new JSONObject();
@@ -57,7 +57,7 @@ public class SynchronizeDataProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<SynchronizeDataResponse> getReturnSerializer() {
-        return new Serializer<SynchronizeDataResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(SynchronizeDataResponse value) {
                 JSONObject json = new JSONObject();

@@ -74,25 +74,25 @@ public class PlayerShopData {
     public Tuple<UnderstandableSkyBlockItem, Integer> popBuyback() {
         if (buybackData.isEmpty())
             throw new IndexOutOfBoundsException("Woah there!");
-        Tuple<UnderstandableSkyBlockItem, Integer> last = buybackData.get(buybackData.size() - 1);
-        buybackData.remove(buybackData.size() - 1);
+        Tuple<UnderstandableSkyBlockItem, Integer> last = buybackData.getLast();
+        buybackData.removeLast();
         return last;
     }
 
     public Tuple<UnderstandableSkyBlockItem, Integer> lastBuyback() {
         if (buybackData.isEmpty())
             throw new IndexOutOfBoundsException("Woah there!");
-        return buybackData.get(buybackData.size() - 1);
+        return buybackData.getLast();
     }
 
     public Tuple<UnderstandableSkyBlockItem, Integer> firstBuyback() {
         if (buybackData.isEmpty())
             throw new IndexOutOfBoundsException("Woah there!");
-        return buybackData.get(0);
+        return buybackData.getFirst();
     }
 
     public boolean hasAnythingToBuyback() {
-        return buybackData.size() > 0;
+        return !buybackData.isEmpty();
     }
 
     public Map<String, Object> serialize() {

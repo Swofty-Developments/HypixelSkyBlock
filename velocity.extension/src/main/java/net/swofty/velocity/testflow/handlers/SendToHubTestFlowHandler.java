@@ -1,14 +1,8 @@
 package net.swofty.velocity.testflow.handlers;
 
-import com.velocitypowered.api.proxy.Player;
-import net.kyori.adventure.text.Component;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.testflow.ProxyTestFlowHandler;
 import net.swofty.velocity.testflow.TestFlowManager;
-import org.tinylog.Logger;
-
-import java.util.Optional;
 
 public class SendToHubTestFlowHandler extends ProxyTestFlowHandler {
 

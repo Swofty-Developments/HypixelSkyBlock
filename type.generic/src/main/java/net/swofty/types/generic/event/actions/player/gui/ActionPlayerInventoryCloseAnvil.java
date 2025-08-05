@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player.gui;
 
 import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.type.AnvilInventory;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;

@@ -54,7 +54,7 @@ public class BreakingTask {
             this.counter = 0;
             // Handle if the player continues to break the block without a release tick
             MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-                // Minecraft wont send a cancel digging packet if the player is still holding the block
+                // Minecraft won't send a cancel digging packet if the player is still holding the block
                 // but our system requires it so we simulate it here
                 SkyBlockEventHandler.callSkyBlockEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,

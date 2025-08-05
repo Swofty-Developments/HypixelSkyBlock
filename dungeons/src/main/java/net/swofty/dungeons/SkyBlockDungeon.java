@@ -112,7 +112,7 @@ public class SkyBlockDungeon {
                 } else {
                     builder.append(DungeonUtilities.center(
                             (isConnected(x, y, x - 1, y) ? "║" : " ") +
-                            room.toString() + (isConnected(x, y, x + 1, y) ? "║" : " "),
+                                    room + (isConnected(x, y, x + 1, y) ? "║" : " "),
                             30, ' '));
                 }
             }

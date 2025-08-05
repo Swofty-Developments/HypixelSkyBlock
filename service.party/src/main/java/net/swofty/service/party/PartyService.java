@@ -1,6 +1,5 @@
 package net.swofty.service.party;
 
-import net.swofty.commons.Configuration;
 import net.swofty.commons.ServiceType;
 import net.swofty.service.generic.SkyBlockService;
 import net.swofty.service.generic.redis.ServiceEndpoint;

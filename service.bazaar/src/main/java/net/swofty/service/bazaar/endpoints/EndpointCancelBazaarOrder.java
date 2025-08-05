@@ -7,7 +7,6 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.Can
 import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.CancelResponse;
 import net.swofty.service.bazaar.BazaarMarket;
 import net.swofty.service.bazaar.OrderDatabase;
-import net.swofty.service.bazaar.OrderRepository;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 
 public class EndpointCancelBazaarOrder implements ServiceEndpoint<

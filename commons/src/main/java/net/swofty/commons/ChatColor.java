@@ -30,7 +30,7 @@ public enum ChatColor {
     RESET('r', 21);
 
     public static final char COLOR_CHAR = '§';
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-OR]");
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + '§' + "[0-9A-FK-OR]");
     private final int intCode;
     private final char code;
     private final boolean isFormat;

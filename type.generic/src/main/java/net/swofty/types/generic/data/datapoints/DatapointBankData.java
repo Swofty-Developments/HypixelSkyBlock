@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class DatapointBankData extends Datapoint<DatapointBankData.BankData> {
     private static final Serializer<BankData> serializer = new Serializer<>() {

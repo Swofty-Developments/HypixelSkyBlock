@@ -1,7 +1,6 @@
 package net.swofty.types.generic.mission.missions;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.custom.CustomBlockBreakEvent;

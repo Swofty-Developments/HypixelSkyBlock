@@ -66,7 +66,7 @@ public enum Directional implements State<Directional> {
     public static final Directional[] axis = {NORTH, EAST, SOUTH, WEST};
     public static final Directional[] order_update = {NORTH, EAST, SOUTH, WEST, UP, DOWN};
 
-    public Directional parse(String input) {
+    public @NotNull Directional parse(String input) {
         if (input == null || input.isEmpty())
             return SELF;
         return Stream.of(values()).filter(shape -> shape.name().equalsIgnoreCase(input.trim())).findFirst().orElse(SELF);

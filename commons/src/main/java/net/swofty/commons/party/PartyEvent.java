@@ -3,7 +3,6 @@ package net.swofty.commons.party;
 import lombok.Getter;
 import lombok.NonNull;
 import net.swofty.commons.protocol.Serializer;
-import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.List;

@@ -9,9 +9,9 @@ import java.util.*;
 
 @Getter
 public enum BazaarCategories {
-    FARMING(Material.GOLDEN_HOE, Material.YELLOW_STAINED_GLASS_PANE,
-            "§e", new BazaarItemSet(ItemType.WHEAT, "Wheat & Seeds",
-            ItemType.WHEAT, ItemType.ENCHANTED_BREAD, ItemType.HAY_BALE, ItemType.ENCHANTED_HAY_BALE, ItemType.WHEAT_SEEDS, ItemType.ENCHANTED_SEEDS),
+    FARMING(Material.GOLDEN_HOE, Material.YELLOW_STAINED_GLASS_PANE, "§e",
+            new BazaarItemSet(ItemType.WHEAT, "Wheat & Seeds",
+                    ItemType.WHEAT, ItemType.ENCHANTED_BREAD, ItemType.HAY_BALE, ItemType.ENCHANTED_HAY_BALE, ItemType.WHEAT_SEEDS, ItemType.ENCHANTED_SEEDS),
             new BazaarItemSet(ItemType.CARROT, "Carrot",
                     ItemType.CARROT, ItemType.ENCHANTED_CARROT, ItemType.ENCHANTED_GOLDEN_CARROT),
             new BazaarItemSet(ItemType.POTATO, "Potato",
@@ -33,7 +33,7 @@ public enum BazaarCategories {
             new BazaarItemSet(ItemType.PORKCHOP, "Pork",
                     ItemType.PORKCHOP, ItemType.ENCHANTED_PORK, ItemType.ENCHANTED_GRILLED_PORK),
             new BazaarItemSet(ItemType.CHICKEN, "Chicker & Feather",
-                    ItemType.CHICKEN, ItemType.ENCHANTED_RAW_CHICKEN, ItemType.FEATHER, ItemType.ENCHANTED_FEATHER, ItemType.ENCHANTED_EGG, ItemType.OMEGA_ENCHANTED_EGG, ItemType.SUPER_ENCHANTED_EGG),
+                    ItemType.CHICKEN, ItemType.ENCHANTED_RAW_CHICKEN, ItemType.FEATHER, ItemType.ENCHANTED_FEATHER, ItemType.ENCHANTED_EGG, ItemType.SUPER_ENCHANTED_EGG, ItemType.OMEGA_ENCHANTED_EGG),
             new BazaarItemSet(ItemType.MUTTON, "Mutton",
                     ItemType.MUTTON, ItemType.ENCHANTED_MUTTON, ItemType.ENCHANTED_COOKED_MUTTON),
             new BazaarItemSet(ItemType.RABBIT, "Rabbit",
@@ -42,9 +42,9 @@ public enum BazaarCategories {
                     ItemType.NETHER_WART, ItemType.ENCHANTED_NETHER_WART)
 
     ),
-    MINING(Material.DIAMOND_PICKAXE, Material.BLUE_STAINED_GLASS_PANE,
-            "§b", new BazaarItemSet(ItemType.COBBLESTONE, "Cobblestone",
-            ItemType.COBBLESTONE, ItemType.ENCHANTED_COBBLESTONE),
+    MINING(Material.DIAMOND_PICKAXE, Material.BLUE_STAINED_GLASS_PANE, "§b",
+            new BazaarItemSet(ItemType.COBBLESTONE, "Cobblestone",
+                    ItemType.COBBLESTONE, ItemType.ENCHANTED_COBBLESTONE),
             new BazaarItemSet(ItemType.COAL, "Coal",
                     ItemType.COAL, ItemType.ENCHANTED_COAL, ItemType.ENCHANTED_CHARCOAL, ItemType.ENCHANTED_COAL_BLOCK),
             new BazaarItemSet(ItemType.IRON_INGOT, "Iron",
@@ -77,17 +77,16 @@ public enum BazaarCategories {
                     ItemType.SAND, ItemType.ENCHANTED_SAND, ItemType.RED_SAND, ItemType.ENCHANTED_RED_SAND, ItemType.ENCHANTED_RED_SAND_CUBE),
             new BazaarItemSet(ItemType.END_STONE, "End Stone",
                     ItemType.END_STONE, ItemType.ENCHANTED_END_STONE),
-            new BazaarItemSet(ItemType.SNOW, "Snow",
-                    ItemType.SNOW, ItemType.SNOW_BLOCK, ItemType.ENCHANTED_SNOW_BLOCK),
+            new BazaarItemSet(ItemType.SNOW_BLOCK, "Snow",
+                    ItemType.SNOWBALL, ItemType.SNOW_BLOCK, ItemType.ENCHANTED_SNOW_BLOCK),
             new BazaarItemSet(ItemType.SULPHUR, "Sulphur",
                     ItemType.SULPHUR, ItemType.ENCHANTED_SULPHUR, ItemType.ENCHANTED_SULPHUR_CUBE),
             new BazaarItemSet(ItemType.MYCELIUM, "Mycelium",
                     ItemType.MYCELIUM, ItemType.ENCHANTED_MYCELIUM, ItemType.ENCHANTED_MYCELIUM_CUBE),
-            new BazaarItemSet(ItemType.LAPIS_LAZULI, "Dwarven Materials",
-                    ItemType.MITHRIL, ItemType.ENCHANTED_MITHRIL, ItemType.REFINED_MITHRIL, ItemType.TITANIUM, ItemType.ENCHANTED_TITANIUM, ItemType.REFINED_TITANIUM, ItemType.ENCHANTED_MITHRIL, ItemType.STARFALL, ItemType.TREASURITE, ItemType.SORROW)
+            new BazaarItemSet(ItemType.MITHRIL, "Dwarven Mines",
+                    ItemType.MITHRIL, ItemType.ENCHANTED_MITHRIL, ItemType.REFINED_MITHRIL, ItemType.TITANIUM, ItemType.ENCHANTED_TITANIUM, ItemType.REFINED_TITANIUM, ItemType.STARFALL, ItemType.TREASURITE, ItemType.SORROW)
     ),
-    COMBAT(Material.IRON_SWORD, Material.RED_STAINED_GLASS_PANE,
-            "§c",
+    COMBAT(Material.IRON_SWORD, Material.RED_STAINED_GLASS_PANE, "§c",
             new BazaarItemSet(ItemType.ROTTEN_FLESH, "Rotten Flesh",
                     ItemType.ROTTEN_FLESH, ItemType.ENCHANTED_ROTTEN_FLESH),
             new BazaarItemSet(ItemType.BONE, "Bone",

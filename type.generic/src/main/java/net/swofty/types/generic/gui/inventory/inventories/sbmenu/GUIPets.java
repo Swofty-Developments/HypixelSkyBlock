@@ -213,20 +213,16 @@ public class GUIPets extends SkyBlockPaginatedGUI<SkyBlockItem> {
 
         ItemStack.Builder itemStack = new NonPlayerItemUpdater(item).getUpdatedItem();
         List<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
+        lore.add(" ");
         if (isPetEnabled) {
             ItemStackCreator.enchant(itemStack);
 
-            lore.add(" ");
             lore.add("§aCurrently Active!");
             lore.add("§eClick to deselect!");
-
-            itemStack = ItemStackCreator.updateLore(itemStack, lore);
         } else {
-            lore.add(" ");
             lore.add(convertToItem ? "§eClick to pick up!" : "§eClick to summon!");
-
-            itemStack = ItemStackCreator.updateLore(itemStack, lore);
         }
+        itemStack = ItemStackCreator.updateLore(itemStack, lore);
 
         ItemStack.Builder finalItemStack = itemStack;
         return new GUIClickableItem(slot) {

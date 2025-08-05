@@ -1,7 +1,5 @@
 package net.swofty.commons.party.events.response;
 
-import net.swofty.commons.party.FullParty;
-import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.protocol.Serializer;

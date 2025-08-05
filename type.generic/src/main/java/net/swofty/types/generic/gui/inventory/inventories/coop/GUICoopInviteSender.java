@@ -68,7 +68,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
                     handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(UUID.randomUUID());
                     handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(PlayerProfiles.getRandomName());
                 } else {
-                    UUID otherCoopMember = coop.memberProfiles().get(0);
+                    UUID otherCoopMember = coop.memberProfiles().getFirst();
                     ProfilesDatabase islandDatabase = new ProfilesDatabase(otherCoopMember.toString());
                     if (islandDatabase.exists()) {
                         DataHandler islandHandler = DataHandler.fromDocument(islandDatabase.getDocument());
@@ -160,8 +160,7 @@ public class GUICoopInviteSender extends SkyBlockInventoryGUI implements Refresh
             boolean accepted = invites.get(target);
             String displayName = SkyBlockPlayer.getDisplayName(target);
 
-            int finalI = i;
-            set(new GUIItem(slots[finalI + 1]) {
+            set(new GUIItem(slots[i + 1]) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStackHead(

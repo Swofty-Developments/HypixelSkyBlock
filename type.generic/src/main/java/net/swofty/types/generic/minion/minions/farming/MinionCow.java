@@ -1,7 +1,6 @@
 package net.swofty.types.generic.minion.minions.farming;
 
 import net.minestom.server.color.Color;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.entity.mob.mobs.minionMobs.MobMinionCow;
 import net.swofty.types.generic.minion.MinionAction;

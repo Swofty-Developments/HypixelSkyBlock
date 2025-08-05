@@ -90,8 +90,7 @@ public class GUIViewPlayerProfile extends SkyBlockInventoryGUI {
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 if (viewedPlayer.getPetData().getEnabledPet() != null && !viewedPlayer.getPetData().getEnabledPet().getItemStack().isAir()) {
                     SkyBlockItem pet = viewedPlayer.getPetData().getEnabledPet();
-                    ItemStack.Builder itemStack = new NonPlayerItemUpdater(pet).getUpdatedItem();
-                    return itemStack;
+                    return new NonPlayerItemUpdater(pet).getUpdatedItem();
                 } else {
                     return ItemStackCreator.getStack("§7Empty Pet Slot", Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
                 }

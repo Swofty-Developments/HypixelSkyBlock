@@ -41,79 +41,65 @@ public class ActionNewZoneDisplay implements SkyBlockEventClass {
         discoveredZones.setValue(discoveredZonesList);
 
         switch (event.getTo()) {
-            case VILLAGE -> {
-                onNewZone(player, RegionType.VILLAGE,
-                        "Purchase items at the Market.",
-                        "Visit the Auction House.",
-                        "Manage your Coins in the Bank.",
-                        "Enchant items at the Library.");
-            }
-            case AUCTION_HOUSE -> {
-                onNewZone(player, RegionType.AUCTION_HOUSE,
-                        "Auction off your special items.",
-                        "Bid on other player's items.");
-            }
-            case BANK -> {
-                onNewZone(player, RegionType.BANK,
-                        "Talk to the Banker.",
-                        "Store your coins to keep them safe.",
-                        "Earn interest on your coins.");
-            }
-            case GOLD_MINE -> {
-                onNewZone(player, RegionType.GOLD_MINE,
-                        "Talk to the Lazy Miner.",
-                        "Find the hidden gold mine.");
-            }
-            case COAL_MINE -> {
-                onNewZone(player, RegionType.COAL_MINE,
-                        "Mine coal.",
-                        "Travel to the Gold Mine.");
-            }
-            case FARM -> {
-                onNewZone(player, RegionType.FARM,
-                        "Talk to the farmer.", "Travel to The Barn.");
-            }
-            case BIRCH_PARK -> {
-                onNewZone(player, RegionType.BIRCH_PARK,
-                        "Chop down trees.",
-                        "Collect all Log types.");
-            }
-            case FOREST -> {
-                onNewZone(player, RegionType.FOREST,
-                        "Visit the Lumberjack.",
-                        "Chop down trees.",
-                        "Travel to the Birch Park.");
-            }
-            case GRAVEYARD -> {
-                onNewZone(player, RegionType.GRAVEYARD,
-                        "Fight Zombies.",
-                        "Travel to the Spider's Den.",
-                        "Talk to Pat.",
-                        "Investigate the Catacombs.");
-            }
-            case BAZAAR_ALLEY -> {
-                onNewZone(player, RegionType.BAZAAR_ALLEY,
-                        "Buy and sell materials in bulk in the Bazaar.");
-            }
-            case WILDERNESS -> {
-                onNewZone(player, RegionType.WILDERNESS,
-                        "Fish.",
-                        "Visit the Fisherman's Hut.",
-                        "Visit the fairy at the Fairy Pond.",
-                        "Discover hidden secrets.");
-            }
-            case RUINS -> {
-                onNewZone(player, RegionType.RUINS,
-                        "Explore the ancient ruins.",
-                        "Watch out for the guard dogs!");
-            }
-            case THE_END -> {
-                onNewZone(player, RegionType.RUINS,
-                        "Talk to the Pearl Dealer.",
-                        "Explore the End Shop.",
-                        "Kill Endermen.",
-                        "Fight Dragons!");
-            }
+            case VILLAGE -> onNewZone(player, RegionType.VILLAGE,
+                    "Purchase items at the Market.",
+                    "Visit the Auction House.",
+                    "Manage your Coins in the Bank.",
+                    "Enchant items at the Library.");
+
+            case AUCTION_HOUSE -> onNewZone(player, RegionType.AUCTION_HOUSE,
+                    "Auction off your special items.",
+                    "Bid on other player's items.");
+
+            case BANK -> onNewZone(player, RegionType.BANK,
+                    "Talk to the Banker.",
+                    "Store your coins to keep them safe.",
+                    "Earn interest on your coins.");
+
+            case GOLD_MINE -> onNewZone(player, RegionType.GOLD_MINE,
+                    "Talk to the Lazy Miner.",
+                    "Find the hidden gold mine.");
+
+            case COAL_MINE -> onNewZone(player, RegionType.COAL_MINE,
+                    "Mine coal.",
+                    "Travel to the Gold Mine.");
+
+            case FARM -> onNewZone(player, RegionType.FARM,
+                    "Talk to the farmer.", "Travel to The Barn.");
+
+            case BIRCH_PARK -> onNewZone(player, RegionType.BIRCH_PARK,
+                    "Chop down trees.",
+                    "Collect all Log types.");
+
+            case FOREST -> onNewZone(player, RegionType.FOREST,
+                    "Visit the Lumberjack.",
+                    "Chop down trees.",
+                    "Travel to the Birch Park.");
+
+            case GRAVEYARD -> onNewZone(player, RegionType.GRAVEYARD,
+                    "Fight Zombies.",
+                    "Travel to the Spider's Den.",
+                    "Talk to Pat.",
+                    "Investigate the Catacombs.");
+
+            case BAZAAR_ALLEY -> onNewZone(player, RegionType.BAZAAR_ALLEY,
+                    "Buy and sell materials in bulk in the Bazaar.");
+
+            case WILDERNESS -> onNewZone(player, RegionType.WILDERNESS,
+                    "Fish.",
+                    "Visit the Fisherman's Hut.",
+                    "Visit the fairy at the Fairy Pond.",
+                    "Discover hidden secrets.");
+
+            case RUINS -> onNewZone(player, RegionType.RUINS,
+                    "Explore the ancient ruins.",
+                    "Watch out for the guard dogs!");
+
+            case THE_END -> onNewZone(player, RegionType.RUINS,
+                    "Talk to the Pearl Dealer.",
+                    "Explore the End Shop.",
+                    "Kill Endermen.",
+                    "Fight Dragons!");
         }
     }
 

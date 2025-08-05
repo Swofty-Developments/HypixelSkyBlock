@@ -31,8 +31,9 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
         set(GUIClickableItem.getGoBackItem(31, new GUIBitsShop()));
 
         set(new GUIClickableItem(12) {
-            Integer price = 6450;
-            ItemType item = ItemType.ABIPHONE_CONTACTS_TRIO;
+            final int price = 6450;
+            final ItemType item = ItemType.ABIPHONE_CONTACTS_TRIO;
+
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 if (player.getBits() >= price) {
@@ -41,8 +42,7 @@ public class GUIBitsAbiphone extends SkyBlockInventoryGUI {
                     SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
                     if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                         player.addAndUpdateItem(finalItem);
-                        Integer remainingBits = player.getBits() - price;
-                        player.setBits(remainingBits);
+                        player.removeBits(price);
                     } else {
                         new GUIBitsConfirmBuy(finalItem, price).open(player);
                     }

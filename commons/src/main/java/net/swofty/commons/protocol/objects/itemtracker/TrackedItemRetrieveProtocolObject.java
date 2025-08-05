@@ -14,7 +14,7 @@ public class TrackedItemRetrieveProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<TrackedItemRetrieveMessage> getSerializer() {
-        return new Serializer<TrackedItemRetrieveMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(TrackedItemRetrieveMessage value) {
                 return value.itemUUID.toString();
@@ -34,7 +34,7 @@ public class TrackedItemRetrieveProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<TrackedItemResponse> getReturnSerializer() {
-        return new Serializer<TrackedItemResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(TrackedItemResponse value) {
                 return value.trackedItem.toDocument().toJson();

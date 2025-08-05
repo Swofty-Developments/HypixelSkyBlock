@@ -8,12 +8,8 @@ import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocolObject;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.types.generic.data.mongodb.CoopDatabase;
-import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
-import java.lang.Runnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -63,7 +59,7 @@ public class DataMutexService {
             }
 
             // Pick the first player for data synchronization (all coop members share the same data)
-            UUID playerUUID = coopMembers.get(0);
+            UUID playerUUID = coopMembers.getFirst();
             Logger.info("Using playerUUID: " + playerUUID + " for synchronization");
 
             SynchronizeDataProtocolObject.SynchronizeDataRequest request =

@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
 
 public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServer> implements RefreshingGUI {
     private final ProxyInformation information;
@@ -157,7 +156,7 @@ public class GUIHubSelector extends SkyBlockPaginatedGUI<UnderstandableProxyServ
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer player) {
                 counter++;
-                counterAtThisMoment = Integer.valueOf(counter);
+                counterAtThisMoment = counter;
                 return ItemStackCreator.getStack(
                         (isThisServer ? "§c"  : "§a") + "SkyBlock Hub #" + counter,
                         (isThisServer ? Material.RED_CONCRETE  : Material.QUARTZ_BLOCK), 1,

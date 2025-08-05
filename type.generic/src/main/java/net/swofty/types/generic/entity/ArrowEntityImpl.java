@@ -76,25 +76,24 @@ public class ArrowEntityImpl extends LivingEntity {
         @NotNull Collection<EntityCollisionResult> collided = CollisionUtils.checkEntityCollisions(instance, this.getBoundingBox(), posBefore, diff, 3, (e) -> e != this, result);
         for (EntityCollisionResult collisionResult : collided) {
             if (collisionResult != null && collisionResult.entity() != shooter) {
-                if (collisionResult.entity() instanceof Entity entity) {
-                    EntityType entityType = entity.getEntityType();
-                    if (entityType == EntityType.PLAYER ||
-                            entityType == EntityType.ARMOR_STAND) {
-                        return;
-                    }
-
-                    var e = new ProjectileCollideWithEntityEvent(
-                            this,
-                            Pos.fromPoint(collisionResult.collisionPoint()),
-                            entity
-                    );
-                    MinecraftServer.getGlobalEventHandler().call(e);
-                    if (!e.isCancelled()) {
-                        remove();
-                        kill();
-                    }
+                Entity entity = collisionResult.entity();
+                EntityType entityType = entity.getEntityType();
+                if (entityType == EntityType.PLAYER ||
+                        entityType == EntityType.ARMOR_STAND) {
                     return;
                 }
+
+                var e = new ProjectileCollideWithEntityEvent(
+                        this,
+                        Pos.fromPoint(collisionResult.collisionPoint()),
+                        entity
+                );
+                MinecraftServer.getGlobalEventHandler().call(e);
+                if (!e.isCancelled()) {
+                    remove();
+                    kill();
+                }
+                return;
             }
         }
 

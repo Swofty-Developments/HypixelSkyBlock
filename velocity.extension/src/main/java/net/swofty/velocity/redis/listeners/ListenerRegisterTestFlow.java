@@ -6,7 +6,6 @@ import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

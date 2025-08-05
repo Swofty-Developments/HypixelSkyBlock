@@ -13,7 +13,7 @@ public class BazaarBuyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<BazaarBuyMessage> getSerializer() {
-        return new Serializer<BazaarBuyMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(BazaarBuyMessage value) {
                 JSONObject json = new JSONObject();
@@ -46,7 +46,7 @@ public class BazaarBuyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<BazaarBuyResponse> getReturnSerializer() {
-        return new Serializer<BazaarBuyResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(BazaarBuyResponse value) {
                 JSONObject json = new JSONObject();

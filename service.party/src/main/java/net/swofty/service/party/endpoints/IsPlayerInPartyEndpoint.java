@@ -1,13 +1,9 @@
 package net.swofty.service.party.endpoints;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.party.PartyEvent;
-import net.swofty.commons.party.events.*;
 import net.swofty.commons.protocol.objects.party.IsPlayerInPartyProtocolObject;
-import net.swofty.commons.protocol.objects.party.SendPartyEventToServiceProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.party.PartyCache;
-import org.tinylog.Logger;
 
 import java.util.UUID;
 
