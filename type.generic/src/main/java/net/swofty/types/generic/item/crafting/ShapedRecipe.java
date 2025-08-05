@@ -65,6 +65,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
             for (int col = 0; col < 3; col++) {
                 int index = row * 3 + col;
                 char symbol = 'O';
+
                 if (row >= startRow && row < startRow + pattern.size()
                         && col >= startCol && col < startCol + pattern.get(0).length()) {
                     symbol = pattern.get(row - startRow).charAt(col - startCol);
@@ -92,20 +93,28 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
         for (int startRow = 0; startRow <= 3 - pattern.size(); startRow++) {
             for (int startCol = 0; startCol <= 3 - pattern.get(0).length(); startCol++) {
-                if (matchesAtPosition(Arrays.stream(stacks).map(s -> s != null ? s.getItemStack() : null).toArray(ItemStack[]::new), startRow, startCol)) {
+
+                if (matchesAtPosition(Arrays.stream(stacks).map(s -> {
+                    return s != null ? s.getItemStack() : null;
+                }).toArray(ItemStack[]::new), startRow, startCol)) {
                     SkyBlockItem[] resultStacks = Arrays.copyOf(stacks, stacks.length);
                     Map<Character, Integer> remaining = new HashMap<>();
                     ingredientMap.forEach((k, v) -> remaining.put(k, v.getAmount()));
+
                     for (int row = 0; row < pattern.size(); row++) {
                         for (int col = 0; col < pattern.get(row).length(); col++) {
                             int index = (startRow + row) * 3 + (startCol + col);
                             char symbol = pattern.get(row).charAt(col);
                             ItemQuantifiable required = ingredientMap.get(symbol);
+
                             if (required == null || required.getItem().getMaterial() == Material.AIR) continue;
                             SkyBlockItem slot = resultStacks[index];
+
                             if (slot != null && slot.getMaterial() != Material.AIR) {
                                 int newAmount = slot.getAmount() - required.getAmount();
-                                resultStacks[index] = (newAmount > 0) ? new SkyBlockItem(slot.getItemStack().withAmount(newAmount)) : null;
+                                resultStacks[index] = (newAmount > 0) ?
+                                        new SkyBlockItem(slot.getItemStack().withAmount(newAmount))
+                                        : null;
                                 remaining.put(symbol, remaining.get(symbol) - required.getAmount());
                             }
                         }
@@ -114,21 +123,26 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                 }
             }
         }
+
         throw new IllegalStateException("Not enough materials to consume!");
     }
 
     @Override
     public SkyBlockItem[] getRecipeDisplay() {
         SkyBlockItem[] display = new SkyBlockItem[9];
+
         for (int row = 0; row < pattern.size(); row++) {
             for (int col = 0; col < pattern.get(row).length(); col++) {
                 char symbol = pattern.get(row).charAt(col);
                 ItemQuantifiable item = ingredientMap.get(symbol);
-                if (item != null && item.getItem() != null && item.getItem().getMaterial() != Material.AIR) {
+
+                if (item != null && item.getItem() != null
+                        && item.getItem().getMaterial() != Material.AIR) {
                     display[row * 3 + col] = item.getItem().clone();
                 }
             }
         }
+
         return display;
     }
 
@@ -145,6 +159,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                             if (recipe.matchesAtPosition(stacks, row, col)) {
                                 for (var entry : recipe.getPositionsOfItems(stacks).entrySet()) {
                                     var req = recipe.getExtraRequirements().get(entry.getKey());
+
                                     if (req != null) {
                                         for (int i : entry.getValue()) {
                                             if (!req.apply(new SkyBlockItem(stacks[i]))) return false;
@@ -163,14 +178,17 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
 
     public Map<Character, List<Integer>> getPositionsOfItems(ItemStack[] stacks) {
         Map<Character, List<Integer>> positions = new HashMap<>();
+
         for (int startRow = 0; startRow <= 3 - pattern.size(); startRow++) {
             for (int startCol = 0; startCol <= 3 - pattern.get(0).length(); startCol++) {
+
                 if (matchesAtPosition(stacks, startRow, startCol)) {
                     for (int row = 0; row < pattern.size(); row++) {
                         for (int col = 0; col < pattern.get(row).length(); col++) {
                             int index = (startRow + row) * 3 + (startCol + col);
                             char symbol = pattern.get(row).charAt(col);
                             ItemQuantifiable expected = ingredientMap.get(symbol);
+
                             if (expected != null && expected.getItem().getMaterial() != Material.AIR) {
                                 positions.computeIfAbsent(symbol, __ -> new ArrayList<>()).add(index);
                             }
@@ -179,6 +197,7 @@ public class ShapedRecipe extends SkyBlockRecipe<ShapedRecipe> {
                 }
             }
         }
+
         positions.replaceAll((k, v) -> new ArrayList<>(new HashSet<>(v)));
         return positions;
     }
