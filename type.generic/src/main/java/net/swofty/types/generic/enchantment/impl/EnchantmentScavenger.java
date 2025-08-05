@@ -1,16 +1,10 @@
 
         package net.swofty.types.generic.enchantment.impl;
 
-import net.swofty.types.generic.bestiary.BestiaryData;
 import net.swofty.types.generic.collection.CustomCollectionAward;
-import net.swofty.types.generic.data.datapoints.DatapointBestiary;
 import net.swofty.types.generic.enchantment.EnchantmentType;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
-import net.swofty.types.generic.entity.mob.BestiaryMob;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
-import net.swofty.types.generic.event.EventNodes;
-import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.types.generic.user.PlayerEnchantmentHandler;

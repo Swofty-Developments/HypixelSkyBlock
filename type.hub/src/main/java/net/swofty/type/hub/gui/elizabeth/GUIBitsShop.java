@@ -185,27 +185,24 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                 }
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
+                    ItemStack.Builder itemStack = shopCategorys.stack;
+                    ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                     if (slot != 4) {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§aCurrently selected!")) {
                             lore.removeLast();
                             lore.add("§eClick to view!");
                         } else if (Objects.equals(lore.getLast(), " ")) {
                             lore.add("§eClick to view!");
                         }
-                        return ItemStackCreator.updateLore(itemStack, lore);
                     } else {
-                        ItemStack.Builder itemStack = shopCategorys.stack;
-                        ArrayList<String> lore = new ArrayList<>(itemStack.build().get(ItemComponent.LORE).stream().map(StringUtility::getTextFromComponent).toList());
                         if (Objects.equals(lore.getLast(), "§eClick to view!")) {
                             lore.removeLast();
                             lore.add("§aCurrently selected!");
                         } else if (Objects.equals(lore.getLast(), " ")) {
                             lore.add("§aCurrently selected!");
                         }
-                        return ItemStackCreator.updateLore(itemStack, lore);
                     }
+                    return ItemStackCreator.updateLore(itemStack, lore);
                 }
             });
             index++;
@@ -237,8 +234,7 @@ public class GUIBitsShop extends SkyBlockInventoryGUI {
                             SkyBlockItem finalItem = new SkyBlockItem(itemStack.build());
                             if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.PURCHASE_CONFIRMATION_BITS)) {
                                 player.addAndUpdateItem(finalItem);
-                                int remainingBits = player.getBits() - bitItems.price;
-                                player.setBits(remainingBits);
+                                player.removeBits(bitItems.price);
                                 new GUIBitsShop().open(player);
                             } else {
                                 new GUIBitsConfirmBuy(finalItem, bitItems.price).open(player);

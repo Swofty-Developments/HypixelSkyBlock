@@ -35,7 +35,7 @@ public class DroppedItemEntityImpl extends Entity {
 
         droppedItems.computeIfPresent(player, (key, value) -> {
             if (value.size() > 50) {
-                value.get(0).remove();
+                value.getFirst().remove();
             }
             value.add(this);
             return value;

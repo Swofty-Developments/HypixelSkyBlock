@@ -3,7 +3,6 @@ package net.swofty.types.generic.event.actions.player.region;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.tag.Tag;
-import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;

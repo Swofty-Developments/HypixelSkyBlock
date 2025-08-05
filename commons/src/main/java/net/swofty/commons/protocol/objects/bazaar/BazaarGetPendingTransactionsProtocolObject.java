@@ -1,7 +1,6 @@
 package net.swofty.commons.protocol.objects.bazaar;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;

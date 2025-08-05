@@ -15,7 +15,7 @@ public class AuctionAddItemProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<AuctionAddItemMessage> getSerializer() {
-        return new Serializer<AuctionAddItemMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionAddItemMessage value) {
                 JSONObject json = new JSONObject();
@@ -41,7 +41,7 @@ public class AuctionAddItemProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<AuctionAddItemResponse> getReturnSerializer() {
-        return new Serializer<AuctionAddItemResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionAddItemResponse value) {
                 return value.uuid.toString();

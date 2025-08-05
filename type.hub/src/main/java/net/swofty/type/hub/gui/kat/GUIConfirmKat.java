@@ -36,7 +36,7 @@ public class GUIConfirmKat extends SkyBlockInventoryGUI {
 
                 Long timeWhenFinished = time + System.currentTimeMillis();
                 player.getKatData().setKatMap(timeWhenFinished, pet);
-                player.setCoins(player.getCoins() - coins);
+                player.removeCoins(coins);
                 player.closeInventory();
             }
 

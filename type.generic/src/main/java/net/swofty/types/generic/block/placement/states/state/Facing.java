@@ -106,7 +106,7 @@ public enum Facing implements State<Facing> {
         };
     }
 
-    public Facing parse(String input) {
+    public @NotNull Facing parse(String input) {
         if (input == null || input.isEmpty())
             return SELF;
         return Stream.of(values()).filter(shape -> shape.name().equalsIgnoreCase(input.trim())).findFirst().orElse(SELF);

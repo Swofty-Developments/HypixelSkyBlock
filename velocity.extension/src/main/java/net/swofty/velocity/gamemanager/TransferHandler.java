@@ -9,7 +9,6 @@ import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;

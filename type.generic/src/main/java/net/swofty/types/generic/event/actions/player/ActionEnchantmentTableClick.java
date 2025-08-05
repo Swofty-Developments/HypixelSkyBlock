@@ -1,7 +1,6 @@
 package net.swofty.types.generic.event.actions.player;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
 import net.swofty.types.generic.event.EventNodes;

@@ -54,10 +54,9 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
         slotToSaveUpTo = totalSlots;
 
         for (int i = 0; i < totalSlots; i++) {
-            int slot = i;
             SkyBlockItem item = e.player().getSackOfSacks().getInSlot(i);
 
-            set(new GUIClickableItem(slot) {
+            set(new GUIClickableItem(i) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                     if (e.getClickType() == ClickType.RIGHT_CLICK) {
@@ -90,8 +89,7 @@ public class GUISackOfSacks extends SkyBlockInventoryGUI {
         }
 
         for (int i = totalSlots; i < slotsPerPage; i++) {
-            int slotIndex = i;
-            CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(slotIndex);
+            CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(i);
             if (nextUpgrade != null) {
                 set(new GUIItem(i) {
                     @Override

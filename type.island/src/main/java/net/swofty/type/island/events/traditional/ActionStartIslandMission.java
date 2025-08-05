@@ -1,6 +1,5 @@
 package net.swofty.type.island.events.traditional;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;

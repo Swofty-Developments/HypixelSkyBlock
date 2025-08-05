@@ -145,29 +145,23 @@ public class MissionData {
         List<Map<String, Object>> serializedActiveMissions = (List<Map<String, Object>>) map.get("activeMissions");
         List<Map<String, Object>> serializedCompletedMissions = (List<Map<String, Object>>) map.get("completedMissions");
 
-        activeMissions = serializedActiveMissions.stream().map(m -> {
-            ActiveMission mission = new ActiveMission(
-                    (String) m.get("missionID"),
-                    (int) m.get("missionProgress"),
-                    (boolean) m.get("isDynamic"),
-                    (int) m.get("missionStarted"),
-                    (Map<String, Object>) m.get("customData"),
-                    (int) m.get("missionEnded")
-            );
-            return mission;
-        }).collect(Collectors.toList());
+        activeMissions = serializedActiveMissions.stream().map(m -> new ActiveMission(
+                (String) m.get("missionID"),
+                (int) m.get("missionProgress"),
+                (boolean) m.get("isDynamic"),
+                (int) m.get("missionStarted"),
+                (Map<String, Object>) m.get("customData"),
+                (int) m.get("missionEnded")
+        )).collect(Collectors.toList());
 
-        completedMissions = serializedCompletedMissions.stream().map(m -> {
-            ActiveMission mission = new ActiveMission(
-                    (String) m.get("missionID"),
-                    (int) m.get("missionProgress"),
-                    (boolean) m.get("isDynamic"),
-                    (int) m.get("missionStarted"),
-                    (Map<String, Object>) m.get("customData"),
-                    (int) m.get("missionEnded")
-            );
-            return mission;
-        }).collect(Collectors.toList());
+        completedMissions = serializedCompletedMissions.stream().map(m -> new ActiveMission(
+                (String) m.get("missionID"),
+                (int) m.get("missionProgress"),
+                (boolean) m.get("isDynamic"),
+                (int) m.get("missionStarted"),
+                (Map<String, Object>) m.get("customData"),
+                (int) m.get("missionEnded")
+        )).collect(Collectors.toList());
     }
 
     @Getter

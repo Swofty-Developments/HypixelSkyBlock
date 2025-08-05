@@ -1,9 +1,7 @@
 package net.swofty.type.island.events.traditional;
 
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerHand;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.island.gui.GUIJerry;
 import net.swofty.types.generic.event.EventNodes;

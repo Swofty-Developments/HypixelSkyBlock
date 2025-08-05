@@ -24,15 +24,13 @@ public class ActionPlayerInventoryPostClick implements SkyBlockEventClass {
 
             if (gui == null) return;
 
-            if (event.getInventory() != null) {
-                int slot = event.getSlot();
-                GUIItem item = gui.get(slot);
+            int slot = event.getSlot();
+            GUIItem item = gui.get(slot);
 
-                if (item == null) return;
+            if (item == null) return;
 
-                if (item instanceof GUIClickableItem clickable) {
-                    clickable.runPost(event, player);
-                }
+            if (item instanceof GUIClickableItem clickable) {
+                clickable.runPost(event, player);
             }
         }
     }

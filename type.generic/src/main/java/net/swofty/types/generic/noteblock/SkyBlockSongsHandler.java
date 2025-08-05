@@ -26,27 +26,27 @@ public record SkyBlockSongsHandler(SkyBlockPlayer player) {
             playerSongs.get(player).task.cancel();
         }
         playerSongs.put(player, new PlayerSong(song,
-                MinecraftServer.getSchedulerManager().submitTask(new Supplier<TaskSchedule>() {
-            int tick = 0;
+                MinecraftServer.getSchedulerManager().submitTask(new Supplier<>() {
+                    int tick = 0;
 
-            @Override
-            public TaskSchedule get() {
-                if (tick > song.getLength() + 1) {
-                    return TaskSchedule.stop();
-                }
+                    @Override
+                    public TaskSchedule get() {
+                        if (tick > song.getLength() + 1) {
+                            return TaskSchedule.stop();
+                        }
 
-                List<Sound> sounds = song.getTicks().get(tick);
-                if (sounds != null) {
-                    for (Sound sound : sounds) {
-                        player.playSound(sound, Sound.Emitter.self());
+                        List<Sound> sounds = song.getTicks().get(tick);
+                        if (sounds != null) {
+                            for (Sound sound : sounds) {
+                                player.playSound(sound, Sound.Emitter.self());
+                            }
+                        }
+
+                        tick++;
+
+                        return TaskSchedule.millis((long) (1000.0 / song.getTps()));
                     }
-                }
-
-                tick++;
-
-                return TaskSchedule.millis((long) (1000.0 / song.getTps()));
-            }
-        })));
+                })));
     }
 
     public @Nullable PlayerSong getPlayerSong() {

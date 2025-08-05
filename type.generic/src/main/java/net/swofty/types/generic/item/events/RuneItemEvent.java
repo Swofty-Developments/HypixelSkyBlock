@@ -1,4 +1,4 @@
-package net.swofty.types.generic.newitem.events;
+package net.swofty.types.generic.item.events;
 
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;

@@ -2,11 +2,9 @@ package net.swofty.service.api.endpoints;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocolObject;
-import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
 import net.swofty.service.api.APIAdminDatabase;
 import net.swofty.service.api.APIAdminDatabaseObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
-import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 
 public class EndpointAuthenticateCode implements ServiceEndpoint<

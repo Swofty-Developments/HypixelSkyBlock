@@ -24,7 +24,7 @@ public abstract class ServerAttribute<T> {
         return serializer.serialize(value);
     }
 
-    public void deserializeValue(String json) throws JsonProcessingException {
+    public void deserializeValue(String json) {
         this.value = serializer.deserialize(json);
     }
 

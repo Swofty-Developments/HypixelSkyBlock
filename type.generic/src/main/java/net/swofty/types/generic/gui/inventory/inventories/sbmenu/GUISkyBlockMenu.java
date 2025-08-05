@@ -1,6 +1,5 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu;
 
-import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;

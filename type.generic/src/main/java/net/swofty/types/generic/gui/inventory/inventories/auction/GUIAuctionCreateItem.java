@@ -150,7 +150,7 @@ public class GUIAuctionCreateItem extends SkyBlockInventoryGUI implements Refres
                     if (escrow.getItem() == null || !response)
                         return;
 
-                    long fee = (long) ((escrow.getPrice() * 0.05) + (escrow.getDuration() / 180000));
+                    long fee = (long) ((escrow.getPrice() * 0.05) + ((double) escrow.getDuration() / 180000));
                     DatapointDouble coins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class);
                     if (coins.getValue() < fee) {
                         player.sendMessage("§cYou don't have enough coins to create this auction!");

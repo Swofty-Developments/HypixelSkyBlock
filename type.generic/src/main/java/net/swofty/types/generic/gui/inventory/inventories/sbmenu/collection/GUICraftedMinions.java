@@ -93,7 +93,7 @@ public class GUICraftedMinions extends SkyBlockPaginatedGUI<SkyBlockItem> {
                 ArrayList<String> lore = new ArrayList<>();
                 List<Integer> tiers = List.of();
                 boolean unlocked = false;
-                Integer minionAmount = 0;
+                int minionAmount = 0;
 
                 for (Map.Entry<String, List<Integer>> minion : playerData.craftedMinions()) {
                     if (Objects.equals(minion.getKey(), minionRegistry.name())) {

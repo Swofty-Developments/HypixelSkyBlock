@@ -139,7 +139,7 @@ public class ItemLore {
                 Gemstone.Slots gemstone = entry.slot();
 
                 if (!gemData.hasGem(index)) {
-                    gemstoneLore.append("§8[" + gemstone.symbol + "] ");
+                    gemstoneLore.append("§8[").append(gemstone.symbol).append("] ");
                     continue;
                 }
 
@@ -147,7 +147,7 @@ public class ItemLore {
                 ItemType filledWith = gemSlot.filledWith;
 
                 if (filledWith == null) {
-                    gemstoneLore.append("§7[" + gemstone.symbol + "] ");
+                    gemstoneLore.append("§7[").append(gemstone.symbol).append("] ");
                     continue;
                 }
 
@@ -157,7 +157,7 @@ public class ItemLore {
                 Gemstone gemstoneEnum = gemstoneImplComponent.getGemstone();
                 Gemstone.Slots gemstoneSlot = Gemstone.Slots.getFromGemstone(gemstoneEnum);
 
-                gemstoneLore.append(gemRarity.bracketColor + "[" + gemstoneSlot.symbol + gemRarity.bracketColor + "] ");
+                gemstoneLore.append(gemRarity.bracketColor).append("[").append(gemstoneSlot.symbol).append(gemRarity.bracketColor).append("] ");
             }
 
             if (!gemstoneLore.toString().trim().isEmpty()) {

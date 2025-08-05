@@ -7,6 +7,8 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ItemQuantifiable {
     private @NonNull SkyBlockItem item;
     @Getter
@@ -59,7 +61,7 @@ public class ItemQuantifiable {
     }
 
     public boolean matchesType(SkyBlockItem item) {
-        return this.item.getAttributeHandler().getTypeAsString() == item.getAttributeHandler().getTypeAsString();
+        return Objects.equals(this.item.getAttributeHandler().getTypeAsString(), item.getAttributeHandler().getTypeAsString());
     }
 
     public String toString() {

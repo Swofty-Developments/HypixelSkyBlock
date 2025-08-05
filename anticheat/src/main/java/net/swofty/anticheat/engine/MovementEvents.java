@@ -15,22 +15,22 @@ public class MovementEvents extends AntiCheatListener {
         Pos pos = player.getCurrentTick().getPos();
         boolean onGround = player.getCurrentTick().isOnGround();
 
-        if (packet instanceof PositionPacket) {
-            PositionPacket positionPacket = (PositionPacket) packet;
-            pos = new Pos(positionPacket.getX(),
-                    positionPacket.getY(), positionPacket.getZ(),
-                    pos.yaw(), pos.pitch());
-            onGround = positionPacket.isOnGround();
-        } else if (packet instanceof PositionAndRotationPacket) {
-            PositionAndRotationPacket positionAndRotationPacket = (PositionAndRotationPacket) packet;
-            pos = positionAndRotationPacket.getPos();
-            onGround = positionAndRotationPacket.isOnGround();
-        } else if (packet instanceof IsOnGroundPacket) {
-            IsOnGroundPacket isOnGroundPacket = (IsOnGroundPacket) packet;
-            onGround = isOnGroundPacket.isOnGround();
-        } else if (packet instanceof RotationPacket) {
-            RotationPacket rotationPacket = (RotationPacket) packet;
-            pos = new Pos(pos.x(), pos.y(), pos.z(), rotationPacket.getYaw(), rotationPacket.getPitch());
+        switch (packet) {
+            case PositionPacket positionPacket -> {
+                pos = new Pos(positionPacket.getX(),
+                        positionPacket.getY(), positionPacket.getZ(),
+                        pos.yaw(), pos.pitch());
+                onGround = positionPacket.isOnGround();
+            }
+            case PositionAndRotationPacket positionAndRotationPacket -> {
+                pos = positionAndRotationPacket.getPos();
+                onGround = positionAndRotationPacket.isOnGround();
+            }
+            case IsOnGroundPacket isOnGroundPacket -> onGround = isOnGroundPacket.isOnGround();
+            case RotationPacket rotationPacket ->
+                    pos = new Pos(pos.x(), pos.y(), pos.z(), rotationPacket.getYaw(), rotationPacket.getPitch());
+            default -> {
+            }
         }
 
         player.processMovement(pos, onGround);

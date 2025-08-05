@@ -31,7 +31,7 @@ public class ActionPlayerChat implements SkyBlockEventClass {
         String message = event.getRawMessage();
         Rank rank = dataHandler.get(DataHandler.Data.RANK, DatapointRank.class).getValue();
 
-        // Sanitize message to remove any special unicode characters
+        // Sanitize message to remove any special Unicode characters
         if (!rank.isStaff())
             message = message.replaceAll("[^\\x00-\\x7F]", "");
 

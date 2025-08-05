@@ -10,8 +10,7 @@ public class PingEvents extends AntiCheatListener {
     @ListenerMethod
     public void onPacketReceive(AnticheatPacketEvent event) {
         SwoftyPacket packet = event.getPacket();
-        if (packet instanceof PingResponsePacket) {
-            PingResponsePacket pingResponsePacket = (PingResponsePacket) packet;
+        if (packet instanceof PingResponsePacket pingResponsePacket) {
             SwoftyPlayer player = pingResponsePacket.getPlayer();
             if (player != null) player.handlePingResponse(pingResponsePacket.getRequestId());
         }

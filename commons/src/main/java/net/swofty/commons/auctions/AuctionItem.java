@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class AuctionItem {
     }
 
     public record Bid(Long timestamp, UUID uuid, Long value) {
-        public String toString() {
+        public @NotNull String toString() {
             return timestamp + "," + uuid + "," + value;
         }
 

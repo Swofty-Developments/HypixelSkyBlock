@@ -171,10 +171,8 @@ public class GUIRecipeBook extends SkyBlockInventoryGUI {
                 lore.add(" ");
                 lore.add("§eClick to view!");
 
-                ItemStack.Builder itemStack = ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
+                return ItemStackCreator.getStack("§a" + StringUtility.toNormalCase(type.name()) + " Recipes",
                         type.getMaterial(), 1, lore);
-
-                return itemStack;
             }
         });
         updateItemStacks(getInventory(), getPlayer());

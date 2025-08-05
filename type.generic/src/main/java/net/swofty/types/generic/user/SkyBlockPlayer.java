@@ -10,6 +10,7 @@ import net.minestom.server.entity.*;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
+import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
@@ -235,11 +236,10 @@ public class SkyBlockPlayer extends Player {
                     item.setAmount(item.getAmount() - 1);
                     getInventory().setItemStack(i, PlayerItemUpdater.playerUpdate(this, item.getItemStack()).build());
                     ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
-                    return item;
                 } else {
                     getInventory().setItemStack(i, ItemStack.of(Material.AIR));
-                    return item;
                 }
+                return item;
             }
         }
 
@@ -252,15 +252,12 @@ public class SkyBlockPlayer extends Player {
         if (item.getAmount() > 1) {
             item.setAmount(item.getAmount() - 1);
             quiver.setFirstItemInQuiver(item);
-            getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
-            ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
-            return item;
         } else {
             quiver.setFirstItemInQuiver(null);
-            getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
-            ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
-            return item;
         }
+        getDataHandler().get(DataHandler.Data.QUIVER, DatapointQuiver.class).setValue(quiver);
+        ActionPlayerChangeSkyBlockMenuDisplay.runCheck(this);
+        return item;
     }
 
     public boolean hasTalisman(ItemType talisman) {
@@ -425,6 +422,12 @@ public class SkyBlockPlayer extends Player {
 
     public void addAndUpdateItem(ItemType item) {
         addAndUpdateItem(new SkyBlockItem(item));
+    }
+
+    public void addAndUpdateItem(ItemType item, int amount) {
+        for (int i = 0; i < amount; i++) {
+            addAndUpdateItem(new SkyBlockItem(item));
+        }
     }
 
     public void addAndUpdateItem(ItemStack item) {
@@ -676,19 +679,55 @@ public class SkyBlockPlayer extends Player {
         return getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
     }
 
-    public void setCoins(double coins) {
-        getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(coins);
+    public void setCoins(double amount) {
+        getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(amount);
+    }
+
+    public void addCoins(double amount) {
+        setCoins(getCoins() + amount);
+    }
+
+    public void removeCoins(double amount) {
+        setCoins(getCoins() - amount);
     }
 
     public Integer getBits() {
         return getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).getValue();
     }
 
+    public void setBits(int amount) {
+        getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(amount);
+    }
+
+    public void addBits(int amount) {
+        setBits(getBits() + amount);
+    }
+
+    public void removeBits(int amount) {
+        setBits(getBits() - amount);
+    }
+
+    public Integer getGems() {
+        return getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).getValue();
+    }
+
+    public void setGems(int amount) {
+        getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).setValue(amount);
+    }
+
+    public void addGems(int amount) {
+        setGems(getGems() + amount);
+    }
+
+    public void removeGems(int amount) {
+        setGems(getGems() - amount);
+    }
+
     public int maxItemFit(ItemType targetType) {
         int fit = 0;
         int maxStack = targetType.material.maxStackSize();
 
-        var inv = getInventory();
+        PlayerInventory inv = getInventory();
         int size = inv.getSize();
 
         for (int slot = 0; slot < size; slot++) {
@@ -696,34 +735,13 @@ public class SkyBlockPlayer extends Player {
             // Interpret the stack via ItemType
             ItemType slotType = ItemType.fromMaterial(stack.material());
 
-            if (slotType == null) {
+            if (slotType == ItemType.AIR || slotType == null) {
                 fit += maxStack;
             } else if (slotType.equals(targetType)) {
                 fit += (maxStack - stack.amount());
             }
         }
         return fit;
-    }
-
-    public void setBits(int bits) {
-        getDataHandler().get(DataHandler.Data.BITS, DatapointInteger.class).setValue(bits);
-    }
-
-    public Integer getGems() {
-        return getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).getValue();
-    }
-
-    public void setGems(int gems) {
-        getDataHandler().get(DataHandler.Data.GEMS, DatapointInteger.class).setValue(gems);
-    }
-
-    public Boolean getPurchaseConfirmationBits() {
-        // return getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).getValue();
-        return false;
-    }
-
-    public void setPurchaseConfirmationBits(boolean enabled) {
-        // getDataHandler().get(DataHandler.Data.PURCHASE_CONFIRMATION_BITS, DatapointBoolean.class).setValue(enabled);
     }
 
     public Long getBoosterCookieExpirationDate() {
@@ -791,6 +809,10 @@ public class SkyBlockPlayer extends Player {
 
     public void addExperience(long value) {
         setExperience(getExperience() + value);
+    }
+
+    public void removeExperience(long value) {
+        setExperience(getExperience() - value);
     }
 
     public DatapointDeaths.PlayerDeaths getDeathData() {

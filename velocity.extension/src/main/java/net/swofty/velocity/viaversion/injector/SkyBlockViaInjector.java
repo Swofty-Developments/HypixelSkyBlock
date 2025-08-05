@@ -5,7 +5,6 @@ import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.ReflectionUtil;
-import com.viaversion.viaversion.velocity.handlers.VelocityChannelInitializer;
 import io.netty.channel.ChannelInitializer;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import java.lang.reflect.InvocationTargetException;

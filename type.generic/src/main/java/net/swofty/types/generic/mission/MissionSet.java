@@ -58,7 +58,7 @@ public enum MissionSet {
 
     /**
      * @param player The player to check
-     * @return Whether or not the player has completed all missions in the set
+     * @return Whether the player has completed all missions in the set
      */
     @SneakyThrows
     public boolean hasCompleted(SkyBlockPlayer player) {

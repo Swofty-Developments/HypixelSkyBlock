@@ -1,7 +1,6 @@
 package net.swofty.commons.party.events;
 
 import net.swofty.commons.party.PartyEvent;
-import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 

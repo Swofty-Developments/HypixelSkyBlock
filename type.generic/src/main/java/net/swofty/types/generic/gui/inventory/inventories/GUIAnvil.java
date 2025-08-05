@@ -252,7 +252,7 @@ public class GUIAnvil  extends SkyBlockInventoryGUI {
                 upgradeItem,
                 sacrificeItem,
                 getPlayer());
-        List<String> lore = new ArrayList<String>();
+        List<String> lore = new ArrayList<>();
         lore.add("§7Combine the items in the slots to the");
         lore.add("§7left and right below.");
         if(levelCost > 0)

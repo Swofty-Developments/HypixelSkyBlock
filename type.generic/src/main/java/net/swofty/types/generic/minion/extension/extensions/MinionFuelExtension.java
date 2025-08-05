@@ -197,7 +197,7 @@ public class MinionFuelExtension extends MinionExtension {
         if (getItemTypePassedIn() == null) {
             return "null";
         }
-        return getItemTypePassedIn().toString() + ":" + insertionTime + ":" + count;
+        return getItemTypePassedIn() + ":" + insertionTime + ":" + count;
     }
 
     @Override

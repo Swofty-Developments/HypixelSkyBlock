@@ -31,8 +31,7 @@ public class GUIBitsConfirmBuy extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 player.addAndUpdateItem(item);
-                Integer remainingBits = player.getBits() - price;
-                player.setBits(remainingBits);
+                player.removeBits(price);
                 new GUIBitsShop().open(player);
             }
 

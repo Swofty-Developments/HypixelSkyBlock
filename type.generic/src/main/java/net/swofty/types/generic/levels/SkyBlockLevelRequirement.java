@@ -2,7 +2,6 @@ package net.swofty.types.generic.levels;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
-import net.swofty.types.generic.levels.unlocks.CustomLevelUnlock;
 import net.swofty.types.generic.levels.unlocks.SkyBlockLevelStatisticUnlock;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;

@@ -8,7 +8,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.bazaar.BazaarCategories;
-import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;

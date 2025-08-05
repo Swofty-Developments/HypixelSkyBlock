@@ -32,9 +32,7 @@ public abstract class TablistModule {
 
         int spaces = (30 - text.length()) / 2;
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < spaces; i++) {
-            builder.append(" ");
-        }
+        builder.append(" ".repeat(spaces));
 
         builder.append(text);
 

@@ -17,7 +17,7 @@ public class AuctionFetchItemsProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<AuctionFetchItemsMessage> getSerializer() {
-        return new Serializer<AuctionFetchItemsMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionFetchItemsMessage value) {
                 JSONObject json = new JSONObject();
@@ -45,7 +45,7 @@ public class AuctionFetchItemsProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<AuctionFetchItemsResponse> getReturnSerializer() {
-        return new Serializer<AuctionFetchItemsResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionFetchItemsResponse value) {
                 return new AuctionItemListSerializer().serialize(value.items);

@@ -11,7 +11,6 @@ import net.swofty.commons.item.ItemType;
 import net.swofty.commons.statistics.ItemStatistic;
 import net.swofty.commons.statistics.ItemStatistics;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
-import net.swofty.types.generic.entity.mob.ai.ClosestEntityRegionTarget;
 import net.swofty.types.generic.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.types.generic.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.types.generic.entity.mob.impl.RegionPopulator;
@@ -19,7 +18,6 @@ import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
-import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

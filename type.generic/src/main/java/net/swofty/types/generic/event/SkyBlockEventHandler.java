@@ -93,7 +93,7 @@ public class SkyBlockEventHandler {
                         Scheduler scheduler = MinecraftServer.getSchedulerManager();
 
                         scheduler.submitTask(() -> {
-                            Player player = ((PlayerEvent) concreteEvent).getPlayer();
+                            Player player = event.getPlayer();
                             if (!player.isOnline()) return TaskSchedule.stop();
                             if (DataHandler.getUser(player) == null) return TaskSchedule.millis(2);
                             if (SkyBlockConst.isIslandServer() &&
@@ -103,7 +103,7 @@ public class SkyBlockEventHandler {
                             return TaskSchedule.stop();
                         });
                     } else {
-                        // Now run the event with the properly casted type
+                        // Now run the event with the properly cast type
                         try {
                             runEvent(eventMethod.skyBlockEvent(), eventMethod.method, eventMethod.instance, concreteEvent);
                         } catch (Exception ex) {

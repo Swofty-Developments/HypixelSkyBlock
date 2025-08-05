@@ -35,7 +35,7 @@ public class CoinShopPrice implements ShopPrice {
 
     @Override
     public void processPurchase(SkyBlockPlayer player) {
-        player.setCoins(player.getCoins() - amount);
+        player.removeCoins(amount);
     }
 
     @Override

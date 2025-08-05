@@ -2,7 +2,7 @@
 
 ## Overview
 
-The TestFlow system allows you to coordinate multi-server testing scenarios where multiple servers need to work together with a specific set of test players.
+The TestFlow system allows you to coordinate multiserver testing scenarios where multiple servers need to work together with a specific set of test players.
 
 ## Setup
 
@@ -101,7 +101,7 @@ if (TestFlow.isTestFlowActive()) {
 ## How It Works
 
 1. **Gradle Task**: Parses the YAML file and starts multiple JVM processes
-2. **Server Registration**: Each server registers with the proxy, indicating it's part of a test flow
+2. **Server Registration**: Each server registers with the proxy, indicating it is part of a test flow
 3. **Proxy Coordination**: The proxy tracks which servers belong to which test flow
 4. **Handler Activation**: Once all servers are ready, the test flow handler is activated
 5. **Player Tracking**: The system tracks which players are part of the test flow across all servers

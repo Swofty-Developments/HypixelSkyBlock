@@ -19,7 +19,7 @@ public class PacketEncodeHandler extends MessageToMessageEncoder<ByteBuf> {
     }
 
     @Override
-    protected void encode(final ChannelHandlerContext ctx, ByteBuf bytebuf, List<Object> out) throws Exception {
+    protected void encode(final ChannelHandlerContext ctx, ByteBuf bytebuf, List<Object> out) {
         if (!info.checkOutgoingPacket()) throw CancelEncoderException.generate(null);
         if (!info.shouldTransformPacket()) {
             out.add(bytebuf.retain());

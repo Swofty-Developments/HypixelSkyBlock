@@ -7,6 +7,7 @@ import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.DyedItemColor;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.SkyBlockInventoryGUI;
@@ -22,18 +23,22 @@ public class GUISeymour extends SkyBlockInventoryGUI {
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getCloseItem(31));
 
+        double cheapTuxedoPrice = 3000000;
+        double fancyTuxedoPrice = 20000000;
+        double elegantTuxedoPrice = 74999999;
+
         set(new GUIClickableItem(11) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 double coins = player.getCoins();
-                if (coins < 3000000) {
+                if (coins < cheapTuxedoPrice) {
                     return;
                 }
                 player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_CHESTPLATE);
                 player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_BOOTS);
                 player.addAndUpdateItem(ItemType.CHEAP_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
-                player.setCoins(coins - 3000000);
+                player.removeCoins(cheapTuxedoPrice);
             }
 
             @Override
@@ -49,9 +54,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         "§7Deal §c+50% §7damage!",
                         "§8Very stylish.",
                         "",
-                        "§7Cost: §63,000,000 Coins",
+                        "§7Cost: §6" + StringUtility.commaify(cheapTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= 3000000 ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= cheapTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
                 builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(56, 56, 56)));
@@ -63,14 +68,14 @@ public class GUISeymour extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 double coins = player.getCoins();
-                if (coins < 20000000) {
+                if (coins < fancyTuxedoPrice) {
                     return;
                 }
                 player.addAndUpdateItem(ItemType.FANCY_TUXEDO_CHESTPLATE);
                 player.addAndUpdateItem(ItemType.FANCY_TUXEDO_BOOTS);
                 player.addAndUpdateItem(ItemType.FANCY_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
-                player.setCoins(coins - 20000000);
+                player.removeCoins(fancyTuxedoPrice);
             }
 
             @Override
@@ -86,9 +91,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         "§7Deal §c+100% §7damage!",
                         "§8Very stylish.",
                         "",
-                        "§7Cost: §620,000,000 Coins",
+                        "§7Cost: §6" + StringUtility.commaify(fancyTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= 20000000 ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= fancyTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
                 builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(51, 42, 42)));
@@ -101,14 +106,14 @@ public class GUISeymour extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 double coins = player.getCoins();
-                if (coins < 74999999) {
+                if (coins < elegantTuxedoPrice) {
                     return;
                 }
                 player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_CHESTPLATE);
                 player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_BOOTS);
                 player.addAndUpdateItem(ItemType.ELEGANT_TUXEDO_LEGGINGS);
                 player.playSuccessSound();
-                player.setCoins(coins - 74999999);
+                player.removeCoins(elegantTuxedoPrice);
             }
 
             @Override
@@ -124,9 +129,9 @@ public class GUISeymour extends SkyBlockInventoryGUI {
                         "§7Deal §c+150% §7damage!",
                         "§8Very stylish.",
                         "",
-                        "§7Cost: §674,999,999 Coins",
+                        "§7Cost: §6" + StringUtility.commaify(elegantTuxedoPrice) + " Coins",
                         "",
-                        player.getCoins() >= 74999999 ? "§eClick to purchase" : "§cCan't afford this!"
+                        player.getCoins() >= elegantTuxedoPrice ? "§eClick to purchase" : "§cCan't afford this!"
                 );
 
                 builder.set(ItemComponent.DYED_COLOR, new DyedItemColor(new Color(25, 25, 25)));

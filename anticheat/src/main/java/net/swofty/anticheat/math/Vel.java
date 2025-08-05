@@ -358,7 +358,7 @@ public final class Vel implements Point {
     }
 
     /**
-     * Rotates the Veltor around a given arbitrary axis in 3 dimensional space.
+     * Rotates the Veltor around a given arbitrary axis in 3-dimensional space.
      *
      * <p>
      * Rotation will follow the general Right-Hand-Rule, which means rotation
@@ -382,7 +382,7 @@ public final class Vel implements Point {
     }
 
     /**
-     * Rotates the Veltor around a given arbitrary axis in 3 dimensional space.
+     * Rotates the Veltor around a given arbitrary axis in 3-dimensional space.
      *
      * <p>
      * Rotation will follow the general Right-Hand-Rule, which means rotation

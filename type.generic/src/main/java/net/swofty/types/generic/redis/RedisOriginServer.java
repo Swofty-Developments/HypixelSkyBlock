@@ -1,7 +1,5 @@
 package net.swofty.types.generic.redis;
 
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.proxyapi.redis.ProxyToClient;
