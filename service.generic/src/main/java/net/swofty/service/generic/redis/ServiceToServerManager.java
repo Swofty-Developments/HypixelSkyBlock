@@ -133,7 +133,7 @@ public class ServiceToServerManager {
                 + "}=-=-={" + requestId
                 + "}=-=-={" + message.toString();
         RedisAPI.getInstance()
-                .publishMessage("*",
+                .publishMessage("all",
                         ChannelRegistry.getFromName(channelName),
                         messageContent);
 

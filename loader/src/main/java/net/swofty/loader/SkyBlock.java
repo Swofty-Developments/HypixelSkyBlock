@@ -165,6 +165,7 @@ public class SkyBlock {
             Logger.info("Internal ID: " + serverUUID.toString());
             SkyBlockConst.setPort(port);
             SkyBlockConst.setMaxPlayers(maxPlayers);
+            SkyBlockConst.setServerUUID(serverUUID);
 
             ServerOutboundMessage.sendMessageToProxy(
                     ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),

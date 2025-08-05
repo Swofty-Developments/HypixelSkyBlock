@@ -450,6 +450,10 @@ public class SkyBlockPlayer extends Player {
         return false;
     }
 
+    public DatapointChatType.ChatType getChatType() {
+        return getDataHandler().get(DataHandler.Data.CHAT_TYPE, DatapointChatType.class).getValue();
+    }
+
     public @Nullable List<SkyBlockItem> takeItem(ItemType type, int amount) {
         List<SkyBlockItem> consumedItems = new ArrayList<>();
         Map<Integer, Integer> map = getAllOfTypeInInventory(type);
@@ -872,6 +876,15 @@ public class SkyBlockPlayer extends Player {
             DataHandler profile = DataHandler.getSelectedOfOfflinePlayer(uuid);
             return profile.get(DataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                     profile.get(DataHandler.Data.IGN, DatapointString.class).getValue();
+        }
+    }
+
+    public static String getRawName(UUID uuid) {
+        if (SkyBlockGenericLoader.getLoadedPlayers().stream().anyMatch(player -> player.getUuid().equals(uuid))) {
+            return SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get().getUsername();
+        } else {
+            DataHandler profile = DataHandler.getSelectedOfOfflinePlayer(uuid);
+            return profile.get(DataHandler.Data.IGN, DatapointString.class).getValue();
         }
     }
 }

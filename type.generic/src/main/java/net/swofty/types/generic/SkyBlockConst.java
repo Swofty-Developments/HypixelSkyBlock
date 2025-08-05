@@ -6,6 +6,8 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.SharedInstance;
 import net.swofty.commons.ServerType;
 
+import java.util.UUID;
+
 public class SkyBlockConst {
     @Getter
     @Setter
@@ -22,6 +24,9 @@ public class SkyBlockConst {
     @Getter
     @Setter
     private static String shortenedServerName;
+    @Getter
+    @Setter
+    private static UUID serverUUID;
     @Getter
     @Setter
     private static SkyBlockTypeLoader typeLoader;

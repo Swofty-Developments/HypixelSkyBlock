@@ -6,5 +6,6 @@ public enum ServiceType {
     ITEM_TRACKER,
     API,
     DATA_MUTEX,
+    PARTY,
     ;
 }

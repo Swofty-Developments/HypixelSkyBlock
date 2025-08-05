@@ -5,11 +5,13 @@ import net.swofty.commons.ServerType;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.data.DataHandler;
+import net.swofty.types.generic.data.datapoints.DatapointChatType;
 import net.swofty.types.generic.data.datapoints.DatapointRank;
 import net.swofty.types.generic.data.datapoints.DatapointToggles;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;
 import net.swofty.types.generic.event.SkyBlockEventClass;
+import net.swofty.types.generic.party.PartyManager;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.commons.StringUtility;
@@ -35,8 +37,19 @@ public class ActionPlayerChat implements SkyBlockEventClass {
 
         String finalMessage = message;
 
-        List<SkyBlockPlayer> receivers = SkyBlockGenericLoader.getLoadedPlayers();
+        DatapointChatType.Chats chatType = player.getChatType().currentChatType;
+        if (chatType == DatapointChatType.Chats.PARTY) {
+            if (!PartyManager.isInParty(player)) {
+                player.sendMessage("§cYou are not in a party and were moved to the ALL channel.");
+                player.getChatType().switchTo(DatapointChatType.Chats.ALL);
+                return;
+            }
 
+            PartyManager.sendChat(player, message);
+            return;
+        }
+
+        List<SkyBlockPlayer> receivers = SkyBlockGenericLoader.getLoadedPlayers();
 
         receivers.removeIf(receiver -> {
             return SkyBlockConst.getTypeLoader().getType() == ServerType.ISLAND &&

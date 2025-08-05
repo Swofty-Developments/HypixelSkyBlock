@@ -53,3 +53,4 @@ jobs:
             service.itemtracker/build/libs/*.jar
             service.api/build/libs/*.jar
             service.datamutex/build/libs/*.jar
+            service.party/build/libs/*.jar

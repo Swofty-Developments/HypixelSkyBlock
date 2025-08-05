@@ -1,6 +1,7 @@
 package net.swofty.types.generic.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mongodb.client.MongoCollection;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -31,6 +32,7 @@ import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 import net.swofty.types.generic.utility.MathUtility;
 import org.bson.Document;
+import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.Arrays;
@@ -71,6 +73,13 @@ public class DataHandler {
             throw new RuntimeException("No profile selected for user " + uuid.toString());
 
         return fromDocument(ProfilesDatabase.fetchDocument(selectedProfile));
+    }
+
+    public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
+        MongoCollection<Document> documents = ProfilesDatabase.collection;
+        Document document = documents.find(new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")).first();
+        if (document == null) return null;
+        return UUID.fromString(document.getString("_owner"));
     }
 
     public static DataHandler getProfileOfOfflinePlayer(UUID uuid, UUID profileUUID) throws RuntimeException {
@@ -300,6 +309,7 @@ public class DataHandler {
         }, (player, datapoint) -> {
             datapoint.setValue(player.getUsername());
         }),
+        CHAT_TYPE("chat_type", true, false, false, DatapointChatType.class, new DatapointChatType("chat_type", new DatapointChatType.ChatType(DatapointChatType.Chats.ALL))),
         BUILD_MODE("build_mode", true, false, false, DatapointBoolean.class, new DatapointBoolean("build_mode", false), (player, datapoint) -> {
         }, (player, datapoint) -> {
             player.setBypassBuild((Boolean) datapoint.getValue());

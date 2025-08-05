@@ -8,6 +8,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
@@ -65,6 +66,23 @@ public class ProxyPlayer {
 
         ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
                 json, (s) -> {});
+    }
+
+    public CompletableFuture<UnderstandableProxyServer> getServer() {
+        CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+                PlayerHandlerRequirements.PlayerHandlerActions.GET_SERVER;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+                json, (s) -> {
+            future.complete(UnderstandableProxyServer.singleFromJSON(s.getJSONObject("server")));
+        });
+
+        return future;
     }
 
     public CompletableFuture<Boolean> isOnline() {

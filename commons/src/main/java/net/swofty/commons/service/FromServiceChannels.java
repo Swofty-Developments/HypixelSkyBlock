@@ -10,6 +10,8 @@ public enum FromServiceChannels {
     UNLOCK_PLAYER_DATA("unlock-player-data"),
     KICK_FROM_GUI("kick-from-gui"),
     PROPAGATE_BAZAAR_TRANSACTION("propagate-bazaar-transaction"),
+    SEND_MESSAGE("send-message"),
+    PROPAGATE_PARTY_EVENT("propagate_party_event");
     ;
 
     private final String channelName;

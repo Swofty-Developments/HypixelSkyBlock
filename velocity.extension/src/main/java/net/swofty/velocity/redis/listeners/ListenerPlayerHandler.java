@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.Configuration;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.proxy.FromProxyChannels;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
@@ -44,6 +45,23 @@ public class ListenerPlayerHandler extends RedisListener {
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
         switch (action) {
+            case GET_SERVER -> {
+                UUID playersServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
+                GameManager.GameServer serverInfo = GameManager.getFromUUID(playersServer);
+                if (serverInfo == null) {
+                    return new JSONObject();
+                }
+
+                return new JSONObject().put("server", new UnderstandableProxyServer(
+                        serverInfo.displayName(),
+                        serverInfo.internalID(),
+                        GameManager.getTypeFromRegisteredServer(serverInfo.registeredServer()),
+                        serverInfo.registeredServer().getServerInfo().getAddress().getPort(),
+                        serverInfo.registeredServer().getPlayersConnected().stream().map(Player::getUniqueId).toList(),
+                        serverInfo.maxPlayers(),
+                        serverInfo.shortDisplayName()
+                ).toJSON());
+            }
             case TRANSFER_WITH_UUID -> {
                 UUID server = UUID.fromString(message.getString("server_uuid"));
                 System.out.println("Transfer with UUID: " + server);
@@ -52,7 +70,7 @@ public class ListenerPlayerHandler extends RedisListener {
 
                 if (serverInfo == null) {
                     player.sendMessage(Component.text(
-                            "§cAttempted to connect to " + server + ", but there is no server with that UUID. Please try again later."
+                            "§cWe encountered an issue while attempting to locate the server on the network. Please try again later."
                     ));
                     return new JSONObject();
                 }

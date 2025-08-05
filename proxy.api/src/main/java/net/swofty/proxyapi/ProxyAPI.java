@@ -48,13 +48,15 @@ public class ProxyAPI {
             String rawMessage = split[2];
             JSONObject json = new JSONObject(rawMessage);
 
-            JSONObject response = handler.onMessage(json);
+            Thread.startVirtualThread(() -> {
+                JSONObject response = handler.onMessage(json);
 
-            // Send response back to service
-            RedisAPI.getInstance().publishMessage(
-                    serviceId,
-                    ChannelRegistry.getFromName("service_response"),
-                    requestId + "}=-=-={" + response.toString());
+                // Send response back to service
+                RedisAPI.getInstance().publishMessage(
+                        serviceId,
+                        ChannelRegistry.getFromName("service_response"),
+                        requestId + "}=-=-={" + response.toString());
+            });
         });
 
         RedisAPI.getInstance().registerChannel("service_broadcast_" + handler.getChannel().getChannelName(), (event) -> {
@@ -64,13 +66,16 @@ public class ProxyAPI {
             String rawMessage = split[2];
             JSONObject json = new JSONObject(rawMessage);
 
-            JSONObject response = handler.onMessage(json);
+            Thread.startVirtualThread(() -> {
+                // Handle message
+                JSONObject response = handler.onMessage(json);
 
-            // Send response back to service with this server's UUID
-            RedisAPI.getInstance().publishMessage(
-                    serviceId,
-                    ChannelRegistry.getFromName("service_broadcast_response"),
-                    requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response.toString());
+                // Send response back to service with this server's UUID
+                RedisAPI.getInstance().publishMessage(
+                        serviceId,
+                        ChannelRegistry.getFromName("service_broadcast_response"),
+                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response.toString());
+            });
         });
     }
 

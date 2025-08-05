@@ -374,7 +374,7 @@ public record SkyBlockGenericLoader(SkyBlockTypeLoader typeLoader) {
         if (mainInstance != null) {
             ServerHolograms.spawnAll(SkyBlockConst.getInstanceContainer());
             String zone = typeLoader.getType().toString();
-            FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer(), FairySoulZone.valueOf(zone));
+            FairySoul.spawnEntities(SkyBlockConst.getInstanceContainer(), FairySoulZone.valueOf(zone.toUpperCase()));
         }
 
         /**

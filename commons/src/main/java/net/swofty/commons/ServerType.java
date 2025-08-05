@@ -14,4 +14,8 @@ public enum ServerType {
 
         return false;
     }
+
+    public String formatName() {
+        return StringUtility.toNormalCase(name());
+    }
 }
