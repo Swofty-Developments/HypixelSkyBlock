@@ -20,7 +20,6 @@ import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.region.RegionType;
 import net.swofty.types.generic.skill.SkillCategories;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;

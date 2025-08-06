@@ -89,8 +89,7 @@ public class ServerOutboundMessage {
         Class<?> clazz = protocolObject.getClass();
         Type genericSuperclass = clazz.getGenericSuperclass();
 
-        if (genericSuperclass instanceof ParameterizedType) {
-            ParameterizedType paramType = (ParameterizedType) genericSuperclass;
+        if (genericSuperclass instanceof ParameterizedType paramType) {
             Type[] typeArguments = paramType.getActualTypeArguments();
             if (typeArguments.length > 0) {
                 Type firstTypeArg = typeArguments[0];

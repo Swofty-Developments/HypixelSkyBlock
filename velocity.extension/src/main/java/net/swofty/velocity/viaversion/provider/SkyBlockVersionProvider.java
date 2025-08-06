@@ -28,7 +28,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
         return user.isClientSide() ? getBackProtocol(user) : getFrontProtocol(user);
     }
 
-    private ProtocolVersion getBackProtocol(UserConnection user) throws Exception {
+    private ProtocolVersion getBackProtocol(UserConnection user) {
         return ProtocolVersion.v1_21_4; // backend server version
     }
 

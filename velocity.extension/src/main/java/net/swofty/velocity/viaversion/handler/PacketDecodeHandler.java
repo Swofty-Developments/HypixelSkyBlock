@@ -22,7 +22,7 @@ public class PacketDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf bytebuf, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf bytebuf, List<Object> out) {
         if (!info.checkIncomingPacket()) throw CancelDecoderException.generate(null);
         if (!info.shouldTransformPacket()) {
             out.add(bytebuf.retain());

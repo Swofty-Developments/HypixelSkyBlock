@@ -7,6 +7,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.bazaar.BazaarConnector;
+import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.*;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarOrderAmountSelection;
 import net.swofty.types.generic.gui.inventory.inventories.bazaar.selections.GUIBazaarPriceSelection;
@@ -25,11 +26,13 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
     private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
-        super(BazaarCategories.getFromItem(itemType).getKey() + " → " + itemType.getDisplayName(), InventoryType.CHEST_4_ROW);
+        super(BazaarCategories.getFromItem(itemType).getValue().displayName + " → " + itemType.getDisplayName(), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
-        set(GUIClickableItem.getGoBackItem(30, new GUIBazaar(BazaarCategories.getFromItem(itemType).getKey())));
+
+        Map.Entry<BazaarCategories, BazaarItemSet> bazaarCategory = BazaarCategories.getFromItem(itemType);
+        set(GUIClickableItem.getGoBackItem(30, new GUIBazaarItemSet(bazaarCategory.getKey(), bazaarCategory.getValue())));
 
         set(new GUIClickableItem(32) {
             @Override
@@ -40,6 +43,19 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 return ItemStackCreator.getStack("§aManage Orders", Material.BOOK, 1,
                         "§7View your pending Bazaar orders", "§eClick to open");
+            }
+        });
+
+        set(new GUIClickableItem(31) {
+            @Override
+            public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
+                new GUIBazaar(BazaarCategories.getFromItem(itemType).getKey()).open(p);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(SkyBlockPlayer p) {
+                return ItemStackCreator.getStackHead("§6Go Back", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
+                        "§7To Bazaar");
             }
         });
 
@@ -112,7 +128,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     lore.add("§eClick to select amount!");
                 }
 
-                return ItemStackCreator.getStack("§aBuy Instantly", Material.EMERALD, 1, lore);
+                return ItemStackCreator.getStack("§aBuy Instantly", Material.GOLDEN_HORSE_ARMOR, 1, lore);
             }
         });
 
@@ -162,20 +178,15 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                     lore.add("§eClick to select amount!");
                 }
 
-                return ItemStackCreator.getStack("§6Sell Instantly", Material.GOLD_INGOT, 1, lore);
+                return ItemStackCreator.getStack("§6Sell Instantly", Material.HOPPER, 1, lore);
             }
         });
 
         set(new GUIClickableItem(15) {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer p) {
-                int maxSpace = p.maxItemFit(itemType);
-                if (maxSpace <= 0) {
-                    p.sendMessage("§6[Bazaar] §cInventory full!");
-                    return;
-                }
 
-                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, true, false, maxSpace, p.getCoins())
+                new GUIBazaarOrderAmountSelection(GUIBazaarItem.this, itemType, true, false, 71680, p.getCoins())
                         .openAmountSelection(p)
                         .thenAccept(amount -> {
                             if (amount <= 0) return;
@@ -192,7 +203,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                                     return;
                                 }
 
-                                p.setCoins(p.getCoins() - totalCost);
+                                p.removeCoins(totalCost);
                                 p.sendMessage("§6[Bazaar] §7Escrowing " + FORMATTER.format(totalCost) + " coins...");
 
                                 p.getBazaarConnector().createBuyOrder(itemType, price, amount)
@@ -202,7 +213,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                                                         FORMATTER.format(price) + " coins each!");
                                                 p.closeInventory();
                                             } else {
-                                                p.setCoins(p.getCoins() + totalCost);
+                                                p.addCoins(totalCost);
                                                 p.sendMessage("§6[Bazaar] §cFailed! Refunded " + FORMATTER.format(totalCost) + " coins.");
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
@@ -216,14 +227,14 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                 List<String> lore = new ArrayList<>();
                 lore.add("§8Create Buy Order");
                 lore.add(" ");
-                lore.add("§7Max space: §e" + p.maxItemFit(itemType) + "x");
+                lore.add("§7Max space: §e71680x");
                 if (stats.bestAsk() > 0) {
                     lore.add("§7Best ask: §6" + FORMATTER.format(stats.bestAsk()) + " coins");
                 }
                 lore.add(" ");
                 lore.add("§eClick to create order!");
 
-                return ItemStackCreator.getStack("§aCreate Buy Order", Material.LIME_STAINED_GLASS_PANE, 1, lore);
+                return ItemStackCreator.getStack("§aCreate Buy Order", Material.FILLED_MAP, 1, lore);
             }
         });
 
@@ -284,7 +295,7 @@ public class GUIBazaarItem extends SkyBlockInventoryGUI implements RefreshingGUI
                 lore.add(" ");
                 lore.add("§eClick to create order!");
 
-                return ItemStackCreator.getStack("§6Create Sell Order", Material.PAPER, 1, lore);
+                return ItemStackCreator.getStack("§6Create Sell Order", Material.MAP, 1, lore);
             }
         });
 

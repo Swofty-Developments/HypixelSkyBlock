@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player.offhand;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEvent;

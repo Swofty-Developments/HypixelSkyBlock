@@ -3,7 +3,6 @@ package net.swofty.type.hub;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.TaskSchedule;
@@ -16,7 +15,6 @@ import net.swofty.type.hub.tab.HubServerModule;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
@@ -102,9 +100,9 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
                 (type) -> switch (type) {
-                    default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                     case THE_FARMING_ISLANDS -> new Pos(74, 72, -180, 35, 0);
                     case DUNGEON_HUB -> new Pos(-44, 88, 11.5, 0, 0);
+                    default -> new Pos(-2.5, 72.5, -69.5, 180, 0);
                 }, // Spawn position
                 true // Announce death messages
         );

@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeHotPotatoBookData.HotPotatoBookData> {
 

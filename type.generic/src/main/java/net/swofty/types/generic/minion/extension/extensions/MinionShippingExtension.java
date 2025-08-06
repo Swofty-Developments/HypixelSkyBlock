@@ -94,7 +94,7 @@ public class MinionShippingExtension extends MinionExtension {
                         if (heldCoins == 0)
                             return;
 
-                        player.setCoins(player.getCoins() + heldCoins);
+                        player.addCoins(heldCoins);
                         player.sendMessage("§aYou have received §6" + StringUtility.commaify(heldCoins) + " coins§a from your Minion!");
                         heldCoins = 0;
                         return;
@@ -139,7 +139,7 @@ public class MinionShippingExtension extends MinionExtension {
     public String toString() {
         if (getItemTypePassedIn() == null)
             return "null";
-        return getItemTypePassedIn().toString() + ":" + itemsSold + ":" + heldCoins;
+        return getItemTypePassedIn() + ":" + itemsSold + ":" + heldCoins;
     }
 
     @Override

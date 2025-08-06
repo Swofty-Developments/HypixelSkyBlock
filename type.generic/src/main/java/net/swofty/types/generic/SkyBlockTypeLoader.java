@@ -6,7 +6,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
-import net.swofty.types.generic.entity.mob.MobRegistry;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;

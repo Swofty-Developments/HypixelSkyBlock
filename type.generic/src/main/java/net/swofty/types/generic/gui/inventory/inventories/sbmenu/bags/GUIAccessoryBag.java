@@ -65,10 +65,9 @@ public class GUIAccessoryBag extends SkyBlockInventoryGUI {
         this.slotToSaveUpTo = endSlot;
 
         for (int i = 0; i < endSlot; i++) {
-            int slot = i;
             SkyBlockItem item = e.player().getAccessoryBag().getInSlot(i + startIndex);
 
-            set(new GUIClickableItem(slot) {
+            set(new GUIClickableItem(i) {
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     if (item == null) {

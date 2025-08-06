@@ -12,7 +12,6 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
 import net.swofty.commons.item.ItemType;
-import net.swofty.commons.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.types.generic.data.DataHandler;

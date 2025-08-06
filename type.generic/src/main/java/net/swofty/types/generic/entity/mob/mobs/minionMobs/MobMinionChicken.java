@@ -10,7 +10,6 @@ import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.loottable.OtherLoot;
 import net.swofty.types.generic.loottable.SkyBlockLootTable;
 import net.swofty.types.generic.skill.SkillCategories;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

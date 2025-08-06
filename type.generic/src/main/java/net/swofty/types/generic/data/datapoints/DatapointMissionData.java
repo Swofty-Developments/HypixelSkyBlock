@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class DatapointMissionData extends Datapoint<MissionData> {
-    private static final Serializer<MissionData> serializer = new Serializer<MissionData>() {
+    private static final Serializer<MissionData> serializer = new Serializer<>() {
         @Override
         public String serialize(MissionData value) {
             return new JSONObject(value.serialize()).toString();

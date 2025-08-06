@@ -39,6 +39,6 @@ public class CoinDropHandler implements SkyBlockEventClass {
 
         coinsDropped = Math.round((baseCoins + scavengedCoins) * bestiaryBoost);
 
-        player.setCoins(player.getCoins() + coinsDropped);
+        player.addCoins(coinsDropped);
     }
 }

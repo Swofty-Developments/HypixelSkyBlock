@@ -27,7 +27,6 @@ import com.velocitypowered.proxy.network.Connections;
 import com.viaversion.vialoader.ViaLoader;
 import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
-import com.viaversion.vialoader.impl.platform.ViaVersionPlatformImpl;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -54,7 +53,6 @@ import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
 import org.json.JSONObject;
 import org.reflections.Reflections;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocolObject;
 import org.json.JSONObject;
 
 import java.util.UUID;
@@ -14,7 +13,7 @@ public class APIAuthenticateCodeProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<AuthenticateCodeMessage> getSerializer() {
-        return new Serializer<AuthenticateCodeMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuthenticateCodeMessage value) {
                 JSONObject json = new JSONObject();
@@ -43,7 +42,7 @@ public class APIAuthenticateCodeProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<AuthenticateCodeResponse> getReturnSerializer() {
-        return new Serializer<AuthenticateCodeResponse>() {
+        return new Serializer<>() {
             public String serialize(AuthenticateCodeResponse value) {
                 JSONObject json = new JSONObject();
                 json.put("successful", value.successful);

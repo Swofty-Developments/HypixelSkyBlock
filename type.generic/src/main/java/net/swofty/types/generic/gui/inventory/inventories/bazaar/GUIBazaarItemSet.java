@@ -9,7 +9,6 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.item.ItemType;
 import net.swofty.types.generic.bazaar.BazaarCategories;
-import net.swofty.types.generic.bazaar.BazaarConnector;
 import net.swofty.types.generic.bazaar.BazaarItemSet;
 import net.swofty.types.generic.gui.inventory.ItemStackCreator;
 import net.swofty.types.generic.gui.inventory.RefreshingGUI;
@@ -38,13 +37,11 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
             10, new int[]{11, 12, 13, 14, 15, 20, 21, 22, 23, 24}
     );
 
-    private final BazaarCategories category;
     private final BazaarItemSet itemSet;
 
     public GUIBazaarItemSet(BazaarCategories category, BazaarItemSet itemSet) {
         super(StringUtility.toNormalCase(category.name()) + " -> " + itemSet.displayName, InventoryType.CHEST_4_ROW);
 
-        this.category = category;
         this.itemSet = itemSet;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -117,9 +114,9 @@ public class GUIBazaarItemSet extends SkyBlockInventoryGUI implements Refreshing
                                 lore.add(" ");
                                 lore.add("§eClick to view details!");
 
-                                return ItemStackCreator.getStack(
-                                        itemType.rarity.getColor() + itemType.getDisplayName(),
-                                        itemType.material, 1, lore);
+                                SkyBlockItem item = new SkyBlockItem(itemType);
+
+                                return ItemStackCreator.updateLore(ItemStackCreator.getFromSkyBlockItem(item), lore);
                             }
                         });
                     })

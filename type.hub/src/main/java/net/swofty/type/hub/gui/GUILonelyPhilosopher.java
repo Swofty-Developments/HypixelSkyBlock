@@ -26,13 +26,14 @@ public class GUILonelyPhilosopher extends SkyBlockInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
                 double coins = player.getCoins();
-                if (coins < 150000) {
+                double price = 150000;
+                if (coins < price) {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
                 player.addAndUpdateItem(ItemType.HUB_CASTLE_TRAVEL_SCROLL);
                 player.playSuccessSound();
-                player.setCoins(coins - 150000);
+                player.removeCoins(price);
             }
 
             @Override

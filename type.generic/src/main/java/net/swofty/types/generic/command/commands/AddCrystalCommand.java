@@ -37,7 +37,7 @@ public class AddCrystalCommand extends SkyBlockCommand {
             );
             crystal.setInstance(((SkyBlockPlayer) sender).getInstance(), ((SkyBlockPlayer) sender).getPosition());
 
-            new CrystalDatabase().addCrystal(item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
+            CrystalDatabase.addCrystal(item.getComponent(SkullHeadComponent.class).getSkullTexture(item),
                     ((SkyBlockPlayer) sender).getPosition(),
                     type);
         }, itemType);

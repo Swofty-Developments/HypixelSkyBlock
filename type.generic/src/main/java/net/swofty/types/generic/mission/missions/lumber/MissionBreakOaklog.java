@@ -46,7 +46,7 @@ public class MissionBreakOaklog extends SkyBlockProgressMission {
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§6100 Coins", "§b5 SkyBlock XP"))).forEach(player::sendMessage);
-        player.setCoins(player.getCoins() + 100);
+        player.addCoins(100);
         player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getMissionCause(getID()));
         player.getMissionData().startMission(MissionTalkToLumberjackAgain.class);
     }

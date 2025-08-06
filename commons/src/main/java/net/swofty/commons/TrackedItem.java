@@ -47,7 +47,7 @@ public class TrackedItem {
         if (attachedPlayers.isEmpty()) {
             attachedPlayers.add(new PlayerOwnershipLog(playerUUID, profileUUID, System.currentTimeMillis(), System.currentTimeMillis()));
         } else {
-            PlayerOwnershipLog lastLog = attachedPlayers.get(attachedPlayers.size() - 1);
+            PlayerOwnershipLog lastLog = attachedPlayers.getLast();
             if (lastLog.playerUUID.equals(playerUUID) && lastLog.playerProfileUUID.equals(profileUUID)) {
                 lastLog = new PlayerOwnershipLog(lastLog.playerUUID, lastLog.playerProfileUUID, lastLog.firstSeen, System.currentTimeMillis());
                 attachedPlayers.set(attachedPlayers.size() - 1, lastLog);

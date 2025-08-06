@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.minestom.server.network.socket.Server;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;

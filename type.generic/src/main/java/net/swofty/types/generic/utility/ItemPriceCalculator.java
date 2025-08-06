@@ -16,8 +16,7 @@ public record ItemPriceCalculator(SkyBlockItem item) {
     }
 
     public Double calculateTotalPrice() {
-        Double toStart = calculateCleanPrice();
 
-        return toStart;
+        return calculateCleanPrice();
     }
 }

@@ -213,7 +213,7 @@ public class GUIBazaarOrderOptions extends SkyBlockInventoryGUI {
                                             "x " + itemType.getDisplayName() + " §7to your inventory.");
                                 } else {
                                     double refund = order.price() * order.amount();
-                                    p.setCoins(p.getCoins() + refund);
+                                    p.addCoins(refund);
                                     p.sendMessage("§6[Bazaar] §7Refunded §6" + FORMATTER.format(refund) +
                                             " coins §7to your wallet.");
                                 }

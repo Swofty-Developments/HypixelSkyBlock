@@ -1,6 +1,5 @@
 package net.swofty.types.generic.command.commands;
 
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.item.attribute.ItemAttribute;

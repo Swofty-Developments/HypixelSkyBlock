@@ -1,43 +1,27 @@
 package net.swofty.type.dungeonhub;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.network.packet.server.play.ParticlePacket;
-import net.minestom.server.particle.Particle;
-import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.dungeonhub.tab.DungeonServerModule;
-import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.SkyBlockGenericLoader;
 import net.swofty.types.generic.SkyBlockTypeLoader;
-import net.swofty.types.generic.bazaar.BazaarCategories;
 import net.swofty.types.generic.entity.animalnpc.SkyBlockAnimalNPC;
 import net.swofty.types.generic.entity.npc.SkyBlockNPC;
 import net.swofty.types.generic.entity.villager.SkyBlockVillagerNPC;
 import net.swofty.types.generic.event.SkyBlockEventClass;
-import net.swofty.types.generic.museum.MuseumDisplays;
 import net.swofty.types.generic.tab.TablistManager;
 import net.swofty.types.generic.tab.TablistModule;
 import net.swofty.types.generic.tab.modules.AccountInformationModule;
 import net.swofty.types.generic.tab.modules.PlayersOnlineModule;
+
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
-import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class TypeDungeonHubLoader implements SkyBlockTypeLoader {

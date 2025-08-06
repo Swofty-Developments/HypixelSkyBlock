@@ -15,7 +15,7 @@ public class UnlockDataProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<UnlockDataRequest> getSerializer() {
-        return new Serializer<UnlockDataRequest>() {
+        return new Serializer<>() {
             @Override
             public String serialize(UnlockDataRequest value) {
                 JSONObject json = new JSONObject();
@@ -57,7 +57,7 @@ public class UnlockDataProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<UnlockDataResponse> getReturnSerializer() {
-        return new Serializer<UnlockDataResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(UnlockDataResponse value) {
                 JSONObject json = new JSONObject();

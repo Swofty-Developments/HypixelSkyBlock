@@ -75,7 +75,7 @@ public class AuctionViewThirdNormal implements AuctionView {
             DatapointUUIDList activeBids = player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class);
             DatapointUUIDList inactiveBids = player.getDataHandler().get(DataHandler.Data.AUCTION_INACTIVE_BIDS, DatapointUUIDList.class);
 
-            // If UUID is in here, it hasn't been claimed yet, if its not, it has been claimed,
+            // If UUID is in here, it hasn't been claimed yet, if it's not, it has been claimed,
             // goes for both coins and items
             // Check that they won the auction in the first place
 

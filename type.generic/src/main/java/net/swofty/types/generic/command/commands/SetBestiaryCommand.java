@@ -1,15 +1,11 @@
 package net.swofty.types.generic.command.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
-import net.swofty.commons.item.ItemType;
-import net.swofty.types.generic.collection.CollectionCategories;
 import net.swofty.types.generic.command.CommandParameters;
 import net.swofty.types.generic.command.SkyBlockCommand;
 import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.entity.mob.MobRegistry;
-import net.swofty.types.generic.entity.mob.SkyBlockMob;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.user.categories.Rank;
 

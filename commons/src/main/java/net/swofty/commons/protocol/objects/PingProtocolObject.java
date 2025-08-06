@@ -9,7 +9,7 @@ public class PingProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<EmptyMessage> getSerializer() {
-        return new Serializer<EmptyMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(EmptyMessage value) {
                 return "";
@@ -29,7 +29,7 @@ public class PingProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<EmptyMessage> getReturnSerializer() {
-        return new Serializer<EmptyMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(EmptyMessage value) {
                 return "";

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatapointFairySouls extends Datapoint<DatapointFairySouls.PlayerFairySouls> {
-    public static Serializer<PlayerFairySouls> serializer = new Serializer<PlayerFairySouls>() {
+    public static Serializer<PlayerFairySouls> serializer = new Serializer<>() {
 
         @Override
         public String serialize(PlayerFairySouls value) {

@@ -7,7 +7,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.types.generic.data.DataHandler;
 import net.swofty.types.generic.data.DataMutexService;
 import net.swofty.types.generic.data.datapoints.DatapointBankData;
@@ -18,12 +17,6 @@ import net.swofty.types.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.types.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.types.generic.mission.missions.MissionDepositCoinsInBank;
 import net.swofty.types.generic.user.SkyBlockPlayer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIBankerDeposit extends SkyBlockInventoryGUI {
 
@@ -142,7 +135,7 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
         }
 
         player.sendMessage("§8Depositing coins...");
-        player.setCoins(player.getCoins() - amount);
+        player.removeCoins(amount);
         if (!player.isCoop()) {
             bankData.addAmount(amount);
             bankData.addTransaction(new DatapointBankData.Transaction(
@@ -173,7 +166,7 @@ public class GUIBankerDeposit extends SkyBlockInventoryGUI {
                         return null; // Return null to indicate failure - no changes made
                     }
 
-                    player.setCoins(player.getCoins() - amount);
+                    player.removeCoins(amount);
                     latestBankData.addAmount(amount);
                     latestBankData.addTransaction(new DatapointBankData.Transaction(
                             System.currentTimeMillis(), amount, player.getUsername()));

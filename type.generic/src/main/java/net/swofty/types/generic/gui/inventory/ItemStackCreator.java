@@ -11,6 +11,9 @@ import net.minestom.server.item.component.HeadProfile;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.Unit;
 import net.swofty.commons.StringUtility;
+import net.swofty.types.generic.item.SkyBlockItem;
+import net.swofty.types.generic.item.components.EnchantedComponent;
+import net.swofty.types.generic.item.components.SkullHeadComponent;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -143,6 +146,25 @@ public class ItemStackCreator {
                 .set(ItemComponent.LORE, stack.get(ItemComponent.LORE))
                 .set(ItemComponent.CUSTOM_NAME, stack.get(ItemComponent.CUSTOM_NAME))
                 .set(ItemComponent.CUSTOM_DATA, stack.get(ItemComponent.CUSTOM_DATA)));
+    }
+
+    /**
+     * Creates an {@link ItemStack.Builder} from an existing {@link SkyBlockItem}.
+     *
+     * @param item the original {@link SkyBlockItem} to create a builder from
+     * @return an {@link ItemStack.Builder} with the properties of the original item
+     */
+    public static ItemStack.Builder getFromSkyBlockItem(SkyBlockItem item) {
+        ItemStack.Builder builder;
+
+        if (item.hasComponent(SkullHeadComponent.class)) {
+            builder = getStackHead(item.getDisplayName(), item.getComponent(SkullHeadComponent.class).getSkullTexture(item), item.getAmount());
+        } else {
+            builder = getStack(item.getDisplayName(), item.getMaterial(), item.getAmount());
+        }
+
+        if (item.hasComponent(EnchantedComponent.class)) return enchant(builder);
+        else return builder;
     }
 
     /**

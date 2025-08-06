@@ -143,7 +143,7 @@ public abstract class SkyBlockLootTable {
     }
 
     public enum CalculationMode {
-        // Adds up all of the chances and picks one based on that
+        // Adds up all the chances and picks one based on that
         PICK_ONE,
         // Calculates each item individually, and gives the player each item that they have a chance to get
         CALCULATE_INDIVIDUAL

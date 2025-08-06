@@ -35,7 +35,7 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
             }
         });
 
-        set(new GUIItem(22) {
+        set(new GUIItem(31) {
             @Override
             public ItemStack.Builder getItem(SkyBlockPlayer p) {
                 return ItemStackCreator.getStack("§a§lBUY ORDERS", Material.EMERALD, 1,
@@ -185,7 +185,7 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
             if (activeOrder != null) {
                 return activeOrder.side() == BazaarConnector.OrderSide.SELL;
             } else if (completions != null && !completions.isEmpty()) {
-                var firstCompletion = completions.get(0);
+                var firstCompletion = completions.getFirst();
                 return firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_COMPLETED ||
                         firstCompletion.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_ORDER_EXPIRED;
             }
@@ -214,7 +214,7 @@ public class GUIBazaarOrders extends SkyBlockInventoryGUI {
         }
 
         private ItemStack.Builder createCompletedOrderDisplay() {
-            var firstCompletion = completions.get(0);
+            var firstCompletion = completions.getFirst();
             String itemName = firstCompletion.getItemName();
             ItemType itemType;
 

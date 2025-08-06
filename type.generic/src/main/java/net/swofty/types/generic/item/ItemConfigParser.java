@@ -102,9 +102,7 @@ public class ItemConfigParser {
                 component.setDefaultCraftable(defaultCraftable);
                 yield component;
             }
-            case "CUSTOM_DISPLAY_NAME" -> {
-                yield new CustomDisplayNameComponent((item) -> config.get("display_name").toString());
-            }
+            case "CUSTOM_DISPLAY_NAME" -> new CustomDisplayNameComponent((item) -> config.get("display_name").toString());
             case "DECORATION_HEAD" -> {
                 String texture = (String) config.get("texture");
                 yield new DecorationHeadComponent(texture);
@@ -138,9 +136,7 @@ public class ItemConfigParser {
                 String display = (String) config.get("display");
                 yield new ExtraRarityComponent(display);
             }
-            case "DUNGEON_ITEM" -> {
-                yield new ExtraRarityComponent("DUNGEON ITEM");
-            }
+            case "DUNGEON_ITEM" -> new ExtraRarityComponent("DUNGEON ITEM");
             case "EXTRA_UNDER_NAME" -> {
                 if (config.containsKey("displays")) {
                     List<String> displays = (List<String>) config.get("displays");
@@ -358,9 +354,7 @@ public class ItemConfigParser {
                 double value = (double) config.get("mining_value");
                 yield new SkillableMineComponent(category, value);
             }
-            case "SKULL_HEAD" -> {
-                yield new SkullHeadComponent((item) -> config.get("texture").toString());
-            }
+            case "SKULL_HEAD" -> new SkullHeadComponent((item) -> config.get("texture").toString());
             case "STANDARD_ITEM" -> {
                 String type = (String) config.get("standard_item_type");
                 yield new StandardItemComponent(type);

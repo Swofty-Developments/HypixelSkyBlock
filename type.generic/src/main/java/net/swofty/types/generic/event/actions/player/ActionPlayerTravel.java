@@ -2,7 +2,6 @@ package net.swofty.types.generic.event.actions.player;
 
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.commons.ServerType;
@@ -11,7 +10,6 @@ import net.swofty.types.generic.event.EventNodes;
 import net.swofty.types.generic.event.SkyBlockEventClass;
 import net.swofty.types.generic.mission.MissionData;
 import net.swofty.types.generic.mission.MissionSet;
-import net.swofty.types.generic.mission.missions.MissionTalkToVillagers;
 import net.swofty.types.generic.mission.missions.MissionUseTeleporter;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import net.swofty.types.generic.event.SkyBlockEvent;

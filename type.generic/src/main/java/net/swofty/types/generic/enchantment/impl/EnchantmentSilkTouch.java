@@ -1,7 +1,6 @@
 package net.swofty.types.generic.enchantment.impl;
 
 import lombok.NonNull;
-import net.swofty.types.generic.collection.CustomCollectionAward;
 import net.swofty.types.generic.enchantment.abstr.Ench;
 import net.swofty.types.generic.enchantment.abstr.EnchFromTable;
 import net.swofty.types.generic.user.SkyBlockPlayer;

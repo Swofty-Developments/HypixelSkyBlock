@@ -13,7 +13,7 @@ public class AuctionFetchItemProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<AuctionFetchItemMessage> getSerializer() {
-        return new Serializer<AuctionFetchItemMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionFetchItemMessage value) {
                 return value.uuid.toString();
@@ -33,7 +33,7 @@ public class AuctionFetchItemProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<AuctionFetchItemResponse> getReturnSerializer() {
-        return new Serializer<AuctionFetchItemResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(AuctionFetchItemResponse value) {
                 return new AuctionItemSerializer<>().serialize(value.item);

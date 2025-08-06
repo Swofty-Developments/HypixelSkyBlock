@@ -1,7 +1,5 @@
 package net.swofty.type.hub.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.hub.gui.GUIHubSelector;
 import net.swofty.types.generic.entity.npc.NPCParameters;

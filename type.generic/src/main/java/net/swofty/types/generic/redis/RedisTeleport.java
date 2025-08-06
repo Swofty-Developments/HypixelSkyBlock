@@ -18,11 +18,11 @@ public class RedisTeleport implements ProxyToClient {
     @Override
     public JSONObject onMessage(JSONObject message) {
         UUID uuid = UUID.fromString(message.getString("uuid"));
-        Double x = message.getDouble("x");
-        Double y = message.getDouble("y");
-        Double z = message.getDouble("z");
-        Float yaw = message.getFloat("yaw");
-        Float pitch = message.getFloat("pitch");
+        double x = message.getDouble("x");
+        double y = message.getDouble("y");
+        double z = message.getDouble("z");
+        float yaw = message.getFloat("yaw");
+        float pitch = message.getFloat("pitch");
 
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
         if (player == null) return new JSONObject();

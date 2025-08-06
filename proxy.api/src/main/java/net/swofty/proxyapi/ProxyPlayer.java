@@ -6,7 +6,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
-import net.swofty.commons.MinecraftVersion;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.proxy.ToProxyChannels;

@@ -11,7 +11,6 @@ import net.swofty.types.generic.entity.mob.BestiaryMob;
 import net.swofty.types.generic.event.SkyBlockEventHandler;
 import net.swofty.types.generic.event.custom.BestiaryUpdateEvent;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryCategories;
-import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryCategory;
 import net.swofty.types.generic.gui.inventory.inventories.sbmenu.bestiary.BestiaryEntry;
 import net.swofty.types.generic.user.SkyBlockPlayer;
 import org.json.JSONObject;

@@ -52,7 +52,7 @@ public enum SkyBlockTexture {
             unicode.append("\\u");
             unicode.append(Integer.toHexString(texture.unicode.codePointAt(0)).toUpperCase());
 
-            // Convert unicode to traditional backslashXXXX format
+            // Convert Unicode to traditional backslashXXXX format
             textureJson.put("chars", new String[] {
                     unicode.toString()
             });

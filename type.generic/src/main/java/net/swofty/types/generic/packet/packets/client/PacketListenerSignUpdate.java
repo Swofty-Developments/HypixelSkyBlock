@@ -20,7 +20,7 @@ public class PacketListenerSignUpdate extends SkyBlockPacketClientListener {
 
         if (SkyBlockSignGUI.signGUIs.containsKey(player)) {
             SkyBlockSignGUI.SignGUI signGUI = SkyBlockSignGUI.signGUIs.get(player);
-            signGUI.future().complete(signPacket.lines().get(0));
+            signGUI.future().complete(signPacket.lines().getFirst());
 
             player.sendPacket(
                     new BlockChangePacket(signGUI.pos(), signGUI.block())

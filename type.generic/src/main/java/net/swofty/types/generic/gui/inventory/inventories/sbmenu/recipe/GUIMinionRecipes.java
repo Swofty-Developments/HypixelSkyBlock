@@ -1,8 +1,6 @@
 package net.swofty.types.generic.gui.inventory.inventories.sbmenu.recipe;
 
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;

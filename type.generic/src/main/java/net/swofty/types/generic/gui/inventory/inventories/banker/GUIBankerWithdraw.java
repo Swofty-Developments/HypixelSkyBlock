@@ -162,7 +162,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
             bankData.addTransaction(new DatapointBankData.Transaction(
                     System.currentTimeMillis(), -amount, player.getUsername()));
 
-            player.setCoins(player.getCoins() + amount);
+            player.addCoins(amount);
             player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) +
                     " coins§a! You now have §6" + StringUtility.decimalify(bankData.getAmount(), 1) +
                     " coins§a in your account.");
@@ -193,7 +193,7 @@ public class GUIBankerWithdraw extends SkyBlockInventoryGUI {
                     latestBankData.addTransaction(new DatapointBankData.Transaction(
                             System.currentTimeMillis(), -amount, player.getUsername()));
 
-                    player.setCoins(player.getCoins() + amount);
+                    player.addCoins(amount);
                     player.sendMessage("§aYou have withdrawn §6" + StringUtility.decimalify(amount, 1) +
                             " coins§a! You now have §6" + StringUtility.decimalify(latestBankData.getAmount(), 1) +
                             " coins§a in your account.");

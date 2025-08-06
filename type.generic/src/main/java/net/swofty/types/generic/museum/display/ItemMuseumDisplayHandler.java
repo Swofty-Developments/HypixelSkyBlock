@@ -27,7 +27,7 @@ public class ItemMuseumDisplayHandler extends MuseumDisplay {
         if (empty) {
             hologram = PlayerHolograms.ExternalPlayerHologram.builder()
                     .player(player)
-                    .text(new String[]{"§7" + display.toString() + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
+                    .text(new String[]{"§7" + display + " Slot #" + (position + 1), "§e§lCLICK TO EDIT"})
                     .pos(pos.add(0, 1, 0))
                     .build();
             PlayerHolograms.addExternalPlayerHologram(hologram);

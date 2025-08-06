@@ -1,6 +1,5 @@
 package net.swofty.types.generic.event.actions.player;
 
-import net.minestom.server.event.Event;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.types.generic.SkyBlockConst;
 import net.swofty.types.generic.event.EventNodes;

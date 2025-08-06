@@ -21,7 +21,7 @@ import java.util.function.Function;
 public class SkyBlockServerAttributes {
     private static final Map<Attributes, ServerAttribute> serverAttributes = new HashMap<>();
 
-    public static void loadAttributes(Document document) throws JsonProcessingException {
+    public static void loadAttributes(Document document) {
         Arrays.stream(Attributes.values()).forEach(data -> {
             if (document == null || !document.containsKey(data.getKey())) {
                 serverAttributes.put(data, data.getDefaultAttribute());

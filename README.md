@@ -35,9 +35,9 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 1. Download 'SkyBlockProxy.jar' from the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download the Velocity proxy from [here](https://api.papermc.io/v2/projects/velocity/versions/3.4.0-SNAPSHOT/builds/463/downloads/velocity-3.4.0-SNAPSHOT-463.jar)
 3. Download `velocity.toml` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and move it to where you want your Proxy server to run.
-4. Move your Velocity proxy JAR into that folder aswell, and run the proxy using `java -jar velocity-3.4.0-SNAPSHOT-463.jar` as a command in that directory.
+4. Move your Velocity proxy JAR into that folder as well, and run the proxy using `java -jar velocity-3.4.0-SNAPSHOT-463.jar` as a command in that directory.
 5. Close this proxy once it has generated the `plugins` folder, just by pressing `CTRL + C` or closing the CMD Prompt.
-6. Move the `SkyBlockProxy.jar` from earlier into the plugins folder.
+6. Move the `SkyBlockProxy.jar` from earlier into the plugins' folder.
 7. Make a new folder where your `velocity.toml` is and call it `configuration`
 8. Download `resources.json` from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
 9. Move this file into the `configuration` folder you just made.
@@ -62,7 +62,7 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 16. (OPTIONAL) If you wish to have Songs on your server, copy the `songs` folder from [here](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration), and put it inside your configuration folder.
 
 ### Service Setup Guide
-1. Due to the nature of SkyBlock, there may be a variety of services that need to be ran. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
+1. Due to the nature of SkyBlock, there may be a variety of services that need to be run. Go to the releases page [here](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest) and download any .JAR files that start with `Service`.
 2. Move these JAR files into the same directory as your Game Servers, they will share the configuration JSON with the services.
 3. Run them using `java -jar {Insert the JAR file}`.
 
@@ -80,13 +80,13 @@ A video of me going through the guide [can be found here](https://www.youtube.co
 ## 🐋 Running with Docker
 - Install the git repository using `git clone https://github.com/Swofty-Developments/HypixelSkyBlock.git
 
-Most parts about downloading and setting up files will be automated for you but you will need to add the following files to the `configuration` folder:
+Most parts about downloading and setting up files will be automated for you, but you will need to add the following files to the `configuration` folder:
 
-- Download the [world files for the Hub and Island worlds.](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
+- Download the [world files for the Hub and Island worlds](https://www.mediafire.com/file/5oko5y8h7uj6i9z/world.zip/file). Make sure they are named as **world.zip**
 
 - In your configuration file Remove the default `resources.json` and rename `resources.json.docker` to `resources.json`
 
-## Running the contaniners! 
+## Running the containers! 
 
 - (Recommended) Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
 - Open Docker Desktop/Docker and ensure that it is running.
@@ -102,7 +102,7 @@ docker-compose up --build
 ```bash
 docker-compose up --build -d
 ```
-> Note: If you have already runned the server before with `docker-compose up --build` you can just run `docker-compose up` to start the server without rebuilding the images making it faster.
+> Note: If you have already run the server before with `docker-compose up --build` you can just run `docker-compose up` to start the server without rebuilding the images making it faster.
 
 - To stop the containers, you can use:
 
@@ -138,7 +138,7 @@ and then run the service command inside there. It will create its own screen ses
 ## Common Issues
 1. `redis.clients.jedis.exceptions.JedisConnectionException: Failed to connect to any host resolved for DNS name.`
 
-    => Your Memurai isn't running.
+    => Your Memurai isn't running. If this can not be fixed, try out [this](https://github.com/tporadowski/redis/releases) instead.
 2. `Preview features are not enabled for... Try running with '--enable-preview'`
 
     => try `java --enable-preview -jar SkyBlockCore.jar {ServerType}`

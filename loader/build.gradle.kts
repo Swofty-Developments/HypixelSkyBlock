@@ -242,7 +242,7 @@ tasks.register("runWithTestFlow") {
                         println("Type 'exit' to stop all servers")
                     }
                 } catch (e: Exception) {
-                    // Input was interrupted, likely due to shutdown
+                    // Input was interrupted, likely due to shut down
                     break
                 }
             }

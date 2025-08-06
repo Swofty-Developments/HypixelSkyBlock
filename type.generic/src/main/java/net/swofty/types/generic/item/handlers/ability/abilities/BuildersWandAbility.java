@@ -57,7 +57,7 @@ public class BuildersWandAbility extends RegisteredAbility {
             case BOTTOM -> new Vec(0, -1, 0);
         };
         while (!blocks.isEmpty() && blockLimit > 0) {
-            Pos l = (blocks.get(0));
+            Pos l = (blocks.getFirst());
             for (Vec vector : check) {
                 if (w.getBlock(l.add(vector)).key().equals(fillMaterial.key()) && w
                         .getBlock(l.add(vector).add(translate)).key().equals(Material.AIR.key())) {
@@ -67,7 +67,7 @@ public class BuildersWandAbility extends RegisteredAbility {
             Pos fillBlock = l.add(translate);
             // TODO: make sure player is on island
             if (player.isOnIsland()) {
-                blocks.removeIf(blocks.get(0)::equals);
+                blocks.removeIf(blocks.getFirst()::equals);
                 if (!player.getInstance().getBlock(fillBlock).key().equals(fillMaterial.key())) {
                     player.getInstance().setBlock(fillBlock, Block.fromKey(fillMaterial.key()));
 
@@ -79,7 +79,7 @@ public class BuildersWandAbility extends RegisteredAbility {
                     break;
                 continue;
             }
-            blocks.removeIf(blocks.get(0)::equals);
+            blocks.removeIf(blocks.getFirst()::equals);
             blockLimit--;
         }
         if(blocksPlaced == 0) {
