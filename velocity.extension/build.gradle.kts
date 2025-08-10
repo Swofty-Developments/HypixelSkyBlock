@@ -26,18 +26,26 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    api(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
+    compileOnly(files("velocity-proxy-3.4.0-SNAPSHOT.jar"))
 
     implementation("com.github.Swofty-Developments:AtlasRedisAPI:1.1.3")
     // implementation("net.swofty:AtlasRedisAPI:1.1.4")
     implementation(project(":commons"))
+
+    implementation("org.mongodb:bson:4.11.2")
+    implementation("org.mongodb:mongodb-driver-sync:4.11.2")
 
     implementation("com.viaversion:vialoader:4.0.2")
     implementation("com.viaversion:viabackwards-common:5.3.2")
     implementation("com.viaversion:viarewind-common:4.0.7")
     implementation("com.viaversion:viaversion:5.3.2")
 
-    implementation("io.netty:netty-all:4.1.110.Final")
+    implementation(platform("io.netty:netty-bom:4.1.110.Final"))
+    implementation("io.netty:netty-buffer")
+    implementation("io.netty:netty-codec")
+    implementation("io.netty:netty-codec-http")
+    implementation("io.netty:netty-transport")
+    implementation("io.netty:netty-handler")
 
     implementation("net.bytebuddy:byte-buddy:1.14.16")
     implementation("net.bytebuddy:byte-buddy-agent:1.14.16")

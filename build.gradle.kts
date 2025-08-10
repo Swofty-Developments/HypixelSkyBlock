@@ -37,7 +37,6 @@ subprojects {
         }
 
         dependencies {
-            "implementation"("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
             "testImplementation"("org.junit.jupiter:junit-jupiter:5.8.2")
 
             "implementation"("org.reflections:reflections:0.10.2")
@@ -45,10 +44,6 @@ subprojects {
             "implementation"("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
             "implementation"("com.fasterxml.jackson.core:jackson-core:2.17.0")
             "implementation"("org.json:json:20240303")
-            "implementation"("org.mongodb:mongo-java-driver:3.12.14")
-            "implementation"("org.tinylog:tinylog-api:2.7.0")
-            "implementation"("org.tinylog:tinylog-impl:2.7.0")
-            "implementation"("org.tinylog:slf4j-tinylog:2.7.0")
             "compileOnly"("org.projectlombok:lombok:1.18.32")
         }
 

@@ -20,9 +20,11 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom-snapshots:1_21_4-7599413490") {
+    compileOnly("net.minestom:minestom-snapshots:1_21_4-7599413490") {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
+    implementation("org.tinylog:tinylog-api:2.7.0")
+    implementation("org.tinylog:tinylog-impl:2.7.0")
 }
 
 tasks.test {
