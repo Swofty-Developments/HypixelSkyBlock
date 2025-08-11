@@ -29,8 +29,8 @@ public class PlayersOnlineModule extends TablistModule {
         List<SkyBlockPlayer> toShow = new ArrayList<>();
 
         // Sort players by their rank ordinal in reverse
-        players.sort((o1, o2) -> o2.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
-                - o1.getDataHandler().get(DataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
+        players.sort((o1, o2) -> o2.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal()
+                - o1.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.RANK, DatapointRank.class).getValue().ordinal());
         Collections.reverse(players);
 
         // In chunks of 19, load the players into the toShow list.

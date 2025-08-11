@@ -19,7 +19,7 @@ public class ActionPlayerBankAddInterest implements HypixelEventClass {
         if (event.isFirstSpawn()) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
-        DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
+        DatapointBankData.BankData bankData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
         long lastClaimedInterest = bankData.getLastClaimedInterest();
         long difference = SkyBlockCalendar.getDifferenceInHours(lastClaimedInterest);
 
@@ -48,7 +48,7 @@ public class ActionPlayerBankAddInterest implements HypixelEventClass {
                 totalToGive,
                 "§cBank Interest"
         ));
-        player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
+        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
 
         player.sendMessage("§b------------------------------------------------");
         player.sendMessage("§aYou have just received §6" +

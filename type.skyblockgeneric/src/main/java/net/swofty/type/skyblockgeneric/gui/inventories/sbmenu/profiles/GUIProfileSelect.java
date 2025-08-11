@@ -61,7 +61,7 @@ public class GUIProfileSelect extends HypixelInventoryGUI {
                         "§7inventory, skills, collections",
                         "§7and more...",
                         "",
-                        "§7Current: §e" + player.getDataHandler().get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
+                        "§7Current: §e" + player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
                         "§7Switching to: §a" + DataHandler.fromDocument(new ProfilesDatabase(profileUuid.toString()).getDocument())
                                 .get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue(),
                         "", "§eClick to switch");

@@ -77,9 +77,9 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                         SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
                         handler.get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(
-                                profileOwner.getDataHandler().get(DataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
+                                profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(DataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
-                                profileOwner.getDataHandler().get(DataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
+                                profileOwner.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                         );
                     }
                 }

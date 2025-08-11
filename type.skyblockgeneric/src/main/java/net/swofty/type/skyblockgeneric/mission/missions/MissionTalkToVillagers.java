@@ -86,8 +86,8 @@ public class MissionTalkToVillagers extends HypixelProgressMission implements Mi
     @Override
     public void onEnd(SkyBlockPlayer player, Map<String, Object> customData, MissionData.ActiveMission mission) {
         mission.getObjectiveCompleteText(new ArrayList<>(List.of("§61000 §7Coins"))).forEach(player::sendMessage);
-        player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
-                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
+        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
+                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + 1000
         );
     }
 

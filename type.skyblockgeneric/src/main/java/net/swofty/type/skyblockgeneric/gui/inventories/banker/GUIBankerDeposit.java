@@ -35,7 +35,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins(), 1),
                         " ",
@@ -57,7 +57,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         "§7Amount to deposit: §6" + StringUtility.decimalify(player.getCoins() / 2, 1),
                         " ",
@@ -100,7 +100,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
                         "§8Bank deposit",
                         " ",
                         "§7Current balance: §6" + StringUtility.decimalify(
-                                player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
+                                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue().getAmount(), 1
                         ),
                         "§7Amount to deposit: §6Custom",
                         " ",
@@ -126,7 +126,7 @@ public class GUIBankerDeposit extends HypixelInventoryGUI {
         if (player.getMissionData().isCurrentlyActive(MissionDepositCoinsInBank.class)) {
             player.getMissionData().endMission(MissionDepositCoinsInBank.class);
         }
-        DatapointBankData.BankData bankData = player.getDataHandler().get(DataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
+        DatapointBankData.BankData bankData = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).getValue();
         if (bankData.getAmount() + amount > bankData.getBalanceLimit()) {
             player.sendMessage("§cYou cannot deposit that much, you would exceed your balance limit of §6" + StringUtility.commaify(
                     bankData.getBalanceLimit()) + " coins§c!");

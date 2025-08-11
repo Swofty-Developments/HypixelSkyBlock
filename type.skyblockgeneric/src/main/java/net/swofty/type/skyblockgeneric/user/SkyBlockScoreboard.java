@@ -65,7 +65,7 @@ public class SkyBlockScoreboard {
                     addLine(" §7Unknown", sidebar);
                 }
                 addLine("§7 ", sidebar);
-                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(DataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
+                addLine("§fPurse: §6" + StringUtility.commaify(dataHandler.get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()), sidebar);
                 addLine("§fBits: §b" + StringUtility.commaify(dataHandler.get(DataHandler.Data.BITS, DatapointInteger.class).getValue()), sidebar);
                 addLine("§7 ", sidebar);
                 if (region != null &&

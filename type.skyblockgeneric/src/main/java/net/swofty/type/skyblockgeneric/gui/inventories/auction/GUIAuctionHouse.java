@@ -63,7 +63,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             }
         });
 
-        if (getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
+        if (getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().isEmpty()) {
             set(new GUIClickableItem(15) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {
@@ -89,7 +89,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(SkyBlockPlayer player) {
                     return ItemStackCreator.getStack("§aManage Auctions", Material.GOLDEN_HORSE_ARMOR, 1,
-                            "§7You own §e" + player.getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
+                            "§7You own §e" + player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size() + " auctions §7in progress or",
                             "§7which recently ended.",
                             " ",
                             "§eClick to manage!");
@@ -97,7 +97,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             });
         }
 
-        if (!getPlayer().getDataHandler().get(DataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
+        if (!getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_BIDS, DatapointUUIDList.class).getValue().isEmpty()) {
             set(new GUIClickableItem(13) {
                 @Override
                 public void run(InventoryPreClickEvent e, SkyBlockPlayer player) {

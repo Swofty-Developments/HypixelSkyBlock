@@ -21,7 +21,7 @@ public class ClearMissionCommand extends HypixelCommand {
 
             sender.sendMessage("§aYour missions have been cleared.");
             SkyBlockPlayer player = (SkyBlockPlayer) sender;
-            player.getDataHandler().get(DataHandler.Data.MISSION_DATA, DatapointMissionData.class)
+            player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class)
                     .setValue(new MissionData());
             player.getMissionData().startMission(MissionBreakLog.class);
         });

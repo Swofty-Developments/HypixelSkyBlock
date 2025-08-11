@@ -190,7 +190,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
 
                 double value = last.getComponent(SellableComponent.class).getSellValue() * amountOfLast;
 
-                double playerCoins = player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue();
+                double playerCoins = player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
                 if (playerCoins < value) {
                     player.sendMessage("§cYou don't have enough coins!");
                     return;
@@ -199,7 +199,7 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
                 player.addAndUpdateItem(new SkyBlockItem(itemStack.build()));
                 player.playSuccessSound();
                 player.getShoppingData().popBuyback();
-                player.getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
+                player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(playerCoins - value);
                 updateThis(player);
             }
 
@@ -341,8 +341,8 @@ public abstract class SkyBlockShopGUI extends HypixelInventoryGUI {
         double sellPrice = sellable.getSellValue() * stack.amount();
 
         getPlayer().getShoppingData().pushBuyback(item.toUnderstandable(), stack.amount());
-        getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).setValue(
-                getPlayer().getDataHandler().get(DataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
+        getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).setValue(
+                getPlayer().getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue() + sellPrice
         );
         getPlayer().sendMessage(
                 "§aYou sold §f" + StringUtility.getTextFromComponent(stack.get(ItemComponent.CUSTOM_NAME)) + "§a for §6"

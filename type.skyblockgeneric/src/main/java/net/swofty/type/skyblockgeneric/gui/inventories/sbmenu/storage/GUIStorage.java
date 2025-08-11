@@ -139,7 +139,7 @@ public class GUIStorage extends HypixelInventoryGUI {
                         if (!(item.hasComponent(BackpackComponent.class))) return;
 
                         backpackItems.put(slot, item.toUnderstandable());
-                        player.getDataHandler().get(DataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
+                        player.getSkyBlockData().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BACKPACKS, DatapointBackpacks.class).setValue(
                                 new DatapointBackpacks.PlayerBackpacks(backpackItems, backpacks.getUnlockedSlots())
                         );
 

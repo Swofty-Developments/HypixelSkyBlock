@@ -165,7 +165,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
         return "§8[" + levelColor + experience.getLevel() + "§8] " +
                 (displayEmblem == null ? "" : displayEmblem.emblem() + " ") +
-                getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
+                getDataHandler().get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getPrefix() +
                 this.getUsername();
     }
 
@@ -561,7 +561,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public String getShortenedDisplayName() {
         return StringUtility.getTextFromComponent(Component.text(this.getUsername(),
-                getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
+                getDataHandler().get(net.swofty.type.generic.data.HypixelDataHandler.Data.RANK, DatapointRank.class).getValue().getTextColor())
         );
     }
 
@@ -617,7 +617,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         ProxyPlayer player = asProxyPlayer();
 
         if (type == HypixelConst.getTypeLoader().getType() && !force) {
-            this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer));
+            this.teleport(HypixelConst.getTypeLoader().getLoaderValues().spawnPosition().apply(this.getOriginServer()));
             return;
         }
 
